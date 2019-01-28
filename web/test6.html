@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/layout.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
+
+
+
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+        <script src="js/bootstrap-datepicker.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script src="js/jquery.dataTables.js"></script>
+        <script src="js/dataTables.bootstrap.js"></script>
+        <script src="js/dataTables.responsive.min.js"></script>
+        <script src="js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+
+        <script type="text/javascript"  src="js/pdf.js"></script>
+        <script type="text/javascript"  src="js/pdf.worker.js"></script>
+        <title>File API - FileReader as Data URL</title>
+
+
+    </head>
+    <body>
+        <form method='post' enctype='multipart/form-data' action=''>
+            <div class='file_upload' id='f1'><input name='file[]' type='file'/>1</div>
+            <div id='file_tools'>
+                <img src='images/file_add.png' id='add_file' title='Add new input'/>
+                <img src='images/file_del.png' id='del_file' title='Delete'/>
+            </div>
+            <input type='submit' name='upload' value='Upload'/>
+        </form>
+
+        <script type='text/javascript'>
+            $(document).ready(function () {
+                var counter = 2;
+//                $('#del_file').hide();
+                $('img#add_file').click(function () {
+                    $('#file_tools').before('<div class="file_upload" id="f' + counter + '"><input name="file[]" type="file">' + counter + '</div>');
+                    $('#del_file').fadeIn(0);
+                    counter++;
+                });
+                $('img#del_file').click(function () {
+                    if (counter === 3) {
+                        $('#del_file').hide();
+                    }
+                    counter--;
+                    $('#f' + counter).remove();
+                });
+            });
+        </script>
+    </body>
+</html>

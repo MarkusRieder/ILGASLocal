@@ -1,0 +1,431 @@
+<%-- 
+    Document   : test4
+    Created on : 26-Nov-2018, 13:37:26
+    Author     : markus
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="javax.imageio.ImageIO,java.awt.image.BufferedImage,java.io.*" %>
+<!DOCTYPE html>
+<html style="height: 100%" >
+    <%@ page import="java.text.*" %>
+    <%@ page import="java.util.*" %>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+
+        <title>Translation Grant Application System</title>
+
+        <!-- Bootstrap -->
+
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/layout.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
+
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <!--<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>-->
+        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
+
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+        <script type="text/javascript"  src="js/moment.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
+        <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript"  src="js/jquery-ui.js"></script>
+        <script type="text/javascript"  src="js/pdf.js"></script>
+        <script type="text/javascript"  src="js/pdf.worker.js"></script>
+        <script type="text/javascript"  src="js/lightbox.min.js"></script>
+
+        <!--icon exclamation-->
+        <style>
+            .icon-exclamation {
+                color: #ff0000;
+
+                ul {
+                    margin: 0;
+                }
+                ul.dashed {
+                    list-style-type: none;
+                }
+                ul.dashed > li {
+                    text-indent: -5px;
+                }
+                ul.dashed > li:before {
+                    content: "-";
+                    text-indent: -5px;
+                }
+            }
+
+            /*
+             * rewrite h1              
+            */
+
+            .header1 {
+                display: block;
+                font-size: 2em;
+                margin-top: 0.67em;
+                margin-bottom: 0.67em;
+                margin-left: 0;
+                margin-right: 0;
+                font-weight: bold;
+                text-align: center;
+            }
+
+
+            /*        <!--Checkboxes with tick mark-->*/
+
+            .checkbox label:after, 
+            .radio label:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
+
+            .checkbox .cr,
+            .radio .cr {
+                position: relative;
+                display: inline-block;
+                border: 1px solid #a9a9a9;
+                border-radius: .25em;
+                width: 1.3em;
+                height: 1.3em;
+                float: left;
+                margin-right: .5em;
+            }
+
+            .radio .cr {
+                border-radius: 50%;
+            }
+
+            .checkbox .cr .cr-icon,
+            .radio .cr .cr-icon {
+                position: absolute;
+                font-size: .8em;
+                line-height: 0;
+                top: 50%;
+                left: 20%;
+            }
+
+            .radio .cr .cr-icon {
+                margin-left: 0.04em;
+            }
+
+            .checkbox label input[type="checkbox"],
+            .radio label input[type="radio"] {
+                display: none;
+            }
+
+            .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+            .radio label input[type="radio"] + .cr > .cr-icon {
+                transform: scale(3) rotateZ(-20deg);
+                opacity: 0;
+                transition: all .3s ease-in;
+            }
+
+            .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+            .radio label input[type="radio"]:checked + .cr > .cr-icon {
+                transform: scale(1) rotateZ(0deg);
+                opacity: 1;
+            }
+
+            .checkbox label input[type="checkbox"]:disabled + .cr,
+            .radio label input[type="radio"]:disabled + .cr {
+                opacity: .5;
+            }
+
+
+            .checkbox-inline.no_indent,
+            .checkbox-inline.no_indent+.checkbox-inline.no_indent {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+            .checkbox-inline.no_indent:last-child {
+                margin-right: 0;
+            }
+
+            body {
+                margin: 5px;
+                background: #d9d1d1
+            }
+            /* Tab Navigation */
+            .nav-tabs {
+                margin: 0;
+                padding: 0;
+                border: 0;    
+            }
+            .nav-tabs > li > a {
+                background: #DADADA;
+                border-radius: 0;
+                box-shadow: inset 0 -8px 7px -9px rgba(0,0,0,.4),-2px -2px 5px -2px rgba(0,0,0,.4);
+            }
+            .nav-tabs > li.active > a,
+            .nav-tabs > li.active > a:hover {
+                background: #F5F5F5;
+                box-shadow: inset 0 0 0 0 rgba(0,0,0,.4),-2px -3px 5px -2px rgba(0,0,0,.4);
+            }
+            a, u {
+                text-decoration: none;
+            }
+            /* Tab Content */
+            .tab-pane {
+                background: #d9d1d1;
+                box-shadow: 0 0 4px rgba(0,0,0,.4);
+                border-radius: 0;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .nav-tabs.two-lines>li {
+                height:62px;
+            }
+            .nav-tabs.two-lines>li>a, .nav-tabs>li>a>div {
+                height:100%;
+            }
+            input[type="text"]:focus + .glyphicon-search{
+                color: #FF8C00;
+            }
+
+            .ui-state-highlight, 
+            .ui-widget-content .ui-state-highlight, 
+            .ui-widget-header .ui-state-highlight {
+                border: 1px solid #003399;
+                background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+            }
+
+            .ui-datepicker { 
+                width: 17em; 
+                padding: .2em .2em 0; 
+                display: none; 
+                position: relative; z-index: 100000 !important;
+                /*z-index: 2000 !important;*/
+            }
+
+            /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
+            .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
+            .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
+            .ui-datepicker-calendar a.ui-state-active { background: red; } 
+
+            /* Set whitespace between the generated input fields*/
+            input.wsp{
+
+                margin-right: 5px;
+            }
+
+            h1 {
+                text-align: center;
+            }
+            .pressCuttingsUpload {
+                margin: 20px 0;
+            }
+
+            .imageupload{
+                margin: 20px 0;
+            }
+
+            .btn-file {
+                position: relative;
+                overflow: hidden;
+            }
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+
+            .panel {
+                background-color: #d9d1d1 ;
+                margin-top: 50px;
+                box-shadow: 0 0 30px  #b6a6a6;    
+                padding:0 15px 0 15px;
+            }
+            .panel-horizontal {
+                background-color: #d9d1d1;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .panel-horizontal > .panel-body {
+                background-color: #d9d1d1;
+                border-radius: 0 4px 4px 0;
+                border-left: 1px solid #ddd;
+            }
+
+            .longLabel{
+                display: inline-table;
+                line-height: initial;
+            }
+
+            .form-input {
+                height: 50px;
+                font-size: 16px;    
+            }
+
+            .form-btn {
+                line-height: 50px;
+                font-size: 16px;
+            }
+
+            header h1{
+                font-size:12pt;
+                color: #fff;
+                background-color: #1BA1E2;
+                padding: 20px;
+
+            }
+            #article
+            {
+                width: 80%;
+                margin:auto;
+                margin-top:10px;
+            }
+
+            .thumbnail{
+
+                height: 100px;
+                margin: 10px;
+                float: left;
+            }
+            #clear{
+                display:none;
+            }
+            #result {
+                border: 4px dotted #cccccc;
+                display: none;
+                float: right;
+                margin:0 auto;
+                width: 511px;
+            }
+        </style>
+
+
+    </head>
+
+    <body style="height: 100%">
+
+
+        <div id="shadowholder">
+            <div class="shadowtop"> </div>
+            <div id="container">
+                <div id="topspacer"> </div>
+                <div id="topbar">
+                    <div class="animateddiv">
+                        <a href="/the-translation-grant-programme"><img src="images/flashtext-animated2.gif" height="80" alt="Promoting Irish Literature Abroad" /></a>
+                    </div>
+                    <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
+                </div> <!--  End of topbar div -->
+
+
+                <!--container for welcome/logout-->                
+
+                <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
+                    <div class="pull-right">
+                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                    </div>
+                </div> <!--container for welcome/logout-->
+
+                <h1 style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
+
+                <!--                <section>
+                                    <h3>A Four Image Set</h3>
+                                    <div>
+                       
+                
+                
+                                        <a class="example-image-link" href="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Screenshots Staff view.pdf" data-lightbox="bookCover" data-title="Ankunft Allerheiligen" data-alt="Ankunft Allerheiligen"><img class="example-image" src="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Thumbs/Screenshots Staff view_thumb.jpg" alt="image-1"/></a>    
+                                        <a class="example-image-link" href="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Screenshots Publisher First view.pdf" data-lightbox="bookCover"  data-title="Die Katze" data-alt="Die Katze"><img class="example-image" src="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Thumbs/Screenshots Publisher First view_thumb.jpg" alt="image-1"/></a>    
+                                        <a class="example-image-link" href="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Little Man From Archangel.jpg" data-lightbox="bookCover"  data-title="Little Man From Archangel" data-alt="Little Man From Archangel"> <img class="example-image" src="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Ankunft Allerheiligen.jpg" alt="image-1"/></a>    
+                                        <a class="example-image-link" href="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Maigret and the Death of a Harbor-Master.jpg" data-lightbox="bookCover"  data-title="Maigret and the Death of a Harbor-Master" data-alt="Maigret and the Death of a Harbor-Master"><img class="example-image" src="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Ankunft Allerheiligen.jpg" alt="image-1"/></a>    
+                                    </div>
+                                </section>
+                                <hr/>-->
+
+                <div class="container-fluid">
+                    <div class="col-md-8" style="margin-bottom: 20px">
+                        <a href="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Screenshots Publisher First view.pdf"  target="_blank"><img class="example-image" src="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Thumbs/Screenshots Publisher First view_thumb.jpg" alt=""></a>
+                        <a class="example-image-link" href="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Screenshots Publisher Second view.pdf" target="_blank"><img class="example-image" src="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Thumbs/Screenshots Publisher Second view_thumb.jpg" alt=""></a>
+                        <a class="example-image-link" href="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Screenshots Staff view.pdf" target="_blank"><img class="example-image" src="http://localhost/~markus/test/2018/Discworld Publishers/217/CoverageCuttings/Thumbs/Screenshots Staff view_thumb.jpg" alt=""></a>
+                    </div>
+                </div>
+
+
+                <form class="form-horizontal" 
+                      role="form"  
+                      autocomplete="on"  
+                      action="${pageContext.request.contextPath}/Application" 
+                      method="POST" 
+                      name="regF"
+                      >
+
+                    <div class="container col-sm-12" style="margin-bottom: 40px">
+                        <button type="submit" class = "btn btn-default btn-sm active" name="New Application">
+                            New Application
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm"  name="List New Applications">
+                            List New Applications
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm" name="List Open Applications">
+                            List Open Applications
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm" name="List Pending Applications">
+                            List Pending Applications
+                        </button>
+
+                        <button type = "submit" class = "btn btn-default btn-sm"  name="List Closed Applications">
+                            List Closed Applications
+                        </button>
+                    </div>
+                </form>
+
+                <!--footer start-->
+
+                <div id="base">  
+
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
+                    </div><!-- end of BaseText div -->
+
+                    <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
+                    <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
+                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+
+                    <div class="mobile-baselogos visible-phone"> 
+                        <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
+                        <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
+                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                    </div>
+
+                </div><!-- end of Base div -->
+
+            </div><!-- end of container div -->
+            <div class="shadowbase"> </div>
+        </div><!-- end of Shadowholder container div -->
+
+        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+            &copy; 2017 mgr Software
+        </div>
+
+    </body>
+</html>
+
