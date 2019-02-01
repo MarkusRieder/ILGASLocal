@@ -215,7 +215,6 @@
 
                 </div><!-- End of topbar div -->
 
-                <h1>SIGNUP.JSP</h1>
 
                 <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland Signup</h1>
 
@@ -409,7 +408,7 @@
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017 mgr Software
+            &copy; 2019 mgr Software
         </div>
 
         <script type="text/javascript">

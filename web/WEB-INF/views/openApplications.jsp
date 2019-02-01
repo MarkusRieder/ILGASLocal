@@ -206,7 +206,7 @@
                     ],
                     "bServerSide": false,
                     "sAjaxSource": newURL,
-                                                         
+
                     "columns": [
                         {
                             "targets": 0,
@@ -599,8 +599,14 @@
                         {"data": "originalName"},
                         {"data": "Author"},
                         {"data": "publicationYear"},
-                        {"data": "Series"},
-                        {"data": "translationTitle"},
+                        {"data": "Series",
+                            "render": function (data) {
+                                console.log("Series  " + data);
+                            }},
+                        {"data": "translationTitle",
+                            "render": function (data) {
+                                console.log("translationTitle  " + data);
+                            }},
                         {"data": "transList",
                             "render": function (data, type, row) {
 
@@ -783,7 +789,16 @@
 
                     // Generate table translatorTrackTable
                     var TranslTitles = rowdata.translatorTitles;
-//                    console.log("TranslTitles: " + translationTitle);
+                    var translationTitle = rowdata.translationTitle;
+                    document.getElementById("translationTitle").value = rowdata.translationTitle;
+
+                    console.log("translationTitle >>> " + translationTitle);
+                    
+                    document.getElementById("series").value = rowdata.Series;
+                    console.log("Series >>> " + rowdata.Series);
+                    
+                    
+                    console.log("TranslTitles: " + TranslTitles);
                     var TranslatorDocs = "";
                     var TranslatorDocs = [];
                     TranslatorDocs = rowdata.transList; //  .transList.values();
@@ -1249,8 +1264,8 @@
                     $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
                     $("#authors").val($(this).closest('tr').children()[66].textContent);
                     $("#publicationYear").val($(this).closest('tr').children()[67].textContent);
-                    $("#series").val($(this).closest('tr').children()[68].textContent);
-                    $("#translationTitle").val($(this).closest('tr').children()[69].textContent);
+//                    $("#series").val($(this).closest('tr').children()[68].textContent);
+//                    $("#translationTitle").val($(this).closest('tr').children()[69].textContent);
 
                     console.log(table.row(this).data());
 
@@ -1964,8 +1979,8 @@
                     <a class="logo"><span class="hidden">Literature Ireland</span></a>
 
                 </div> <!--  End of topbar div -->
-                
-                
+
+
                 <!--container for welcome/logout-->
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
@@ -2967,11 +2982,11 @@
                       method="POST" 
                       name="regF"
                       >
-                                <input type="hidden" name="userID" value="${userID}">
-                                <input type="hidden" name="name" value="${name}">
-                                <input type="hidden" name="publisherID" value="${publisherID}">
-                                <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                <input type="hidden" name="publisherName" value="${companyDetails.Company}">
+                    <input type="hidden" name="userID" value="${userID}">
+                    <input type="hidden" name="name" value="${name}">
+                    <input type="hidden" name="publisherID" value="${publisherID}">
+                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                    <input type="hidden" name="publisherName" value="${companyDetails.Company}">
 
                     <div class="container col-sm-12" style="margin-bottom: 40px">
                         <input type="submit" id="NewApplication" name="task"  class = "btn btn-default btn-sm" value="Start New Application" />

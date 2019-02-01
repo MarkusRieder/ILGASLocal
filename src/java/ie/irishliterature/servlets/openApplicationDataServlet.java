@@ -64,9 +64,7 @@ public class openApplicationDataServlet extends HttpServlet {
             listApplications = openApplicationDAO.getAllApplicationsPublisher(publisherID);
 
             //    System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
-        } catch (ClassNotFoundException | DBException ex) {
-            Logger.getLogger(openApplicationDataServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } catch (ClassNotFoundException | DBException | ParseException ex) {
             Logger.getLogger(openApplicationDataServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 

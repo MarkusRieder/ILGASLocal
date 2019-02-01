@@ -98,7 +98,7 @@
 
 
         <!--script for DataTable Modal popup-->
-        
+
         <!--User-->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -220,7 +220,7 @@
             ;
         </script>
         <!--script for DataTable Modal popup-->
-        
+
         <!--ExpertReader-->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -1576,7 +1576,7 @@
             .onlytableScroll{
                 overflow-x:scroll;
             }
-            
+
 
         </style>
 
@@ -2323,7 +2323,7 @@
                                                                     </label>
                                                                 </div> 
                                                             </div>
-                                                            
+
                                                             <script>
                                                                 $("#datePublisherInformedOfMeeting").datepicker({
                                                                     showWeekDays: true,
@@ -2348,14 +2348,12 @@
                                                                     <button class='btn btn-danger'>Reject</button>
                                                                 </div>
                                                             </div> <!--row-->
-                                                            
+
                                                         </div>
                                                     </div> <!--tab-pane" id="page 4" -->
 
-
+                                                    <!--Contract -->
                                                     <div class="tab-pane" id="page5">
-
-                                                        <!--Contract -->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-1"></div>

@@ -109,7 +109,10 @@ public class openApplicationDAO {
                     application.setBookNotes(Notes);
                     application.setCopiesSent(res.getInt("copiesSent"));
 //                    application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
-
+String translationTitle = getTranslationTitle(ReferenceNumber);
+application.setTranslationTitle(translationTitle);
+String Serie = getSeries(ReferenceNumber);
+application.setSeries(Serie);
                     System.out.println("publicationYear:  " + res.getString("publicationYear"));
                     String[] t = res.getString("publicationYear").split("-");
                     System.out.println("t.length:  " + t.length);
@@ -432,6 +435,11 @@ public class openApplicationDAO {
                     rightsAgreementArray.add(rightsAgreementList);
 
                     application.setRightsAgreement(rightsAgreementList);
+                    String translationTitle = getTranslationTitle(ReferenceNumber);
+application.setTranslationTitle(translationTitle);
+
+String Serie = getSeries(ReferenceNumber);
+application.setSeries(Serie);
                     /*
                      * get all idTranslator id's for that ReferenceNumber return
                      * ArrayList
@@ -634,7 +642,10 @@ public class openApplicationDAO {
 
                     rightsAgreementList = getRightsAgreement(ReferenceNumber);
                     rightsAgreementArray.add(rightsAgreementList);
-
+                    String translationTitle = getTranslationTitle(ReferenceNumber);
+                    application.setTranslationTitle(translationTitle);
+                    String Serie = getSeries(ReferenceNumber);
+                    application.setSeries(Serie);
                     application.setRightsAgreement(rightsAgreementList);
                     /*
                      * get all idTranslator id's for that ReferenceNumber return
@@ -895,7 +906,7 @@ public class openApplicationDAO {
                 while (res.next()) {
 
                     translationTitle = res.getString(1);
-
+ System.out.println("translationTitle  " + translationTitle);
                 }
 
             }

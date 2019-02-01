@@ -21,6 +21,13 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
+
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
@@ -31,12 +38,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
-        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
 
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
         <script type="text/javascript"  src="js/moment.js"></script>
         <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
@@ -44,8 +46,6 @@
         <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript"  src="js/jquery-ui.js"></script>
 
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.7/purify.min.js.map"></script>-->
-        <!--<script type="text/javascript"  src="js/purify.min.js"></script>-->
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
 
@@ -54,6 +54,7 @@
         <script>
             //Global Variables
             var translatorArray = [];
+            var rightsHolderArray = [];
             var authorArray = [];
             var languageArray = [];
             var pressCuttingArray = [];
@@ -144,51 +145,6 @@
             });
         </script>
 
-        <!--AutoComplete_Authors-->
-        <!--  
-       <script type="text/javascript">
-           $(function () {
-               $("#author").autocomplete({
-                   source: 'ACAuthor', // The source of the AJAX results
-                   dataType: 'json',
-                   contentType: "application/json",
-                   data: '',
-                   minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                   focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                       $("#author").val(ui.item.name);
-                       return false;
-                   },
-                   select: function (event, ui) { // What happens when an autocomplete result is selected
-                       $("#author").val(ui.item.name);
-                       $('#idauthor').val(ui.item.id);
-                   }
-               });
-           });
-       </script>
-        -->
-
-        <!--    AutoComplete_Translators    -->
-        <!--    
-        <script type="text/javascript">
-                $(function () {
-                    $("#translatorName").autocomplete({
-                        source: 'ACTranslator', // The source of the AJAX results
-                        dataType: 'json',
-                        contentType: "application/json",
-                        data: '',
-                        minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                        focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                            $("#translatorName").val(ui.item.name);
-                            return false;
-                        },
-                        select: function (event, ui) { // What happens when an autocomplete result is selected
-                            $("#translatorName").val(ui.item.name);
-                            $('#idTranslator').val(ui.item.id);
-                        }
-                    });
-                });
-            </script>   
-        -->
 
         <!--    AutoComplete_Languages   -->
         <script>
@@ -523,6 +479,26 @@
                 });
             });
             $(function () {
+                $('div.agreement').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    //                  var label_translatorid2 = "label_translator" + id2;
+                    document.getElementById("label_agreement1").value = label;
+                });
+            });
+            $(function () {
+                $('div.addendum').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    //                  var label_translatorid2 = "label_translator" + id2;
+                    document.getElementById("label_addendum1").value = label;
+                });
+            });
+            $(function () {
                 $(document).on('change', 'div.translatorcv :file', function () {
                     var id = parseInt(this.id.replace("translator_cv", ""));
                     var input = $(this),
@@ -593,7 +569,7 @@
             function generatedLabels() {
                 $(document).on('change', ':file', function () {
 
-
+                    console.log("generatedLabels Name ", $(this));
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -632,6 +608,24 @@
             });
         </script>
 
+        <!--add more RightsHolders-->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                counter = 1;
+                $("#addAdditionalRightsHolders").click(function (event) {
+                    counter++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counter + ".  Rights holder  </div>");
+                    var $newInput = $("<input placeholder='Rights holder name' type='text'> ");
+                    $newInput
+                            .attr("name", "Name" + counter)
+                            .attr("id", "name" + counter)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#RightsHolderGeneratedForm"));
+                });
+            });
+        </script>
+
         <script>
 
             // Copy the first translator name to the pop up modal
@@ -648,6 +642,7 @@
                 translatorArray.push(Name);
                 console.log(" first entry in translatorArray ", fn.value);
 
+
                 if (!localStorage.translatorContent === 0) {
                     //function retrieve(){
                     document.getElementById("torget").innerHTML = localStorage.getItem("translatorContent");
@@ -656,12 +651,49 @@
                         console.log("restored translatorContent " + translatorContent);
                     }
                 }
+
+
+                // back To Translators tab
+                $('#bs-example-navbar-collapse-2 a[href="#Translator"]').tab('show');
             }
 
         </script>
 
         <script>
 
+            // Copy the first translator name to the pop up modal
+
+            function  copyFirstRightsHolderName() {
+
+                rightsHolderArray = [];
+                console.log("copyFirstRightsHolderName rightsHolderArray cleared ", rightsHolderArray);
+
+                var fn = document.getElementById("rightsHoldersName0");
+                document.getElementById("firstRightsHolder0").value = fn.value;
+                Name = fn.value;
+                console.log("copyFirstRightsHolderName Name ", Name);
+                rightsHolderArray.push(Name);
+                console.log(" first entry in rightsHolderArray ", fn.value);
+
+
+                if (!localStorage.rightsAgreementContent === 0) {
+                    //function retrieve(){
+                    document.getElementById("rightsAgreementContracts").innerHTML = localStorage.getItem("rightsAgreementContent");
+                    console.log("copyFirstRightsHolderName localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("restored rightsAgreementContent " + rightsAgreementContent);
+                    }
+                }
+
+
+                // back To Translators tab
+                $('#bs-example-navbar-collapse-2 a[href="#Translator"]').tab('show');
+            }
+
+        </script>
+
+        <!--generateTranslatorTab-->
+        <script>
             function  generateTranslatorTab(indicator) {
 
                 if (indicator === 0) {
@@ -669,11 +701,13 @@
                     // if we have a final list of translators (more than one)
                     // we need to clear a possible existing tab
 
-                    $('#tn').empty(); // empty the div before fetching and adding new data
                     $('#tnc').empty(); // empty the div before fetching and adding new data
+                    $('#tn').empty();  // empty the div before fetching and adding new data
+
                 }
 
-
+                $('#tnc').empty(); // empty the div before fetching and adding new data
+                $('#tn').empty();  // empty the div before fetching and adding new data
 
                 console.log("generateTranslatorTab translatorArray " + translatorArray);
                 // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
@@ -701,11 +735,9 @@
                 }
 
                 rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
-
                 rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
 
                 $(rightsAgreementContractsNavBar).appendTo('#tn');
-
 
                 // The Tabs themselves
 
@@ -714,8 +746,6 @@
                 for (var i = 0; i < translatorArray.length; i++) {
 
                     var j = i + 1;
-
-
 
                     if (i === 0) {
 
@@ -727,28 +757,29 @@
 
                     }
 
+                    rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
 
-                    rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';  //  --container--
 
-                    //Upload a copy of the agreement with the translation rights holder
-
-                    rightsAgreementContractsNavContent += '<div class="col-md-10 agreement" style="margin-bottom: 10px">';
-                    rightsAgreementContractsNavContent += '<div  style="margin-bottom: 40px;margin-top: 30px"> <strong class="pull-left">Upload a copy of the agreement with  ' + translatorArray[i] + '</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>';
-                    rightsAgreementContractsNavContent += '<br/>';
-                    rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                    rightsAgreementContractsNavContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
+                    //Upload a copy of the CV
+                    console.log("processFirstTranslator generateTranslatorTab Upload a copy of the CV i " + i + " j " + j + " :: " + translatorArray[i]);
+                    rightsAgreementContractsNavContent += '<div class="col-md-8" style="margin-bottom: 20px">';
+                    rightsAgreementContractsNavContent += '<label for="label_translator' + j + '" class="control-label pull-left" >Upload a copy of ' + translatorArray[i] + '\'s CV:</label>';
+                    rightsAgreementContractsNavContent += '<br>';
+                    rightsAgreementContractsNavContent += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+                    rightsAgreementContractsNavContent += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
                     rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Agreement-' + j + '" id="agreement' + j + '">';
+                    rightsAgreementContractsNavContent += 'Select file ';
+                    rightsAgreementContractsNavContent += '<input multiple="" name="file" id="translator_cv' + j + '" type="file">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left" value=""/>';
-                    rightsAgreementContractsNavContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-10" 
-
+                    rightsAgreementContractsNavContent += '<input id="label_translator' + j + '" class="pull-left">';
+                    rightsAgreementContractsNavContent += '<br>';
+                    rightsAgreementContractsNavContent += '<br>';
+                    rightsAgreementContractsNavContent += '<input id="translator_cv_upload' + j + '" value="Translator_CV" name="destination" type="hidden">';
+                    rightsAgreementContractsNavContent += '</div>';
+                    rightsAgreementContractsNavContent += '</div>';
 
                     //Upload a copy of the contract with
-
                     rightsAgreementContractsNavContent += '<div class="col-md-9" style="margin-bottom: 10px">';
                     rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the contract with ' + translatorArray[i] + '</strong></div>';
                     rightsAgreementContractsNavContent += '<br/>';
@@ -763,42 +794,113 @@
                     rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                     rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
 
-
-                    //Upload form for addendum to the rights agreement
-
-                    rightsAgreementContractsNavContent += '<div class="col-md-12" style="margin-bottom: 10px">';
-                    rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the addendum to the rights agreement </strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div>';
-                    rightsAgreementContractsNavContent += '<br/>';
-                    rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                    rightsAgreementContractsNavContent += '<div class="input-group addendum"  style="margin-bottom: 40px;">';
-                    rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Addendum-' + j + '" id="addendum' + j + '">';
-                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                    rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_addendum' + j + '" class="pull-left"/>';
-                    rightsAgreementContractsNavContent += '<input type="hidden" value="Addendum" name="destination" id="addendum_upload' + j + '"/>';
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-12" 
-
                     rightsAgreementContractsNavContent += '</div  class="container EndwrapperContainer">'; // <!--container-->
                     rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+
+                }
+
+                //show translatorTabs if hidden
+                if ($(translatorTabs).css('display') === 'none' || $(translatorTabs).css("visibility") === "hidden") {
+                    $(translatorTabs).show();
                 }
 
                 $(rightsAgreementContractsNavContent).appendTo('#tnc');
 
             }
-
         </script>
 
+        <!--backToRightsAgreement-->
+        <script>
+            function backToRightsAgreement() {
+
+                alert("backToRightsAgreement");
+                console.log("backToRightsAgreement rightsHolderArray  ", rightsHolderArray);
+
+                var upload_number = 2;
+
+
+                // Get Content
+                var rightsAgreementContent = document.getElementById("rightsAgreementContracts").innerHTML;
+
+
+                // Store Content
+                localStorage.setItem("rightsAgreementContent", rightsAgreementContent);
+                console.log("backToRightsAgreement localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
+                if (!localStorage.rightsAgreementContent === 0) {
+                    console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent[i]);
+                    }
+//                    alert("backToTranslators false");
+//                    return false;
+                }
+
+                for (var i = 2; i <= counter; i++) {
+
+                    var nr = "name" + i;
+                    console.log("backToRightsAgreement nr ", nr);
+                    var item = document.getElementById(nr);
+                    itemValue = item.value;
+                    console.log("backToRightsAgreement itemValue ", itemValue);
+                    rightsHolderArray.push(itemValue);
+                    console.log("backToRightsAgreement next entry in translatorArray ", itemValue);
+                }
+
+                // Switch off "Add more translators"
+                $('#addAdditionalRightsHoldersModalDiv').toggle();
+
+                // Change Title from "Translation rights holder" to "Translation rights holder(s)"
+                document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holder(s)';
+
+                // Disable first Translation rights holder name input element
+                document.getElementById("rightsHoldersName0").disabled = 'true';
+
+                // Display all TranslatorrightsHolder input element each
+                for (var i = 1; i < rightsHolderArray.length; i++) {
+                    console.log("backToRightsAgreement rightsHolderArray " + rightsHolderArray[i]);
+                    var additionalTranslatorTag = '';
+
+                    additionalTranslatorTag += '<div class="form-group has-feedback">';
+                    additionalTranslatorTag += ' <input id="translatorrightsHolderName' + i;
+                    additionalTranslatorTag += 'type="text"  ';
+                    additionalTranslatorTag += 'class="form-control"';
+                    additionalTranslatorTag += 'name="translatorrightsHolderName' + i + '"';
+                    additionalTranslatorTag += 'value="' + rightsHolderArray[i] + '"';
+                    additionalTranslatorTag += 'disabled = ""';
+                    additionalTranslatorTag += '</div>';
+
+                    $(additionalTranslatorTag).appendTo('#addAddRightsHolders');
+                }
+
+
+                console.log("backToRightsAgreement #rightsHolderArray.val(rightsHolderArray) " + rightsHolderArray);
+                console.log(rightsHolderArray);
+                console.log("backToRightsAgreement #rightsHolderArray.length " + rightsHolderArray.length);
+                $("#rightsHolderArray").val(rightsHolderArray);
+
+                // back To RightsAgreement tab
+                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
+
+                // if we have a final list of translators (more than one)
+                // we need to clear a possible existing tab first
+//                generateTranslatorTab(0);
+            }
+        </script>
+
+        <!--backToTranslators-->
         <script>
             function backToTranslators() {
 
-//                alert("backToTranslators");
+                alert("backToTranslators");
 //                translatorArray = [];
                 console.log("backToTranslators translatorArray  ", translatorArray);
                 var upload_number = 2;
+
+
                 // Get Content
                 var translatorContent = document.getElementById("torget").innerHTML;
+
+
                 // Store Content
                 localStorage.setItem("translatorContent", translatorContent);
                 console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
@@ -810,14 +912,19 @@
 //                    alert("backToTranslators false");
 //                    return false;
                 }
+
+
                 for (var i = 2; i <= counter; i++) {
 
                     var nr = "name" + i;
+                    console.log("backToTranslators nr ", nr);
                     var item = document.getElementById(nr);
                     itemValue = item.value;
+                    console.log("backToTranslators itemValue ", itemValue);
                     translatorArray.push(itemValue);
                     console.log("backToTranslators next entry in translatorArray ", itemValue);
                     var moreUploadTag = '';
+                    moreUploadTag += '<h1> backToTranslators moreUploadTag </h1>';
                     moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
                     moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
                     moreUploadTag += '<br>';
@@ -838,9 +945,6 @@
                     upload_number++;
                 }
 
-                // back To Translators tab
-                $('#bs-example-navbar-collapse-1 a[href="#Translator"]').tab('show');
-
                 // Switch off "Add more translators"
                 $('#addTranslatorModalDiv').toggle();
 
@@ -854,13 +958,14 @@
                 for (var i = 1; i < translatorArray.length; i++) {
                     console.log("backToTranslators translatorArray " + translatorArray[i]);
                     var additionalTranslatorTag = '';
+//                     additionalTranslatorTag += '<h1> backToTranslators additionalTranslatorTag </h1>';
                     additionalTranslatorTag += '<div class="form-group has-feedback">';
                     additionalTranslatorTag += ' <input id="translatorName"  ';
                     additionalTranslatorTag += 'type="text"  ';
                     additionalTranslatorTag += 'class="form-control"';
                     additionalTranslatorTag += 'name="translatorName"';
                     additionalTranslatorTag += 'value="' + translatorArray[i] + '"';
-                    additionalTranslatorTag += 'disabled = true';
+                    additionalTranslatorTag += 'disabled = ""';
                     additionalTranslatorTag += '</div>';
                     $(additionalTranslatorTag).appendTo('#addTransl');
                 }
@@ -870,6 +975,9 @@
                 console.log(translatorArray);
                 console.log("backToTranslators #translatorArray.length " + translatorArray.length);
                 $("#translatorArray").val(translatorArray);
+
+                // back To Translators tab
+                $('#bs-example-navbar-collapse-2 a[href="#Translator"]').tab('show');
 
                 // if we have a final list of translators (more than one)
                 // we need to clear a possible existing tab first
@@ -910,6 +1018,7 @@
 
                     var moreUploadTag = '';
 
+                    moreUploadTag += '<h1> backToMisc moreUploadTag </h1>';
                     moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
                     moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
                     moreUploadTag += '<br>';
@@ -1013,6 +1122,7 @@
         <script>
 
             function myFunction() {
+                alert("myfunction");
                 translatorName876 = "";
                 var x = document.getElementById("translatorName");
                 console.log("document.getElementById(translatorName) ", x);
@@ -1021,38 +1131,54 @@
                 localStorage.setItem('translatorName876', tester);
                 localStorage.setItem('translatorName8', translatorName876);
                 var tripper = localStorage.getItem("translatorName876");
-                document.getElementById("123").innerHTML = tripper;
-                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
-//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-//                console.log("tester   ", tester);
-//                console.log("tripper   ", tripper);
+//                document.getElementById("123").innerHTML = tripper;
+//                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
+////                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+////                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+////                console.log("tester   ", tester);
+////                console.log("tripper   ", tripper);
 
                 $("#translatorArray").val(translatorName876);
-                copyFirstTranslatorName();
+
+
+                translatorArray = [];
+                console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
+
+                var fn = document.getElementById("translatorName");
+                document.getElementById("first0").value = fn.value;
+                Name = fn.value;
+                console.log("copyFirstTranslatorName Name ", Name);
+                translatorArray.push(Name);
+                console.log(" first entry in translatorArray ", fn.value);
+
+
+
+//                copyFirstTranslatorName();
                 generateTranslatorTab(1);
             }
 
         </script>
 
+        <!--https://stackoverflow.com/questions/3392493/adjust-width-of-input-field-to-its-input-->
         <script>
+            $(document).ready(function () {
+                
+                var input = document.querySelector('input'); // get the input element
+                alert(input);
+                input.addEventListener('input', resizeInput); // bind the "resizeInput" callback on "input" event
+                resizeInput.call(input); // immediately call the function
 
-            function myFunction2() {
-
-
-                copyFirstRow2();
-
-            }
-
+                function resizeInput() {
+                    this.style.width = this.value.length + "ch";
+                }
+            });
         </script>
 
         <script>
-
             $(document).ready(function () {
-
-                var tripper = localStorage.getItem("translatorName876");
-                document.getElementById("123").innerHTML = tripper;
-                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
+//                var tripper = localStorage.getItem("translatorName");
+//                document.getElementById("123").innerHTML = tripper;
+//                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
 //                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
 //                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
 //                console.log("tripper 1  ", tripper);
@@ -1342,7 +1468,7 @@
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
                             <div style="margin: 20px; text-align: center">
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons zoom" onclick="showInfoModal()();">info_outline</i></a>
+                                <a href="#" data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons zoom" onclick="showInfoModal()();">info</i></a>
                                 <a href="#" data-toggle="tooltip" data-placement="top" title="Notes" ><i class="material-icons zoom" onclick="showNotesModal()();">note</i></a>                           
                             </div>
 
@@ -1571,6 +1697,7 @@
 
                                         </div> <!--row-->
                                         <input type="hidden" id="translatorArray" name="translatorArray" >
+                                        <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
                                         <!--keep in one line otherwise placeholder doesn't show-->
                                         <label class="pull-left">Additional contact information (where applicable)</label>
                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
@@ -1620,7 +1747,7 @@
                                                                        class="form-control"                                
                                                                        name="AuthorLastName"                                
                                                                        value=""    
-                                                                       onblur="myFunction2();"
+                                                                       onblur="copyFirstRow2();"
                                                                        placeholder="Author Last Name"
                                                                        >                                                                
                                                             </div>
@@ -1790,32 +1917,71 @@
                                         Rights Agreement & Contracts
                                     </p>
 
-                                    <div class="container-fluid">
-                                        <!--                                        <div class="row"  style="display: block;
-                                                                                     margin-right: auto;
-                                                                                     margin-left: auto;">-->
+                                    <div class="container-fluid"  id="rightsAgreementContracts">
 
-                                        <nav class="navbar navbar-default" >
-                                            <div class="container-fluid"  style="background-color: #d9d1d1">
-                                                <!-- Brand and toggle get grouped for better mobile display -->
-                                                <div class="navbar-header">
-                                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
-                                                        <span class="sr-only">Toggle navigation</span>
-                                                        <span class="icon-bar"></span>
-                                                        <span class="icon-bar"></span>
-                                                        <span class="icon-bar"></span>
-                                                    </button>
-                                                    <!--<a class="navbar-brand" href="#">Brand</a>-->
+                                        <div class="tab-content">
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <!--Upload a copy of the agreement with the translation rights holder-->
+                                                <div class="col-md-10 agreement" style="margin-bottom: 1px">
+                                                    <div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the agreement with the translation rights holder</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>
+                                                    <br/>
+                                                    <div class="margin-bottom: 4px"></div>
+                                                    <div class="input-group agreement"  style="margin-bottom: 10px;">
+                                                        <label class="btn btn-default btn-file pull-left">
+                                                            Select file <input type="file" name="Agreement-1" id="agreement1">
+                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                        </label>
+                                                        <input id="label_agreement1" class="pull-left" value=""/>
+                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
+                                                    </div> 
+                                                </div> 
+                                            </div> <!-- row  -->
+
+                                            <!--Name of translation rights holder-->
+                                            <div class="row" style="margin-bottom: 10px;">                                               
+                                                <div class="col-sm-6">      
+                                                    <div class="form-group has-feedback">
+                                                        <label for="rightsHoldersName0" class="pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
+                                                        <input id="rightsHoldersName0"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="rightsHoldersName"                                
+                                                               value=""    
+                                                               onblur="myFunction();"
+                                                               placeholder="Translation rights holder"
+                                                               >
+                                                    </div>
+
+                                                    <div id="addAddRightsHolders"></div>
                                                 </div>
-                                                <!-- Collect the nav links, forms, and other content for toggling -->
-                                                <div  id="tn">                                                        
-                                                </div>  <!-- tn -->
-                                                <div class="tab-content" id="tnc">
-                                                    <!--                                                    <p>Please fill in Translator Details first!!</p>-->
-                                                </div>  <!-- tnc -->
-                                            </div>  <!-- <div class="container-fluid"  -->
-                                        </nav>  <!-- <nav class="navbar -->
-                                        <!--</div>  row -->
+
+
+                                                <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addAdditionalRightsHoldersModalDiv">  
+                                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                       data-toggle="modal" 
+                                                       data-target="#addAdditionalRightsHoldersModal"
+                                                       onclick="copyFirstRightsHolderName();"
+                                                       >Add more Translation rights holders</a>
+                                                </div>
+                                            </div> <!-- row  -->
+
+                                            <div class="row" style="margin-bottom: 10px;">
+                                                <!--Upload form for addendum to the rights agreement-->
+                                                <div class="col-md-12" style="margin-bottom: 10px">
+                                                    <div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the addendum to the rights agreement </strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div>
+                                                    <br/>
+                                                    <div class="margin-bottom: 40px"></div>
+                                                    <div class="input-group addendum"  style="margin-bottom: 40px;">
+                                                        <label class="btn btn-default btn-file pull-left">
+                                                            Select file <input type="file"  name="Addendum-1" id="addendum1">
+                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                        </label>
+                                                        <input id="label_addendum1" class="pull-left"/>
+                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/>
+                                                    </div> 
+                                                </div> 
+                                            </div> <!-- row  -->
+                                        </div> <!--tab-content-->
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Rights" -->
 
@@ -1909,11 +2075,37 @@
                                 <!-- Translator's Details -->
 
                                 <div class="tab-pane" id="Translator"> 
-                                    <p class="header1" style="margin-bottom: 40px">
+                                    <p class="header1" style="margin-bottom: 5px">
                                         Translator Details
                                     </p>
 
                                     <div class="container-fluid" id="torget">
+
+                                        <div class="row" style="margin-bottom: 1px">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
+
+                                                        <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee</label>                                                                        
+                                                        <div class="input-group pull-left" style="margin-bottom: 20px">
+                                                            <label class="input-group-addon" for="translatorFee">
+                                                                <span class="glyphicon glyphicon-euro"></span>                                     
+                                                            </label>
+                                                            <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
+                                                        <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
+                                                        <div class="form-group">
+                                                            <!--keep in one line otherwise placeholder doesn't show-->
+                                                            <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>  <!--panel--body-->
+                                            </div> <!--panel-default-->
+                                        </div> <!-- row -->
+
 
                                         <div class="row" style="margin-bottom: 10px">
                                             <div class="panel panel-default">
@@ -1944,65 +2136,32 @@
                                                            onclick="copyFirstTranslatorName();"
                                                            >Add more translators</a>
                                                     </div>                                                    
-
-
-                                                </div>
-                                            </div>
+                                                </div><!--panel-body-->
+                                            </div><!--panel-default-->
                                         </div> <!--row-->
 
                                         <div class="row" style="margin-bottom: 10px">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
 
-                                                        <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee</label>                                                                        
-                                                        <div class="input-group pull-left" style="margin-bottom: 20px">
-                                                            <label class="input-group-addon" for="translatorFee">
-                                                                <span class="glyphicon glyphicon-euro"></span>                                     
-                                                            </label>
-                                                            <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                            <div class="container-fluid" id="translatorTabs" style="display: none">
+                                                <nav class="navbar navbar-default" >
+                                                    <div class="container-fluid"  style="background-color: #d9d1d1">
+                                                        <div class="navbar-header">
+                                                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                                                                <span class="sr-only">Toggle navigation</span>
+                                                                <span class="icon-bar"></span>
+                                                                <span class="icon-bar"></span>
+                                                                <span class="icon-bar"></span>
+                                                            </button>
                                                         </div>
-                                                    </div>
+                                                        <div  id="tn">
+                                                        </div>  <!-- tn -->
+                                                        <div class="tab-content" id="tnc">
+                                                        </div>  <!-- tnc -->
+                                                    </div>  <!-- <div class="container-fluid"  -->
+                                                </nav>  <!-- <nav class="navbar -->
+                                            </div> <!-- container-fluid  -->
 
-                                                    <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
-                                                        <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
-                                                        <div class="form-group">
-                                                            <!--keep in one line otherwise placeholder doesn't show-->
-                                                            <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>  <!--panel--body-->
-                                            </div> <!--panel-default-->
-                                        </div> <!-- row -->
-
-                                        <div class="row">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <div class="col-md-8"   style="margin-bottom: 20px">
-                                                        <label for="translator_cv0" class="control-label pull-left" id="123"></label>
-                                                        <br/>
-                                                        <small class="pull-left"   style="margin-bottom: 10px">This should include a list of previously published literary translations</small> 
-                                                        <div class="input-group translator_cv pull-left"  style="margin-bottom: 40px;">
-                                                            <label class="btn btn-default btn-file pull-left">
-                                                                Select file 
-                                                                <input multiple="" type="file"  name="Translator_CV-1" id="translator_cv0" >
-                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                            </label>
-                                                            <input id="label_translator0" class="pull-left"/>
-                                                            <br/>
-                                                            <br/>          
-                                                            <input type="hidden" name="userID" value="${userID}">
-                                                            <input type="hidden" name="publisherID" value="${publisherID}">
-                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                            <!--Destination:-->
-                                                            <input type="hidden" id="translator_cv_upload0" value="Translator_CV" name="destination" />                                          
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="userID" id="translatorName123" value=''>
-                                                    <div id="additionalTranslator"></div>
-                                                </div>
-                                            </div>
-                                        </div> 
+                                        </div> <!--row-->
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Translator" -->
 
@@ -2241,6 +2400,38 @@
                                 </div> <!--modal dialog-->
                             </div> <!--modal fade-->
 
+
+                            <div class="modal fade" id="addAdditionalRightsHoldersModal" tabindex="-1" role="dialog" aria-labelledby="addAdditionalRightsHoldersModalLabel">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #c3bcbc">
+                                            <button type="button" class="close" data-dismiss="modal"  onclick="backToRightsAgreement();"  aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="addAdditionalRightsHoldersModalLabel">add more Translation rights holder</h4>
+                                        </div>
+
+
+                                        <div class="modal-body" style="background-color: #d9d1d1">
+
+                                            <div class="row" style="margin-bottom: 10px">
+                                                <div class='col-sm-12'>
+
+                                                    <div  id="RightsHolderGeneratedForm" class="input-group" style='margin-bottom:2px'>
+                                                        1. Rights holder <input type="text" id="firstRightsHolder0" value="Name" style='margin-bottom:2px'>                                                         
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                                            <button id="addAdditionalRightsHolders" type="button" value="additional rights holders"  class="btn btn-group-sm  button teal pull-left">Add additional rights holders</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToRightsAgreement();">Done</button>
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div> <!--modal footer -->
+                                    </div> <!--modal content-->          
+                                </div> <!--modal dialog-->
+                            </div> <!--modal fade-->
+
+
                             <div class="modal fade" id="addAuthorModal" tabindex="-1" role="dialog" aria-labelledby="addAuthorModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -2394,12 +2585,12 @@
                     <input type="hidden" name="userID" value="${userID}">
                     <input type="hidden" name="publisherID" value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
-                    <input type="text" name="publisherName" value="${companyDetails.Company}">
+                    <input type="hidden" name="publisherName" value="${companyDetails.Company}">
 
                     <div class="container col-sm-12" style="margin-bottom: 40px">
-                        <input type="submit" id="NewApplication" name="New Application"  class = "btn btn-default btn-sm" value="New Application" />
+                        <input type="submit" id="NewApplication" name="New Application"  class = "btn btn-default btn-sm active" value="New Application" />
                         <input type="submit" id="ListOpenApplications" name="List Open Applications"  class = "btn btn-default btn-sm" value="List Open Applications" />
-                        <input type="submit" id="ListPendingApplications" name="List Pending Applications"  class = "btn btn-default btn-sm active" value="List Pending Applications" />
+                        <input type="submit" id="ListPendingApplications" name="List Pending Applications"  class = "btn btn-default btn-sm" value="List Pending Applications" />
                         <input type="submit" id="ListClosedApplications" name="List Closed Applications"  class = "btn btn-default btn-sm" value="List Closed Applications" />
                     </div>
                 </form>
@@ -2435,22 +2626,23 @@
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
+                                                var $imageupload = $('.imageupload');
+                                                $imageupload.imageupload();
 
-            function pressCuttingsModal() {
-                $("#pressCuttingsModal").modal("show");
-            }
+                                                function pressCuttingsModal() {
+                                                    $("#pressCuttingsModal").modal("show");
+                                                }
 
-            var pressCuttingsUpload = $('.pressCuttingsUpload');
-            pressCuttingsUpload.imageupload();
+                                                var pressCuttingsUpload = $('.pressCuttingsUpload');
+                                                pressCuttingsUpload.imageupload();
 
-            function  showInfoModal() {
-                $("#showInfoModal").modal("show");
-            }
-            function  showNotesModal() {
-                $("#showNotesModal").modal("show");
-            }
+                                                function  showInfoModal() {
+                                                    $("#showInfoModal").modal("show");
+                                                }
+                                                function  showNotesModal() {
+                                                    $("#showNotesModal").modal("show");
+                                                }
+                                                ;
         </script>
     </body>
 </html>

@@ -62,48 +62,30 @@ and open the template in the editor.
     </head>
     <body>
         <div>
-            <div class="container" >
-
-
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#camera">Open Modal</button>
-                <div id="camera" tabindex="-1" role="dialog" aria-labelledby="cameraLabel" aria-hidden="true" class="modal fader">
-                    <div class="modal-dialog col-sm-12">
-                        <div class="modal-content" style="margin-left: 10px; margin-top: 10px;">
-                            <div class="modal-header">
-                                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">x</button>
-                                <h4 id="cameraLabel" class="modal-title">Upload a photo of yourself</h4>
-
-
-                            </div>
-                            <div class="modal-body">
-                                <form action="/overview/setprofileimage" method="POST" enctype="multipart/form-data" id="coords">
-                                    <div class="form-group"> <span id="err_coords" style="color: #ff0000; float: left; text-align: center; width: 100%;"></span>
-
-                                    </div>
-                                    <br>
-                                    <input type='file' id="imgAvatar" name="image" onchange="readURLAvatar(this, 'avatar');" />
-                                    <img id="avatar" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Dell_Logo.png/601px-Dell_Logo.png" alt="your image" />
-                                    <div class="inline-labels">
-                                        <input type="hidden" id="x" name="crop[x]" />
-                                        <input type="hidden" id="y" name="crop[y]" />
-                                        <input type="hidden" id="w" name="crop[w]" />
-                                        <input type="hidden" id="h" name="crop[h]" />
-                                    </div>
-                                    <br>
-                                    <input type="hidden" id="uplloadAvatar" name="uplloadAvatar" value="" />
-                                    <button type="button" class="btn btn-danger btn-sm" onclick="checkCoordsImg(1);">Crop & Upload</button>
-                                    <button type="button" class="btn btn-success btn-sm" onclick="checkCoordsImg(2);">Upload</button>
-                                </form>
-                                <br>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<div id="addAddRightsHolders">
+    <div class="col-sm-6"> 
+        <div class="form-group has-feedback"> 
+            <input 
+                id="translatorrightsHolderName1" 
+                type="text" 
+                class="form-control" 
+                name="translatorrightsHolderName" 
+                value="Norman Miller" 
+                disabled="">
         </div>
+        </div>
+    </div>
+    <div class="col-sm-6"> 
+        <div class="form-group has-feedback"> 
+            <input id="translatorrightsHolderName" 
+                   type="text" 
+                   class="form-control" 
+                   name="translatorrightsHolderName" 
+                   value="Michael Meyer" 
+                   disabled="">
+        </div>
+        </div>
+    </div>
+
     </body>
 </html>
