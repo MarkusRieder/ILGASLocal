@@ -78,6 +78,8 @@ public class LibraryDAO {
             ps1.setString(18, library.getSeries());
 
             ps1.executeUpdate();
+            
+             System.out.println("LibraryDAO  insertBook  " + ps1.toString());
 
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
             res = ps2.executeQuery();
@@ -95,7 +97,6 @@ public class LibraryDAO {
 
         } catch (ClassNotFoundException | SQLException e) {
             DBConn.close(conn, ps1, ps2, res);
-            e.printStackTrace();
             throw new DBException("4 Excepion while accessing database");
         }
 

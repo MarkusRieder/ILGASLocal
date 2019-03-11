@@ -11,6 +11,8 @@
 
 <%
     String uname = request.getParameter("uname");
+    
+      System.out.println("checkusername uname: " + uname);
 
     Class.forName("com.mysql.jdbc.Driver");
     Connection con = DriverManager.getConnection("jdbc:mysql://www.literatureirelandgrantapplication.com:3306/ILGAS", "markus", "ankh573");

@@ -12,7 +12,7 @@ import ie.irishliterature.dao.openApplicationDAO;
 import static ie.irishliterature.dao.openApplicationDAO.updateApplication;
 import static ie.irishliterature.dao.pendingApplicationDAO.updateLibrary;
 import ie.irishliterature.db.DBException;
-import ie.irishliterature.model.ExpertReader1;
+import ie.irishliterature.model.ExpertReader;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.Library;
 import ie.irishliterature.model.Publisher;
@@ -170,6 +170,8 @@ public class OpenApplicationServlet extends HttpServlet {
 
     private String[] translatorArrayContent;
 
+    private String[] rightsHolderArrayContent;
+
     private String[] authorArray;  //Array of Author/Title
 
     private String[] languageArray;
@@ -256,11 +258,11 @@ public class OpenApplicationServlet extends HttpServlet {
         //  String name = request.getParameter("name");
         //  String value = request.getParameter("value");
         String task = String.valueOf(request.getSession().getAttribute("task"));
-        
 
-        System.out.println("GrantApplicationServlet :: ");
+        System.out.println("OpenApplicationServlet :: ");
         System.out.println("HttpSession session :: sess: " + task);
         System.out.println("Here we are >>>>>>>>>.   Open Applications :: OpenApplicationServlet");
+        task = "openApplications";
         switch (task) {
             case "openApplications":
                 System.out.println("openApplicationsn :: ");
@@ -268,6 +270,7 @@ public class OpenApplicationServlet extends HttpServlet {
                 //set Status
                 Status = "pending";
                 int translatorArrayLength = 0;
+                int rightsHolderArrayLength = 0;
                 int languageArrayLength = 0;
                 //set Timestamp and format
                 String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
@@ -454,6 +457,7 @@ public class OpenApplicationServlet extends HttpServlet {
                                     break;
                                 case "dateCopiesWereSent":
                                     dateCopiesWereSent = fieldvalue;
+                                    System.out.println("dateCopiesWereSent::" + dateCopiesWereSent + ";");
                                     break;
                                 case "TCACCEPTED":
                                     TCACCEPTED = fieldvalue;
@@ -498,18 +502,18 @@ public class OpenApplicationServlet extends HttpServlet {
                                     break;
                                 case "authorArray":
                                     authorArray = fieldvalue.split(","); //split string by ,
-                                    //                System.out.println("authorArraylength  GrantApplicationServlet:: " + authorArray.length);
+                                    //                System.out.println("authorArraylength  OpenApplicationServlet:: " + authorArray.length);
                                     for (String individualValue : authorArray) {
-                                        //                    System.out.println("authorArray  GrantApplicationServlet:: " + individualValue);
+                                        //                    System.out.println("authorArray  OpenApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "AuthorFirstName":
                                     AuthorFirstName = fieldvalue;
-                                    //                 System.out.println("AuthorFirstName GrantApplicationServlet:: " + AuthorFirstName);
+                                    //                 System.out.println("AuthorFirstName OpenApplicationServlet:: " + AuthorFirstName);
                                     break;
                                 case "AuthorLastName":
                                     AuthorLastName = fieldvalue;
-                                    //              System.out.println("AuthorLastName GrantApplicationServlet:: " + AuthorLastName);
+                                    //              System.out.println("AuthorLastName OpenApplicationServlet:: " + AuthorLastName);
                                     break;
                                 case "bookTitle":
                                     Title = fieldvalue;
@@ -551,13 +555,22 @@ public class OpenApplicationServlet extends HttpServlet {
                                     translatorArrayLength = translatorArrayContent.length;
                                     System.out.println("translatorArray >>>> translatorArray.length " + translatorArrayContent.length);
                                     for (String individualValue : translatorArrayContent) {
-                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
+                                        System.out.println("translatorArray  OpenApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
+                                    }
+                                    break;
+                                case "rightsHolderArray":
+                                    System.out.println("rightsHolderArray >>>> HERE ");
+                                    rightsHolderArrayContent = fieldvalue.split(","); //split string by ","
+                                    rightsHolderArrayLength = rightsHolderArrayContent.length;
+                                    System.out.println("rightsHolderArray >>>> rightsHolderArray.length " + rightsHolderArrayContent.length);
+                                    for (String individualValue : rightsHolderArrayContent) {
+                                        System.out.println("rightsHolderArray  OpenApplicationServlet:: " + individualValue + " ----------> rightsHolderArrayLength::  " + rightsHolderArrayLength);
                                     }
                                     break;
                                 case "languages":
                                     languageArray = fieldvalue.split(","); //split string by ,
                                     for (String individualValue : languageArray) {
-                                        //                  System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+                                        //                  System.out.println("languageArray  OpenApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "physicalDescription":
@@ -601,7 +614,7 @@ public class OpenApplicationServlet extends HttpServlet {
                                     languageArray = fieldvalue.split(","); //split string by ,
                                     languageArrayLength = languageArray.length;
                                     for (String individualValue : languageArray) {
-                                        System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+                                        System.out.println("languageArray  OpenApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "appForeignCountry":
@@ -812,7 +825,14 @@ public class OpenApplicationServlet extends HttpServlet {
                      * Original Work & Sample Translation
                      */
                     application.setCopiesSent(copiesSent);
-                    application.setDateCopiesWereSent(convertDate(dateCopiesWereSent));
+                    if (!"".equals(dateCopiesWereSent)) {
+                        System.out.println("!\"\".equals(dateCopiesWereSent)");
+                        application.setDateCopiesWereSent(convertDate(dateCopiesWereSent));
+                    }
+                    if (dateCopiesWereSent != null) {
+                        System.out.println("!= null");
+                        application.setDateCopiesWereSent(convertDate(dateCopiesWereSent));
+                    }
                     application.setTranslatorNotes(translatorNotes);
                     application.setBookNotes(bookNotes);
                     application.setTC_ACCEPTED(TC_ACCEPTED);
@@ -839,20 +859,9 @@ public class OpenApplicationServlet extends HttpServlet {
                         System.out.println("ApplicationNumber ---->> " + ApplicationNumber);
                     }
 
-                } catch (ParseException ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (FileUploadException ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (DBException ex) {
+                } catch (ParseException | FileUploadException | SQLException | DBException ex) {
                     Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (DBException ex) {
-//                    Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                }
 
                 ////////////////////////////////////////////////////////////
                 //  Process Publisher
@@ -904,7 +913,21 @@ public class OpenApplicationServlet extends HttpServlet {
                     try {
                         updatePublisher(publisher, publisherID);
                     } catch (DBException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                /*
+                 * Process translation rights holder
+                 */
+                System.out.println("Process rightsHolderArrayContent ");
+                System.out.println("rightsHolderArrayContent " + rightsHolderArrayContent.length);
+                if (rightsHolderArrayContent.length > 0) {
+                    System.out.println("rightsHolderArrayContent " + Arrays.toString(rightsHolderArrayContent));
+                    try {
+                        openApplicationDAO.updateRightsHolderArrayContent(ReferenceNumber, rightsHolderArrayContent);
+                    } catch (DBException ex) {
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -935,17 +958,34 @@ public class OpenApplicationServlet extends HttpServlet {
 
                     String[] subDirs = filesToBeMoved.get(i).split("(?<!^)/");
                     System.out.println("ffilesToBeMoved.get(i) " + filesToBeMoved.get(i));
-                    String decider = subDirs[6];
 
+                    for (int b = 0; b < subDirs.length; b++) {
+                        System.out.println("subDirs [" + b + "]  " + subDirs[b]);
+                    }
+                    String decider = subDirs[8];
+                    System.out.println("decider " + subDirs[8]);
                     switch (decider) {
 
                         case "Agreement":
                         case "Contract":
                         case "Addendum":
                         case "Translator_CV":
-                            String subDirectory = subDirs[6];  // Addendum
-                            String subNameDirectory = subDirs[7];  // Translator Name2
-                            moveFileName = subDirs[8];  // addendum to the rights agreement 2.docx 
+
+                            //subDirs [0]  /home]]
+                            //subDirs [1]  glassfish]]
+                            //subDirs [2]  glassfish]]
+                            //subDirs [3]  domains]]
+                            //subDirs [4]  domain1]]
+                            //subDirs [5]  tempDir]]
+                            //subDirs [6]  2019]]
+                            //subDirs [7]  Discworld Publishing]]
+                            //subDirs [8]  Contract]]
+                            //subDirs [9]  Isabel Reid]]
+                            //subDirs [10]  contract with the translator.docx]]
+                            //[decider Contract]]
+                            String subDirectory = subDirs[8];  // Addendum
+                            String subNameDirectory = subDirs[9];  // Translator Name2
+                            moveFileName = subDirs[10];  // addendum to the rights agreement 2.docx 
 
                             destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
                                     + ApplicationNumber + File.separator + subDirectory + File.separator + subNameDirectory + File.separator;
@@ -961,8 +1001,19 @@ public class OpenApplicationServlet extends HttpServlet {
 
                         case "Original":
                         case "TranslationSample":
-                            String Directory = subDirs[6];      // TranslationSample
-                            moveFileName = subDirs[7];      // translation sample.docx
+
+                            //subDirs [0]  /home]]
+                            //subDirs [1]  glassfish]]
+                            //subDirs [2]  glassfish]]
+                            //subDirs [3]  domains]]
+                            //subDirs [4]  domain1]]
+                            //subDirs [5]  tempDir]]
+                            //subDirs [6]  2019]]
+                            //subDirs [7]  Discworld Publishing]]
+                            //subDirs [8]  TranslationSample]]
+                            //subDirs [9]  TranslationSample.docx]]
+                            String Directory = subDirs[8];      // TranslationSample
+                            moveFileName = subDirs[9];      // translation sample.docx
                             destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
                                     + ApplicationNumber + File.separator + Directory + File.separator;
                             System.out.println("filesToBeMoved--Directory--->>>> " + Directory);
@@ -1001,7 +1052,7 @@ public class OpenApplicationServlet extends HttpServlet {
                      */
                     System.out.println("####################### sending files to tables ##################################################");
 
-
+System.out.println("####################### longArrayList ##################################################");
                     /*
                      * loop through the Translators and insert each into
                      * TranslatorTrack
@@ -1012,11 +1063,18 @@ public class OpenApplicationServlet extends HttpServlet {
 
                         String[] elements = longArrayList.get(i).split("(?<!^)/");
 
+                        System.out.println("longArrayList");
+                        for (int b = 0; b < elements.length; b++) {
+                            System.out.println("elements [" + b + "]  " + elements[b]);
+                        }
+
+                        System.out.println("longArrayList decider " + elements[10]);
+
                         String moveFile = longArrayList.get(i);
-                        String decider = elements[7];
-                        translatorName = elements[8];
-                        String moveFileName = elements[9];
-                        String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
+                        String decider = elements[9];
+                        translatorName = elements[10];
+                        String moveFileName = elements[11];
+                        String moveFileNameReplaced = moveFile.replace("/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents");
 
                         /*
                          * moveFile = the whole path including the file name
@@ -1067,7 +1125,7 @@ public class OpenApplicationServlet extends HttpServlet {
                             } // switch (decider)
 
                         } catch (DBException ex) {
-                            Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                     }
@@ -1078,38 +1136,47 @@ public class OpenApplicationServlet extends HttpServlet {
 //                            "moveFileName " + moveFileName + "moveFileNameReplaced " + moveFileNameReplaced);
                 }  // end else
 
-                // Process Original TranslationSample
+                System.out.println("####################### shortArrayList ##################################################");
+                
+                /*
+                 * Process Original TranslationSample
+                 */
                 for (int i = 0; i < shortArrayList.size(); i++) {
                     System.out.println("shortArrayList---i:[" + i + "]-->>>> " + shortArrayList.get(i));
 
                     String[] elements = shortArrayList.get(i).split("(?<!^)/");
+
+                    System.out.println("shortArrayList");
+                    for (int b = 0; b < elements.length; b++) {
+                        System.out.println("elements [" + b + "]  " + elements[b]);
+                    }
 
                     String AppNumber = Integer.toString(ApplicationNumber);   // '195/2018' ---> 195
 
 //                    for (int l = 0; l < elements.length; l++) {
                     try {
 //                            System.out.println("elements---i:[" + l + "]-->>>> " + elements[l]);
-
+                        System.out.println("shortArrayList decider " + elements[10]);
                         String moveFile = shortArrayList.get(i);
-                        String decider = elements[7];      // Original
-                        String moveFileName = elements[8]; // copy of original work.docx
-                        String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
+                        String decider = elements[10];      // Original
+                        String moveFileName = elements[11]; // copy of original work.docx
+                        String moveFileNameReplaced = moveFile.replace("/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents");
 
                         switch (decider) {
 
                             case "Original":
-                                System.out.println("insertOriginal:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                System.out.println("insertOriginal:: shortArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
                                 GrantApplicationDAO.insertOriginal(AppNumber, moveFileName, moveFileNameReplaced);
 
                                 break;
                             case "TranslationSample":
-                                System.out.println("insertTranslationSample:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
+                                System.out.println("insertTranslationSample:: shortArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile);
                                 GrantApplicationDAO.insertTranslationSample(AppNumber, moveFileName, moveFileNameReplaced);
                                 break;
 
                         } // switch (decider)
                     } catch (DBException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
 //                    }
                 }
@@ -1139,7 +1206,7 @@ public class OpenApplicationServlet extends HttpServlet {
                     try {
                         boolean succ = updateLibrary(library, referenceNumber);
                     } catch (DBException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -1154,25 +1221,25 @@ public class OpenApplicationServlet extends HttpServlet {
 
             case "New Applications":
                 System.out.println("New Applications :: ");
-                System.out.println("task: GrantApplicationServlet:: 1 " + task);
+                System.out.println("task: OpenApplicationServlet:: 1 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/newApplications.jsp").forward(request, response);
                 break;
 
             case "Open Applications":
                 System.out.println("Open Applications :: ");
-                System.out.println("task: GrantApplicationServlet:: 2 " + task);
+                System.out.println("task: OpenApplicationServlet:: 2 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/openApplications.jsp").forward(request, response);
                 break;
 
             case "Pending Applications":
                 System.out.println("Pending Applications :: ");
-                System.out.println("task: GrantApplicationServlet:: 3 " + task);
+                System.out.println("task: OpenApplicationServlet:: 3 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/pendingApplications.jsp").forward(request, response);
                 break;
 
             case "Closed Applications":
                 System.out.println("Closed Applications :: ");
-                System.out.println("task: GrantApplicationServlet:: 4 " + task);
+                System.out.println("task: OpenApplicationServlet:: 4 " + task);
                 request.getRequestDispatcher("/WEB-INF/views/closedApplications.jsp").forward(request, response);
                 break;
 
@@ -1193,7 +1260,7 @@ public class OpenApplicationServlet extends HttpServlet {
                     fileAttachment = getAttachments(newAssignedReferenceNumber);
 
                 } catch (DBException ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
                 String originalPath;
@@ -1204,7 +1271,7 @@ public class OpenApplicationServlet extends HttpServlet {
                 ////////////////////////////////////////////////////////////
                 //  Process Application - INSERT new ExpertReader1
                 ////////////////////////////////////////////////////////////
-                ExpertReader1 expertReader = new ExpertReader1();
+                ExpertReader expertReader = new ExpertReader();
 
                 expertReader.setExpertReaderUserID(expertReaderUserID);
                 expertReader.setExpertReaderName(expertReaderName);
@@ -1240,12 +1307,12 @@ public class OpenApplicationServlet extends HttpServlet {
                                 MailUtil.sendEmailWithAttachmentExpertReader(expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate);
 
                             } catch (MessagingException ex) {
-                                Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
 
                     } catch (DBException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 
@@ -1314,7 +1381,7 @@ public class OpenApplicationServlet extends HttpServlet {
                     try {
                         items = upload.parseRequest(request);
                     } catch (FileUploadException ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                     for (FileItem item : items) {
@@ -1478,18 +1545,18 @@ public class OpenApplicationServlet extends HttpServlet {
                                     break;
                                 case "authorArray":
                                     authorArray = fieldvalue.split(","); //split string by ,
-                                    System.out.println("authorArraylength  GrantApplicationServlet:: " + authorArray.length);
+                                    System.out.println("authorArraylength  OpenApplicationServlet:: " + authorArray.length);
                                     for (String individualValue : authorArray) {
-                                        System.out.println("authorArray  GrantApplicationServlet:: " + individualValue);
+                                        System.out.println("authorArray  OpenApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "AuthorFirstName":
                                     AuthorFirstName = fieldvalue;
-                                    System.out.println("AuthorFirstName GrantApplicationServlet:: " + AuthorFirstName);
+                                    System.out.println("AuthorFirstName OpenApplicationServlet:: " + AuthorFirstName);
                                     break;
                                 case "AuthorLastName":
                                     AuthorLastName = fieldvalue;
-                                    System.out.println("AuthorLastName GrantApplicationServlet:: " + AuthorLastName);
+                                    System.out.println("AuthorLastName OpenApplicationServlet:: " + AuthorLastName);
                                     break;
                                 case "title":
                                     Title = fieldvalue;
@@ -1530,13 +1597,13 @@ public class OpenApplicationServlet extends HttpServlet {
                                     translatorArrayLength = translatorArrayContent.length;
                                     System.out.println("translatorArray >>>> translatorArray.length " + translatorArrayContent.length);
                                     for (String individualValue : translatorArrayContent) {
-                                        System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
+                                        System.out.println("translatorArray  OpenApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
                                     }
                                     break;
                                 case "languages":
                                     languageArray = fieldvalue.split(","); //split string by ,
                                     for (String individualValue : languageArray) {
-                                        System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+                                        System.out.println("languageArray  OpenApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "physicalDescription":
@@ -1581,7 +1648,7 @@ public class OpenApplicationServlet extends HttpServlet {
                                     languageArray = fieldvalue.split(","); //split string by ,
                                     languageArrayLength = languageArray.length;
                                     for (String individualValue : languageArray) {
-                                        System.out.println("languageArray  GrantApplicationServlet:: " + individualValue);
+                                        System.out.println("languageArray  OpenApplicationServlet:: " + individualValue);
                                     }
                                     break;
                                 case "appForeignCountry":
@@ -1747,13 +1814,13 @@ public class OpenApplicationServlet extends HttpServlet {
                         }
 
                     } catch (Exception ex) {
-                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     updateApplication(application, ReferenceNumber);
                 } catch (ParseException ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
         }

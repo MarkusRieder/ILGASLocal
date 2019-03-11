@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GrantApplication {
 
-     private int ApplicationNumber;
+    private int ApplicationNumber;
 
     private String ApplicationYear;
 
@@ -115,10 +115,10 @@ public class GrantApplication {
     private String translatorNotes;
 
     private String Status;
-    
+
     private String approveWithdrawnReject;
 
-     private int directorChairDecision;
+    private int directorChairDecision;
 
 //    Original Work & Sample Translation
     private int copiesSent;
@@ -195,6 +195,8 @@ public class GrantApplication {
     private java.sql.Timestamp LASTUPDATED;
 
     private java.sql.Timestamp Created;
+
+    private ArrayList<String> rightsHolderArray;
 
     /**
      * @return the ApplicationNumber
@@ -624,7 +626,8 @@ public class GrantApplication {
     }
 
     /**
-     * @param proofOfPaymentToTranslatorName the proofOfPaymentToTranslatorName to set
+     * @param proofOfPaymentToTranslatorName the proofOfPaymentToTranslatorName
+     *                                       to set
      */
     public void setProofOfPaymentToTranslatorName(String proofOfPaymentToTranslatorName) {
         this.proofOfPaymentToTranslatorName = proofOfPaymentToTranslatorName;
@@ -1016,7 +1019,8 @@ public class GrantApplication {
     }
 
     /**
-     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName to set
+     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName
+     *                                       to set
      */
     public void setCopiesTranslationSampleDocName(String copiesTranslationSampleDocName) {
         this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
@@ -1482,6 +1486,20 @@ public class GrantApplication {
      */
     public void setCreated(java.sql.Timestamp Created) {
         this.Created = Created;
+    }
+
+    /**
+     * @return the rightsHolderArray
+     */
+    public ArrayList<String> getRightsHolderArray() {
+        return rightsHolderArray;
+    }
+
+    /**
+     * @param rightsHolderArray the rightsHolderArray to set
+     */
+    public void setRightsHolderArray(ArrayList<String> rightsHolderArray) {
+        this.rightsHolderArray = rightsHolderArray;
     }
 
 }

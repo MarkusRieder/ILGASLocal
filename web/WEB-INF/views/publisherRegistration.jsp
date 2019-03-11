@@ -8,69 +8,27 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
-<html style="height: 100%" >
+<html style="height: 100%" lang="en"> 
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Translation Grant Application System</title>
+
+
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" type="text/css" href="css/my-block-ui.css">   
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
-        <link rel="stylesheet" type="text/css" href="css/form.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
 
-        <script src="js/jquery-1.11.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
+        <script type="text/javascript"  src="js/jquery-ui.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 
-        <script src="js/bootstrap.js"></script>
-        <script src="js/blockui.js"></script>
-        <script src="js/my-block-ui.js"></script>
-        <script src="js/bootstrap-select.min.js"></script>
-        <script src="js/register.js"></script>
-        <script src="js/bootstrap-validator.js"></script>
-        <script src="js/jquery.validate.js"></script>
-        <script src="js/bootstrap-show-password.js"></script>
-        <script src="js/jquery-ui.js"></script>
-        <script src="js/bootstrap-validate.js"></script>
-
-
-        <style>
-            .form-horizontal .control-label {
-                margin-bottom: 5px;
-            }
-            .form-horizontal .form-group {
-                margin-bottom: 5px;
-                margin-left:0px;
-                margin-right:0px;
-            }
-            body {
-                background: #d9d1d1;
-            }
-            input[type="text"]:focus + .glyphicon-search{
-                color: #FF8C00;
-            }
-
-            .has-error input[type="text"], .has-error input[type="email"], .has-error select {
-                border: 1px solid #a94442;
-            }
-            .has-error input[type="text"], .has-error input[type="url"], .has-error select {
-                border: 1px solid #a94442;
-            }
-            input[aria-invalid="true"], textarea[aria-invalid="true"] {
-                border: 1px solid #f00;
-                box-shadow: 0 0 4px 0 #f00;
-            }
-
-        </style>  
-       
         <!--AutoComplete_international_publishers-->
         <script>
             $(function () {
@@ -129,34 +87,7 @@
             });
         </script>
 
-        <!--Tooltips-->
-        <script>
-            $('input[type=text][name=Company]').tooltip({
-                placement: "top",
-                trigger: "hover"
-            });
-        </script>
 
-        <!--setting checkboxes if value is true = 1 -->
-        <script type="text/javascript">
-            function CheckboxValue() {
-                $(":checkbox").filter(function () {
-                    return this.value === '1';
-                }).prop("checked", "true");
-            }
-        </script>
-
-        <!--clear all checkboxes onload-->
-        <script type="text/javascript">
-            function deCheckboxValue() {
-                var w = document.getElementsByTagName('input');
-                for (var i = 0; i < w.length; i++) {
-                    if (w[i].type === 'checkbox') {
-                        w[i].checked = false;
-                    }
-                }
-            }
-        </script>
 
         <!-- checks for http:// in URL
              if not then URL will be preceded with http:// -->
@@ -173,31 +104,12 @@
             }
         </script>
 
-        <script type="text/javascript">
-            function ValidateEmail(mail)
-            {
-                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
-                {
-                    return (true);
-                }
-                return (false);
-            }
-        </script>
 
 
     </head>
 
-    <body style="height: 100%" onload="deCheckboxValue();">
-        <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span>
-            <span class="message"></span>
-        </div>
-        <div class="alert alert-success" role="alert" id="successField" style="display:none">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Success:</span>
-            <span class="message"></span>
-        </div>
+    <body style="height: 100%">
+
         <div id="shadowholder">
 
             <div class="shadowtop"> </div>
@@ -224,12 +136,11 @@
 
                     <form id="newPublisherForm" 
                           name="newPublisherForm"
-                          class="form-horizontal" 
                           action="${pageContext.request.contextPath}/newPublisher" 
                           method="POST"  
                           role="form" 
                           >
-             
+
                         <!--first row-->
                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                             <div class="col-sm-6">
@@ -260,53 +171,67 @@
 
                         <!--second row-->
                         <div class="row" style="margin-bottom: 10px">
-                            <div class="col-sm-6">
-                                <input id="Address1"
-                                       type="text"                                
-                                       class="form-control"                                
-                                       name="Address1"                                
-                                       value=""                                
-                                       placeholder="Address1"
-                                       required=""
-                                       >
+
+                            <div class="col-sm-5">
+                                <div class="form-group has-feedback">
+                                    <label for="Address1" class="pull-left control-label">Address field 1</label>
+                                    <input id="Address1"
+                                           type="text"                                
+                                           class="form-control"                                
+                                           name="Address1"                            
+                                           placeholder="Address1"
+                                           required=""
+                                           >
+                                </div>
                             </div>
-                            <div class="col-sm-2">
-                                <input id="postCode"                                
-                                       type="text"                                
-                                       class="form-control"                                
-                                       name="postCode"                                
-                                       value=""                                
-                                       placeholder="Post Code"
-                                       required=""
-                                       >
-                            </div>
+
                             <div class="col-sm-3">
-                                <input id="City"                                
-                                       type="text"                                
-                                       class="form-control"                                
-                                       name="City"                                
-                                       value=""                                
-                                       placeholder="City"
-                                       required=""
-                                       >
+                                <div class="form-group has-feedback">
+                                    <label for="postCode" class="pull-left control-label">Post code</label>
+                                    <input id="postCode"                                
+                                           type="text"                                
+                                           class="form-control"                                
+                                           name="postCode"          
+                                           placeholder="Post Code"
+                                           required=""
+                                           >
+                                </div>
                             </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group has-feedback">
+                                    <label for="City" class="pull-left control-label">City</label>
+                                    <input id="City"                                
+                                           type="text"                                
+                                           class="form-control"                                
+                                           name="City"                                
+                                           value=""                                
+                                           placeholder="City"
+                                           required=""
+                                           >
+                                </div>
+                            </div>
+
                         </div> <!--row-->
 
                         <!--third row-->
                         <div class="row" style="margin-bottom: 10px">
-                            <div class="col-sm-6">
-                                <input id="Address2"                                
-                                       type="text"                                
-                                       class="form-control"                                
-                                       name="Address2"                                
-                                       value=""                                
-                                       placeholder="Address2"
-                                       >
+                            <div class="col-sm-5">
+                                <div class="form-group has-feedback">
+                                    <label for="Address2" class="pull-left control-label">Address field 2</label>
+                                    <input id="Address2"                                
+                                           type="text"                                
+                                           class="form-control"                                
+                                           name="Address2"                                                               
+                                           placeholder="Address2"
+                                           >
+                                </div>
                             </div>
 
                             <!--get Country via autocomplete set Country Code automatically -->
                             <div class="col-sm-5">
                                 <div class="form-group has-feedback">
+                                    <label for="country" class="pull-left control-label">Country</label>
                                     <input id="country"                                
                                            type="text"                                
                                            class="form-control"                                
@@ -314,8 +239,7 @@
                                            value=""                                
                                            placeholder="Country"
                                            required=""
-                                           >
-                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                           >   
                                 </div>
                             </div>
                         </div> <!--row-->
@@ -323,6 +247,7 @@
                         <!--fourth row-->
                         <div class="row" style="margin-bottom: 10px">
                             <div class="col-sm-6">
+                                <label for="Address3" class="pull-left">Address field 3</label>
                                 <input id="Address3"                                
                                        type="text"                                
                                        class="form-control"                                
@@ -331,7 +256,8 @@
                                        placeholder="Address3"
                                        >
                             </div>
-                            <div class="col-sm-2">   
+                            <div class="col-sm-3">   
+                                <label for="countryCode" class="pull-left">Country code</label>
                                 <input id="countryCode"                                
                                        type="text"                                
                                        class="form-control"                                
@@ -345,7 +271,8 @@
 
                         <!--fifth row-->
                         <div class="row" style="margin-bottom: 10px">
-                            <div class="col-sm-6">       
+                            <div class="col-sm-6">  
+                                <label for="Address4" class="pull-left">Address field 4</label>
                                 <input id="Address4"                                
                                        type="text"                                
                                        class="form-control"                                
@@ -355,14 +282,18 @@
                                        >
                             </div>
                             <div class="col-sm-3">
-                                <input id="Telephone"                                
-                                       type="text"                                
-                                       class="form-control"                                
-                                       name="Telephone"                                
-                                       value=""                                
-                                       placeholder="Telephone"
-                                       required=""
-                                       >
+                                <div class="form-group has-feedback">
+                                    <label for="Telephone" class="pull-left control-label">Telephone</label>
+                                    <input id="Telephone"                                
+                                           type="text"                                
+                                           class="form-control"                                
+                                           name="Telephone"                                
+                                           value=""                                
+                                           placeholder="Telephone"
+                                           required=""
+                                           >
+
+                                </div>
                             </div>
                         </div> <!--row-->
 
@@ -382,38 +313,38 @@
 
                         <!--seventh row-->
                         <div class="row" style="margin-bottom: 10px">
-                            <div class="col-sm-6">
-                                <input id="Email"             
-                                       aria-required="true"
-                                       type="email"                                
-                                       class="form-control"                                
-                                       name="Email"                                
-                                       value=""                     
-                                       onblur ="ValidateEmail(this.value)"
-                                       placeholder="Main Email"
-                                       required=""
-                                       >
-                                <script type="text/javascript">
-                                    bootstrapValidate('#Email', 'required:fill out this field|email:Enter a valid email address');
-                                </script>
-                                <div class="help-block with-errors"></div>
-                            </div>                           
 
                             <div class="col-sm-5">
-                                <input id="WWW"                                
-                                       type="url"                                            
-                                       class="form-control"                                
-                                       name="WWW"    
-                                       onblur ="addhttp(this)"
-                                       value=""           
-                                       placeholder="http://www.example.com"
-                                       required=""
-                                       >
-                                <script type="text/javascript">
-                                    bootstrapValidate('#WWW', 'required:fill out this field');
-                                </script>
-                                <div class="help-block with-errors"></div>
+                                <div class="form-group has-feedback">
+                                    <label for="Email" class="pull-left control-label">Email</label>
+                                    <input id="Email"                                
+                                           type="email"                                
+                                           class="form-control"                                
+                                           name="Email"                                
+                                           value="${companyDetails.Email}"                                
+                                           placeholder="Main Email"
+                                           required
+                                           >
+
+                                </div>
+                            </div>                        
+
+                            <div class="col-sm-5">
+                                <div class="form-group has-feedback">
+                                    <label for="WWW" class="pull-left control-label">Web address</label>
+                                    <input id="WWW"                                
+                                           type="url"                                            
+                                           class="form-control"                                
+                                           name="WWW"    
+                                           onblur ="addhttp(this);"
+                                           value=""           
+                                           placeholder="http://www.example.com"
+                                           required=""
+                                           >
+
+                                </div>
                             </div>
+
                         </div> <!--row-->
 
                         <!--eighth row-->
@@ -506,6 +437,80 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2019 mgr Software
         </div>
+        <script>
+            $(document).ready(function () {
+                $("#newPublisherForm").validate({
+                    rules: {
+                        Email: {
+                            required: true,
+                            email: true
+                        },
+                        WWW: {
+                            required: true,
+                            url: true
+                        },
+                        Address1: {
+                            required: true,
+                            minlength: 2
+                        },
+                        postCode: "required",
+                        City: "required",
+                        country: "required",
+                        Telephone: {
+                            required: true,
+                            number: true
+                        }
+                    },
+                    messages: {
+                        WWW: "This field is required. Please use syntax: http://www.example.com"
+                    },
+                    errorElement: "em",
+                    errorPlacement: function (error, element) {
+                        // Add the `help-block` class to the error element
+                        error.addClass("help-block");
 
+                        // Add `has-feedback` class to the parent div.form-group
+                        // in order to add icons to inputs
+                        element.parents(".col-sm-3").addClass("has-feedback");
+
+                        if (element.prop("type") === "checkbox") {
+                            error.insertAfter(element.parent("label"));
+                        } else {
+                            error.insertAfter(element);
+                        }
+
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if (!element.next("span")[ 0 ]) {
+                            $("<span class='glyphicon glyphicon-remove form-control-feedback'></span>").insertAfter(element);
+                        }
+                    },
+                    success: function (label, element) {
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if (!$(element).next("span")[ 0 ]) {
+                            $("<span class='glyphicon glyphicon-ok form-control-feedback'></span>").insertAfter($(element));
+                        }
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).parents(".col-sm-3").addClass("has-error").removeClass("has-success");
+                        $(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
+                        $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+                        $(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).parents(".col-sm-3").addClass("has-success").removeClass("has-error");
+                        $(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+                        $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+                        $(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+                    }
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $("input[type='url']").blur(function () {
+                    $('#WWW').valid();
+                });
+            });
+        </script>
     </body>
 </html>

@@ -13,6 +13,7 @@ import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,11 +45,30 @@ public class openApplicationPublisherDataServlet extends HttpServlet {
 
         System.out.println("openApplicationPublisherDataServlet:  ");
 
+        String publisherID = "";
+                
         HttpSession session = request.getSession();
 
+                Enumeration en = request.getParameterNames();
+
+        while (en.hasMoreElements()) {
+            Object objOri = en.nextElement();
+
+            String param = (String) objOri;
+
+            String value = request.getParameter(param);
+            
+            if(param.equals("publisherID")){
+                 publisherID = value;
+            }
+
+            System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+
+        }
+        
 //        int pID = (Integer) session.getAttribute("publisherID");
 //        String publisherID = (String) Integer.toString(pID);
-        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
+//        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
                 System.out.println("openApplicationPublisherDataServlet publisherID: " + publisherID);
 
 

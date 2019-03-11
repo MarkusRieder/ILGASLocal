@@ -13,7 +13,7 @@ import static ie.irishliterature.dao.GrantApplicationDAO.updateExpertReader;
 import static ie.irishliterature.dao.openApplicationDAO.updateApplication;
 import ie.irishliterature.dao.pendingApplicationDAO;
 import ie.irishliterature.db.DBException;
-import ie.irishliterature.model.ExpertReader1;
+import ie.irishliterature.model.ExpertReader;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.Library;
 import ie.irishliterature.model.Publisher;
@@ -1400,7 +1400,7 @@ public class PendingApplicationServlet extends HttpServlet {
                 ////////////////////////////////////////////////////////////
                 //  Process Application - INSERT new ExpertReader1
                 ////////////////////////////////////////////////////////////
-                ExpertReader1 expertReader = new ExpertReader1();
+                ExpertReader expertReader = new ExpertReader();
 
                 expertReader.setExpertReaderUserID(expertReaderUserID);
                 expertReader.setExpertReaderName(expertReaderName);

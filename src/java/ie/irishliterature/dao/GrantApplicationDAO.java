@@ -3,7 +3,7 @@ package ie.irishliterature.dao;
 import static ie.irishliterature.dao.ACpublisherDAO_test.disconnect;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
-import ie.irishliterature.model.ExpertReader1;
+import ie.irishliterature.model.ExpertReader;
 import ie.irishliterature.model.GrantApplication;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -103,7 +103,6 @@ public class GrantApplicationDAO {
         } catch (ClassNotFoundException | SQLException e) {
             DBConn.close(conn, ps, res);
             LOGGER.debug(e.getMessage());
-            e.printStackTrace();
             throw new DBException("1 Excepion while accessing database");
         }
 
@@ -121,7 +120,7 @@ public class GrantApplicationDAO {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement("select 1 from ILGAS.GrantApplication where ReferenceNumber = ?");
-            
+
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
@@ -138,7 +137,7 @@ public class GrantApplicationDAO {
         return verified;
     }
 
-  // insertRow
+    // insertRow
     public static String insertRow(GrantApplication application) throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -307,7 +306,7 @@ public class GrantApplicationDAO {
 //        System.out.println("GrantApplicationDAO ApplicationNumber:1:   " + ApplicationNumber);
         return ReferenceNumber;
     }
-    
+
     public static int insertAuthors(String ReferenceNumber, String Name, String FirstName, String LastName) throws DBException {
 
         Connection conn = null;
@@ -491,7 +490,7 @@ public class GrantApplicationDAO {
         int id = 0;
         int idTranslator = 0;
         ResultSet res = null;
-      System.out.println("insertAgreement......................:");
+        System.out.println("insertAgreement......................:");
         try {
 
             //check if Translator exists
@@ -1246,7 +1245,7 @@ public class GrantApplicationDAO {
                     + "publicationYear,\n"
                     + "award,\n"
                     + "salesFigures,\n"
-                    + "lastUpdated)  values  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
+                    + "lastUpdated)  values  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
                     + " WHERE ApplicationNumber = " + ReferenceNumber);
 
             ps1.setString(1, application.getReferenceNumber());
@@ -1279,38 +1278,36 @@ public class GrantApplicationDAO {
             ps1.setString(28, application.getStatus());
             ps1.setString(29, application.getCover());
             ps1.setString(30, application.getCoverName());
-//            ps1.setDate(31, sqlDate(application.getOriginalDateOfPublication()));
-            ps1.setString(31, (application.getPublicationYear()));
-            ps1.setString(32, application.getOriginalLanguage());
-            ps1.setInt(33, application.getOriginalPageExtent());
-            ps1.setString(34, application.getCountryOfPublication());
-            ps1.setString(35, application.getForeignPublisher());
-            ps1.setString(36, application.getForeignCountry());
-            ps1.setString(37, application.getTargetLanguage());
-            ps1.setDate(38, sqlDate(application.getBoardMeeting()));
-            ps1.setBigDecimal(39, application.getAmountRequested());
-            ps1.setBigDecimal(40, application.getAmountApproved());
-            ps1.setDate(41, sqlDate(application.getPublisherInformedOfMeeting()));
-            ps1.setString(42, application.getBoardComments_Instructions());
-            ps1.setDate(43, sqlDate(application.getContractSentToPublisher()));
-            ps1.setDate(44, sqlDate(application.getAcknowledgementApproved()));
-            ps1.setDate(45, sqlDate(application.getDatePublishedBooksReceived()));
-            ps1.setDate(46, sqlDate(application.getDatePaymentMadeToPublisher()));
-            ps1.setString(47, application.getPaymentReferenceNumber());
-            ps1.setString(48, application.getAddendumRightsAgreement());
-            ps1.setString(49, application.getAddendumRightsAgreementName());
-            ps1.setString(50, application.getProofOfPaymentToTranslator());
-            ps1.setString(51, application.getProofOfPaymentToTranslatorName());
-            ps1.setString(52, application.getBankDetailsForm());
-            ps1.setString(53, application.getBankDetailsFormName());
-            ps1.setString(54, application.getSignedLIContract());
-            ps1.setString(55, application.getSignedLIContractName());
-            ps1.setString(56, application.getPaymentStatus());
+            ps1.setString(31, application.getOriginalLanguage());
+            ps1.setInt(32, application.getOriginalPageExtent());
+            ps1.setString(33, application.getCountryOfPublication());
+            ps1.setString(34, application.getForeignPublisher());
+            ps1.setString(35, application.getForeignCountry());
+            ps1.setString(36, application.getTargetLanguage());
+            ps1.setDate(37, sqlDate(application.getBoardMeeting()));
+            ps1.setBigDecimal(38, application.getAmountRequested());
+            ps1.setBigDecimal(39, application.getAmountApproved());
+            ps1.setDate(40, sqlDate(application.getPublisherInformedOfMeeting()));
+            ps1.setString(41, application.getBoardComments_Instructions());
+            ps1.setDate(42, sqlDate(application.getContractSentToPublisher()));
+            ps1.setDate(43, sqlDate(application.getAcknowledgementApproved()));
+            ps1.setDate(44, sqlDate(application.getDatePublishedBooksReceived()));
+            ps1.setDate(45, sqlDate(application.getDatePaymentMadeToPublisher()));
+            ps1.setString(46, application.getPaymentReferenceNumber());
+            ps1.setString(47, application.getAddendumRightsAgreement());
+            ps1.setString(48, application.getAddendumRightsAgreementName());
+            ps1.setString(49, application.getProofOfPaymentToTranslator());
+            ps1.setString(50, application.getProofOfPaymentToTranslatorName());
+            ps1.setString(51, application.getBankDetailsForm());
+            ps1.setString(52, application.getBankDetailsFormName());
+            ps1.setString(53, application.getSignedLIContract());
+            ps1.setString(54, application.getSignedLIContractName());
+            ps1.setString(55, application.getPaymentStatus());
             // ps1.setString(57, application.getPreviousGrantAid());
-            ps1.setString(57, application.getPublicationYear());
-            ps1.setInt(58, application.getAward());
-            ps1.setInt(59, application.getSalesFigures());
-            ps1.setTimestamp(60, application.getLASTUPDATED());
+            ps1.setString(56, application.getPublicationYear());
+            ps1.setInt(57, application.getAward());
+            ps1.setInt(60, application.getSalesFigures());
+            ps1.setTimestamp(61, application.getLASTUPDATED());
 
             committed = ps1.executeUpdate();
 
@@ -1744,7 +1741,7 @@ public class GrantApplicationDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
-System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: <<<<<<<<<<<<<<<<<");
+        System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: <<<<<<<<<<<<<<<<<");
         int idTranslator = 0;
 
         try {
@@ -1753,7 +1750,7 @@ System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: <<<<<<<<<<<
             ps = conn.prepareStatement("SELECT idTranslator FROM ILGAS.Translator WHERE Name = ?");
             ps.setString(1, translatorName);
             res = ps.executeQuery();
-System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: ps: " + ps);
+            System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: ps: " + ps);
             if (res != null) {
 
                 while (res.next()) {
@@ -1773,7 +1770,7 @@ System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: ps: " + ps)
         }
 
         System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: translatorName = " + translatorName + " idTranslator::: " + idTranslator);
-        
+
         return idTranslator;
     }
 
@@ -1985,12 +1982,12 @@ System.out.println(">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: ps: " + ps)
         int idExpertReaderUserID = 0;
         System.out.println("GrantApplicationDAO getExpertReaderUserID ");
         System.out.println("GrantApplicationDAO expertReaderName " + expertReaderName);
-        
+
         try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement("SELECT userID FROM ILGAS.users WHERE fullName = ?");
-ps.setString(1, expertReaderName);
+            ps.setString(1, expertReaderName);
 //            ps.setString(1, "'%" + expertReaderName + "%'");
             System.out.println("GrantApplicationDAO ps " + ps.toString());
             res = ps.executeQuery();
@@ -2016,7 +2013,7 @@ ps.setString(1, expertReaderName);
         return idExpertReaderUserID;
     }
 
-    public static int updateExpertReader(ExpertReader1 expertReader, java.sql.Date today) throws DBException {
+    public static int updateExpertReader(ExpertReader expertReader, java.sql.Date today) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -2079,9 +2076,9 @@ ps.setString(1, expertReaderName);
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement("SELECT email FROM ILGAS.users WHERE fullName = ?");
-ps.setString(1, expertReaderName);
+            ps.setString(1, expertReaderName);
 //            ps.setString(1, "'%" + expertReaderName + "%'");
-            
+
             System.out.println("GrantApplicationDAO ps " + ps.toString());
             res = ps.executeQuery();
             if (res != null) {
@@ -2148,6 +2145,97 @@ ps.setString(1, expertReaderName);
         return attachments;
     }
 
+    public static ArrayList<String> getRightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        ArrayList<String> rightsHolderArrayContent = new ArrayList<String>();
+        rightsHolderArrayContent.clear();
+        ResultSet res = null;
+
+        try {
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps1.setString(1, ReferenceNumber);
+            res = ps1.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderArrayContent.add(res.getString(1));
+                    System.out.println("getRightsHolderArrayContent  retrieving " + res.getString(1) + "......................:");
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return rightsHolderArrayContent;
+
+    }
+
+    public static int updateRightsHolderArrayContent(String ReferenceNumber, String[] rightsHolderArrayContent) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        int id = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("updaterightsHolderArrayContent......................:");
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            for (int i = 0; i < rightsHolderArrayContent.length; i++) {
+                String translationRightsHolderName = rightsHolderArrayContent[i];
+                //     String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName ) VALUES (?,?)";
+
+                String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName )SELECT * FROM (SELECT ?, ?) AS tmp WHERE NOT EXISTS ( "
+                        + "SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder  WHERE TranslationRightsHolderName = ? AND ReferenceNumber = ? ) LIMIT 1;";
+
+                ps1 = conn.prepareStatement(query);
+
+                ps1.setString(1, ReferenceNumber);
+                ps1.setString(2, translationRightsHolderName);
+                ps1.setString(3, translationRightsHolderName);
+                ps1.setString(4, ReferenceNumber);
+
+                System.out.println("updaterightsHolderArrayContent  inserting " + translationRightsHolderName + "......................:");
+
+                ps1.executeUpdate();
+
+                if (res != null) {
+                    while (res.next()) {
+
+                        id = res.getInt(1);
+//                    System.out.println("GrantApplicationDAO id::   " + id);
+                    }
+                }
+            }
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
     private static java.sql.Timestamp getCurrentTimeStamp() {
 
         java.util.Date today = new java.util.Date();
@@ -2199,4 +2287,40 @@ ps.setString(1, expertReaderName);
 
         return idTranslatorTrack;
     }
+    
+    public static boolean rightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int rightsHolderContent = 0;
+        boolean rightsHolderContentExists = false;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps.setString(1, ReferenceNumber);
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderContent = res.getInt(1);
+                }
+            }
+            DBConn.close(conn, ps, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("rightsHolderArrayContent Excepion while accessing database");
+        }
+
+        if (rightsHolderContent > 0) {
+            return rightsHolderContentExists = true;
+        } else {
+            return rightsHolderContentExists = false;
+        }
+
+    }
 }
+

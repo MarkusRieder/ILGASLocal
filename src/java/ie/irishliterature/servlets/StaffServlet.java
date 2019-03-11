@@ -184,7 +184,8 @@ public class StaffServlet extends HttpServlet {
             System.out.println("param15 Payment_Reference_Number " + Payment_Reference_Number);
             PaymentStatus = request.getParameter("paymentStatus");
             System.out.println("param16 PaymentStatus " + PaymentStatus);
-            Status = "closed";
+
+            Status = "open";
 
             ////////////////////////////////////////////////////////////
             //  Process Application
@@ -195,6 +196,9 @@ public class StaffServlet extends HttpServlet {
             System.out.println("sending dateOfBoardMeeting  " + dateOfBoardMeeting);
             if (!dateOfBoardMeeting.isEmpty()) {
                 application.setBoardMeeting(convertStringDate(dateOfBoardMeeting));
+            }
+            if (ApproveWithdrawnReject.equals("Approved")) {
+                Status = "pending";
             }
             application.setApproveWithdrawnReject(ApproveWithdrawnReject);
             System.out.println("sending approveWithdrawnReject  " + approveWithdrawnReject);
@@ -215,7 +219,7 @@ public class StaffServlet extends HttpServlet {
 //            if (!Date_publisher_informed_of_meeting.isEmpty() && Date_publisher_informed_of_meeting != null && !"".equals(Date_publisher_informed_of_meeting)) {
             if (convertStringDate(Date_Contract_Sent_to_Publisher) != null) {
                 System.out.println("sending Date_Contract_Sent_to_Publisher  " + Date_Contract_Sent_to_Publisher);
-System.out.println("sending Date_Contract_Sent_to_Publisher  " + convertStringDate(Date_Contract_Sent_to_Publisher));
+                System.out.println("sending Date_Contract_Sent_to_Publisher  " + convertStringDate(Date_Contract_Sent_to_Publisher));
                 application.setContractSentToPublisher(convertStringDate(Date_Contract_Sent_to_Publisher));
             }
             System.out.println("sending Date_ILE_Acknowlegement_Approved  " + Date_ILE_Acknowlegement_Approved);
@@ -231,6 +235,10 @@ System.out.println("sending Date_Contract_Sent_to_Publisher  " + convertStringDa
                 application.setDatePaymentMadeToPublisher(convertStringDate(Date_Payment_Made_to_Publisher));
             }
             application.setPaymentReferenceNumber(Payment_Reference_Number);
+
+            if (PaymentStatus.equals("Paid")) {
+                Status = "closed";
+            }
             application.setPaymentStatus(PaymentStatus);
 
             System.out.println("sending plannedPageExtent  " + plannedPageExtent);
@@ -280,19 +288,18 @@ System.out.println("sending Date_Contract_Sent_to_Publisher  " + convertStringDa
 
     public java.sql.Date convertStringDate(String datum) throws ParseException {
 
-        if(!"".equals(datum)){
-        System.out.println("convertStringDate datum  " + datum);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-        System.out.println("convertStringDate sdf1  " + sdf1);
-        java.util.Date date = sdf1.parse(datum);
-        System.out.println("convertStringDate date  " + date);
-        java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
-        System.out.println("convertStringDate sqlStartDate  " + sqlStartDate);
-        
-         return sqlStartDate;
-         
-        }
-        else{
+        if (!"".equals(datum)) {
+            System.out.println("convertStringDate datum  " + datum);
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println("convertStringDate sdf1  " + sdf1);
+            java.util.Date date = sdf1.parse(datum);
+            System.out.println("convertStringDate date  " + date);
+            java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());
+            System.out.println("convertStringDate sqlStartDate  " + sqlStartDate);
+
+            return sqlStartDate;
+
+        } else {
             System.out.println("convertStringDate datum  = null " + datum);
         }
         return null;

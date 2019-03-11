@@ -308,7 +308,7 @@
                                         </div> <!-- col-md-12 control -->
                                     </div> <!-- form-group -->
 
-<!--                                    <div class="form-group">
+                                    <div class="form-group">
                                         <div class="col-md-12 control">
                                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                                 Don't have an account? 
@@ -317,8 +317,8 @@
                                                     Sign Up Here
                                                 </a>
                                             </div> <%-- div style --%>
-                                        </div>  col-md-12 control 
-                                    </div>  form-group -->
+                                        </div>  <!--col-md-12 control--> 
+                                    </div>  <!--form-group--> 
                                 </form>  <!--loginform-->
                             </div>  <!-- panel-body -->
                         </div>  <!--panel-info-->
@@ -463,27 +463,22 @@
                                                 </div>
                                             </div> <!--form-group cpassword-->
 
-                                            <!--selectpicker-->
-                                            <div class="form-group">
-                                                <!--<label for="location" class="col-sm-3 control-label">Select your function</label>-->
-                                                <div class="col-sm-10">
-                                                    <!--<select class="selectpicker" title="Select Your Function" style="display: none;">-->
-                                                    <select class="selectpicker" 
-                                                            title="Select Your Function" 
-                                                            style="display: none;" 
-                                                            name="function" 
-                                                            id="functionDataset" 
-                                                            onchange="changeFunc();"
-                                                            required
-                                                            >
-<!--                                                        <option value="">Select Your Function</option>
-                                                        <option>Literature Ireland Staff</option>-->
-                                                        <option>Publisher</option>
-                                                        <!--<option>Expert Reader</option>-->
-                                                    </select>                                        
+                                                                                       <div class="form-group">
+                                                <div class="col-md-9">
+                                                    <label for="functionDataset" >Your function</label>
+                                                    <div style="clear: both;"></div>
+                                                    <input type="text" 
+                                                           class="form-control"  
+                                                           id="functionDataset" 
+                                                           name="function" 
+                                                           placeholder="Publisher"                                           
+                                                           value="Publisher" 
+                                                           style=" background-color:#00c0ef"
+                                                           readonly
+                                                           >                               
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group selectpicker-->
+                                            </div> <!--form-group functionDataset-->
 
                                             <!--publisherBox-->
                                             <div id="publisherBox" style="display:none; margin-top:50px; ">

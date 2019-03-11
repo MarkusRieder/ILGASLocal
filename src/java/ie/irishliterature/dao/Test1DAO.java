@@ -215,6 +215,7 @@ public class Test1DAO {
 
                     }
 
+                            
                     application.setTransList(listOfTranslatorArray);
                     application.setTranslatorName(translatorNamesList);
                     application.setTranslatorTrack2(translatorTrackList);
@@ -913,7 +914,7 @@ public class Test1DAO {
                 while (res.next()) {
 
                     translatorTrackID.add(res.getString(1));
-
+                    
                 }
             }
 
@@ -922,6 +923,8 @@ public class Test1DAO {
         }
 
         DBConn.close(conn, ps, res);
+        
+        System.out.println("Test1DAO getTranslatorTrackId " + translatorTrackID);
 
         return translatorTrackID;
     }
@@ -1204,6 +1207,8 @@ public class Test1DAO {
                 //add record to resultList
                 resultList.add(testList);
 
+                System.out.println("Test1DAO getTranslatorTracker  translator: " + res.getString(1) + " author: " + res.getString(2) + " title: " + res.getString(3) + " ReferenceNumber: " + res.getString(4));
+
             }
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -1212,8 +1217,12 @@ public class Test1DAO {
             throw new DBException("12 Excepion while accessing database");
         }
 
-        DBConn.close(conn, ps, res);
+        DBConn.close(conn, ps, res);               
 
+        for(int u = 0; u < resultList.size(); u++){
+            System.out.println("Test1DAO resultList " + u + "  " + resultList.get(u));
+        }
+        
         return resultList;
     }
 
