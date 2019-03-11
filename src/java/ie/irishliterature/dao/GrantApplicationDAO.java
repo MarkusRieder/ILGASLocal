@@ -2144,6 +2144,97 @@ public class GrantApplicationDAO {
         return attachments;
     }
 
+    public static ArrayList<String> getRightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        ArrayList<String> rightsHolderArrayContent = new ArrayList<String>();
+        rightsHolderArrayContent.clear();
+        ResultSet res = null;
+
+        try {
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps1.setString(1, ReferenceNumber);
+            res = ps1.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderArrayContent.add(res.getString(1));
+                    System.out.println("getRightsHolderArrayContent  retrieving " + res.getString(1) + "......................:");
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return rightsHolderArrayContent;
+
+    }
+
+    public static int updateRightsHolderArrayContent(String ReferenceNumber, String[] rightsHolderArrayContent) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        int id = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("updaterightsHolderArrayContent......................:");
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            for (int i = 0; i < rightsHolderArrayContent.length; i++) {
+                String translationRightsHolderName = rightsHolderArrayContent[i];
+                //     String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName ) VALUES (?,?)";
+
+                String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName )SELECT * FROM (SELECT ?, ?) AS tmp WHERE NOT EXISTS ( "
+                        + "SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder  WHERE TranslationRightsHolderName = ? AND ReferenceNumber = ? ) LIMIT 1;";
+
+                ps1 = conn.prepareStatement(query);
+
+                ps1.setString(1, ReferenceNumber);
+                ps1.setString(2, translationRightsHolderName);
+                ps1.setString(3, translationRightsHolderName);
+                ps1.setString(4, ReferenceNumber);
+
+                System.out.println("updaterightsHolderArrayContent  inserting " + translationRightsHolderName + "......................:");
+
+                ps1.executeUpdate();
+
+                if (res != null) {
+                    while (res.next()) {
+
+                        id = res.getInt(1);
+//                    System.out.println("GrantApplicationDAO id::   " + id);
+                    }
+                }
+            }
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
     private static java.sql.Timestamp getCurrentTimeStamp() {
 
         java.util.Date today = new java.util.Date();
@@ -2194,5 +2285,40 @@ public class GrantApplicationDAO {
         }
 
         return idTranslatorTrack;
+    }
+
+    public static boolean rightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int rightsHolderContent = 0;
+        boolean rightsHolderContentExists = false;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps.setString(1, ReferenceNumber);
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderContent = res.getInt(1);
+                }
+            }
+            DBConn.close(conn, ps, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("rightsHolderArrayContent Excepion while accessing database");
+        }
+
+        if (rightsHolderContent > 0) {
+            return rightsHolderContentExists = true;
+        } else {
+            return rightsHolderContentExists = false;
+        }
+
     }
 }

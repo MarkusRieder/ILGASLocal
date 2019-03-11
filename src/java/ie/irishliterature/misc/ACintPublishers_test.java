@@ -3,23 +3,22 @@ package ie.irishliterature.misc;
 
 import com.google.gson.Gson;
 import ie.irishliterature.dao.ACpublisherDAO_test;
+import ie.irishliterature.model.Publisher;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ie.irishliterature.model.Publisher;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-
 /**
  * Servlet implementation class ACintPublishers
  */
-@WebServlet(urlPatterns = "/ACintPublishers_test")
+
+@WebServlet(name = "ACintPublishers_test", urlPatterns = {"/ACintPublishers_test"})
 public class ACintPublishers_test extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -33,9 +32,9 @@ public class ACintPublishers_test extends HttpServlet {
     @SuppressWarnings("unchecked")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("doGet ......_test.............");
+        System.out.println("ACintPublishers_test Local doGet ......_test.............");
         String text = request.getParameter("term");
-        System.out.println("Hello from Get Method: " + text);
+        System.out.println("Hello from Get Method: ACintPublishers_test Local " + text);
 
         ACpublisherDAO_test publisherDAO_test = new ACpublisherDAO_test();
         try {

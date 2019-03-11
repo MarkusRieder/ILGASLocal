@@ -1,0 +1,36 @@
+/*#field{
+    margin-left:.5em;float:left
+}
+br{
+    clear:both
+}
+input{
+    border:1px solid #000;
+    margin-bottom:.5em
+}
+input.error{
+    border:1px solid red
+}
+input.success{
+    border:1px solid green
+}
+label.error{
+    background:url(../images/unchecked.gif) no-repeat;
+    display:inline;
+    padding-left:16px;
+    margin-left:.3em
+}
+label.success{
+    background:url(../images/checked.gif)  no-repeat;
+    display: inline; 
+    padding-left:16px;
+    margin-left:.3em;
+        
+}
+*/
+.green {
+   color: green;
+}
+
+
+

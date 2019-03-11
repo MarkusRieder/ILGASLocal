@@ -9,12 +9,11 @@ package ie.irishliterature.db;
  *
  * @author markus
  */
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import com.mysql.jdbc.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,7 +22,7 @@ public class DataSource {
 
     private static DataSource ds = null;
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost/ILGAS";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS?autoReconnect=true&useSSL=false&useUnicode=true&charset=UTF-8";
     private static final String USER = "root";
     private static final String PASS = "ankh573";
 

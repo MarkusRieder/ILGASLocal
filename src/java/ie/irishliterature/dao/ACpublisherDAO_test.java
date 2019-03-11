@@ -9,7 +9,9 @@ import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.Publisher;
+import ie.irishliterature.util.Setup;
 import java.sql.Connection;
+import static java.sql.DriverManager.getConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,15 +35,14 @@ import java.util.logging.Logger;
 public class ACpublisherDAO_test {
 
     private static Connection connection;
-    private static final Database db = new Database();
+//    private static  Database db = new Database();
 
     protected static void connect() throws SQLException {
+        System.out.println("ACpublisherDAO_test Local connect ");
         if (connection == null || connection.isClosed()) {
-            try {
-                connection = db.getConnection();
-            } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
-                Logger.getLogger(ACpublisherDAO_test.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            System.out.println("ACpublisherDAO_test Local connect if (connection == null || connection.isClosed())");
+            connection = getConnection(Setup.DB_URL, Setup.DB_USERNAME, Setup.DB_PASSWORD);
+            System.out.println("ACpublisherDAO_test Local getConnection " + connection);
         }
     }
 
@@ -55,14 +56,15 @@ public class ACpublisherDAO_test {
     public ArrayList getpublisher(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
         ArrayList publisherList = new ArrayList();
-
+ System.out.println("ACpublisherDAO_test Local getpublisher ");
         connect();
 
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ILGAS.international_publishers WHERE Company  like ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ILGAS.international_publishers WHERE company  like ?");
             ps.setString(1, "%" + s + "%");
             ResultSet rs = ps.executeQuery();
-
+            System.out.println("ACpublisherDAO_test Local getpublisher search for: " + s);
+             System.out.println("ACpublisherDAO_test Local getpublisherquery: " + ps);
             while (rs.next()) {
                 Publisher publisher = new Publisher();
 

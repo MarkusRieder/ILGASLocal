@@ -195,6 +195,8 @@ public class GrantApplication {
     private java.sql.Timestamp LASTUPDATED;
 
     private java.sql.Timestamp Created;
+    
+    private  ArrayList<String>rightsHolderArray;
 
     /**
      * @return the ApplicationNumber
@@ -1489,5 +1491,19 @@ public class GrantApplication {
      */
     public void setDirectorChairDecision(int directorChairDecision) {
         this.directorChairDecision = directorChairDecision;
+    }
+
+    /**
+     * @return the rightsHolderArray
+     */
+    public ArrayList<String> getRightsHolderArray() {
+        return rightsHolderArray;
+    }
+
+    /**
+     * @param rightsHolderArray the rightsHolderArray to set
+     */
+    public void setRightsHolderArray(ArrayList<String> rightsHolderArray) {
+        this.rightsHolderArray = rightsHolderArray;
     }
 }

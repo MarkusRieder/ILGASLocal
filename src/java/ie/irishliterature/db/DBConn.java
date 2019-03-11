@@ -1,15 +1,13 @@
 package ie.irishliterature.db;
 
+import ie.irishliterature.util.Setup;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import org.apache.log4j.Logger;
-
-import ie.irishliterature.util.Setup;
 
 /**
  * @author srinivas This file is to create Connections and Closing connections
@@ -26,10 +24,16 @@ public class DBConn {
      * @throws SQLException To Create Connections
      */
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
+//        System.out.println("DBConn getConnection .............");
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = null;
         connection = DriverManager.getConnection(
                 Setup.DB_URL, Setup.DB_USERNAME, Setup.DB_PASSWORD);
+        if(connection == null){
+//             System.out.println("DBConn getConnection is NULL ");
+        }else{
+//             System.out.println("DBConn getConnection is NOT NULL ");
+        }
         return connection;
     }
     

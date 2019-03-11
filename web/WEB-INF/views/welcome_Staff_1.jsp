@@ -27,7 +27,7 @@
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https:////cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
 
 
@@ -38,13 +38,16 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css" />
 
+
         <link rel="stylesheet" href="css/lesshat.css" />
         <link rel="stylesheet" href="css/newfile.css" />
         <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
-        <link rel="stylesheet" href="css/chosen.min.css" />
+        <!--<link rel="stylesheet" href="css/chosen.min.css" />-->
         <link rel="stylesheet" href="css/jquery.dataTables.yadcf.css" />
+        <!--<link rel="stylesheet" href="css/irishLiterature.css" />-->
         <!--        <link rel="stylesheet" href="css/widgContent.css" />
                 <link rel="stylesheet" href="css/widgEditor.css" />-->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
         <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
@@ -54,7 +57,7 @@
 
         <script type="text/javascript"   src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>       
         <!--<script type="text/javascript"   src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>-->
-        <script type="text/javascript"   src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
         <script type="text/javascript"   src="//cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
         <script type="text/javascript"   src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
         <script type="text/javascript"   src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
@@ -67,18 +70,23 @@
 
         <script type="text/javascript"   src="js/jquery.dataTables.yadcf.js"></script>
         <!--<script type="text/javascript"   src="js/widgEditor.js"></script>-->
-                <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 
-        <title>JSP Page</title>
 
-   <script>
+
+
+
+
+        <title>Translation Grant Application System</title>
+
+        <script>
             $(document).ready(function () {
                 $("#alertSuccess").hide();
                 $("#errid").hide();
                 $("#errname").hide();
-                $("#erremail").hide();  //Initially hiding the error spans
+                $("#erremail").hide(); //Initially hiding the error spans
                 $("#errpass").hide();
-
                 $("#Rbtn").click(function () {
                     var userid = $("#id").val();
                     var username = $("#username").val();
@@ -86,7 +94,6 @@
                     var email = $("#email").val();
                     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     var letters = /^[A-Za-z]+$/;
-
                     if (userid == "" || userid == null) {
                         alert("UserID cannot be Empty");
                         return false;
@@ -96,7 +103,6 @@
                     } else if (password == "" || password == null) {
                         alert("Password cannot be Empty");
                         return false;
-
                     } else if (email == "" || email == null) {
 
                         alert("Email cannot be Empty");
@@ -107,7 +113,6 @@
                         return false;
                     } else if (!(email.match(mailformat))) {
                         alert("Please Enter Valid Mail ID");
-
                         return false;
                     } else if (!(username.match(letters))) {
                         alert("Pleas Enter only Characters for Username");
@@ -119,18 +124,14 @@
                     }
 
                 });
-
-
                 $("#id").change(function () {
-                    var userid = $("#id").val();   //here we are restricting the user at the time of typing,we called an event "Keyup"
+                    var userid = $("#id").val(); //here we are restricting the user at the time of typing,we called an event "Keyup"
                     if (isNaN(userid)) {
 
-                        $("#errid").show();  //if user enters other than number then the error span will be shown
+                        $("#errid").show(); //if user enters other than number then the error span will be shown
                         return false;
                     } else {
                         $("#errid").hide();
-
-
                         return true;
                     }
 
@@ -139,10 +140,8 @@
                 $("#username").change(function () {
                     var username = $("#username").val();
                     var letters = /^[A-Za-z]+$/;
-
                     if (!(username.match(letters))) {
                         $("#errname").show();
-
                         return false;
                     } else {
                         $("#errname").hide();
@@ -152,40 +151,31 @@
                 });
                 $("#email").change(function () {
                     var email = $("#email").val();
-
                     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     if (!(email.match(mailformat))) {
                         $("#erremail").show();
-
-
                         return false;
                     } else {
                         $("#erremail").hide();
                         return true;
-
-
                     }
 
                 });
-
                 $("#cpassword").change(function () {
                     var password = $("#password").val();
                     var cpassword = $("#cpassword").val();
                     if (!(password === cpassword)) {
                         $("#errpass").show();
                         return false;
-
                     } else {
                         $("#errpass").hide();
-
                         return true;
                     }
                 });
             });
-
         </script>
-        
-        
+
+
         <script type="text/javascript">
 
             function getTodaysDate() {
@@ -243,6 +233,7 @@
             var TranslTitles = "";
             var TranslatorDocs = [];
             var readerReport = "";
+            var genreTable = null;
 //
 //            var floprowdata;
 //
@@ -253,10 +244,163 @@
             var oTable;
         </script>
 
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $.fn.dataTable.ext.buttons.newGenre = {
+                    text: 'newGenre'
+                };
+                var genreTable = $('#genreTable').DataTable({
+
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'newGenre',
+                            text: '<i class="fa fa-plus-square " style="font-size:24px;color:blue"></i>',
+                            titleAttr: 'Add new Genre',
+                            attr: {
+                                id: 'newGenre'
+                            }
+
+//                            action: function (e, dt, button, config) {
+//                                $('.reportFiltrsButton').attr(
+//                                        {
+//                                            "data-toggle": "modal",
+//                                            "data-target": "#createNewGenremodal"
+//                                        }
+//                                );
+////                                $('#createNewGenremodal').modal('show');
+//                            }
+                        }
+                    ],
+                    "bProcessing": false,
+                    "bServerSide": false,
+                    "sAjaxSource": "./GenresDataServlet",
+                    "columns": [
+                        {
+                            "class": "delete-control",
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ""
+                        },
+                        {"data": "genre",
+                            "render": function (data, type, row) {
+                                console.log("genres: " + data);
+                                return  data;
+                            }},
+                        {"data": "idgenres"},
+                        {"data": "idgenres"}
+                    ],
+                    columnDefs: [
+                        {width: "5%", targets: 0},
+                        {
+                            targets: -1,
+                            visible: false
+                        },
+                        {className: "dt-left", "targets": [1, 2]}
+                    ],
+                    fixedColumns: true
+                });
+                $('#genreTable tbody').on('click', 'tr td.delete-control', function () {
+
+                    var tr = $(this).closest('tr');
+                    var row = genreTable.row(tr);
+                    var rowdata = (genreTable.row(tr).data());
+                    console.log(genreTable.row(this).data());
+                    var idToDelete = rowdata.idgenres;
+                    var genreToDelete = rowdata.genre;
+                    console.log("idToDelete  " + idToDelete);
+                    console.log("genreToDelete  " + genreToDelete);
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
+                    } else {
+                        genreTable.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+
+                    console.log("genreToDelete 22 " + $(this).val());
+                    $.ajax({
+                        type: "POST",
+                        url: "./GenreDelete",
+                        data: "id=" + idToDelete,
+                        success: function (data, status, xhr) {
+
+                            //delete the row
+                            genreTable.row('.selected').remove().draw(false);
+                            genreTable.ajax.reload();
+                            document.getElementById("showDeletedGenre").innerHTML = "Genre: <strong>'" + genreToDelete + "'</strong> has been  <strong>successfully</strong> deleted!";
+                            $("#deleteGenreSuccessModal").modal('show');
+                        },
+                        error: function (xhr) {
+                            alert("Error");
+                            $('#edtModal').show();
+                            //error handling
+                        }});
+                });
+                var genreToAdd = document.getElementById('addGenre').value;
+                $('#newGenre').on('click', function () {
+                    $('#createNewGenremodal').modal('show');
+                    console.log("genreToAdd " + genreToAdd);
+                });
+
+                $('#addGenreButton').on('click', function () {
+                    var genreToAdd = document.getElementById('addGenre').value;
+                    console.log("genreToAdd " + genreToAdd);
+                    $.ajax({
+                        type: "POST",
+                        url: "./GenreAdd",
+                        data: "genre=" + genreToAdd,
+                        success: function (data, status, xhr) {
+                            console.log("data " + data);
+                            console.log("status " + status);
+                            console.log("xhr " + xhr);
+                            genreTable.ajax.reload();
+                            document.getElementById("showAddedGenre").innerHTML = "Genre: <strong>'" + genreToAdd + "'</strong> has been  <strong>successfully</strong> added!";
+                            $("#addGenreSuccessModal").modal('show');
+                        },
+                        error: function (xhr) {
+                            alert("Error");
+                            $('#edtModal').show();
+                            //error handling
+                        }});
+
+                });
+            });
+        </script>
+
+        <!--        <style>
+                    .delete-success-dialog .modal-dialog {
+                        height: 100%;
+                        width: 100%;
+                        margin: 0px !important;
+                        padding: 0px !important;
+        
+                    }
+                    .delete-success-dialog .modal-header{
+                        text-align:center;
+        
+                    }
+                    .delete-success-dialog .modal-content{
+                        height: 40%;
+                        text-align:center;
+                    }
+                    .delete-success-dialog .modal-body{
+                        text-align:center;
+        
+        
+        
+                    }
+        
+                    .login-dialog .modal-dialog {
+                        width: 300px;
+                    }
+                </style>-->
         <!--User-->
         <script type="text/javascript">
             $(document).ready(function () {
-
+                $.fn.dataTable.ext.buttons.newStaff = {
+                    text: 'NewStaff'
+                };
                 var table = $("#user").DataTable({
 
                     dom: 'Bfrtip',
@@ -271,30 +415,18 @@
 
                         },
                         {
-                            extend: 'copyHtml5',
-                            text: '<i class="fa fa-files-o"></i>',
-                            titleAttr: 'Copy',
-                            exportOptions: {
-                                columns: ':contains("Office")'
+                            extend: 'newStaff',
+                            text: '<i class="fa fa-user-plus" style="font-size:24px;color:blue"></i>',
+                            titleAttr: 'Add new Staff Member',
+                            action: function (e, dt, button, config) {
+                                $('.reportFiltrsButton').attr(
+                                        {
+                                            "data-toggle": "modal",
+                                            "data-target": "#createNewStaffmodal"
+                                        }
+                                );
+                                $('#createNewStaffmodal').modal('show');
                             }
-                        },
-                        {
-                            extend: 'excelHtml5',
-                            text: '<i class="fa fa-file-excel-o"></i>',
-                            titleAttr: 'Excel',
-                            title: 'Irish Literature User'
-                        },
-                        {
-                            extend: 'csvHtml5',
-                            text: '<i class="fa fa-file-text-o"></i>',
-                            titleAttr: 'CSV',
-                            title: 'Irish Literature User'
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            text: '<i class="fa fa-file-pdf-o"></i>',
-                            titleAttr: 'PDF',
-                            title: 'Irish Literature User'
                         }
                     ],
                     "bProcessing": false,
@@ -361,8 +493,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $.fn.dataTable.ext.buttons.reload = {
-                    text: 'Reload',
-
+                    text: 'Reload'
                 };
                 var table = $('#expReader').DataTable({
 
@@ -394,7 +525,7 @@
 //                            },
                         {
                             extend: 'reload',
-                            text: '<i class="fa fa-user-plus"></i>',
+                            text: '<i class="fa fa-user-plus" style="font-size:24px;color:blue"></i>',
                             titleAttr: 'Add new Expert Reader',
                             action: function (e, dt, button, config) {
                                 $('.reportFiltrsButton').attr(
@@ -442,60 +573,18 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 var table = $("#books").DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-
-                        {
-                            text: '<i class="fa fa-files-o"></i>',
-                            titleAttr: 'email',
-                            exportOptions: {
-                                columns: ':contains("Office")'
-                            }
-                        },
-                        {
-                            extend: 'copyHtml5',
-                            text: '<i class="fa fa-files-o"></i>',
-                            titleAttr: 'Copy',
-                            exportOptions: {
-                                columns: ':contains("Office")'
-                            }
-                        },
-                        {
-                            extend: 'excelHtml5',
-                            text: '<i class="fa fa-file-excel-o"></i>',
-                            titleAttr: 'Excel',
-                            title: 'Irish Literature Library'
-                        },
-                        {
-                            extend: 'csvHtml5',
-                            text: '<i class="fa fa-file-text-o"></i>',
-                            titleAttr: 'CSV',
-                            title: 'Irish Literature Library'
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            text: '<i class="fa fa-file-pdf-o"></i>',
-                            titleAttr: 'PDF',
-                            title: 'Irish Literature Library'
-                        }
-
-                    ],
-                    "bProcessing": false,
+                    "processing": true,
+                    'language': {
+                        "loadingRecords": "&nbsp;",
+                        "processing": "Loading..."
+                    },
                     "bServerSide": false,
                     "sAjaxSource": "./LibraryDataServlet",
                     "columns": [{
-                            "targets": 0,
-                            "class": "btn-control",
+                            "className": 'details-control',
                             "orderable": false,
                             "data": null,
-                            "defaultContent": "<i class='fa fa-pencil-square fa-lg'></i>"
-                        },
-                        {
-                            "targets": -1,
-                            "class": "details-control",
-                            "orderable": false,
-                            "data": null,
-                            "defaultContent": ""
+                            "defaultContent": ''
                         },
                         {"data": "bookID"},
                         {"data": "referenceNumber"},
@@ -503,23 +592,80 @@
                             "render": function (data, type, full, meta) {
 
                                 //if length = 1 we have just 1 Author ==> display
-                                //if length >  we have more than 1 Author ==>
+                                //if length > 1 we have more than 1 Author ==>
                                 // display first Author - put the rest into modal2
                                 //     console.log("Author length :" + data.length);
-                                if (type === 'display') {
-                                    return '<textarea name="Author" rows="2" cols="40">'
-                                            + data
-                                            + '</textarea>';
-                                }
+//                                if (type === 'display') {
+//                                    return '<textarea name="Author" rows="2" cols="40">'
+//                                            + data
+//                                            + '</textarea>';
+//                                }
                                 return data;
                             }
                         },
-                        {"data": "Title"},
-//                        {"data": "Publisher"},
-                        {"data": "Publisheryear"},
-                        {"data": "Genre"},
-                        {"data": "translationTitle"},
-                        {"data": "translationPublisherYear"},
+                        {"data": "Title",
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                                console.log("Title " + data);
+                            }},
+                        {"data": "Publisher",
+                            "render": function (data, type, full, meta) {
+                                console.log("Publisher " + data);
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                            }},
+                        {"data": "Publisheryear",
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                                console.log("Publisheryear " + data);
+                            }},
+                        {"data": "Genre",
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                                console.log("Genre " + data);
+                            }},
+                        {"data": "translationTitle",
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                                console.log("translationTitle " + data);
+                            }},
+                        {"data": "translationPublisher",
+                            "render": function (data, type, full, meta) {
+                                console.log("translationPublisher " + data);
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                            }},
+                        {"data": "translationPublisherYear",
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                                console.log("translationPublisherYear " + data);
+                            }},
                         {"data": "Translator",
                             "render": function (data, type, full, meta) {
 
@@ -527,21 +673,64 @@
                                 //if length >  we have more than 1 Translator ==>
                                 // display first Translator - put the rest into modal2
                                 //     console.log("Author length :" + data.length);
-                                if (type === 'display') {
-                                    return '<textarea name="Translator" rows="2" cols="40">'
-                                            + data
-                                            + '</textarea>';
-                                }
+//                                if (type === 'display') {
+//                                    return '<textarea name="Translator" rows="2" cols="40">'
+//                                            + data
+//                                            + '</textarea>';
+//                                }
                                 return data;
                             }},
-                        {"data": "Language"},
+                        {"data": "Language",
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                                console.log("Language: " + data);
+                            }},
 //                        {"data": "physicalDescription"},
 //                        {"data": "Duplicates"},
                         //{"data": "Copies"},
-                        {"data": "ISBN"}, //as dummy for Copies
-                        {"data": "Notes"},
-                        {"data": "ISBN"},
-                        {"data": "ISSN"},
+                        {"data": "translationPublisherYear",
+                            "render": function (data, type, full, meta) {
+                                console.log("translationPublisherYear " + data);
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                            }
+                        }, //as dummy for Copies
+                        {"data": "Notes",
+                            "render": function (data, type, full, meta) {
+                                console.log("Notes " + data);
+                                if (typeof (data) === "undefined") {
+                                    return 'Notes n/a';
+                                } else {
+                                    return data;
+                                }
+                            }},
+                        {"data": "ISBN",
+                            "render": function (data, type, full, meta) {
+                                console.log("ISBN " + data);
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                            }
+                        },
+                        {"data": "ISSN",
+                            "render": function (data, type, full, meta) {
+                                console.log("ISSN " + data);
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                            }
+                        },
                         {"data": "cover",
                             "render": function (data, type, row) {
                                 if (typeof (data) === "undefined") {
@@ -557,10 +746,6 @@
                             targets: -1,
                             visible: false
                         },
-                        {
-                            "targets": [-1, 0],
-                            "orderable": false
-                        },
                         {className: "dt-left", "targets": [1, 2, 3, 4, 5, 6, 7, 8]}
                     ]
 
@@ -575,8 +760,30 @@
                     $("#referenceNumber").val($(this).closest('tr').children()[3].textContent); // ID
                     //  $("#Author").val($(this).closest('tr').children()[4].textContent); // uname
 
+                    console.log("lib a1  " + $(this).closest('tr').children()[1].textContent);
+                    console.log("lib b2 id " + $(this).closest('tr').children()[2].textContent);
+                    console.log("lib c3 ref " + $(this).closest('tr').children()[3].textContent);
+                    console.log("lib d4 Author  " + $(this).closest('tr').children()[4].textContent); //Author
+                    console.log("lib e5 Org Title " + $(this).closest('tr').children()[5].textContent);
+                    console.log("lib f6 Publisher " + $(this).closest('tr').children()[6].textContent);
+                    console.log("lib g7 Publisheryear " + $(this).closest('tr').children()[7].textContent);
+                    console.log("lib h8 Genre " + $(this).closest('tr').children()[8].textContent);
+                    console.log("lib i9 Trans Title " + $(this).closest('tr').children()[9].textContent);
+                    console.log("lib j10 Translator " + $(this).closest('tr').children()[10].textContent);
+                    console.log("lib k11 Language " + $(this).closest('tr').children()[11].textContent);
+                    console.log("lib l12 translationPublisherYear " + $(this).closest('tr').children()[12].textContent);
+                    console.log("lib m13 Notes " + $(this).closest('tr').children()[13].textContent);
+                    console.log("lib n14  " + $(this).closest('tr').children()[14].textContent);
+                    console.log("lib o15 ISSN " + $(this).closest('tr').children()[15].textContent);
+                    console.log("lib p16 ISBN " + $(this).closest('tr').children()[16].textContent);
+//                    console.log("lib q17 ??? " + $(this).closest('tr').children()[17].textContent);
+
                     var authors = rowdata.Author;
+                    // var authors = "AuthorFirst7 AuthorLast7, AuthorFirst777 AuthorLast777, AuthorFirst7 AuthorLast7";
+                    console.log("lib 41 Author  " + rowdata.Author);
                     $("#Author").val(authors);
+                    $("#Translator").val(rowdata.Translator);
+
                     if (typeof (rowdata.cover) === "undefined") {
                         var cver = 'images/not-available.jpg';
                     } else {
@@ -585,41 +792,52 @@
 
                     $("#bookCover").val(cver);
                     document.getElementById("bookCover").src = cver;
-                    $("#Title").val($(this).closest('tr').children()[5].textContent); // First
+                    $("#OrgTitle").val($(this).closest('tr').children()[4].textContent); // First
+                    $("#Publisher").val($(this).closest('tr').children()[5].textContent); // First
+                    $("#Publisheryear").val($(this).closest('tr').children()[6].textContent); // First
+                    $("#TransTitle").val($(this).closest('tr').children()[8].textContent); // First
+                    $("#Translator").val($(this).closest('tr').children()[11].textContent); // First
+                    $("#translationPublisher").val($(this).closest('tr').children()[9].textContent); // First
                     $("#Genre").val($(this).closest('tr').children()[7].textContent); // Last
-                    $("#Language").val($(this).closest('tr').children()[11].textContent); // Function
-                    $("#ISBN").val($(this).closest('tr').children()[16].textContent); // Role
-                    console.log(table.row(this).data());
-                });
-                $('#books tbody').on('click', 'tr td.btn-control', function () {
-
-                    var cver = "";
-                    var tr = $(this).closest('tr');
-                    var row = table.row(tr);
-                    var rowdata = (table.row(tr).data());
-                    $("#editBooksModal").modal("show");
-                    $("#referenceNumber2").val($(this).closest('tr').children()[3].textContent); // ID
-                    $("#Author2").val($(this).closest('tr').children()[4].textContent); // uname
-
-                    if (typeof (rowdata.cover) === "undefined") {
-                        var cver = 'images/not-available.jpg';
-                    } else {
-                        var cver = 'http://localhost' + rowdata.cover + '';
-                    }
-
-                    $("#bookCover").val(cver);
-                    document.getElementById("bookCover").src = cver;
-                    $("#Title2").val($(this).closest('tr').children()[5].textContent); // First
-                    $("#Genre2").val($(this).closest('tr').children()[7].textContent); // Last
-                    $("#Language2").val($(this).closest('tr').children()[11].textContent); // Function
-                    //      $("#ISBN2").val($(this).closest('tr').children()[16].textContent); // Role
+                    $("#Language").val($(this).closest('tr').children()[12].textContent); // Function
+                    $("#ISBN").val($(this).closest('tr').children()[15].textContent); // Role
+                    $("#ISSN").val($(this).closest('tr').children()[16].textContent); // Role
 
                     console.log(table.row(this).data());
                 });
+//                $('#books tbody').on('click', 'tr td.btn-control', function () {
+//
+//                    var cver = "";
+//                    var tr = $(this).closest('tr');
+//                    var row = table.row(tr);
+//                    var rowdata = (table.row(tr).data());
+//                    $("#editBooksModal").modal("show");
+//                    $("#referenceNumber2").val($(this).closest('tr').children()[3].textContent); // ID
+//                    $("#Author2").val($(this).closest('tr').children()[4].textContent); // uname
+//
+//                    if (typeof (rowdata.cover) === "undefined") {
+//                        var cver = 'images/not-available.jpg';
+//                    } else {
+//                        var cver = 'http://localhost' + rowdata.cover + '';
+//                    }
+//
+//                    $("#bookCover").val(cver);
+//                    document.getElementById("bookCover").src = cver;
+//                    $("#Title2").val($(this).closest('tr').children()[5].textContent); // First
+//                    $("#Genre2").val($(this).closest('tr').children()[7].textContent); // Last
+//                    $("#Language2").val($(this).closest('tr').children()[11].textContent); // Function
+//                    //      $("#ISBN2").val($(this).closest('tr').children()[16].textContent); // Role
+//
+//                    console.log(table.row(this).data());
+//                });
             });
         </script>
 
-
+        <script type="text/javascript">
+            function saveBooks() {
+                alert("save Books to do");
+            }
+        </script>
         <!--applications-->
 
         <!-- detailsTable-->              
@@ -629,6 +847,11 @@
                 var rowdata = [];
                 detailsTable = $('#applications1').DataTable({
                     data: [],
+                    "processing": true,
+                    "language": {
+                        "loadingRecords": "&nbsp; Loading Applications... ",
+                        "processing": "Loading Applications..."
+                    },
                     "columns": [
                         {
                             "targets": 0,
@@ -741,10 +964,14 @@
                                 return data;
                             }},
                         {"data": "bookTitle",
-                            "render": function (data) {
-//                                console.log("data:bookTitle  " + data);
-                                return data;
-                            }},
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                            }
+                        },
                         {"data": "TranslatorTrack2",
                             "render": function (data) {
                                 console.log("data:TranslatorTrack2  " + data);
@@ -1337,35 +1564,6 @@
 
                                     docName = nls[l].trim();
                                 }
-
-// Display translator translation sample
-// 
-//                                else if (l === 4) {
-//                                    https://ilikekillnerds.com/2016/05/removing-character-startend-string-javascript/
-//                                    Remove the last character
-//                                    var myString = 'thisIsMyString!';
-//                                    var sillyString = myString.slice(0, -1);
-
-//
-//                                    td = document.createElement('td');
-//                                    var btn = document.createElement('input');
-//                                    btn.type = "button";
-//                                    btn.className = "btn btn-info";
-//                                    btn.value = "Translator translation sample";
-//
-//                                    var dir = nls[l].substr(1);
-//                                    var destination = dir.replace("/home/markus/public_html/", "/~markus/");
-//                                    console.log("destination " + destination);
-//
-//                                    var entry = "location.href='http://localhost" + destination + "'";
-//                                    console.log("localhost " + entry);
-//
-//                                    btn.setAttribute("onclick", entry);
-//                                    td.appendChild(btn);
-//                                    console.log("nls[l] [" + l + " ] " + nls[l]);
-//                                    td.appendChild(btn);
-//                                    tr.appendChild(td);
-//                                }
                             }
                             tr.appendChild(td);
                             tableBody.appendChild(tr);
@@ -1454,6 +1652,7 @@
                             if (typeof (TranslTitles[i][j]) === "undefined") {
                                 TranslTitles[i][j] = '';
                             }
+                            console.log("555 last bit ");
                             var tr = document.createElement('TR');
                             td.width = '33.33%';
                             td2.width = '33.33%';
@@ -1466,6 +1665,7 @@
                             var Author = record[1];
                             var Title = record[2];
                             var ReferenceNumber = record[3];
+                            console.log("8 xyz record " + record);
                             idx++;
                             td.appendChild(document.createTextNode(Author));
                             td2.appendChild(document.createTextNode(Title));
@@ -1968,113 +2168,6 @@
                         w++; // next translator
                     }
 
-//                    $("#appcontract").val(contr);
-//                    $("#appproposedDateOfPublication").val($(this).closest('tr').children()[5].textContent);
-////                  $("#appproposedPrintRun").val($(this).closest('tr').children()[6].textContent);
-////                    $("#appplannedPageExtent").val($(this).closest('tr').children()[7].textContent);
-//                    $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
-////                    $("#appfeePerPage").val($(this).closest('tr').children()[10].textContent);
-//                    $("#apptranslatorFee").val($(this).closest('tr').children()[11].textContent); //ok
-//                    $("#appNotes").val($(this).closest('tr').children()[12].textContent);
-//                    $("#appStatus").val($(this).closest('tr').children()[13].textContent); //ok
-//                    $("#appcopiesSent").val($(this).closest('tr').children()[14].textContent);
-//                    $("#appdateCopiesWereSent").val($(this).closest('tr').children()[15].textContent);
-//                    $("#appTC_ACCEPTED").val($(this).closest('tr').children()[17].textContent);
-//                    $("#appAPPROVED").val($(this).closest('tr').children()[18].textContent);
-//                    $("#appGenre").val($(this).closest('tr').children()[19].textContent);
-//                    $("#appExpertReader").val($(this).closest('tr').children()[21].textContent);
-//                    $("#appBookTitle").val($(this).closest('tr').children()[22].textContent); //ok
-//                    $("#expertReaderName").val($(this).closest('tr').children()[22].textContent);
-//                    $("#sampleSentOut").val($(this).closest('tr').children()[27].textContent);
-//                    $("#sampleReturned").val($(this).closest('tr').children()[28].textContent);
-//                    $("#appReadersReport").val($(this).closest('tr').children()[29].textContent);
-////                    $("#readerReportSummary").val($(this).closest('tr').children()[32].textContent);
-//
-//
-//                    $("#appLanguageOriginal").val($(this).closest('tr').children()[34].textContent);
-//                    $("#appPageExtentOriginal").val($(this).closest('tr').children()[35].textContent);
-//                    $("#appCountryOfPublication").val($(this).closest('tr').children()[36].textContent);
-////                    $("#appForeignPublisher").val($(this).closest('tr').children()[37].textContent);
-////                    $("#appForeignCountry").val($(this).closest('tr').children()[38].textContent);
-////                    $("#appTargetLanguage").val($(this).closest('tr').children()[39].textContent);
-//                    $("#amountRequested").val($(this).closest('tr').children()[41].textContent);
-//                    $("#previousGrantAid").val($(this).closest('tr').children()[59].textContent);
-//                    $("#award").val($(this).closest('tr').children()[60].textContent);
-//                    $("#salesFigures").val($(this).closest('tr').children()[61].textContent);
-//                    $("#authorList").val($(this).closest('tr').children()[64].textContent);
-//                    $("#appDateOfPublicationOriginal").val(rowdata.publicationYear);
-//                    console.log(detailsTable.row(this).data());
-//                    console.log("12345  1 " + $(this).closest('tr').children()[1].textContent);
-//                    console.log("12345  2 " + $(this).closest('tr').children()[2].textContent);
-//                    console.log("12345  3 " + $(this).closest('tr').children()[3].textContent);
-//                    console.log("12345  4 " + $(this).closest('tr').children()[4].textContent);
-//                    console.log("12345  5 " + $(this).closest('tr').children()[5].textContent);
-//                    console.log("12345  6 " + $(this).closest('tr').children()[6].textContent);
-//                    console.log("12345  7 " + $(this).closest('tr').children()[7].textContent);
-//                    console.log("12345  8 " + $(this).closest('tr').children()[8].textContent);
-//                    console.log("12345  9 " + $(this).closest('tr').children()[9].textContent);
-//                    console.log("12345 10 " + $(this).closest('tr').children()[10].textContent);
-//                    console.log("12345 11 " + $(this).closest('tr').children()[11].textContent);
-//                    console.log("12345 12 " + $(this).closest('tr').children()[12].textContent);
-//                    console.log("12345 13 " + $(this).closest('tr').children()[13].textContent);
-//                    console.log("12345 14 " + $(this).closest('tr').children()[14].textContent);
-//                    console.log("12345 15 " + $(this).closest('tr').children()[15].textContent);
-//                    console.log("12345 16 " + $(this).closest('tr').children()[16].textContent);
-//                    console.log("12345 17 " + $(this).closest('tr').children()[17].textContent);
-//                    console.log("12345 18 " + $(this).closest('tr').children()[18].textContent);
-//                    console.log("12345 19 " + $(this).closest('tr').children()[19].textContent);
-//                    console.log("12345 20 " + $(this).closest('tr').children()[20].textContent);
-//                    console.log("12345 21 " + $(this).closest('tr').children()[21].textContent);
-//                    console.log("12345 22 " + $(this).closest('tr').children()[22].textContent);
-//                    console.log("12345 23 " + $(this).closest('tr').children()[23].textContent);
-//                    console.log("12345 24 " + $(this).closest('tr').children()[24].textContent);
-//                    console.log("12345 25 " + $(this).closest('tr').children()[25].textContent);
-//                    console.log("12345 26 " + $(this).closest('tr').children()[26].textContent);
-//                    console.log("12345 27 " + $(this).closest('tr').children()[27].textContent);
-//                    console.log("12345 28 " + $(this).closest('tr').children()[28].textContent);
-//                    console.log("12345 29 " + $(this).closest('tr').children()[29].textContent);
-//                    console.log("12345 30 " + $(this).closest('tr').children()[30].textContent);
-//                    console.log("12345 31 " + $(this).closest('tr').children()[31].textContent);
-//                    console.log("12345 32 " + $(this).closest('tr').children()[32].textContent);
-//                    console.log("12345 33 " + $(this).closest('tr').children()[33].textContent);
-//                    console.log("12345 34 " + $(this).closest('tr').children()[34].textContent);
-//                    console.log("12345 35 " + $(this).closest('tr').children()[35].textContent);
-//                    console.log("12345 36 " + $(this).closest('tr').children()[36].textContent);
-//                    console.log("12345 37 " + $(this).closest('tr').children()[37].textContent);
-//                    console.log("12345 38 " + $(this).closest('tr').children()[38].textContent);
-//                    console.log("12345 39 " + $(this).closest('tr').children()[39].textContent);
-//                    console.log("12345 40 " + $(this).closest('tr').children()[40].textContent);
-//                    console.log("12345 41 " + $(this).closest('tr').children()[41].textContent);
-//                    console.log("12345 42 " + $(this).closest('tr').children()[42].textContent);
-//                    console.log("12345 43 " + $(this).closest('tr').children()[43].textContent);
-//                    console.log("12345 44 " + $(this).closest('tr').children()[44].textContent);
-//                    console.log("12345 45 " + $(this).closest('tr').children()[45].textContent);
-//                    console.log("12345 46 " + $(this).closest('tr').children()[46].textContent);
-//                    console.log("12345 47 " + $(this).closest('tr').children()[47].textContent);
-//                    console.log("12345 48 " + $(this).closest('tr').children()[48].textContent);
-//                    console.log("12345 49 " + $(this).closest('tr').children()[49].textContent);
-//                    console.log("12345 50 " + $(this).closest('tr').children()[50].textContent);
-//                    console.log("12345 51 " + $(this).closest('tr').children()[51].textContent);
-//                    console.log("12345 52 " + $(this).closest('tr').children()[52].textContent);
-//                    console.log("12345 53 " + $(this).closest('tr').children()[53].textContent);
-//                    console.log("12345 54 " + $(this).closest('tr').children()[54].textContent);
-//                    console.log("12345 55 " + $(this).closest('tr').children()[55].textContent);
-//                    console.log("12345 56 " + $(this).closest('tr').children()[56].textContent);
-//                    console.log("12345 57 " + $(this).closest('tr').children()[57].textContent);
-//                    console.log("12345 58 " + $(this).closest('tr').children()[58].textContent);
-//                    console.log("12345 59 " + $(this).closest('tr').children()[59].textContent);
-//                    console.log("12345 60 " + $(this).closest('tr').children()[60].textContent);
-//                    console.log("12345 61 " + $(this).closest('tr').children()[61].textContent);
-//                    console.log("12345 62 " + $(this).closest('tr').children()[62].textContent);
-//                    console.log("12345 63 " + $(this).closest('tr').children()[63].textContent);
-//                    console.log("12345 64 " + $(this).closest('tr').children()[64].textContent);
-//                    console.log("12345 65 " + $(this).closest('tr').children()[65].textContent);
-////                            console.log("12345 66 " + $(this).closest('tr').children()[66].textContent);
-////                            console.log("12345 67 " + $(this).closest('tr').children()[67].textContent);
-////                            console.log("12345 68 " + $(this).closest('tr').children()[68].textContent);
-////                            console.log("12345 69 " + $(this).closest('tr').children()[69].textContent);
-////                            console.log("12345 70 " + $(this).closest('tr').children()[70].textContent);
-////                    $("#applicationsModal").modal("show");
                 });
             });
         </script>
@@ -2115,6 +2208,10 @@
                     },
                     "colReorder": true,
                     "processing": true,
+                    "language": {
+                         "loadingRecords": "&nbsp; Loading Applications... ",
+                        "processing": "Loading Applications..."
+                    },
                     "serverSide": true,
                     "stateSave": true,
                     "searching": true,
@@ -2151,11 +2248,11 @@
                             }},
                         {"data": "bookTitle",
                             "render": function (data) {
-                                if (data !== null) {
+                                if (typeof data === "undefined") {
 //                                    console.log("bookTitle  " + data);
-                                    return data;
+                                    return  "n/a";
                                 } else {
-                                    return "n/a";
+                                    return data;
                                 }
                             }},
                         {"data": "Status",
@@ -2203,8 +2300,6 @@
                 ]);
             });
         </script>
-
-
 
         <script type="text/javascript">
 
@@ -2295,6 +2390,16 @@
             tr.shown td.details-control {
                 background: url('images/details_close.png') no-repeat center center;
             }
+            td.delete-control {
+                background: url('images/delete-control.png') no-repeat center center;
+                cursor: pointer;
+            }
+
+            td.add-control {
+                background: url('images/add-control.png') no-repeat center center;
+                cursor: pointer;
+            }
+
             application.dataTable tbody td {
                 word-break: break-all;
                 vertical-align: top;
@@ -2422,6 +2527,24 @@
                 box-shadow: 0 3px 0 0 #007299;
                 color: #0099cc;
             }
+            .mytab .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+            .mytab2 .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+            #myTab li a { border-color: blue;background-color:#A5C967; }
+            #myTab li.active a {border-bottom-color: transparent;background-color:Yellow; }
+            #myTab2 li a { border-color: blue;background-color:#A5C967; }
+            #myTab2 li.active a {border-bottom-color: transparent;background-color:Yellow; }
+            .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
+
+
+
+            body .modal-admin {
+                /* new custom width */
+                width: 750px;
+                /* must be half of the width, minus scrollbar on the left (30px) */
+                margin-left: 175px;
+                margin-right: 0;
+                margin-top: 50px ;
+            }
         </style>
 
 
@@ -2520,6 +2643,31 @@
             });
         </script>
 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                /**
+                 * Vertically center Bootstrap 3 modals so they aren't always stuck at the top
+                 * https://www.abeautifulsite.net/vertically-centering-bootstrap-modals
+                 */
+                $(function () {
+                    function reposition() {
+                        var modal = $(this),
+                                dialog = modal.find('.modal-dialog1');
+                        modal.css('display', 'block');
+                        // Dividing by two centers the modal exactly, but dividing by three 
+                        // or four works better for larger screens.
+                        dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+                    }
+                    // Reposition when a modal is shown
+                    $('.modal').on('show.bs.modal', reposition);
+                    // Reposition when the window is resized
+                    $(window).on('resize', function () {
+                        $('.modal:visible').each(reposition);
+                    });
+                });
+            });
+        </script>
+
 
         <!--if Publisher selected display publisherBox-->
         <script type="text/javascript">
@@ -2568,11 +2716,11 @@
 
                         <!-- Nav tabs -->
                         <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="background-color: #d9d1d1">
+                        <div class="collapse navbar-collapse" id="myTab" style="background-color: #d9d1d1">
                             <ul class="nav navbar-nav nav-tabs two-lines" role="tablist">
                                 <li role="tab" class="active"><a href="#Application" data-toggle="tab">Application Management</a></li>
                                 <li role="tab" ><a href="#User" data-toggle="tab">User Management</a></li>
-                                <li role="tab" ><a href="#Contracts" data-toggle="tab">Contracts</a></li>
+                                <!--<li role="tab" ><a href="#Contracts" data-toggle="tab">Contracts</a></li>-->
                                 <li role="tab" ><a href="#ExpertReader" data-toggle="tab">Expert Reader</a></li>
                                 <li role="tab" ><a href="#Library" data-toggle="tab">Library</a></li>
                                 <li role="tab" ><a href="#Genres" data-toggle="tab">Genres</a></li>
@@ -3004,25 +3152,6 @@
                                                                        >
                                                             </div>
                                                         </div> <!--row-->
-
-                                                        <!--                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                                                                    <div class="col-sm-3">
-                                                                                                        <label for="appTC_ACCEPTED" class="control-label pull-left">T&C accepted</label>
-                                                                                                        <input id="appTC_ACCEPTED"
-                                                                                                               type="text"                                
-                                                                                                               class="form-control"                                
-                                                                                                               name="appTC_ACCEPTED"                                
-                                                                                                               >
-                                                                                                    </div>
-                                                                                                    <div class="col-sm-4">
-                                                                                                        <label for="appAPPROVED" class="control-label pull-left">Application Approved</label>
-                                                                                                        <input id="appAPPROVED"
-                                                                                                               type="text"                                
-                                                                                                               class="form-control"                                
-                                                                                                               name="appAPPROVED"                                
-                                                                                                               >
-                                                                                                    </div>
-                                                                                                </div> row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
@@ -3622,7 +3751,6 @@
                                     </div> <!-- /container-fluid -->
 
                                     <!--userModal-->
-
                                     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -3810,213 +3938,100 @@
 
                                 </div> <!-- tab-pane expReader-->
 
-
-
                                 <!--Library-->
                                 <div class="tab-pane fade" id="Library">
                                     <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
 
                                         <div class="table-responsive">
-                                            <table id="books" class="display table table-striped table-bordered  dt-responsive nowrap" width="100%" cellspacing="0">
+                                            <table id="books" class="display table table-striped table-bordered nowrap" width="100%" cellspacing="0">
                                                 <thead>
-                                                    <tr>
-                                                        <th class="btn-control"></th>
+                                                    <tr>         
                                                         <th class="details-control"></th>
-                                                        <th class="all">bookID</th>
+                                                        <th class="none">bookID</th>
                                                         <th class="all">Reference <br/> Number</th>
                                                         <th class="all">Author(s)</th>
                                                         <th class="all">Title</th>
-                                                        <th class="all">Publisher <br/>Year</th>
-                                                        <th class="all">Genre</th>
-                                                        <th class="all">Translation<br/>Title</th>                                       
-                                                        <th class="all">Translation<br/>Publisher Year</th>
+                                                        <th class="all">Publisher</th>                                                        
+                                                        <th class="none">Publisher <br/>Year</th>
+                                                        <th class="none">Genre</th>
+                                                        <th class="all">Translation<br/>Title</th>  
+                                                        <th class="all">Original Publisher</th>                                                        
+                                                        <th class="none">Translation<br/>Publisher Year</th>                                                        
                                                         <th class="all">Translator</th>
                                                         <th class="all">Language</th>
-                                                        <th class="all">Copies</th>
-                                                        <th class="all">Notes</th>
-                                                        <th class="all">ISBN</th>
-                                                        <th class="all">ISSN</th>
-                                                        <th class="all"></th>                                                   
+                                                        <th class="none">Copies</th>
+                                                        <th class="none">Notes</th>
+                                                        <th class="none">ISBN</th>
+                                                        <th class="none">ISSN</th>
+                                                        <th class="none"></th>                                                                                                            
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Main Grid -->   
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>                                                                    
+                                                        <th class="details-control"></th>
+                                                        <th class="none">bookID</th>
+                                                        <th class="all">Reference <br/> Number</th>
+                                                        <th class="all">Author(s)</th>
+                                                        <th class="all">Title</th>
+                                                        <th class="all">Publisher</th>                                                        
+                                                        <th class="none">Publisher <br/>Year</th>
+                                                        <th class="none">Genre</th>
+                                                        <th class="all">Translation<br/>Title</th>  
+                                                        <th class="all">Original Publisher</th>                                                        
+                                                        <th class="none">Translation<br/>Publisher Year</th>                                                        
+                                                        <th class="all">Translator</th>
+                                                        <th class="all">Language</th>
+                                                        <th class="none">Copies</th>
+                                                        <th class="none">Notes</th>
+                                                        <th class="none">ISBN</th>
+                                                        <th class="none">ISSN</th>
+                                                        <th class="none"></th>                           
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>             
+                                    <c:if test="${not empty error}">Error: ${error}</c:if>
+
+                                    </div>
+                                </div> <!--Library-->
+
+                                <!--Genres-->
+                                <div class="tab-pane fade" id="Genres">
+                                    <h2>Manage Genres</h2>
+                                    <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
+                                        <div class="table-responsive">
+                                            <table id="genreTable" class="table table-striped table-bordered  dt-responsive nowrap" width="75%" cellspacing="0" border="1">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="delete-control" style="width: 5%">Remove</th>                                                  
+                                                        <th class="all">Genre</th>   
+                                                        <th class="never"></th>     
+                                                        <th class="never"></th>
                                                     </tr>
                                                 </thead>
 
                                                 <tfoot>
                                                     <tr>
-                                                        <th class="btn-control"></th>
-                                                        <th class="details-control"></th>
-                                                        <th class="all">bookID</th>
-                                                        <th class="all">Reference <br/> Number</th>
-                                                        <th class="all">Author(s)</th>
-                                                        <th class="all">Title</th>
-                                                        <th class="all">Publisher <br/>Year</th>
-                                                        <th class="all">Genre</th>
-                                                        <th class="all">Translation<br/>Title</th>                                       
-                                                        <th class="all">Translation<br/>Publisher Year</th>
-                                                        <th class="all">Translator</th>
-                                                        <th class="all">Language</th>
-                                                        <th class="all">Copies</th>
-                                                        <th class="all">Notes</th>
-                                                        <th class="all">ISBN</th>
-                                                        <th class="all">ISSN</th>
-                                                        <th class="all"></th>                                                      
+                                                        <th class="delete-control" style="width: 5%">Remove</th>                                                  
+                                                        <th class="all"></th>   
+                                                        <th class="never"></th>     
+                                                        <th class="never"></th>
                                                     </tr>
                                                 </tfoot>
-
-                                                <tbody>
-
-                                                </tbody>
                                             </table>
                                         </div>             
-                                    <c:if test="${not empty error}">Error: ${error}</c:if>
+                                    </div>                             
+                                </div> <!--tab-pane Genres-->
 
-
-                                        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header" style="background-color: #c3bcbc">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="booksModalLabel">Display Library</h4>
-                                                    </div>
-                                                    <div class="modal-body" style="background-color: #d9d1d1">
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> referenceNumber </label>
-                                                                <p><input type="text" class="input-sm" id="referenceNumber"/></p>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-1"></div>
-                                                            <div class="col-sm-8">        
-                                                                <label class="control-label">Book cover</label>                                                               
-                                                                <img id="bookCover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
-                                                            </div>
-
-                                                        </div>
-
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-6">
-                                                                <label class="pull-left" for="Author"> Author </label>   
-                                                                <textarea  id="Author" name="Author"  rows="2" cols="65">
-                                                        
-                                                                </textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left" for="Title"> Title</label>
-                                                                <p><input type="text" class="input-sm" id="Title"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Genre</label>
-                                                                <p><input type="text" class="input-sm" id="Genre"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Language(s) </label>
-                                                                <p><input type="text" class="input-sm" id="Language"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">                                                                                                          
-                                                                <label class="pull-left"> ISBN </label>
-                                                                <p><input type="text" class="input-sm" id="ISBN"/></p>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
-
-
-                                        <div class="modal fade" id="editBooksModal" tabindex="-1" role="dialog" aria-labelledby="editBooksModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="editBooksModalLabel">Edit books</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Reference number </label>
-                                                                <p><input type="text" class="input-sm" id="referenceNumber2"/></p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-6">
-                                                                <label class="pull-left" for="Author2"> Author </label>   
-                                                                <textarea  id="Author2" name="Author2"  rows="2" cols="65">
-                                                        
-                                                                </textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left" for="Title2"> Title</label>
-                                                                <p><input type="text" class="input-sm" id="Title2"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Genre</label>
-                                                                <p><input type="text" class="input-sm" id="Genre2"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Language(s) </label>
-                                                                <p><input type="text" class="input-sm" id="Language2"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">                                                                                                          
-                                                                <label class="pull-left"> ISBN </label>
-                                                                <p><input type="text" class="input-sm" id="ISBN2"/></p>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
-                                    </div>
-                                </div> <!--Library-->
-
-                                <!--Misc-->
-                                <div class="tab-pane fade" id="Genres">
-                                    <h2>Genre content goes here</h2>
-                                </div>
                                 <div class="tab-pane fade" id="Queries">
                                     <h2>Queries go here</h2>
                                 </div>
                             </div>
                         </div>
                     </nav>
-
-
-
 
                     <!--footer start-->
                     <div id="base">  
@@ -4041,20 +4056,107 @@
                 <div class="shadowbase"> </div>
             </div><!-- end of Shadow container div -->
             <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2017 mgr Software
+                &copy; 2019 mgr Software
             </div>
 
-            <!--Add New Eexpert Reader modal-->
-            <div class="modal fade" id="createNewEReadermodal" data-modal-index="2">
+
+            <!--Add New Staff Member modal-->
+            <div class="modal fade" id="createNewStaffmodal" data-modal-index="2">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form 
-                            id="createNewEReaderForm"  
+                            id="createNewStaffmodalForm"  
                             method="POST"
                             role="form"                             
-                            action="${pageContext.request.contextPath}/AddUserExpertReader" 
+                            action="${pageContext.request.contextPath}/AddUserStaff" 
                         >
-                     
+
+
+                        <input type="hidden" name="AddNewStaff"  class="form-control" value="AddNewStaff">
+                        <div class="modal-header" style="background-color: #c3bcbc">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Add new Staff member</h4>
+                        </div>
+                        <div class="modal-body" style="background-color: #d9d1d1">
+
+                            <div class="panel-body">
+
+                                <!--ENSURE signup is validated-->
+                                <div class="form-group">
+                                    <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="StaffUname" id="StaffUname" placeholder="Username" onblur="loadXMLDocStaff()"/>                                           
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--<label for="firstname" class="col-md-3 control-label">First Name</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="StaffFirstname" placeholder="First Name">                                            
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--<label for="lastname" class="col-md-3 control-label">Last Name</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="StaffLastname" placeholder="Last Name">                                            
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>       
+
+                                <div class="form-group">
+                                    <!--<label for="email" class="col-md-3 control-label">Email</label>-->
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control" name="StaffEmail" id="StaffEmail" placeholder="Email Address">                                            
+                                        <span class="help-block" id="error"></span>   
+                                        <!--<span id="erremail" class="alert alert-danger col-lg-8 col-md-8 col-sm-8 col-xs-12">Invalid Email Address</span>-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <!--<label for="password" class="col-md-3 control-label">Password</label>-->
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control" id="StaffPassword" name="StaffPassword" placeholder="Password">                                           
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control"  id="StaffCpassword" name="StaffCpassword" placeholder="Confirm Password">                               
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                            </div><!--signup-form-container-->
+
+                            <!--<input type="hidden" name="NewAssignedERRefNo" id="NewAssignedERRefNo"  class="form-control">-->
+                        </div>
+                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                            <input type="hidden" name="userID" value="${userID}">
+                            <input type="hidden" name="publisherID" value="${publisherID}">
+                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                            <button type="submit" class="btn btn-primary" >Add new Staff member</button>
+                        </div>
+
+                        <!--                                </div>-->
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->     
+
+        <!--Add New Expert Reader modal-->
+        <div class="modal fade" id="createNewEReadermodal" data-modal-index="2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form 
+                        id="createNewEReaderForm"  
+                        method="POST"
+                        role="form"                             
+                        action="${pageContext.request.contextPath}/AddUserExpertReader" 
+                        >
+
 
                         <input type="hidden" name="AddExpertReader"  class="form-control" value="AddExpertReader">
                         <div class="modal-header" style="background-color: #c3bcbc">
@@ -4063,89 +4165,89 @@
                         </div>
                         <div class="modal-body" style="background-color: #d9d1d1">
 
-                                <div class="panel-body">
+                            <div class="panel-body">
 
-  <!--                              <div class="signup-form-container">
+                                <!--                              <div class="signup-form-container">
+                              
+                              
+                                                                      <div id="signupalert" style="display:none" class="alert alert-danger">
+                                                                          <p>Error:</p>
+                                                                          <span></span>
+                                                                      </div>
+                              
+                                                                      <div class="form-body">
+                                                                          <div class="alert alert-info" id="message" style="display:none;">
+                                                                              submitted
+                                                                          </div>
+                              
+                                                                          <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
+                                                                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                                              <span class="sr-only">Error:</span>
+                                                                              <span class="message"></span>
+                                                                          </div>
+                              
+                                                                          <div class="alert alert-success" role="alert" id="successField" style="display:none">
+                                                                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                                              <span class="sr-only">Success:</span>
+                                                                              <span class="message"></span>
+                                                                          </div>-->
+                                <!--ENSURE signup is validated-->
+                                <div class="form-group">
+                                    <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="uname" id="uname" placeholder="Username" onblur="loadXMLDocER()"/>                                           
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--<label for="firstname" class="col-md-3 control-label">First Name</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="firstname" placeholder="First Name">                                            
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--<label for="lastname" class="col-md-3 control-label">Last Name</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="lastname" placeholder="Last Name">                                            
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>       
 
+                                <div class="form-group">
+                                    <!--<label for="email" class="col-md-3 control-label">Email</label>-->
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="Email Address">                                            
+                                        <span class="help-block" id="error"></span>   
+                                        <!--<span id="erremail" class="alert alert-danger col-lg-8 col-md-8 col-sm-8 col-xs-12">Invalid Email Address</span>-->
+                                    </div>
+                                </div>
 
-                                        <div id="signupalert" style="display:none" class="alert alert-danger">
-                                            <p>Error:</p>
-                                            <span></span>
-                                        </div>
+                                <div class="form-group">
+                                    <!--<label for="password" class="col-md-3 control-label">Password</label>-->
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">                                           
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
 
-                                        <div class="form-body">
-                                            <div class="alert alert-info" id="message" style="display:none;">
-                                                submitted
-                                            </div>
+                                <div class="form-group">
+                                    <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control"  id="cpassword" name="cpassword" placeholder="Confirm Password">                               
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
 
-                                            <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
-                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                <span class="sr-only">Error:</span>
-                                                <span class="message"></span>
-                                            </div>
+                                <!--                                       </div><%--form-body --%>
+                               
+                                                                       <div class="form-footer">
+                                                                           <button type="submit" class="btn btn-info">
+                                                                               <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
+                                                                           </button>
+                                                                       </div>-->
+                            </div><!--signup-form-container-->
 
-                                            <div class="alert alert-success" role="alert" id="successField" style="display:none">
-                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                <span class="sr-only">Success:</span>
-                                                <span class="message"></span>
-                                            </div>-->
-<!--ENSURE signup is validated-->
-                                            <div class="form-group">
-                                                <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="uname" id="uname" placeholder="Username" onblur="loadXMLDoc()"/>                                           
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <!--<label for="firstname" class="col-md-3 control-label">First Name</label>-->
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="firstname" placeholder="First Name">                                            
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <!--<label for="lastname" class="col-md-3 control-label">Last Name</label>-->
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="lastname" placeholder="Last Name">                                            
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div>       
-
-                                            <div class="form-group">
-                                                <!--<label for="email" class="col-md-3 control-label">Email</label>-->
-                                                <div class="col-md-9">
-                                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email Address">                                            
-                                                    <span class="help-block" id="error"></span>   
-                                                    <!--<span id="erremail" class="alert alert-danger col-lg-8 col-md-8 col-sm-8 col-xs-12">Invalid Email Address</span>-->
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <!--<label for="password" class="col-md-3 control-label">Password</label>-->
-                                                <div class="col-md-9">
-                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">                                           
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
-                                                <div class="col-md-9">
-                                                    <input type="password" class="form-control"  id="cpassword" name="cpassword" placeholder="Confirm Password">                               
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div>
-         
- <!--                                       </div><%--form-body --%>
-
-                                        <div class="form-footer">
-                                            <button type="submit" class="btn btn-info">
-                                                <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
-                                            </button>
-                                        </div>-->
-                                </div><!--signup-form-container-->
-                                        
                             <!--<input type="hidden" name="NewAssignedERRefNo" id="NewAssignedERRefNo"  class="form-control">-->
                         </div>
                         <div class="modal-footer"  style="background-color: #c3bcbc">
@@ -4155,16 +4257,15 @@
                             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                             <button type="submit" class="btn btn-primary" >Add new expert reader</button>
                         </div>
-                   
-<!--                                </div>-->
-                            </form>
+
+                        <!--                                </div>-->
+                    </form>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->     
 
         <!--additionalExpertReaderModal-->
         <div id="additionalExpertReaderModal"></div>
-
 
         <!--assignEReadermodal-->
         <div class="modal fade" id="assignEReadermodal" data-modal-index="2">
@@ -4235,8 +4336,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->           
 
-
-
         <!--pressCuttingsModal-->
         <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
             <div class="modal-dialog">
@@ -4274,14 +4373,224 @@
         </div> <!--modal fade-->
         <!--pressCuttingsModal-->
         <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
-        
-                <script type="text/javascript">
-            function loadXMLDoc()
+
+
+        <!--createNewGenremodal-->
+        <div class="modal fade" id="createNewGenremodal" tabindex="-1" role="dialog" aria-labelledby="createNewGenremodalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #c3bcbc;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="createNewGenremodalLabel">Add Genre</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <label for="addGenre" class="control-label pull-left">Add Genre</label>
+                                <input type="text" class="form-control input-sm" id="addGenre"/>                               
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                       
+                        <button type="button" class="btn btn-primary" id="addGenreButton" data-dismiss="modal" >Add Genre</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+        <!--deleteGenreSuccessModal-->
+        <div class="modal fade" id="deleteGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteGenreSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="deleteGenreSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showDeletedGenre"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+        <!--addGenreSuccessModal-->
+        <div class="modal fade" id="addGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addGenreSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addGenreSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showAddedGenre"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
+
+        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
+
+            <div class="modal-dialog" role="document">
+
+                <div class="modal-content" style="background-color: #d9d1d1">
+
+                    <div class="modal-header" style="background-color: #c3bcbc">
+                        <h4 class="modal-title" id="booksModalLabel">Manage books</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    </div>
+
+                    <!-- modal-body -->
+                    <div class="modal-body" style="background-color: #d9d1d1;">
+                        <div class="container-fluid">
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-8">        
+                                    <label class="control-label">Book cover</label>                                                               
+                                    <img id="bookCover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                <div class="col-sm-4">
+                                    <label class="pull-left"> Reference Number </label>
+                                    <p><input type="text" class="input-sm pull-left" id="referenceNumber"/></p>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                <div class="col-sm-5">
+                                    <label class="pull-left" for="Author"> Author </label>   
+                                    <input type="text" class="input-sm pull-left" id="Author"/>                                   
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="pull-left" for="Translator"> Translator </label>   
+                                    <input type="text" class="input-sm pull-left" id="Translator"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                <div class="col-sm-5">
+                                    <label class="pull-left" for="OrgTitle"> Original Title &nbsp;&nbsp;&nbsp;</label>
+                                    <input type="text" class="input-sm pull-left" id="OrgTitle"/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="pull-left" for="TransTitle"> Translated Title</label>
+                                    <input type="text" class="input-sm pull-left" id="TransTitle"/>
+                                </div>
+
+                            </div>
+
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                <div class="col-sm-5">
+                                    <label class="pull-left" for="Publisher"> Publisher &nbsp;&nbsp;&nbsp;</label>
+                                    <input type="text" class="input-sm pull-left" id="Publisher"/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="pull-left" for="translationPublisher"> Original Publisher</label>
+                                    <input type="text" class="input-sm pull-left" id="translationPublisher"/>
+                                </div>
+                            </div>
+
+
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                <div class="col-sm-5">
+                                    <label class="pull-left"> Publisheryear</label>
+                                    <input type="text" class="input-sm pull-left" id="Publisheryear"/>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label class="pull-left"> Genre</label>
+                                    <input type="text" class="input-sm pull-left" id="Genre"/>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                <div class="col-sm-4">
+                                    <label class="pull-left"> Language(s) </label>
+                                    <p><input type="text" class="input-sm" id="Language"/></p>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                <div class="col-sm-5">                                                                                                          
+                                    <label class="pull-left"> ISBN </label>
+                                    <input type="text" class="input-sm" id="ISBN"/>
+                                </div>
+                                <div class="col-sm-5">                                                                                                          
+                                    <label class="pull-left"> ISSN </label>
+                                    <input type="text" class="input-sm" id="ISSN"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  <!--modal-body -->
+
+                    <!--modal-footer -->
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                                       
+                        <button type="button" class="btn btn-primary"  onclick="saveBooks();">Save changes / NOT available yet</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>  <!-- modal-footer -->
+
+                </div> <!-- modal-content -->
+            </div> <!-- modal-dialog -->
+        </div> <!-- modal -->
+
+
+        <!--loadXMLDocER-->
+        <script type="text/javascript">
+            function loadXMLDocER()
             {
                 var xmlhttp;
                 var uname = document.getElementById("uname").value;
                 var urls = "checkusername.jsp?uname=" + uname;
-
                 if (window.XMLHttpRequest)
                 {
                     xmlhttp = new XMLHttpRequest();
@@ -4301,5 +4610,33 @@
             }
             ;
         </script>
+
+        <!--loadXMLDocStaff-->
+        <script type="text/javascript">
+            function loadXMLDocStaff()
+            {
+                var xmlhttp;
+                var uname = document.getElementById("StaffUname").value;
+                var urls = "checkusername.jsp?uname=" + uname;
+                if (window.XMLHttpRequest)
+                {
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState === 4)
+                    {
+                        document.getElementById("error").innerHTML = xmlhttp.responseText;
+                    }
+                };
+                xmlhttp.open("GET", urls, true);
+                xmlhttp.send();
+            }
+            ;
+        </script>
+
     </body>
 </html>

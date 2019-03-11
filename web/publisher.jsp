@@ -1,5 +1,5 @@
 <%-- 
-    Document   : template
+    Document   : publisher.jsp
     Created on : 17-Mar-2017, 11:57:10
     Author     : markus
 --%>
@@ -14,10 +14,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Translation Grant Application System</title>
-<!--index.jsp-->
+        <!--publisher.jsp-->
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/irishLiterature.css.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/my-block-ui.css">   
         <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
@@ -39,6 +39,13 @@
         <script src="js/jquery.validate.js"></script>
         <script src="js/bootstrap-show-password.js"></script>
         <script src="js/jquery-ui.js"></script>
+
+
+        <!--clear localStorage and sessionStorage-->
+        <script type="text/javascript">
+            localStorage.clear();
+            sessionStorage.clear();
+        </script>
 
 
         <!--if Publisher selected display publisherBox-->
@@ -87,7 +94,7 @@
         <script type="text/javascript">
             $(function () {
                 $("#company").autocomplete({
-                    source: 'ACintPublishers_test', // The source of the AJAX results
+                     source: './ACintPublishers_test', // The source of the AJAX results
                     dataType: 'json',
                     data: '',
                     minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
@@ -170,32 +177,6 @@
             }
         </script>
 
-        <!--icon exclamation-->
-        <style>
-            .icon-exclamation {
-                color: #ff0000;
-
-                ul {
-                    margin: 0;
-                }
-                ul.dashed {
-                    list-style-type: none;
-                }
-                ul.dashed > li {
-                    text-indent: -5px;
-                }
-                ul.dashed > li:before {
-                    content: "-";
-                    text-indent: -5px;
-                }
-            }
-        </style>
-
-        <style>
-            input {
-                vertical-align: -2px;
-            }
-        </style>
         <!-- clear company autocomplete box and make it invisible -->
         <script type="text/javascript">
             function clearCompany(checkboxElem) {
@@ -210,6 +191,35 @@
                 }
             }
         </script>
+
+        <!--icon exclamation-->
+        <style>
+            .icon-exclamation {
+                color: #ff0000;
+            }
+                ul {
+                    margin: 0;
+                }
+                ul.dashed {
+                    list-style-type: none;
+                }
+                ul.dashed > li {
+                    text-indent: -5px;
+                }
+                ul.dashed > li:before {
+                    content: "-";
+                    text-indent: -5px;
+                }
+            
+
+            input {
+                vertical-align: -2px;
+            }
+            input[type="text"]:focus + .glyphicon-search{
+                color: #FF8C00;
+            }
+        </style>
+
     </head>
 
     <body style="height: 100%" onload="deCheckboxValue();"> 
@@ -235,13 +245,13 @@
                 <div id="topbar">
 
                     <div class="animateddiv">
-                        <a href="/the-translation-grant-programme"><img src="images/flashtext-animated2.gif" height="80" alt="Promoting Irish Literature Abroad" /></a>
+                        <a><img src="images/flashtext-animated2.gif" height="80" alt="Promoting Irish Literature Abroad" /></a>
                     </div>
-                    <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
+                    <a class="logo"><span class="hidden">Literature Ireland</span></a>
 
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
 
@@ -249,7 +259,8 @@
                         <div class="panel panel-info" >
                             <div class="panel-heading">
                                 <div class="panel-title">Sign In</div>
-                                <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="forgotPassword.jsp">Forgot password ?</a></div>
+                                <div style="float:right; font-size: 80%; position: relative; top:-10px;"><a href="forgotPassword.jsp">Forgot password ?</a></div>
+                                <br/>    
                             </div>     
 
                             <div style="padding-top:30px" class="panel-body" >
@@ -263,19 +274,18 @@
                                       role="form" 
                                       >
 
-                                    <div style="margin-bottom: 25px" class="input-group">
+                                    <div style="margin-bottom: 25px" class="input-group col-sm-9">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                         <input id="login-username" 
                                                type="text" 
                                                class="form-control" 
                                                name="username" 
                                                value="" 
-                                               placeholder="username"
+                                               placeholder="Enter your username"
                                                >   
-
                                     </div>
 
-                                    <div style="margin-bottom: 25px" class="input-group">
+                                    <div style="margin-bottom: 25px" class="input-group col-sm-9">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                                         <input id="lpassword" 
                                                type="password" 
@@ -283,11 +293,13 @@
                                                name="password" 
                                                data-toggle="password"  
                                                data-placement="after" 
-                                               placeholder="password"
+                                               placeholder="Enter your password"
                                                >
 
-                                        <div class="help-block with-errors"></div>
                                     </div>
+                                    <!--https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2-->
+                                    <input name="lastLogon" type="hidden" value="<%= new java.lang.Long(System.currentTimeMillis()).toString()%>"/>
+                                    <div class="help-block with-errors"></div>
 
                                     <div style="margin-top:10px" class="form-group">
                                         <!-- Button -->
@@ -299,7 +311,7 @@
                                     <div class="form-group">
                                         <div class="col-md-12 control">
                                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                                Don't have an account! 
+                                                Don't have an account? 
                                                 <a href="#" onClick="$('#loginbox').hide();
                                                         $('#signupbox').show()">
                                                     Sign Up Here
@@ -339,7 +351,6 @@
                                           method="POST" 
                                           name="regF"
                                           >
-
                                         <div id="signupalert" style="display:none" class="alert alert-danger">
                                             <p>Error:</p>
                                             <span></span>
@@ -367,7 +378,6 @@
                                                            data-error="Username should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
                                                            required
                                                            >     
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group uname-->  
@@ -384,7 +394,6 @@
                                                            data-error="First name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
                                                            required
                                                            >              
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group firstname-->     
@@ -401,7 +410,6 @@
                                                            data-error="Last name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
                                                            required
                                                            >    
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group lastname-->      
@@ -418,7 +426,6 @@
                                                            data-error="Enter valid Email"
                                                            required
                                                            >                                            
-
                                                     <span class="help-block" id="error"></span>      
                                                 </div>
                                             </div> <!--form-group email-->
@@ -436,7 +443,6 @@
                                                            Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
                                                            required                                                                                     
                                                            >                                           
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group password-->
@@ -453,38 +459,33 @@
                                                            data-match="#password"                                                                      
                                                            required
                                                            >                               
-
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group cpassword-->
 
-                                            <!--selectpicker-->
                                             <div class="form-group">
-                                                <!--<label for="location" class="col-sm-3 control-label">Select your function</label>-->
-                                                <div class="col-sm-10">
-                                                    <!--<select class="selectpicker" title="Select Your Function" style="display: none;">-->
-                                                    <select class="selectpicker" 
-                                                            title="Select Your Function" 
-                                                            style="display: none;" 
-                                                            name="function" 
-                                                            id="functionDataset" 
-                                                            onchange="changeFunc();"
-                                                            required
-                                                            >
-                                                        <!--<option>Literature Ireland Staff</option>-->
-                                                        <option>Publisher</option>
-                                                        <!--<option>Expert Reader</option>-->
-                                                    </select>                                        
+                                                <div class="col-md-9">
+                                                    <label for="functionDataset" >Your function</label>
+                                                    <div style="clear: both;"></div>
+                                                    <input type="text" 
+                                                           class="form-control"  
+                                                           id="functionDataset" 
+                                                           name="function" 
+                                                           placeholder="Publisher"                                           
+                                                           value="Publisher" 
+                                                           style=" background-color:#00c0ef"
+                                                           readonly
+                                                           >                               
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group selectpicker-->
+                                            </div> <!--form-group functionDataset-->
 
                                             <!--publisherBox-->
-                                            <div id="publisherBox" style="display:none; margin-top:50px; ">
+                                            <div id="publisherBox" style="margin-top:50px; ">
 
                                                 <!--get Company and Company_Number via autocomplete-->
                                                 <div class="row" style="margin-bottom: 40px;margin-top: 30px">
-                                                    <div class="form-group">
+                                                    <div class="form-group has-feedback has-feedback-left">
                                                         <div class="col-sm-10">
                                                             <input  id="company" 
                                                                     name="company" 
@@ -496,6 +497,7 @@
                                                                     onblur="CheckboxValue();"
                                                                     placeholder="Company Name"
                                                                     >
+                                                            <i class="glyphicon glyphicon-search form-control-feedback" id="companyGlyphicon"></i>
                                                         </div>
                                                     </div> <!--form-group-->
 
@@ -517,7 +519,7 @@
                                                                     <input type="checkbox"  
                                                                            id="cbnewPublisher"
                                                                            name="cbnewPublisher"         
-                                                                           value="cbnewPublisher"    
+                                                                           value="cbnewPublisher"  
                                                                            onclick="clearCompany(this);"
                                                                            > 
                                                                     Can't find your company? 
@@ -678,7 +680,7 @@
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017 mgr Software
+            &copy; 2019 mgr Software
         </div>
 
     </body>

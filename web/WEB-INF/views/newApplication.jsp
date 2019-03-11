@@ -1,4 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%--<%@page contentType="text/html" pageEncoding="UTF-8"%>--%>
 <%-- 
     Document   : newApplication
     Created on : 19-Mar-2017, 11:27:58
@@ -8,11 +9,12 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
-<html style="height: 100%" >
+<html style="height: 100%" lang="en"> 
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+
 
         <title>Translation Grant Application System</title>
 
@@ -50,9 +52,8 @@
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
 
 
-
+        <!--  Global Variables  -->
         <script>
-            //Global Variables
             var translatorArray = [];
             var rightsHolderArray = [];
             var authorArray = [];
@@ -89,7 +90,7 @@
         <!--AutoComplete_Genres-->
         <script type="text/javascript">
             $(function () {
-                $("#genre").autocomplete({
+                $("#genre1").autocomplete({
                     source: 'ACGenre', // The source of the AJAX results
                     dataType: 'json',
                     contentType: "application/json",
@@ -110,7 +111,7 @@
         <!--AutoComplete_international_publishers-->
         <script>
             $(function () {
-                $("#publisher").autocomplete({
+                $("#publisher1").autocomplete({
                     source: 'ACintPublishers_test', // The source of the AJAX results
                     dataType: 'json',
                     data: '',
@@ -146,9 +147,29 @@
         </script>
 
 
+        <!--AutoComplete_country-->
+        <script>
+            $(function () {
+                $("#countryOfPublication1").autocomplete({
+                    source: 'AutoComplete_country', // The source of the AJAX results
+                    dataType: 'json',
+                    data: '',
+                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                        $("#countryOfPublication").val(ui.item.name);
+                        return false;
+                    },
+                    select: function (event, ui) { // What happens when an autocomplete result is selected
+                        $("#countryOfPublication").val(ui.item.name);
+                        $('#countryCode').val(ui.item.id);
+                    }
+                });
+            });
+        </script>
+
         <!--    AutoComplete_Languages   -->
         <script>
-            console.log(" AutoComplete_Languages ");
+//            console.log(" AutoComplete_Languages ");
             $(function () {
                 function split(val) {
                     return val.split(/,\s*/);
@@ -157,7 +178,7 @@
                     return split(term).pop();
                 }
 
-                $("#appTargetLanguage")
+                $("#languageOfTheOriginal1")
                         // don't navigate away from the field on tab when selecting an item
                         .on("keydown", function (event) {
                             if (event.keyCode === $.ui.keyCode.TAB &&
@@ -470,6 +491,7 @@
         <script>
             $(function () {
                 $('div.translator_cv').on('change', ':file', function () {
+//                    alert("translator_cv");
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -500,12 +522,14 @@
             });
             $(function () {
                 $(document).on('change', 'div.translatorcv :file', function () {
+//                    alert("translatorcv");
                     var id = parseInt(this.id.replace("translator_cv", ""));
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    var label_translatorid = "label_translator" + id;
+                    var label_translatorid = "label_translator_cv" + id;
+                    console.log("label_translatorid Name ", label_translatorid);
                     document.getElementById(label_translatorid).value = label;
                 });
             });
@@ -568,14 +592,15 @@
 
             function generatedLabels() {
                 $(document).on('change', ':file', function () {
-
-                    console.log("generatedLabels Name ", $(this));
+//                    alert($(this));
                     var input = $(this),
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     var id = input[0].id;
                     var label_id = "label_" + id;
+                    console.log("generatedLabels input ", input);
+                    console.log("label_id              ", label_id);
                     document.getElementById(label_id).value = label;
                 });
             }
@@ -675,6 +700,9 @@
                 rightsHolderArray.push(Name);
                 console.log(" first entry in rightsHolderArray ", fn.value);
 
+                $("#rightsHolderArray").val(rightsHolderArray);
+                console.log("copyFirstRightsHolderName rightsHolderArray ", rightsHolderArray);
+
 
                 if (!localStorage.rightsAgreementContent === 0) {
                     //function retrieve(){
@@ -686,8 +714,8 @@
                 }
 
 
-                // back To Translators tab
-                $('#bs-example-navbar-collapse-2 a[href="#Translator"]').tab('show');
+                // back To Rights tab
+                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
             }
 
         </script>
@@ -763,16 +791,16 @@
                     //Upload a copy of the CV
                     console.log("processFirstTranslator generateTranslatorTab Upload a copy of the CV i " + i + " j " + j + " :: " + translatorArray[i]);
                     rightsAgreementContractsNavContent += '<div class="col-md-8" style="margin-bottom: 20px">';
-                    rightsAgreementContractsNavContent += '<label for="label_translator' + j + '" class="control-label pull-left" >Upload a copy of ' + translatorArray[i] + '\'s CV:</label>';
+                    rightsAgreementContractsNavContent += '<label for="label_translator_cv' + j + '" class="control-label pull-left" >Upload a copy of ' + translatorArray[i] + '\'s CV:</label>';
                     rightsAgreementContractsNavContent += '<br>';
                     rightsAgreementContractsNavContent += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
                     rightsAgreementContractsNavContent += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
                     rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                    rightsAgreementContractsNavContent += 'Select file ';
-                    rightsAgreementContractsNavContent += '<input multiple="" name="file" id="translator_cv' + j + '" type="file">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Translator_CV-' + j + '" id="translator_cv' + j + '">';
+
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_translator' + j + '" class="pull-left">';
+                    rightsAgreementContractsNavContent += '<input id="label_translator_cv' + j + '" class="pull-left">';
                     rightsAgreementContractsNavContent += '<br>';
                     rightsAgreementContractsNavContent += '<br>';
                     rightsAgreementContractsNavContent += '<input id="translator_cv_upload' + j + '" value="Translator_CV" name="destination" type="hidden">';
@@ -891,7 +919,7 @@
         <script>
             function backToTranslators() {
 
-                alert("backToTranslators");
+//                alert("backToTranslators");
 //                translatorArray = [];
                 console.log("backToTranslators translatorArray  ", translatorArray);
                 var upload_number = 2;
@@ -1053,9 +1081,7 @@
 
         <!--add more Authors -->
         <script type="text/javascript">
-
             $(document).ready(function () {
-
                 Authorcounter = 1;
                 $("#addAuthor").click(function (event) {
 
@@ -1090,7 +1116,7 @@
                 var fulln = aFirstName.value + " " + aLastName.value;
                 authorArray.push(fulln, aFirstName.value, aLastName.value);
             }
-
+            ;
         </script>
 
         <script>
@@ -1108,6 +1134,7 @@
 
                     authorArray.push(fullName, firstValue, lastValue);
                 }
+                ;
 
                 $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
                 var arrayLength = authorArray.length;
@@ -1120,9 +1147,8 @@
 
 
         <script>
-
             function myFunction() {
-                alert("myfunction");
+//                alert("myfunction");
                 translatorName876 = "";
                 var x = document.getElementById("translatorName");
                 console.log("document.getElementById(translatorName) ", x);
@@ -1151,20 +1177,17 @@
                 translatorArray.push(Name);
                 console.log(" first entry in translatorArray ", fn.value);
 
-
-
 //                copyFirstTranslatorName();
                 generateTranslatorTab(1);
             }
-
+            ;
         </script>
 
         <!--https://stackoverflow.com/questions/3392493/adjust-width-of-input-field-to-its-input-->
         <script>
             $(document).ready(function () {
-                
                 var input = document.querySelector('input'); // get the input element
-                alert(input);
+//                alert(input);
                 input.addEventListener('input', resizeInput); // bind the "resizeInput" callback on "input" event
                 resizeInput.call(input); // immediately call the function
 
@@ -1174,16 +1197,101 @@
             });
         </script>
 
+        <!--Translatorform-->
         <script>
+            //check if Translator name has been deleted
             $(document).ready(function () {
-//                var tripper = localStorage.getItem("translatorName");
-//                document.getElementById("123").innerHTML = tripper;
-//                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
-//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-//                console.log("tripper 1  ", tripper);
+                $("#translatorName").change(function () {
+                    if ($('#translatorName').val() === '') {
+                        $(uploadDocuments).hide();
+                        translatorArray = []; // clear translatorArray
+                        $('#tnc').empty(); // empty the div 
+                        $('#tn').empty();  // empty the div 
+                        $(translatorTabs).hide(); // close div
+                        $('#translatorName').trigger('click');
+                        console.log(translatorArray);
+                    }
+
+                });
+            });
+
+            // When typing Translator name change text for uploadDocuments 
+            $(document).ready(function () {
+                $("#translatorName").keyup(function () {
+                    //show translatorTabs if hidden
+                    if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
+                        $(uploadDocuments).show();
+                    }
+                    var dInput = $(this).val();
+                    console.log(dInput);
+                    $('#uploadDocuments').html("upload documents for <br/>" + $(this).val() + " ");
+                    $("#uploadDocuments").append($('<span class="glyphicon glyphicon-import"></span>'));
+                    $('#addTranslatorModala').text("OR add more translators");
+                    //$(".dDimension:contains('" + dInput + "')").css("display","block");
+                });
+            });
+
+            //check if Translator name has been pasted in
+            $(document).ready(function () {
+                $("#translatorName").on("paste", function () {
+                    //show translatorTabs if hidden
+                    if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
+                        $(uploadDocuments).show();
+                    }
+                    var dInput = $(this).val();
+                    console.log(dInput);
+                    $('#uploadDocuments').html("upload documents for <br/>" + $(this).val() + " ");
+                    $("#uploadDocuments").append($('<span class="glyphicon glyphicon-import"></span>'));
+                    $('#addTranslatorModala').text("OR add more translators");
+                    $('#translatorName').trigger('click');
+                    //$(".dDimension:contains('" + dInput + "')").css("display","block");
+                });
+            });
+
+            // check if Translator name is been filled from cache
+            $(document).ready(function () {
+                $("#translatorName").mouseup(function () {
+                    if ($('#translatorName').val() !== '') {
+                        //show translatorTabs if hidden
+                        if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
+                            $(uploadDocuments).show();
+                        }
+                        var dInput = $(this).val();
+                        console.log(dInput);
+                        $('#uploadDocuments').html("upload documents for <br/>" + $(this).val() + " ");
+                        $("#uploadDocuments").append($('<span class="glyphicon glyphicon-import"></span>'));
+                        $('#addTranslatorModala').text("OR add more translators");
+                        $('#translatorName').trigger('click');
+                    }
+                });
+            });
+
+            //https://www.thewebflash.com/clear-button-in-bootstrap-input-group-component/
+            $(document).ready(function () {
+                $('.has-clear input[type="text"]').on('input propertychange', function () {
+                    var $this = $(this);
+                    var visible = Boolean($this.val());
+                    $this.siblings('.form-control-clear').toggleClass('hidden', !visible);
+                }).trigger('propertychange');
+
+                $('.form-control-clear').click(function () {
+                    $(this).siblings('input[type="text"]').val('')
+                            .trigger('propertychange').focus();
+                    if ($('#translatorName').val() === '') {
+                        $(uploadDocuments).hide();
+                        translatorArray = []; // clear translatorArray
+                        $('#tnc').empty(); // empty the div 
+                        $('#tn').empty();  // empty the div 
+                        $(translatorTabs).hide(); // close div
+                        $('#addTranslatorModala').text("Add more translators"); // reset text
+                        $('#translatorName').trigger('click');
+                        console.log(translatorArray);
+                    }
+                });
             });
         </script>
+
+
 
         <style>
             .btn-file {
@@ -1319,24 +1427,21 @@
                 $('#files').val("");
                 $(this).hide();
             });
-
         </script>
 
 
         <script>
             $(document).ready(function () {
-
                 var tcACCEPTED = '${tcACCEPTED}';
                 var gdprACCEPTED = '${gdprACCEPTED}';
                 document.getElementById("tcACCEPTED").value = tcACCEPTED;
                 document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
 
             });
-
         </script>
 
+        <!--Styles-->
         <style>
-
             header h1{
                 font-size:12pt;
                 color: #fff;
@@ -1383,6 +1488,25 @@
 
             .zoom:hover {
                 transform: scale(2.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+            }
+            .mytab .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+            .mytab2 .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+            #myTab li a { border-color: blue;background-color:#A5C967; }
+            #myTab li.active a {border-bottom-color: transparent;background-color:Yellow; }
+            #myTab2 li a { border-color: blue;background-color:#A5C967; }
+            #myTab2 li.active a {border-bottom-color: transparent;background-color:Yellow; }
+            .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
+
+
+            /* https://www.thewebflash.com/clear-button-in-bootstrap-input-group-component/ */
+            ::-ms-clear {
+                display: none;
+            }
+
+            .form-control-clear {
+                z-index: 10;
+                pointer-events: auto;
+                cursor: pointer;
             }
         </style>
 
@@ -1456,7 +1580,7 @@
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="background-color: #d9d1d1">
+                        <div class="collapse navbar-collapse" id="myTab" style="background-color: #d9d1d1">
                             <ul class="nav navbar-nav nav-tabs two-lines">
                                 <!--<li class="active"><a href="#info" data-toggle="tab">Info</a></li>-->
                                 <li class="active"><a href="#Contact" data-toggle="tab">Contact Details</a></li>
@@ -1468,14 +1592,19 @@
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
                             <div style="margin: 20px; text-align: center">
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons zoom" onclick="showInfoModal()();">info</i></a>
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Notes" ><i class="material-icons zoom" onclick="showNotesModal()();">note</i></a>                           
+                                <a data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons zoom" onclick="showInfoModal();">info</i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Notes" ><i class="material-icons zoom" onclick="showNotesModal();">note</i></a>                           
                             </div>
 
                         </div><!-- /.navbar-collapse -->
 
-                        <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
-                            <%request.getSession().setAttribute("task", "Start New Application");%>
+                        <form  
+                            method="POST" 
+                            id="applicationForm" 
+                            name="applicationForm" 
+                            action="${pageContext.request.contextPath}/GrantApplicationServlet" 
+                            enctype="multipart/form-data"> 
+
                             <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
 
@@ -1848,22 +1977,26 @@
                                                                            name="languageOfTheOriginal"                                
                                                                            value=""    
                                                                            placeholder="Language"
-                                                                           >                                
+                                                                           >      
+                                                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                                                 </div>
-                                                            </div>
+                                                            </div><!--mini-box-->
                                                         </div> <!--col-xs-6-->
 
                                                         <div class="col-xs-4">
                                                             <div class="mini-box">
-                                                                <label for="countryOfPublication" class="pull-left" > Country of publication</label>
-                                                                <input id="countryOfPublication"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="countryOfPublication"                                
-                                                                       value=""    
-                                                                       placeholder="Country of Publication"
-                                                                       >
-                                                            </div>
+                                                                <div class="form-group has-feedback">
+                                                                    <label for="countryOfPublication" class="pull-left" > Country of publication</label>
+                                                                    <input id="countryOfPublication"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="countryOfPublication"                                
+                                                                           value=""    
+                                                                           placeholder="Country of Publication"
+                                                                           >
+                                                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                                </div>
+                                                            </div><!--mini-box-->
                                                         </div> <!--col-xs-4-->         
                                                     </div> <!--row-->
 
@@ -1945,9 +2078,9 @@
                                                         <input id="rightsHoldersName0"                                
                                                                type="text"                                
                                                                class="form-control"                                
-                                                               name="rightsHoldersName"                                
-                                                               value=""    
-                                                               onblur="myFunction();"
+                                                               name="rightsHoldersName0"                                
+                                                               value=""  
+                                                               onblur="copyFirstRightsHolderName();"
                                                                placeholder="Translation rights holder"
                                                                >
                                                     </div>
@@ -2071,9 +2204,7 @@
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Publication" -->
 
-
                                 <!-- Translator's Details -->
-
                                 <div class="tab-pane" id="Translator"> 
                                     <p class="header1" style="margin-bottom: 5px">
                                         Translator Details
@@ -2106,36 +2237,54 @@
                                             </div> <!--panel-default-->
                                         </div> <!-- row -->
 
-
                                         <div class="row" style="margin-bottom: 10px">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
                                                     <div class="col-sm-4"> 
-                                                        <div class="form-group has-feedback">
-                                                            <label for="translatorName" class="pull-left" id="translatorNameLabel">Translator</label>
-                                                            <input id="translatorName"                                
-                                                                   type="text"                                
-                                                                   class="form-control"                                
-                                                                   name="translatorName"                                
-                                                                   value=""    
-                                                                   onblur="myFunction();"
-                                                                   placeholder="Translator Name"
-                                                                   >
-
+                                                        <div class="input-group">
+                                                            <div class="form-group has-feedback  has-clear">
+                                                                <label for="translatorName" class="pull-left" id="translatorNameLabel">Translator</label>
+                                                                <input id="translatorName"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="translatorName"                                
+                                                                       value=""    
+                                                                       placeholder="Translator Name"
+                                                                       >
+                                                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                                                            </div>
                                                         </div>
-
-                                                        <div id="addTransl">
-
-                                                        </div>
+                                                        <div id="addTransl"></div>
                                                     </div>
 
-                                                    <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addTranslatorModalDiv">  
-                                                        <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                           data-toggle="modal" 
-                                                           data-target="#addTranslatorModal"
-                                                           onclick="copyFirstTranslatorName();"
-                                                           >Add more translators</a>
-                                                    </div>                                                    
+                                                    <div class="col-sm-4"> 
+                                                        <button type="button"                   
+                                                                id="uploadDocuments"
+                                                                class="btn btn-success"
+                                                                title="upload documents"
+                                                                style="margin-top: 20px;display:none;"
+                                                                name="uploadDocuments"
+                                                                onclick="myFunction();"
+                                                                >                                                               
+                                                            <span class="glyphicon glyphicon-import"></span>
+                                                        </button>           
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <label for="addTranslatorModala" class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                        <button type="button"                   
+                                                                id="addTranslatorModala"
+                                                                class="btn btn-success"
+                                                                data-toggle="modal" 
+                                                                data-target="#addTranslatorModal"
+                                                                title="Add more translators"
+                                                                style="margin-top: 25px;"
+                                                                name="addTranslatorModala"
+                                                                onclick="copyFirstTranslatorName();"
+                                                                >Add more translators                                                             
+                                                            <span class="glyphicon glyphicon-import"></span>
+                                                        </button>           
+                                                    </div>
                                                 </div><!--panel-body-->
                                             </div><!--panel-default-->
                                         </div> <!--row-->
@@ -2164,7 +2313,6 @@
                                         </div> <!--row-->
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Translator" -->
-
 
                                 <!-- Miscellaneous -->
                                 <div class="tab-pane" id="Misc">
@@ -2258,9 +2406,7 @@
                                                             <div class="col-md-8"   style="margin-bottom: 40px">
                                                                 <label for="label_originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
                                                                 <div class="input-group originalSample pull-left"  
-                                                                     data-toggle="tooltip"
-                                                                     title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
-                                                                     data-placement="bottom" >
+                                                                     >
                                                                     <label class="btn btn-default btn-file pull-left">
                                                                         Select file 
                                                                         <input type="file"  
@@ -2313,15 +2459,16 @@
 
                                                     <div class="col-md-9"   >
                                                         <div class="input-group input-group-lg">
-                                                            <button type="submit"                                                                          
+                                                            <button type="submit"              
                                                                     data-toggle="tooltip" 
                                                                     class="btn btn-success"
                                                                     title="Click to submit the application!"
                                                                     style="margin-bottom: 10px"
+                                                                    name="Start New Application"
                                                                     >
                                                                 Submit the application
                                                                 <span class="glyphicon glyphicon-import"></span>
-                                                            </button>
+                                                            </button>                                        
                                                         </div><!-- input-group -->
                                                     </div>  <!-- col-md-9 -->
                                                 </div>  <!-- panel--body -->
@@ -2334,8 +2481,11 @@
                                         </div>    
                                     </div>  <!-- container-fluid -->
                                 </div> <!-- tab-pane Original --> 
+
+
                             </div> <!-- my-tab-content -->
 
+                            <!--pressCuttingsModal-->
                             <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -2368,8 +2518,10 @@
                                     </div> <!--modal content-->          
                                 </div> <!--modal dialog-->
                             </div> <!--modal fade-->
+
                             <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
 
+                            <!--addTranslatorModal-->
                             <div class="modal fade" id="addTranslatorModal" tabindex="-1" role="dialog" aria-labelledby="addTranslatorModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -2400,7 +2552,7 @@
                                 </div> <!--modal dialog-->
                             </div> <!--modal fade-->
 
-
+                            <!--addAdditionalRightsHoldersModal-->
                             <div class="modal fade" id="addAdditionalRightsHoldersModal" tabindex="-1" role="dialog" aria-labelledby="addAdditionalRightsHoldersModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -2431,7 +2583,7 @@
                                 </div> <!--modal dialog-->
                             </div> <!--modal fade-->
 
-
+                            <!--addAuthorModal-->
                             <div class="modal fade" id="addAuthorModal" tabindex="-1" role="dialog" aria-labelledby="addAuthorModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -2463,6 +2615,7 @@
                                 </div> <!--modal dialog-->
                             </div> <!-- addAuthorModal -->
 
+                            <!--showInfoModal-->
                             <div class="modal fade" id="showInfoModal" tabindex="-1" role="dialog" aria-labelledby="showInfoModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -2526,6 +2679,7 @@
                                 </div> <!--modal dialog-->
                             </div> <!--modal fade-->
 
+                            <!--showNotesModal-->
                             <div class="modal fade" id="showNotesModal" tabindex="-1" role="dialog" aria-labelledby="showNotesModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -2621,7 +2775,7 @@
         </div><!-- end of Shadowholder container div -->
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017 mgr Software
+            &copy; 2019 mgr Software
         </div>
         <script src="js/bootstrap-imageupload.js"></script>
 

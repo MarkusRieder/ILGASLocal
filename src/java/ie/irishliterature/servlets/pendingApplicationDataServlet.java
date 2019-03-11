@@ -13,6 +13,7 @@ import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +50,29 @@ public class pendingApplicationDataServlet extends HttpServlet {
 //        System.out.println("pendingApplicationDataServlet  Publisher here  publisherID: getParameter >> " + publisherID);
         HttpSession session = request.getSession();
 
-               String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
+        String publisherID = String.valueOf(request.getSession().getAttribute("Company_Number"));
+        //       String publisherID = request.getParameter("Company_Number");
+        System.out.println("pendingApplicationDataServlet  publisherID here  publisherID: getParameter >> " + publisherID);
+
+        Enumeration en = request.getParameterNames();
+
+        while (en.hasMoreElements()) {
+            Object objOri = en.nextElement();
+
+            String param = (String) objOri;
+
+            String value = request.getParameter(param);
+
+            System.out.println("pendingApplicationDataServlet Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+
+        }
+
+        Enumeration<String> attributes = request.getSession().getAttributeNames();
+        while (attributes.hasMoreElements()) {
+            String attribute = attributes.nextElement();
+            System.out.println("pendingApplicationDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute(attribute));
+        }
+
 ////        String publisherID = request.getParameter("publisherID");
 //        String publisherName = (String) request.getAttribute("publisherName");
 //        System.out.println("/pendingApplicationDataServlet  --->  publisherName1 " + publisherName);

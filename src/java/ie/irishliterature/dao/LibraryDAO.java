@@ -173,6 +173,7 @@ public class LibraryDAO {
                 library.setGenre(rs.getString("Genre"));
                 library.setTranslationTitle(rs.getString("translationTitle"));
                 library.setTranslationPublisher(rs.getString("translationPublisher"));
+                
 
                 // checking full null value
                 String translationPublisherYear = rs.getString("translationPublisherYear");

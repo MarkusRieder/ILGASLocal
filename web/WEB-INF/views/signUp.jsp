@@ -323,9 +323,9 @@
                                                 <div class="col-sm-6">
                                                     <!--<select class="selectpicker" title="Select Your Function" style="display: none;">-->
                                                     <select class="selectpicker" title="Select Your Function" style="display: none;" name="function" id="functionDataset" required>
-                                                        <option>Literature Ireland Staff</option>
+                                                        <!--<option>Literature Ireland Staff</option>-->
                                                         <option>Publisher</option>
-                                                        <option>Expert Reader</option>
+                                                        <!--<option>Expert Reader</option>-->
                                                     </select>                                        
                                                     <span class="help-block" id="error"></span> 
                                                 </div>

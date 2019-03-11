@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Translation Grant Application System</title>
-
+        <!--login.jsp-->
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -463,30 +463,25 @@
                                                 </div>
                                             </div> <!--form-group cpassword-->
 
-                                            <!--selectpicker-->
                                             <div class="form-group">
-                                                <!--<label for="location" class="col-sm-3 control-label">Select your function</label>-->
-                                                <div class="col-sm-10">
-                                                    <!--<select class="selectpicker" title="Select Your Function" style="display: none;">-->
-                                                    <select class="selectpicker" 
-                                                            title="Select Your Function" 
-                                                            style="display: none;" 
-                                                            name="function" 
-                                                            id="functionDataset" 
-                                                            onchange="changeFunc();"
-                                                            required
-                                                            >
-                                                        <option value="">Select Your Function</option>
-                                                        <option>Literature Ireland Staff</option>
-                                                        <option>Publisher</option>
-                                                        <option>Expert Reader</option>
-                                                    </select>                                        
+                                                <div class="col-md-9">
+                                                    <label for="functionDataset" >Your function</label>
+                                                    <div style="clear: both;"></div>
+                                                    <input type="text" 
+                                                           class="form-control"  
+                                                           id="functionDataset" 
+                                                           name="function" 
+                                                           placeholder="Publisher"                                           
+                                                           value="Publisher" 
+                                                           style=" background-color:#00c0ef"
+                                                           readonly
+                                                           >                               
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group selectpicker-->
+                                            </div> <!--form-group functionDataset-->
 
                                             <!--publisherBox-->
-                                            <div id="publisherBox" style="display:none; margin-top:50px; ">
+                                            <div id="publisherBox" style="margin-top:50px; ">
 
                                                 <!--get Company and Company_Number via autocomplete-->
                                                 <div class="row" style="margin-bottom: 40px;margin-top: 30px">
@@ -685,7 +680,7 @@
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2018 mgr Software
+            &copy; 2019 mgr Software
         </div>
 
     </body>

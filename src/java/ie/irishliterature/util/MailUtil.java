@@ -19,8 +19,152 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class MailUtil {
+                                            
+
+    public static void sendEmailRegistrationLinkNewStaff(String uname, String firstname, String password, String email, String hash) throws AddressException, MessagingException {
+
+        Properties props = new Properties();
+
+        props.put("mail.smtp.host", "lh30.dnsireland.com");
+        props.put("mail.smtp.port", "26");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD);
+            }
+        });
+
+        try {
+
+            String link = Setup.MAIL_REGISTRATION_SITE_LINK + "?scope=activation&userId=" + uname + "&hash=" + hash;
+
+            StringBuilder bodyText = new StringBuilder();
+            bodyText.append("<div>")
+                    .append("<p>  Dear ")
+                    .append(firstname)
+                    .append(", </p>")
+                    .append("<p>  This email is being sent to you to validate the email address you provided for your Literature Ireland ")
+                    .append("  translation grant system login.</p> ")
+                    .append("<p>  To ensure the security of the account information associated with your login,")
+                    .append("  please take a moment to click through the link below and verify that we have assigned the correct email address:</p>")
+                    .append("<p><u><a href='")
+                    .append(link)
+                    .append("target='_blank>'")
+                    .append(link)
+                    .append("</a></u></p>")
+                    .append("</p><br/><br/></p>")
+                    .append("<p>  Please note that if you do not confirm your email address, your login details will eventually be automatically disabled.</p> ")
+                    .append(" <p> To log into the system, you can use the following account information:</p>")
+                    .append("<p>Your login:  ")
+                    .append(uname)
+                    .append("</p>")
+                    .append("<p>Your email address: ")
+                    .append(email)
+                    .append("</p>")
+                    .append("<p>Your interim password: ")
+                    .append(password)
+                    .append("</p>")
+                    .append("<p>  Once you have logged in, you may change your password. </p>")
+                    .append("</div>");
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setSubject("Irish Literature - Email Registration");
+            message.setContent(bodyText.toString(), "text/html; charset=utf-8");
+            message.setSentDate(new Date());
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void sendEmailRegistrationLinkExpertReader(String uname, String fullname, String password, String email, String hash) throws AddressException, MessagingException {
+
+        Properties props = new Properties();
+
+        props.put("mail.smtp.host", "lh30.dnsireland.com");
+        props.put("mail.smtp.port", "26");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD);
+            }
+        });
+
+        try {
+
+            String link = Setup.MAIL_REGISTRATION_SITE_LINK + "?scope=activation&userId=" + uname + "&hash=" + hash;
+            String info = "http://www.literatureirelandgrantapplication.com/reader/info";
+            String policy = "http://www.literatureirelandgrantapplication.com/reader/info";
+
+            StringBuilder bodyText = new StringBuilder();
+            bodyText.append("<div>")
+                    .append("<p>  Dear ")
+                    .append(fullname)
+                    .append(", </p>")        
+                    .append("<p>This email is being sent to you to validate the email address you provided for your Literature  Ireland translation grant system login.")
+                    .append("</p> ")
+                    .append(" <p>To ensure the security of the account information associated with your login, please take a moment to click through the link below and verify that we have the correct email address.</p > ")
+                    .append(" <p>Please note that if you do not confirm your email address, your login details will eventually be automatically disabled.</p>")
+                    .append(" <p> <a href='")
+                    .append(link)
+                    .append("'> <u>")
+                    .append(link)
+                    .append("</u></a> </p>")
+                    .append("<p> To log into the system, you can use the following account information: </p> ")
+                    .append(" <p>Your login: ")
+                    .append(uname)
+                    .append("<br/>")
+                     .append("<p>Your email address: ")
+                    .append(email)
+                    .append("</p>")                   
+                    .append("<p>Your interim password: ")
+                    .append(password)
+                    .append(" &nbsp;</p>")
+                    .append("<p>Some guidelines on how to use the system (e.g.uploading your report and bank details form) are available online at&nbsp;")
+                    .append(" <a href='")
+                    .append(info)
+                    .append("target='_blank'> <u>")
+                    .append(info)
+                    .append("</u></a>")
+                    .append("  </p> ")
+                    .append(" <p> Should you have additional questions, please do not hesitate to contact &nbsp; ")
+                    .append(" <a href='mailto: info@literatureireland.com'><u> info@literatureireland.com</u></a>")
+                    .append(" &nbsp;or&nbsp;  <a href='mailto: online@literatureireland.com'>  <u> online@literatureireland.com</u></a></p>")
+                    .append("  <p> You can find a copy of our privacy policy on our website at:  </p>")
+                    .append("  <a href='")
+                    .append(policy)
+                    .append("target='_blank'> <u>")
+                    .append(policy)
+                    .append("</u></a>")
+                    .append(" <p> Thank you and best wishes from Literature Ireland. </p> ")
+                    .append("  <p> <br/><br/></p> ")
+                    .append("</div>");
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setSubject("Irish Literature - Email Registration");
+            message.setContent(bodyText.toString(), "text/html; charset=utf-8");
+            message.setSentDate(new Date());
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void sendEmailRegistrationLink(String uname, String email, String hash) throws AddressException, MessagingException {
+        
         Properties props = new Properties();
 
         props.put("mail.smtp.host", "lh30.dnsireland.com");

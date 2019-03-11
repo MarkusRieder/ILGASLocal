@@ -51,7 +51,7 @@ public class openApplicationDAO {
             ArrayList<String> pressCoverage = new ArrayList<>();
             ArrayList<String> translatorNameList = new ArrayList<>();
 
-            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' ";
+            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' AND Status = 'open'";
             System.out.println("getAllApplicationsPublisher Local openApplicationDAO searchQuery  " + searchQuery);
             try {
 
@@ -108,11 +108,11 @@ public class openApplicationDAO {
                     String Notes = getBookNotes(ReferenceNumber);
                     application.setBookNotes(Notes);
                     application.setCopiesSent(res.getInt("copiesSent"));
-//                    application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
-String translationTitle = getTranslationTitle(ReferenceNumber);
-application.setTranslationTitle(translationTitle);
-String Serie = getSeries(ReferenceNumber);
-application.setSeries(Serie);
+                    application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
+                    String translationTitle = getTranslationTitle(ReferenceNumber);
+                    application.setTranslationTitle(translationTitle);
+                    String Serie = getSeries(ReferenceNumber);
+                    application.setSeries(Serie);
                     System.out.println("publicationYear:  " + res.getString("publicationYear"));
                     String[] t = res.getString("publicationYear").split("-");
                     System.out.println("t.length:  " + t.length);
@@ -254,8 +254,10 @@ application.setSeries(Serie);
                     application.setPressCoverage(pressCoverage);
 
                     application.setUnassignedExpertReaderList(unassignedExpertReaderList);
-//                    application.setTranslatorTitles(mixedList);
 
+                    application.setRightsHolderArray(getRightsHolderArrayContent(ReferenceNumber));
+
+//                    application.setTranslatorTitles(mixedList);
 //                   //  System.out.println("==================================================================================>");
 //                   //  System.out.println("ReferenceNumber   " + ReferenceNumber);
 //                   //  System.out.println("mixedList         " + mixedList);
@@ -423,7 +425,6 @@ application.setSeries(Serie);
                     application.setDirectorChairDecision(res.getInt("directorChairDecision"));
                     application.setPaymentStatus((res.getString("paymentStatus")));
                     String expertReaderName = getExpertReaderName(ReferenceNumber);
-
                     application.setExpertReaderName(expertReaderName);
                     application.setApproveWithdrawnReject(res.getString("approveWithdrawnReject"));
                     System.out.println("setApproveWithdrawnReject  ");
@@ -436,10 +437,9 @@ application.setSeries(Serie);
 
                     application.setRightsAgreement(rightsAgreementList);
                     String translationTitle = getTranslationTitle(ReferenceNumber);
-application.setTranslationTitle(translationTitle);
-
-String Serie = getSeries(ReferenceNumber);
-application.setSeries(Serie);
+                    application.setTranslationTitle(translationTitle);
+                    String Serie = getSeries(ReferenceNumber);
+                    application.setSeries(Serie);
                     /*
                      * get all idTranslator id's for that ReferenceNumber return
                      * ArrayList
@@ -477,7 +477,7 @@ application.setSeries(Serie);
                         singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker(translatorTrackId.get(i));
                         translatorTrackList.add(singleTranslatorTrackList);
-
+ System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
                         titleList = getTitles(ReferenceNumber);
 
                     }
@@ -632,7 +632,6 @@ application.setSeries(Serie);
                     application.setPreviousGrantAid(getPreviousGrantAid(ReferenceNumber));
                     application.setGenre(bookTitle[1]);
                     application.setBoardComments_Instructions(res.getString("boardComments_Instructions"));
-
                     String expertReaderName = getExpertReaderName(ReferenceNumber);
                     application.setPaymentStatus((res.getString("paymentStatus")));
                     application.setExpertReaderName(expertReaderName);
@@ -684,7 +683,7 @@ application.setSeries(Serie);
                         singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker(translatorTrackId.get(i));
                         translatorTrackList.add(singleTranslatorTrackList);
-
+ System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
                         titleList = getTitles(ReferenceNumber);
 
                     }
@@ -797,7 +796,7 @@ application.setSeries(Serie);
 
             ps = conn.prepareStatement("SELECT Translator.Name, TranslatorTrack.translatorCVDocName, TranslatorTrack.translatorCV, TranslatorTrack.copiesTranslationSample, TranslatorTrack.copiesTranslationSampleDocName \n"
                     + "FROM ILGAS.TranslatorTrack\n"
-                    + "INNER JOIN Translator ON TranslatorTrack.idTranslator = Translator.idTranslator\n"
+                    + "INNER JOIN ILGAS.Translator ON TranslatorTrack.idTranslator = Translator.idTranslator\n"
                     + "WHERE TranslatorTrack.translatorCVDocName IS NOT NULL  \n"
                     + "AND  TranslatorTrack.ReferenceNumber = ? \n"
                     + "order by TranslatorTrack.idTranslator");
@@ -906,7 +905,7 @@ application.setSeries(Serie);
                 while (res.next()) {
 
                     translationTitle = res.getString(1);
- System.out.println("translationTitle  " + translationTitle);
+                    System.out.println("translationTitle  " + translationTitle);
                 }
 
             }
@@ -1558,6 +1557,95 @@ application.setSeries(Serie);
         return rightsAgreementArray;
     }
 
+    public static ArrayList<String> getRightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        ArrayList<String> rightsHolderArrayContent = new ArrayList<String>();
+        rightsHolderArrayContent.clear();
+        ResultSet res = null;
+
+        try {
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps1.setString(1, ReferenceNumber);
+            res = ps1.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderArrayContent.add(res.getString(1));
+                    System.out.println("getRightsHolderArrayContent  retrieving " + res.getString(1) + "......................:");
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return rightsHolderArrayContent;
+
+    }
+
+    public static int updateRightsHolderArrayContent(String ReferenceNumber, String[] rightsHolderArrayContent) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        int id = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("updaterightsHolderArrayContent......................:");
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            for (int i = 0; i < rightsHolderArrayContent.length; i++) {
+                String translationRightsHolderName = rightsHolderArrayContent[i];
+                //     String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName ) VALUES (?,?)";
+
+                String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName )SELECT * FROM (SELECT ?, ?) AS tmp WHERE NOT EXISTS ( SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE TranslationRightsHolderName = ?  AND ReferenceNumber = ?) LIMIT 1;";
+
+                ps1 = conn.prepareStatement(query);
+
+                ps1.setString(1, ReferenceNumber);
+                ps1.setString(2, translationRightsHolderName);
+                ps1.setString(3, translationRightsHolderName);
+ps1.setString(4, ReferenceNumber);
+                System.out.println("updaterightsHolderArrayContent  inserting " + translationRightsHolderName + "......................:");
+
+                ps1.executeUpdate();
+
+                if (res != null) {
+                    while (res.next()) {
+
+                        id = res.getInt(1);
+//                    System.out.println("GrantApplicationDAO id::   " + id);
+                    }
+                }
+            }
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
     //updateApplication
     public static boolean updateApplication(GrantApplication app, String ReferenceNumber) throws SQLException, DBException {
 
@@ -1566,42 +1654,44 @@ application.setSeries(Serie);
         boolean id = false;
         int committed = 0;
         ResultSet res = null;
-//                String[] appl = {"ApplicationNumber",	" ApplicationYear",	" ReferenceNumber",	" company",	" publisherID",	" userID",	" agreement",	" agreementDocName",	" contract",	" contractDocName",	" proposedDateOfPublication",	" proposedPrintRun",	" plannedPageExtent",	" translatorCV",	" translatorCVDocName",	" numberOfPages",	" translatorFee",	" breakDownTranslatorFee",	" Notes",	" copiesSent",	" dateCopiesWereSent",	" Original",	" OriginalName",	" copiesTranslationSample",	" copiesTranslationSampleDocName",	" gdpr_ACCEPTED",	" TC_ACCEPTED",	" APPROVED",	" Status",	" Cover",	" CoverName",	" originalDateOfPublication",	" publicationYear",	" originalLanguage",	" originalPageExtent",	" countryOfPublication",	" foreignPublisher",	" foreignCountry",	" targetLanguage",	" boardMeeting",	" amountRequested",	" amountApproved",	" publisherInformedOfMeeting",	" boardComments_Instructions",	" contractSentToPublisher",	" acknowledgementApproved",	" datePublishedBooksReceived",	" datePaymentMadeToPublisher",	" paymentReferenceNumber",	" addendumRightsAgreement",	" addendumRightsAgreementName",	" proofOfPaymentToTranslator",	" proofOfPaymentToTranslatorName",	" bankDetailsForm",	" bankDetailsFormName",	" signedLIContract",	" signedLIContractName",	" paymentStatus",	" previousGrantAid",	" award",	" salesFigures",	" lastUpdated",	" Recommendation",	" Created",	" bilingual"};
 
+//        This is not the full pojo - only fields relevant to pending update
         Set<String> VALUES = new HashSet<>(Arrays.asList(
-                new String[]{"ApplicationNumber", "ApplicationYear", "ReferenceNumber", "company", "publisherID", "userID", "agreement", "agreementDocName", "contract", "contractDocName", "proposedDateOfPublication", "proposedPrintRun", "plannedPageExtent", "translatorCV", "translatorCVDocName", "numberOfPages", "translatorFee", "breakDownTranslatorFee", "Notes", "copiesSent", "dateCopiesWereSent", "Original", "OriginalName",
+                new String[]{"agreement", "agreementDocName", "contract", "contractDocName", "proposedPrintRun", "plannedPageExtent", "translatorCV", "translatorCVDocName", "numberOfPages", "translatorFee", "breakDownTranslatorFee", "Notes", "copiesSent", "Original", "OriginalName",
                     "copiesTranslationSample", "copiesTranslationSampleDocName", "gdpr_ACCEPTED", "TC_ACCEPTED", "APPROVED", "Status", "Cover", "CoverName",
-                    "originalDateOfPublication", "publicationYear", "originalLanguage", "originalPageExtent", "countryOfPublication", "foreignPublisher", "foreignCountry",
-                    "targetLanguage", "boardMeeting", "amountRequested", "amountApproved", "publisherInformedOfMeeting", "boardComments_Instructions",
-                    "contractSentToPublisher", "acknowledgementApproved", "datePublishedBooksReceived", "datePaymentMadeToPublisher", "paymentReferenceNumber",
+                    "publicationYear", "originalLanguage", "originalPageExtent", "countryOfPublication", "foreignPublisher", "foreignCountry",
+                    "targetLanguage", "amountRequested", "amountApproved", "boardComments_Instructions",
+                    "paymentReferenceNumber",
                     "addendumRightsAgreement", "addendumRightsAgreementName", "proofOfPaymentToTranslator", "proofOfPaymentToTranslatorName", "bankDetailsForm",
-                    "bankDetailsFormName", "signedLIContract", "signedLIContractName", "paymentStatus", "previousGrantAid", "award", "salesFigures", "lastUpdated",
-                    "Recommendation", "Created", "bilingual"}
+                    "bankDetailsFormName", "signedLIContract", "signedLIContractName", "paymentStatus", "previousGrantAid", "award", "salesFigures",
+                    "Recommendation", "bilingual"}
         ));
         int counter = 1;
         System.out.printf("we are here  updateApplication   ");
 
-        String prepStat = "(UPDATE GrantApplication SET";
+        String prepStat = "UPDATE ILGAS.GrantApplication SET";
 
         System.out.printf("xxx  app.getClass().getDeclaredFields().length  " + app.getClass().getDeclaredFields().length);
-        int setLength = app.getClass().getDeclaredFields().length;
+//        int setLength = app.getClass().getDeclaredFields().length;
+        int setLength = VALUES.size();
         for (java.lang.reflect.Field field : app.getClass().getDeclaredFields()) {
             try {
                 field.setAccessible(true);
 
                 String col = field.getName();
                 Object value = field.get(app);
-                System.out.printf("xxx  " + counter + ":  Field name: %s, Field value: %s%n", col, value);
 
                 if (VALUES.contains(col)) {
-                    if (counter < setLength - 1) {
-                        if (!"ApplicationNumber".equals(col) && !"ApplicationYear".equals(col)) {
 
-                            prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
-                        }
-                    } else {
-                        prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
-                    }
+//                    System.out.printf("xxx  " + counter + ":  Field name: %s, Field value: %s%n", col, value);
+//                    System.out.printf("xxx  counter: " + counter + "  setLength:  " + setLength);
+//                    if (counter < setLength - 1) {
+//                        if (!"ApplicationNumber".equals(col) && !"ApplicationYear".equals(col) && !"ReferenceNumber".equals(col)  && !"boardMeeting".equals(col)) {
+                    prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
+//                        }
+//                    } else {
+//                        prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "') ";
+//                    }
                 }
 
                 counter++;
@@ -1612,7 +1702,12 @@ application.setSeries(Serie);
 
         }
 
-        prepStat += " WHERE ReferenceNumber = " + ReferenceNumber;
+        int ind = prepStat.lastIndexOf(",");
+        if (ind >= 0) {
+            prepStat = new StringBuilder(prepStat).replace(ind, ind + 1, "").toString();
+        }
+
+        prepStat += " WHERE ReferenceNumber = '" + ReferenceNumber + "';";
         System.out.printf("xxx  prepStat " + prepStat);
         try {
             conn = DBConn.getConnection();
@@ -1700,6 +1795,41 @@ application.setSeries(Serie);
         System.out.print("openApplicationDAO  previousGrantAid :  " + previousGrantAid.toString());
 
         return previousGrantAid;
+
+    }
+
+    public static boolean rightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int rightsHolderContent = 0;
+        boolean rightsHolderContentExists = false;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps.setString(1, ReferenceNumber);
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderContent = res.getInt(1);
+                }
+            }
+            DBConn.close(conn, ps, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("rightsHolderArrayContent Excepion while accessing database");
+        }
+
+        if (rightsHolderContent > 0) {
+            return rightsHolderContentExists = true;
+        } else {
+            return rightsHolderContentExists = false;
+        }
 
     }
 }

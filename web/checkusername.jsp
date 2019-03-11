@@ -12,19 +12,21 @@
 <%
     String uname = request.getParameter("uname");
 
+    System.out.println("checkusername uname: " + uname);
+    
     Class.forName("com.mysql.jdbc.Driver");
     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ILGAS", "root", "ankh573");
     Statement st = con.createStatement();
-    ResultSet rs = st.executeQuery("select * from users where uname='" + uname + "'");  // this is for name
+    ResultSet rs = st.executeQuery("select * from ILGAS.users where uname='" + uname + "'");  // this is for name
     if (rs.next()) {
         out.println("<font color=red>");
         out.println("Username already exists");
         out.println("</font>");
 
     } else {
-//        out.println("<font color=green>");
-//        out.println("Available");
-//        out.println("</font>");
+        out.println("<font color=green>");
+        out.println("Available");
+        out.println("</font>");
 
     }
     rs.close();

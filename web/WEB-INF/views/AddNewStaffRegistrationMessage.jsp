@@ -1,6 +1,6 @@
 <%-- 
     Document   : AddNewStaffRegistrationMessage.jsp
-    Created on : 01-Apr-2017, 12:56:23
+    Created on : 22-Feb-2019, 19:56:23
     Author     : markus
 --%>
 
@@ -66,7 +66,7 @@
 
                 </div><!-- End of topbar div -->
 
-                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland <br/><br/> Expert Reader Registration</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland <br/><br/> New Staff Registration</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="col-md-3"></div>

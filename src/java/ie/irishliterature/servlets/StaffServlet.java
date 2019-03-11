@@ -184,7 +184,8 @@ public class StaffServlet extends HttpServlet {
             System.out.println("param13 Payment_Reference_Number " + Payment_Reference_Number);
             PaymentStatus = request.getParameter("paymentStatus");
             System.out.println("param14 PaymentStatus " + PaymentStatus);
-            Status = "closed";
+
+            Status = "open";
 
             ////////////////////////////////////////////////////////////
             //  Process Application
@@ -195,6 +196,10 @@ public class StaffServlet extends HttpServlet {
             System.out.println("sending dateOfBoardMeeting  " + dateOfBoardMeeting);
             if (!dateOfBoardMeeting.isEmpty()) {
                 application.setBoardMeeting(convertStringDate(dateOfBoardMeeting));
+            }
+
+            if (ApproveWithdrawnReject.equals("Approved")) {
+                Status = "pending";
             }
             application.setApproveWithdrawnReject(ApproveWithdrawnReject);
             System.out.println("sending approveWithdrawnReject  " + approveWithdrawnReject);
@@ -230,6 +235,10 @@ public class StaffServlet extends HttpServlet {
                 application.setDatePaymentMadeToPublisher(convertStringDate(Date_Payment_Made_to_Publisher));
             }
             application.setPaymentReferenceNumber(Payment_Reference_Number);
+
+            if (PaymentStatus.equals("Paid")) {
+                Status = "closed";
+            }
             application.setPaymentStatus(PaymentStatus);
 
             System.out.println("sending plannedPageExtent  " + plannedPageExtent);

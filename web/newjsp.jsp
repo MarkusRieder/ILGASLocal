@@ -13,7 +13,7 @@
 
         <!-- Bootstrap -->
 
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
@@ -36,180 +36,174 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
         <script src="js/bootstrap-datepicker.js"></script>
         <script src="js/jquery-ui.js"></script>
-
-
-        <script>
-
-            $(function () {
-                $('div.cover').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("cover_upload").value = label;
-                    console.log("label  ", label);
-                    console.log("numFiles  ", numFiles);
-                });
-            });
-        </script>
-
-        <style>
-
-            .container-bg { 
-                background: url(images/background/IMG_6318.JPG) no-repeat center center fixed; 
-                -webkit-background-size: cover;
-                -moz-background-size:  cover;
-                -o-background-size: cover;
-                background-size: 100% ;
-                padding-right: 15px;
-                padding-left: 15px;
-                margin-right: auto;
-                margin-left: auto;
-                max-width: 1000px;
-                overflow:hidden;
-
-            }
-
-            .tst {
-                background-image: url('images/background/IMG_6318.JPG');
-                background-size: contain;
-                background-repeat: no-repeat;
-                width: 100%;
-                height: 0;
-                padding-top: 51.4056%; /* (img-height / img-width * container-width) */
-                /* (853 / 1280 * 100) */
-            }
-
-            div.row { 
-                border: 1px solid;
-                border-bottom: 0px;
-            }
-            .container div.row:last-child {
-                border-bottom: 1px solid;
-            }
-        </style>
-        <style>
-            .btn-file {
-                position: relative;
-                overflow: hidden;
-            }
-            .btn-file input[type=file] {
-                position: absolute;
-                top: 0;
-                right: 0;
-                min-width: 100%;
-                min-height: 100%;
-                font-size: 100px;
-                text-align: right;
-                filter: alpha(opacity=0);
-                opacity: 0;
-                outline: none;
-                background: white;
-                cursor: inherit;
-                display: block;
-            }
-
-            .imageupload {
-                margin: 20px 0;
-            }
-        </style>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 
     </head>
     <body>
-        <div id="shadowholder">
-            <div class="shadowtop"> </div>
-            <div id="container">
-                <div id="topspacer"> </div>
-                <div id="topbar">
-                    <div class="animateddiv">
-                        <a href="/the-translation-grant-programme"><img src="images/flashtext-animated2.gif" height="70" alt="Promoting Irish Literature Abroad" /></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="page-header">
+                        <div class="alert alert-info" role="alert">
+                            <h4>This demo shows how to integrate JQuery-validation and the Bootstrap framework.</h4>
+                            <ul>
+                                <li><a href="https://getbootstrap.com/" class="alert-link">Bootstrap home project</a>.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
 
-                    <!--container for welcome/logout-->
-                    <div class="container-fluid" >
-                        <div class="pull-right">
-                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Using feedback icons</h3>
                         </div>
-                    </div> <!--container for welcome/logout-->
-                </div> <!--  End of topbar div -->
-                <div class="jquery-script-clear"></div>
-
-                <div class="container">
-
-                    <!-- bootstrap-imageupload. -->
-                    <div class="imageupload panel panel-default">
-                        <div class="panel-heading clearfix">
+                        <div class="panel-body">
+                            <form id="signupForm1" method="post" class="form-horizontal" action="">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="firstname1">First name</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="firstname1" name="firstname1" placeholder="First name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="lastname1">Last name</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="lastname1" name="lastname1" placeholder="Last name" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="username1">Username</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="username1" name="username1" placeholder="Username" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="email1">Email</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control" id="email1" name="email1" placeholder="Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="password1">Password</label>
+                                    <div class="col-sm-5">
+                                        <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label" for="confirm_password1">Confirm password</label>
+                                    <div class="col-sm-5">
+                                        <input type="password" class="form-control" id="confirm_password1" name="confirm_password1" placeholder="Confirm password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-5 col-sm-offset-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="agree1" name="agree1" value="agree" />Please agree to our policy
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-9 col-sm-offset-4">
+                                        <button type="submit" class="btn btn-primary" name="signup1" value="Sign up">Sign up</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="file-tab panel-body cover">
-                            <label class="btn btn-default btn-file">
-                                <span></span>
-                                <!-- The file is stored here. -->
-                                <input type="file" name="image-file">
-                                <i class="glyphicon glyphicon-picture"></i>
-                            </label>
-                            <button type="button" class="btn btn-default">Remove</button>
-                        </div>
-
-
-                        <!--<input id="label_agreement" class="pull-left"/>-->
-                        <br/>
-                        <br/>
-                        <input type="hidden" value="Cover" name="image-file" id="cover_upload"/>
                     </div>
                 </div>
-
-
-
-                <!--footer start-->
-
-                <div id="base">  
-
-                    <div class="basetext">  
-                        <h2>Literature Ireland</h2>
-                        <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                    </div><!-- end of BaseText div -->
-
-                    <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
-                    <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
-
-                    <div class="mobile-baselogos visible-phone"> 
-                        <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
-                        <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
-                    </div>
-
-                </div><!-- end of Base div -->
-
-            </div> <!--  end of container div -->
-            <div class="shadowbase"> </div>
-        </div><!-- end of Shadowholder container div -->
-
-
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017 mgr Software
+            </div>
         </div>
-        <script src="js/bootstrap-imageupload.js"></script>
+        <script type="text/javascript">
+//            $.validator.setDefaults({
+//                submitHandler: function () {
+//                    alert("submitted!");
+//                }
+//            });
 
-        <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
+                $("#signupForm1").validate({
+                    rules: {
+                        firstname1: "required",
+                        lastname1: "required",
+                        username1: {
+                            required: true,
+                            minlength: 2
+                        },
+                        password1: {
+                            required: true,
+                            minlength: 5
+                        },
+                        confirm_password1: {
+                            required: true,
+                            minlength: 5,
+                            equalTo: "#password1"
+                        },
+                        email1: {
+                            required: true,
+                            email: true
+                        },
+                        agree1: "required"
+                    },
+                    messages: {
+                        firstname1: "Please enter your firstname",
+                        lastname1: "Please enter your lastname",
+                        username1: {
+                            required: "Please enter a username",
+                            minlength: "Your username must consist of at least 2 characters"
+                        },
+                        password1: {
+                            required: "Please provide a password",
+                            minlength: "Your password must be at least 5 characters long"
+                        },
+                        confirm_password1: {
+                            required: "Please provide a password",
+                            minlength: "Your password must be at least 5 characters long",
+                            equalTo: "Please enter the same password as above"
+                        },
+                        email1: "Please enter a valid email address",
+                        agree1: "Please accept our policy"
+                    },
+                    errorElement: "em",
+                    errorPlacement: function (error, element) {
+                        // Add the `help-block` class to the error element
+                        error.addClass("help-block");
 
-            $('#imageupload-disable').on('click', function () {
-                $imageupload.imageupload('disable');
-                $(this).blur();
-            })
+                        // Add `has-feedback` class to the parent div.form-group
+                        // in order to add icons to inputs
+                        element.parents(".col-sm-5").addClass("has-feedback");
 
-            $('#imageupload-enable').on('click', function () {
-                $imageupload.imageupload('enable');
-                $(this).blur();
-            })
+                        if (element.prop("type") === "checkbox") {
+                            error.insertAfter(element.parent("label"));
+                        } else {
+                            error.insertAfter(element);
+                        }
 
-            $('#imageupload-reset').on('click', function () {
-                $imageupload.imageupload('reset');
-                $(this).blur();
-            });
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if (!element.next("span")[ 0 ]) {
+                            $("<span class='glyphicon glyphicon-remove form-control-feedback'></span>").insertAfter(element);
+                        }
+                    },
+                    success: function (label, element) {
+                        // Add the span element, if doesn't exists, and apply the icon classes to it.
+                        if (!$(element).next("span")[ 0 ]) {
+                            $("<span class='glyphicon glyphicon-ok form-control-feedback'></span>").insertAfter($(element));
+                        }
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
+                        $(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
+                        $(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+                    }
+                });
+                
+//                            $(document).ready(function () {
+//                var validator = $("#signupForm1").validate();
+//                alert("Validate");
+//                validator.form();
+//            });
         </script>
     </body>
 </html>

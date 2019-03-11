@@ -4,7 +4,7 @@ import static ie.irishliterature.dao.ACpublisherDAO_test.updatePublisher;
 import ie.irishliterature.dao.GrantApplicationDAO;
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import static ie.irishliterature.dao.GrantApplicationDAO.ifLanguageExist;
-import static ie.irishliterature.dao.LibraryDAO.insertBook;
+import ie.irishliterature.dao.LibraryDAO;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.Library;
@@ -160,6 +160,8 @@ public class GrantApplicationServlet extends HttpServlet {
 
     private String[] translatorArrayContent;
 
+    private String[] rightsHolderArrayContent;
+
     private String[] authorArray;  //Array of Author/Title
 
     private String[] languageArray;
@@ -239,6 +241,8 @@ public class GrantApplicationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String name = "";
         HttpSession session = request.getSession();
         System.out.println("############################### /GrantApplicationServlet ####################################");
@@ -251,7 +255,7 @@ public class GrantApplicationServlet extends HttpServlet {
                 name = (String) session.getValue(key);
             }
         }
-        
+
         System.out.println("###################################################################");
         String task = "Start New Application";
 
@@ -264,6 +268,7 @@ public class GrantApplicationServlet extends HttpServlet {
                 //set Status
                 Status = "open";
                 int translatorArrayLength = 0;
+                int rightsHolderArrayLength = 0;
                 int languageArrayLength = 0;
                 //set Timestamp and format
                 String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
@@ -328,7 +333,7 @@ public class GrantApplicationServlet extends HttpServlet {
                              * collect all data input from input fileds
                              */
                             String fieldname = item.getFieldName();
-                            String fieldvalue = item.getString();
+                            String fieldvalue = item.getString("UTF-8").trim();
 
                             System.out.println(fieldname + " >> " + fieldvalue);
                             switch (fieldname) {
@@ -535,6 +540,16 @@ public class GrantApplicationServlet extends HttpServlet {
                                     System.out.println("translatorArray >>>> translatorArray.length " + translatorArrayContent.length);
                                     for (String individualValue : translatorArrayContent) {
                                         System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
+                                    }
+                                    break;
+
+                                case "rightsHolderArray":
+                                    System.out.println("rightsHolderArray >>>> HERE ");
+                                    rightsHolderArrayContent = fieldvalue.split(","); //split string by ","
+                                    rightsHolderArrayLength = rightsHolderArrayContent.length;
+                                    System.out.println("rightsHolderArray >>>> rightsHolderArray.length " + rightsHolderArrayContent.length);
+                                    for (String individualValue : rightsHolderArrayContent) {
+                                        System.out.println("rightsHolderArray  OpenApplicationServlet:: " + individualValue + " ----------> rightsHolderArrayLength::  " + rightsHolderArrayLength);
                                     }
                                     break;
                                 case "languages":
@@ -778,7 +793,7 @@ public class GrantApplicationServlet extends HttpServlet {
                     application.setProposedDateOfPublication(convertDate(proposedDateOfPublication));
                     application.setProposedPrintRun(proposedPrintRun);
                     application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
-//                    application.setTargetLanguage(targetLanguage); // we get that from the Languages_Library table
+                    application.setTargetLanguage(targetLanguage); // we get that from the Languages_Library table
                     application.setBilingual_edition(bilingual);
                     /*
                      * Translator Details
@@ -894,9 +909,7 @@ public class GrantApplicationServlet extends HttpServlet {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                } catch (ParseException ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (FileUploadException ex) {
+                } catch (ParseException | FileUploadException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
@@ -955,6 +968,20 @@ public class GrantApplicationServlet extends HttpServlet {
                 }
 
                 /*
+                 * Process translation rights holder
+                 */
+                System.out.println("Process rightsHolderArrayContent ");
+
+                if (rightsHolderArrayContent.length > 0) {
+                    System.out.println("rightsHolderArrayContent " + rightsHolderArrayContent.length);
+                    try {
+                        GrantApplicationDAO.updateRightsHolderArrayContent(ReferenceNumber, rightsHolderArrayContent);
+                    } catch (DBException ex) {
+                        Logger.getLogger(OpenApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+                /*
                  * Update GrantApplication to contain the filePaths
                  * =================================================
                  * path = path + File.separator + yearInString + File.separator
@@ -962,7 +989,6 @@ public class GrantApplicationServlet extends HttpServlet {
                  * upload to temp dir then move to final directory
                  */
                 List<String> translatorFileDetails = new ArrayList<>();
-
 
                 System.out.println("####################### creating the lists ##################################################");
 
@@ -1069,7 +1095,8 @@ public class GrantApplicationServlet extends HttpServlet {
                         String moveFile = longArrayList.get(i);
                         String decider = elements[7];
                         translatorName = elements[8];
-                        String moveFileName = elements[8];
+                        String moveFileName = elements[9];
+                        System.out.println("longArrayList moveFileName  " + moveFileName);
                         String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
 //                        String moveFileNameReplaced = moveFile.replace("/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents");
                         /*
@@ -1187,7 +1214,7 @@ public class GrantApplicationServlet extends HttpServlet {
                 library.setPublisheryear(publicationYear);
                 library.setGenre(Genre);
                 library.setSeries(Series);
-                library.setTranslationPublisher(translationPublisher);
+                library.setTranslationPublisher(foreignPublisher);
                 library.setTranslationTitle(translationTitle);
                 library.setTranslationPublisherYear(translationPublisherYear);
                 library.setPhysicalDescription(physicalDescription);
@@ -1200,7 +1227,7 @@ public class GrantApplicationServlet extends HttpServlet {
 
                  {
                     try {
-                        bookID = insertBook(library);
+                        bookID = LibraryDAO.insertBook(library);
                     } catch (DBException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1209,6 +1236,8 @@ public class GrantApplicationServlet extends HttpServlet {
                 ////////////////////////////////////////////////////////////
                 //  Process Application Languages
                 ////////////////////////////////////////////////////////////
+                System.out.println("Process Languages");
+                System.out.println("Languages languageArrayLength: " + languageArrayLength);
                 if (languageArrayLength != 0) {
 
                     String[] processingLanguagesArray = new String[languageArray.length - 1];
@@ -1217,7 +1246,7 @@ public class GrantApplicationServlet extends HttpServlet {
                      * convert processingArray to ArrayList Languages
                      */
                     Languages = new ArrayList<>(Arrays.asList(processingLanguagesArray));
-
+                    System.out.println("Languages Languages.length: " + Languages.size());
                     int idx = 0;
 
                     /*
@@ -1230,7 +1259,7 @@ public class GrantApplicationServlet extends HttpServlet {
                         System.out.println("Languages Languages.length: " + Languages.size());
                         if (idx < Languages.size()) {
                             processingLanguagesArray[idx] = languages;
-
+                            System.out.println("Languages languages  " + languages + " idx " + idx);
                             /*
                              * when we have a complete set (idLanguages, lang,
                              * bookID, ReferenceNumber)
@@ -1250,20 +1279,46 @@ public class GrantApplicationServlet extends HttpServlet {
                                  * insert them into the tables Languages_Library
                                  */
                                 GrantApplicationDAO.insertLanguages_Library(idLanguages, language, bookID, ReferenceNumber);
+                                System.out.println("1 GrantApplicationDAO.insertLanguages_Library(idLanguages  " + idLanguages
+                                        + " language " + language + " bookID " + bookID + "  ReferenceNumber " + ReferenceNumber);
 
                             } catch (DBException ex) {
                                 Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                             }
 
                             idx++;
+                        } else {
+                            int idLanguages = 0;
+                            try {
+                                idLanguages = ifLanguageExist(languages);
+                            } catch (DBException ex) {
+                                Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                            try {
+
+                                /*
+                                 * set the variables and
+                                 * insert them into the tables Languages_Library
+                                 */
+                                GrantApplicationDAO.insertLanguages_Library(idLanguages, languages, bookID, ReferenceNumber);
+                                System.out.println("2 GrantApplicationDAO.insertLanguages_Library(idLanguages  " + idLanguages
+                                        + " language " + languages + " bookID " + bookID + "  ReferenceNumber " + ReferenceNumber);
+
+                            } catch (DBException ex) {
+                                Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 } else {
+                    System.out.println("Languages languageArrayLength  === 0  " + languageArrayLength);
 
                     try {
 
                         int idLanguages = ifLanguageExist(languages);
                         GrantApplicationDAO.insertLanguages_Library(idLanguages, appTargetLanguage, bookID, ReferenceNumber);
+                        System.out.println("3 GrantApplicationDAO.insertLanguages_Library(idLanguages  " + idLanguages
+                                + " appTargetLanguage " + appTargetLanguage + " bookID " + bookID + "  ReferenceNumber " + ReferenceNumber);
 
                     } catch (DBException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);

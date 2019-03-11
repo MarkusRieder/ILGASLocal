@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "AddUserExpertReader", urlPatterns = {"/AddUserExpertReader"})
-public class AddUserExpertReader extends HttpServlet {
+@WebServlet(name = "AddUserStaff", urlPatterns = {"/AddUserStaff"})
+public class AddUserStaff extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,10 +49,10 @@ public class AddUserExpertReader extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddExpertReader</title>");
+            out.println("<title>Servlet AddUserStaff</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddExpertReader at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddUserStaff at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -87,12 +87,12 @@ public class AddUserExpertReader extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String username = request.getParameter("uname");
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String function = "Expert Reader";
+        String username = request.getParameter("StaffUname");
+        String firstname = request.getParameter("StaffFirstname");
+        String lastname = request.getParameter("StaffLastname");
+        String password = request.getParameter("StaffPassword");
+        String email = request.getParameter("StaffEmail");
+        String function = "Literature Ireland Staff";
         String role = "";
         int userID = 0;
         String fullname = firstname + " " + lastname;
@@ -151,9 +151,9 @@ public class AddUserExpertReader extends HttpServlet {
                 /*
                  * send verification email
                  */
-                MailUtil.sendEmailRegistrationLinkExpertReader(username,fullname, password, email, hash);
+                MailUtil.sendEmailRegistrationLinkNewStaff(username,firstname, password, email, hash);
 
-                message = "Expert Reader <strong>" + fullname + "</strong> has been created  <br/><br/>and email has been sent";
+                message = "New Staff member <strong>" + fullname + "</strong> has been created  <br/><br/>and email has been sent";
             } else {
                 /*
                  * tell user that the email already in use
@@ -171,7 +171,7 @@ public class AddUserExpertReader extends HttpServlet {
         }
 
         request.setAttribute("message", message);
-        request.getRequestDispatcher("/WEB-INF/views/AddExpertReaderregistrationMessage.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/AddNewStaffRegistrationMessage.jsp").forward(request, response);
     }
 
     /**
