@@ -602,7 +602,14 @@
                             }},
                         {"data": "originalName"},
                         {"data": "Author"},
-                        {"data": "publicationYear"},
+                        {"data": "publicationYear",
+                            "render": function (data) {
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                    return data;
+                                console.log("publicationYear  " + data);
+                            }},
                         {"data": "Series",
                             "render": function (data) {
                                 if (typeof (data) === "undefined") {
@@ -792,7 +799,7 @@
 
                     console.log("8 xyz bookTitle: " + rowdata.bookTitle);
                     document.getElementById("appBookTitle").value = rowdata.bookTitle;
-                    document.getElementById("publicationYear").value = rowdata.publicationYear;
+//                    document.getElementById("publicationYear").value = rowdata.publicationYear;
                     document.getElementById("appGenre").value = rowdata.genre;
                     document.getElementById("appLanguageOriginal").value = rowdata.originalLanguage;
                     document.getElementById("appCountryOfPublication").value = rowdata.countryOfPublication;
@@ -2388,7 +2395,7 @@
         <script type="text/javascript">
             function formatDate(unformattedDate) {
                 var date = new Date(unformattedDate);
-                var day = date.ge<tDate();
+                var day = date.getDate();
                 var month = date.getMonth() + 1;
                 var year = date.getFullYear();
                 var formattedDate = day + "/" + month + "/" + year;
@@ -2918,7 +2925,7 @@
                                                                                    >
                                                                         </div>
                                                                         <input type="hidden" id="bookTitle" name="bookTitle" >
-                                                                        <div class="col-sm-4">          
+<!--                                                                        <div class="col-sm-4">          
                                                                             <label for="appForeignPublisher" class="pull-left">Publisher (of the original)<br/> &nbsp;</label>                                                           
                                                                             <input id="appForeignPublisher"                                
                                                                                    type="text"                                
@@ -2927,10 +2934,10 @@
                                                                                    value="${companyDetails.Company}"    
                                                                                    placeholder="Publisher"
                                                                                    >                                                     
-                                                                        </div>
+                                                                        </div>-->
 
                                                                         <div class="col-sm-3">    
-                                                                            <label for="publicationYear" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
+<!--                                                                            <label for="publicationYear" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
 
                                                                             <input id="publicationYear"                                
                                                                                    type="text"                                
@@ -2939,7 +2946,7 @@
                                                                                    value=""    
                                                                                    placeholder="Publication Year"
                                                                                    >
-                                                                        </div>
+                                                                        </div>-->
                                                                     </div> <!--row-->
 
 

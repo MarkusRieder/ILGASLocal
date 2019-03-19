@@ -51,7 +51,7 @@ public class StaffServlet extends HttpServlet {
     private String ApproveWithdrawnReject; //  Date
     private int approveWithdrawnReject = 0;
     private int directorChairDecision = 0;
-    private String DirectorChairDecision;
+    private String DirectorChairDecision = "";
     private String amountApproved; //  Date
     private String Date_ILE_Acknowlegement_Approved; //  Date
     private String Date_Published_Books_Received; //  Date
@@ -122,6 +122,33 @@ public class StaffServlet extends HttpServlet {
             String name = request.getParameter("name");
             System.out.println("Here we are >>>>>>>>>.   StaffServlet ::  name " + name);
 
+            System.out.println("############################### /StaffServlet ####################################");
+
+            Enumeration en = request.getParameterNames();
+
+            while (en.hasMoreElements()) {
+                Object objOri = en.nextElement();
+
+                String param = (String) objOri;
+
+                String value = request.getParameter(param);
+
+                System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+
+            }
+
+            System.out.println("Enumeration keys   ");
+            Enumeration keys = session.getAttributeNames();
+            while (keys.hasMoreElements()) {
+                String key = (String) keys.nextElement();
+                System.out.println("key  :" + key + ": " + session.getValue(key));
+                if ("name".equals(key)) {
+                    name = (String) session.getValue(key);
+                }
+            }
+
+            System.out.println("###################################################################");
+
 //        switch (task) {
 //            case "StaffServlet":
             System.out.println("Here we are >>>>>>>>>.   StaffServlet :: StaffServlet");
@@ -134,11 +161,19 @@ public class StaffServlet extends HttpServlet {
             notesAboutApplication = request.getParameter("appNotesAboutApplication");
 
             System.out.println("param1 notesAboutApplication " + notesAboutApplication);
-            dateOfBoardMeeting = request.getParameter("appDateOfBoardMeeting");
+
+            if (request.getParameter("appDateOfBoardMeeting").isEmpty()) {
+                dateOfBoardMeeting = "";
+            } else {
+                dateOfBoardMeeting = request.getParameter("appDateOfBoardMeeting");
+            }
             System.out.println("param2 dateOfBoardMeeting " + dateOfBoardMeeting);
+            
             ApproveWithdrawnReject = request.getParameter("ApproveWithdrawnReject");
             System.out.println("param3  ApproveWithdrawnReject  " + ApproveWithdrawnReject);
+
             DirectorChairDecision = request.getParameter("directorChairDecision");
+            System.out.println("param4  DirectorChairDecision " + request.getParameter("directorChairDecision"));
 
             if ("ticked".equals(ApproveWithdrawnReject)) {
                 approveWithdrawnReject = 1;
@@ -153,7 +188,9 @@ public class StaffServlet extends HttpServlet {
             }
 
             System.out.println("param4  directorChairDecision " + directorChairDecision);
+
             Comments_about_Meeting = request.getParameter("commentsAboutMeeting");
+
             System.out.println("param5 Comments_about_Meeting " + Comments_about_Meeting);
 
             plannedPageExtent = request.getParameter("appplannedPageExtent");
@@ -161,24 +198,50 @@ public class StaffServlet extends HttpServlet {
             proposedPrintRun = request.getParameter("appproposedPrintRun");
             System.out.println("param5 proposedPrintRun " + proposedPrintRun);
 
+            Award = request.getParameter("award");
             if ("ticked".equals(Award)) {
                 award = 1;
             } else {
                 award = 0;
             }
 
-            System.out.println("param6 award " + award);
+            System.out.println("param6 Award " + request.getParameter("award"));
             amountApproved = request.getParameter("amountApproved");
             System.out.println("param7 amountApproved " + amountApproved);
-            Date_publisher_informed_of_meeting = request.getParameter("datePublisherInformedOfMeeting");
+
+            if (request.getParameter("datePublisherInformedOfMeeting").isEmpty()) {
+                Date_publisher_informed_of_meeting = "";
+            } else {
+                Date_publisher_informed_of_meeting = request.getParameter("datePublisherInformedOfMeeting");
+            }
             System.out.println("param8 Date_publisher_informed_of_meeting " + Date_publisher_informed_of_meeting);
-            Date_Contract_Sent_to_Publisher = request.getParameter("dateContractSenttoPublisher");
+
+            if (request.getParameter("dateContractSenttoPublisher").isEmpty()) {
+                Date_Contract_Sent_to_Publisher = "";
+            } else {
+                Date_Contract_Sent_to_Publisher = request.getParameter("dateContractSenttoPublisher");
+            }
             System.out.println("param9 Date_Contract_Sent_to_Publisher " + Date_Contract_Sent_to_Publisher);
-            Date_ILE_Acknowlegement_Approved = request.getParameter("dateILEAcknowledgementApproved");
+
+            if (request.getParameter("dateILEAcknowledgementApproved").isEmpty()) {
+                Date_ILE_Acknowlegement_Approved = "";
+            } else {
+                Date_ILE_Acknowlegement_Approved = request.getParameter("dateILEAcknowledgementApproved");
+            }
             System.out.println("param10 Date_ILE_Acknowlegement_Approved " + Date_ILE_Acknowlegement_Approved);
-            Date_Published_Books_Received = request.getParameter("datePublishedBooksReceived");
+
+            if (request.getParameter("datePublishedBooksReceived").isEmpty()) {
+                Date_Published_Books_Received = "";
+            } else {
+                Date_Published_Books_Received = request.getParameter("datePublishedBooksReceived");
+            }
             System.out.println("param11 Date_Published_Books_Received " + Date_Published_Books_Received);
-            Date_Payment_Made_to_Publisher = request.getParameter("datePaymentMadeToPublisher");
+
+            if (request.getParameter("datePaymentMadeToPublisher").isEmpty()) {
+                Date_Payment_Made_to_Publisher = "";
+            } else {
+                Date_Payment_Made_to_Publisher = request.getParameter("datePaymentMadeToPublisher");
+            }
             System.out.println("param12 Date_Payment_Made_to_Publisher " + Date_Payment_Made_to_Publisher);
             Payment_Reference_Number = request.getParameter("paymentReferenceNumber");
             System.out.println("param13 Payment_Reference_Number " + Payment_Reference_Number);
@@ -192,7 +255,8 @@ public class StaffServlet extends HttpServlet {
             ////////////////////////////////////////////////////////////
             GrantApplication application = new GrantApplication();
 
-            application.setNotesAboutApplication("'" + notesAboutApplication + "'");
+            application.setNotesAboutApplication(notesAboutApplication);
+
             System.out.println("sending dateOfBoardMeeting  " + dateOfBoardMeeting);
             if (!dateOfBoardMeeting.isEmpty()) {
                 application.setBoardMeeting(convertStringDate(dateOfBoardMeeting));
@@ -244,8 +308,8 @@ public class StaffServlet extends HttpServlet {
             System.out.println("sending plannedPageExtent  " + plannedPageExtent);
             System.out.println("sending proposedPrintRun  " + proposedPrintRun);
 
-            application.setProposedPrintRun(Integer.parseInt(plannedPageExtent));
-            application.setPlannedPageExtent(Integer.parseInt(proposedPrintRun));
+            application.setProposedPrintRun(Integer.parseInt(proposedPrintRun));
+            application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
 
             application.setStatus(Status);
             application.setLASTUPDATED(timestamp);

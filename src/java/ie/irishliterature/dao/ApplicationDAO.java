@@ -183,7 +183,7 @@ public class ApplicationDAO {
 
         try {
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement("update ILGAS.users set STATUS = ? where uname = ?");
+            ps = conn.prepareStatement("update ILGAS.users set status = ? where uname = ?");
             ps.setString(1, st);
             ps.setString(2, un);
             ps.executeUpdate();
@@ -192,7 +192,7 @@ public class ApplicationDAO {
         } catch (ClassNotFoundException | SQLException e) {
             LOGGER.debug(e.getMessage());
             DBConn.close(conn, ps);
-            throw new DBException("5 Excepion while accessing database");
+            throw new DBException("updateStatus 5 Excepion while accessing database");
         }
     }
 

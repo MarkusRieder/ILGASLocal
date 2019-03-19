@@ -50,7 +50,6 @@ public class Library {
 
     private String ISSN;
     
-
     private java.sql.Timestamp LASTUPDATED;
 
     /**

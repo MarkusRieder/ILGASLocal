@@ -14,10 +14,7 @@
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
         <!--JQuery-->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <!--<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>-->
-
 
         <!-- Bootstrap -->
 
@@ -38,15 +35,9 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css" />
 
-
         <link rel="stylesheet" href="css/lesshat.css" />
-        <link rel="stylesheet" href="css/newfile.css" />
         <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
-        <!--<link rel="stylesheet" href="css/chosen.min.css" />-->
         <link rel="stylesheet" href="css/jquery.dataTables.yadcf.css" />
-        <!--<link rel="stylesheet" href="css/irishLiterature.css" />-->
-        <!--        <link rel="stylesheet" href="css/widgContent.css" />
-                <link rel="stylesheet" href="css/widgEditor.css" />-->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
@@ -234,6 +225,8 @@
             var TranslatorDocs = [];
             var readerReport = "";
             var genreTable = null;
+            var booksTable = null;
+            var hasCover = false;
 //
 //            var floprowdata;
 //
@@ -285,7 +278,7 @@
                         },
                         {"data": "genre",
                             "render": function (data, type, row) {
-                                console.log("genres: " + data);
+//                                console.log("genres: " + data);
                                 return  data;
                             }},
                         {"data": "idgenres"},
@@ -369,32 +362,28 @@
         </script>
 
         <!--        <style>
-                    .delete-success-dialog .modal-dialog {
-                        height: 100%;
+                    .modal-body {
+                        /*max-height: calc(100vh - 210px);*/
                         width: 100%;
-                        margin: 0px !important;
-                        padding: 0px !important;
-        
-                    }
-                    .delete-success-dialog .modal-header{
-                        text-align:center;
-        
-                    }
-                    .delete-success-dialog .modal-content{
-                        height: 40%;
-                        text-align:center;
-                    }
-                    .delete-success-dialog .modal-body{
-                        text-align:center;
-        
-        
-        
+                        height: 200%;
+                        overflow-y: auto;
                     }
         
-                    .login-dialog .modal-dialog {
-                        width: 300px;
+                    .modal-dialog {
+                        width: 100%;
+                        height: 100%;
+                        margin: 0;
+                        padding: 0;
+                    }
+        
+                    .modal-content {
+                        height: auto;
+                        min-height: 100%;
+                        border-radius: 0;
                     }
                 </style>-->
+
+
         <!--User-->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -466,10 +455,11 @@
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
-//                    console.log("rowdata  "  + rowdata.value);
+                    console.log("rowdata.EMAIL  " + rowdata.EMAIL);
 
                     $('#usr_name').html("User Details for: " + rowdata.FIRST_NAME + " " + rowdata.LAST_NAME);
                     var mail = 'mailto: ' + rowdata.EMAIL;
+                    $("#userClearEmail").val(rowdata.EMAIL);
                     $('#msg_val').html("Send email to: " + rowdata.FIRST_NAME + " " + rowdata.LAST_NAME);
                     document.getElementById("mails").href = mail;
                     $("#userModal").modal("show");
@@ -572,11 +562,11 @@
         <!--Books-->
         <script type="text/javascript">
             $(document).ready(function () {
-                var table = $("#books").DataTable({
+                booksTable = $("#books").DataTable({
                     "processing": true,
                     'language': {
                         "loadingRecords": "&nbsp;",
-                        "processing": "Loading..."
+                        "processing": "Loading Library..."
                     },
                     "bServerSide": false,
                     "sAjaxSource": "./LibraryDataServlet",
@@ -587,7 +577,16 @@
                             "defaultContent": ''
                         },
                         {"data": "bookID"},
-                        {"data": "referenceNumber"},
+                        {"data": "referenceNumber",
+                            "render": function (data, type, full, meta) {
+//                                console.log("lib LibraryDataServlet data referenceNumber " + data);
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+
+                            }},
                         {"data": "Author",
                             "render": function (data, type, full, meta) {
 
@@ -610,11 +609,11 @@
                                 } else {
                                     return data;
                                 }
-                                console.log("Title " + data);
+//                                console.log("Title " + data);
                             }},
                         {"data": "Publisher",
                             "render": function (data, type, full, meta) {
-                                console.log("Publisher " + data);
+//                                console.log("Publisher " + data);
                                 if (typeof (data) === "undefined") {
                                     return 'n/a';
                                 } else {
@@ -628,7 +627,7 @@
                                 } else {
                                     return data;
                                 }
-                                console.log("Publisheryear " + data);
+//                                console.log("Publisheryear " + data);
                             }},
                         {"data": "Genre",
                             "render": function (data, type, full, meta) {
@@ -637,7 +636,6 @@
                                 } else {
                                     return data;
                                 }
-                                console.log("Genre " + data);
                             }},
                         {"data": "translationTitle",
                             "render": function (data, type, full, meta) {
@@ -646,11 +644,11 @@
                                 } else {
                                     return data;
                                 }
-                                console.log("translationTitle " + data);
+//                                console.log("translationTitle " + data);
                             }},
                         {"data": "translationPublisher",
                             "render": function (data, type, full, meta) {
-                                console.log("translationPublisher " + data);
+//                                console.log("translationPublisher " + data);
                                 if (typeof (data) === "undefined") {
                                     return 'n/a';
                                 } else {
@@ -664,7 +662,7 @@
                                 } else {
                                     return data;
                                 }
-                                console.log("translationPublisherYear " + data);
+//                                console.log("translationPublisherYear " + data);
                             }},
                         {"data": "Translator",
                             "render": function (data, type, full, meta) {
@@ -687,14 +685,14 @@
                                 } else {
                                     return data;
                                 }
-                                console.log("Language: " + data);
+//                                console.log("Language: " + data);
                             }},
 //                        {"data": "physicalDescription"},
 //                        {"data": "Duplicates"},
                         //{"data": "Copies"},
                         {"data": "translationPublisherYear",
                             "render": function (data, type, full, meta) {
-                                console.log("translationPublisherYear " + data);
+//                                console.log("translationPublisherYear " + data);
                                 if (typeof (data) === "undefined") {
                                     return 'n/a';
                                 } else {
@@ -704,7 +702,7 @@
                         }, //as dummy for Copies
                         {"data": "Notes",
                             "render": function (data, type, full, meta) {
-                                console.log("Notes " + data);
+//                                console.log("Notes " + data);
                                 if (typeof (data) === "undefined") {
                                     return 'Notes n/a';
                                 } else {
@@ -713,7 +711,7 @@
                             }},
                         {"data": "ISBN",
                             "render": function (data, type, full, meta) {
-                                console.log("ISBN " + data);
+//                                console.log("ISBN " + data);
                                 if (typeof (data) === "undefined") {
                                     return 'n/a';
                                 } else {
@@ -723,7 +721,7 @@
                         },
                         {"data": "ISSN",
                             "render": function (data, type, full, meta) {
-                                console.log("ISSN " + data);
+//                                console.log("ISSN " + data);
                                 if (typeof (data) === "undefined") {
                                     return 'n/a';
                                 } else {
@@ -746,7 +744,8 @@
                             targets: -1,
                             visible: false
                         },
-                        {className: "dt-left", "targets": [1, 2, 3, 4, 5, 6, 7, 8]}
+//                         { "visible": false, "targets": 1 },
+                        {className: "dt-left", "targets": [2, 3, 4, 5, 6, 7, 8]}
                     ]
 
                 });
@@ -754,15 +753,16 @@
 
                     var cver = "";
                     var tr = $(this).closest('tr');
-                    var row = table.row(tr);
-                    var rowdata = (table.row(tr).data());
+                    var row = booksTable.row(tr);
+                    var rowdata = (booksTable.row(tr).data());
                     $("#booksModal").modal("show");
-                    $("#referenceNumber").val($(this).closest('tr').children()[3].textContent); // ID
+                    $("#bookID").val($(this).closest('tr').children()[1].textContent); // ID
+                    $("#referenceNumber").val($(this).closest('tr').children()[2].textContent); // ID
                     //  $("#Author").val($(this).closest('tr').children()[4].textContent); // uname
 
                     console.log("lib a1  " + $(this).closest('tr').children()[1].textContent);
                     console.log("lib b2 id " + $(this).closest('tr').children()[2].textContent);
-                    console.log("lib c3 ref " + $(this).closest('tr').children()[3].textContent);
+                    console.log("lib c3 ref " + $(this).closest('tr').children()[2].textContent);
                     console.log("lib d4 Author  " + $(this).closest('tr').children()[4].textContent); //Author
                     console.log("lib e5 Org Title " + $(this).closest('tr').children()[5].textContent);
                     console.log("lib f6 Publisher " + $(this).closest('tr').children()[6].textContent);
@@ -777,10 +777,10 @@
                     console.log("lib o15 ISSN " + $(this).closest('tr').children()[15].textContent);
                     console.log("lib p16 ISBN " + $(this).closest('tr').children()[16].textContent);
 //                    console.log("lib q17 ??? " + $(this).closest('tr').children()[17].textContent);
-
+                    console.log("rowdata.cover  " + rowdata.cover);
                     var authors = rowdata.Author;
                     // var authors = "AuthorFirst7 AuthorLast7, AuthorFirst777 AuthorLast777, AuthorFirst7 AuthorLast7";
-                    console.log("lib 41 Author  " + rowdata.Author);
+                    console.log("lib rowdata.Author  " + rowdata.Author);
                     $("#Author").val(authors);
                     $("#Translator").val(rowdata.Translator);
 
@@ -789,9 +789,9 @@
                     } else {
                         var cver = 'http://localhost' + rowdata.cover + '';
                     }
-
+                    var bookCover;
                     $("#bookCover").val(cver);
-                    document.getElementById("bookCover").src = cver;
+                    document.getElementById("Cover1").src = cver;
                     $("#OrgTitle").val($(this).closest('tr').children()[4].textContent); // First
                     $("#Publisher").val($(this).closest('tr').children()[5].textContent); // First
                     $("#Publisheryear").val($(this).closest('tr').children()[6].textContent); // First
@@ -803,7 +803,35 @@
                     $("#ISBN").val($(this).closest('tr').children()[15].textContent); // Role
                     $("#ISSN").val($(this).closest('tr').children()[16].textContent); // Role
 
-                    console.log(table.row(this).data());
+
+                    if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
+
+                        // no cover - show upload
+                        var cver = '..images/not-available.jpg';
+                        $("#showUploadCover1").show();
+                        $("#showUploadCover2").hide();
+                        document.getElementById("cover21").src = cver;
+                        hasCover = false;
+                    } else {
+                        // we have a cover - show cover
+                        $("#showUploadCover2").show();
+                        $("#showUploadCover1").hide();
+                        var cver = 'http://localhost' + rowdata.cover + '';
+                        console.log("rowdata.cover cver " + cver);
+                        hasCover = true;
+                        $("#cover").val(cver);
+                        console.log("81 xyz show bookCover cover " + bookCover);
+                        console.log("81 xyz show Book cover for \n" + rowdata.translationTitle);
+                        document.getElementById("cover21").src = cver;
+                        document.getElementById("Cover1").src = cver;
+                        document.getElementById("showUploadCoverTitle").innerHTML = "Book cover for \n" + rowdata.translationTitle;
+                        console.log("cver  " + cver);
+
+                        bookTranslationTitle = rowdata.translationTitle;
+                        console.log("81 xyz show Book bookTranslationTitle for \n" + bookTranslationTitle);
+                    }
+                    console.log("hasCover2  " + hasCover);
+                    console.log(booksTable.row(this).data());
                 });
 //                $('#books tbody').on('click', 'tr td.btn-control', function () {
 //
@@ -834,9 +862,80 @@
         </script>
 
         <script type="text/javascript">
-            function saveBooks() {
-                alert("save Books to do");
-            }
+            $(document).ready(function () {
+                $("#btnSubmit").click(function (event) {
+
+                    event.preventDefault();
+
+// $('#booksModal').modal('toggle');
+                    var bookID = document.getElementById('bookID').value;
+                    var referenceNumber = document.getElementById('referenceNumber').value;
+                    var Author = document.getElementById('Author').value;
+                    var Translator = document.getElementById('Translator').value;
+                    var OrgTitle = document.getElementById('OrgTitle').value;
+                    var TransTitle = document.getElementById('TransTitle').value;
+                    var Publisher = document.getElementById('Publisher').value;
+                    var translationPublisher = document.getElementById('translationPublisher').value;
+                    var Genre = document.getElementById('Genre').value;
+                    var Language = document.getElementById('Language').value;
+                    var ISBN = document.getElementById('ISBN').value;
+                    var ISSN = document.getElementById('ISSN').value;
+                    var bookCover = document.getElementById('Cover1').value;
+                    var bookCover2 = document.getElementById('cover21').value;
+//                    var form = $("saveBooksForm")[0]; // You need to use standard javascript object here
+
+                    console.log("bookCover  " + bookCover);
+                    console.log("hasCover2  " + hasCover);
+
+                    var formData = new FormData(); // Currently empty
+
+                    formData.append("bookID", bookID);
+                    formData.append("referenceNumber", referenceNumber);
+                    formData.append("Publisher", Publisher);
+                    formData.append("Author", Author);
+                    formData.append("Translator", Translator);
+                    formData.append("OrgTitle", OrgTitle);
+                    formData.append("TransTitle", TransTitle);
+                    formData.append("translationPublisher", translationPublisher);
+                    formData.append("Genre", Genre);
+                    formData.append("Language", Language);
+                    formData.append("ISBN", ISBN);
+                    formData.append("ISSN", ISSN);
+                    console.log("rowdata.cover  " + rowdata.cover);
+
+                    console.log("rowdata.cover cover21 " + document.getElementById("cover21").src);
+
+
+                    if (!hasCover) {
+                        formData.append("Cover", Cover1.files[0], bookCover);
+                    }
+
+
+                    $.ajax({
+                        url: "./LibraryUpdate",
+                        data: formData,
+                        type: 'POST',
+                        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                        processData: false, // NEEDED, DON'T OMIT THIS
+                        // ... Other options like success and etc
+                        success: function (data, status, xhr) {
+                             console.log("Success ");
+                                       document.getElementById("showLibraryUpdateSuccess").innerHTML = "Library:  has been  <strong>successfully</strong> updated!";
+//                            console.log("data " + data);
+//                            console.log("status " + status);
+//                            console.log("xhr " + xhr);
+                            booksTable.ajax.reload();
+//                            document.getElementById("showAddedGenre").innerHTML = "Genre: <strong>'" + genreToAdd + "'</strong> has been  <strong>successfully</strong> added!";
+                            $("#libraryUpdateSuccessModal").modal('show');
+                        },
+                        error: function (xhr) {
+                            alert("Error");
+//                            $('#edtModal').show();
+                            //error handling
+                        }
+                    });
+                });
+            });
         </script>
         <!--applications-->
 
@@ -1105,7 +1204,7 @@
                         {"data": "acknowledgementApproved",
                             "render": function (data) {
                                 if (typeof (data) === "undefined") {
-                                    return "n/a";
+                                    return "";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1116,7 +1215,7 @@
                         {"data": "datePublishedBooksReceived",
                             "render": function (data) {
                                 if (typeof (data) === "undefined") {
-                                    return "n/a";
+                                    return "";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1127,7 +1226,7 @@
                         {"data": "datePaymentMadeToPublisher",
                             "render": function (data) {
                                 if (typeof (data) === "undefined") {
-                                    return "n/a";
+                                    return "";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1159,13 +1258,14 @@
                         {"data": "paymentStatus",
                             "render": function (data, type, row) {
                                 if (typeof (data) === "undefined") {
-                                    return "n/a";
+                                    return "";
                                 } else
                                     return data;
                             }},
                         {"data": "previousGrantAid"},
                         {"data": "award",
                             "render": function (data, type, row) {
+                                console.log("8888 award " + data);
                                 return (data === 1) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
                             }
                         },
@@ -1207,7 +1307,6 @@
                     filter: true,
                     info: true,
                     ordering: true,
-                    processing: true,
                     retrieve: true
                 });
                 $('#applications tbody').on('click', 'tr td.details-control', function (e) {
@@ -1317,7 +1416,12 @@
                     console.log("rowdata bookTitles: " + bookTitles);
                     $("#appBookTitle").val(bookTitles.join(""));
                     $("#authorList").val(rowdata.Author);
-                    $("#appDateOfBoardMeeting").val(formatDate(rowdata.boardMeeting));
+                    console.log("rowdata rowdata.Author " + rowdata.Author);
+                    if (rowdata.boardMeeting !== "undefined") {
+                        $("#appDateOfBoardMeeting").val(formatDate(rowdata.boardMeeting));
+                    }
+
+                    console.log("rowdata.boardMeeting " + rowdata.boardMeeting);
                     $("#dateContractSenttoPublisher").val(formatDate(rowdata.contractSentToPublisher));
                     $("#dateILEAcknowledgementApproved").val(formatDate(rowdata.acknowledgementApproved));
                     $("#datePublishedBooksReceived").val(formatDate(rowdata.datePublishedBooksReceived));
@@ -2046,11 +2150,13 @@
                         rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
                         rightsAgreementContractsNavContent += '</div>'; // row
 
-                        //Upload form for addendum to the rights agreement
+
 
                         rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
                         rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
-                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="addendumToggle' + j + '"  style="margin-bottom: 40px; position:absolute; z-index:0; ">';
+                        //Upload form for addendum to the rights agreement
+
+                        rightsAgreementContractsNavContent += '<div class="col-md-10"  id="addendumToggle' + j + '"  style="margin-bottom: 40px; position:absolute; z-index:0; ">';
                         rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left" id="uploadAddendum' + j + '" ></strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div>';
                         rightsAgreementContractsNavContent += '<br/>';
                         rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
@@ -2151,8 +2257,8 @@
                                     break;
                                 case 5:
                                     // AddendumRightsAgreementName
-
-                                    if (rightsAgreementArray[v].slice(0, -1) === 'null') {
+                                    var test = rightsAgreementArray[v].substr(1);
+                                    if (test !== null && test !== '') {
 
                                         document.getElementById('label_addendum' + w).value = "not entered";
                                         document.getElementById('uploadAddendum' + w).innerHTML = 'Upload a copy of the addendum to the rights agreement ' + translatorNamesForGenerateTranslatorTab[j];
@@ -2174,12 +2280,16 @@
 
         <script type="text/javascript">
             function formatDate(unformattedDate) {
-                var date = new Date(unformattedDate);
-                var day = date.getDate();
-                var month = date.getMonth() + 1;
-                var year = date.getFullYear();
-                var formattedDate = day + "/" + month + "/" + year;
-                return formattedDate;
+                if (typeof unformattedDate === "undefined") {
+                    formattedDate === "";
+                } else {
+                    var date = new Date(unformattedDate);
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    var formattedDate = day + "/" + month + "/" + year;
+                    return formattedDate;
+                }
             }
         </script>
 
@@ -2209,7 +2319,7 @@
                     "colReorder": true,
                     "processing": true,
                     "language": {
-                         "loadingRecords": "&nbsp; Loading Applications... ",
+                        "loadingRecords": "&nbsp; Loading Applications... ",
                         "processing": "Loading Applications..."
                     },
                     "serverSide": true,
@@ -2466,10 +2576,52 @@
                 border-color: Black;
             }
 
+            .imageupload{
+                margin: 0 auto;
+                width: 300px;
+            }
+
+            .panel {
+                background-color: #d9d1d1 ;
+                margin-top: 50px;
+                box-shadow: 0 0 30px  #b6a6a6;    
+                padding:0 15px 0 15px;
+            }
+
+            .imagePreview {
+                width: 100%;
+                height: 180px;
+                background-position: center center;
+                background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+                background-color:#fff;
+                background-size: cover;
+                background-repeat:no-repeat;
+                display: inline-block;
+                box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+            }
+            /*            .ImageBorder
+                        {
+                            border-width: 1px;
+                            border-color: Black;
+                        }
+            
+                        .imageupload{
+                            width: 100%;
+                            height: 180px;
+                            background-position: center center;
+                            background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+                            background-color:#fff;
+                            background-size: cover;
+                            background-repeat:no-repeat;
+                            display: inline-block;
+                            box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+                        }*/
+
             .h4{
                 font-size: 14px;
                 line-height: 14px;
             }
+
 
             .box .box-header{
                 background: #36a9e1;
@@ -2491,7 +2643,25 @@
                 margin-bottom: -3px;
                 margin-top: 3px;
             }
-
+            .btn-file {
+                position: relative;
+                overflow: hidden;
+            }
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
         </style>
 
         <!--Styles for the approved/withdrawn/rejected buttons-->
@@ -2588,6 +2758,23 @@
 //                    $(this).addClass("bold");
                 });
             });
+        </script>
+
+        <!--if directorChairDecision ticked set directorChairDecision value to ticked-->
+        <script>
+            function directorChairDecision_click(cb) {
+                console.log("directorChairDecision_click  set " + cb.checked);
+                if (cb.checked) {
+                    console.log("directorChairDecision  setting ('value', 'ticked')");
+                    document.getElementById("directorChairDecision").value = "ticked";
+                } else {
+                    console.log("directorChairDecision  setting ('value', '')");
+                    document.getElementById("directorChairDecision").value = "";
+                }
+                document.getElementById("directorChairDecision").value;
+                console.log("directorChairDecision  value " + document.getElementById("directorChairDecision").value);
+            }
+            ;
         </script>
 
         <script type="text/javascript">
@@ -3295,10 +3482,11 @@
                                                                 <label for="directorChairDecision" class="control-label">Director/Chair decision</label>
                                                                 <br/> 
                                                                 <input id="directorChairDecision"
-                                                                       type="checkbox"       
-                                                                       value="ticked" 
-                                                                       class="form-control"                                
+                                                                       type="checkbox"      
+                                                                       class="form-control" 
+                                                                       value="ticked"                                                                                                
                                                                        name="directorChairDecision"  
+                                                                       onclick="directorChairDecision_click(this);"
                                                                        >
                                                             </div>
                                                         </div> <!--row-->
@@ -3724,7 +3912,7 @@
                                                     <th class="all">Last Name</th>
                                                     <th class="all">Email</th>
                                                     <th class="all">Function</th>
-                                                    <th class="all">Role</th>
+                                                    <th class="never">Role</th>
                                                     <th class="all"></th>
                                                 </tr>
                                             </thead>
@@ -3737,7 +3925,7 @@
                                                     <th class="all">Last Name</th>
                                                     <th class="all">Email</th>
                                                     <th class="all">Function</th>
-                                                    <th class="all">Role</th>
+                                                    <th class="never">Role</th>
                                                     <th class="all"></th>
                                                 </tr>
                                             </tfoot>
@@ -3805,11 +3993,11 @@
                                                         </div>
 
                                                         <div class="col-sm-4">
-                                                            <label for="userRole" class="control-label pull-left">Role</label>
-                                                            <input id="userRole"                                
+                                                            <label for="userClearEmail" class="control-label pull-left">Email</label>
+                                                            <input id="userClearEmail"                                
                                                                    type="text"                                
                                                                    class="form-control"                                
-                                                                   name="userRole"                                
+                                                                   name="userClearEmail"                                
                                                                    >
                                                         </div>
                                                     </div> <!--row-->
@@ -3825,6 +4013,8 @@
                                                                 <span class="glyphicon glyphicon-envelope"></span>
                                                                 <p id="msg"><span id="msg_val">_</span></p> </a>
                                                         </div>
+
+
                                                     </div> <!--row-->
 
 
@@ -3929,7 +4119,7 @@
 
                                                 <div class="modal-footer"  style="background-color: #c3bcbc">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                                                 </div><!-- modal-footer -->
 
                                             </div><!-- modal-content -->
@@ -3943,27 +4133,27 @@
                                     <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
 
                                         <div class="table-responsive">
-                                            <table id="books" class="display table table-striped table-bordered nowrap" width="100%" cellspacing="0">
+                                            <table id="books" class="  table table-striped table-bordered nowrap" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>         
                                                         <th class="details-control"></th>
-                                                        <th class="none">bookID</th>
+                                                        <th class="never">bookID</th>
                                                         <th class="all">Reference <br/> Number</th>
                                                         <th class="all">Author(s)</th>
                                                         <th class="all">Title</th>
                                                         <th class="all">Publisher</th>                                                        
-                                                        <th class="none">Publisher <br/>Year</th>
-                                                        <th class="none">Genre</th>
+                                                        <th class="never">Publisher <br/>Year</th>
+                                                        <th class="never">Genre</th>
                                                         <th class="all">Translation<br/>Title</th>  
                                                         <th class="all">Original Publisher</th>                                                        
-                                                        <th class="none">Translation<br/>Publisher Year</th>                                                        
+                                                        <th class="never">Translation<br/>Publisher Year</th>                                                        
                                                         <th class="all">Translator</th>
                                                         <th class="all">Language</th>
-                                                        <th class="none">Copies</th>
-                                                        <th class="none">Notes</th>
-                                                        <th class="none">ISBN</th>
-                                                        <th class="none">ISSN</th>
-                                                        <th class="none"></th>                                                                                                            
+                                                        <th class="never">Copies</th>
+                                                        <th class="never">Notes</th>
+                                                        <th class="never">ISBN</th>
+                                                        <th class="never">ISSN</th>
+                                                        <th class="never"></th>                                                                                                            
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -3972,23 +4162,23 @@
                                                 <tfoot>
                                                     <tr>                                                                    
                                                         <th class="details-control"></th>
-                                                        <th class="none">bookID</th>
+                                                        <th class="never">bookID</th>
                                                         <th class="all">Reference <br/> Number</th>
                                                         <th class="all">Author(s)</th>
                                                         <th class="all">Title</th>
                                                         <th class="all">Publisher</th>                                                        
-                                                        <th class="none">Publisher <br/>Year</th>
-                                                        <th class="none">Genre</th>
+                                                        <th class="never">Publisher <br/>Year</th>
+                                                        <th class="never">Genre</th>
                                                         <th class="all">Translation<br/>Title</th>  
                                                         <th class="all">Original Publisher</th>                                                        
-                                                        <th class="none">Translation<br/>Publisher Year</th>                                                        
+                                                        <th class="never">Translation<br/>Publisher Year</th>                                                        
                                                         <th class="all">Translator</th>
                                                         <th class="all">Language</th>
-                                                        <th class="none">Copies</th>
-                                                        <th class="none">Notes</th>
-                                                        <th class="none">ISBN</th>
-                                                        <th class="none">ISSN</th>
-                                                        <th class="none"></th>                           
+                                                        <th class="never">Copies</th>
+                                                        <th class="never">Notes</th>
+                                                        <th class="never">ISBN</th>
+                                                        <th class="never">ISSN</th>
+                                                        <th class="never"></th>                           
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -4473,116 +4663,187 @@
         </div><!-- modal -->
 
 
+        <!--libraryUpdateSuccessModal-->
+        <div class="modal fade" id="libraryUpdateSuccessModal" tabindex="-1" role="dialog" aria-labelledby="libraryUpdateSuccessModallLabel"  data-modal-index="3">
 
-        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
+            <div class="modal-admin" role="document">
 
-            <div class="modal-dialog" role="document">
+                <div class="modal-content">
 
-                <div class="modal-content" style="background-color: #d9d1d1">
-
-                    <div class="modal-header" style="background-color: #c3bcbc">
-                        <h4 class="modal-title" id="booksModalLabel">Manage books</h4>
+                    <div class="modal-header" style="background-color: #5bdc18;">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
+                        <h4 class="modal-title" id="libraryUpdateSuccessModallLabel">Success</h4>
                     </div>
 
-                    <!-- modal-body -->
-                    <div class="modal-body" style="background-color: #d9d1d1;">
-                        <div class="container-fluid">
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-8">        
-                                    <label class="control-label">Book cover</label>                                                               
-                                    <img id="bookCover" src="" alt="Book Cover" class="img ImageBorder form-control" title="Book Cover"/>
-                                </div>
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showLibraryUpdateSuccess"></p>                       
                             </div>
-
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                <div class="col-sm-4">
-                                    <label class="pull-left"> Reference Number </label>
-                                    <p><input type="text" class="input-sm pull-left" id="referenceNumber"/></p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                <div class="col-sm-5">
-                                    <label class="pull-left" for="Author"> Author </label>   
-                                    <input type="text" class="input-sm pull-left" id="Author"/>                                   
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label class="pull-left" for="Translator"> Translator </label>   
-                                    <input type="text" class="input-sm pull-left" id="Translator"/>
-                                </div>
-
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                <div class="col-sm-5">
-                                    <label class="pull-left" for="OrgTitle"> Original Title &nbsp;&nbsp;&nbsp;</label>
-                                    <input type="text" class="input-sm pull-left" id="OrgTitle"/>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label class="pull-left" for="TransTitle"> Translated Title</label>
-                                    <input type="text" class="input-sm pull-left" id="TransTitle"/>
-                                </div>
-
-                            </div>
-
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                <div class="col-sm-5">
-                                    <label class="pull-left" for="Publisher"> Publisher &nbsp;&nbsp;&nbsp;</label>
-                                    <input type="text" class="input-sm pull-left" id="Publisher"/>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label class="pull-left" for="translationPublisher"> Original Publisher</label>
-                                    <input type="text" class="input-sm pull-left" id="translationPublisher"/>
-                                </div>
-                            </div>
-
-
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                <div class="col-sm-5">
-                                    <label class="pull-left"> Publisheryear</label>
-                                    <input type="text" class="input-sm pull-left" id="Publisheryear"/>
-                                </div>
-                                <div class="col-sm-5">
-                                    <label class="pull-left"> Genre</label>
-                                    <input type="text" class="input-sm pull-left" id="Genre"/>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                <div class="col-sm-4">
-                                    <label class="pull-left"> Language(s) </label>
-                                    <p><input type="text" class="input-sm" id="Language"/></p>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                <div class="col-sm-5">                                                                                                          
-                                    <label class="pull-left"> ISBN </label>
-                                    <input type="text" class="input-sm" id="ISBN"/>
-                                </div>
-                                <div class="col-sm-5">                                                                                                          
-                                    <label class="pull-left"> ISSN </label>
-                                    <input type="text" class="input-sm" id="ISSN"/>
-                                </div>
-                            </div>
+                            <div class="col-sm-3"></div>
                         </div>
-                    </div>  <!--modal-body -->
 
-                    <!--modal-footer -->
-                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                                       
-                        <button type="button" class="btn btn-primary"  onclick="saveBooks();">Save changes / NOT available yet</button>
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>  <!-- modal-footer -->
+                    </div><!-- modal-footer -->
 
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+        
+                   <form 
+                        id="saveBooksForm"  
+                        method="POST"
+                        role="form"                             
+                        action="${pageContext.request.contextPath}/LibraryUpdate" 
+                        enctype="multipart/form-data">
+        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="background-color: #d9d1d1">
+
+ 
+
+                        <div class="modal-header" style="background-color: #c3bcbc">
+                            
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="booksModalLabel">Manage books</h4>
+                        </div>
+
+                        <!-- modal-body -->
+                        <div class="modal-body" style="background-color: #d9d1d1;">
+                            <div class="container-fluid">
+
+                                <div class="row"> 
+
+                                    <div style=" margin: 0 auto; position: relative;">
+                                        <div class="col-sm-2"></div>
+                                        <div id="showUploadCover1" class="col-sm-8"  style="margin-bottom:  20px; ">
+
+                                            <!-- bootstrap-imageupload. -->                                                               
+                                            <div class="imageupload panel panel-default">
+                                                <div class="panel-heading clearfix">
+                                                    <h3 class="panel-title ">Select book cover</h3>
+                                                </div>
+                                                <div class="file-tab panel-body" id="cover1" style="display:block; margin: 0 auto;width: 75%">
+
+                                                    <label class="btn btn-default btn-file"> 
+                                                        <span>Browse</span>
+                                                        <!-- The file is stored here. -->
+
+                                                        <input type="file" id="Cover1" name="Cover1" style="width:200px;height:300px;">
+
+                                                    </label>
+
+                                                    <button type="button" class="btn btn-default">Remove</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div id="showUploadCover2" class="col-sm-8"  style="margin-bottom:  40px; "> 
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading clearfix">
+                                                    <h3 class="panel-title" id="showUploadCoverTitle"></h3>
+                                                </div>
+
+                                                <div class="file-tab panel-body" id="cover2" style="display:block; margin: 0 auto;width: 75%">
+                                                    <!--<div class="panel-body" id="cover2" style="display:block;  margin:auto;">-->
+                                                    <img src="" id="cover21"  alt="" style="width:200px;height:300px;">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div> <!-- position: relative; -->
+
+                                </div> <!--row-->
+
+                                <input type="hidden" class="input-sm pull-left" id="bookID"/> 
+                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                    <div class="col-sm-4">
+                                        <label class="pull-left"> Reference Number </label>
+                                        <p><input type="text" class="input-sm pull-left" id="referenceNumber"/></p>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                    <div class="col-sm-5">
+                                        <label class="pull-left" for="Author"> Author </label>   
+                                        <input type="text" class="input-sm pull-left" id="Author"/>                                   
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label class="pull-left" for="Translator"> Translator </label>   
+                                        <input type="text" class="input-sm pull-left" id="Translator"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+
+                                    <div class="col-sm-5">
+                                        <label class="pull-left" for="OrgTitle"> Original Title &nbsp;&nbsp;&nbsp;</label>
+                                        <input type="text" class="input-sm pull-left" id="OrgTitle"/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="pull-left" for="TransTitle"> Translated Title</label>
+                                        <input type="text" class="input-sm pull-left" id="TransTitle"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                    <div class="col-sm-5">
+                                        <label class="pull-left" for="Publisher"> Publisher &nbsp;&nbsp;&nbsp;</label>
+                                        <input type="text" class="input-sm pull-left" id="Publisher"/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="pull-left" for="translationPublisher"> Translation Publisher</label>
+                                        <input type="text" class="input-sm pull-left" id="translationPublisher"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                    <div class="col-sm-5">
+                                        <label class="pull-left"> Genre</label>
+                                        <input type="text" class="input-sm pull-left" id="Genre"/>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label class="pull-left"> Language(s) </label>
+                                        <p><input type="text" class="input-sm" id="Language"/></p>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                    <div class="col-sm-5">                                                                                                          
+                                        <label class="pull-left"> ISBN </label>
+                                        <input type="text" class="input-sm" id="ISBN"/>
+                                    </div>
+                                    <div class="col-sm-5">                                                                                                          
+                                        <label class="pull-left"> ISSN </label>
+                                        <input type="text" class="input-sm" id="ISSN"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  <!--modal-body -->
+
+                        <!--modal-footer -->
+                        <div class="modal-footer"  style="background-color: #c3bcbc;">                                                       
+                            <button type="submit" id="btnSubmit" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                        </div>  <!-- modal-footer -->
+<!--                    </form>                     -->
                 </div> <!-- modal-content -->
             </div> <!-- modal-dialog -->
         </div> <!-- modal -->
-
+</form>     
 
         <!--loadXMLDocER-->
         <script type="text/javascript">
@@ -4637,6 +4898,17 @@
             }
             ;
         </script>
+        <script src="js/bootstrap-imageupload.js"></script>
 
+        <script>
+            var $imageupload = $('.imageupload');
+            $imageupload.imageupload();
+            function  showInfoModal() {
+                $("#showInfoModal").modal("show");
+            }
+            function  showNotesModal() {
+                $("#showNotesModal").modal("show");
+            }
+        </script>
     </body>
 </html>

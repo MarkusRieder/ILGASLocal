@@ -60,6 +60,14 @@ public class NewPublisherServlet extends HttpServlet {
         String WWW = request.getParameter("WWW");
         String doNtMail = request.getParameter("doNotMail");
         String Bursary = request.getParameter("Bursaries");
+        
+                System.out.println("newPublisher::   ");
+        System.out.println("PublisherID::   " + PublisherID);
+        System.out.println("publisherName::   " + Company);
+        System.out.println("Address1::   " + Address1);
+        System.out.println("postCode::   " + postCode);
+        System.out.println("City::   " + City);
+        System.out.println("countryCode::   " + countryCode);
 
         session.setAttribute("publisherID", PublisherID);
         session.setAttribute("Company_Number", PublisherID);

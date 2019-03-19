@@ -247,8 +247,8 @@ public class PendingApplicationServlet extends HttpServlet {
     public void init() {
 
 //         Get the file location where they would be stored.
-        tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
-        rootPath = "/home/glassfish/glassfish/domains/domain1/documents";
+        tempPath = "/home/markus/test/tempDir";
+        rootPath = "/home/markus/public_html/test";
 //        String catalinaBase = System.getProperty("catalina.base");
 //        tempPath = catalinaBase + "/tempDir";
 //        rootPath = catalinaBase + "/uploadDir";
@@ -906,13 +906,9 @@ public class PendingApplicationServlet extends HttpServlet {
                         System.out.println("ApplicationNumber ---->> " + ApplicationNumber);
                     }
 
-                } catch (ParseException ex) {
+                } catch (ParseException | FileUploadException ex) {
                     Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (FileUploadException ex) {
-                    Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    Logger.getLogger(PendingApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (DBException ex) {
+                } catch (SQLException | DBException ex) {
                     Logger.getLogger(PendingApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
@@ -1326,10 +1322,7 @@ public class PendingApplicationServlet extends HttpServlet {
                 library.setNotes(bookNotes);
                 library.setISBN(ISBN);
                 library.setISSN(ISSN);
-//
-//                check why ISBN is not going to db
-//        
-//                check Drawdown Requirements 
+
                  {
                     try {
                         boolean succ = pendingApplicationDAO.updateLibrary(library, ReferenceNumber);

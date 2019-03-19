@@ -523,62 +523,67 @@ public class Test1DAO {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
-            ps1 = conn.prepareStatement("UPDATE ILGAS.GrantApplication SET "
-                    + " boardMeeting = ? ,"
-                    + " amountApproved = ? ,"
-                    + " publisherInformedOfMeeting = ? ,"
-                    + " contractSentToPublisher = ? ,"
-                    + " boardComments_Instructions = ? ,"
-                    + " acknowledgementApproved = ? ,"
-                    + " datePublishedBooksReceived = ? ,"
-                    + " datePaymentMadeToPublisher = ? ,"
-                    + " paymentReferenceNumber = ? ,"
-                    + " paymentStatus = ? ,"
-                    + " award = ? ,"
-                    + " proposedPrintRun = ?   ,"
-                    + " plannedPageExtent = ?  ,"
-                    + " notesAboutApplication = ?  ,"
-                    + " Status = ? ,"
-                    + " approveWithdrawnReject = ? ,"
-                    + " directorChairDecision = ? ,"
-                    + " APPROVED = ? ,"
-                    + " lastUpdated = ?"
-                    + "  WHERE ApplicationYear = '" + applicationYear + "'  AND ApplicationNumber = '" + ApplicationNumber + "';");
+            String updateQuery = "UPDATE  ILGAS.GrantApplication  SET ";
+            if (null != app.getBoardMeeting()) {
+                updateQuery += " boardMeeting = '" + app.getBoardMeeting() + "',";
+            }
+            if (null != app.getPublisherInformedOfMeeting()) {
+                updateQuery += " publisherInformedOfMeeting = '" + app.getPublisherInformedOfMeeting() + "',";
+            }
+            if (null != app.getContractSentToPublisher()) {
+                updateQuery += " contractSentToPublisher = '" + app.getContractSentToPublisher() + "',";
+            }
+            if (null != app.getAcknowledgementApproved()) {
+                updateQuery += " acknowledgementApproved = '" + app.getAcknowledgementApproved() + "',";
+            }
+            if (null != app.getDatePublishedBooksReceived()) {
+                updateQuery += " datePublishedBooksReceived ='" + app.getDatePublishedBooksReceived() + "',";
+            }
+            if (null != app.getDatePaymentMadeToPublisher()) {
+                updateQuery += " datePaymentMadeToPublisher ='" + app.getDatePaymentMadeToPublisher() + "',";
+            }
 
-            ps1.setDate(1, sqlDate(app.getBoardMeeting()));
-            System.out.println("getBoardMeeting " + app.getBoardMeeting());
-            
-            ps1.setBigDecimal(2, app.getAmountApproved());
-            
-            
-            ps1.setDate(3, sqlDate(app.getPublisherInformedOfMeeting()));
-            System.out.println("getPublisherInformedOfMeeting " + app.getPublisherInformedOfMeeting());
-            
-            
-            ps1.setDate(4, sqlDate(app.getContractSentToPublisher()));
-            System.out.println("getContractSentToPublisher " + app.getContractSentToPublisher());
-            ps1.setString(5, app.getBoardComments_Instructions());
-            ps1.setDate(6, sqlDate(app.getAcknowledgementApproved()));
-            System.out.println("getAcknowledgementApproved " + app.getAcknowledgementApproved());
-            ps1.setDate(7, sqlDate(app.getDatePublishedBooksReceived()));
-            System.out.println("getDatePublishedBooksReceived " + app.getDatePublishedBooksReceived());
-            ps1.setDate(8, sqlDate(app.getDatePaymentMadeToPublisher()));
-            System.out.println("getDatePaymentMadeToPublisher " + app.getDatePaymentMadeToPublisher());
-            ps1.setString(9, app.getPaymentReferenceNumber());
-            ps1.setString(10, app.getPaymentStatus());
-            ps1.setInt(11, app.getAward());
-            ps1.setInt(12, app.getProposedPrintRun());
-             System.out.println("getProposedPrintRun " + app.getProposedPrintRun());
-            ps1.setInt(13, app.getPlannedPageExtent());
-             System.out.println("getPlannedPageExtent " + app.getPlannedPageExtent());
-            ps1.setString(14, app.getNotesAboutApplication());
-            ps1.setString(15, app.getStatus());
-            ps1.setString(16, app.getApproveWithdrawnReject());
-            ps1.setInt(17, app.getDirectorChairDecision());
-            ps1.setInt(18, app.getAPPROVED());
-            ps1.setTimestamp(19, timestamp);
+            if (app.getAmountApproved().signum() > 0.00) {
+                updateQuery += " amountApproved ='" + app.getAmountApproved() + "',";
+            }
+            if (!"".equals(app.getBoardComments_Instructions())) {
+                updateQuery += " boardComments_Instructions ='" + app.getBoardComments_Instructions() + "',";
+            }
+            if (!"".equals(app.getPaymentReferenceNumber())) {
+                updateQuery += " paymentReferenceNumber ='" + app.getPaymentReferenceNumber() + "',";
+            }
+            if (null != app.getPaymentStatus()) {
+                updateQuery += " paymentStatus ='" + app.getPaymentStatus() + "',";
+            }
 
-            System.out.println("ps1:  1: " + ps1);
+            updateQuery += " award ='" + app.getAward() + "',";
+
+            if (app.getProposedPrintRun() > 0) {
+                updateQuery += " proposedPrintRun ='" + app.getProposedPrintRun() + "',";
+            }
+            if (app.getPlannedPageExtent() > 0) {
+                updateQuery += " plannedPageExtent ='" + app.getPlannedPageExtent() + "',";
+            }
+
+            updateQuery += " notesAboutApplication ='" + app.getNotesAboutApplication() + "',";
+            System.out.println("notesAboutApplication :" + " notesAboutApplication ='" + app.getNotesAboutApplication() + "'");
+
+            updateQuery += " Status ='" + app.getStatus() + "',";
+
+            if (null != app.getApproveWithdrawnReject()) {
+                updateQuery += " approveWithdrawnReject ='" + app.getApproveWithdrawnReject() + "',";
+            }
+
+            updateQuery += " directorChairDecision ='" + app.getDirectorChairDecision() + "',";
+            System.out.println("APPROVED :" + " APPROVED = " + app.getAPPROVED() + ",");
+            updateQuery += " APPROVED = " + app.getAPPROVED() + ",";
+            updateQuery += " lastUpdated ='" + timestamp + "'";
+
+            updateQuery += "  WHERE ApplicationYear = '" + applicationYear + "'  AND ApplicationNumber = '" + ApplicationNumber + "';";
+
+            System.out.println("ps1:  1: " + updateQuery);
+
+            ps1 = conn.prepareStatement(updateQuery); //      .prepareStatement(prepStat);
 
             ps1.executeUpdate();
 
@@ -590,7 +595,7 @@ public class Test1DAO {
 
         } catch (ClassNotFoundException | SQLException e) {
             DBConn.close(conn, ps1, res);
-            throw new DBException("4 Excepion while accessing database" + e);
+            throw new DBException("Test1DAO updateApplication 4 Excepion while accessing database" + e);
         }
 
         return id;

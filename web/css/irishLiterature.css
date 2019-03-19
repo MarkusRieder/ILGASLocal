@@ -41,7 +41,7 @@ textarea {
 
 /*https://stackoverflow.com/questions/10476632/how-to-scroll-the-page-when-a-modal-dialog-is-longer-than-the-screen*/
 .modal-body {
-    /*max-height: calc(100vh - 210px);*/
+    max-height: calc(100vh - 210px);
     width: 100%;
     height: 200%;
     overflow-y: auto;

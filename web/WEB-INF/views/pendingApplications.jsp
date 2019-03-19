@@ -3575,7 +3575,7 @@
                                                                 <div id="showUploadCover2" class="col-sm-4"  style="margin-bottom:  40px; "> 
                                                                     <div class="panel panel-default">
                                                                         <div class="panel-heading clearfix">
-                                                                            <h3 class="panel-title " id="showUploadCoverTitle"></h3>
+                                                                            <h3 class="panel-title" id="showUploadCoverTitle"></h3>
                                                                         </div>
 
                                                                         <div class="panel-body" id="cover2" style="display:block;  margin:auto;">
