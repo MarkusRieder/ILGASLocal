@@ -461,11 +461,8 @@ public class openApplicationDAO {
                      * iterate through all translators in translatorTrackId
                      */
                     
-                    for (int i = 0; i < translatorTrackId.size(); i++) {
-                        
-                        
-                        System.out.println("============================ Start Loop translatorTrackId " + i + "  ============================================================");
-                       
+     for (int i = 0; i < translatorTrackId.size(); i++) {
+
                         translatorNameList = new ArrayList<>();
 
                         titleList = new ArrayList<>();
@@ -476,45 +473,12 @@ public class openApplicationDAO {
 
                         translatorNameList.add(translatorNameForList);
 
-                        System.out.println("8 xyz before clearing translatorTrackList " + singleTranslatorTrackList);
-//                        singleTranslatorTrackList.clear();
-                        singleTranslatorTrackList = new ArrayList<>();
-                        System.out.println("8 xyz after clearing translatorTrackList " + singleTranslatorTrackList);
-
+                        singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker(translatorTrackId.get(i));
-                        // Test1DAO resultList 0  [Isabel Reid, Quentin Bates, Cold Breath, 14/2019]]]
-                        System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
-
                         translatorTrackList.add(singleTranslatorTrackList);
-
-                        System.out.println("8 xyz adding to translatorTrackList " + singleTranslatorTrackList);
-                        System.out.println("8 xyz translatorTrackList.size() " + translatorTrackList.size());
-
-                        System.out.println("8 xyz translatorTrackList contains now " + singleTranslatorTrackList);
-
-                        
-                    for (int z = 0; z < translatorTrackList.size(); z++) {
-                        System.out.println("8 xyz 4 === [" + z + "]  " + translatorTrackList.get(z));
-                    }
-                    
+ System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
                         titleList = getTitles(ReferenceNumber);
 
-                        System.out.println("============================ End Loop translatorTrackId " + i + "  ============================================================");
-                    }
-
-                    System.out.println("8 xyz 2 === [0]  " + translatorTrackList.get(0));
-                    System.out.println("8 xyz 2 === [1]  " + translatorTrackList.get(1));
-
-                    System.out.println("8 xyz Looping translatorTrackList.size() " + translatorTrackList.size());
-                    System.out.println("8 xyz Looping translatorTrackList ");
-                    for (int y = 0; y < translatorTrackList.size(); y++) {
-                        for (int z = 0; z < translatorTrackList.get(y).size(); z++) {
-                            System.out.println("8 xyz 3 === [" + z + "]  " + translatorTrackList.get(z));
-                        }
-                    }
-
-                    for (int z = 0; z < translatorTrackList.size(); z++) {
-                        System.out.println("8 xyz 4 === [" + z + "]  " + translatorTrackList.get(z));
                     }
 
                     application.setRightsHolderArray(getRightsHolderArrayContent(ReferenceNumber));

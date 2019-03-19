@@ -248,10 +248,7 @@ public class PendingApplicationServlet extends HttpServlet {
 
 //         Get the file location where they would be stored.
         tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
-        rootPath = "/home/glassfish/glassfish/domains/domain1/documents";
-//        String catalinaBase = System.getProperty("catalina.base");
-//        tempPath = catalinaBase + "/tempDir";
-//        rootPath = catalinaBase + "/uploadDir";
+        rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
 
     }
 

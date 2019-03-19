@@ -241,7 +241,7 @@ public class OpenApplicationServlet extends HttpServlet {
 
         // Get the file location where they would be stored.
         tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
-        rootPath = "/home/glassfish/glassfish/domains/domain1/documents";
+        rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
 
     }
 

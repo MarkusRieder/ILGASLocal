@@ -367,6 +367,73 @@ public class LibraryDAO {
         //    System.out.println("return id::  " + id);
         return id;
     }
+    //updateLibrary
+    public static boolean updateLibrary2(Library library, int bookID) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        boolean id;
+        int committed = 0;
+        ResultSet res = null;
+        int book = bookID;
+
+        System.out.println("doing updateLibrary::  ");
+        System.out.println("doing updateLibrary::bookID  " + bookID);
+
+        try {
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            String sql = "UPDATE ILGAS.library \n"
+                    + "SET \n"
+                    + "Title  = ?, \n"
+                    + "Publisher  = ?, \n"
+                    + "Genre  = ?, \n"
+                    + "translationTitle  = ?, \n"
+                    + "translationPublisher  = ?,\n"
+                    + "ISBN  = ?, \n"
+                    + "ISSN  = ? ";                  
+            sql += " WHERE bookID = " + book;
+
+            ps1 = conn.prepareStatement(sql);
+
+            ps1.setString(1, library.getTitle());
+            ps1.setString(2, library.getPublisher());
+            ps1.setString(3, library.getGenre());
+            ps1.setString(4, library.getTranslationTitle());
+            ps1.setString(5, library.getTranslationPublisher());
+            ps1.setString(6, library.getISBN());
+            ps1.setString(7, library.getISSN());
+
+            //Info:   Parameter Name is 'bookID' and Parameter Value is '2079'
+//Info:   Parameter Name is 'referenceNumber' and Parameter Value is '50/2019'
+//Info:   Parameter Name is 'Author' and Parameter Value is 'Yrsa Sigurdardóttir'
+//Info:   Parameter Name is 'Translator' and Parameter Value is 'Victoria Cribb'
+//Info:   Parameter Name is 'OrgTitle' and Parameter Value is 'Aflausn'
+//Info:   Parameter Name is 'TransTitle' and Parameter Value is 'The Absolution'
+//Info:   Parameter Name is 'Publisher' and Parameter Value is 'Discworld Publishers'
+//Info:   Parameter Name is 'translationPublisher' and Parameter Value is 'Iceland Press'
+//Info:   Parameter Name is 'Genre' and Parameter Value is 'Crime Fiction'
+//Info:   Parameter Name is 'Language' and Parameter Value is 'English'
+//Info:   Parameter Name is 'ISBN' and Parameter Value is ' 978-1473621619'
+//Info:   Parameter Name is 'ISSN' and Parameter Value is 'n/a'
+            System.out.println("doing updateLibrary::ps1  " + ps1);
+
+            ps1.executeUpdate();
+
+            conn.commit();
+
+            id = committed > 0;
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            DBConn.close(conn, ps1, res);
+            throw new DBException("updateLibrary 4 Excepion while accessing database");
+        }
+        //    System.out.println("return id::  " + id);
+        return id;
+    }
 
     //deleteBook
     public static boolean deleteBook(Library library) throws SQLException {

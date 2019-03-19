@@ -813,7 +813,7 @@
 
                     console.log("8 xyz bookTitle: " + rowdata.bookTitle);
                     document.getElementById("appBookTitle").value = rowdata.bookTitle;
-                    document.getElementById("publicationYear").value = rowdata.publicationYear;
+//                    document.getElementById("publicationYear").value = rowdata.publicationYear;
                     document.getElementById("appGenre").value = rowdata.genre;
                     document.getElementById("appLanguageOriginal").value = rowdata.originalLanguage;
                     document.getElementById("appCountryOfPublication").value = rowdata.countryOfPublication;
@@ -3012,17 +3012,17 @@
                                                                         </div>
                                                                         <input type="hidden" id="bookTitle" name="bookTitle" >
                                                                         <div class="col-sm-4">          
-                                                                            <label for="appForeignPublisher" class="pull-left">Publisher (of the original)<br/> &nbsp;</label>                                                           
-                                                                            <input id="appForeignPublisher"                                
+                                                                            <label for="foreignPublisher" class="pull-left">Publisher (of the original)<br/> &nbsp;</label>                                                           
+                                                                            <input id="foreignPublisher"                                
                                                                                    type="text"                                
                                                                                    class="form-control"                                
-                                                                                   name="appForeignPublisher"                                
+                                                                                   name="foreignPublisher"                                
                                                                                    value="${companyDetails.Company}"    
                                                                                    placeholder="Publisher"
                                                                                    >                                                     
                                                                         </div>
 
-                                                                        <div class="col-sm-3">    
+<!--                                                                        <div class="col-sm-3">    
                                                                             <label for="publicationYear" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
 
                                                                             <input id="publicationYear"                                
@@ -3032,7 +3032,7 @@
                                                                                    value=""    
                                                                                    placeholder="Publication Year"
                                                                                    >
-                                                                        </div>
+                                                                        </div>-->
                                                                     </div> <!--row-->
 
 
@@ -3256,7 +3256,7 @@
                                                                     </script>
                                                                 </div>
 
-                                                                <div class="col-sm-4">          
+<!--                                                                <div class="col-sm-4">          
                                                                     <label for="foreignPublisher" class="pull-left">Publisher (of the original)</label>                                                           
                                                                     <input id="foreignPublisher"                                
                                                                            type="text"                                
@@ -3264,7 +3264,7 @@
                                                                            name="foreignPublisher"                                
                                                                            placeholder="Publisher"
                                                                            >                                                     
-                                                                </div>
+                                                                </div>-->
                                                             </div> <!-- row -->
 
                                                             <div class="row">

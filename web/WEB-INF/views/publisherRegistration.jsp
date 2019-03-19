@@ -24,6 +24,7 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/layout.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
         <script type="text/javascript"  src="js/jquery-ui.js"></script>
@@ -240,6 +241,7 @@
                                            placeholder="Country"
                                            required=""
                                            >   
+                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                 </div>
                             </div>
                         </div> <!--row-->

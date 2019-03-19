@@ -155,7 +155,7 @@
 
                         <div class="col-md-3"></div>
                         <div class="col-md-6" style="margin-bottom: 50px; margin-top: 50px;">
-                            <h3>The following files have been successfully uplooaded:</h3><br/>
+                            <h3>The following files have been successfully uploaded:</h3><br/>
                             <%-- Using JSP EL to get message attribute value from request scope --%>
                             ${requestScope.message}
                         </div>

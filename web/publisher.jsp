@@ -1,5 +1,5 @@
 <%-- 
-    Document   : template
+    Document   : publisher.jsp
     Created on : 17-Mar-2017, 11:57:10
     Author     : markus
 --%>
@@ -14,10 +14,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Translation Grant Application System</title>
-
+        <!--publisher.jsp-->
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/irishLiterature.css.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/my-block-ui.css">   
         <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
@@ -94,7 +94,7 @@
         <script type="text/javascript">
             $(function () {
                 $("#company").autocomplete({
-                    source: 'ACintPublishers_test', // The source of the AJAX results
+                     source: './ACintPublishers_test', // The source of the AJAX results
                     dataType: 'json',
                     data: '',
                     minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
@@ -196,7 +196,7 @@
         <style>
             .icon-exclamation {
                 color: #ff0000;
-
+            }
                 ul {
                     margin: 0;
                 }
@@ -210,7 +210,7 @@
                     content: "-";
                     text-indent: -5px;
                 }
-            }
+            
 
             input {
                 vertical-align: -2px;
@@ -317,8 +317,8 @@
                                                     Sign Up Here
                                                 </a>
                                             </div> <%-- div style --%>
-                                        </div>  <!--col-md-12 control--> 
-                                    </div>  <!--form-group--> 
+                                        </div> <!-- col-md-12 control -->
+                                    </div> <!-- form-group -->
                                 </form>  <!--loginform-->
                             </div>  <!-- panel-body -->
                         </div>  <!--panel-info-->
@@ -463,7 +463,7 @@
                                                 </div>
                                             </div> <!--form-group cpassword-->
 
-                                                                                       <div class="form-group">
+                                            <div class="form-group">
                                                 <div class="col-md-9">
                                                     <label for="functionDataset" >Your function</label>
                                                     <div style="clear: both;"></div>
@@ -481,7 +481,7 @@
                                             </div> <!--form-group functionDataset-->
 
                                             <!--publisherBox-->
-                                            <div id="publisherBox" style="display:none; margin-top:50px; ">
+                                            <div id="publisherBox" style="margin-top:50px; ">
 
                                                 <!--get Company and Company_Number via autocomplete-->
                                                 <div class="row" style="margin-bottom: 40px;margin-top: 30px">
@@ -680,7 +680,7 @@
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2018 mgr Software
+            &copy; 2019 mgr Software
         </div>
 
     </body>

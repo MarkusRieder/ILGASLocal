@@ -2367,7 +2367,7 @@
 
                                                     <!--Date copies were sent:-->
                                                     <div class="col-md-3" >
-                                                        <strong>Date copies were sent:</strong> 
+                                                        <strong>Date copy were sent:</strong> 
                                                         <div class="input-group">
                                                             <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
                                                             <label class="input-group-addon" for="dateCopiesWereSent">
@@ -2654,15 +2654,15 @@
 
                                             <h3> Original Work & Sample Translation</h3>
                                             <ul class="dashed">
-                                                <li>Two copies of the original work* </li>
-                                                <li>Two copies of a translation sample** consisting of 10 to 12 pages of prose or six poems</li>
+                                                <li>One copy of the original work* </li>
+                                                <li>A translation sample** consisting of 10 to 12 pages of prose or six poems</li>
                                             </ul>
 
                                             <br/>
-                                            <p> <i> * &nbsp; Please contact Literature Ireland if two copies of the original work cannot be obtained.<br/>
+                                            <p> <i> * &nbsp; Please contact Literature Ireland if a hard copy of the original work cannot be obtained.<br/>
                                                     ** If more than one translator is involved, a translation sample must be submitted for each translator.
                                                 </i> </p>
-                                            All queries in relation to the Translation Grant Programme should be addressed to Deputy Director Rita McCann at rita[at]literatureireland[dot]com or Administrator Orla King at orla[at]literatureireland[dot]com.
+                                            All queries in relation to the Translation Grant Programme should be sent to info@literatureireland.com.
                                             <br/>
                                         </div>
 
@@ -2691,24 +2691,142 @@
                                                     NOTES
                                                 </p>
                                                 <br/>
-                                                <ol>
-                                                    <li>The <strong>deadlines for application</strong> are available on the Literature Ireland website at <a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a>. There are typically three deadlines per year.  </li>
+                                                                                              <div class="container-fluid">
+                                                    <ol>
+                                                        <li>
+                                                            <p>There
+                                                                are three translation grant rounds per year. The <b> deadlines
+                                                                    for submission of applications</b>
+                                                                are available on the Literature Ireland website at
+                                                                <u><a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a></u>.
+                                                                A translation grant round is considered to consist of a period of
+                                                                two months from the date of the deadline.
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p>
+                                                        <br/>
+                                                        <br/>
 
-                                                    <li>The deadline for application is the <strong>date by which applications should be received</strong> by Literature Ireland and not the date by which they should be posted. Allowance is made for postal delays but submissions received more than one week after the deadline may not be accepted.  </li>
+                                                    </p>
+                                                    <ol start="2">
+                                                        <li>
+                                                            <p><b>Applications
+                                                                    should be submitted from one month prior to the deadline.</b>
+                                                                Applications submitted after the deadline may not be accepted or may
+                                                                be postponed to the next round.
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p><br/>
+                                                        <br/>
 
-                                                    <li><strong>Late applications</strong> may, in rare cases, be accepted at the discretion of Literature Ireland. However, late submission will affect the timeliness with which the applicant publisher can be informed of the outcome of his/her application. </li>
+                                                    </p>
+                                                    <ol start="3">
+                                                        <li>
+                                                            <p><b>Late
+                                                                    applications or applications for consideration outside the usual
+                                                                    round</b> may, in rare
+                                                                cases, be accepted at the discretion of Literature Ireland.
+                                                                Applicants in these cases should contact 
+                                                                <u><a href="mailto:info@literatureireland.com">
+                                                                        info@literatureireland.com</a></u>
+                                                                before submitting an application. Applicants are also advised that
+                                                                late submission will affect the timeliness with which they can be
+                                                                informed of the outcome of the application.
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p><br/>
+                                                        <br/>
 
-                                                    <li>It is recommended that the <strong>translation sample</strong> submitted be a final or near-final version which has been <strong>proofread and edited</strong>. If the sample submitted is an early or unedited draft, the applicant is requested to inform Literature Ireland of this fact.  </li>
+                                                    </p>
+                                                    <ol start="4">
+                                                        <li>
+                                                            <p>It
+                                                                is recommended that the <b>translation
+                                                                    sample</b> submitted
+                                                                with the application be a final or near-final version which has been
+                                                                <b>proofread and
+                                                                    edited</b>. If the
+                                                                sample submitted is an early or unedited draft, the applicant is
+                                                                requested to inform Literature Ireland of this fact. There is a
+                                                                ‘Notes’ field in the ‘Book Details’ tab of the application
+                                                                system which may be used for this purpose. 
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p><br/>
+                                                        <br/>
 
-                                                    <li>Literature Ireland maintains records of the <strong>average/typical rates paid to literary translators</strong> in different countries. If the rate being paid to the translator is substantially different from that which might be usual, the applicant is requested to include an explanation for this in his/her application. </li> 
+                                                    </p>
+                                                    <ol start="5">
+                                                        <li>
+                                                            <p>Literature
+                                                                Ireland reserves the right to have <b>translation
+                                                                    samples submitted assessed for quality by an independent expert</b>,
+                                                                who will write a report that will be presented to the board of
+                                                                directors when it considers the request for funding (see note 7).
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p><br/>
+                                                        <br/>
 
-                                                    <li> For each application, the <strong>translation sample is assessed by an independent expert</strong>, who provides a report which is made available to the board of Literature Ireland when it considers the request for funding (see note 7). </li>
+                                                    </p>
+                                                    <ol start="6">
+                                                        <li>
+                                                            <p>Literature
+                                                                Ireland maintains records of the average/typical rates paid to
+                                                                literary translators in different countries. If the rate being paid
+                                                                to the translator is substantially different from that which might
+                                                                be usual, the application is requested to include an explanation for
+                                                                this in his/her application.
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p>
+                                                        <br/>
+                                                        <br/>
 
-                                                    <li>All applications are considered by the board of Literature Ireland at meeting held six to <strong>eight weeks after the deadline</strong>. Applications for translations due for publication before the date of the board meeting will be deemed ineligible.  </li>
+                                                    </p>
+                                                    <ol start="7">
+                                                        <li>
+                                                            <p>All
+                                                                applications in a given round will be considered by the board of
+                                                                Literature Ireland at a <b>meeting
+                                                                    held six to eight weeks after the deadline</b>.
+                                                                Applications for <b>translations
+                                                                    due for printing or publication before this meeting takes place will
+                                                                    be deemed ineligible</b>.	
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p><br/>
+                                                        <br/>
 
-                                                    <li>Applicants are informed of the <strong>outcome of the application</strong> within 10 days of the board meeting. Successful applicants will be issued with formal contracts and a letter of award within six weeks of grant approval.   </li> 
-                                                </ol>
+                                                    </p>
+                                                    <ol start="8">
+                                                        <li>
+                                                            <p><b>Applicants
+                                                                    will be informed of the outcome of the application within 10 days of
+                                                                    the board meeting</b>.
+                                                                Successful applicants will be issued with formal contracts and a
+                                                                letter of award within six weeks of approval.
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                    <p><br/>
+                                                        <br/>
 
+                                                    </p>
+                                                    <ol start="9">
+                                                        <li>
+                                                            <p><b>All decisions of the board of Literature Ireland are final</b>.	
+                                                            </p>
+                                                        </li>
+                                                    </ol>
+                                                </div>
                                             </div>
                                         </div>
 

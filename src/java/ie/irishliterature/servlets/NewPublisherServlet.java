@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,10 +63,35 @@ public class NewPublisherServlet extends HttpServlet {
         String Bursary = request.getParameter("Bursaries");
 
         System.out.println("newPublisher::   ");
-
         System.out.println("PublisherID::   " + PublisherID);
         System.out.println("publisherName::   " + Company);
+        System.out.println("Address1::   " + Address1);
+        System.out.println("postCode::   " + postCode);
+        System.out.println("City::   " + City);
+        System.out.println("countryCode::   " + countryCode);
 
+        System.out.println("############################### /newPublisher ####################################");
+        System.out.println("Enumeration keys   ");
+        Enumeration keys = session.getAttributeNames();
+        while (keys.hasMoreElements()) {
+            String key = (String) keys.nextElement();
+            System.out.println("key  :" + key + ": " + session.getValue(key));
+          
+        }
+        Enumeration en = request.getParameterNames();
+
+        while (en.hasMoreElements()) {
+            Object objOri = en.nextElement();
+
+            String param = (String) objOri;
+
+            String value = request.getParameter(param);
+
+            System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+
+        }
+
+        System.out.println("###################################################################");
 //        session.setAttribute("publisherID", PublisherID);
 //        session.setAttribute("Company_Number", PublisherID);
 //        session.setAttribute("publisherName", Company);
@@ -143,8 +169,7 @@ public class NewPublisherServlet extends HttpServlet {
             DBConn.close(conn, ps1, res);
             e.printStackTrace();
         }
-        
-        
+
         request.setAttribute("PublisherID", PublisherID);
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
