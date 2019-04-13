@@ -460,8 +460,7 @@ public class openApplicationDAO {
                     /*
                      * iterate through all translators in translatorTrackId
                      */
-                    
-     for (int i = 0; i < translatorTrackId.size(); i++) {
+                    for (int i = 0; i < translatorTrackId.size(); i++) {
 
                         translatorNameList = new ArrayList<>();
 
@@ -476,7 +475,7 @@ public class openApplicationDAO {
                         singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker(translatorTrackId.get(i));
                         translatorTrackList.add(singleTranslatorTrackList);
- System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
+                        System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
                         titleList = getTitles(ReferenceNumber);
 
                     }
@@ -1152,6 +1151,7 @@ public class openApplicationDAO {
 
             ps = conn.prepareStatement("SELECT CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.users, ILGAS.expertReader\n"
                     + "WHERE expertReader.expertReaderUserID = users.userID\n"
+                       + " AND first_name <> 'removed'\n"
                     + "AND expertReader.referenceNumber = ? ");
 
             ps.setString(1, appRef);
@@ -1238,6 +1238,7 @@ public class openApplicationDAO {
             ps = conn.prepareStatement("SELECT referenceNumber, fileDestination, sampleSentOut, sampleReturned,summaryReport, "
                     + "CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.expertReader, ILGAS.users\n"
                     + "WHERE expertReaderUserID = userID\n"
+                       + " AND first_name <> 'removed'\n"
                     + "AND referenceNumber  = ? ");
 
             ps.setString(1, appRef);
@@ -1411,10 +1412,20 @@ public class openApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT  CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.users\n"
-                    + "LEFT JOIN ILGAS.expertReader ON users.userID = expertReader.expertReaderUserID\n"
-                    + "WHERE expertReader.expertReaderUserID IS NULL\n"
-                    + "AND users.function = 'Expert Reader'");
+            // changed on Ritas wishes 23/03/2019
+//            ps = conn.prepareStatement("SELECT  CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM users\n"
+//                    + "LEFT JOIN expertReader ON users.userID = expertReader.expertReaderUserID\n"
+//                    + "WHERE expertReader.reading = 'false'\n"
+//                    + "AND users.function = 'Expert Reader'");
+            ps = conn.prepareStatement("SELECT \n"
+                    + "CONCAT(first_name, ' ', last_name) AS `expertReaderName`\n"
+                    + " FROM\n"
+                    + " ILGAS.users\n"
+                    + " LEFT JOIN\n"
+                    + " ILGAS.expertReader ON users.userID = expertReader.expertReaderUserID\n"
+                    + " WHERE\n"
+                    + " users.function = 'Expert Reader'\n"
+                    + " AND first_name <> 'removed'");
 
             res = ps.executeQuery();
 
@@ -1851,8 +1862,8 @@ public class openApplicationDAO {
         }
 
     }
-    
-        @SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     public static ArrayList<String> getTranslatorTracker(String TranslatorTrackId) throws DBException {
 
         Connection conn = null;
@@ -1919,14 +1930,13 @@ public class openApplicationDAO {
             throw new DBException("12 Excepion while accessing database");
         }
 
-        DBConn.close(conn, ps, res);               
+        DBConn.close(conn, ps, res);
 
-        for(int u = 0; u < resultList.size(); u++){
+        for (int u = 0; u < resultList.size(); u++) {
             System.out.println("Test1DAO resultList " + u + "  " + resultList.get(u));
         }
-        
+
         return resultList;
     }
-    
-    
+
 }

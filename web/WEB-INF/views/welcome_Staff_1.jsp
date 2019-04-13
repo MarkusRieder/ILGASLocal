@@ -13,7 +13,7 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
-            <!--JQuery-->
+        <!--JQuery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
         <!-- Bootstrap -->
@@ -240,7 +240,7 @@
             var TranslTitles = "";
             var TranslatorDocs = [];
             var readerReport = "";
-                  var genreTable = null;
+            var genreTable = null;
             var booksTable = null;
             var hasCover = false;
 //
@@ -479,9 +479,9 @@
             $(document).ready(function () {
                 $.fn.dataTable.ext.buttons.reload = {
                     text: 'Reload'
-
                 };
-                var table = $('#expReader').DataTable({
+                $.fn.dataTable.ext.errMode = 'throw';
+                var expReaderTable = $('#expReader').DataTable({
 
                     /**
                      B - Buttons
@@ -494,21 +494,6 @@
 
                     dom: 'Bfrtip',
                     buttons: [
-//                           {
-//                            //only enabled when one row is selected (like edit / delete)
-//                            extend: 'selectedSingle', //alternative would be 'selected' (multiple rows)
-//                                    text: 'reportFiltrsLabel',
-//                                    className: "reportFiltrsButton",
-//                                    action: function (e, dt, button, config) {
-//                                    $('.reportFiltrsButton').attr(
-//                                    {
-//                                    "data-toggle": "modal",
-//                                            "data-target": "#createNewEReadermodal"
-//                                    }
-//                                    );
-//                                    showReportFiltrTable();
-//                                    }
-//                            },
                         {
                             extend: 'reload',
                             text: '<i class="fa fa-user-plus" style="font-size:24px;color:blue"></i>',
@@ -522,24 +507,29 @@
                                 );
                                 $('#createNewEReadermodal').modal('show');
                             }
-
                         }
-
-
                     ],
                     "columnDefs": [
-                        {className: "dt-left", "targets": [1, 2, 3]}
+                        {className: "dt-left", "targets": [1, 2, 3, 4, 5]}
                     ],
                     "bProcessing": false,
                     "bServerSide": false,
                     "sAjaxSource": "./ExpertReaderDataServlet",
                     "columns": [{
-                            "targets": -1,
+                            "targets": -2,
                             "class": "details-control",
                             "orderable": false,
                             "data": null,
                             "defaultContent": ""
                         },
+                        {
+                            "targets": -1,
+                            "class": "delete-control",
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ""
+                        },
+                        {"data": "USER_ID"},
                         {"data": "FIRST_NAME"},
                         {"data": "LAST_NAME"},
                         {"data": "EMAIL"}
@@ -547,10 +537,46 @@
                 });
                 $('#expReader tbody').on('click', 'tr td.details-control', function () {
                     $("#expReaderModal").modal("show");
-                    $("#FirstNameExpReader").val($(this).closest('tr').children()[1].textContent); // Reference
-                    $("#LastNameExpReader").val($(this).closest('tr').children()[2].textContent); // Author
-                    $("#EmailExpReader").val($(this).closest('tr').children()[3].textContent); // Year                    
-                    //   console.log(table.row(this).data());
+                    $("#FirstNameExpReader").val($(this).closest('tr').children()[3].textContent); // First Name
+                    $("#LastNameExpReader").val($(this).closest('tr').children()[4].textContent); // Last Name
+                    $("#EmailExpReader").val($(this).closest('tr').children()[5].textContent); // Email                    
+                    console.log(expReaderTable.row(this).data());
+                });
+                $('#expReader tbody').on('click', 'tr td.delete-control', function () {
+                    $("#deleteExpReaderModal").modal("show");
+                    $("#delExpertReaderID").val($(this).closest('tr').children()[2].textContent);  // ID
+                    $("#delFirstNameExpReader").val($(this).closest('tr').children()[3].textContent); // First Name
+                    $("#delLastNameExpReader").val($(this).closest('tr').children()[4].textContent); // Last Name
+                    $("#delEmailExpReader").val($(this).closest('tr').children()[5].textContent); // Email                    
+                    console.log(expReaderTable.row(this).data());
+                });
+
+                $('#der').on('click', function () {
+
+                    var idToDelete = document.getElementById("delExpertReaderID").value;
+
+                    console.log("idToDelete  " + idToDelete);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "./ExpertReaderDelete",
+                        data: "id=" + idToDelete,
+                        success: function (data, status, xhr) {
+                            console.log("ajax  success:");
+                            //delete the row
+                            expReaderTable.ajax.reload();
+                            console.log("  expReaderTable.ajax.reload:");
+                            $("#deleteExpReaderModal").modal('toggle');
+                            console.log("deleteExpReaderModal  toggle");
+                            document.getElementById("showDeleteExpReader").innerHTML = "Expert Reader: <strong>'" + idToDelete + "'</strong> has been  <strong>successfully</strong> deleted!";
+                            $("#deleteExpReaderSuccessModal").modal('show');
+                            console.log("deleteExpReaderSuccessModal  show");
+                        },
+                        error: function (xhr) {
+                            alert("Error");
+                            $('#edtModal').show();
+                            //error handling
+                        }});
                 });
             });
         </script>
@@ -746,7 +772,7 @@
                     ]
 
                 });
-                   $('#books tbody').on('click', 'tr td.details-control', function () {
+                $('#books tbody').on('click', 'tr td.details-control', function () {
 
                     var cver = "";
                     var tr = $(this).closest('tr');
@@ -892,8 +918,8 @@
                         processData: false, // NEEDED, DON'T OMIT THIS
                         // ... Other options like success and etc
                         success: function (data, status, xhr) {
-                             console.log("Success ");
-                                       document.getElementById("showLibraryUpdateSuccess").innerHTML = "Library:  has been  <strong>successfully</strong> updated!";
+                            console.log("Success ");
+                            document.getElementById("showLibraryUpdateSuccess").innerHTML = "Library:  has been  <strong>successfully</strong> updated!";
 //                            console.log("data " + data);
 //                            console.log("status " + status);
 //                            console.log("xhr " + xhr);
@@ -1831,7 +1857,7 @@
                                     btn.className = "btn btn-info";
                                     btn.value = nls[1].trim();
                                     var dir = nls[l].substr(1);
-                                    
+
                                     var destination = dir.replace("/home/markus/public_html/", "/~markus/");
                                     console.log("destination " + destination);
                                     var entry = "location.href='http://www.literatureirelandgrantapplication.com:8080" + destination + "'";
@@ -2092,12 +2118,12 @@
                                     console.log("8 xyz Process AddendumRightsAgreementName for ", translatorNamesForGenerateTranslatorTab[j]);
                                     console.log("8 xyz v " + v + "  w  " + w + "  j  " + j); // 8 xyz v 3  w  1
                                     if (w === 1) {
-                                        
+
 //                                        does not see if empty 
-                                          console.log("8 xyz  if (rightsAgreementArray[v].substr(1) !== 'null') " + rightsAgreementArray[v].substr(1)); // 8 xyz v 3  w  1
-                                         var test = rightsAgreementArray[v].substr(1);
-                                    
-                                    if(test !== null && test !== '') {
+                                        console.log("8 xyz  if (rightsAgreementArray[v].substr(1) !== 'null') " + rightsAgreementArray[v].substr(1)); // 8 xyz v 3  w  1
+                                        var test = rightsAgreementArray[v].substr(1);
+
+                                        if (test !== null && test !== '') {
                                             console.log("8 xyz AddendumRightsAgreementName === empty");
                                             document.getElementById('label_addendum' + w).value = "not entered";
                                             var uploadAddendum = "Upload a copy of the addendum to the rights agreement &nbsp";
@@ -2822,7 +2848,7 @@
                 border-color: Black;
             }
 
-                      .imageupload{
+            .imageupload{
                 margin: 0 auto;
                 width: 300px;
             }
@@ -2845,7 +2871,7 @@
                 display: inline-block;
                 box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
             }
-            
+
             .h4{
                 font-size: 14px;
                 line-height: 14px;
@@ -2912,7 +2938,7 @@
                 margin-right: 0;
                 margin-top: 50px ;
             }
-                        .btn-file {
+            .btn-file {
                 position: relative;
                 overflow: hidden;
             }
@@ -2957,7 +2983,8 @@
                 }
                 document.getElementById("directorChairDecision").value;
                 console.log("directorChairDecision  value " + document.getElementById("directorChairDecision").value);
-            };
+            }
+            ;
         </script>
 
         <!--reply_click-->
@@ -4193,7 +4220,7 @@
                                                     <th class="all">Last Name</th>
                                                     <th class="all">Email</th>
                                                     <th class="all">Function</th>
-                                                     <th class="never">Role</th>
+                                                    <th class="never">Role</th>
                                                     <th class="all"></th>
                                                 </tr>
                                             </thead>
@@ -4206,7 +4233,7 @@
                                                     <th class="all">Last Name</th>
                                                     <th class="all">Email</th>
                                                     <th class="all">Function</th>
-                                                     <th class="never">Role</th>
+                                                    <th class="never">Role</th>
                                                     <th class="all"></th>
                                                 </tr>
                                             </tfoot>
@@ -4273,7 +4300,7 @@
                                                                    >
                                                         </div>
 
-                                                 <div class="col-sm-4">
+                                                        <div class="col-sm-4">
                                                             <label for="userClearEmail" class="control-label pull-left">Email</label>
                                                             <input id="userClearEmail"                                
                                                                    type="text"                                
@@ -4320,10 +4347,12 @@
                                     <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
 
                                         <div class="table-responsive">
-                                            <table id="expReader" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                                            <table id="expReader" class="display responsive table table-striped table-bordered" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
                                                         <th class="details-control"></th>
+                                                        <th class="delete-control"></th>
+                                                        <th class="never">User ID</th>
                                                         <th class="all">First Name</th>
                                                         <th class="all">Last Name</th>
                                                         <th class="all">Email</th>
@@ -4333,6 +4362,8 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th class="details-control"></th>
+                                                        <th class="delete-control"></th>
+                                                        <th class="never">bookID</th>
                                                         <th class="all">First Name</th>
                                                         <th class="all">Last Name</th>
                                                         <th class="all">Email</th>
@@ -4368,13 +4399,7 @@
                                                         </div>
 
                                                         <div class="col-sm-1"></div>
-                                                        <!--
-                                                                                                                <div class="col-sm-4">
-                                                        
-                                                                                                                    <label for="expertReaderReferenceNumber"> Assign Expert Readers to Reference Number: </label>
-                                                                                                                    <input type="text" class="input-sm" id="expertReaderReferenceNumber"/>
-                                                        
-                                                                                                                </div>-->
+
                                                     </div>
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
@@ -4391,9 +4416,6 @@
                                                         </div>
                                                     </div>
 
-
-
-
                                                 </div><!-- modal body -->
 
                                                 <div class="modal-footer"  style="background-color: #c3bcbc">
@@ -4403,11 +4425,60 @@
 
                                             </div><!-- modal-content -->
                                         </div><!-- modal-dialog -->
+                                    </div><!-- modal -->                                
+
+                                    <!--deleteExpReaderModal-->
+                                    <div class="modal fade" id="deleteExpReaderModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderModalLabel">
+
+                                        <div class="modal-dialog" role="document">
+
+                                            <div class="modal-content">
+
+                                                <div class="modal-header" style="background-color:  #ff0000;">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="deleteExpReaderModalLabel">Delete expert reader</h4>
+                                                </div>
+
+                                                <div class="modal-body" style="background-color: #d9d1d1">
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <input type="hidden" id="delExpertReaderID">  
+                                                        <div class="col-sm-4">
+                                                            <label for="FirstNameExpReader" class="control-label pull-left">First name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                            <input type="text" class="input-sm" id="delFirstNameExpReader"/>
+                                                        </div>
+                                                        <div class="col-sm-1"></div>                                                        
+                                                    </div>
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <div class="col-sm-4">
+                                                            <label for="LastNameExpReader" class="control-label pull-left"> Last name</label>
+                                                            <input type="text" class="input-sm" id="delLastNameExpReader"/>
+                                                        </div>
+                                                        <div class="col-sm-5">You are deleting this user
+                                                            <span class="glyphicon glyphicon-exclamation-sign" style="color: red"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <div class="col-sm-4">
+                                                            <label for="EmailExpReader" class="control-label pull-left"> Email</label>
+                                                            <input type="text" class="input-sm" id="delEmailExpReader"/>
+                                                        </div>
+                                                    </div>
+
+                                                </div><!-- modal body -->
+
+                                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" id="der" class="btn btn-danger">Delete Expert Reader</button>
+                                                </div><!-- modal-footer -->
+
+                                            </div><!-- modal-content -->
+                                        </div><!-- modal-dialog -->
                                     </div><!-- modal -->
 
                                 </div> <!-- tab-pane expReader-->
-
-
 
                                 <!--Library-->
                                 <div class="tab-pane fade" id="Library">
@@ -4499,37 +4570,6 @@
                                             </div><!-- modal-dialog -->
                                         </div><!-- modal -->
 
-                                        <!--deleteGenreSuccessModal-->
-                                        <div class="modal fade" id="deleteGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteGenreSuccessModalLabel"  data-modal-index="3">
-
-                                            <div class="modal-admin" role="document">
-
-                                                <div class="modal-content">
-
-                                                    <div class="modal-header" style="background-color: #5bdc18;">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="deleteGenreSuccessModalLabel">Success</h4>
-                                                    </div>
-
-                                                    <div class="modal-body" style="background-color: #d9d1d1">
-
-                                                        <div class="row">
-                                                            <div class="col-sm-3"></div>
-                                                            <div class="col-sm-6">                               
-                                                                <p id="showDeletedGenre"></p>                       
-                                                            </div>
-                                                            <div class="col-sm-3"></div>
-                                                        </div>
-
-                                                    </div><!-- modal body -->
-
-                                                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div><!-- modal-footer -->
-
-                                                </div><!-- modal-content -->
-                                            </div><!-- modal-dialog -->
-                                        </div><!-- modal -->
 
                                         <!--addGenreSuccessModal-->
                                         <div class="modal fade" id="addGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addGenreSuccessModalLabel"  data-modal-index="3">
@@ -4563,7 +4603,7 @@
                                             </div><!-- modal-dialog -->
                                         </div><!-- modal -->
 
-
+                                        <!--editBooksModal-->
                                         <div class="modal fade" id="editBooksModal" tabindex="-1" role="dialog" aria-labelledby="editBooksModalLabel">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -4809,7 +4849,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->     
 
-
         <!--Add New Staff Member modal-->
         <div class="modal fade" id="createNewStaffmodal" data-modal-index="2">
             <div class="modal-dialog">
@@ -4968,8 +5007,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->           
 
-
-
         <!--pressCuttingsModal-->
         <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
             <div class="modal-dialog">
@@ -4998,13 +5035,11 @@
                 </div> <!--modal content-->          
             </div> <!--modal dialog-->
         </div> <!--modal fade-->
-        
-        
+
         <!--pressCuttingsModal-->
         <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
-   
-        
-            <!--libraryUpdateSuccessModal-->
+
+        <!--libraryUpdateSuccessModal-->
         <div class="modal fade" id="libraryUpdateSuccessModal" tabindex="-1" role="dialog" aria-labelledby="libraryUpdateSuccessModallLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">
@@ -5036,7 +5071,7 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
-        
+        <!--booksModal-->
         <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content" style="background-color: #d9d1d1">
@@ -5050,7 +5085,7 @@
 
                         <div class="modal-header" style="background-color: #c3bcbc">                          
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title" id="booksModalLabel">Manage books</h4>
+                            <h4 class="modal-title" id="booksModalLabel">Manage books</h4>
                         </div>
 
                         <!-- modal-body -->
@@ -5185,7 +5220,71 @@
         </div> <!-- modal -->
 
 
-        
+        <!--deleteExpReaderSuccessModal-->
+        <div class="modal fade" id="deleteExpReaderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="deleteExpReaderSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showDeleteExpReader"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
+        <!--deleteGenreSuccessModal-->
+        <div class="modal fade" id="deleteGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteGenreSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="deleteGenreSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showDeletedGenre"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
         <!--loadXMLDocER-->
         <script type="text/javascript">
             function loadXMLDocER()
@@ -5238,9 +5337,10 @@
                 };
                 xmlhttp.open("GET", urls, true);
                 xmlhttp.send();
-            };
+            }
+            ;
         </script>
-                <script src="js/bootstrap-imageupload.js"></script>
+        <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
             var $imageupload = $('.imageupload');

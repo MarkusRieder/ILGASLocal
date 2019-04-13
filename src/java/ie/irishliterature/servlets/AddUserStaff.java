@@ -95,7 +95,16 @@ public class AddUserStaff extends HttpServlet {
         String function = "Literature Ireland Staff";
         String role = "";
         int userID = 0;
+
         String fullname = firstname + " " + lastname;
+
+        System.out.println("AddUserStaff doPost::username " + username);
+        System.out.println("AddUserStaff doPost::firstname " + firstname);
+        System.out.println("AddUserStaff doPost::lastname " + lastname);
+        System.out.println("AddUserStaff doPost::password " + password);
+        System.out.println("AddUserStaff doPost::email " + email);
+        System.out.println("AddUserStaff doPost::function " + function);
+        System.out.println("AddUserStaff doPost::fullname " + fullname);
 
         Status sp = new Status();
         String output = "";
@@ -105,6 +114,7 @@ public class AddUserStaff extends HttpServlet {
         user.setUSERNAME(username);
         user.setFIRST_NAME(firstname);
         user.setLAST_NAME(lastname);
+        user.setFull_NAME(fullname);
 
         /*
          * generate hash for password
@@ -123,8 +133,7 @@ public class AddUserStaff extends HttpServlet {
          */
         user.setEMAIL_VERIFICATION_HASH(BCrypt.hashpw(hash, GlobalConstants.SALT));
 
-        if (role
-                == null) {
+        if (role == null) {
             role = "not assigned";
         }
 
@@ -151,7 +160,7 @@ public class AddUserStaff extends HttpServlet {
                 /*
                  * send verification email
                  */
-                MailUtil.sendEmailRegistrationLinkNewStaff(username,fullname, password, email, hash);
+                MailUtil.sendEmailRegistrationLinkNewStaff(username, fullname, password, email, hash);
 
                 message = "New Staff member <strong>" + fullname + "</strong> has been created  <br/><br/>and email has been sent";
             } else {
@@ -162,8 +171,7 @@ public class AddUserStaff extends HttpServlet {
                 message = "This Email is already registered - try again";
             }
 
-//ENSURE signup is validated
-
+            //ENSURE signup is validated
         } catch (DBException | MessagingException e) {
             sp.setCode(-1);
             sp.setMessage(e.getMessage());

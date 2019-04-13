@@ -95,7 +95,16 @@ public class AddUserExpertReader extends HttpServlet {
         String function = "Expert Reader";
         String role = "";
         int userID = 0;
+
         String fullname = firstname + " " + lastname;
+
+        System.out.println("AddUserExpertReader doPost::username " + username);
+        System.out.println("AddUserExpertReader doPost::firstname " + firstname);
+        System.out.println("AddUserExpertReader doPost::lastname " + lastname);
+        System.out.println("AddUserExpertReader doPost::password " + password);
+        System.out.println("AddUserExpertReader doPost::email " + email);
+        System.out.println("AddUserExpertReader doPost::function " + function);
+        System.out.println("AddUserExpertReader doPost::fullname " + fullname);
 
         Status sp = new Status();
         String output = "";
@@ -105,6 +114,7 @@ public class AddUserExpertReader extends HttpServlet {
         user.setUSERNAME(username);
         user.setFIRST_NAME(firstname);
         user.setLAST_NAME(lastname);
+        user.setFull_NAME(fullname);
 
         /*
          * generate hash for password

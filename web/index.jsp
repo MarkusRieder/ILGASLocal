@@ -241,7 +241,7 @@
 
                 </div> <!--  End of topbar div -->
   
-                <h1 align="center" style="align-content: center">Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
 
@@ -426,7 +426,7 @@
                                             <!--password-->
                                             <div class="form-group">
                                                 <div class="col-md-9">
-                                                    <input type="text" 
+                                                    <input type="password" 
                                                            class="form-control" 
                                                            id="password"
                                                            name="password" 
@@ -445,7 +445,7 @@
                                             <div class="form-group">
                                                 <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
                                                 <div class="col-md-9">
-                                                    <input type="text" 
+                                                    <input type="password" 
                                                            class="form-control"  
                                                            id="cpassword" 
                                                            name="cpassword" 

@@ -490,7 +490,8 @@ public class UserDAO {
         PreparedStatement ps = null;
         ResultSet res = null;
 
-        String searchQuery = "SELECT * FROM ILGAS.users WHERE function = 'Expert Reader'";
+          String searchQuery = "SELECT * FROM ILGAS.users WHERE function = 'Expert Reader'"
+                + " AND first_name <> 'removed'";
 
         try {
             conn = DBConn.getConnection();
@@ -504,7 +505,7 @@ public class UserDAO {
             if (res != null) {
                 while (res.next()) {
                     User expertReader = new User();
-//                    expertReader.setUSERNAME(res.getString("uname"));
+                    expertReader.setUSER_ID(res.getString("userID"));
                     expertReader.setFIRST_NAME(res.getString("first_name"));
                     expertReader.setLAST_NAME(res.getString("last_name"));
                     expertReader.setEMAIL(res.getString("email"));

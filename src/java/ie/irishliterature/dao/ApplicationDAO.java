@@ -114,19 +114,27 @@ public class ApplicationDAO {
         try {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
-            ps1 = conn.prepareStatement("insert into ILGAS.users (uname,FIRST_NAME,LAST_NAME,PASSWORD,EMAIL,FUNCTION,ROLE,EMAIL_VERIFICATION_HASH) values (?,?,?,?,?,?,?,?)");
+            ps1 = conn.prepareStatement("insert into ILGAS.users (uname,FIRST_NAME,LAST_NAME,fullName, PASSWORD,EMAIL,FUNCTION,ROLE,EMAIL_VERIFICATION_HASH) values (?,?,?,?,?,?,?,?,?)");
             ps1.setString(1, pojo.getUSERNAME());
             ps1.setString(2, pojo.getFIRST_NAME());
             ps1.setString(3, pojo.getLAST_NAME());
-            ps1.setString(4, pojo.getPASSWORD());
-            ps1.setString(5, pojo.getEMAIL());
-            ps1.setString(6, pojo.getFUNCTION());
-            ps1.setString(7, pojo.getROLE());
-            ps1.setString(8, pojo.getEMAIL_VERIFICATION_HASH());
+            ps1.setString(4, pojo.getFull_NAME());
+            ps1.setString(5, pojo.getPASSWORD());
+            ps1.setString(6, pojo.getEMAIL());
+            ps1.setString(7, pojo.getFUNCTION());
+            ps1.setString(8, pojo.getROLE());
+            ps1.setString(9, pojo.getEMAIL_VERIFICATION_HASH());
 
             String uname = pojo.getUSERNAME();
             System.out.println("uname dao insertRow: " + uname);
-
+            String fn = pojo.getFIRST_NAME();
+            System.out.println("fn dao insertRow: " + fn);
+            String ln = pojo.getLAST_NAME();
+            System.out.println("ln dao insertRow: " + ln);
+            String fulln = pojo.getFull_NAME();
+            System.out.println("fulln dao insertRow: " + fulln);
+            String pw = pojo.getPASSWORD();
+            System.out.println("pw dao insertRow: " + pw);
             String strF = pojo.getFUNCTION();
             System.out.println("strF: " + strF);
 

@@ -2,6 +2,8 @@ package ie.irishliterature.model;
 
 public class User {
 
+    private String USER_ID;
+
     private String USERNAME;
 
     private String EMAIL;
@@ -9,6 +11,8 @@ public class User {
     private String FIRST_NAME;
 
     private String LAST_NAME;
+
+    private String Full_NAME;
 
     private String EMAIL_VERIFICATION_HASH;
 
@@ -23,7 +27,6 @@ public class User {
     private String CREATED_TIME;
 
     private String STATUS;
-
 
     public String getUSERNAME() {
         return USERNAME;
@@ -116,6 +119,34 @@ public class User {
     @Override
     public String toString() {
         return "ClassPojo [USERNAME = " + USERNAME + ", EMAIL = " + EMAIL + ", FIRST_NAME = " + FIRST_NAME + ", LAST_NAME = " + LAST_NAME + ", EMAIL_VERIFICATION_HASH = " + EMAIL_VERIFICATION_HASH + ", EMAIL_VERIFICATION_ATTEMPTS = " + EMAIL_VERIFICATION_ATTEMPTS + ", PASSWORD = " + PASSWORD + ", STATUS = " + STATUS + ", CREATED_TIME = " + CREATED_TIME + "]";
+    }
+
+    /**
+     * @return the Full_NAME
+     */
+    public String getFull_NAME() {
+        return Full_NAME;
+    }
+
+    /**
+     * @param Full_NAME the Full_NAME to set
+     */
+    public void setFull_NAME(String Full_NAME) {
+        this.Full_NAME = Full_NAME;
+    }
+
+    /**
+     * @return the USER_ID
+     */
+    public String getUSER_ID() {
+        return USER_ID;
+    }
+
+    /**
+     * @param USER_ID the USER_ID to set
+     */
+    public void setUSER_ID(String USER_ID) {
+        this.USER_ID = USER_ID;
     }
 
 }

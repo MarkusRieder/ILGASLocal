@@ -1965,6 +1965,7 @@
 
 
                                                     <div class="row" style="margin-bottom: 10px">
+
                                                         <div class="col-xs-4">
                                                             <div class="mini-box">
                                                                 <div class="form-group has-feedback">
@@ -1977,23 +1978,26 @@
                                                                            placeholder="Language"
                                                                            >                     
                                                                     <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                                                </div>
-                                                            </div>
+                                                                </div><!--form-group has-feedback-->
+                                                            </div><!--mini-box-->
                                                         </div> <!--col-xs-6-->
 
                                                         <div class="col-xs-4">
                                                             <div class="mini-box">
-                                                                <label for="countryOfPublication" class="pull-left" > Country of publication</label>
-                                                                <input id="countryOfPublication"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="countryOfPublication"                                
-                                                                       value=""    
-                                                                       placeholder="Country of Publication"
-                                                                       >
-                                                                <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                                            </div>
-                                                        </div> <!--col-xs-4-->         
+                                                                <div class="form-group has-feedback">
+                                                                    <label for="countryOfPublication" class="pull-left" > Country of publication</label>
+                                                                    <input id="countryOfPublication"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="countryOfPublication"                                
+                                                                           value=""    
+                                                                           placeholder="Country of Publication"
+                                                                           >
+                                                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                                                </div><!--form-group has-feedback-->
+                                                            </div><!--mini-box-->
+                                                        </div> <!--col-xs-4-->    
+
                                                     </div> <!--row-->
 
                                                     <div class="row">
@@ -2691,7 +2695,7 @@
                                                     NOTES
                                                 </p>
                                                 <br/>
-                                                                                              <div class="container-fluid">
+                                                <div class="container-fluid">
                                                     <ol>
                                                         <li>
                                                             <p>There
