@@ -477,7 +477,7 @@ public class openApplicationDAO {
                         singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker(translatorTrackId.get(i));
                         translatorTrackList.add(singleTranslatorTrackList);
- System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
+                        System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
                         titleList = getTitles(ReferenceNumber);
 
                     }
@@ -683,7 +683,7 @@ public class openApplicationDAO {
                         singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker(translatorTrackId.get(i));
                         translatorTrackList.add(singleTranslatorTrackList);
- System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
+                        System.out.println("8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList);
                         titleList = getTitles(ReferenceNumber);
 
                     }
@@ -1138,6 +1138,7 @@ public class openApplicationDAO {
 
             ps = conn.prepareStatement("SELECT CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.users, ILGAS.expertReader\n"
                     + "WHERE expertReader.expertReaderUserID = users.userID\n"
+                    + " AND first_name <> 'removed'\n"
                     + "AND expertReader.referenceNumber = ? ");
 
             ps.setString(1, appRef);
@@ -1222,8 +1223,9 @@ public class openApplicationDAO {
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement("SELECT referenceNumber, fileDestination, sampleSentOut, sampleReturned,summaryReport, "
-                    + "CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM expertReader, users\n"
+                    + "CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.expertReader, ILGAS.users\n"
                     + "WHERE expertReaderUserID = userID\n"
+                    + " AND first_name <> 'removed'\n"
                     + "AND referenceNumber  = ? ");
 
             ps.setString(1, appRef);
@@ -1397,10 +1399,20 @@ public class openApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT  CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM users\n"
-                    + "LEFT JOIN expertReader ON users.userID = expertReader.expertReaderUserID\n"
-                    + "WHERE expertReader.reading = 'false'\n"
-                    + "AND users.function = 'Expert Reader'");
+  // changed on Ritas wishes 23/03/2019
+//            ps = conn.prepareStatement("SELECT  CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM users\n"
+//                    + "LEFT JOIN expertReader ON users.userID = expertReader.expertReaderUserID\n"
+//                    + "WHERE expertReader.reading = 'false'\n"
+//                    + "AND users.function = 'Expert Reader'");
+            ps = conn.prepareStatement("SELECT \n"
+                    + "    CONCAT(first_name, ' ', last_name) AS `expertReaderName`\n"
+                    + "FROM\n"
+                    + "    ILGAS.users\n"
+                    + "        LEFT JOIN\n"
+                    + "    ILGAS.expertReader ON users.userID = expertReader.expertReaderUserID\n"
+                    + "WHERE\n"
+                    + "    users.function = 'Expert Reader'\n"
+                    + "        AND first_name <> 'removed'");
 
             res = ps.executeQuery();
 
@@ -1620,7 +1632,7 @@ public class openApplicationDAO {
                 ps1.setString(1, ReferenceNumber);
                 ps1.setString(2, translationRightsHolderName);
                 ps1.setString(3, translationRightsHolderName);
-ps1.setString(4, ReferenceNumber);
+                ps1.setString(4, ReferenceNumber);
                 System.out.println("updaterightsHolderArrayContent  inserting " + translationRightsHolderName + "......................:");
 
                 ps1.executeUpdate();

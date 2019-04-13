@@ -49,10 +49,10 @@ public class AddUserExpertReader extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddExpertReader</title>");
+            out.println("<title>Servlet AddUserExpertReader</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddExpertReader at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddUserExpertReader at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -95,7 +95,16 @@ public class AddUserExpertReader extends HttpServlet {
         String function = "Expert Reader";
         String role = "";
         int userID = 0;
+
         String fullname = firstname + " " + lastname;
+
+        System.out.println("AddUserExpertReader doPost::username " + username);
+        System.out.println("AddUserExpertReader doPost::firstname " + firstname);
+        System.out.println("AddUserExpertReader doPost::lastname " + lastname);
+        System.out.println("AddUserExpertReader doPost::password " + password);
+        System.out.println("AddUserExpertReader doPost::email " + email);
+        System.out.println("AddUserExpertReader doPost::function " + function);
+        System.out.println("AddUserExpertReader doPost::fullname " + fullname);
 
         Status sp = new Status();
         String output = "";
@@ -105,6 +114,7 @@ public class AddUserExpertReader extends HttpServlet {
         user.setUSERNAME(username);
         user.setFIRST_NAME(firstname);
         user.setLAST_NAME(lastname);
+        user.setFull_NAME(fullname);
 
         /*
          * generate hash for password
@@ -123,8 +133,7 @@ public class AddUserExpertReader extends HttpServlet {
          */
         user.setEMAIL_VERIFICATION_HASH(BCrypt.hashpw(hash, GlobalConstants.SALT));
 
-        if (role
-                == null) {
+        if (role == null) {
             role = "not assigned";
         }
 
@@ -151,7 +160,7 @@ public class AddUserExpertReader extends HttpServlet {
                 /*
                  * send verification email
                  */
-                MailUtil.sendEmailRegistrationLinkExpertReader(username,fullname, password, email, hash);
+                MailUtil.sendEmailRegistrationLinkExpertReader(username, fullname, password, email, hash);
 
                 message = "Expert Reader <strong>" + fullname + "</strong> has been created  <br/><br/>and email has been sent";
             } else {
@@ -162,8 +171,7 @@ public class AddUserExpertReader extends HttpServlet {
                 message = "This Email is already registered - try again";
             }
 
-//ENSURE signup is validated
-
+            //ENSURE signup is validated
         } catch (DBException | MessagingException e) {
             sp.setCode(-1);
             sp.setMessage(e.getMessage());

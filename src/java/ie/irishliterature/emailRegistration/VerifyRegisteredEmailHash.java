@@ -36,6 +36,7 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
     /**
      * @param request
      * @param response
+     *
      * @throws javax.servlet.ServletException
      * @throws java.io.IOException
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -45,9 +46,11 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // get user Id and email verification code Hash code  
         String uname = request.getParameter("userId");
-        System.out.println("VerifyRegisteredEmailHash doGet username 1 : " + uname);
+        System.out.println("VerifyRegisteredEmailHash servlet doGet username 1 : " + uname);
         String hash = BCrypt.hashpw(request.getParameter("hash"), GlobalConstants.SALT);
         String scope = request.getParameter("scope");
+        System.out.println("VerifyRegisteredEmailHash doGet  hash 1 : " + hash);
+        System.out.println("VerifyRegisteredEmailHash doGet scope 1 : " + scope);
         String message = null;
 
         try {
@@ -60,9 +63,8 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
                 ApplicationDAO.updateStatus(uname, "active");
 
                 message = "Email verified successfully. Account was activated. Click <a href=\"index.jsp\">here</a> to login";
-        
-              //  request.getRequestDispatcher("/WEB-INF/views/emailValidationSuccess.jsp").forward(request, response);
 
+                //  request.getRequestDispatcher("/WEB-INF/views/emailValidationSuccess.jsp").forward(request, response);
             } else if (ApplicationDAO.verifyEmailHash(uname, hash) && scope.equals(GlobalConstants.RESET_PASSWORD)) {
                 //update status as active
                 ApplicationDAO.updateStatus(uname, "active");

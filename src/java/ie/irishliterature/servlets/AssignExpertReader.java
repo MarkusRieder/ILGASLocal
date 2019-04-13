@@ -107,6 +107,7 @@ public class AssignExpertReader extends HttpServlet {
         System.out.println(" expertReaderName " + expertReaderName);
         System.out.println(" expectedReturnDate " + expectedReturnDate);
 
+        
         String newAssignedReferenceNumber = request.getParameter("NewAssignedERRefNo");
         System.out.println(" newAssignedReferenceNumber " + newAssignedReferenceNumber);
         int expertReaderUserID = 0;
@@ -145,10 +146,10 @@ public class AssignExpertReader extends HttpServlet {
                     System.out.println(" filePath 1 AssignExpertReader " + filePath[1]);
                     System.out.println(" filePath 3 AssignExpertReader " + filePath[3]);
 
-                    originalPath = filePath[1].replace("/documents", "/home/glassfish/glassfish/domains/domain1/docroot/documents");
+                    originalPath = filePath[1].replace("~markus", "/home/markus/public_html/test");
                     originalName = filePath[2];
 
-                    translationPath = filePath[3].replace("/documents", "/home/glassfish/glassfish/domains/domain1/docroot/documents");
+                    translationPath = filePath[3].replace("~markus", "/home/markus/public_html/test");
                     translationName = filePath[4];
 
                     attachFiles[0] = originalPath;

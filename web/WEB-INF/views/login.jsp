@@ -13,20 +13,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+
         <title>Translation Grant Application System</title>
         <!--login.jsp-->
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css">-->
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/my-block-ui.css">   
         <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
         <link rel="stylesheet" type="text/css" href="css/form.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" />
 
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
         <script src="js/jquery-1.11.3.min.js"></script>
 
@@ -39,7 +41,7 @@
         <script src="js/jquery.validate.js"></script>
         <script src="js/bootstrap-show-password.js"></script>
         <script src="js/jquery-ui.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 
         <!--clear localStorage and sessionStorage-->
         <script type="text/javascript">
@@ -251,7 +253,7 @@
 
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">login Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
 
@@ -313,7 +315,8 @@
                                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
                                                 Don't have an account? 
                                                 <a href="#" onClick="$('#loginbox').hide();
-                                                        $('#signupbox').show()">
+                                                        $('#signupbox').show();
+                                                        $('#uname').focus();">
                                                     Sign Up Here
                                                 </a>
                                             </div> <%-- div style --%>
@@ -365,20 +368,18 @@
 
                                             <!--uname-->
                                             <div class="form-group">
-                                                <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
                                                 <div class="col-md-9">
                                                     <input type="text" 
                                                            class="form-control" 
                                                            name="uname" 
                                                            id="uname" 
-                                                           placeholder="Username" 
-                                                           data-toggle="validator"
+                                                           placeholder="User name"                                             
                                                            onblur="loadXMLDoc()"
-                                                           pattern="[A-Za-z0-9 \-']{1,20}" 
-                                                           data-error="Username should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
-                                                           required
-                                                           >     
-                                                    <span class="help-block" id="error"></span> 
+                                                           required 
+                                                           pattern="^\S+$"
+                                                           title='The username can only consist of alphabetical, number and underscore'
+                                                           >    
+                                                    <span  id="checkusernameResultMessage"></span> 
                                                 </div>
                                             </div> <!--form-group uname-->  
 
@@ -387,14 +388,11 @@
                                                 <div class="col-md-9">
                                                     <input type="text" 
                                                            class="form-control" 
+                                                           id="firstname" 
                                                            name="firstname" 
                                                            placeholder="First Name" 
-                                                           data-toggle="validator"
-                                                           pattern="[A-Za-z0-9]{1,20}" 
-                                                           data-error="First name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
-                                                           required
+                                                           required="required"
                                                            >              
-                                                    <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group firstname-->     
 
@@ -403,17 +401,26 @@
                                                 <div class="col-md-9">
                                                     <input type="text" 
                                                            class="form-control" 
+                                                           id="lastname" 
                                                            name="lastname" 
                                                            placeholder="Last Name"
-                                                           data-toggle="validator"
-                                                           pattern="[A-Za-z0-9 \-']{1,20}" 
-                                                           data-error="Last name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
-                                                           required
+                                                           required="required"
                                                            >    
-                                                    <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group lastname-->      
-
+                                            <div class="form-group">
+                                                <div class="col-md-9">
+                                                    <input type="text" 
+                                                           class="form-control" 
+                                                           name="username" 
+                                                           id="username" 
+                                                           placeholder="User name"                                                         
+                                                           required 
+                                                           pattern="^\S+$"
+                                                           title='The username can only consist of alphabetical, number and underscore'
+                                                           >    
+                                                </div>
+                                            </div> <!--form-group uname-->  
                                             <!--email-->
                                             <div class="form-group">
                                                 <div class="col-md-9">
@@ -421,12 +428,11 @@
                                                            class="form-control" 
                                                            name="email" 
                                                            placeholder="Email Address"
-                                                           data-toggle="validator"
                                                            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
                                                            data-error="Enter valid Email"
                                                            required
                                                            >                                            
-                                                    <span class="help-block" id="error"></span>      
+
                                                 </div>
                                             </div> <!--form-group email-->
 
@@ -443,7 +449,6 @@
                                                            Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
                                                            required                                                                                     
                                                            >                                           
-                                                    <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group password-->
 
@@ -459,7 +464,6 @@
                                                            data-match="#password"                                                                      
                                                            required
                                                            >                               
-                                                    <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group cpassword-->
 
@@ -476,7 +480,6 @@
                                                            style=" background-color:#00c0ef"
                                                            readonly
                                                            >                               
-                                                    <span class="help-block" id="error"></span> 
                                                 </div>
                                             </div> <!--form-group functionDataset-->
 
@@ -570,16 +573,130 @@
                 </div> <!-- /container-fluid -->
 
 
+                <script>
+                    $(document).ready(function () {
+                        alert("bootstrapValidator")
+                        $('#register-form').bootstrapValidator({
+                            message: 'This value is not valid',
+                            live: 'enabled',
+                            trigger: "keyup",
+                            feedbackIcons: {
+                                valid: 'glyphicon glyphicon-ok',
+                                invalid: 'glyphicon glyphicon-remove',
+                                validating: 'glyphicon glyphicon-refresh'
+                            },
+                            fields: {
+                                uname: {
+                                    message: 'The username is not valid',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The username is required and cannot be empty'
+                                        },
+                                        stringLength: {
+                                            min: 6,
+                                            max: 30,
+                                            message: 'The username must be more than 6 and less than 30 characters long'
+                                        },
+                                        regexp: {
+                                            regexp: /^\S+$/,
+                                            message: 'The username can only consist of alphabetical, number and underscore'
+                                        }
+                                    }
+                                },
+                                username: {
+                                    message: 'The username is not valid',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The username is required and cannot be empty'
+                                        },
+                                        stringLength: {
+                                            min: 6,
+                                            max: 30,
+                                            message: 'The username must be more than 6 and less than 30 characters long'
+                                        },
+                                        regexp: {
+                                            regexp: /^\S+$/,
+                                            message: 'The username can only consist of alphabetical, number and underscore'
+                                        }
+                                    }
+                                },
+                                firstname: {
+                                    message: 'The first name is not valid',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The first name is required and cannot be empty'
+                                        },
+                                        stringLength: {
+                                            min: 6,
+                                            max: 30,
+                                            message: 'The first name must be more than 6 and less than 30 characters long'
+                                        },
+                                        regexp: {
+                                            regexp: /^[a-zA-Z0-9_]+$/,
+                                            message: 'The first name can only consist of alphabetical, number and underscore'
+                                        }
+                                    }
+                                },
+                                lastname: {
+                                    message: 'The last name is not valid',
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The last name is required and cannot be empty'
+                                        },
+                                        stringLength: {
+                                            min: 6,
+                                            max: 30,
+                                            message: 'The last name must be more than 6 and less than 30 characters long'
+                                        },
+                                        regexp: {
+                                            regexp: /^[a-zA-Z0-9_]+$/,
+                                            message: 'The last name can only consist of alphabetical, number and underscore'
+                                        }
+                                    }
+                                },
+                                email: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The email address is required and cannot be empty'
+                                        },
+                                        emailAddress: {
+                                            message: 'The email address is not a valid'
+                                        }
+                                    }
+                                },
+                                password: {
+                                    validators: {
+                                        notEmpty: {
+                                            message: 'The password is required and cannot be empty'
+                                        },
+                                        different: {
+                                            field: 'username',
+                                            message: 'The password cannot be the same as username'
+                                        },
+                                        stringLength: {
+                                            min: 8,
+                                            message: 'The password must have at least 8 characters'
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+
+
                 <script  type="text/javascript">
                     $(function () {
                         $('#register-form').validator().on('submit', function (e) {
                             if (e.isDefaultPrevented()) {
                                 // handle the invalid form...
+                                console.log(e);
                             } else {
                                 blockUi();
                                 // everything looks good!
                                 $.post("RegisterServlet", $("#register-form").serialize(), function (data) {
                                     var jdata = JSON.parse(data);
+                                    console.log(jdata.message);
                                     if (jdata.code === -1) {
                                         $("#errorField .message").text(jdata.message);
                                         $("#errorField").show();
@@ -614,20 +731,22 @@
                     {
                         var xmlhttp;
                         var uname = document.getElementById("uname").value;
-                        var urls = "checkusername.jsp?uname=" + uname;
+                        if (uname !== "") {
+                            var urls = "checkusername.jsp?uname=" + uname;
 
-                        if (window.XMLHttpRequest)
-                        {
-                            xmlhttp = new XMLHttpRequest();
-                        } else
-                        {
-                            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                            if (window.XMLHttpRequest)
+                            {
+                                xmlhttp = new XMLHttpRequest();
+                            } else
+                            {
+                                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
                         }
                         xmlhttp.onreadystatechange = function ()
                         {
                             if (xmlhttp.readyState === 4)
                             {
-                                document.getElementById("error").innerHTML = xmlhttp.responseText;
+                                document.getElementById("checkusernameResultMessage").innerHTML = xmlhttp.responseText;
                             }
                         };
                         xmlhttp.open("GET", urls, true);

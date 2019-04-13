@@ -107,7 +107,9 @@ public class RegisterServlet extends HttpServlet {
                 /*
                  * double check if Publisher exists
                  */
-                if (!ACpublisherDAO_test.isPublisherExists(cmpny)) {
+                PublisherID =  Integer.parseInt(ACpublisherDAO_test.isPublisherExists(cmpny));
+                
+                if (PublisherID == 0) {
                     System.out.println("newPublisher does not exist - create new one");
 
                     /*
@@ -144,9 +146,11 @@ public class RegisterServlet extends HttpServlet {
             output = Utils.toJson(sp);
         } else {
             User user = new User();
+            String fullName = firstname + " " + lastname ;
             user.setUSERNAME(username);
             user.setFIRST_NAME(firstname);
             user.setLAST_NAME(lastname);
+            user.setFull_NAME(fullName);
 
             /*
              * generate hash for password

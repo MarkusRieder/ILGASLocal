@@ -95,8 +95,18 @@ public class AddUserStaff extends HttpServlet {
         String function = "Literature Ireland Staff";
         String role = "";
         int userID = 0;
+        
+        
         String fullname = firstname + " " + lastname;
-
+        
+        System.out.println("AddUserStaff doPost::username " + username);
+        System.out.println("AddUserStaff doPost::firstname " + firstname);
+        System.out.println("AddUserStaff doPost::lastname " + lastname);
+        System.out.println("AddUserStaff doPost::password " + password);
+        System.out.println("AddUserStaff doPost::email " + email);
+        System.out.println("AddUserStaff doPost::function " + function);
+        System.out.println("AddUserStaff doPost::fullname " + fullname);
+        
         Status sp = new Status();
         String output = "";
         String message = "";
@@ -105,6 +115,7 @@ public class AddUserStaff extends HttpServlet {
         user.setUSERNAME(username);
         user.setFIRST_NAME(firstname);
         user.setLAST_NAME(lastname);
+        user.setFull_NAME(fullname);
 
         /*
          * generate hash for password

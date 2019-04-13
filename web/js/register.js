@@ -15,6 +15,9 @@ $("document").ready(function () {
     $.validator.addMethod("validemail", function (value, element) {
         return this.optional(element) || eregex.test(value);
     });
+    $.validator.addMethod("nowhitespace", function (value, element) {
+    return value.indexOf(" ") < 0 && value !== ""; 
+    }, "No white space please");
 
     $("#register-form").validate({
 
@@ -23,7 +26,8 @@ $("document").ready(function () {
                     username: {
                         required: true,
                         validname: true,
-                        minlength: 2
+                        minlength: 2,
+                        nowhitespace: true
                     },
                     firstname: {
                         required: true,

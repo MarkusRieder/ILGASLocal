@@ -117,7 +117,7 @@
                 $("#username").change(function () {
                     var username = $("#username").val();
                     var letters = /^[A-Za-z]+$/;
-
+console.log("username: ", username);
                     if (!(username.match(letters))) {
                         $("#errname").show();
 
@@ -216,7 +216,7 @@
                 </div><!-- End of topbar div -->
 
 
-                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland Signup</h1>
+                <h1 align="center" style="align-content: center">signup Translation Grant Application System for Literature Ireland Signup</h1>
 
                 <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>

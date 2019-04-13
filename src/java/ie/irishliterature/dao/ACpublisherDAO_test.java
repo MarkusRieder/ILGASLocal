@@ -56,7 +56,7 @@ public class ACpublisherDAO_test {
     public ArrayList getpublisher(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
         ArrayList publisherList = new ArrayList();
- System.out.println("ACpublisherDAO_test Local getpublisher ");
+        System.out.println("ACpublisherDAO_test Local getpublisher ");
         connect();
 
         try {
@@ -64,7 +64,7 @@ public class ACpublisherDAO_test {
             ps.setString(1, "%" + s + "%");
             ResultSet rs = ps.executeQuery();
             System.out.println("ACpublisherDAO_test Local getpublisher search for: " + s);
-             System.out.println("ACpublisherDAO_test Local getpublisherquery: " + ps);
+            System.out.println("ACpublisherDAO_test Local getpublisherquery: " + ps);
             while (rs.next()) {
                 Publisher publisher = new Publisher();
 
@@ -150,25 +150,31 @@ public class ACpublisherDAO_test {
     }
 
     //isPublisherExists
-    public static boolean isPublisherExists(String Company) throws DBException {
+    /*
+     * check if publisher exists
+     * @param Company from: RegisterServlet
+     * @param returnPublisherID to: RegisterServlet
+     */
+    public static String isPublisherExists(String Company) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
-        boolean verified = false;
+        // boolean verified = false;
+        String returnPublisherID = "0";
         ResultSet res = null;
 
         try {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT * FROM ILGAS.international_publishers "
-                    + "WHERE Company = ?");
-            System.out.println("isPublisherExists company: try:: " + ps);
+            ps = conn.prepareStatement("SELECT * FROM ILGAS.international_publishers WHERE Company = ?");
             ps.setString(1, Company);
+            System.out.println("isPublisherExists company: try:: " + ps);
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
                     System.out.println("isPublisherExists res:   " + res.getString(1));
-                    verified = true;
+//                    verified = true;
+                    returnPublisherID = res.getString(1);
                 }
             }
 
@@ -178,8 +184,9 @@ public class ACpublisherDAO_test {
             DBConn.close(conn, ps, res);
             throw new DBException("isPublisherExists - 3 Excepion while accessing database");
         }
-
-        return verified;
+        System.out.println("isPublisherExists :: verified " + returnPublisherID);
+//        return verified;
+        return returnPublisherID;
     }
 
     //isNewPublisher 
@@ -365,7 +372,7 @@ public class ACpublisherDAO_test {
             ps1.setInt(2, Company_Number);
 
             System.out.println("ps1 " + ps1.toString());
-            
+
             ps1.executeUpdate();
 
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
@@ -520,8 +527,8 @@ public class ACpublisherDAO_test {
 
             ps1 = conn.prepareStatement(sql);
 
-            ps1.setString(1, publisher.getCompany());            
-            ps1.setInt(2, publisher.getCompany_Number());            
+            ps1.setString(1, publisher.getCompany());
+            ps1.setInt(2, publisher.getCompany_Number());
             ps1.setString(3, publisher.getAddress1());
             ps1.setString(4, publisher.getAddress2());
             ps1.setString(5, publisher.getAddress3());

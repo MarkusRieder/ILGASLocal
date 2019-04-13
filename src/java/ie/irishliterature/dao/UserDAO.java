@@ -126,15 +126,16 @@ public class UserDAO {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
-            ps1 = conn.prepareStatement("insert into ILGAS.users (uname,FIRST_NAME,LAST_NAME,PASSWORD,EMAIL,FUNCTION,ROLE, EMAIL_VERIFICATION_HASH) values (?,?,?,?,?,?,?,?.?)");
+            ps1 = conn.prepareStatement("insert into ILGAS.users (uname,FIRST_NAME,LAST_NAME, Full_NAME, PASSWORD,EMAIL,FUNCTION,ROLE, EMAIL_VERIFICATION_HASH) values (?,?,?,?,?,?,?,?,?.?)");
             ps1.setString(1, pojo.getUSERNAME());
             ps1.setString(2, pojo.getFIRST_NAME());
             ps1.setString(3, pojo.getLAST_NAME());
-            ps1.setString(4, pojo.getPASSWORD());
-            ps1.setString(5, pojo.getEMAIL());
-            ps1.setString(6, pojo.getFUNCTION());
-            ps1.setString(7, pojo.getROLE());
-            ps1.setString(8, pojo.getEMAIL_VERIFICATION_HASH());
+            ps1.setString(4, pojo.getFull_NAME());
+            ps1.setString(5, pojo.getPASSWORD());
+            ps1.setString(6, pojo.getEMAIL());
+            ps1.setString(7, pojo.getFUNCTION());
+            ps1.setString(8, pojo.getROLE());
+            ps1.setString(9, pojo.getEMAIL_VERIFICATION_HASH());
 
             String uname = pojo.getUSERNAME();
             System.out.println("uname dao insertRow: " + uname);
@@ -490,7 +491,8 @@ public class UserDAO {
         PreparedStatement ps = null;
         ResultSet res = null;
 
-        String searchQuery = "SELECT * FROM ILGAS.users WHERE function = 'Expert Reader'";
+        String searchQuery = "SELECT * FROM ILGAS.users WHERE function = 'Expert Reader'"
+                + " AND first_name <> 'removed'";
 
         try {
             conn = DBConn.getConnection();
@@ -504,7 +506,7 @@ public class UserDAO {
             if (res != null) {
                 while (res.next()) {
                     User expertReader = new User();
-//                    expertReader.setUSERNAME(res.getString("uname"));
+                    expertReader.setUSER_ID(res.getString("userID"));
                     expertReader.setFIRST_NAME(res.getString("first_name"));
                     expertReader.setLAST_NAME(res.getString("last_name"));
                     expertReader.setEMAIL(res.getString("email"));

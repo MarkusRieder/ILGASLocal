@@ -46,6 +46,7 @@ public class StaffServlet extends HttpServlet {
     ////////////////////////////////////////////////////////////////////////////
     private String referenceNumber;  //Array of Author/Title
     private String applicationYear;
+    private String applicationNumber;
     private String notesAboutApplication;                   // path to file
     private String dateOfBoardMeeting; //  Date
     private String ApproveWithdrawnReject; //  Date
@@ -122,199 +123,185 @@ public class StaffServlet extends HttpServlet {
             String name = request.getParameter("name");
             System.out.println("Here we are >>>>>>>>>.   StaffServlet ::  name " + name);
 
-            System.out.println("############################### /StaffServlet ####################################");
+            java.sql.Timestamp timestamp = getcurrentTimeStamp();
+            Status = "open";
+
+            GrantApplication application = new GrantApplication();
 
             Enumeration en = request.getParameterNames();
-
+            
+            /*
+             * loop through fieldnames and assign their values to variables if
+             * not empty
+             */
+            
             while (en.hasMoreElements()) {
                 Object objOri = en.nextElement();
 
-                String param = (String) objOri;
+                String fieldname = (String) objOri;
 
-                String value = request.getParameter(param);
+                switch (fieldname) {
+                    case "appReferenceNumber":
+                        referenceNumber = request.getParameter(fieldname);
+                        applicationNumber = referenceNumber.split("/")[0];
+                        applicationYear = referenceNumber.split("/")[1];
+                        break;
+                    case "appNotesAboutApplication":
+                        notesAboutApplication = request.getParameter(fieldname);
+                        application.setNotesAboutApplication(notesAboutApplication);
+                        break;
+                    case "appDateOfBoardMeeting":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            dateOfBoardMeeting = request.getParameter(fieldname);
+                            application.setBoardMeeting(convertStringDate(dateOfBoardMeeting));
+                        }
+                        break;
+                    case "ApproveWithdrawnReject":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            ApproveWithdrawnReject = request.getParameter(fieldname);
+                            System.out.println("param00 ApproveWithdrawnReject " + ApproveWithdrawnReject);
+                            if ("ticked".equals(ApproveWithdrawnReject)) {
+                                approveWithdrawnReject = 1;
+                            } else {
+                                approveWithdrawnReject = 0;
+                            }
+                            if (ApproveWithdrawnReject.equals("Approved")) {
+                                Status = "pending";
+                            }
+                            application.setApproveWithdrawnReject(ApproveWithdrawnReject);
+                        }
+                        break;
+                    case "directorChairDecision":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            DirectorChairDecision = request.getParameter(fieldname);
+                            if ("ticked".equals(DirectorChairDecision)) {
+                                directorChairDecision = 1;
+                            } else {
+                                directorChairDecision = 0;
+                            }
+                            application.setDirectorChairDecision(directorChairDecision);
+                        }
+                        break;
+                    case "commentsAboutMeeting":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Comments_about_Meeting = request.getParameter(fieldname);
+                            application.setBoardComments_Instructions(Comments_about_Meeting);
+                        }
+                        break;
+                    case "appplannedPageExtent":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            plannedPageExtent = request.getParameter(fieldname);
+                            application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
+                        }
+                        break;
+                    case "appproposedPrintRun":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            proposedPrintRun = request.getParameter(fieldname);
+                            application.setProposedPrintRun(Integer.parseInt(proposedPrintRun));
+                        }
+                        break;
+                    case "award":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Award = request.getParameter(fieldname);
+                            if ("ticked".equals(Award)) {
+                                award = 1;
+                            } else {
+                                award = 0;
+                            }
+                            application.setAward(award);
+                        }
+                        break;
+                    case "amountApproved":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            amountApproved = request.getParameter(fieldname);
+                            BigDecimal aa = new BigDecimal(amountApproved.replaceAll(",", ""));
+                            application.setAmountApproved(aa);
+                        }
+                        break;
+                    case "dateContractSenttoPublisher":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Date_Contract_Sent_to_Publisher = request.getParameter(fieldname);
+                            application.setContractSentToPublisher(convertStringDate(Date_Contract_Sent_to_Publisher));
+                        }
+                        break;
+                    case "dateILEAcknowledgementApproved":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Date_ILE_Acknowlegement_Approved = request.getParameter(fieldname);
+                            application.setAcknowledgementApproved(convertStringDate(Date_ILE_Acknowlegement_Approved));
+                        }
+                        break;
+                    case "datePublisherInformedOfMeeting":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Date_publisher_informed_of_meeting = request.getParameter(fieldname);
+                        }
+                        break;
+                    case "datePublishedBooksReceived":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Date_Published_Books_Received = request.getParameter(fieldname);
+                            application.setDatePublishedBooksReceived(convertStringDate(Date_Published_Books_Received));
+                        }
+                        break;
+                    case "datePaymentMadeToPublisher":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Date_Payment_Made_to_Publisher = request.getParameter(fieldname);
+                            application.setDatePaymentMadeToPublisher(convertStringDate(Date_Payment_Made_to_Publisher));
+                        }
+                        break;
+                    case "paymentReferenceNumber":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            Payment_Reference_Number = request.getParameter(fieldname);
+                            application.setPaymentReferenceNumber(Payment_Reference_Number);
+                        }
+                        break;
+                    case "paymentStatus":
+                        if (!"".equals(request.getParameter(fieldname))) {
+                            PaymentStatus = request.getParameter(fieldname);
+                            if (PaymentStatus.equals("Paid")) {
+                                Status = "closed";
 
-                System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+                            }
+                            application.setPaymentStatus(PaymentStatus);
+                        }
+                        break;
+
+                } // end switch
+
+                application.setStatus(Status);
+                application.setLASTUPDATED(timestamp);
 
             }
 
-            System.out.println("Enumeration keys   ");
-            Enumeration keys = session.getAttributeNames();
-            while (keys.hasMoreElements()) {
-                String key = (String) keys.nextElement();
-                System.out.println("key  :" + key + ": " + session.getValue(key));
-                if ("name".equals(key)) {
-                    name = (String) session.getValue(key);
-                }
-            }
-
-            System.out.println("###################################################################");
-
-//        switch (task) {
-//            case "StaffServlet":
-            System.out.println("Here we are >>>>>>>>>.   StaffServlet :: StaffServlet");
-
-            java.sql.Timestamp timestamp = getcurrentTimeStamp();
-
-            referenceNumber = request.getParameter("appReferenceNumber");
-            applicationYear = referenceNumber.split("/")[1];
-            System.out.println("param1 applicationYear " + applicationYear);
-            notesAboutApplication = request.getParameter("appNotesAboutApplication");
-
-            System.out.println("param1 notesAboutApplication " + notesAboutApplication);
-
-            if (request.getParameter("appDateOfBoardMeeting").isEmpty()) {
-                dateOfBoardMeeting = "";
-            } else {
-                dateOfBoardMeeting = request.getParameter("appDateOfBoardMeeting");
-            }
-            System.out.println("param2 dateOfBoardMeeting " + dateOfBoardMeeting);
-            
-            ApproveWithdrawnReject = request.getParameter("ApproveWithdrawnReject");
-            System.out.println("param3  ApproveWithdrawnReject  " + ApproveWithdrawnReject);
-
-            DirectorChairDecision = request.getParameter("directorChairDecision");
-            System.out.println("param4  DirectorChairDecision " + request.getParameter("directorChairDecision"));
-
-            if ("ticked".equals(ApproveWithdrawnReject)) {
-                approveWithdrawnReject = 1;
-            } else {
-                approveWithdrawnReject = 0;
-            }
-
-            if ("ticked".equals(DirectorChairDecision)) {
-                directorChairDecision = 1;
-            } else {
-                directorChairDecision = 0;
-            }
-
-            System.out.println("param4  directorChairDecision " + directorChairDecision);
-
-            Comments_about_Meeting = request.getParameter("commentsAboutMeeting");
-
-            System.out.println("param5 Comments_about_Meeting " + Comments_about_Meeting);
-
-            plannedPageExtent = request.getParameter("appplannedPageExtent");
-            System.out.println("param5 plannedPageExtent " + plannedPageExtent);
-            proposedPrintRun = request.getParameter("appproposedPrintRun");
-            System.out.println("param5 proposedPrintRun " + proposedPrintRun);
-
-            Award = request.getParameter("award");
-            if ("ticked".equals(Award)) {
-                award = 1;
-            } else {
-                award = 0;
-            }
-
-            System.out.println("param6 Award " + request.getParameter("award"));
-            amountApproved = request.getParameter("amountApproved");
-            System.out.println("param7 amountApproved " + amountApproved);
-
-            if (request.getParameter("datePublisherInformedOfMeeting").isEmpty()) {
-                Date_publisher_informed_of_meeting = "";
-            } else {
-                Date_publisher_informed_of_meeting = request.getParameter("datePublisherInformedOfMeeting");
-            }
-            System.out.println("param8 Date_publisher_informed_of_meeting " + Date_publisher_informed_of_meeting);
-
-            if (request.getParameter("dateContractSenttoPublisher").isEmpty()) {
-                Date_Contract_Sent_to_Publisher = "";
-            } else {
-                Date_Contract_Sent_to_Publisher = request.getParameter("dateContractSenttoPublisher");
-            }
-            System.out.println("param9 Date_Contract_Sent_to_Publisher " + Date_Contract_Sent_to_Publisher);
-
-            if (request.getParameter("dateILEAcknowledgementApproved").isEmpty()) {
-                Date_ILE_Acknowlegement_Approved = "";
-            } else {
-                Date_ILE_Acknowlegement_Approved = request.getParameter("dateILEAcknowledgementApproved");
-            }
-            System.out.println("param10 Date_ILE_Acknowlegement_Approved " + Date_ILE_Acknowlegement_Approved);
-
-            if (request.getParameter("datePublishedBooksReceived").isEmpty()) {
-                Date_Published_Books_Received = "";
-            } else {
-                Date_Published_Books_Received = request.getParameter("datePublishedBooksReceived");
-            }
-            System.out.println("param11 Date_Published_Books_Received " + Date_Published_Books_Received);
-
-            if (request.getParameter("datePaymentMadeToPublisher").isEmpty()) {
-                Date_Payment_Made_to_Publisher = "";
-            } else {
-                Date_Payment_Made_to_Publisher = request.getParameter("datePaymentMadeToPublisher");
-            }
-            System.out.println("param12 Date_Payment_Made_to_Publisher " + Date_Payment_Made_to_Publisher);
-            Payment_Reference_Number = request.getParameter("paymentReferenceNumber");
-            System.out.println("param13 Payment_Reference_Number " + Payment_Reference_Number);
-            PaymentStatus = request.getParameter("paymentStatus");
-            System.out.println("param14 PaymentStatus " + PaymentStatus);
-
-            Status = "open";
-
-            ////////////////////////////////////////////////////////////
-            //  Process Application
-            ////////////////////////////////////////////////////////////
-            GrantApplication application = new GrantApplication();
-
-            application.setNotesAboutApplication(notesAboutApplication);
-
-            System.out.println("sending dateOfBoardMeeting  " + dateOfBoardMeeting);
-            if (!dateOfBoardMeeting.isEmpty()) {
-                application.setBoardMeeting(convertStringDate(dateOfBoardMeeting));
-            }
-
-            if (ApproveWithdrawnReject.equals("Approved")) {
-                Status = "pending";
-            }
-            application.setApproveWithdrawnReject(ApproveWithdrawnReject);
-            System.out.println("sending approveWithdrawnReject  " + approveWithdrawnReject);
-            application.setDirectorChairDecision(directorChairDecision);
-            application.setBoardComments_Instructions(Comments_about_Meeting);
-            application.setAward(award);
-            if (!amountApproved.isEmpty()) {
-                BigDecimal aa = new BigDecimal(amountApproved.replaceAll(",", ""));
-                System.out.println("amountApproved  " + amountApproved);
-                System.out.println("aa  " + aa);
-                application.setAmountApproved(aa);
-            }
-            if (!Date_publisher_informed_of_meeting.isEmpty()) {
-                System.out.println("sending Date_publisher_informed_of_meeting  " + Date_publisher_informed_of_meeting);
-
-                application.setPublisherInformedOfMeeting(convertStringDate(Date_publisher_informed_of_meeting));
-            }
-            if (!Date_publisher_informed_of_meeting.isEmpty()) {
-                System.out.println("sending Date_Contract_Sent_to_Publisher  " + Date_Contract_Sent_to_Publisher);
-
-                application.setContractSentToPublisher(convertStringDate(Date_Contract_Sent_to_Publisher));
-            }
-            System.out.println("sending Date_ILE_Acknowlegement_Approved  " + Date_ILE_Acknowlegement_Approved);
-            if (!Date_ILE_Acknowlegement_Approved.isEmpty()) {
-                application.setAcknowledgementApproved(convertStringDate(Date_ILE_Acknowlegement_Approved));
-            }
-            System.out.println("sending Date_Published_Books_Received  " + Date_Published_Books_Received);
-            if (!Date_Published_Books_Received.isEmpty()) {
-                application.setDatePublishedBooksReceived(convertStringDate(Date_Published_Books_Received));
-            }
-            System.out.println("sending Date_Payment_Made_to_Publisher  " + Date_Payment_Made_to_Publisher);
-            if (!Date_Payment_Made_to_Publisher.isEmpty()) {
-                application.setDatePaymentMadeToPublisher(convertStringDate(Date_Payment_Made_to_Publisher));
-            }
-            application.setPaymentReferenceNumber(Payment_Reference_Number);
-
-            if (PaymentStatus.equals("Paid")) {
-                Status = "closed";
-            }
-            application.setPaymentStatus(PaymentStatus);
-
-            System.out.println("sending plannedPageExtent  " + plannedPageExtent);
-            System.out.println("sending proposedPrintRun  " + proposedPrintRun);
-
-            application.setProposedPrintRun(Integer.parseInt(proposedPrintRun));
-            application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
-
-            application.setStatus(Status);
-            application.setLASTUPDATED(timestamp);
-
-            String applicationNumber = referenceNumber.split("/")[0];
+//            System.out.println("Enumeration keys   ");
+//            Enumeration keys = session.getAttributeNames();
+//            while (keys.hasMoreElements()) {
+//                String key = (String) keys.nextElement();
+//                System.out.println("key  :" + key + ": " + session.getValue(key));
+//                if ("name".equals(key)) {
+//                    name = (String) session.getValue(key);
+//                }
+//            }
+            System.out.println("param1 referenceNumber " + referenceNumber);
+            System.out.println("param2 applicationNumber " + applicationNumber);
+            System.out.println("param3 applicationYear " + applicationYear);
+            System.out.println("param4 notesAboutApplication " + notesAboutApplication);
+            System.out.println("param5 dateOfBoardMeeting :" + dateOfBoardMeeting + ":");
+            System.out.println("param6  ApproveWithdrawnReject  " + ApproveWithdrawnReject);
+            System.out.println("param7  directorChairDecision " + directorChairDecision);
+            System.out.println("param8 Comments_about_Meeting " + Comments_about_Meeting);
+            System.out.println("param9 plannedPageExtent " + plannedPageExtent);
+            System.out.println("param10 proposedPrintRun " + proposedPrintRun);
+            System.out.println("param11 Award " + award);
+            System.out.println("param12 amountApproved " + amountApproved);
+            System.out.println("param13 Date_Contract_Sent_to_Publisher :" + Date_Contract_Sent_to_Publisher + ":");
+            System.out.println("param14 Date_ILE_Acknowlegement_Approved " + Date_ILE_Acknowlegement_Approved);
+            System.out.println("param15 Date_publisher_informed_of_meeting " + Date_publisher_informed_of_meeting);
+            System.out.println("param16 Date_Published_Books_Received " + Date_Published_Books_Received);
+            System.out.println("param17 Date_Payment_Made_to_Publisher " + Date_Payment_Made_to_Publisher);
+            System.out.println("param18 Payment_Reference_Number " + Payment_Reference_Number);
+            System.out.println("param19 PaymentStatus " + PaymentStatus);
+            System.out.println("param20 Date_publisher_informed_of_meeting " + Date_publisher_informed_of_meeting);
+            System.out.println("param21 Status " + Status);
+            System.out.println("param22 timestamp " + timestamp);
 
             Test1DAO.updateApplication(application, applicationNumber, applicationYear);
 
@@ -327,12 +314,13 @@ public class StaffServlet extends HttpServlet {
             request.setAttribute("message", message);
             request.setAttribute("name", name);
             request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
-        } catch (ParseException | DBException | SQLException ex) {
+
+        } catch (ParseException | SQLException | DBException ex) {
             Logger.getLogger(StaffServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
+    @Override
     public void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, java.io.IOException {

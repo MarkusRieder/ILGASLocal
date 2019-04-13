@@ -50,7 +50,7 @@ AND l.referenceNumber = g.ReferenceNumber) AS 'PAtP'
         LEFT JOIN
     Translator t ON t.idTranslator = tt.idTranslator
 WHERE
-    g.ReferenceNumber = "10/2017"
+    g.ReferenceNumber = "14/2019"
 GROUP BY g.ReferenceNumber]]>
 	</queryString>
 	<field name="ReferenceNumber" class="java.lang.String">

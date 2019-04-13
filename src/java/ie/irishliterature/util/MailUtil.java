@@ -19,7 +19,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class MailUtil {
-                                            
 
     public static void sendEmailRegistrationLinkNewStaff(String uname, String firstname, String password, String email, String hash) throws AddressException, MessagingException {
 
@@ -52,7 +51,7 @@ public class MailUtil {
                     .append("  please take a moment to click through the link below and verify that we have assigned the correct email address:</p>")
                     .append("<p><u><a href='")
                     .append(link)
-                    .append("target='_blank>'")
+                    .append("'> <u>")
                     .append(link)
                     .append("</a></u></p>")
                     .append("</p><br/><br/></p>")
@@ -103,6 +102,7 @@ public class MailUtil {
         try {
 
             String link = Setup.MAIL_REGISTRATION_SITE_LINK + "?scope=activation&userId=" + uname + "&hash=" + hash;
+
             String info = "http://www.literatureirelandgrantapplication.com/reader/info";
             String policy = "http://www.literatureirelandgrantapplication.com/reader/info";
 
@@ -110,7 +110,7 @@ public class MailUtil {
             bodyText.append("<div>")
                     .append("<p>  Dear ")
                     .append(fullname)
-                    .append(", </p>")        
+                    .append(", </p>")
                     .append("<p>This email is being sent to you to validate the email address you provided for your Literature  Ireland translation grant system login.")
                     .append("</p> ")
                     .append(" <p>To ensure the security of the account information associated with your login, please take a moment to click through the link below and verify that we have the correct email address.</p > ")
@@ -124,9 +124,9 @@ public class MailUtil {
                     .append(" <p>Your login: ")
                     .append(uname)
                     .append("<br/>")
-                     .append("<p>Your email address: ")
+                    .append("<p>Your email address: ")
                     .append(email)
-                    .append("</p>")                   
+                    .append("</p>")
                     .append("<p>Your interim password: ")
                     .append(password)
                     .append(" &nbsp;</p>")
@@ -164,7 +164,7 @@ public class MailUtil {
     }
 
     public static void sendEmailRegistrationLink(String uname, String email, String hash) throws AddressException, MessagingException {
-        
+
         Properties props = new Properties();
 
         props.put("mail.smtp.host", "lh30.dnsireland.com");

@@ -124,9 +124,8 @@ public class ExpertReaderDAO {
 
         return id;
     }
-    
-    
-  //updateExpertReader
+
+    //updateExpertReader
     public static boolean updateExpertReader(ExpertReader expertReader, String ReferenceNumber) throws DBException {
 
         Connection conn = null;
@@ -134,7 +133,6 @@ public class ExpertReaderDAO {
         boolean id;
         int committed;
         ResultSet res = null;
-      
 
         System.out.println("doing updatePublisher::  ");
         try {
@@ -148,7 +146,7 @@ public class ExpertReaderDAO {
 
             ps1 = conn.prepareStatement(sql);
 
-            ps1.setString(1, expertReader.getSummaryReport());                      
+            ps1.setString(1, expertReader.getSummaryReport());
 
             System.out.println("ps1::  " + ps1);
 
@@ -171,6 +169,7 @@ public class ExpertReaderDAO {
 
         return id;
     }
+
     public static List<ExpertReader> getExpertReaderOpenReadings(String userID) throws ClassNotFoundException, SQLException, DBException {
 
         List<ExpertReader> ExpertReaderOpenReadingsData = null;
@@ -225,4 +224,49 @@ public class ExpertReaderDAO {
 
         return ExpertReaderOpenReadingsData;
     }
+
+    //updateExpertReader
+    public static boolean deleteExpertReader(String userID) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        boolean id;
+        int committed;
+        ResultSet res = null;
+
+        System.out.println("doing deleteExpertReader::  ");
+        try {
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            java.sql.Timestamp timestamp = getcurrentTimeStamp();
+
+            String sql = "UPDATE ILGAS.users SET uname = 'removed', first_name = 'removed', last_name = 'removed', fullName ='removed', email = 'removed'  WHERE userID = ?";
+
+            ps1 = conn.prepareStatement(sql);
+
+            ps1.setString(1, userID);
+
+            System.out.println("ps1::  " + ps1);
+
+            committed = ps1.executeUpdate();
+
+            conn.commit();
+
+            if (committed > 0) {
+                id = true;
+            } else {
+                id = false;
+            }
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            DBConn.close(conn, ps1, res);
+            throw new DBException("updateExpertReader - 4 Excepion while accessing database");
+        }
+
+        return id;
+    }
+
 }

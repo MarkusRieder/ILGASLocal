@@ -11,199 +11,190 @@
 
         <title>Translation Grant Application System</title>
 
+        <!--JQuery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
         <!-- Bootstrap -->
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+        <!--DataTables-->
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https:////cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/1.10.15/integration/font-awesome/dataTables.fontAwesome.css">
+
+
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css" />
 
-        <link href="css/bootstrap-imgupload.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/lesshat.css" />
+        <link rel="stylesheet" type="text/css" href="css/lightbox.min.css">
+        <link rel="stylesheet" href="css/jquery.dataTables.yadcf.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
+
+        <link rel="stylesheet" type="text/css" href="css/query-builder.default.min.css" />
+
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 
 
-        <script src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
+        <script type="text/javascript"   src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>  
 
-        <!--<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>-->
-
-
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-        <script src="js/moment.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
-        <script src="js/bootstrap-datepicker.js"></script>
-        <script src="js/jquery-ui.js"></script>
+        <script type="text/javascript"   src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>       
+        <!--<script type="text/javascript"   src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>-->
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript"   src="//cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
+        <script type="text/javascript"   src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script type="text/javascript"   src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+        <script type="text/javascript"   src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+        <script type="text/javascript"   src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js "></script>
+        <script type="text/javascript"   src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
+        <script type="text/javascript"   src="js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript"   src="js/jquery-ui.js"></script>
+        <script type="text/javascript"   src="js/lightbox.min.js"></script>
+        <script type="text/javascript"   src="js/query-builder.standalone.min.js"></script>
+        <!--<script src="https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder@2.5.2/dist/js/query-builder.min.js"></script>-->
+        <!--<script type="text/javascript"   src="js/jQuery.extendext.js"></script>-->
+        <script type="text/javascript"   src="js/jquery.dataTables.yadcf.js"></script>
+        <!--<script type="text/javascript"   src="js/widgEditor.js"></script>-->
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+<link href="https://cdn.webdatarocks.com/latest/webdatarocks.min.css" rel="stylesheet"/>
+<script src="https://cdn.webdatarocks.com/latest/webdatarocks.toolbar.min.js"></script>
+<script src="https://cdn.webdatarocks.com/latest/webdatarocks.js"></script>
 
+        <script>
+            var rules_basic = {
+                condition: 'AND',
+                rules: [{
+                        id: 'price',
+                        operator: 'less',
+                        value: 10.25
+                    }, {
+                        condition: 'OR',
+                        rules: [{
+                                id: 'category',
+                                operator: 'equal',
+                                value: 2
+                            }, {
+                                id: 'category',
+                                operator: 'equal',
+                                value: 1
+                            }]
+                    }]
+            };
+
+            $('#builder').queryBuilder({
+                plugins: ['bt-tooltip-errors'],
+
+                filters: [{
+                        id: 'name',
+                        label: 'Name',
+                        type: 'string'
+                    }, {
+                        id: 'category',
+                        label: 'Category',
+                        type: 'integer',
+                        input: 'select',
+                        values: {
+                            1: 'Books',
+                            2: 'Movies',
+                            3: 'Music',
+                            4: 'Tools',
+                            5: 'Goodies',
+                            6: 'Clothes'
+                        },
+                        operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+                    }, {
+                        id: 'in_stock',
+                        label: 'In stock',
+                        type: 'integer',
+                        input: 'radio',
+                        values: {
+                            1: 'Yes',
+                            0: 'No'
+                        },
+                        operators: ['equal']
+                    }, {
+                        id: 'price',
+                        label: 'Price',
+                        type: 'double',
+                        validation: {
+                            min: 0,
+                            step: 0.01
+                        }
+                    }, {
+                        id: 'id',
+                        label: 'Identifier',
+                        type: 'string',
+                        placeholder: '____-____-____',
+                        operators: ['equal', 'not_equal'],
+                        validation: {
+                            format: /^.{4}-.{4}-.{4}$/
+                        }
+                    }],
+                rules: rules_basic
+            });
+            /****************************************************************
+             Triggers and Changers QueryBuilder
+             *****************************************************************/
+
+            $('#btn-get').on('click', function () {
+                var result = $('#builder').queryBuilder('getRules');
+                if (!$.isEmptyObject(result)) {
+                    alert(JSON.stringify(result, null, 2));
+                } else {
+                    console.log("invalid object :");
+                }
+                console.log(result);
+            });
+
+            $('#btn-reset').on('click', function () {
+                $('#builder').queryBuilder('reset');
+            });
+
+            $('#btn-set').on('click', function () {
+                //$('#builder').queryBuilder('setRules', rules_basic);
+                var result = $('#builder').queryBuilder('getRules');
+                if (!$.isEmptyObject(result)) {
+                    rules_basic = result;
+                }
+            });
+
+            //When rules changed :
+            $('#builder').on('getRules.queryBuilder.filter', function (e) {
+                //$log.info(e.value);
+            });
+        </script>
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
-                    <div class="page-header">
-                        <div class="alert alert-info" role="alert">
-                            <h4>This demo shows how to integrate JQuery-validation and the Bootstrap framework.</h4>
-                            <ul>
-                                <li><a href="https://getbootstrap.com/" class="alert-link">Bootstrap home project</a>.</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Using feedback icons</h3>
-                        </div>
-                        <div class="panel-body">
-                            <form id="signupForm1" method="post" class="form-horizontal" action="">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="firstname1">First name</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="firstname1" name="firstname1" placeholder="First name" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="lastname1">Last name</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="lastname1" name="lastname1" placeholder="Last name" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="username1">Username</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="username1" name="username1" placeholder="Username" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="email1">Email</label>
-                                    <div class="col-sm-5">
-                                        <input type="text" class="form-control" id="email1" name="email1" placeholder="Email" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="password1">Password</label>
-                                    <div class="col-sm-5">
-                                        <input type="password" class="form-control" id="password1" name="password1" placeholder="Password" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label" for="confirm_password1">Confirm password</label>
-                                    <div class="col-sm-5">
-                                        <input type="password" class="form-control" id="confirm_password1" name="confirm_password1" placeholder="Confirm password" />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-5 col-sm-offset-4">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" id="agree1" name="agree1" value="agree" />Please agree to our policy
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-9 col-sm-offset-4">
-                                        <button type="submit" class="btn btn-primary" name="signup1" value="Sign up">Sign up</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <div id="builder"></div>
+            <button class="btn btn-success" id="btn-set">Set Rules</button>
+            <button class="btn btn-primary" id="btn-get">Get Rules</button>
+            <button class="btn btn-warning" id="btn-reset">Reset</button>
+            
         </div>
-        <script type="text/javascript">
-//            $.validator.setDefaults({
-//                submitHandler: function () {
-//                    alert("submitted!");
-//                }
-//            });
+<div id="wdr-component"></div>
 
-                $("#signupForm1").validate({
-                    rules: {
-                        firstname1: "required",
-                        lastname1: "required",
-                        username1: {
-                            required: true,
-                            minlength: 2
-                        },
-                        password1: {
-                            required: true,
-                            minlength: 5
-                        },
-                        confirm_password1: {
-                            required: true,
-                            minlength: 5,
-                            equalTo: "#password1"
-                        },
-                        email1: {
-                            required: true,
-                            email: true
-                        },
-                        agree1: "required"
-                    },
-                    messages: {
-                        firstname1: "Please enter your firstname",
-                        lastname1: "Please enter your lastname",
-                        username1: {
-                            required: "Please enter a username",
-                            minlength: "Your username must consist of at least 2 characters"
-                        },
-                        password1: {
-                            required: "Please provide a password",
-                            minlength: "Your password must be at least 5 characters long"
-                        },
-                        confirm_password1: {
-                            required: "Please provide a password",
-                            minlength: "Your password must be at least 5 characters long",
-                            equalTo: "Please enter the same password as above"
-                        },
-                        email1: "Please enter a valid email address",
-                        agree1: "Please accept our policy"
-                    },
-                    errorElement: "em",
-                    errorPlacement: function (error, element) {
-                        // Add the `help-block` class to the error element
-                        error.addClass("help-block");
-
-                        // Add `has-feedback` class to the parent div.form-group
-                        // in order to add icons to inputs
-                        element.parents(".col-sm-5").addClass("has-feedback");
-
-                        if (element.prop("type") === "checkbox") {
-                            error.insertAfter(element.parent("label"));
-                        } else {
-                            error.insertAfter(element);
-                        }
-
-                        // Add the span element, if doesn't exists, and apply the icon classes to it.
-                        if (!element.next("span")[ 0 ]) {
-                            $("<span class='glyphicon glyphicon-remove form-control-feedback'></span>").insertAfter(element);
-                        }
-                    },
-                    success: function (label, element) {
-                        // Add the span element, if doesn't exists, and apply the icon classes to it.
-                        if (!$(element).next("span")[ 0 ]) {
-                            $("<span class='glyphicon glyphicon-ok form-control-feedback'></span>").insertAfter($(element));
-                        }
-                    },
-                    highlight: function (element, errorClass, validClass) {
-                        $(element).parents(".col-sm-5").addClass("has-error").removeClass("has-success");
-                        $(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
-                    },
-                    unhighlight: function (element, errorClass, validClass) {
-                        $(element).parents(".col-sm-5").addClass("has-success").removeClass("has-error");
-                        $(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
-                    }
-                });
-                
-//                            $(document).ready(function () {
-//                var validator = $("#signupForm1").validate();
-//                alert("Validate");
-//                validator.form();
-//            });
-        </script>
+<script>
+var pivot = new WebDataRocks({
+	container: "#wdr-component",
+	toolbar: true,
+	report: {
+		dataSource: {
+			filename: "../../PendingApplicationServlet"
+		}
+	}
+});
+</script>
     </body>
 </html>

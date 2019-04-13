@@ -29,7 +29,8 @@
 
 
         <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <!--<link rel="stylesheet" type="text/css" href="css/font-awesome.css">-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
@@ -63,10 +64,6 @@
         <!--<script type="text/javascript"   src="js/widgEditor.js"></script>-->
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
-
-
-
-
 
 
         <title>Translation Grant Application System</title>
@@ -166,9 +163,8 @@
             });
         </script>
 
-
+        <!--getTodaysDate-->
         <script type="text/javascript">
-
             function getTodaysDate() {
                 var date = new Date();
                 var day = date.getDate();
@@ -238,6 +234,7 @@
         </script>
 
 
+        <!--Genre-->
         <script type="text/javascript">
             $(document).ready(function () {
                 $.fn.dataTable.ext.buttons.newGenre = {
@@ -254,16 +251,6 @@
                             attr: {
                                 id: 'newGenre'
                             }
-
-//                            action: function (e, dt, button, config) {
-//                                $('.reportFiltrsButton').attr(
-//                                        {
-//                                            "data-toggle": "modal",
-//                                            "data-target": "#createNewGenremodal"
-//                                        }
-//                                );
-////                                $('#createNewGenremodal').modal('show');
-//                            }
                         }
                     ],
                     "bProcessing": false,
@@ -361,35 +348,13 @@
             });
         </script>
 
-        <!--        <style>
-                    .modal-body {
-                        /*max-height: calc(100vh - 210px);*/
-                        width: 100%;
-                        height: 200%;
-                        overflow-y: auto;
-                    }
-        
-                    .modal-dialog {
-                        width: 100%;
-                        height: 100%;
-                        margin: 0;
-                        padding: 0;
-                    }
-        
-                    .modal-content {
-                        height: auto;
-                        min-height: 100%;
-                        border-radius: 0;
-                    }
-                </style>-->
-
-
         <!--User-->
         <script type="text/javascript">
             $(document).ready(function () {
                 $.fn.dataTable.ext.buttons.newStaff = {
                     text: 'NewStaff'
                 };
+
                 var table = $("#user").DataTable({
 
                     dom: 'Bfrtip',
@@ -405,7 +370,7 @@
                         },
                         {
                             extend: 'newStaff',
-                            text: '<i class="fa fa-user-plus" style="font-size:24px;color:blue"></i>',
+                            text: '<i class="fas fa-user-plus" style="font-size:24px;color:blue"></i>',
                             titleAttr: 'Add new Staff Member',
                             action: function (e, dt, button, config) {
                                 $('.reportFiltrsButton').attr(
@@ -451,7 +416,6 @@
                 });
                 $('#user tbody').on('click', 'tr td.details-control', function () {
 
-
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
@@ -485,7 +449,8 @@
                 $.fn.dataTable.ext.buttons.reload = {
                     text: 'Reload'
                 };
-                var table = $('#expReader').DataTable({
+                $.fn.dataTable.ext.errMode = 'throw';
+                var expReaderTable = $('#expReader').DataTable({
 
                     /**
                      B - Buttons
@@ -498,21 +463,6 @@
 
                     dom: 'Bfrtip',
                     buttons: [
-//                           {
-//                            //only enabled when one row is selected (like edit / delete)
-//                            extend: 'selectedSingle', //alternative would be 'selected' (multiple rows)
-//                                    text: 'reportFiltrsLabel',
-//                                    className: "reportFiltrsButton",
-//                                    action: function (e, dt, button, config) {
-//                                    $('.reportFiltrsButton').attr(
-//                                    {
-//                                    "data-toggle": "modal",
-//                                            "data-target": "#createNewEReadermodal"
-//                                    }
-//                                    );
-//                                    showReportFiltrTable();
-//                                    }
-//                            },
                         {
                             extend: 'reload',
                             text: '<i class="fa fa-user-plus" style="font-size:24px;color:blue"></i>',
@@ -526,24 +476,29 @@
                                 );
                                 $('#createNewEReadermodal').modal('show');
                             }
-
                         }
-
-
                     ],
                     "columnDefs": [
-                        {className: "dt-left", "targets": [1, 2, 3]}
+                        {className: "dt-left", "targets": [1, 2, 3, 4, 5]}
                     ],
                     "bProcessing": false,
                     "bServerSide": false,
                     "sAjaxSource": "./ExpertReaderDataServlet",
                     "columns": [{
-                            "targets": -1,
+                            "targets": -2,
                             "class": "details-control",
                             "orderable": false,
                             "data": null,
                             "defaultContent": ""
                         },
+                        {
+                            "targets": -1,
+                            "class": "delete-control",
+                            "orderable": false,
+                            "data": null,
+                            "defaultContent": ""
+                        },
+                        {"data": "USER_ID"},
                         {"data": "FIRST_NAME"},
                         {"data": "LAST_NAME"},
                         {"data": "EMAIL"}
@@ -551,10 +506,42 @@
                 });
                 $('#expReader tbody').on('click', 'tr td.details-control', function () {
                     $("#expReaderModal").modal("show");
-                    $("#FirstNameExpReader").val($(this).closest('tr').children()[1].textContent); // Reference
-                    $("#LastNameExpReader").val($(this).closest('tr').children()[2].textContent); // Author
-                    $("#EmailExpReader").val($(this).closest('tr').children()[3].textContent); // Year                    
-                    //   console.log(table.row(this).data());
+                    $("#FirstNameExpReader").val($(this).closest('tr').children()[3].textContent); // First Name
+                    $("#LastNameExpReader").val($(this).closest('tr').children()[4].textContent); // Last Name
+                    $("#EmailExpReader").val($(this).closest('tr').children()[5].textContent); // Email                    
+                    console.log(expReaderTable.row(this).data());
+                });
+                $('#expReader tbody').on('click', 'tr td.delete-control', function () {
+                    $("#deleteExpReaderModal").modal("show");
+                    $("#delExpertReaderID").val($(this).closest('tr').children()[2].textContent);  // ID
+                    $("#delFirstNameExpReader").val($(this).closest('tr').children()[3].textContent); // First Name
+                    $("#delLastNameExpReader").val($(this).closest('tr').children()[4].textContent); // Last Name
+                    $("#delEmailExpReader").val($(this).closest('tr').children()[5].textContent); // Email                    
+                    console.log(expReaderTable.row(this).data());
+                });
+
+                $('#der').on('click', function () {
+
+                    var idToDelete = document.getElementById("delExpertReaderID").value;
+
+                    console.log("idToDelete  " + idToDelete);                    
+
+                    $.ajax({
+                        type: "POST",
+                        url: "./ExpertReaderDelete",
+                        data: "id=" + idToDelete,
+                        success: function (data, status, xhr) {
+                            //delete the row
+                            expReaderTable.ajax.reload();
+                            $("#deleteExpReaderModal").modal('toggle');
+                            document.getElementById("showDeleteExpReader").innerHTML = "Expert Reader: <strong>'" + idToDelete + "'</strong> has been  <strong>successfully</strong> deleted!";
+                            $("#deleteExpReaderSuccessModal").modal('show');
+                        },
+                        error: function (xhr) {
+                            alert("Error");
+                            $('#edtModal').show();
+                            //error handling
+                        }});
                 });
             });
         </script>
@@ -867,7 +854,7 @@
 
                     event.preventDefault();
 
-// $('#booksModal').modal('toggle');
+                    // $('#booksModal').modal('toggle');
                     var bookID = document.getElementById('bookID').value;
                     var referenceNumber = document.getElementById('referenceNumber').value;
                     var Author = document.getElementById('Author').value;
@@ -919,8 +906,8 @@
                         processData: false, // NEEDED, DON'T OMIT THIS
                         // ... Other options like success and etc
                         success: function (data, status, xhr) {
-                             console.log("Success ");
-                                       document.getElementById("showLibraryUpdateSuccess").innerHTML = "Library:  has been  <strong>successfully</strong> updated!";
+                            console.log("Success ");
+                            document.getElementById("showLibraryUpdateSuccess").innerHTML = "Library:  has been  <strong>successfully</strong> updated!";
 //                            console.log("data " + data);
 //                            console.log("status " + status);
 //                            console.log("xhr " + xhr);
@@ -4041,10 +4028,12 @@
                                     <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
 
                                         <div class="table-responsive">
-                                            <table id="expReader" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                                            <table id="expReader" class="display responsive table table-striped table-bordered" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>
                                                         <th class="details-control"></th>
+                                                        <th class="delete-control"></th>
+                                                        <th class="never">User ID</th>
                                                         <th class="all">First Name</th>
                                                         <th class="all">Last Name</th>
                                                         <th class="all">Email</th>
@@ -4054,6 +4043,8 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th class="details-control"></th>
+                                                        <th class="delete-control"></th>
+                                                        <th class="never">User ID</th>
                                                         <th class="all">First Name</th>
                                                         <th class="all">Last Name</th>
                                                         <th class="all">Email</th>
@@ -4126,7 +4117,63 @@
                                         </div><!-- modal-dialog -->
                                     </div><!-- modal -->
 
+                                    <!--</div>  tab-pane expReader-->
+
+
+
+                                    <!--deleteExpReaderModal-->
+                                    <div class="modal fade" id="deleteExpReaderModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderModalLabel">
+
+                                        <div class="modal-dialog" role="document">
+
+                                            <div class="modal-content">
+
+                                                <div class="modal-header" style="background-color:  #ff0000;">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="deleteExpReaderModalLabel">Delete expert reader</h4>
+                                                </div>
+
+                                                <div class="modal-body" style="background-color: #d9d1d1">
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <input type="hidden" id="delExpertReaderID">  
+                                                        <div class="col-sm-4">
+                                                            <label for="FirstNameExpReader" class="control-label pull-left">First name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                            <input type="text" class="input-sm" id="delFirstNameExpReader"/>
+                                                        </div>
+                                                        <div class="col-sm-1"></div>                                                        
+                                                    </div>
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <div class="col-sm-4">
+                                                            <label for="LastNameExpReader" class="control-label pull-left"> Last name</label>
+                                                            <input type="text" class="input-sm" id="delLastNameExpReader"/>
+                                                        </div>
+                                                        <div class="col-sm-5">You are deleting this user
+                                                            <span class="glyphicon glyphicon-exclamation-sign" style="color: red"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                        <div class="col-sm-4">
+                                                            <label for="EmailExpReader" class="control-label pull-left"> Email</label>
+                                                            <input type="text" class="input-sm" id="delEmailExpReader"/>
+                                                        </div>
+                                                    </div>
+
+                                                </div><!-- modal body -->
+
+                                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" id="der" class="btn btn-danger">Delete Expert Reader</button>
+                                                </div><!-- modal-footer -->
+
+                                            </div><!-- modal-content -->
+                                        </div><!-- modal-dialog -->
+                                    </div><!-- modal -->
+
                                 </div> <!-- tab-pane expReader-->
+
 
                                 <!--Library-->
                                 <div class="tab-pane fade" id="Library">
@@ -4564,7 +4611,6 @@
         <!--pressCuttingsModal-->
         <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
 
-
         <!--createNewGenremodal-->
         <div class="modal fade" id="createNewGenremodal" tabindex="-1" role="dialog" aria-labelledby="createNewGenremodalLabel"  data-modal-index="3">
 
@@ -4630,6 +4676,40 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
+
+        <!--deleteExpReaderSuccessModal-->
+        <div class="modal fade" id="deleteExpReaderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="deleteExpReaderSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showDeleteExpReader"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
         <!--addGenreSuccessModal-->
         <div class="modal fade" id="addGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addGenreSuccessModalLabel"  data-modal-index="3">
 
@@ -4662,7 +4742,6 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
-
         <!--libraryUpdateSuccessModal-->
         <div class="modal fade" id="libraryUpdateSuccessModal" tabindex="-1" role="dialog" aria-labelledby="libraryUpdateSuccessModallLabel"  data-modal-index="3">
 
@@ -4694,21 +4773,22 @@
                 </div><!-- modal-content -->
             </div><!-- modal-dialog -->
         </div><!-- modal -->
-        
-                   <form 
-                        id="saveBooksForm"  
-                        method="POST"
-                        role="form"                             
-                        action="${pageContext.request.contextPath}/LibraryUpdate" 
-                        enctype="multipart/form-data">
-        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" style="background-color: #d9d1d1">
 
- 
+        <!--saveBooksForm-->
+        <form 
+            id="saveBooksForm"  
+            method="POST"
+            role="form"                             
+            action="${pageContext.request.contextPath}/LibraryUpdate" 
+            enctype="multipart/form-data">
+            <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="background-color: #d9d1d1">
+
+
 
                         <div class="modal-header" style="background-color: #c3bcbc">
-                            
+
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="booksModalLabel">Manage books</h4>
                         </div>
@@ -4839,11 +4919,11 @@
                             <button type="submit" id="btnSubmit" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
                             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                         </div>  <!-- modal-footer -->
-<!--                    </form>                     -->
-                </div> <!-- modal-content -->
-            </div> <!-- modal-dialog -->
-        </div> <!-- modal -->
-</form>     
+                        <!--                    </form>                     -->
+                    </div> <!-- modal-content -->
+                </div> <!-- modal-dialog -->
+            </div> <!-- modal -->
+        </form>     
 
         <!--loadXMLDocER-->
         <script type="text/javascript">
