@@ -31,7 +31,7 @@ public class pendingApplicationDAO {
     private static final String TRANSLATORNAME = "";
     private static final ArrayList TITLELIST = new ArrayList<>();
     private static ArrayList<String> titleList = new ArrayList<>();
-    
+
     @SuppressWarnings("unchecked")
     public static ArrayList getAllApplications(String parameter) throws ClassNotFoundException, DBException {
 
@@ -43,7 +43,7 @@ public class pendingApplicationDAO {
         ArrayList<String> translatorTrackId = new ArrayList<>();
         ArrayList<String> authorList;// = new ArrayList<>();
         //  ArrayList<String> list = new ArrayList<>();
-System.out.println("pendingApplicationDAO  Publisher here: " + parameter);
+        System.out.println("pendingApplicationDAO  Publisher here: " + parameter);
         ArrayList<String> translatorList;
         List<List<String>> listOfTranslatorArray;
         List<List<String>> rightsAgreementArray;
@@ -259,7 +259,7 @@ System.out.println("pendingApplicationDAO  Publisher here: " + parameter);
             ArrayList<String> pressCoverage = new ArrayList<>();
             ArrayList<String> translatorNameList = new ArrayList<>();
 
-            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' AND Status = 'pending'";
+            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' AND Status = 'pending' ORDER BY ApplicationYear, ApplicationNumber";
             System.out.println("getAllApplicationsPublisher Local pendingApplicationDAO searchQuery  " + searchQuery);
             try {
 
@@ -351,7 +351,12 @@ System.out.println("pendingApplicationDAO  Publisher here: " + parameter);
 //                    DateFormat inputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 //                    Date date2 = inputFormat1.parse(text);
                     application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
-
+                    String ISBN = getISBN(ReferenceNumber);
+                    String ISSN = getISSN(ReferenceNumber);
+                    System.out.println(ISBN);
+                    
+                    application.setISBN(ISBN);
+                    application.setISSN(ISSN);
                     application.setCopiesTranslationSample(res.getString("copiesTranslationSample"));
                     application.setCopiesTranslationSampleDocName(res.getString("copiesTranslationSampleDocName"));
                     application.setTC_ACCEPTED(res.getInt("TC_ACCEPTED"));
@@ -1384,7 +1389,6 @@ System.out.println("pendingApplicationDAO  Publisher here: " + parameter);
 
 //                    System.out.printf("xxx  " + counter + ":  Field name: %s, Field value: %s%n", col, value);
 //                    System.out.printf("xxx  counter: " + counter + "  setLength:  " + setLength);
-
 //                    if (counter < setLength - 1) {
 //                        if (!"ApplicationNumber".equals(col) && !"ApplicationYear".equals(col) && !"ReferenceNumber".equals(col)  && !"boardMeeting".equals(col)) {
                     prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
@@ -1557,12 +1561,11 @@ System.out.println("pendingApplicationDAO  Publisher here: " + parameter);
                     + "lastUpdated = ?");
 
             sql += " WHERE referenceNumber = '" + referenceNumber + "'";
-System.out.println("library.getISBN()::  " + library.getISBN());
-            
-            System.out.println("\n\n sql::  " +sql + "\n\n");
+            System.out.println("library.getISBN()::  " + library.getISBN());
+
+            System.out.println("\n\n sql::  " + sql + "\n\n");
             System.out.println("library.getISSN()::  " + library.getISSN());
-            
-            
+
             ps1 = conn.prepareStatement(sql);
 
             ps1.setString(1, library.getTitle());
@@ -1593,7 +1596,7 @@ System.out.println("library.getISBN()::  " + library.getISBN());
             DBConn.close(conn, ps1, res);
             throw new DBException("4 Excepion while accessing database" + e);
         }
-          System.out.println("return id::  " + id);
+        System.out.println("return id::  " + id);
         return id;
     }
 
@@ -1719,8 +1722,7 @@ System.out.println("library.getISBN()::  " + library.getISBN());
         }
 
     }
-    
-    
+
     public static ArrayList<String> getRightsHolderArrayContent(String ReferenceNumber) throws DBException {
 
         Connection conn = null;
@@ -1784,7 +1786,7 @@ System.out.println("library.getISBN()::  " + library.getISBN());
                 ps1.setString(1, ReferenceNumber);
                 ps1.setString(2, translationRightsHolderName);
                 ps1.setString(3, translationRightsHolderName);
-ps1.setString(4, ReferenceNumber);
+                ps1.setString(4, ReferenceNumber);
                 System.out.println("updaterightsHolderArrayContent  inserting " + translationRightsHolderName + "......................:");
 
                 ps1.executeUpdate();
@@ -1810,5 +1812,4 @@ ps1.setString(4, ReferenceNumber);
         return id;
     }
 
-    
 }

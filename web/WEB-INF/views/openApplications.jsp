@@ -17,7 +17,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Translation Grant Application System</title>
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -2630,14 +2629,15 @@
 
                     </div> <!-- container-fluid -->
 
-                    <div class="modal fade" id="applicationsModal" role="document"   data-modal-index="1">
-                        <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal fade" id="applicationsModal" data-modal-index="1">
+                        <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #c3bcbc">
                                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                     <h4 class="modal-title">Add details to application <span id="appReferenceNumber"></span></h4>
 
                                 </div>
+                                
                                 <!-- modal-body -->
                                 <div class="modal-body" style="background-color: #d9d1d1">
 
@@ -2925,28 +2925,28 @@
                                                                                    >
                                                                         </div>
                                                                         <input type="hidden" id="bookTitle" name="bookTitle" >
-<!--                                                                        <div class="col-sm-4">          
-                                                                            <label for="appForeignPublisher" class="pull-left">Publisher (of the original)<br/> &nbsp;</label>                                                           
-                                                                            <input id="appForeignPublisher"                                
-                                                                                   type="text"                                
-                                                                                   class="form-control"                                
-                                                                                   name="appForeignPublisher"                                
-                                                                                   value="${companyDetails.Company}"    
-                                                                                   placeholder="Publisher"
-                                                                                   >                                                     
-                                                                        </div>-->
+                                                                        <!--                                                                        <div class="col-sm-4">          
+                                                                                                                                                    <label for="appForeignPublisher" class="pull-left">Publisher (of the original)<br/> &nbsp;</label>                                                           
+                                                                                                                                                    <input id="appForeignPublisher"                                
+                                                                                                                                                           type="text"                                
+                                                                                                                                                           class="form-control"                                
+                                                                                                                                                           name="appForeignPublisher"                                
+                                                                                                                                                           value="${companyDetails.Company}"    
+                                                                                                                                                           placeholder="Publisher"
+                                                                                                                                                           >                                                     
+                                                                                                                                                </div>-->
 
                                                                         <div class="col-sm-3">    
-<!--                                                                            <label for="publicationYear" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
-
-                                                                            <input id="publicationYear"                                
-                                                                                   type="text"                                
-                                                                                   class="form-control"                                
-                                                                                   name="publicationYear"                                
-                                                                                   value=""    
-                                                                                   placeholder="Publication Year"
-                                                                                   >
-                                                                        </div>-->
+                                                                            <!--                                                                            <label for="publicationYear" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
+                                                                            
+                                                                                                                                                        <input id="publicationYear"                                
+                                                                                                                                                               type="text"                                
+                                                                                                                                                               class="form-control"                                
+                                                                                                                                                               name="publicationYear"                                
+                                                                                                                                                               value=""    
+                                                                                                                                                               placeholder="Publication Year"
+                                                                                                                                                               >-->
+                                                                        </div>
                                                                     </div> <!--row-->
 
 
@@ -3339,7 +3339,7 @@
                                                                             <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
                                                                         </div>
                                                                     </div>
-                                                                </div>  <!--panel--body-->
+                                                                </div>  <!--panel-body-->
                                                             </div> <!--panel-default-->
                                                         </div> <!-- row -->
 
@@ -3420,7 +3420,7 @@
                                                                         $("#dateCopiesWereSent").datepicker();
                                                                     </script>
 
-                                                                </div> <!--panel--body-->
+                                                                </div> <!--panel-body-->
                                                             </div> <!--panel-default-->
 
                                                         </div> <!-- row -->
@@ -3466,7 +3466,7 @@
                                                                         </div> <!--row-->                                                            
                                                                         <!-- translationSampleForm -->                                                                                                              
                                                                     </div>  <!-- col-md-12 -->
-                                                                </div>  <!--panel--body-->
+                                                                </div>  <!--panel-body-->
                                                             </div> <!--panel-default-->
 
                                                         </div> <!-- row -->
@@ -3489,8 +3489,8 @@
                                                                             </button>
                                                                         </div><!-- input-group -->
                                                                     </div>  <!-- col-md-9 -->
-                                                                </div>  <!-- panel--body -->
-                                                            </div>  <!--panel--default-->     
+                                                                </div>  <!-- panel-body -->
+                                                            </div>  <!--panel-default-->     
 
                                                         </div> <!-- row -->
 
@@ -3505,6 +3505,10 @@
                                             </div> <!-- applicationEditForm-tab-content -->
 
                                         </form>
+                                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                                            <!--                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                                            <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                        </div>
                                     </div> <!-- container-fluid --> 
                                 </nav>   
                             </div> <!-- /.modal-body -->    
@@ -3513,7 +3517,7 @@
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal applicationsModal -->
 
-                <!--addAdditionalRightsHoldersModal-->
+
                 <div class="modal fade" id="addAdditionalRightsHoldersModal" tabindex="-1" role="dialog" aria-labelledby="addAdditionalRightsHoldersModalLabel"  data-modal-index="2">
                     <div class="modal-dialog">
                         <div class="modal-content" style="background-color: #d9d1d1">
@@ -3545,8 +3549,6 @@
                     </div> <!--modal dialog-->
                 </div> <!--modal fade-->
 
-
-
                 <form class="form-horizontal" 
                       role="form"  
                       autocomplete="on"  
@@ -3554,6 +3556,7 @@
                       method="POST" 
                       name="regF"
                       >
+                    
                     <input type="hidden" name="userID" value="${userID}">
                     <input type="hidden" name="name" value="${name}">
                     <input type="hidden" name="publisherID" value="${publisherID}">
@@ -3566,6 +3569,7 @@
                         <input type="submit" id="ListPendingApplications" name="task"  class = "btn btn-default btn-sm" value="List Pending Applications" />
                         <input type="submit" id="ListClosedApplications" name="task"  class = "btn btn-default btn-sm" value="List Closed Applications" />
                     </div>
+
                 </form>
 
 

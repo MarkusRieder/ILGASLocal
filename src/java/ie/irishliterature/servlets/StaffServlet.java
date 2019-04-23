@@ -26,18 +26,6 @@ public class StaffServlet extends HttpServlet {
             = Logger.getLogger(StaffServlet.class.getCanonicalName());
     private static final long serialVersionUID = 7908187011456392847L;
 
-    ////////////////////////////////////////////////////////////////////////////
-    ///
-    ///  For file upload
-    ///
-    ////////////////////////////////////////////////////////////////////////////
-    private boolean isMultipart;
-    private String filePath;
-    private String rootPath;
-    private final int maxFileSize = 50 * 1024;
-    private final int maxMemSize = 4 * 1024;
-    //  private File file;
-    private String tempPath = "";
 
     ////////////////////////////////////////////////////////////////////////////
     ///

@@ -65,136 +65,148 @@
         <!--<script type="text/javascript"   src="js/widgEditor.js"></script>-->
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
-<link href="https://cdn.webdatarocks.com/latest/webdatarocks.min.css" rel="stylesheet"/>
-<script src="https://cdn.webdatarocks.com/latest/webdatarocks.toolbar.min.js"></script>
-<script src="https://cdn.webdatarocks.com/latest/webdatarocks.js"></script>
+        <link href="https://cdn.webdatarocks.com/latest/webdatarocks.min.css" rel="stylesheet"/>
+        <script src="https://cdn.webdatarocks.com/latest/webdatarocks.toolbar.min.js"></script>
+        <script src="https://cdn.webdatarocks.com/latest/webdatarocks.js"></script>
 
         <script>
-            var rules_basic = {
-                condition: 'AND',
-                rules: [{
-                        id: 'price',
-                        operator: 'less',
-                        value: 10.25
-                    }, {
-                        condition: 'OR',
-                        rules: [{
-                                id: 'category',
-                                operator: 'equal',
-                                value: 2
-                            }, {
-                                id: 'category',
-                                operator: 'equal',
-                                value: 1
-                            }]
-                    }]
-            };
+              window.onload = function () {
+//                  https://robertnyman.com/2010/12/16/utilizing-the-html5-file-api-to-choose-upload-preview-and-see-progress-for-multiple-files/
+            (function () {
+                var filesUpload = document.getElementById("files-upload"),
+                        dropArea = document.getElementById("drop-area"),
+                        fileList = document.getElementById("file-list");
 
-            $('#builder').queryBuilder({
-                plugins: ['bt-tooltip-errors'],
+                function uploadFile(file) {
+                    var li = document.createElement("li"),
+                            div = document.createElement("div"),
+                            img,
+                            progressBarContainer = document.createElement("div"),
+                            progressBar = document.createElement("div"),
+                            reader,
+                            xhr,
+                            fileInfo;
 
-                filters: [{
-                        id: 'name',
-                        label: 'Name',
-                        type: 'string'
-                    }, {
-                        id: 'category',
-                        label: 'Category',
-                        type: 'integer',
-                        input: 'select',
-                        values: {
-                            1: 'Books',
-                            2: 'Movies',
-                            3: 'Music',
-                            4: 'Tools',
-                            5: 'Goodies',
-                            6: 'Clothes'
-                        },
-                        operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
-                    }, {
-                        id: 'in_stock',
-                        label: 'In stock',
-                        type: 'integer',
-                        input: 'radio',
-                        values: {
-                            1: 'Yes',
-                            0: 'No'
-                        },
-                        operators: ['equal']
-                    }, {
-                        id: 'price',
-                        label: 'Price',
-                        type: 'double',
-                        validation: {
-                            min: 0,
-                            step: 0.01
+                    li.appendChild(div);
+
+                    progressBarContainer.className = "progress-bar-container";
+                    progressBar.className = "progress-bar";
+                    progressBarContainer.appendChild(progressBar);
+                    li.appendChild(progressBarContainer);
+
+                    /*
+                     If the file is an image and the web browser supports FileReader,
+                     present a preview in the file list
+                     */
+                    if (typeof FileReader !== "undefined" && (/image/i).test(file.type)) {
+                        img = document.createElement("img");
+                        li.appendChild(img);
+                        reader = new FileReader();
+                        reader.onload = (function (theImg) {
+                            return function (evt) {
+                                theImg.src = evt.target.result;
+                            };
+                        }(img));
+                        reader.readAsDataURL(file);
+                    }
+
+                    // Uploading - for Firefox, Google Chrome and Safari
+                    xhr = new XMLHttpRequest();
+
+                    // Update progress bar
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            progressBar.style.width = (evt.loaded / evt.total) * 100 + "%";
+                        } else {
+                            // No data to calculate on
                         }
-                    }, {
-                        id: 'id',
-                        label: 'Identifier',
-                        type: 'string',
-                        placeholder: '____-____-____',
-                        operators: ['equal', 'not_equal'],
-                        validation: {
-                            format: /^.{4}-.{4}-.{4}$/
+                    }, false);
+
+                    // File uploaded
+                    xhr.addEventListener("load", function () {
+                        progressBarContainer.className += " uploaded";
+                        progressBar.innerHTML = "Uploaded!";
+                    }, false);
+
+                    xhr.open("post", "upload/upload.php", true);
+
+                    // Set appropriate headers
+                    xhr.setRequestHeader("Content-Type", "multipart/form-data");
+                    xhr.setRequestHeader("X-File-Name", file.name);
+                    xhr.setRequestHeader("X-File-Size", file.size);
+                    xhr.setRequestHeader("X-File-Type", file.type);
+
+                    // Send the file (doh)
+                    xhr.send(file);
+
+                    // Present file info and append it to the list of files
+                    fileInfo = "<div><strong>Name:</strong> " + file.name + "</div>";
+                    fileInfo += "<div><strong>Size:</strong> " + parseInt(file.size / 1024, 10) + " kb</div>";
+                    fileInfo += "<div><strong>Type:</strong> " + file.type + "</div>";
+                    div.innerHTML = fileInfo;
+
+                    fileList.appendChild(li);
+                }
+
+                function traverseFiles(files) {
+                    if (typeof files !== "undefined") {
+                        for (var i=0, l=files.length; i<l; i++) {
+                            uploadFile(files[i]);
                         }
-                    }],
-                rules: rules_basic
-            });
-            /****************************************************************
-             Triggers and Changers QueryBuilder
-             *****************************************************************/
-
-            $('#btn-get').on('click', function () {
-                var result = $('#builder').queryBuilder('getRules');
-                if (!$.isEmptyObject(result)) {
-                    alert(JSON.stringify(result, null, 2));
-                } else {
-                    console.log("invalid object :");
+                    } else {
+                        fileList.innerHTML = "No support for the File API in this web browser";
+                    }
                 }
-                console.log(result);
-            });
 
-            $('#btn-reset').on('click', function () {
-                $('#builder').queryBuilder('reset');
-            });
+                filesUpload.addEventListener("change", function () {
+                    traverseFiles(this.files);
+                }, false);
 
-            $('#btn-set').on('click', function () {
-                //$('#builder').queryBuilder('setRules', rules_basic);
-                var result = $('#builder').queryBuilder('getRules');
-                if (!$.isEmptyObject(result)) {
-                    rules_basic = result;
-                }
-            });
+                dropArea.addEventListener("dragleave", function (evt) {
+                    var target = evt.target;
 
-            //When rules changed :
-            $('#builder').on('getRules.queryBuilder.filter', function (e) {
-                //$log.info(e.value);
-            });
+                    if (target && target === dropArea) {
+                        this.className = "";
+                    }
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }, false);
+
+                dropArea.addEventListener("dragenter", function (evt) {
+                    this.className = "over";
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }, false);
+
+                dropArea.addEventListener("dragover", function (evt) {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }, false);
+
+                dropArea.addEventListener("drop", function (evt) {
+                    traverseFiles(evt.dataTransfer.files);
+                    this.className = "";
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }, false);
+            })();
+        };
         </script>
     </head>
     <body>
         <div class="container">
 
-
-            <div id="builder"></div>
-            <button class="btn btn-success" id="btn-set">Set Rules</button>
-            <button class="btn btn-primary" id="btn-get">Get Rules</button>
-            <button class="btn btn-warning" id="btn-reset">Reset</button>
-            
+            <h3>Choose file(s)</h3>
+            <p>
+                <input id="files-upload" type="file" multiple>
+            </p>
+            <p id="drop-area">
+                <span class="drop-instructions">or drag and drop files here</span>
+                <span class="drop-over">Drop files here!</span>
+            </p>
+            <ul id="file-list">
+                <li class="no-items">(no files uploaded yet)</li>
+            </ul>
         </div>
-<div id="wdr-component"></div>
-
-<script>
-var pivot = new WebDataRocks({
-	container: "#wdr-component",
-	toolbar: true,
-	report: {
-		dataSource: {
-			filename: "../../PendingApplicationServlet"
-		}
-	}
-});
-</script>
     </body>
 </html>

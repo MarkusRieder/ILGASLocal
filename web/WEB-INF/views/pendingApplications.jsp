@@ -41,15 +41,14 @@
 //            }
         %>
 
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-        <!-- Bootstrap -->
+        <!-- bootstrap 4.x is supported. You can also use the bootstrap css 3.3.x versions -->
+        <!--https://github.com/kartik-v/bootstrap-fileinput/-->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">    
         <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
@@ -57,8 +56,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
-
-
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
@@ -72,45 +70,29 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js"></script>
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
-        <!-- 
-                    <link rel="stylesheet" type="text/css" href="../../kartik/css/fileinput.css" media="all" />
-            <script type="text/javascript" src="kartik/js/plugins/sortable.js"></script> 
-                    <script type="text/javascript" src="kartik/js/plugins/piexif.js"></script>
-                    <script type="text/javascript" src="kartik/js/plugins/purify.js"></script>
-            <script type="text/javascript" src="kartik/js/fileinput.js"></script>
-        -->
-        <!-- 
-                    <script type="text/javascript" src="../../kartik/js/plugins/sortable.js"></script>
-                    <script type="text/javascript" src="../../kartik/js/plugins/piexif.js"></script>
-                            <script type="text/javascript" src="../../kartik/js/plugins/purify.js"></script>
-                            <script type="text/javascript" src="../../kartik/js/fileinput.js"></script>-->         <!--
-                            <style>
-                                    .ui-state-highlight, 
-                                    .ui-widget-content .ui-state-highlight, 
-                                    .ui-widget-header .ui-state-highlight {
-                                    border: 1px solid #003399;
-                                    background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
-                            }
-                    
-                            
-                    .ui-datepicker { 
-                    width: 17em; 
-                    padding: .2em .2em 0; 
-                    display: none; 
-                    z-index: 2000 !important;
-                    }
-                    
-                    /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
-                    .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
-                    .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
-                    .ui-datepicker-calendar a.ui-state-active { background: red; } 
-        
-                    </style>-->
 
+        <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+            wish to resize images before upload. This must be loaded before fileinput.min.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/piexif.min.js" type="text/javascript"></script>
+        <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
+            This must be loaded before fileinput.min.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/sortable.min.js" type="text/javascript"></script>
+        <!-- purify.min.js is only needed if you wish to purify HTML content in your preview for 
+            HTML files. This must be loaded before fileinput.min.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/purify.min.js" type="text/javascript"></script>
+        <!-- popper.min.js below is needed if you use bootstrap 4.x (for popover and tooltips). You can also use the bootstrap js 
+           3.3.x versions without popper.min.js. -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+            dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+
+        <!-- the main fileinput plugin file -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
+        <!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/themes/fas/theme.min.js"></script>
 
         <script>
 
-//var TranslatorDocs = [];
             var translatorArray = [];
             var translators = [];
             var authorArray = [];
@@ -141,7 +123,7 @@
                 gotoCurrent: true,
                 orientation: "bottom" // <-- and add this
             });
-            PDFJS.workerSrc = 'js/pdf.worker.js';
+//            PDFJS.workerSrc = 'js/pdf.worker.js';
 //      localStorage.clear();
 
             var i;
@@ -157,6 +139,7 @@
             }
         </script>      
 
+        <!--applications-->
         <script type="text/javascript">
             var cntr = 0;
             var publisherID = '${publisherID}';
@@ -364,7 +347,7 @@
                             }},
                         {"data": "expertReaderName"},
                         {"data": "bookTitle"},
-                        {"data": "TranslatorTrack",
+                        {"data": "TranslatorTrack2",
                             "render": function (data) {
                                 console.log("TranslatorTrack  " + data);
                                 return data;
@@ -593,22 +576,76 @@
                             "render": function (data, type, row) {
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-                        {"data": "addendumRightsAgreementName"},
+                        {"data": "addendumRightsAgreementName",
+                            "render": function (data, type, row) {
+                                console.log("7771 1 addendumRightsAgreementName  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "proofOfPaymentToTranslator",
                             "render": function (data, type, row) {
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                console.log("7771 1 proofOfPaymentToTranslator  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                }
                             }},
-                        {"data": "proofOfPaymentToTranslatorName"},
+                        {"data": "proofOfPaymentToTranslatorName",
+                            "render": function (data, type, row) {
+                                console.log("7771 1 proofOfPaymentToTranslatorName  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "bankDetailsForm",
                             "render": function (data, type, row) {
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                console.log("7771 2 bankDetailsForm  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                }
                             }},
-                        {"data": "bankDetailsFormName"},
+                        {"data": "bankDetailsFormName",
+                            "render": function (data, type, row) {
+                                console.log("7771 1 bankDetailsFormName  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "SignedLIContract",
                             "render": function (data, type, row) {
-                                return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                console.log("7771 3 SignedLIContract  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                }
                             }},
-                        {"data": "SignedLIContractName"},
+                        {"data": "SignedLIContractName",
+                            "render": function (data, type, row) {
+                                console.log("7771 1 SignedLIContractName  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "paymentStatus",
                             "render": function (data, type, row) {
                                 if (typeof (data) === "undefined") {
@@ -636,16 +673,37 @@
                             "render": function (data, type, row) {
                                 return '<a href="http://localhost' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-                        {"data": "originalName"},
+                        {"data": "originalName",
+                            "render": function (data, type, row) {
+                                console.log("7771 1 originalName  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "Author"},
                         {"data": "publicationYear"},
                         {"data": "Series",
-                            "render": function (data) {
-                                console.log("Series  " + data);
+                            "render": function (data, type, row) {
+                                console.log("7771 1 Series  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
                             }},
                         {"data": "translationTitle",
-                            "render": function (data) {
-                                console.log("translationTitle  " + data);
+                            "render": function (data, type, row) {
+                                console.log("7771 1 translationTitle  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
                             }},
                         {"data": "transList",
                             "render": function (data, type, row) {
@@ -664,6 +722,26 @@
                                 rightsHolderArray = data;
                                 console.log("rightsHolderArray data  " + data + "\n");
                                 return data;
+                            }},
+                        {"data": "ISBN",
+                            "render": function (data, type, row) {
+                                console.log("7771 1 ISBN  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
+                        {"data": "ISSN",
+                            "render": function (data, type, row) {
+                                console.log("7771 1 ISSN  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
                             }},
                         {"data": "idTranslator"}
 
@@ -767,15 +845,41 @@
                     $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
 //                    document.getElementById("addendum").href = addendumRightsAgreemnt;
 
-//                    var proofOfPaymentToTrans = 'http://localhost' + rowdata.proofOfPaymentToTranslator + '';
-//                    $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
-//                    document.getElementById("proofPayment").href = proofOfPaymentToTrans;
-//                    var bankDetailsFrm = 'http://localhost' + rowdata.bankDetailsForm + '';
-//                    $("#appBankDetailsForm").val(bankDetailsFrm);
-//                    document.getElementById("bankDetailForm").href = bankDetailsFrm;
-//                    var signedLIContr = 'http://localhost' + rowdata.SignedLIContract + '';
-//                    $("#appSignedLIContract").val(signedLIContr);
-//                    document.getElementById("signedLIcontract").href = signedLIContr;
+                    if (rowdata.proofOfPaymentToTranslator !== 'null' && rowdata.proofOfPaymentToTranslator !== undefined) {
+                        console.log("7771 A proofOfPaymentToTranslator null");
+                        $("#proofPaymentDiv1").toggle();
+                        $("#proofPaymentDiv2").toggle();
+                    }
+                    proofOfPaymentToTrans = 'http://localhost' + rowdata.proofOfPaymentToTranslator + '';
+                    $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
+                    console.log("7771 A proofOfPaymentToTranslator rowdata.proofOfPaymentToTranslator " + rowdata.proofOfPaymentToTranslator);
+                    console.log("7771 A proofOfPaymentToTranslator proofOfPaymentToTrans " + proofOfPaymentToTrans);
+                    document.getElementById("proofPayment_link").href = proofOfPaymentToTrans;
+
+
+                    if (rowdata.bankDetailsForm !== 'null' && rowdata.bankDetailsForm !== undefined) {
+                        console.log("7771 B bankDetailsForm !== undefined");
+                        $("#bankDetailForm1").toggle();
+                        $("#bankDetailForm2").toggle();
+                    }
+                    bankDetailsFrm = 'http://localhost' + rowdata.bankDetailsForm + '';
+                    $("#appBankDetailsForm").val(bankDetailsFrm);
+                    console.log("7771 B bankDetailsForm rowdata.bankDetailsForm " + rowdata.bankDetailsForm);
+                    console.log("7771 B bankDetailsForm bankDetailsFrm " + bankDetailsFrm);
+                    document.getElementById("bankDetailForm_link").href = bankDetailsFrm;
+
+                    if (rowdata.SignedLIContract !== 'null' && rowdata.SignedLIContract !== undefined) {
+                        console.log("7771 C SignedLIContract undefined");
+                        $("#signedLIContract1").toggle();
+                        $("#signedLIContract2").toggle();
+                    }
+                    signedLIContr = 'http://localhost' + rowdata.SignedLIContract + '';
+                    $("#appSignedLIContract").val(signedLIContr);
+                    console.log("7771 C SignedLIContract rowdata.SignedLIContract " + rowdata.SignedLIContract);
+                    console.log("7771 C SignedLIContract signedLIContr signedLIContr " + signedLIContr);
+                    document.getElementById("signedLIcontract_link").href = signedLIContr;
+
+
                     //             console.log("showUploadCover rowdata.cover " + rowdata.cover);
 //
 //                    if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
@@ -824,6 +928,7 @@
 
                     console.log("8 xyz bookTitle: " + rowdata.bookTitle);
                     document.getElementById("appBookTitle").value = rowdata.bookTitle;
+                    document.getElementById("bookTitle").value = rowdata.bookTitle;
                     document.getElementById("publicationYear").value = rowdata.publicationYear;
                     document.getElementById("appGenre").value = rowdata.genre;
                     document.getElementById("appLanguageOriginal").value = rowdata.originalLanguage;
@@ -840,6 +945,9 @@
                     document.getElementById("languages").value = rowdata.originalLanguage;
                     document.getElementById("translatorFee").value = rowdata.translatorFee;
                     document.getElementById("BreakDownOfTranslatorFee").value = rowdata.breakDownTranslatorFee;
+
+                    document.getElementById("isbn").value = rowdata.ISBN;
+                    document.getElementById("isnn").value = rowdata.ISSN;
 
                     for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
 
@@ -1247,7 +1355,7 @@
                                     // ContractDocName
                                     console.log("8 xyz ContractDocName");
                                     console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
-                                    if (rightsAgreementArray[v].slice(0, -1)) {
+                                    if (rightsAgreementArray[v].substr(1) === 'null') {
                                         console.log("8 xyz ContractDocName ===  empty");
                                         console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
                                         console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
@@ -1279,7 +1387,7 @@
                                     // AddendumRightsAgreementName
                                     console.log("8 xyz AddendumRightsAgreement ");
                                     if (w === 1) {
-                                        if (rightsAgreementArray[v].slice(0, -1)) {
+                                        if (rightsAgreementArray[v].substr(1) === '') {
                                             console.log("8 xyz AddendumRightsAgreementName is blank");
                                             console.log("8 xyz case 1 not entered");
                                             document.getElementById('label_addendum' + w).value = "not entered";
@@ -1567,6 +1675,9 @@
                     input.trigger('fileselect', [numFiles, label]);
                     var id = input[0].id;
                     var label_id = "label_" + id;
+                    console.log("generatedLabels id ", id);
+                    console.log("generatedLabels label_id ", label);
+                    console.log("generatedLabels label ", label);
                     document.getElementById(label_id).value = label;
                     document.getElementById(label_id).size = label.length;
                 });
@@ -2154,8 +2265,10 @@
 
             ];
             function validFileType(file) {
+                console.log("validFileType(file)", file);
                 for (var i = 0; i < fileTypes.length; i++) {
                     if (file.type === fileTypes[i]) {
+                        console.log("validFileType(file) valid  ", file);
                         return true;
                     }
                 }
@@ -2236,13 +2349,14 @@
 
         <script type="text/javascript">
             window.onload = function () {
-                document.getElementById('files').addEventListener('change', handleFileSelect, false);
+//                document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 
                 //Set all filled input fields to readOnly
                 //so only empty ones can be filled in!!!
 
                 var emptyTextBoxes = $('input:text').filter(function () {
+                    console.log("this.value ", this.value);
                     return (this.value !== "" || this.value.length !== 0);
                 });
                 var string = "The following input fields have been marked readonly - \n";
@@ -2268,39 +2382,145 @@
 
         </script>
 
-        <!--handleFileSelect-->
-        <script>
-//            https://stackoverflow.com/questions/23402187/multiple-files-upload-and-using-file-reader-to-preview
-            function handleFileSelect(evt) {
-                var files = evt.target.files; // FileList object
-                // Loop through the FileList and render image files as thumbnails.
-                for (var i = 0, f; f = files[i]; i++) {
-
-                    // Only process image files.
-                    if (!f.type.match('image.*')) {
-                        continue;
+        <!--            handleFileSelect
+                <script>
+                    // Loaded via <script> tag, create shortcut to access PDF.js exports.
+                    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+        // The workerSrc property shall be specified.
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+        
+        //            https://stackoverflow.com/questions/23402187/multiple-files-upload-and-using-file-reader-to-preview
+                    function handleFileSelect(evt) {
+                        var files = evt.target.files; // FileList object
+                        console.log("files ", files);
+                        // Loop through the FileList and render image files as thumbnails.
+                        for (var i = 0, f; f = files[i]; i++) {
+        
+                            // Only process image files.
+                            if (!validFileType(files[i])) {
+                                continue;
+                            }
+        
+                            var reader = new FileReader();
+        
+                            // Closure to capture the file information.
+                            reader.onload = (function (theFile) {
+        
+                                if (theFile.type === "application/pdf") {
+                                    console.log("files pdf ", theFile.name);
+                                    var fileReader = new FileReader();
+                                    fileReader.onload = function () {
+                                        var pdfData = new Uint8Array(this.result);
+                                        // Using DocumentInitParameters object to load binary data.
+                                        var loadingTask = pdfjsLib.getDocument({data: pdfData});
+                                        loadingTask.promise.then(function (pdf) {
+                                            console.log('PDF loaded');
+        
+                                            // Fetch the first page
+                                            var pageNumber = 1;
+                                            pdf.getPage(pageNumber).then(function (page) {
+                                                console.log('Page loaded');
+        
+                                                var scale = 1.5;
+                                                var viewport = page.getViewport({scale: scale});
+        
+                                                // Prepare canvas using PDF page dimensions
+                                                var canvas = $("#pdfViewer")[0];
+                                                var context = canvas.getContext('2d');
+                                                canvas.height = viewport.height;
+                                                canvas.width = viewport.width;
+        
+                                                // Render PDF page into canvas context
+                                                var renderContext = {
+                                                    canvasContext: context,
+                                                    viewport: viewport
+                                                };
+                                                var renderTask = page.render(renderContext);
+                                                renderTask.promise.then(function () {
+                                                    console.log('Page rendered');
+                                                });
+                                            });
+                                        }, function (reason) {
+                                            // PDF loading error
+                                            console.error(reason);
+                                        });
+                                    };
+        
+                                    fileReader.readAsArrayBuffer(theFile);
+        
+                                } else
+                                {
+                                    return function (e) {
+                                        console.log("e.target.result ", e.target.result);
+                                        // Render thumbnail.
+                                        var span = document.createElement('span');
+        //                            var cleanFileName = decodeURI(escape(theFile.name));
+                                        span.innerHTML = ['<img class="thumbnail" src="', e.target.result,
+                                            '" title="', theFile.name, '"/>'].join('');
+                                        document.getElementById('coverageCuttings').insertBefore(span, null);
+                                    };
+                                }
+                            })(f);
+        
+                            // Read in the image file as a data URL.
+                            reader.readAsDataURL(f);
+                        }
                     }
+        //            document.getElementById("files").addEventListener('change', handleFileSelect, false);
+                </script>-->
+        <script>
+           // Check HTML5 File API Browser Support
+if (window.File && window.FileList && window.FileReader) {
+       function showFile() {
+//           var preview = document.getElementById("preview");
+           var fileInput = document.querySelector("#input25");
 
-                    var reader = new FileReader();
+           for (var i = 0; i < fileInput.files.length; i++) {
+               var reader = new FileReader();
+               reader.onload = function(readerEvent) {
+//                   var listItem = document.createElement("li");
+//                   listItem.innerHTML = "<img src='" + readerEvent.target.result + "' />";
+//                   preview.append(listItem);
+               };
+               console.log("fileInput.files[i]" + fileInput.files[i].name);
+               reader.readAsDataURL(fileInput.files[i]);
+           }
+       }
+   } else {
+       alert("Your browser is too old to support HTML5 File API");
+   }
+   </script>
 
-                    // Closure to capture the file information.
-                    reader.onload = (function (theFile) {
-                        return function (e) {
-                            // Render thumbnail.
-                            var span = document.createElement('span');
-                            var cleanFileName = decodeURI(escape(theFile.name));
-                            span.innerHTML = ['<img class="thumbnail" src="', e.target.result,
-                                '" title="', cleanFileName, '"/>'].join('');
-                            document.getElementById('coverageCuttings').insertBefore(span, null);
-                        };
-                    })(f);
-
-                    // Read in the image file as a data URL.
-                    reader.readAsDataURL(f);
-                }
-            }
+        <!--coverageCuttings preview-->
+        <script>
+            $(document).ready(function () {
+                $("#input25").fileinput({
+                    'theme': 'fas',
+                    'uploadUrl': '#',
+                    'showUpload': false,
+                    'overwriteInitial': true
+                });
+                $('#input25').on("change", function (event) {
+                    var files = event.target.files; //FileList object
+                    var coverageCuttings_upload = document.getElementById("output").value;
+                    for (var i = 0; i < files.length; i++)
+                    {
+                        var file = files[i];
+                        var fileName = files[i].name;
+                        console.log("fileName  " + fileName);
+                        console.log("file  " + file);
+                        pressCuttingArray.push(fileName);
+                    }
+                    var arrayLength = pressCuttingArray.length;
+                    for (var i = 0; i < arrayLength; i++) {
+                        console.log("pressCuttingArray  " + i);
+                        console.log(pressCuttingArray[i]);
+                    }
+                    $("#coverageCuttings_upload").val(pressCuttingArray);
+                    $("#pressCuttingArray").val(pressCuttingArray);
+                });
+            });
         </script>
-
 
         <!--Styles-->
         <style>
@@ -2392,10 +2612,31 @@
                 overflow-y:auto;
                 text-align: center;
             }
+            .modal-footer {  
+                background: #81ccfb;
+                padding: 1em;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            body {
+                margin: 5px;
+                background: #d9d1d1
+            }
+            .modal-body {
+                /* 100% = dialog height, 120px = header + footer */
+                max-height: calc(100% - 50px);
+                overflow-y: scroll;
+            }
+            .modal-dialog,
+            .modal-content {
+                /* 80% of window height */
+                height: 100%;
+            }
 
             #addAdditionalRightsHoldersModal{
                 width: 400px;
-
                 top: 50%;
                 left: 50%;
                 margin-top: -90px;
@@ -2408,19 +2649,7 @@
 
                 margin-right: 5px;
             }
-            .modal-footer {  
 
-                background: #81ccfb;
-                padding: 1em;
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 0;
-            }
-            body {
-                margin: 5px;
-                background: #d9d1d1
-            }
             /* Tab Navigation */
             .nav-tabs {
                 margin: 0;
@@ -2491,10 +2720,10 @@
                 padding: 6px 12px;
                 cursor: pointer;
             }
-            
+
             .black, .black a {
-  color: #000000;
-}
+                color: #000000;
+            }
         </style>
 
         <!--modal_counter-->
@@ -2536,18 +2765,14 @@
                 ////                console.log("tripper   ", tripper);
 
                 $("#translatorArray").val(translatorName876);
-
-
                 translatorArray = [];
                 console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
-
                 var fn = document.getElementById("translatorName");
                 document.getElementById("first0").value = fn.value;
                 Name = fn.value;
                 console.log("copyFirstTranslatorName Name ", Name);
                 translatorArray.push(Name);
                 console.log(" first entry in translatorArray ", fn.value);
-
                 //copyFirstTranslatorName();
                 generateTranslatorTab(1);
             }
@@ -2606,7 +2831,7 @@
                     </div>
                 </div> <!--container for welcome/logout-->
 
-                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland pendingApplications</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px"></div>
 
@@ -2699,6 +2924,8 @@
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2780,6 +3007,8 @@
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
+                                            <th class="never"></th>
+                                            <th class="never"></th>
                                         </tr>
                                     </tfoot>
 
@@ -2794,7 +3023,7 @@
 
                     </div> <!-- container-fluid -->
 
-                    <div class="modal applicationsModal" id="applicationsModal" data-modal-index="1">
+                    <div class="modal applicationsModal" id="applicationsModal" data-modal-index="1"  tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #c3bcbc">
@@ -3256,7 +3485,6 @@
                                                                            class="form-control"                                
                                                                            name="rightsHoldersName"                                
                                                                            value=""    
-
                                                                            placeholder="Translation rights holder"
                                                                            >
                                                                 </div>
@@ -3586,7 +3814,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!--                                                            </div> position: relative;-->
+                                                            <!--</div> position: relative;-->
 
                                                         </div> <!--row-->
 
@@ -3801,7 +4029,7 @@
                                                                     </div> <!-- col-md-7 -->
 
                                                                     <div class="pressCuttingsClone" id="pressCuttingsClone"></div>
-
+  <input type="text" name="pressCuttings_image-file" id="pressCuttingArray"/>
                                                                     <!--Date copies were sent:-->
                                                                     <div class="col-md-3" >
                                                                         <label for="copiesSent" class="pull-left"><strong>Date copies were sent</strong> </label>
@@ -3864,7 +4092,7 @@
                                                                         </div> <!--row-->                                                            
                                                                         <!-- translationSampleForm -->                                                                                                              
                                                                     </div>  <!-- col-md-12 -->
-                                                                </div>  <!--panel--body-->
+                                                                </div>  <!--panel-body-->
                                                             </div> <!--panel-default-->
 
                                                         </div> <!-- row -->
@@ -3887,8 +4115,8 @@
                                                                             </button>
                                                                         </div><!-- input-group -->
                                                                     </div>  <!-- col-md-9 -->
-                                                                </div>  <!-- panel--body -->
-                                                            </div>  <!--panel--default-->     
+                                                                </div>  <!-- panel-body -->
+                                                            </div>  <!--panel-default-->     
 
                                                         </div> <!-- row -->
 
@@ -3906,68 +4134,12 @@
                                     </div> <!-- container-fluid -->  
                                 </nav>    
                             </div> <!-- /.modal-body -->
+
                         </div> <!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal applicationsModal -->
 
-                <!--pressCuttingsModal-->
-                <div class="modal autoModal coverageCuttings" id="pressCuttingsModal"  tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal"  style="background-color: #c3bcbc" data-modal-index="2">
-                    <div class="modal-dialog coverageCuttings" style="align-content: center">
-                        <div class="modal-content coverageCuttings" style="background-color: #d9d1d1;">
 
-                            <div class="modal-header" style="background-color: #c3bcbc">
-                                <button type="button" class="close" data-dismiss="modal"    aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="pressCuttingsModalLabel">add coverage cuttings</h4>
-                            </div>
-
-                            <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
-
-                                <div class="row" style="background-color: #d9d1d1;">
-                                    <div class='col-sm-8' style="margin-bottom: 40px">                                
-                                        <div class="col-sm-12 center-block"  style="margin-bottom: 40px">   
-                                            <output  id="coverageCuttings"></output>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="multipleFiles"> 
-                                    <p>Please select either <u style="text-decoration: underline">one</u> file or <u style="text-decoration: underline">multiple</u> files.</p>
-                                    <p>For multiple files please press the <strong>Ctrl-key and </strong> then select with your mouse</p></div>
-                            </div>
-
-                            <div class="modal-footer coverageCuttings"  style="background-color: #c3bcbc">
-                                <div class="row">  
-                                    <div class="col-xs-4">
-                                        <div class="form-group pull-left upload">
-                                            <label class="pull-left">
-                                                <button id="clearCoverageCuttings" class="btn btn-warning btn-xs">
-                                                    Clear the files selection
-                                                </button>
-                                            </label>
-                                            <label for="files" class="custom-file-upload pull-left">
-                                                <i class="fa fa-cloud-upload"></i> Select press cuttings
-                                            </label>
-                                            <input type="file"  name="coverageCuttings[]" id="files" class="form-input upload pull-left" onchange="generatedLabels();" multiple="multiple"/>
-
-                                            <!--Destination:-->
-                                            <input type="hidden" id="coverageCuttings_upload" value="coverageCuttings_upload" name="destination" />                
-                                            <!--<input type="hidden" value="pressCuttings" name="pressCuttings_image-file" id="label_pressCuttings"/>-->
-                                            <!--</div>--> 
-                                        </div>  
-                                    </div>   
-                                </div>
-                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToDrawDown();">Done</button>
-                                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                            </div> <!--modal footer -->
-
-                        </div> <!--modal content-->          
-                    </div> <!--modal dialog-->
-                </div> <!--modal fade-->
-                <!--<div class="pressCuttings" id="pressCuttings"></div>-->
-
-                <!--<input type="hidden" value="pressCuttings" name="pressCuttings_image-file" id="label_pressCuttings"/>-->
-                <!--Destination:-->
-                <!--                <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />         -->
 
                 <form class="form-horizontal" 
                       role="form"  
@@ -4021,17 +4193,74 @@
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-                                    var $imageupload = $('.imageupload');
-                                    $imageupload.imageupload();
-
-                                    function  showInfoModal() {
-                                        $("#showInfoModal").modal("show");
-                                    }
-                                    function  showNotesModal() {
-                                        $("#showNotesModal").modal("show");
-                                    }
+            var $imageupload = $('.imageupload');
+            $imageupload.imageupload();
+            function  showInfoModal() {
+                $("#showInfoModal").modal("show");
+            }
+            function  showNotesModal() {
+                $("#showNotesModal").modal("show");
+            }
         </script>
+        <!--pressCuttingsModal-->
+        <div class="modal autoModal coverageCuttings" id="pressCuttingsModal"  tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal"  style="background-color: #c3bcbc" data-modal-index="3">
+            <div class="modal-dialog coverageCuttings" style="align-content: center">
+                <div class="modal-content coverageCuttings" style="background-color: #d9d1d1;">
 
+                    <div class="modal-header" style="background-color: #c3bcbc">
+                        <button type="button" class="close" data-dismiss="modal"    aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="pressCuttingsModalLabel">add coverage cuttings</h4>
+                    </div>
+
+                    <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
+
+                        <div class="row" style="background-color: #d9d1d1;">
+                            <div class='col-sm-8' style="margin-bottom: 40px">                                
+                                <div class="col-sm-12 center-block"  style="margin-bottom: 40px">   
+                                    <input type="file"  name="coverageCuttings" id="files" class="form-input upload pull-left" onchange="generatedLabels();" multiple="multiple"/>
+                                    <input id="input25" name="input25[]" type="file" multiple onchange="showFile()">
+                                    <input id="output" type="file" multiple><br/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="multipleFiles"> 
+                            <p>Please select either <u style="text-decoration: underline">one</u> file or <u style="text-decoration: underline">multiple</u> files.</p>
+                            <p>For multiple files please press the <strong>Ctrl-key and </strong> then select with your mouse</p></div>
+                    </div>
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc">
+                        <div class="row">  
+                            <div class="col-xs-4">
+                                <div class="form-group pull-left upload">
+                                    <!--                                            <label class="pull-left">
+                                                                                    <button id="clearCoverageCuttings" class="btn btn-warning btn-xs">
+                                                                                        Clear the files selection
+                                                                                    </button>
+                                                                                </label>-->
+                                    <label for="files" class="custom-file-upload pull-left">
+                                        <i class="fa fa-cloud-upload"></i> Select press cuttings
+                                    </label>
+
+                                    <!--Destination:-->
+                                    <input type="text" id="coverageCuttings_upload" value="coverageCuttings_upload" name="destination" />                
+                                  
+                                    <ul id="preview"></ul>
+                                    <!--</div>--> 
+                                </div>  
+                            </div>   
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+                        </div>
+                    </div> <!--modal footer -->
+
+                </div> <!--modal content-->          
+            </div> <!--modal dialog-->
+        </div> <!--modal fade-->
+        <!--<div class="pressCuttings" id="pressCuttings"></div>-->
+
+        <!--<input type="hidden" value="pressCuttings" name="pressCuttings_image-file" id="label_pressCuttings"/>-->
+        <!--Destination:-->
+        <!--                <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />         -->
 
     </body>
 </html>

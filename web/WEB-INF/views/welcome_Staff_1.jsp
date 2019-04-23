@@ -29,7 +29,7 @@
 
 
         <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <!--<link rel="stylesheet" type="text/css" href="css/font-awesome.css">-->
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
