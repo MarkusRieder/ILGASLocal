@@ -46,7 +46,7 @@ public class ApplicationServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String publisherID = request.getParameter("publisherID");   // OK  request.getParameter publisherID1 2790
-        String publisherName = request.getParameter("publisherName");// OK  request.getParameter publisherName1 Rotten Luck
+        String publisherName = request.getParameter("company");// OK  request.getParameter publisherName1 Rotten Luck
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         String name = request.getParameter("name");

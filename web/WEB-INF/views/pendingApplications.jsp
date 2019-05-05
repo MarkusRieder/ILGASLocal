@@ -41,15 +41,12 @@
 //            }
         %>
 
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <!--https://github.com/kartik-v/bootstrap-fileinput/-->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-        <!-- Bootstrap -->
-
-
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">    
         <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
@@ -57,8 +54,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
         <link rel="stylesheet" type="text/css" href="css/responsive.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
-
-
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
@@ -69,55 +65,43 @@
         <script src="js/dataTables.responsive.min.js"></script>
         <script src="js/dataTables.bootstrap.min.js"></script>
         <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js"></script>
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
-        <!-- 
-                    <link rel="stylesheet" type="text/css" href="../../kartik/css/fileinput.css" media="all" />
-            <script type="text/javascript" src="kartik/js/plugins/sortable.js"></script> 
-                    <script type="text/javascript" src="kartik/js/plugins/piexif.js"></script>
-                    <script type="text/javascript" src="kartik/js/plugins/purify.js"></script>
-            <script type="text/javascript" src="kartik/js/fileinput.js"></script>
-        -->
-        <!-- 
-                    <script type="text/javascript" src="../../kartik/js/plugins/sortable.js"></script>
-                    <script type="text/javascript" src="../../kartik/js/plugins/piexif.js"></script>
-                            <script type="text/javascript" src="../../kartik/js/plugins/purify.js"></script>
-                            <script type="text/javascript" src="../../kartik/js/fileinput.js"></script>-->         <!--
-                            <style>
-                                    .ui-state-highlight, 
-                                    .ui-widget-content .ui-state-highlight, 
-                                    .ui-widget-header .ui-state-highlight {
-                                    border: 1px solid #003399;
-                                    background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
-                            }
-                    
-                            
-                    .ui-datepicker { 
-                    width: 17em; 
-                    padding: .2em .2em 0; 
-                    display: none; 
-                    z-index: 2000 !important;
-                    }
-                    
-                    /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
-                    .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
-                    .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
-                    .ui-datepicker-calendar a.ui-state-active { background: red; } 
-        
-                    </style>-->
+
+        <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+            wish to resize images before upload. This must be loaded before fileinput.min.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/piexif.min.js" type="text/javascript"></script>
+        <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview. 
+            This must be loaded before fileinput.min.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/sortable.min.js" type="text/javascript"></script>
+        <!-- purify.min.js is only needed if you wish to purify HTML content in your preview for 
+            HTML files. This must be loaded before fileinput.min.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/purify.min.js" type="text/javascript"></script>
+        <!-- popper.min.js below is needed if you use bootstrap 4.x (for popover and tooltips). You can also use the bootstrap js 
+           3.3.x versions without popper.min.js. -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+            dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+
+        <!-- the main fileinput plugin file -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.min.js"></script>
+        <!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/themes/fas/theme.min.js"></script>
 
 
         <script>
-
-//var TranslatorDocs = [];
             var translatorArray = [];
+            var translators = [];
             var authorArray = [];
             var languageArray = [];
             var pressCuttingArray = [];
+            var rightsHolderArray = [];
+            var translatorNamesForGenerateTranslatorTab = [];
             var Name = "";
             var Author = "";
             var counter = 0;
+            var translationrightsholdercounter = 0;
             var Authorcounter = 0;
             var pressCuttingCounter = 0;
             var translatorCounter = 0;
@@ -126,6 +110,7 @@
             var bookCover;
             var bookTranslationTitle;
             var uploadCounter = 1;
+            var publisherName;
 
             $.datepicker.setDefaults({
                 dateFormat: 'dd/mm/yy',
@@ -151,10 +136,15 @@
             for (i = 0; i < sessionStorage.length; i++) {
                 console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
             }
-        </script>      
+        </script>    
 
+        <!--applications-->
         <script type="text/javascript">
             var cntr = 0;
+            var publisherID = '${publisherID}';
+            var newURL = "./pendingApplicationPublisherDataServlet?publisherID=" + publisherID;
+            console.log("13131 publisherID  " + publisherID);
+            console.log("13131 newURL  " + newURL);
             $(document).ready(function () {
                 var table = $("#applications").DataTable({
                     stateSave: true,
@@ -235,10 +225,9 @@
                             }
                         }
                     ],
-//                    "bProcessing": '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
-                    //  "bProcessing":  "<img src='/images/progress.gif'>",
                     "bServerSide": false,
-                    "sAjaxSource": "./pendingApplicationDataServlet",
+                    "sAjaxSource": newURL,
+
                     "columns": [
                         {
                             "targets": 0,
@@ -252,7 +241,11 @@
                         {"data": "ReferenceNumber"},
                         //    {"data": "ReferenceNumber"},
 
-                        {"data": "company"},
+                        {"data": "company",
+                            "render": function (data) {
+                                console.log("company  " + data);
+                                return data;
+                            }},
                         {"data": "agreement",
                             "render": function (data, type, row) {
 
@@ -269,10 +262,8 @@
                                 } else
                                 {
                                     var date = new Date(data);
-                                    console.log("date : proposedDateOfPublication" + date);
                                     var month = date.getMonth() + 1;
-                                    console.log("date 2: proposedDateOfPublication " + date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear());
-                                    return  date.getDate() + "/" + month + "/" + date.getFullYear();
+                                    return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
                                 }
                             }},
                         {"data": "proposedPrintRun"},
@@ -293,7 +284,7 @@
                                     return mValue.toFixed(2);
                                 } else
                                     return '-';
-                                //  return data;
+                                return data;
                             }
                         },
                         {"data": "bookNotes",
@@ -321,6 +312,7 @@
                             }},
                         {"data": "dateCopiesWereSent",
                             "render": function (data) {
+                                console.log("dateCopiesWereSent " + data);
                                 var date = new Date(data);
                                 var month = date.getMonth() + 1;
                                 return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
@@ -351,21 +343,41 @@
                                 ;
                             }},
                         {"data": "genre"},
-                        {"data": "TranslatorName"},
-//                        {"data": "expertReaderName"},
+                        {"data": "TranslatorName",
+                            "render": function (data) {
+                                console.log("TranslatorName  " + data);
+                                return data;
+                            }},
+                        {"data": "expertReaderName"},
                         {"data": "bookTitle"},
-//                        {"data": "translatorTitles"},
-                        {"data": "Titles"},
-//                        {"data": "translatorCVDocName"},
+                        {"data": "TranslatorTrack2",
+                            "render": function (data) {
+                                console.log("TranslatorTrack  " + data);
+                                return data;
+                            }},
+                        {"data": "Titles",
+                            "render": function (data) {
+                                console.log("Titles  " + data);
+                                return data;
+                            }},
+                        {"data": "translatorCVDocName",
+                            "render": function (data) {
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+
+                                    return data;
+                                }
+                            }},
                         {"data": "cover",
                             "render": function (data) {
                                 if (typeof (data) === "undefined") {
                                     return "n/a";
                                 } else
                                 {
-                                    console.log("data : cover" + data);
-                                    return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"></a>';
-                                    //return data;
+
+                                    return data;
                                 }
                             }},
                         {"data": "sampleSentOut",
@@ -396,8 +408,8 @@
                                 return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         //                        {"data": "readerReportSummary"},
-//                        {"data": "expertReaderList"},
-//                        {"data": "unassignedExpertReaderList"},
+                        {"data": "expertReaderList"},
+                        {"data": "unassignedExpertReaderList"},
                         {"data": "idTranslator"},
                         {"data": "publicationYear",
                             "render": function (data) {
@@ -482,14 +494,14 @@
                             }},
                         {"data": "amountRequested",
                             "render": function (data, type, row) {
-                                var mValue = parseFloat(0.00);
-                                mValue = parseFloat(data);
+                                var mValue; // = parseFloat(0.00);
+                                mValue = data; //parseFloat(data);
                                 if (mValue > 0) {
                                     //mValue = Math.round(mValue);                                             
-                                    return mValue.toFixed(2);
+                                    return mValue; //.toFixed(2);
                                 } else
                                     return '-';
-                                // return data;
+                                return data;
                             }
                         },
                         {"data": "amountApproved",
@@ -501,7 +513,7 @@
                                     return mValue.toFixed(2);
                                 } else
                                     return '-';
-                                // return data;
+                                return data;
                             }
                         },
                         {"data": "publisherInformedOfMeeting",
@@ -585,22 +597,58 @@
                             "render": function (data, type, row) {
                                 return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-//                        {"data": "addendumRightsAgreementName"},
+                        {"data": "addendumRightsAgreementName",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "proofOfPaymentToTranslator",
                             "render": function (data, type, row) {
                                 return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-//                        {"data": "proofOfPaymentToTranslatorName"},
+                        {"data": "proofOfPaymentToTranslatorName",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "bankDetailsForm",
                             "render": function (data, type, row) {
                                 return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-//                        {"data": "bankDetailsFormName"},
+                        {"data": "bankDetailsFormName",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "SignedLIContract",
                             "render": function (data, type, row) {
                                 return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-//                        {"data": "SignedLIContractName"},
+                        {"data": "SignedLIContractName",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
                         {"data": "paymentStatus",
                             "render": function (data, type, row) {
                                 if (typeof (data) === "undefined") {
@@ -628,44 +676,75 @@
                             "render": function (data, type, row) {
                                 return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
-//                        {"data": "originalName"},
-                        {"data": "Author"},
-                        {"data": "publicationYear"},
-                        {"data": "Series"},
-                        {"data": "translationTitle"},
+                        {"data": "originalName",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
+                        {"data": "Author",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
+                        {"data": "publicationYear",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
+                        {"data": "Series",
+                            "render": function (data) {
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
+                        {"data": "translationTitle",
+                            "render": function (data) {
+                                console.log("translationTitle  " + data);
+                            }},
                         {"data": "transList",
                             "render": function (data, type, row) {
 
-                                console.log("transList data" + data + " \n ");
+                                console.log("777 transList data" + data + " \n ");
                                 return data;
                             }},
                         {"data": "rightsAgreement",
                             "render": function (data, type, row) {
 
-                                console.log("rightsAgreement data  " + data + "\n");
+                                console.log("123v4 rightsAgreement data  " + data + "\n");
+                                return data;
+                            }},
+                        {"data": "rightsHolderArray",
+                            "render": function (data, type, row) {
+                                rightsHolderArray = data;
+                                console.log("rightsHolderArray data  " + data + "\n");
                                 return data;
                             }},
                         {"data": "ISBN",
                             "render": function (data) {
-
-                                if (typeof (data) === "undefined") {
-                                    return "n/a";
-                                } else
-                                {
-                                    console.log("ISBN data  " + data + "\n");
-                                    return data;
-                                }
+                                console.log("ISBN  " + data);
                             }},
                         {"data": "ISSN",
                             "render": function (data) {
-
-                                if (typeof (data) === "undefined") {
-                                    return "n/a";
-                                } else
-                                {
-                                    console.log("ISSN data  " + data + "\n");
-                                    return data;
-                                }
+                                console.log("ISSN  " + data);
                             }},
                         {"data": "idTranslator"}
 
@@ -703,6 +782,7 @@
                 //     console.log("bookTitle " + bookTitle),
                 //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                 $('#additionalExpertReaderModal').empty(); // empty the div before fetching and adding new data
+
 
                 $('#applications tbody').on('click', 'tr td.details-control', function (e) {
                     e.preventDefault();
@@ -756,7 +836,7 @@
 //                        document.getElementById("agreement").value = 'closed';
 //                    }
 //                    ;
-                    var agreemnt = 'href="http://www.literatureirelandgrantapplication.com:8080' + rowdata.agreement + '';
+                    var agreemnt = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.agreement + '';
 //                    $("#appAgreement").val(agreemnt);
 //                    document.getElementById("agreement").href = agreemnt;
 
@@ -768,77 +848,31 @@
                     $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
 //                    document.getElementById("addendum").href = addendumRightsAgreemnt;
 
-
-                    if (typeof (rowdata.proofOfPaymentToTranslator) === "undefined" || rowdata.proofOfPaymentToTranslator === "") {
-
-                        var proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
-                        $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
-//                        document.getElementById("proofPayment").href = proofOfPaymentToTrans;
-                        $("#proofPaymentDiv1").show();
-                        $("#proofPaymentDiv2").hide();
-                    } else {
-                        var proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
-                        $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
-                        document.getElementById("proofPayment_link").href = proofOfPaymentToTrans;
-                        $("#proofPaymentDiv2").show();
-                        $("#proofPaymentDiv1").hide();
-                    }
-
-                    if (typeof (rowdata.bankDetailsForm) === "undefined" || rowdata.bankDetailsForm === "") {
-                        var bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
-                        $("#appBankDetailsForm").val(bankDetailsFrm);
-//                        document.getElementById("bankDetailForm").href = bankDetailsFrm;
-                        $("#bankDetailForm1").show();
-                        $("#bankDetailForm2").hide();
-                    } else {
-                        var bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
-                        $("#appBankDetailsForm").val(bankDetailsFrm);
-                        document.getElementById("bankDetailForm_link").href = bankDetailsFrm;
-                        $("#bankDetailForm2").show();
-                        $("#bankDetailForm1").hide();
-                    }
-
-                    if (typeof (rowdata.SignedLIContract) === "undefined" || rowdata.SignedLIContract === "") {
-                        var signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
-                        $("#appSignedLIContract").val(signedLIContr);
-//                        document.getElementById("signedLIcontract").href = signedLIContr;
-
-                        $("#signedLIContract1").show();
-                        $("#signedLIContract2").hide();
-                    } else {
-                        var signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
-                        $("#appSignedLIContract").val(signedLIContr);
-                        document.getElementById("signedLIcontract_link").href = signedLIContr;
-                        $("#signedLIContract2").show();
-                        $("#signedLIContract1").hide();
-                    }
-
-                    if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
-
-                        // no cover - show upload
-                        var cver = '..images/not-available.jpg';
-                        $("#showUploadCover1").show();
-                        $("#showUploadCover2").hide();
-//                        document.getElementById("cover21").src = cver;
-                    } else {
-                        // we have a cover - show cover
-                        $("#showUploadCover2").show();
-                        $("#showUploadCover1").hide();
-                        var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
-
-                        $("#cover").val(cver);
-                        console.log("81 xyz show bookCover cover " + bookCover);
-                        console.log("81 xyz show Book cover for \n" + rowdata.translationTitle);
-                        document.getElementById("cover21").src = cver;
-                        document.getElementById("showUploadCoverTitle").innerHTML = "Book cover for \n" + rowdata.translationTitle;
-
-                        bookTranslationTitle = rowdata.translationTitle;
-                        console.log("81 xyz show Book bookTranslationTitle for \n" + bookTranslationTitle);
-                    }
-
-
-
-//                    var contr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.contract + '';
+                    var proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
+                    $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
+                    document.getElementById("proofPayment").href = proofOfPaymentToTrans;
+                    var bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
+                    $("#appBankDetailsForm").val(bankDetailsFrm);
+                    document.getElementById("bankDetailForm").href = bankDetailsFrm;
+                    var signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
+                    $("#appSignedLIContract").val(signedLIContr);
+                    document.getElementById("signedLIcontract").href = signedLIContr;
+                    //             console.log("showUploadCover rowdata.cover " + rowdata.cover);
+//
+//                    if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
+//                        var cver = 'images/not-available.jpg';
+//                        $("#showUploadCover").show();
+//                        $("#showCover").hide();
+//                        document.getElementById("cover").src = cver;
+//                    } else {
+//
+//                        $("#showCover").show();
+//                        $("#showUploadCover").hide();
+//                        var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+//                        $("#cover").val(cver);
+//                        document.getElementById("cover").src = cver;
+//                    }
+                    var contr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.contract + '';
 //                    document.getElementById("contract").href = contr;
 //
 //                    var trans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.translatorCV + '';
@@ -846,68 +880,150 @@
 //
                     var transSamp = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.copiesTranslationSample + '';
                     document.getElementById("translationSample1").href = transSamp;
+
+
                     $("#applicationsModal").modal("show");
+//                    rightsHolderArray = [];
 //                    $("#applications").DataTable().ajax.reload();
                     $("#appApplicationNumber").val($(this).closest('tr').children()[1].textContent);
                     $("#appApplicationYear").val($(this).closest('tr').children()[2].textContent);
                     $("#appReferenceNumber").val($(this).closest('tr').children()[3].textContent);
                     $("#appCompany").val($(this).closest('tr').children()[4].textContent);
+                    $("#company").val($(this).closest('tr').children()[4].textContent);
 //                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
+                   var publisherName = rowdata.company;
+                    document.getElementById("publisherName1").value = publisherName;
+                    document.getElementById("publisherName2").value = publisherName;
+                    console.log("publisherName " + publisherName);
 
                     var appReferenceNumber = rowdata.ReferenceNumber;
+                    referenzNummer = rowdata.ReferenceNumber;
+                    var ReferenceNumber = rowdata.ReferenceNumber;
+                    document.getElementById("ReferenceNumber1").value = ReferenceNumber;
+                    document.getElementById("ReferenceNumber2").value = ReferenceNumber;
                     document.getElementById("appReferenceNumber").innerHTML = appReferenceNumber;
+                    document.getElementById("appReferenceNumber1").innerHTML = appReferenceNumber;
                     document.getElementById("ReferenceNumber").value = appReferenceNumber;
                     //          console.log("appReferenceNumber " + appReferenceNumber);
                     $("#unassignedERRefNo").val(appReferenceNumber);
                     var TranslName = rowdata.TranslatorName;
                     //          console.log("TranslName " + TranslName);
                     $("#translatorNames").val(TranslName);
-                    console.log("TranslatorName  ", TranslName.length);
+                    console.log("TranslatorName length ", TranslName.length);
                     var bookTitles = rowdata.Titles;
                     $("#currentItem").val(bookTitles.join(""));
 
                     console.log("8 xyz bookTitle: " + rowdata.bookTitle);
-                    document.getElementById("bookTitle").value = rowdata.bookTitle;
+                    document.getElementById("appBookTitle").value = rowdata.bookTitle;
+                    document.getElementById("publicationYear").value = rowdata.publicationYear;
+                    document.getElementById("appGenre").value = rowdata.genre;
+                    document.getElementById("appLanguageOriginal").value = rowdata.originalLanguage;
+                    document.getElementById("appCountryOfPublication").value = rowdata.countryOfPublication;
+                    document.getElementById("bookNotes").value = rowdata.bookNotes;
+                    document.getElementById("proposedDateOfPublication").value = formatDate(rowdata.proposedDateOfPublication);
+                    document.getElementById("appForeignPublisher").value = rowdata.foreignPublisher;
+                    document.getElementById("foreignPublisher").value = rowdata.foreignPublisher;
+                    console.log("123v rowdata.foreignPublisher " + rowdata.foreignPublisher);
+                    document.getElementById("plannedPageExtent").value = rowdata.plannedPageExtent;
+                    document.getElementById("appForeignCountry").value = rowdata.foreignCountry;
+                    document.getElementById("appproposedPrintRun").value = rowdata.proposedPrintRun;
+                    var languageArray = rowdata.targetLanguage;
+                    document.getElementById("appTargetLanguage").value = languageArray;
+                    document.getElementById("publicationYear1").value = rowdata.publicationYear;
+                    document.getElementById("languages").value = rowdata.originalLanguage;
+                    document.getElementById("translatorFee").value = rowdata.translatorFee;
+                    document.getElementById("BreakDownOfTranslatorFee").value = rowdata.breakDownTranslatorFee;
 
-                    if (typeof (rowdata.ISBN) === "undefined") {
-                        var ISBN = 'n/a';
-                        document.getElementById("isbn").readOnly = false;
-                        document.getElementById("isbn").value = ISBN;
-                    } else {
-                        document.getElementById("isbn").readOnly = true;
-                        document.getElementById("isbn").value = rowdata.ISBN;
+                    document.getElementById("isbn").value = rowdata.ISBN;
+                    document.getElementById("isnn").value = rowdata.ISSN;
+
+                    for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
+
+                        console.log("123v rightsHolderArray " + rowdata.rightsHolderArray[i]);
                     }
-                    if (typeof (rowdata.ISSN) === "undefined") {
-                        var ISSN = 'n/a';
-                        document.getElementById("isnn").readOnly = false;
-                        document.getElementById("isnn").value = ISSN;
-                    } else {
-                        document.getElementById("isnn").readOnly = true;
-                        document.getElementById("isnn").value = rowdata.ISSN;
+                    if (rowdata.rightsHolderArray.length === 0) {
+                        $('#addAddRightsHolders').empty();
+                        document.getElementById("rightsHoldersName0").style.display = "inline";
+                        console.log("123v ist empty ");
+                        $("#RightsHolderGeneratedForm").empty();
+                        document.getElementById("rightsHoldersName0").value = "";
+                        document.getElementById("rightsHoldersName0").disabled = false;
+                        document.getElementById("rightsHoldersName0").readOnly = false;
                     }
+                    /*
+                     * Process rights holders
+                     * 1) check if there is one in the array - if so fill the input field and disable it
+                     */
+//                    if (rowdata.rightsHolderArray.length > 1) {
+//                        document.getElementById("rightsHoldersName0").value = rowdata.rightsHolderArray[0];
+//                        document.getElementById("rightsHoldersName0").disabled = true;
+//                    }
 
+                    /*
+                     * Process rights holders
+                     * 2) check if it's an array i.e. more data
+                     * if so
+                     * 3)  change title to plural
+                     * 4) iterate through the array - starting with 1 as we done 0 already
+                     * 5) make sure input fields are disabled so they wont be inserted into table again
+                     */
 
+                    console.log("123v rightsHolderArray.length " + rowdata.rightsHolderArray.length);
 
+                    if (rowdata.rightsHolderArray.length > 0) {
+                        /*                         
+                         * Change Title from "Translation rights holder" to "Translation rights holder(s)"
+                         */
+                        document.getElementById("rightsHoldersName0").style.display = "none";
+                        document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holders';
+                        for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
+
+                            var additionalTranslatorTag = '';
+
+                            additionalTranslatorTag += '<div class="form-group has-feedback">';
+                            additionalTranslatorTag += ' <input id="rightsHoldersName' + i;
+                            additionalTranslatorTag += ' type="text"  ';
+                            additionalTranslatorTag += ' class="form-control"';
+                            additionalTranslatorTag += ' name="rightsHoldersName' + i + '"';
+                            additionalTranslatorTag += ' value="' + rowdata.rightsHolderArray[i] + '"';
+                            additionalTranslatorTag += ' disabled = ""';
+                            additionalTranslatorTag += ' </div>';
+
+                            $(additionalTranslatorTag).appendTo('#addAddRightsHolders');
+                        }
+                        ;
+                    } else {
+                        document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holder';
+                    }
 
                     var Authors = rowdata.Author;
                     document.getElementById("authors").value = rowdata.Author;
                     document.getElementById("authorArray").value = rowdata.Author;
 
-                    document.getElementById("bookNotes").value = rowdata.bookNotes;
                     document.getElementById("originalPageExtent").value = rowdata.originalPageExtent;
 
-                    languageArray = rowdata.targetLanguage;
-                    console.log("languageArray  ", languageArray);
+
+
 
 
                     // Generate table translatorTrackTable
                     var TranslTitles = rowdata.translatorTitles;
-//                    console.log("TranslTitles: " + translationTitle);
+                    var translationTitle = rowdata.translationTitle;
+                    document.getElementById("translationTitle").value = rowdata.translationTitle;
+
+                    console.log("translationTitle >>> " + translationTitle);
+
+                    document.getElementById("series").value = rowdata.Series;
+                    console.log("Series >>> " + rowdata.Series);
+
+
+                    console.log("TranslTitles: " + TranslTitles);
                     var TranslatorDocs = "";
                     var TranslatorDocs = [];
                     TranslatorDocs = rowdata.transList; //  .transList.values();
+                    console.log("888 TranslatorDocs " + TranslatorDocs);
                     translatorArray = rowdata.transList;
-                    console.log("8 xyz translatorArray  ", translatorArray);
+
                     $("#translatorArray").val(translatorArray);
 
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
@@ -937,14 +1053,16 @@
 //                    headingCell3.appendChild(headingText3);
 //                    headingRow.appendChild(headingCell3);
 
-                    header.appendChild(headingRow);
-                    tble.appendChild(header);
+//                    header.appendChild(headingRow);
+//                    tble.appendChild(header);
                     var translatorNamesForGenerateTranslatorTab = [];
-                    var translators = [];
-                    for (var i = 0; i < TranslatorDocs.length; ++i) {
-                        console.log("TranslatorDocs.length " + TranslatorDocs.length);
-                        for (var j = 0; j < TranslatorDocs[i].length; ++j) {
+                    translators = [];
 
+                    for (var i = 0; i < TranslatorDocs.length; ++i) {
+                        console.log("8 xyz TranslatorDocs.length " + TranslatorDocs.length);
+
+                        for (var j = 0; j < TranslatorDocs[i].length; ++j) {
+                            console.log(TranslatorDocs[i]);
                             // skip undefined values to preserve sparse array
                             if (TranslatorDocs[i][j] === undefined)
                                 continue;
@@ -953,12 +1071,18 @@
                                 translators[j] = [];
                             // swap the x and y coords for the copy
                             translators[i][j] = TranslatorDocs[i][j];
-                            console.log("1 translators[" + j + "][" + i + "] " + translators[j][i]);
+
+                            console.log("8 xyz 1 translators[" + j + "][" + i + "] " + translators[j][i]);
+                            console.log("8 xyz 2 TranslatorDocs[" + i + "][" + j + "] " + TranslatorDocs[i][j]);
+                            console.log("8 xyz 3 translators[i].length: " + translators[i].length);
+                            console.log("8 xyz 4 TranslatorDocs[i].length: " + TranslatorDocs[i].length);
+                            console.log("8 xyz 5 translators.length: " + translators.length);
                         }
                     }
 
                     //TABLE ROWS
                     for (i = 0; i < translators.length; i++) {
+
                         var tr = document.createElement('TR');
                         for (j = 0; j < translators[i].length; j++) {
                             console.log("translators[i].length: " + translators[i].length);
@@ -978,11 +1102,9 @@
                             for (k = 0; k < nls.length; k++) {
                                 console.log("1 nls [" + k + " ] " + nls[k]);
                             }
+
                             var newTranslatorName = nls[0];
                             newTranslatorName = newTranslatorName.substring(1);
-
-                            console.log("newTranslatorName " + newTranslatorName);
-
                             translatorNamesForGenerateTranslatorTab.push(newTranslatorName);
                             console.log("translatorNamesForGenerateTranslatorTab " + translatorNamesForGenerateTranslatorTab);
                             for (o = 0; o < translatorNamesForGenerateTranslatorTab.length; o++) {
@@ -1005,7 +1127,7 @@
                                     btn.className = "btn btn-info";
                                     btn.value = nls[1].trim();
                                     var dir = nls[l].substr(1);
-                                    var destination = dir.replace("/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents");
+                                    var destination = dir.replace("/home/markus/public_html/", "/~markus/");
                                     console.log("destination " + destination);
                                     var entry = "location.href='http://www.literatureirelandgrantapplication.com:8080" + destination + "'";
                                     console.log("localhost " + entry);
@@ -1018,35 +1140,6 @@
 
                                     docName = nls[l].trim();
                                 }
-
-// Display translator translation sample
-// 
-//                                else if (l === 4) {
-//                                    https://ilikekillnerds.com/2016/05/removing-character-startend-string-javascript/
-//                                    Remove the last character
-//                                    var myString = 'thisIsMyString!';
-//                                    var sillyString = myString.slice(0, -1);
-
-//
-//                                    td = document.createElement('td');
-//                                    var btn = document.createElement('input');
-//                                    btn.type = "button";
-//                                    btn.className = "btn btn-info";
-//                                    btn.value = "Translator translation sample";
-//
-//                                    var dir = nls[l].substr(1);
-//                                    var destination = dir.replace("/home/markus/public_html/", "/~markus/");
-//                                    console.log("destination " + destination);
-//
-//                                    var entry = "location.href='http://www.literatureirelandgrantapplication.com:8080" + destination + "'";
-//                                    console.log("localhost " + entry);
-//
-//                                    btn.setAttribute("onclick", entry);
-//                                    td.appendChild(btn);
-//                                    console.log("nls[l] [" + l + " ] " + nls[l]);
-//                                    td.appendChild(btn);
-//                                    tr.appendChild(td);
-//                                }
                             }
                             tr.appendChild(td);
                             tableBody.appendChild(tr);
@@ -1055,44 +1148,29 @@
                         tableBody.appendChild(tr);
                     }
                     tble.appendChild(tableBody);
-                    translatorTableDiv.appendChild(tble);
-                    var expertReaderName = rowdata.expertReaderList;
-//                    console.log("expertReaderName:  " + expertReaderName);
-//                    console.log("expertReaderName length:  " + expertReaderName.length);
 
-//                    document.getElementById("unassignedERRefNo").value = appReferenceNumber;
-//                    document.getElementById("NewAssignedERRefNo").value = appReferenceNumber;
-                    /*
-                     * get the whole List with the arrays  
-                     * no of arrays = expertReaderName.length
-                     */
-                    //          alert(cntr);
+                    var expertReaderName = rowdata.expertReaderList;
+
 
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#additionalExpertReader').empty(); // empty the div before fetching and adding new data
 
-
                     //Get all Expert Readers that are not assigned at the moment
                     var unassignedExpertReaderList = rowdata.unassignedExpertReaderList;
-                    //           console.log(unassignedExpertReaderList.length);
 
+                    //reset the blocks
+                    document.getElementById("agreementToggle1").style.display = "block";
+                    document.getElementById("agreement_button1").style.display = "none";
+                    document.getElementById("addendumToggle1").style.display = "block";
+                    document.getElementById("addendum_button1").style.display = "none";
 
-//                    var select = document.getElementById("selectUnassignedER");
-//                    // Optional: Clear all existing options first:
-//                    select.innerHTML = "";
-//                    // Populate list with options:
-//                    var defaultSelect = "Select Expert Reader";
-//                    //set default
-//                    select.innerHTML += "<option value=\"" + defaultSelect + "\">" + defaultSelect + "</option>";
-//                    for (var i = 0; i < unassignedExpertReaderList.length; i++) {
-//                        var opt = unassignedExpertReaderList[i];
-//                        select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
-//                    }
+                    /*
+                     * empty the div before fetching and adding new data
+                     */
+                    $('#tn').empty();
+                    $('#tnc').empty();
 
-
-                    $('#tn').empty(); // empty the div before fetching and adding new data
-                    $('#tnc').empty(); // empty the div before fetching and adding new data
-
+                    console.log("8 xyz 6 translators.length: " + translators.length);
                     // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
 
                     // 1: The Nav-Bar
@@ -1113,8 +1191,8 @@
                     }
 
                     rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
-
                     rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
+
 
                     $(rightsAgreementContractsNavBar).appendTo('#tn');
 
@@ -1130,38 +1208,37 @@
 
                         if (i === 0) {
 
-                            rightsAgreementContractsNavContent += '<div class="tab-pane in active" id="tn' + j + '">';
+                            rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
                         } else {
 
-                            rightsAgreementContractsNavContent += '<div class="tab-pane" id="tn' + j + '">';
+                            rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
                         }
 
 
                         rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
 
-                        //Upload a copy of the agreement with the translation rights holder
-
+                        //Upload a copy of the CV
                         rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
                         rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative;">';
 
-                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="agreementToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
-                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement' + j + '"></strong></div> ';
+                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="cvToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
+                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadCV' + j + '"></strong></div>';
                         rightsAgreementContractsNavContent += '<br/>';
                         rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                        rightsAgreementContractsNavContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
+                        rightsAgreementContractsNavContent += '<div class="input-group cv"  style="margin-bottom: 40px;">';
                         rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Agreement-' + j + '" id="agreement' + j + '">';
+                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="CV-' + j + '" id="cv' + j + '">';
                         rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                         rightsAgreementContractsNavContent += '</label>';
-                        rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left"/>';
-                        rightsAgreementContractsNavContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
+                        rightsAgreementContractsNavContent += '<input  type="text" id="label_cv' + j + '" class="pull-left"/>';
+                        rightsAgreementContractsNavContent += '<input type="hidden" value="CV" name="destination" id="cv_upload' + j + '"/>';
                         rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                         rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
 
-                        rightsAgreementContractsNavContent += '<div class="col-md-8" id="agreement_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
-                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="agreement_button_label' + j + '" ></label>';
-                        rightsAgreementContractsNavContent += '<div class="input-group agreement_buttonText pull-left">';
-                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="agreement_link' + j + '" href="">';
+                        rightsAgreementContractsNavContent += '<div class="col-md-5" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="cv_button_label' + j + '" ></label>';
+                        rightsAgreementContractsNavContent += '<div class="input-group cv_buttonText pull-left">';
+                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="cv_link' + j + '" href="">';
                         rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
                         rightsAgreementContractsNavContent += 'Click to open</a>';
                         rightsAgreementContractsNavContent += '</div>';
@@ -1172,7 +1249,6 @@
                         rightsAgreementContractsNavContent += '</div>'; // row
 
                         //Upload a copy of the contract with translator
-
                         rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
                         rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
 
@@ -1185,7 +1261,7 @@
                         rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
                         rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                         rightsAgreementContractsNavContent += '</label>';
-                        rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
+                        rightsAgreementContractsNavContent += '<input  type="text" id="label_contract' + j + '" class="pull-left"/>';
                         rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
                         rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                         rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
@@ -1203,41 +1279,9 @@
                         rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
                         rightsAgreementContractsNavContent += '</div>'; // row
 
-                        //Upload form for addendum to the rights agreement
-
-                        rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
-                        rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
-
-
-                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="addendumToggle' + j + '"  style="margin-bottom: 40px; position:absolute; z-index:0; ">';
-                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left" id="uploadAddendum' + j + '" ></strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div>';
-                        rightsAgreementContractsNavContent += '<br/>';
-                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                        rightsAgreementContractsNavContent += '<div class="input-group addendum"  style="margin-bottom: 40px;">';
-                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Addendum-' + j + '" id="addendum' + j + '">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                        rightsAgreementContractsNavContent += '</label>';
-                        rightsAgreementContractsNavContent += '<input id="label_addendum' + j + '" class="pull-left"/>';
-                        rightsAgreementContractsNavContent += '<input type="hidden" value="Addendum" name="destination" id="addendum_upload' + j + '"/>';
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-12" 
-
-                        rightsAgreementContractsNavContent += '<div class="col-md-8" id="addendum_button' + j + '"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  ';
-                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="addendum_button_label' + j + '" ></label>';
-                        rightsAgreementContractsNavContent += '<div class="input-group addendum_buttonText pull-left" style="width: 190px; hight: 34px" >';
-                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="addendum_link' + j + '" href="">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
-                        rightsAgreementContractsNavContent += 'Click to open</a>';
-                        rightsAgreementContractsNavContent += '</div>';
-                        rightsAgreementContractsNavContent += '</div>'; // -- col-md-5--
-
-
-                        rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
-                        rightsAgreementContractsNavContent += '</div>'; // row
-
                         rightsAgreementContractsNavContent += '</div>';  //  --container--
                         rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+
                     }
 
                     $(rightsAgreementContractsNavContent).appendTo('#tnc');
@@ -1245,8 +1289,8 @@
 
                     //Fill the tabs
 
-
                     var w = 1;
+                    console.log("8 xyz 1: Fill the tabs rightsAgreement.length " + rowdata.rightsAgreement.length);
                     for (var j = 0; j < rowdata.rightsAgreement.length; j++) {
                         var rightsAgreementArray = rowdata.rightsAgreement[j].split(",");
                         for (var v = 0; v < rightsAgreementArray.length; v++) {
@@ -1254,48 +1298,60 @@
                             switch (v) {
                                 case 0:
                                     // Agreement
-
-                                    if (rightsAgreementArray[v].substr(1) !== 'null') {
-                                        console.log("8 xyz case 0  [" + j + "]");
-                                        console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
-                                        document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                    console.log("8 xyz Agreement ");
+                                    if (w === 1) {
+                                        if (rightsAgreementArray[v].substr(1) !== 'null') {
+                                            console.log("8 xyz Agreement not null");
+                                            console.log("8 xyz case 0  j[" + j + "] w  " + w);
+                                            console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
+                                            document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                        }
                                     }
                                     break;
                                 case 1:
                                     // AgreementDocName
+                                    console.log("8 xyz AgreementDocName ");
                                     console.log("8 xyz case 1 [" + j + "]");
-                                    if (rightsAgreementArray[v].substr(1) === 'null') {
-                                        console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
-                                        document.getElementById('uploadAgreement' + w).innerHTML = 'Upload a copy of the agreement with ' + translatorNamesForGenerateTranslatorTab[j];
-                                        document.getElementById('label_agreement' + w).value = "not entered";
+                                    console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
+                                    if (w === 1) {
+                                        if (rightsAgreementArray[v].substr(1) === '') {
+                                            console.log("8 xyz AgreementDocName ===  empty");
+                                            console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
+                                            document.getElementById('uploadAgreement' + w).innerHTML = 'Upload a copy of the agreement with the translation rights holder';
+                                            document.getElementById('label_agreement' + w).value = "not entered";
 
-                                    } else {
-                                        console.log("8 xyz case 1 toggle ");
-                                        $('#agreementToggle' + w).toggle();
-                                        $('#agreement_button' + w).toggle();
+                                        } else {
+                                            console.log("8 xyz AgreementDocName toggle");
+                                            console.log("8 xyz case 1 toggle ");
+                                            $('#agreementToggle' + w).toggle();
+                                            $('#agreement_button' + w).toggle();
 
-                                        document.getElementById("agreement_button_label" + w).innerHTML = 'Open copy of the agreement with the translation rights holder' + translatorNamesForGenerateTranslatorTab[j];
+                                            document.getElementById("agreement_button_label" + w).innerHTML = 'Open copy of the agreement with the translation rights holder';
 
+                                        }
                                     }
                                     break;
                                 case 2:
                                     // Contract
-
+                                    console.log("8 xyz Contract ");
                                     if (rightsAgreementArray[v].substr(1) !== 'null') {
-
+                                        console.log("8 xyz Contract ===  available");
                                         document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
                                     }
                                     break;
                                 case 3:
                                     // ContractDocName
-
-                                    if (rightsAgreementArray[v].substr(1) === 'null') {
-
+                                    console.log("8 xyz ContractDocName");
+                                    console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
+                                    if (rightsAgreementArray[v].substr(1) === '') {
+                                        console.log("8 xyz ContractDocName ===  empty");
+                                        console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
+                                        console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
                                         document.getElementById('label_contract' + w).value = "not entered";
                                         document.getElementById('uploadContract' + w).innerHTML = 'Upload a copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
 
                                     } else {
-
+                                        console.log("8 xyz ContractDocName toggle");
                                         $('#contractToggle' + w).toggle();
                                         $('#contract_button' + w).toggle();
 
@@ -1305,171 +1361,158 @@
                                     break;
                                 case 4:
                                     // AddendumRightsAgreement
-
-                                    if (rightsAgreementArray[v].substr(1) !== 'null') {
-
-                                        document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                    console.log("8 xyz AddendumRightsAgreement ");
+                                    if (w === 1) {
+                                        if (rightsAgreementArray[v].substr(1) !== 'null') {
+                                            console.log("8 xyz AddendumRightsAgreement not null");
+                                            console.log("8 xyz case 0  j[" + j + "] w  " + w);
+                                            console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
+                                            document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                        }
                                     }
                                     break;
                                 case 5:
                                     // AddendumRightsAgreementName
+                                    console.log("8 xyz AddendumRightsAgreement ");
+                                    if (w === 1) {
+                                        if (rightsAgreementArray[v].slice(0, -1)) {
+                                            console.log("8 xyz AddendumRightsAgreementName is blank");
+                                            console.log("8 xyz case 1 not entered");
+                                            document.getElementById('label_addendum' + w).value = "not entered";
+                                            var uploadAddendum = "Upload a copy of the addendum to the rights agreement";
+                                            console.log("8 xyz 2 rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
+                                            document.getElementById('uploadAddendum' + w).innerHTML = uploadAddendum;
 
-                                    if (rightsAgreementArray[v].slice(0, -1) === 'null') {
+                                        } else {
+                                            console.log("8 xyz AddendumRightsAgreementName toggle");
+                                            console.log("8 xyz case 1 toggle ");
+                                            $('#addendumToggle' + w).toggle();
+                                            $('#addendum_button' + w).toggle();
 
-                                        document.getElementById('label_addendum' + w).value = "not entered";
-                                        document.getElementById('uploadAddendum' + w).innerHTML = 'Upload a copy of the addendum to the rights agreement ' + translatorNamesForGenerateTranslatorTab[j];
-
-                                    } else {
-
-                                        $('#addendumToggle' + w).toggle();
-                                        $('#addendum_button' + w).toggle();
-
-                                        document.getElementById("addendum_button_label" + w).innerHTML = 'Open copy of the addendum to the rights agreement with ' + translatorNamesForGenerateTranslatorTab[j];
+                                            document.getElementById("addendum_button_label" + w).innerHTML = "<strong>Open copy of the addendum to the rights agreement </strong>";
+                                        }
                                     }
                                     break;
                             }
                         }
+
+                        //                        console.log("8 xyz  #################   translatorNamesForGenerateTranslatorTab[" + j + "]", translators[j][0]);
+                        console.log("81 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
+
+
+                        // CV
+                        console.log("81 xyz  Process CVs #############################################");
+                        console.log("81 xyz Process CV for ", translatorNamesForGenerateTranslatorTab[j]);
+                        if (translatorNamesForGenerateTranslatorTab[j] === 'null') {
+                            console.log("81 xyz  translatorNamesForGenerateTranslatorTab[j] === 'null' ");
+                            console.log("81 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
+                            document.getElementById('uploadCV' + j).innerHTML = 'Upload a copy of the CV with ' + translatorNamesForGenerateTranslatorTab[j];
+                            document.getElementById('label_translator' + j).value = "not entered";
+
+                        } else {
+                            console.log("81 xyz  translatorNamesForGenerateTranslatorTab[j] NOT 'null' ");
+                            console.log("81 xyz ON i " + i);
+                            console.log("81 xyz ON j " + j);
+                            console.log("81 xyz ON w " + w);
+
+
+                            $('#cvToggle' + w).toggle();
+                            $('#cv_button' + w).toggle();
+                            for (var g = 0; g < translators.length; g++) {
+                                console.log("81 xyz transArray = translators[0] [" + g + "]", translators[0][g]);
+                            }
+                            var transArray = translators[0][j];
+
+                            console.log("81 xyz translators[j][0]  " + translators[j][0]);
+                            console.log("81 xyz translators[0][j]  " + translators[0][j]);
+
+                            transArray = transArray.replace("[", "");
+                            transArray = transArray.replace("]", "");
+
+                            var linkArray = transArray.split(",");
+                            for (var h = 0; h < linkArray.length; h++) {
+                                console.log("81 xyz linkArray[" + h + "]  " + linkArray[h]);
+                            }
+
+                            console.log("81 xyz linkArray[2]  " + linkArray[2]);
+
+                            document.getElementById("cv_button_label" + w).innerHTML = 'Open copy of the CV for ' + translatorNamesForGenerateTranslatorTab[j];
+                            document.getElementById('cv_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + linkArray[2].trim() + " ";
+
+                        }
+
                         w++;  // next translator
+
                     }
 
-
+//
+//
                     $("#appcontract").val(contr);
-                    $("#proposedDateOfPublication").val($(this).closest('tr').children()[7].textContent);
-                    $("#appproposedPrintRun").val($(this).closest('tr').children()[8].textContent);
-                    $("#plannedPageExtent").val($(this).closest('tr').children()[9].textContent);
+//                    $("#proposedDateOfPublication").val($(this).closest('tr').children()[7].textContent);
+//                    $("#appproposedPrintRun").val($(this).closest('tr').children()[8].textContent);
+//                    $("#plannedPageExtent").val($(this).closest('tr').children()[9].textContent);
                     $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
-                    $("#breakDownTranslatorFee").val($(this).closest('tr').children()[12].textContent);
-                    $("#translatorFee").val($(this).closest('tr').children()[13].textContent);
-                    $("#bookNotes").val($(this).closest('tr').children()[14].textContent);
+//                    $("#breakDownTranslatorFee").val($(this).closest('tr').children()[12].textContent);
+//                    $("#translatorFee").val($(this).closest('tr').children()[13].textContent);
+//                    $("#bookNotes").val($(this).closest('tr').children()[14].textContent);
                     $("#appStatus").val($(this).closest('tr').children()[15].textContent);
                     $("#copiesSent").val($(this).closest('tr').children()[16].textContent);
                     $("#dateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
-//                    $("#copiesTranslationSample").val($(this).closest('tr').children()[18].textContent);
                     $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
                     $("#appAPPROVED").val($(this).closest('tr').children()[20].textContent);
-                    $("#appGenre").val($(this).closest('tr').children()[21].textContent);
-                    $("#TranslatorName").val($(this).closest('tr').children()[22].textContent);
-                    $("#appBookTitle").val($(this).closest('tr').children()[23].textContent);
-
-                    $("#cover").val($(this).closest('tr').children()[25].textContent);
-
+//                    $("#appGenre").val($(this).closest('tr').children()[21].textContent);
+                    $("#appExpertReader").val($(this).closest('tr').children()[23].textContent);
+//                    $("#appBookTitle").val($(this).closest('tr').children()[24].textContent);
+                    $("#expertReaderName").val($(this).closest('tr').children()[22].textContent);
                     $("#sampleSentOut").val($(this).closest('tr').children()[29].textContent);
                     $("#sampleReturned").val($(this).closest('tr').children()[30].textContent);
-                    $("#appLanguageOriginal").val($(this).closest('tr').children()[31].textContent);
-                    $("#originalPageExtent").val($(this).closest('tr').children()[32].textContent);
-                    $("#appCountryOfPublication").val($(this).closest('tr').children()[33].textContent);
-                    $("#appForeignCountry").val($(this).closest('tr').children()[33].textContent);
-                    $("#appForeignPublisher").val($(this).closest('tr').children()[34].textContent);
+                    $("#appReadersReport").val($(this).closest('tr').children()[31].textContent);
+//                  $("#readerReportSummary").val($(this).closest('tr').children()[32].textContent);
+
 //                  $("#appDateOfPublicationOriginal").val($(this).closest('tr').children()[35].textContent);
-                    $("#publicationYear1").val($(this).closest('tr').children()[35].textContent);
-                    $("#languages").val($(this).closest('tr').children()[36].textContent);
+//                    $("#publicationYear1").val($(this).closest('tr').children()[35].textContent);
+//                    $("#languages").val($(this).closest('tr').children()[36].textContent);
 //                    $("#appLanguageOriginal").val($(this).closest('tr').children()[36].textContent);
-//                    $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
-                    $("#amountRequested").val($(this).closest('tr').children()[38].textContent);
-                    $("#amountApproved").val($(this).closest('tr').children()[39].textContent);
-                    $("#foreignPublisher").val($(this).closest('tr').children()[34].textContent);
-                    $("#publisherInformedOfMeetingn").val($(this).closest('tr').children()[40].textContent);
-                    $("#appTargetLanguage").val($(this).closest('tr').children()[36].textContent);
-                    $("#acknowledgementApproved").val($(this).closest('tr').children()[43].textContent);
-//                    $("#award").val($(this).closest('tr').children()[62].textContent);
-//                    $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
-//                    $("#authors").val($(this).closest('tr').children()[66].textContent);
-                    $("#publicationYear1").val($(this).closest('tr').children()[57].textContent);
-                    $("#series").val($(this).closest('tr').children()[58].textContent);
-                    $("#translationTitle").val($(this).closest('tr').children()[59].textContent);
-//                    $("#isbn").val($(this).closest('tr').children()[62].textContent);
-//                    $("#issn").val($(this).closest('tr').children()[63].textContent);
-                    //                  console.log(table.row(this).data());
+                    $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
+//                    $("#appCountryOfPublication").val($(this).closest('tr').children()[38].textContent);
+//                    $("#appForeignPublisher").val($(this).closest('tr').children()[39].textContent);
+//                    $("#foreignPublisher").val($(this).closest('tr').children()[39].textContent);
+//                    $("#appForeignCountry").val($(this).closest('tr').children()[40].textContent);
+//                    $("#appTargetLanguage").val($(this).closest('tr').children()[41].textContent);
+                    $("#amountRequested").val($(this).closest('tr').children()[43].textContent);
+                    $("#amountApproved").val($(this).closest('tr').children()[43].textContent);
+                    $("#award").val($(this).closest('tr').children()[62].textContent);
+                    $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
+                    $("#authors").val($(this).closest('tr').children()[66].textContent);
+//                    $("#publicationYear").val($(this).closest('tr').children()[67].textContent);
+////                    $("#series").val($(this).closest('tr').children()[68].textContent);
+////                    $("#translationTitle").val($(this).closest('tr').children()[69].textContent);
 
+                    if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
 
-                    console.log("12345  1 ApplicationNumber " + $(this).closest('tr').children()[1].textContent);
-                    console.log("12345  2 ApplicationYear " + $(this).closest('tr').children()[2].textContent);
-                    console.log("12345  3 ReferenceNumber " + $(this).closest('tr').children()[3].textContent);
-                    console.log("12345  4 company " + $(this).closest('tr').children()[4].textContent);
-                    console.log("12345  5 agreement " + $(this).closest('tr').children()[5].textContent);
-                    console.log("12345  6 contract " + $(this).closest('tr').children()[6].textContent);
-                    console.log("12345  7 proposedDateOfPublication " + $(this).closest('tr').children()[7].textContent);
-                    console.log("12345  8 appproposedPrintRun " + $(this).closest('tr').children()[8].textContent);
-                    console.log("12345  9 plannedPageExtent " + $(this).closest('tr').children()[9].textContent);
-                    console.log("12345 10 translatorCV " + $(this).closest('tr').children()[10].textContent);
+                        // no cover - show upload
+                        var cver = '..images/not-available.jpg';
+                        $("#showUploadCover1").show();
+                        $("#showUploadCover2").hide();
+                        //                        document.getElementById("cover21").src = cver;
+                    } else {
+                        // we have a cover - show cover
+                        $("#showUploadCover2").show();
+                        $("#showUploadCover1").hide();
+                        var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
 
-                    console.log("12345 11 appnumberOfPages " + $(this).closest('tr').children()[11].textContent);
-                    console.log("12345 12 breakDownTranslatorFee " + $(this).closest('tr').children()[12].textContent);
-                    console.log("12345 13 translatorFee " + $(this).closest('tr').children()[13].textContent);
-                    console.log("12345 14 bookNotes " + $(this).closest('tr').children()[14].textContent);
-                    console.log("12345 15 appStatus " + $(this).closest('tr').children()[15].textContent);
-                    console.log("12345 16 copiesSent " + $(this).closest('tr').children()[16].textContent);
-                    console.log("12345 17 dateCopiesWereSent " + $(this).closest('tr').children()[17].textContent);
-                    console.log("12345 18 copiesTranslationSample " + $(this).closest('tr').children()[18].textContent);
-                    console.log("12345 19 appTC_ACCEPTED " + $(this).closest('tr').children()[19].textContent);
-                    console.log("12345 20 appAPPROVED " + $(this).closest('tr').children()[20].textContent);
+                        $("#cover").val(cver);
+                        console.log("81 xyz show bookCover cover " + bookCover);
+                        console.log("81 xyz show Book cover for \n" + rowdata.translationTitle);
+                        document.getElementById("cover21").src = cver;
+                        document.getElementById("showUploadCoverTitle").innerHTML = "Book cover for \n" + rowdata.translationTitle;
 
-                    console.log("12345 21 appGenre " + $(this).closest('tr').children()[21].textContent);
-                    console.log("12345 22 TranslatorName " + $(this).closest('tr').children()[22].textContent);
-                    console.log("12345 23 bookTitle " + $(this).closest('tr').children()[23].textContent);
-                    console.log("12345 24 Titles " + $(this).closest('tr').children()[24].textContent);
-                    console.log("12345 25 cover " + $(this).closest('tr').children()[25].textContent);
-                    console.log("12345 26 sampleSentOut " + $(this).closest('tr').children()[26].textContent);
-                    console.log("12345 27 sampleReturned " + $(this).closest('tr').children()[27].textContent);
-                    console.log("12345 28 readerReport " + $(this).closest('tr').children()[28].textContent);
-                    console.log("12345 29 idTranslator " + $(this).closest('tr').children()[29].textContent);
-                    console.log("12345 30 publicationYear " + $(this).closest('tr').children()[30].textContent);
-
-                    console.log("12345 31 appLanguageOriginal " + $(this).closest('tr').children()[31].textContent);
-                    console.log("12345 32 originalPageExtent " + $(this).closest('tr').children()[32].textContent);
-                    console.log("12345 33 countryOfPublication / appForeignCountry " + $(this).closest('tr').children()[33].textContent);
-                    console.log("12345 34 foreignPublisher / appForeignPublisher " + $(this).closest('tr').children()[34].textContent);
-                    console.log("12345 35 publicationYear1 " + $(this).closest('tr').children()[35].textContent);
-                    console.log("12345 36 languages / appTargetLanguage " + $(this).closest('tr').children()[36].textContent);
-                    console.log("12345 37 ???? " + $(this).closest('tr').children()[37].textContent);
-                    console.log("12345 38 amountRequested " + $(this).closest('tr').children()[38].textContent);
-                    console.log("12345 39 amountApproved " + $(this).closest('tr').children()[39].textContent);
-                    console.log("12345 40 publisherInformedOfMeeting" + $(this).closest('tr').children()[40].textContent);
-
-
-                    console.log("12345 41 boardComments_Instructions " + $(this).closest('tr').children()[41].textContent);
-                    console.log("12345 42 contractSentToPublisher " + $(this).closest('tr').children()[42].textContent);
-                    console.log("12345 43 acknowledgementApproved " + $(this).closest('tr').children()[43].textContent);
-                    console.log("12345 44 datePublishedBooksReceived " + $(this).closest('tr').children()[44].textContent);
-                    console.log("12345 45 datePaymentMadeToPublisher " + $(this).closest('tr').children()[45].textContent);
-                    console.log("12345 46 paymentReferenceNumber " + $(this).closest('tr').children()[46].textContent);
-                    console.log("12345 47 addendumRightsAgreement " + $(this).closest('tr').children()[47].textContent);
-                    console.log("12345 48 proofOfPaymentToTranslator " + $(this).closest('tr').children()[48].textContent);
-                    console.log("12345 49 bankDetailsForm " + $(this).closest('tr').children()[49].textContent);
-                    console.log("12345 50 SignedLIContract " + $(this).closest('tr').children()[50].textContent);
-
-                    console.log("12345 51 paymentStatus " + $(this).closest('tr').children()[51].textContent);
-                    console.log("12345 52 previousGrantAid " + $(this).closest('tr').children()[52].textContent);
-                    console.log("12345 53 award " + $(this).closest('tr').children()[53].textContent);
-                    console.log("12345 54 salesFigures " + $(this).closest('tr').children()[54].textContent);
-                    console.log("12345 55 original " + $(this).closest('tr').children()[55].textContent);
-                    console.log("12345 56 Author " + $(this).closest('tr').children()[56].textContent);
-                    console.log("12345 57 publicationYear1 " + $(this).closest('tr').children()[57].textContent);
-                    console.log("12345 58 Series " + $(this).closest('tr').children()[58].textContent);
-                    console.log("12345 59 translationTitle " + $(this).closest('tr').children()[59].textContent);
-                    console.log("12345 60 transList " + $(this).closest('tr').children()[60].textContent);
-                    console.log("12345 61 " + $(this).closest('tr').children()[61].textContent);
-                    console.log("12345 62 ISBN " + $(this).closest('tr').children()[62].textContent);
-                    console.log("12345 63 ISSN " + $(this).closest('tr').children()[63].textContent);
-//                    console.log("12345 64 " + $(this).closest('tr').children()[64].textContent);
-//                    console.log("12345 65 " + $(this).closest('tr').children()[65].textContent);
-//                    console.log("12345 66 authors " + $(this).closest('tr').children()[66].textContent);
-//                    console.log("12345 67 publicationYear " + $(this).closest('tr').children()[67].textContent);
-//                    console.log("12345 68 series " + $(this).closest('tr').children()[68].textContent);
-//                    console.log("12345 69 translationTitle " + $(this).closest('tr').children()[69].textContent);
-//                    console.log("12345 70 " + $(this).closest('tr').children()[70].textContent);
-
-//                    console.log("12345 71 " + $(this).closest('tr').children()[71].textContent);
-//                    console.log("12345 72 " + $(this).closest('tr').children()[72].textContent);
-//                    console.log("12345 73 " + $(this).closest('tr').children()[72].textContent);
-                    console.log("generateTranslatorTab translatorArray " + translators.length);
-
+                        bookTranslationTitle = rowdata.translationTitle;
+                        console.log("81 xyz show Book bookTranslationTitle for \n" + bookTranslationTitle);
+                    }
                 });
             });
         </script>
-
-
-
 
 
         <!--get selectpicker selection--> 
@@ -1503,7 +1546,9 @@
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_agreement").value = label;
+                    //                  var label_translatorid2 = "label_translator" + id2;
+                    document.getElementById("label_agreement1").value = label;
+                    document.getElementById("label_agreement1").size = label.length;
                 });
             });
             $(function () {
@@ -1513,6 +1558,7 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_contract").value = label;
+                    document.getElementById("label_contract").size = label.length;
                 });
             });
             $(function () {
@@ -1521,7 +1567,9 @@
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_addendum").value = label;
+                    //                  var label_translatorid2 = "label_translator" + id2;
+                    document.getElementById("label_addendum1").value = label;
+                    document.getElementById("label_addendum1").size = label.length;
                 });
             });
             $(function () {
@@ -1530,8 +1578,9 @@
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-//                  var label_translatorid2 = "label_translator" + id2;
+                    //                  var label_translatorid2 = "label_translator" + id2;
                     document.getElementById("label_translator0").value = label;
+                    document.getElementById("label_translator0").size = label.length;
                 });
             });
             $(function () {
@@ -1543,6 +1592,7 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     var label_translatorid = "label_translator" + id;
                     document.getElementById(label_translatorid).value = label;
+                    document.getElementById(label_translatorid).size = label.length;
                 });
             });
             $(function () {
@@ -1552,6 +1602,7 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_originalSample").value = label;
+                    document.getElementById("label_originalSample").size = label.length;
                 });
             });
             $(function () {
@@ -1561,6 +1612,7 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_translationSample").value = label;
+                    document.getElementById("label_translationSample").size = label.length;
                 });
             });
             $(function () {
@@ -1569,8 +1621,8 @@
                             numFiles = input.get(0).files ? input.get(0).files.length : 1,
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
-                    alert("Cover " + label);
                     document.getElementById("label_cover").value = label;
+                    document.getElementById("label_cover").size = label.length;
                 });
             });
             $(function () {
@@ -1580,6 +1632,7 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_proofPayment").value = label;
+                    document.getElementById("label_proofPayment").size = label.length;
                 });
             });
             $(function () {
@@ -1589,6 +1642,7 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_BankDetailForm").value = label;
+                    document.getElementById("label_BankDetailForm").size = label.length;
                 });
             });
             $(function () {
@@ -1598,6 +1652,7 @@
                             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
                     input.trigger('fileselect', [numFiles, label]);
                     document.getElementById("label_signedLIcontract").value = label;
+                    document.getElementById("label_signedLIcontract").size = label.length;
                 });
             });
 
@@ -1610,35 +1665,39 @@
                     var id = input[0].id;
                     var label_id = "label_" + id;
                     document.getElementById(label_id).value = label;
+                    document.getElementById(label_id).size = label.length;
                 });
             }
+            ;
+        </script>
+
+        <!--copyFirstTranslatorName-->
+        <script>
+            function  copyFirstTranslatorName() {
+
+                translatorArray = [];
+                console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
+
+                var fn = document.getElementById("translatorName");
+                document.getElementById("first0").value = fn.value;
+                Name = fn.value;
+                console.log("copyFirstTranslatorName Name ", Name);
+                translatorArray.push(Name);
+                console.log(" first entry in translatorArray ", fn.value);
 
 
-            function storeImage() {
-                // Get Content
-                var uploadCoverContent = document.getElementById("showUploadCover1").innerHTML;
-
-                bookCover = 'http://www.literatureirelandgrantapplication.com:8080' + bookCover + '';
-                $("#cover").val(bookCover);
-                console.log("8 xyz storeImage Cover cover " + bookCover);
-
-                console.log("8 xyz storeImage Book cover for \n" + bookTranslationTitle);
-                document.getElementById("cover21").src = bookCover;
-                document.getElementById("showUploadCoverTitle").innerHTML = "Book cover for \n" + bookTranslationTitle;
-
-                // Store Content
-                localStorage.setItem("uploadCoverContent", uploadCoverContent);
-
-                console.log("storeImage localStorage.uploadCoverContent ", localStorage.uploadCoverContent.length);
-                if (!localStorage.uploadCoverContent === 0) {
-                    console.log("storeImage uploadCoverContent " + uploadCoverContent);
-                    for (i = 0; i < uploadCoverContent.length; i++) {
-                        console.log("storeImage uploadCoverContent " + uploadCoverContent[i]);
+                if (!localStorage.translatorContent === 0) {
+                    //function retrieve(){
+                    document.getElementById("torget").innerHTML = localStorage.getItem("translatorContent");
+                    console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("restored translatorContent " + translatorContent);
                     }
-//                    alert("backToTranslators false");
-//                    return false;
                 }
 
+
+                // back To Translators tab
+                $('#bs-example-navbar-collapse-2 a[href="#Translator"]').tab('show');
             }
         </script>
 
@@ -1660,56 +1719,326 @@
             });
         </script>
 
-        <script>
-            // Copy the first translator name to the pop up modal
-            function  copyFirstTranslatorName() {
+        <!--add more RightsHolders-->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#addAdditionalRightsHolders").click(function (event) {
+                    console.log("addAdditionalRightsHolders   ", rightsHolderArray);
+                    console.log("123v2 addAdditionalRightsHolders   ", rightsHolderArray.length);
+                    translationrightsholdercounter = rightsHolderArray.length;
+                    translationrightsholdercounterInput = rightsHolderArray.length;
+                    translationrightsholdercounter++;
 
-                var fn = document.getElementById("translatorName");
-                document.getElementById("first0").value = fn.value;
-                Name = fn.value;
-                translatorArray.push(Name);
-                console.log(" first entry in translatorArray ", fn.value);
-                if (!localStorage.translatorContent === 0) {
-                    //function retrieve(){
-                    document.getElementById("torget").innerHTML = localStorage.getItem("translatorContent");
-                    console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
-                    for (i = 0; i < translatorContent.length; i++) {
-                        console.log("restored translatorContent " + translatorContent);
-                    }
-                }
-            }
-
+                    console.log("123v2 addAdditionalRightsHolders  translationrightsholdercounter ", translationrightsholdercounter);
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + translationrightsholdercounter + ".  Rights holder  </div>");
+                    var $newInput = $("<input placeholder='Rights holder name' type='text'> ");
+                    $newInput
+                            .attr("name", "rightsHoldersName" + translationrightsholdercounterInput)
+                            .attr("id", "name" + translationrightsholdercounterInput)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#RightsHolderGeneratedForm"));
+                });
+            });
         </script>
 
-        <script>
-            function backToTranslators() {
-                var upload_number = 2;
-                // Get Content
-                var translatorContent = document.getElementById("translatorTableDiv").innerHTML;
-                var coverageCuttingsContent = document.getElementById("result").innerHTML;
-                // Store Content
-                localStorage.setItem("translatorContent", translatorContent);
-                localStorage.setItem("coverageCuttingsContent", coverageCuttingsContent);
+        <!--addAdditionalRightsHoldersModalDiv-->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                translationrightsholdercounter = 1;
+                $("#RightsHolderGeneratedForm").empty();
+                $("#addAdditionalRightsHoldersModalDiv").click(function (event) {
+                    alert("addAdditionalRightsHoldersModalDiv");
+                    console.log("123v addAdditionalRightsHolders   ", rightsHolderArray.length);
+                    if (rightsHolderArray.length > 0) {
+                        for (var i = 0; i < rightsHolderArray.length; i++) {
+                            var counter = i + 1;
+                            console.log("123v addAdditionalRightsHolders   ", rightsHolderArray[i]);
+                            var name = rightsHolderArray[i];
 
-                console.log("backToTranslators localStorage.coverageCuttingsContent length ", localStorage.coverageCuttingsContent.length);
-                if (!localStorage.coverageCuttingsContent === 0) {
-                    console.log("backToTranslators coverageCuttingsContent " + coverageCuttingsContent);
-                    for (i = 0; i < coverageCuttingsContent.length; i++) {
-                        console.log("backToTranslators coverageCuttingsContent " + coverageCuttingsContent[i]);
+                            var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counter + ".  Rights holder  </div>");
+                            var $newInput = $('<input placeholder="Rights holder name" disabled="" type="text" value="' + name + '"  > ');
+                            $newInput
+                                    .attr("name", "rightsHoldersName" + i)
+                                    .attr("id", "name" + i)
+                                    .addClass("text wsp");
+                            $newInput.appendTo($newDiv);
+                            $newDiv.appendTo($("#RightsHolderGeneratedForm"));
+
+                        }
+                    } else {
+
+                    }
+                });
+            });
+        </script>
+
+        <!--copyFirstRightsHolderName-->
+        <script>
+            function  copyFirstRightsHolderName() {
+
+                console.log("123v copyFirstRightsHolderName addAdditionalRightsHolders length  ", rightsHolderArray.length);
+
+                if (rightsHolderArray.length === 0) {
+                    var fn = document.getElementById("rightsHoldersName0");
+                    document.getElementById("firstRightsHolder0").value = fn.value;
+                    Name = fn.value;
+                    console.log("copyFirstRightsHolderName Name ", Name);
+                    rightsHolderArray.push(Name);
+                    console.log(" first entry in rightsHolderArray ", fn.value);
+                }
+
+                if (!localStorage.rightsAgreementContent === 0) {
+                    //function retrieve(){
+                    document.getElementById("rightsAgreementContracts").innerHTML = localStorage.getItem("rightsAgreementContent");
+                    console.log("copyFirstRightsHolderName localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("restored rightsAgreementContent " + rightsAgreementContent);
+                    }
+                }
+
+
+                // back To Translators tab
+//                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
+            }
+        </script>
+
+        <!--backToRightsAgreement-->
+        <script>
+            function backToRightsAgreement() {
+                alert("backToRightsAgreement");
+
+                $("#addAddRightsHolders").empty();
+
+                console.log("123v backToRightsAgreement rightsHolderArray  ", rightsHolderArray);
+
+                // Get Content
+                var rightsAgreementContent = document.getElementById("rightsAgreementContracts").innerHTML;
+
+                // Store Content
+                localStorage.setItem("rightsAgreementContent", rightsAgreementContent);
+                console.log("backToRightsAgreement localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
+                if (!localStorage.rightsAgreementContent === 0) {
+                    console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent[i]);
                     }
 //                    alert("backToTranslators false");
 //                    return false;
                 }
 
-//                var test1 = document.getElementById("result");
-//                console.log("test1 length  " + test1.length);
-//                for (var z = 0; z < test1.length; z++) {
-//
-//                    console.log("test1 [" + z + "]  " + test1[z].value);
-//                }
 
 
+                console.log("123v2 backToRightsAgreement translationrightsholdercounter  ", translationrightsholdercounter);
+                for (var i = 2; i < translationrightsholdercounter; i++) {
+                    console.log("123v2 backToRightsAgreement rightsHolderArray ", rightsHolderArray);
+                    var nr = "name" + i;
+                    console.log("backToRightsAgreement nr ", nr);
+                    var item = document.getElementById(nr);
+                    itemValue = item.value;
+                    console.log("123v2  backToRightsAgreement nr " + nr + " itemValue " + itemValue);
+                    //only push itemValue with a value and not already in array
+                    if (itemValue !== "") {
+                        if (rightsHolderArray.includes(itemValue)) {
+                            console.log("123v2 backToRightsAgreement excluding  ", itemValue);
+                        } else {
+                            console.log("123v2 backToRightsAgreement push itemValue ", itemValue);
+                            rightsHolderArray.push(itemValue);
+                            console.log("123v2 backToRightsAgreement next entry in translatorArray ", itemValue);
+                        }
+                    }
+                }
 
+                // Switch off "Add more translators"
+                $('#addAdditionalRightsHoldersModalDiv').toggle();
+
+                // Change Title from "Translation rights holder" to "Translation rights holder(s)"
+                document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holders';
+
+                // Disable first Translation rights holder name input element
+                document.getElementById("rightsHoldersName0").readonly = 'true';
+                document.getElementById("rightsHoldersName0").style.display = "none";
+
+                // Display all TranslatorrightsHolder input element each
+                for (var i = 0; i < rightsHolderArray.length; i++) {
+
+                    var additionalTranslatorTag = '';
+                    console.log("LOOP rightsHolderArray " + rightsHolderArray[i]);
+
+                    additionalTranslatorTag += '<div class="form-group has-feedback">';
+                    additionalTranslatorTag += ' <input id="rightsHoldersName' + i;
+                    additionalTranslatorTag += ' type="text"  ';
+                    additionalTranslatorTag += 'class="form-control"';
+                    additionalTranslatorTag += 'name="rightsHoldersName' + i + '"';
+                    additionalTranslatorTag += 'value="' + rightsHolderArray[i] + '"';
+                    additionalTranslatorTag += 'disabled = ""';
+                    additionalTranslatorTag += '</div>';
+
+                    $(additionalTranslatorTag).appendTo('#addAddRightsHolders');
+                }
+
+
+                console.log("backToRightsAgreement #rightsHolderArray.val(rightsHolderArray) " + rightsHolderArray);
+                console.log(rightsHolderArray);
+                console.log("backToRightsAgreement #rightsHolderArray.length " + rightsHolderArray.length);
+                $("#rightsHolderArray").val(rightsHolderArray);
+
+                // back To RightsAgreement tab
+//                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
+// on load of the page: switch to the currently selected tab
+                var hash = window.location.hash;
+                console.log("window.location.hash " + hash);
+                $('#myTab a[href="' + hash + '"]').tab('show');
+
+
+                // if we have a final list of translators (more than one)
+                // we need to clear a possible existing tab first
+//                generateTranslatorTab(0);
+            }
+        </script>
+
+        <!--generateTranslatorTab-->
+        <script>
+            function  generateTranslatorTab(indicator) {
+
+                if (indicator === 0) {
+
+                    // if we have a final list of translators (more than one)
+                    // we need to clear a possible existing tab
+
+                    $('#tnc').empty(); // empty the div before fetching and adding new data
+                    $('#tn').empty();  // empty the div before fetching and adding new data
+
+                }
+
+                $('#tnc').empty(); // empty the div before fetching and adding new data
+                $('#tn').empty();  // empty the div before fetching and adding new data
+
+                console.log("generateTranslatorTab translatorArray " + translatorArray);
+                // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
+
+                // 1: The Nav-Bar
+
+                var rightsAgreementContractsNavBar = '';
+
+                rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
+                rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
+
+                for (var i = 0; i < translatorArray.length; i++) {
+
+                    var j = i + 1;
+
+
+                    if (i === 0) {
+
+                        rightsAgreementContractsNavBar += '<li class="active"><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
+
+                    } else {
+
+                        rightsAgreementContractsNavBar += '<li><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
+                    }
+                }
+
+                rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
+                rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
+
+                $(rightsAgreementContractsNavBar).appendTo('#tn');
+
+                // The Tabs themselves
+
+                var rightsAgreementContractsNavContent = '';
+
+                for (var i = 0; i < translatorArray.length; i++) {
+
+                    var j = i + 1;
+
+                    if (i === 0) {
+
+                        rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
+
+                    } else {
+
+                        rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
+
+                    }
+
+                    rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
+
+
+                    //Upload a copy of the CV
+                    console.log("processFirstTranslator generateTranslatorTab Upload a copy of the CV i " + i + " j " + j + " :: " + translatorArray[i]);
+                    rightsAgreementContractsNavContent += '<div class="col-md-8" style="margin-bottom: 20px">';
+                    rightsAgreementContractsNavContent += '<label for="label_translator' + j + '" class="control-label pull-left" >Upload a copy of ' + translatorArray[i] + '\'s CV:</label>';
+                    rightsAgreementContractsNavContent += '<br>';
+                    rightsAgreementContractsNavContent += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+                    rightsAgreementContractsNavContent += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
+                    rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
+                    rightsAgreementContractsNavContent += 'Select file ';
+                    rightsAgreementContractsNavContent += '<input multiple="" name="file" id="translator_cv' + j + '" type="file">';
+                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    rightsAgreementContractsNavContent += '</label>';
+                    rightsAgreementContractsNavContent += '<input  type="text" id="label_translator' + j + '" class="pull-left">';
+                    rightsAgreementContractsNavContent += '<br>';
+                    rightsAgreementContractsNavContent += '<br>';
+                    rightsAgreementContractsNavContent += '<input id="translator_cv_upload' + j + '" value="Translator_CV" name="destination" type="hidden">';
+                    rightsAgreementContractsNavContent += '</div>';
+                    rightsAgreementContractsNavContent += '</div>';
+
+                    //Upload a copy of the contract with
+                    rightsAgreementContractsNavContent += '<div class="col-md-9" style="margin-bottom: 10px">';
+                    rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left">Upload a copy of the contract with ' + translatorArray[i] + '</strong></div>';
+                    rightsAgreementContractsNavContent += '<br/>';
+                    rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
+                    rightsAgreementContractsNavContent += '<div class="input-group contract"  style="margin-bottom: 40px;">';
+                    rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
+                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    rightsAgreementContractsNavContent += '</label>';
+                    rightsAgreementContractsNavContent += '<input  type="text" id="label_contract' + j + '" class="pull-left"/>';
+                    rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
+                    rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
+                    rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
+
+                    rightsAgreementContractsNavContent += '</div  class="container EndwrapperContainer">'; // <!--container-->
+                    rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+
+                }
+
+//                show translatorTabs if hidden
+                if ($(translatorTabs).css('display') === 'none' || $(translatorTabs).css("visibility") === "hidden") {
+                    $(translatorTabs).show();
+                }
+
+                $(rightsAgreementContractsNavContent).appendTo('#tnc');
+
+            }
+        </script>
+
+        <!--backToTranslators-->
+        <script>
+            function backToDrawDown() {
+
+                $('#bs-example-navbar-collapse-1 a[href="#DrawDown"]').tab('show');
+            }
+        </script>
+
+        <!--backToTranslators-->
+        <script>
+            function backToTranslators() {
+                var upload_number = 2;
+                // Get Content
+                var translatorContent = document.getElementById("torget").innerHTML;
+                // Store Content
+                localStorage.setItem("translatorContent", translatorContent);
+                console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
+                if (!localStorage.translatorContent === 0) {
+                    console.log("backToTranslators translatorContent " + translatorContent);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("backToTranslators translatorContent " + translatorContent[i]);
+                    }
+//                    alert("backToTranslators false");
+//                    return false;
+                }
                 for (var i = 2; i <= counter; i++) {
 
                     var nr = "name" + i;
@@ -1728,7 +2057,7 @@
                     moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
                     moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
                     moreUploadTag += '</label>';
-                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
+                    moreUploadTag += '<input  type="text" id="label_translator' + upload_number + '" class="pull-left">';
                     moreUploadTag += '<br>';
                     moreUploadTag += '<br>';
                     moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
@@ -1738,13 +2067,13 @@
                     upload_number++;
                 }
 
-//                $('#bs-example-navbar-collapse-1 a[href="#Drawdown"]').tab('show');
-//                $('#addTranslatorModalDiv').toggle();
-////                Change Title from "Translator" to "Translators"
-//                document.getElementById("translatorNameLabel").innerHTML = 'Translators';
-//                Disable first Translator input element
-//                document.getElementById("translatorName").readonly = 'true';
-//                Display all Translators in input element each
+                $('#bs-example-navbar-collapse-1 a[href="#Translator"]').tab('show');
+                $('#addTranslatorModalDiv').toggle();
+                // Change Title from "Translator" to "Translators"
+                document.getElementById("translatorNameLabel").innerHTML = 'Translators';
+                // Disable first Translator input element
+                document.getElementById("translatorName").readonly = 'true';
+                //Display all Translators in input element each
                 for (var i = 1; i < translatorArray.length; i++) {
                     console.log("backToTranslators translatorArray " + translatorArray[i]);
                     var additionalTranslatorTag = '';
@@ -1778,7 +2107,6 @@
 
                 rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
 
-//                $(rightsAgreementContractsNavBar).appendTo('#tn');
                 var rightsAgreementContractsNavContent = '';
 
                 for (var i = 0; i < translatorArray.length; i++) {
@@ -1786,16 +2114,16 @@
                     var j = i + 1;
                     if (i === 0) {
 
-                        rightsAgreementContractsNavContent += '<div class="tab-pane in active" id="tn' + j + '">';
+                        rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
                     } else {
 
-                        rightsAgreementContractsNavContent += '<div class="tab-pane" id="tn' + j + '">';
+                        rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
                     }
 
                     //  --container--
                     rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
-                    //Upload a copy of the agreement with the translation rights holder
 
+                    //Upload a copy of the agreement with the translation rights holder
                     rightsAgreementContractsNavContent += '<div class="col-md-10"   style="margin-bottom: 10px">';
                     rightsAgreementContractsNavContent += '<div  style="margin-bottom: 40px;margin-top: 30px"> <strong class="pull-left">Upload a copy of the agreement with the translation rights holder' + j + '</strong> <small class="pull-left"> &nbsp;  (where applicable)</small> </div>';
                     rightsAgreementContractsNavContent += '<br/>';
@@ -1805,7 +2133,7 @@
                     rightsAgreementContractsNavContent += 'Select file <input type="file"  name="file" id="agreement' + j + '">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left"/>';
+                    rightsAgreementContractsNavContent += '<input  type="text"  id="label_agreement' + j + '" class="pull-left"/>';
                     rightsAgreementContractsNavContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
                     rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                     rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-10" 
@@ -1822,7 +2150,7 @@
                     rightsAgreementContractsNavContent += 'Select file <input type="file"  name="file" id="contract' + j + '">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
+                    rightsAgreementContractsNavContent += '<input  type="text"  id="label_contract' + j + '" class="pull-left"/>';
                     rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
                     rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                     rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
@@ -1839,7 +2167,7 @@
                     rightsAgreementContractsNavContent += 'Select file <input type="file"  name="file" id="addendum' + j + '">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_addendum' + j + '" class="pull-left"/>';
+                    rightsAgreementContractsNavContent += '<input  type="text"  id="label_addendum' + j + '" class="pull-left"/>';
                     rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="addendum_upload' + j + '"/>';
                     rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                     rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-12" 
@@ -1854,56 +2182,64 @@
             }
         </script>
 
-        <script>
-            //managing stacked modals
-            //https://stackoverflow.com/questions/28077066/bootstrap-modal-issue-scrolling-gets-disabled
+        <!-- add Press Cuttings -->
+        <script type="text/javascript">
             $(document).ready(function () {
-                $('.btn[data-toggle=modal]').on('click', function () {
-
-                    var $btn = $(this);
-                    var currentDialog = $btn.closest('.modal-dialog'),
-                            targetDialog = $($btn.attr('data-target'));
-                    if (!currentDialog.length)
-                        return;
-                    targetDialog.data('previous-dialog', currentDialog);
-                    currentDialog.addClass('aside');
-                    var stackedDialogCount = $('.modal.in .modal-dialog.aside').length;
-                    if (stackedDialogCount <= 5) {
-                        currentDialog.addClass('aside-' + stackedDialogCount);
-                    }
-
-                });
-
-                $('.modal').on('hidden.bs.modal', function () {
-
-                    var $dialog = $(this);
-                    var previousDialog = $dialog.data('previous-dialog');
-                    var Dialogindex = $dialog.data('modal-index');
-                    if (previousDialog) {
-                        previousDialog.removeClass('aside');
-                        $dialog.data('previous-dialog', undefined);
-
-                    }
-                    if (Dialogindex) {
-                        if ($('.modal:visible').length) {
-                            $('body').addClass('modal-open');
-                        }
-                        $('body').css('overflow-y', '');
-                    } else {
-                        $('body').css('overflow-y', 'hidden');
-                    }
-                    if (Dialogindex) {
-                        if ($('.modal:visible').length) {
-                            $('body').addClass('modal-open');
-                        }
-                        $('body').css('overflow-y', '');
-                    } else {
-                        $('body').css('overflow-y', 'hidden');
-                    }
+                pressCuttingCounter = 1;
+                $("#pressCutting").click(function (event) {
+                    pressCuttingCounter++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + pressCuttingCounter + ". Press Cutting  </div>");
+                    var $newInput = $("<input placeholder='Press Cutting' type='text'> ");
+                    $newInput
+                            .attr("name", "pressCutting" + pressCuttingCounter)
+                            .attr("id", "pressCutting" + pressCuttingCounter)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#addPressCuttingForm"));
                 });
             });
         </script>
 
+        <!--backToMisc-->
+        <script>
+            function backToMisc() {
+                var upload_number = 2;
+                for (var i = 2; i <= pressCuttingCounter; i++) {
+                    //           console.log("backToMisc()   ");
+                    var nr = "name" + i;
+                    var item = document.getElementById(nr);
+                    var itemValue = item.value;
+                    pressCuttingArray.push(itemValue);
+                    var moreUploadTag = '';
+                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+                    moreUploadTag += '<label for="label_pressCuttings' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
+                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
+                    moreUploadTag += 'Select file ';
+                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
+                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    moreUploadTag += '</label>';
+                    moreUploadTag += '<input  type="text" id="label_pressCuttings' + upload_number + '" class="pull-left">';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<br>';
+                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="pressCuttings" name="destination" type="hidden">';
+                    moreUploadTag += '</div>';
+                    moreUploadTag += '</div>';
+                    $(moreUploadTag).appendTo('#additionalTranslator');
+                    upload_number++;
+                }
+
+                $('#bs-example-navbar-collapse-1 a[href="#Misc"]').tab('show');
+                var arrayLength = pressCuttingArray.length;
+                for (var i = 0; i < arrayLength; i++) {
+                }
+                $("#pressCuttingArray").val(pressCuttingArray);
+            }
+        </script>
+
+        <!--fileTypes-->
         <script>
             var fileTypes = [
                 'image/jpeg',
@@ -1925,119 +2261,84 @@
             }
         </script>
 
-        <script>
-            window.onload = function () {
-                //Check File API support
-                if (window.File && window.FileList && window.FileReader)
-                {
-                    $('#files').on("change", function (event) {
-                        var files = event.target.files; //FileList object
-                        var output = document.getElementById("result");
-//                        console.log(" output " + output);
-
-//                        const keys = Object.keys(output);
-//                        console.log(keys); // [apple, orange, pear]
-//                        const values = Object.values(output);
-//                        console.log(values); // [28, 17, 54]
-//                        const entries = Object.entries(output);
-//                        console.log(entries);
-                        // [
-                        //   [apple, 28],
-                        //   [orange, 17],
-                        //   [pear, 54]
-                        // ]
-
-
-                        for (var i = 0; i < files.length; i++)
+        <!--        <script>
+                    $(document).ready(function () {
+                        //Check File API support
+                        if (window.File && window.FileList && window.FileReader)
                         {
-
-                            var file = files[i];
-                            var fileName = files[i].name;
-                            console.log("2 xyz fileName  " + fileName);
-                            //Only pics
-//                            if (file.type.match('image.*')) {
-                            if (validFileType(files[i])) {
-                                if (this.files[0].size < 2097152) {
-                                    // continue;
-                                    var picReader = new FileReader();
-                                    picReader.addEventListener("load", function (event) {
-                                        var picFile = event.target;
-                                        var div = document.createElement("div");
-                                        div.style = "background-color: #d9d1d1;";
-                                        div.innerHTML =
-                                                " <a class='column' style='text-decoration: none;'> <img class='thumbnail' src='" + picFile.result + "'" + "title='" + file.name + " />"
-                                                + "<span  class='caption'>" + file.name + "</span></a>";
-                                        output.insertBefore(div, null);
-
-//
-//$('#pressCuttingsClone').before('<div class="file_upload" id="coverageCuttings'+uploadCounter+'"><input name="CoverageCuttings" type="file"></div>');
-
-//                                        var input = document.createElement("input");
-//                                        input.setAttribute("type", "file");
-//                                        input.setAttribute("id", "files" + uploadCounter);
-//                                        input.setAttribute("name", "PressCuttings" + uploadCounter);
-//                                        input.setAttribute("multiple", "");
-//                                        input.className = "upload";
-//                                        document.getElementById("pressCuttingsClone").appendChild(input);
-//$('#files' + uploadCounter).val(file.name);
-//                                        document.getElementById("files" + uploadCounter).value = file.name;
-
-//var input = document.createElement("input");
-//  input.setAttribute("type","file");
-//  input.setAttribute("id" ,"files" );
-//  input.setAttribute("name","imgs[]");
-//  input.setAttribute("multiple","");
-//  input.className = "upload";
-//  input.value = picFile.result;
-//
-//          document.getElementById("pressCuttingsClone").appendChild(input);
-//  console.log(input);
-                                        console.log("uploadCounter  " + uploadCounter);
-                                        uploadCounter++;
-
-
-//                                        var div = document.createElement("div");
-//                                        div.innerHTML =
-//                                                " <a class='column' style='text-decoration: none;'> <img class='thumbnail' src='" + picFile.result + "'" + "title='" + file.name + " />"
-//                                                + "<span  class='caption'>" + file.name + "</span></a>";
-//                                        output.insertBefore(div, null);
-//
-//                                        var elmnt = document.getElementById("result");
-//                                        var cln = elmnt.cloneNode(true);
-////                                    document.body.appendChild(cln);
-//                                        document.getElementById("pressCuttingsClone").appendChild(cln);
-//                                        var images = $('#output img');
-//                                        console.log("images");
-//                                        console.log(images);
-//                                        img = $(this);
-//                                        console.log("img");
-//                                        console.log(img);
-//                                        $('#coverageCuttings').val(img);
-
-                                    });
-                                    //Read the image
-                                    $('#clear, #result').show();
-                                    picReader.readAsDataURL(file);
-
-                                } else {
-                                    alert("Image Size is too big. Minimum size is 2MB.");
-                                    $(this).val("");
+                            $('#files').on("change", function (event) {
+                                var files = event.target.files; //FileList object
+                                var output = document.getElementById("result");
+                                for (var i = 0; i < files.length; i++)
+                                {
+                                    var file = files[i];
+                                    var fileName = files[i].name;
+                                    console.log("fileName  " + fileName);
+        //                            if (file.type.match('image.*')) {
+                                    if (validFileType(files[i])) {
+                                        if (this.files[0].size < 2097152) {
+                                            var picReader = new FileReader();
+                                            picReader.addEventListener("load", function (event) {
+                                                var picFile = event.target;
+                                                var div = document.createElement("div");
+                                                div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
+                                                        "title='preview image'/>";
+                                                output.insertBefore(div, null);
+                                            });
+                                            //Read the image
+                                            $('#clear, #result').show();
+                                            picReader.readAsDataURL(file);
+                                        } else {
+                                            alert("Image Size is too big.Minimum size is 2MB.");
+                                            $(this).val("");
+                                        }
+                                    } else {
+                                        alert("You can only upload image file.");
+                                        $(this).val("");
+                                    }
                                 }
-                            } else {
-                                alert("You can only upload image file.");
-                                $(this).val("");
-                            }
-
+        
+                            });
+                        } else
+                        {
+                            console.log("Your browser does not support File API");
                         }
-
-
+                        //Set all filled input fields to readOnly
+                        //so only empty ones can be filled in!!!
+        
+                        var emptyTextBoxes = $('input:text').filter(function () {
+                            return (this.value !== "" || this.value.length !== 0);
+                        });
+                        var string = "The following input fields have been marked readonly - \n";
+        
+                        emptyTextBoxes.each(function () {
+                            string += "\n" + this.id;
+                            document.getElementById(this.id).readOnly = true;
+                        });
+                        console.log("7 xyz ", string);
+        
                     });
-                } else
-                {
-                    console.log("Your browser does not support File API");
-                }
+                    $(document).on("click", "#files", function () {
+                        $('.thumbnail').parent().remove();
+                        $('result').hide();
+                        $(this).val("");
+                    });
+                    $(document).on("click", "#clear", function () {
+                        $('.thumbnail').parent().remove();
+                        $('#result').hide();
+                        $('#files').val("");
+                        $(this).hide();
+                    });
+                </script>-->
 
-//                {
+        <script type="text/javascript">
+            window.onload = function () {
+
+
+
+                //Set all filled input fields to readOnly
+                //so only empty ones can be filled in!!!
+
                 var emptyTextBoxes = $('input:text').filter(function () {
                     return (this.value !== "" || this.value.length !== 0);
                 });
@@ -2049,17 +2350,13 @@
                 });
                 console.log("7 xyz ", string);
 
-//                }
-
             };
-
-            $('#files').on("click", function () {
+            $(document).on("click", "#files", function () {
                 $('.thumbnail').parent().remove();
                 $('result').hide();
                 $(this).val("");
             });
-
-            $('#clear').on("click", function () {
+            $(document).on("click", "#clearCoverageCuttings", function () {
                 $('.thumbnail').parent().remove();
                 $('#result').hide();
                 $('#files').val("");
@@ -2068,80 +2365,96 @@
 
         </script>
 
+        <script>
+            // Check HTML5 File API Browser Support
+            if (window.File && window.FileList && window.FileReader) {
+                function showFile() {
+//           var preview = document.getElementById("preview");
+                    var fileInput = document.querySelector("#input25");
 
+//                    var ref = ReferenceNumber.value;
+//                    var pub = $("#publisherName").val();
+//                    console.log("showFile ReferenceNumber " + ref + " pub " + pub);
+
+                    for (var i = 0; i < fileInput.files.length; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function (readerEvent) {
+//                   var listItem = document.createElement("li");
+//                   listItem.innerHTML = "<img src='" + readerEvent.target.result + "' />";
+//                   preview.append(listItem);
+                        };
+//                        document.getElementsByClassName("fileinput-upload-button").href = './coverageABCCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber1").val() + '&publisherName=' + $("#publisherName").val();
+//                        console.log("ReferenceNumber fileInput.files[i]" + fileInput.files[i].name);
+//                        console.log("ReferenceNumber 34 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val());
+                        reader.readAsDataURL(fileInput.files[i]);
+                    }
+                }
+            } else {
+                alert("Your browser is too old to support HTML5 File API");
+            }
+        </script>
+
+        <!--coverageCuttings preview-->
+        <script>
+            $("#input25").fileinput({'showUpload': false, 'previewFileType': 'any'});
+            $('#input25').on('fileuploaded').fileinput('clear');
+
+//        https://github.com/kartik-v/bootstrap-fileinput/
+//        http://webtips.krajee.com/ajax-based-file-uploads-using-fileinput-plugin/
+//        https://stackoverflow.com/questions/30939225/bootstrap-file-input-jquery-plugin-designed-by-krajee-syntaxerror-unexpected-e
+
+            function clearURL() {
+//                document.getElementsByClassName("fileinput-upload-button").href = "";
+//                alert("clearURL ReferenceNumber1 " + document.getElementById("ReferenceNumber1").value);
+            }
+
+//            function loadFileinput() {
+////                document.getElementsByClassName("fileinput-upload-button").href = './coverageCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber1").val() + '&publisherName=' + $("#publisherName").val();
+// newURLcoverageCuttingsUploadServlet = './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val();
+// alert("loadFileinput iAmGlobal " + iAmGlobal);
+//  alert("loadFileinput newURL " + newURLcoverageCuttingsUploadServlet);
+// 
+//            }
+
+//            $(document).ready(function () {
+            function loadFileinput() {
+                $('#input25').fileinput('clear');
+                  var publisherName = document.getElementById("publisherName1").value;
+                  console.log("ReferenceNumber 31 " + publisherName);
+                var newURLcoverageCuttingsUploadServlet = './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + publisherName;
+// document.getElementsByClassName("fileinput-upload-button").href = './coverageDEFCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val();
+// alert("loadFileinput newURL " + newURLcoverageCuttingsUploadServlet);
+                console.log("ReferenceNumber 32 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + publisherName);
+//                console.log("ReferenceNumber 33 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber").val() + '&publisherName=' + $("#publisherName").val());
+                 console.log("ReferenceNumber 34 newURL " + newURLcoverageCuttingsUploadServlet);
+                $("#input25").fileinput('refresh', {
+                    'theme': 'fas',
+                    'uploadUrl': newURLcoverageCuttingsUploadServlet,
+                    uploadExtraData: {ReferenceNumberABC: ReferenceNumber.value, publisherNameABC: $("#publisherName").val()},
+                    'allowedFileExtensions': ["jpg", "gif", "png", "pdf"],
+                    // ≈ 1.4mb
+                    'maxFileSize': 1400,
+                    'overwriteInitial': true
+                });
+
+
+
+
+            }
+//                });
+
+
+        </script>
+
+
+        <!--Styles-->
         <style>
-            .coverageCuttings.modal {
-                width: 900px; 
-                margin: 0 auto; 
+            .coverBackgroundImage
+            {
+                background-image:<c:url value="../images/not-available.jpg" />;
+                width: 100%;
+                height: auto;
             }
-            coverageCuttings.modal-content {
-                height: 100%;
-                border-radius: 0;
-                position:relative;
-            }
-            .coverageCuttings.modal-body {
-                position: relative;
-                overflow-y: auto;
-                max-height: 200px;
-                padding: 15px;
-            }
-            .coverageCuttings.modal-footer {
-                border-radius: 0;
-                bottom:0px;
-                position:absolute;
-                width:100%;
-            }
-
-
-            #clear{
-                display:none;
-            }
-            #result {
-                border: 4px dotted #cccccc;
-                display: none;
-                float: right;
-                margin:0 auto;
-                width: 511px;
-            }
-
-            /* Three image containers (use 33.33% for three, 25% for four, and 50% for two, etc) */
-            .column {
-                float: left;
-                width: 33.33%;
-                padding: 5px;
-            }
-
-            /* Clear floats after image containers */
-            .row::after {
-                content: "";
-                clear: both;
-                display: table;
-            }
-
-            .autoModal.modal .modal-body{
-                max-height: 100%;
-            }
-
-            div.upload {
-                position: relative;
-                overflow: hidden;
-            }
-            input.upload {
-                position: absolute;
-                font-size: 50px;
-                opacity: 0;
-                right: 0;
-                top: 0;
-            }
-
-            .center-block {
-                display: block;
-                margin-right: auto;
-                margin-left: auto;
-            }
-
-        </style>
-        <style>
 
             /*
             * Checkboxes with tick mark
@@ -2220,24 +2533,184 @@
                 background:yellow;
                 /*      background-color:#d9d1d1;*/
             }
-
-            .centerCover {
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
-
+            .modal {
+                overflow-y:auto;
+                text-align: center;
             }
 
+            #addAdditionalRightsHoldersModal{
+                width: 400px;
+                top: 50%;
+                left: 50%;
+                margin-top: -90px;
+                margin-left: -200px;
+                padding: 20px;               
 
-            .imageupload{
-                margin: 20px 0;
+            }
+            .modal-footer {  
+
+                background: #81ccfb;
+                padding: 1em;
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+            }
+            body {
+                margin: 5px;
+                background: #d9d1d1
+            }
+            /* Set whitespace between the generated input fields*/
+            input.wsp{
+
+                margin-right: 5px;
             }
 
+            /* Tab Navigation */
+            .nav-tabs {
+                margin: 0;
+                padding: 0;
+                border: 0;   
+                border-bottom: 1px solid #d45500; 
+            }
+            .nav-tabs > li > a {
+                background: #DADADA;
+                border-radius: 0;
+                box-shadow: inset 0 -8px 7px -9px rgba(0,0,0,.4),-2px -2px 5px -2px rgba(0,0,0,.4);
+                color: #575757;
+            }
+            .nav-tabs > li.active > a,
+            .nav-tabs > li.active > a:hover {
+                background: #F5F5F5;
+                box-shadow: inset 0 0 0 0 rgba(0,0,0,.4),-2px -3px 5px -2px rgba(0,0,0,.4);
+                border-color: #d45500;
+                border-bottom-color: transparent;
+                color: #3c5a78;
+                font-size: 16px;
+            }
+            a, u {
+                text-decoration: none;
+            }
+            /* Tab Content */
+            .tab-pane {
+                background: #d9d1d1;
+                box-shadow: 0 0 4px rgba(0,0,0,.4);
+                border-radius: 0;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .nav-tabs.two-lines>li {
+                height:62px;
+            }
+            .nav-tabs.two-lines>li>a, .nav-tabs>li>a>div {
+                height:100%;
+            }
+            input[type="text"]:focus + .glyphicon-search{
+                color: #FF8C00;
+            }
+            .mytab .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+            .mytab2 .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+            #myTab li a { border-color: blue;background-color:#A5C967; }
+            #myTab li.active a {border-bottom-color: transparent;background-color:Yellow; }
+            #myTab2 li a { border-color: blue;background-color:#A5C967; }
+            #myTab2 li.active a {border-bottom-color: transparent;background-color:Yellow; }
+            .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
+
+            span > i {
+                color: white;
+            }
+            span > input {
+                background: none;
+                color: white;
+                padding: 0;
+                border: 0;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+            .custom-file-upload {
+                border: 1px solid #ccc;
+                display: inline-block;
+                padding: 6px 12px;
+                cursor: pointer;
+            }
+
+            .black, .black a {
+                color: #000000;
+            }
         </style>
 
+        <!--modal_counter-->
+        <script type="text/javascript">
+            // https://github.com/mgcrea/angular-strap/issues/1343
+            var modal_counter = 0;
+            $(document).ready(function () {
+                $('.modal').on('shown.bs.modal', function () {
+                    modal_counter++;
+                });
+                $('.modal').on('hidden.bs.modal', function () {
+                    modal_counter--;
+                    if (modal_counter) {
+                        $('body').addClass('modal-open');
+                    } else {
+                        $('body').removeClass('modal-open');
+                    }
+                });
+            })
+        </script>
+
+        <!--myFunction-->
         <script>
+            function myFunction() {
+                alert("myfunction");
+                translatorName876 = "";
+                var x = document.getElementById("translatorName");
+                console.log("document.getElementById(translatorName) ", x);
+                translatorName876 = x.value;
+                var tester = "Upload a copy of " + translatorName876 + "'s CV:";
+                localStorage.setItem('translatorName876', tester);
+                localStorage.setItem('translatorName8', translatorName876);
+                var tripper = localStorage.getItem("translatorName876");
+                //                document.getElementById("123").innerHTML = tripper;
+                //                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
+                ////                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+                ////                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+                ////                console.log("tester   ", tester);
+                ////                console.log("tripper   ", tripper);
+
+                $("#translatorArray").val(translatorName876);
+
+
+                translatorArray = [];
+                console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
+
+                var fn = document.getElementById("translatorName");
+                document.getElementById("first0").value = fn.value;
+                Name = fn.value;
+                console.log("copyFirstTranslatorName Name ", Name);
+                translatorArray.push(Name);
+                console.log(" first entry in translatorArray ", fn.value);
+
+                //copyFirstTranslatorName();
+                generateTranslatorTab(1);
+            }
 
         </script>
+
+        <!--formatDate-->
+        <script type="text/javascript">
+            function formatDate(unformattedDate) {
+                var date = new Date(unformattedDate);
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                var formattedDate = day + "/" + month + "/" + year;
+                return formattedDate;
+            }
+        </script>
+
 
     </head>
 
@@ -2278,7 +2751,7 @@
                     </div>
                 </div> <!--container for welcome/logout-->
 
-                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland pendingApplications</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px"></div>
 
@@ -2320,17 +2793,17 @@
                                             <th class="never">Approved</th> 
                                             <th class="never">Genre</th>   
                                             <th class="never"></th>
-                                            <!--<th class="never">Expert Reader</th>-->
+                                            <th class="never">Expert Reader</th>
                                             <th class="all">Book Title</th>
-                                            <!--<th class="never">24Translator Titles</th>-->
+                                            <th class="never">24Translator Titles</th>
                                             <th class="never">25 Titles</th>
-                                            <!--<th class="never">26 Translator CV Doc Name</th>-->
+                                            <th class="never">26 Translator CV Doc Name</th>
                                             <th class="never">27 Cover</th>
                                             <th class="never">28 Sample Sent Out</th>
                                             <th class="never">29 Sample Returned</th>
                                             <th class="never">30 Reader Report</th>
-                                            <!--<th class="never">31 Expert Reader List</th>-->
-                                            <!--<th class="never">32 Unassigned Expert Reader List</th>-->    
+                                            <th class="never">31 Expert Reader List</th>
+                                            <th class="never">32 Unassigned Expert Reader List</th>    
                                             <th class="never">33 idTranslator</th>
                                             <th class="never">34 Original Date of Publication</th>
                                             <th class="never">35 Original Language</th>
@@ -2350,19 +2823,19 @@
                                             <th class="never">Date Payment made to Publisher</th>
                                             <th class="never">Payment Reference Number</th>
                                             <th class="never">Addendum</th>
-                                            <!--<th class="never">Addendum Name</th>-->
+                                            <th class="never">Addendum Name</th>
                                             <th class="never">Proof of Payment</th>    
-                                            <!--<th class="never">Proof of Payment Name</th>-->
+                                            <th class="never">Proof of Payment Name</th>
                                             <th class="never">Bank Details</th>
-                                            <!--<th class="never">Bank Details Name</th>-->    
+                                            <th class="never">Bank Details Name</th>    
                                             <th class="never">Signed LI Contract</th>
-                                            <!--<th class="never">Signed LI ContractName</th>-->
+                                            <th class="never">Signed LI ContractName</th>
                                             <th class="never">Payment Status</th>
                                             <th class="never">Previous Grant Aid</th>
                                             <th class="never">Award</th>    
                                             <th class="never">Sales Figures</th>
                                             <th class="never">Original</th>
-                                            <!--<th class="never">Original Name</th>-->
+                                            <th class="never">Original Name</th>
                                             <th class="all">Author(s)</th>
                                             <th class="never"></th>                                            
                                             <th class="never"></th>
@@ -2372,9 +2845,12 @@
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
+                                            <th class="never"></th>
                                         </tr>
                                     </thead>
-
+                                    <tbody>
+                                        <!-- Main Grid -->   
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th class="details-control"></th>   
@@ -2400,17 +2876,17 @@
                                             <th class="never">Approved</th> 
                                             <th class="never">Genre</th>   
                                             <th class="never"></th>
-                                            <!--<th class="never">Expert Reader</th>-->
+                                            <th class="never">Expert Reader</th>
                                             <th class="all">Book Title</th>
-                                            <!--<th class="never">24Translator Titles</th>-->
+                                            <th class="never">24Translator Titles</th>
                                             <th class="never">25 Titles</th>
-                                            <!--<th class="never">26 Translator CV Doc Name</th>-->
+                                            <th class="never">26 Translator CV Doc Name</th>
                                             <th class="never">27 Cover</th>
                                             <th class="never">28 Sample Sent Out</th>
                                             <th class="never">29 Sample Returned</th>
                                             <th class="never">30 Reader Report</th>
-                                            <!--<th class="never">31 Expert Reader List</th>-->
-                                            <!--<th class="never">32 Unassigned Expert Reader List</th>-->    
+                                            <th class="never">31 Expert Reader List</th>
+                                            <th class="never">32 Unassigned Expert Reader List</th>    
                                             <th class="never">33 idTranslator</th>
                                             <th class="never">34 Original Date of Publication</th>
                                             <th class="never">35 Original Language</th>
@@ -2430,20 +2906,21 @@
                                             <th class="never">Date Payment made to Publisher</th>
                                             <th class="never">Payment Reference Number</th>
                                             <th class="never">Addendum</th>
-                                            <!--<th class="never">Addendum Name</th>-->
+                                            <th class="never">Addendum Name</th>
                                             <th class="never">Proof of Payment</th>    
-                                            <!--<th class="never">Proof of Payment Name</th>-->
+                                            <th class="never">Proof of Payment Name</th>
                                             <th class="never">Bank Details</th>
-                                            <!--<th class="never">Bank Details Name</th>-->    
+                                            <th class="never">Bank Details Name</th>    
                                             <th class="never">Signed LI Contract</th>
-                                            <!--<th class="never">Signed LI ContractName</th>-->
+                                            <th class="never">Signed LI ContractName</th>
                                             <th class="never">Payment Status</th>
                                             <th class="never">Previous Grant Aid</th>
                                             <th class="never">Award</th>    
                                             <th class="never">Sales Figures</th>
                                             <th class="never">Original</th>
-                                            <!--<th class="never">Original Name</th>-->
+                                            <th class="never">Original Name</th>
                                             <th class="all">Author(s)</th>
+                                            <th class="never"></th> 
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
@@ -2454,11 +2931,10 @@
                                             <th class="never"></th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <!-- Main Grid -->   
-                                    </tbody>
+
                                 </table>
                             </div> <!-- Main Grid -->       
+
 
                         </div> <!-- container-fluid -->  
                     </div> <!-- tab-pane "Application" -->     
@@ -2466,9 +2942,7 @@
                     <c:if test="${not empty error}">Error: ${error}</c:if>
 
                     </div> <!-- container-fluid -->
-                    <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/PendingApplicationServlet" enctype="multipart/form-data">
-                    <%request.getSession().setAttribute("task", "Pending Applications");%>
-                    <%request.getSession().setAttribute("publisherID", "publisherID");%>
+
                     <div class="modal applicationsModal" id="applicationsModal" data-modal-index="1">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -2493,7 +2967,7 @@
                                             </div>
 
                                             <!-- Collect the nav links, forms, and other content for toggling -->
-                                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  style="font-size: 0.8em !important;  background-color: #d9d1d1">
+                                            <div class="collapse navbar-collapse" id="myTab" style="font-size: 0.8em !important;  background-color: #d9d1d1">
                                                 <ul class="nav navbar-nav nav-tabs two-lines">
                                                     <li class="active"><a href="#Contact" data-toggle="tab">Contact <br/>Details</a></li>
                                                     <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>                                                    
@@ -2505,10 +2979,11 @@
                                                 </ul>
                                             </div><!-- /.navbar-collapse -->
 
-                                  <!--          <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/PendingApplicationServlet" enctype="multipart/form-data">
-                                            <%request.getSession().setAttribute("task", "Pending Applications");%> -->
+                                            <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/PendingApplicationServlet" enctype="multipart/form-data">
+                                            <%request.getSession().setAttribute("task", "Pending Applications");%>
+                                            <%request.getSession().setAttribute("publisherID", "publisherID");%>
+                                            <input type="hidden" name="ReferenceNumber1" id="ReferenceNumber1"/>
                                             <div id="applicationEditForm-tab-content" class="tab-content"  style="background-color: #E8F6FF">
-
 
                                                 <!-- Contact details -->
                                                 <div class="tab-pane active" id="Contact">
@@ -2706,9 +3181,10 @@
                                                                 </div> <!--well-->
                                                             </div> <!--<div class="col-sm-3">-->   
                                                         </div> <!--row-->
-                                                        <input type="hidden" id="translatorArray" name="translatorArray" >
                                                         <input type="hidden" id="authorArray" name="authorArray" >
-                                                        <input type="hidden" id="ReferenceNumber" name="ReferenceNumber" >
+                                                        <input type="hidden" id="translatorArray" name="translatorArray" >
+                                                        <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
+
                                                         <!--keep in one line otherwise placeholder doesn't show-->
                                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
                                                     </div> <!--container-->
@@ -2879,37 +3355,109 @@
                                                 </div><!-- tab-pane "Book" -->
 
                                                 <!-- Rights Agreement -->
-                                                <div class="tab-pane" id="Rights">
-                                                    <p class="header1" style="margin-bottom: 40px">
+                                                <div class="tab-pane fade" id="Rights">
+                                                    <p class="header1" style="margin-bottom: 80px">
                                                         Rights Agreement & Contracts
                                                     </p>
 
-                                                    <div class="container-fluid"  style="background-color: #d9d1d1">
-                                                        <div class="row"  style="display: block;
-                                                             margin-right: auto;
-                                                             margin-left: auto;">
+                                                    <div class="container-fluid"  id="rightsAgreementContracts">
+                                                        <!--<div class="container-fluid">-->
+                                                        <!--<div class="tab-content">-->
 
-                                                            <nav class="navbar navbar-default" >
-                                                                <div class="container-fluid"  style="background-color: #d9d1d1">
-                                                                    <!-- Brand and toggle get grouped for better mobile display -->
-                                                                    <div class="navbar-header">
-                                                                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
-                                                                            <span class="sr-only">Toggle navigation</span>
-                                                                            <span class="icon-bar"></span>
-                                                                            <span class="icon-bar"></span>
-                                                                            <span class="icon-bar"></span>
-                                                                        </button>
-                                                                        <!--<a class="navbar-brand" href="#">Brand</a>-->
+                                                        <!--Upload form for agreement-->
+                                                        <div class="row" style="margin-bottom: 80px;">
+                                                            <div style=" margin: 0 auto; position: relative;">
+
+                                                                <div class="col-md-8"  id="agreementToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
+                                                                    <!--<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement1"></strong></div>--> 
+                                                                    <label  class="control-label pull-left" id="uploadAgreement1" ></label>
+                                                                    <br/>
+                                                                    <div class="margin-bottom: 40px"></div>
+                                                                    <div class="input-group agreement"  style="margin-bottom: 40px;">
+                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                            Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1">
+                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                        </label>
+                                                                        <input  type="text" id="label_agreement1" class="pull-left"/>
+                                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
+                                                                    </div> 
+                                                                </div> <!-- position:absolute; z-index:0 -->
+
+                                                                <div class="col-md-7" id="agreement_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                    <label  class="control-label pull-left" id="agreement_button_label1" ></label>
+                                                                    <div class="input-group agreement_buttonText pull-left">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="agreement_link1" href="">
+                                                                            <span class="glyphicon glyphicon-file"></span>
+                                                                            Click to open</a>
                                                                     </div>
-                                                                    <!-- Collect the nav links, forms, and other content for toggling -->
-                                                                    <div  id="tn">                                                        
-                                                                    </div>  <!-- tn -->
-                                                                    <div class="tab-content" id="tnc">
+                                                                </div> <!-- position:absolute; z-index:1; display:none -->
 
-                                                                    </div>  <!-- tnc -->
-                                                                </div>  <!-- <div class="container-fluid"  -->
-                                                            </nav>  <!-- <nav class="navbar -->
-                                                        </div>  <!-- row  -->
+                                                            </div> <!-- position: relative  -->
+                                                        </div> <!-- row  -->
+
+                                                        <!--Name of translation rights holder-->
+                                                        <div class="row" style="margin-bottom: 40px;margin-top: 60px">  
+
+                                                            <div class="col-sm-6">  
+                                                                <div class="input-group has-feedback"  style="margin-bottom: 10px">  
+                                                                    <label for="rightsHoldersName0" class="pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
+                                                                    <input id="rightsHoldersName0"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="rightsHoldersName"                                
+                                                                           value=""    
+
+                                                                           placeholder="Translation rights holder"
+                                                                           >
+                                                                </div>
+
+                                                                <div id="addAddRightsHolders"></div>
+                                                            </div>
+
+                                                            <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addAdditionalRightsHoldersModalDiv">  
+                                                                <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                                   data-toggle="modal" 
+                                                                   data-target="#addAdditionalRightsHoldersModal"
+                                                                   onclick="copyFirstRightsHolderName();"
+                                                                   >Add more Translation rights holders</a>
+                                                            </div>
+
+                                                        </div> <!-- row  -->
+
+                                                        <!--Upload form for addendum to the rights agreement-->
+                                                        <div class="row" style="margin-bottom: 80px;">    
+
+                                                            <div style=" margin: 0 auto; position: relative;">
+
+                                                                <div class="col-md-10"  id="addendumToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
+                                                                    <label  class="control-label pull-left"> <strong class="pull-left"  id="uploadAddendum1"></strong>
+                                                                        <small> (where applicable)</small>     
+                                                                    </label>
+                                                                    <br/>                                                               
+                                                                    <div class="input-group addendum  pull-left"  style="margin-bottom: 40px;">
+                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                            Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1">
+                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                        </label>
+                                                                        <input type="text" id="label_addendum1" class="pull-left"/>
+                                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/>
+                                                                    </div> 
+                                                                </div> <!-- position:absolute; z-index:0 -->
+
+                                                                <div class="col-md-7" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                    <label class="control-label pull-left" id="addendum_button_label1"></label> <small class='pull-left'> &nbsp;  (where applicable)</small>'
+                                                                    <div class="input-group addendum_buttonText pull-left">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="addendum_link1" href="">
+                                                                            <span class="glyphicon glyphicon-file"></span>
+                                                                            Click to open</a>
+                                                                    </div>
+                                                                </div> <!-- position:absolute; z-index:1; display:none -->
+
+                                                            </div> <!-- position: relative  -->
+                                                        </div> <!-- row  -->
+                                                        <div class="col-sm-12" style="min-height: 100%;height: 100%;margin-bottom: 60px"></div>
+
+                                                        <!--</div> tab-content-->
                                                     </div> <!-- container-fluid  -->
                                                 </div> <!-- class="tab-pane" id="Rights" -->
 
@@ -3080,24 +3628,14 @@
                                                 </div> <!-- tab-pane "Publication Details" -->
 
                                                 <!-- Translator's Details -->
-                                                <div class="tab-pane" id="Translator"> 
-                                                    <p class="header1" style="margin-bottom: 40px">
+                                                <div class="tab-pane fade" id="Translator"> 
+                                                    <p class="header1" style="margin-bottom: 5px">
                                                         Translator Details
                                                     </p>
 
-                                                    <div class="container-fluid">
+                                                    <div class="container-fluid" id="torget">                                                        
 
-                                                        <div class="row" style="margin-bottom: 10px">
-                                                            <div class="panel panel-default">
-                                                                <div class="panel-body">
-
-                                                                    <div class="col-md-12" id="translatorTableDiv" style="margin-left: 40px;"></div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div> <!--row-->
-
-                                                        <div class="row" style="margin-bottom: 10px">
+                                                        <div class="row" style="margin-bottom: 1px">
                                                             <div class="panel panel-default">
                                                                 <div class="panel-body">
                                                                     <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">                                              
@@ -3112,17 +3650,42 @@
                                                                     </div>
 
                                                                     <div class="col-md-4" style="margin-top: 40px; margin-bottom: 20px">  
-                                                                        <label for="breakDownTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
+                                                                        <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
                                                                         <div class="form-group">
                                                                             <!--keep in one line otherwise placeholder doesn't show-->
-                                                                            <textarea class="form-control" placeholder="Break-down of translator fee" name="breakDownTranslatorFee" id='breakDownTranslatorFee' style="width: 280px; height: 196px;"></textarea>
+                                                                            <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>  <!--panel--body-->
                                                             </div> <!--panel-default-->
                                                         </div> <!-- row -->
-                                                    </div> <!-- container-fluid -->
-                                                </div> <!-- tab-pane "Translator Details" -->                               
+
+
+                                                        <div class="row" style="margin-bottom: 10px">
+
+                                                            <!--<div class="container-fluid" id="translatorTabs" style="display: none">-->
+                                                            <div class="container-fluid" id="translatorTabs" >
+                                                                <nav class="navbar navbar-default" id="myTab2">
+                                                                    <div class="container-fluid"  style="background-color: #d9d1d1">
+                                                                        <div class="navbar-header">
+                                                                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                                                                                <span class="sr-only">Toggle navigation</span>
+                                                                                <span class="icon-bar"></span>
+                                                                                <span class="icon-bar"></span>
+                                                                                <span class="icon-bar"></span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div  id="tn">
+                                                                        </div>  <!-- tn -->
+                                                                        <div class="tab-content" id="tnc">
+                                                                        </div>  <!-- tnc -->
+                                                                    </div>  <!-- <div class="container-fluid"  -->
+                                                                </nav>  <!-- <nav class="navbar -->
+                                                            </div> <!-- container-fluid  -->
+
+                                                        </div> <!--row-->
+                                                    </div> <!-- container-fluid  -->
+                                                </div> <!-- class="tab-pane" id="Translator" -->                            
 
                                                 <!-- Drawdown Requirements -->
                                                 <div class="tab-pane" id="Drawdown">
@@ -3134,46 +3697,46 @@
 
                                                         <div class="row"> 
 
-                                                            <!--<div style=" margin: 0 auto; position: relative;">-->
-                                                            <div class="col-sm-4"></div>
-                                                            <div id="showUploadCover1" class="col-sm-4"  style="margin-bottom:  40px; ">
+                                                            <div style=" margin: 0 auto; position: relative;">
+                                                                <div class="col-sm-4"></div>
+                                                                <div id="showUploadCover1" class="col-sm-4"  style="margin-bottom:  40px; ">
 
-                                                                <!-- bootstrap-imageupload. -->                                                               
-                                                                <div class="imageupload panel panel-default">
-                                                                    <div class="panel-heading clearfix">
-                                                                        <h3 class="panel-title ">Select book cover</h3>
+                                                                    <!-- bootstrap-imageupload. -->                                                               
+                                                                    <div class="imageupload panel panel-default">
+                                                                        <div class="panel-heading clearfix">
+                                                                            <h3 class="panel-title ">Select book cover</h3>
+                                                                        </div>
+                                                                        <div class="file-tab panel-body" id="cover1" style="display:block; margin:auto; margin-left: 30px">
+
+                                                                            <label class="btn btn-default btn-file">
+                                                                                <span>Browse</span>
+                                                                                <!-- The file is stored here. -->
+
+                                                                                <input type="file" id="Cover1" name="Cover" style="width:200px;height:300px;">
+
+                                                                            </label>
+
+                                                                            <button type="button" class="btn btn-default">Remove</button>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="file-tab panel-body" id="cover1" style="display:block; margin:auto; margin-left: 30px">
+                                                                    <input type="hidden" value="Cover" name="image-file" id="label_cover1"/>
+                                                                </div>
 
-                                                                        <label class="btn btn-default btn-file" onclick="storeImage();">
-                                                                            <span>Browse</span>
-                                                                            <!-- The file is stored here. -->
+                                                                <div id="showUploadCover2" class="col-sm-4"  style="margin-bottom:  40px; "> 
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading clearfix">
+                                                                            <h3 class="panel-title" id="showUploadCoverTitle"></h3>
+                                                                        </div>
 
-                                                                            <input type="file" id="Cover1" name="Cover" style="width:200px;height:300px;">
+                                                                        <div class="panel-body" id="cover2" style="display:block;  margin:auto;">
 
-                                                                        </label>
+                                                                            <img src="" id="cover21"  alt="" style="width:200px;height:300px;">
 
-                                                                        <button type="button" class="btn btn-default">Remove</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <input type="hidden" value="Cover" name="image-file" id="label_cover1"/>
                                                             </div>
-
-                                                            <div id="showUploadCover2" class="col-sm-4"  style="margin-bottom:  40px; "> 
-                                                                <div class="panel panel-default">
-                                                                    <div class="panel-heading clearfix">
-                                                                        <h3 class="panel-title " id="showUploadCoverTitle"></h3>
-                                                                    </div>
-
-                                                                    <div class="panel-body" id="cover2" style="display:block;  margin:auto;">
-
-                                                                        <img src="" id="cover21"  alt="" style="width:200px;height:300px;">
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <!--</div> position: relative;-->
+                                                            <!--                                                            </div> position: relative;-->
 
                                                         </div> <!--row-->
 
@@ -3230,9 +3793,12 @@
                                                                         <br/>
                                                                         <br/>          
                                                                         <input type="hidden" name="userID" value="${userID}">
+                                                                        <input type="hidden" name="ReferenceNumber" id="ReferenceNumber"/>
                                                                         <input type="hidden" name="name" value="${name}">
+                                                                        <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
                                                                         <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
                                                                         <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                        <input type="text" name="publisherName1" id="publisherName1" value="">
                                                                         <!--Destination:-->
                                                                         <input type="hidden" id="proofPayment_upload" value="proofPayment" name="destination" />                                          
                                                                     </div>
@@ -3302,7 +3868,7 @@
                                                             <div class="col-md-4"   style="margin-bottom: 40px">
                                                                 <strong class="pull-left">&nbsp;</strong>    
                                                                 <!--<button type="button" data-toggle="modal" data-target="#pressCuttingsModal">Launch modal</button>-->
-                                                                <label class="btn btn-default pull-left callPressCuttingsModal" data-toggle="modal" data-target="#pressCuttingsModal">
+                                                                <label class="btn btn-default pull-left form-control callPressCuttingsModal" data-toggle="modal" onclick="loadFileinput();" data-target="#pressCuttingsModal">
                                                                     <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting.png" /> 
                                                                     Upload coverage cuttings
                                                                     <!--<span class="glyphicon glyphicon-upload"></span>-->
@@ -3377,7 +3943,7 @@
                                                                                        checked =""
                                                                                        value="" 
                                                                                        class="form-control">
-                                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok black"></i></span>
                                                                             </label>
                                                                             <input type="hidden" name="userID" value="${userID}">
                                                                             <input type="hidden" name="name" value="${name}">
@@ -3489,63 +4055,51 @@
 
                                             </div> <!-- applicationEditForm-tab-content -->
 
+                                        </form>
+                                    </div> <!-- container-fluid -->  
+                                </nav>    
+                            </div> <!-- /.modal-body -->
+                        </div> <!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal applicationsModal -->
+
+                <!--pressCuttingsModal-->
+                <div class="modal autoModal coverageCuttings" id="pressCuttingsModal"  tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal"  style="background-color: #c3bcbc" data-modal-index="3">
+                    <div class="modal-dialog coverageCuttings" style="align-content: center">
+
+                        <!-- Modal content-->
+                        <div class="modal-content coverageCuttings" style="background-color: #d9d1d1;">
 
 
-                                            <div class="modal-footer"  style="background-color: #c3bcbc">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                            </div>
-                                        </div> <!-- container-fluid -->  
-                                    </nav>    
-                                </div> <!-- /.modal-body -->
-                            </div> <!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div> <!--modal fade-->
-                    <div class="modal autoModal coverageCuttings" id="pressCuttingsModal"  tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal"  style="background-color: #c3bcbc" data-modal-index="2">
-                        <div class="modal-dialog coverageCuttings" style="align-content: center">
-                            <div class="modal-content coverageCuttings" style="background-color: #d9d1d1;">
-
-                                <div class="modal-header" style="background-color: #c3bcbc">
-                                    <button type="button" class="close" data-dismiss="modal"    aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="pressCuttingsModalLabel">add coverage cuttings</h4>
-                                </div>
-
-                                <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
-
-                                    <div class="row" style="background-color: #d9d1d1;">
-                                        <div class='col-sm-8' style="margin-bottom: 40px">                                
-                                            <div class="col-sm-12 center-block"  style="margin-bottom: 40px">   
-                                                <output  id="result"  style="border:1px solid black"></output>
-
-                                            </div>
-                                        </div>
+                            <div class="modal-header" style="background-color: #c3bcbc">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="pressCuttingsModalLabel">Add coverage cuttings for Reference number  <span id="appReferenceNumber1"></span></h4>
+                            </div>
+                            <!-- Modal body-->
+                            <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
+                                <form id="coverageCuttingsForm" name="coverageCuttingsForm" enctype="multipart/form-data">
+                                                                        <input type="hidden" name="userID" value="${userID}">
+                                                                        <input type="hidden" name="ReferenceNumber2" id="ReferenceNumber2"/>
+                                                                        <input type="hidden" name="name" value="${name}">
+                                                                        <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
+                                                                        <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
+                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                        <input type="hidden" name="publisherName2" id="publisherName2" value="">
+                                    <div   style="margin-bottom: 40px">                                      
+                                        <input id="input25" name="input25[]" type="file" multiple onchange="showFile()">
                                     </div>
-                                    <div id="multipleFiles"> 
-                                        <p>Please select either one file or multiple files.</p>
-                                        <p>For multiple files please press the <strong>Ctrl-key and </strong> then select with your mouse</p></div>
-                                </div>
+                                </form>
+                            </div> <!-- modal-body -->
 
-                                <div class="modal-footer coverageCuttings"  style="background-color: #c3bcbc">
-                                    <div class="btn btn-primary btn-sm  pull-left upload">
-                                        <span>Choose coverage cuttings</span>
-                                        <input class="upload" id="files"  name='coverageCuttings' type="file" multiple="multiple"/>
+                            <div class="modal-footer"  style="background-color: #c3bcbc">
+                                <button type="button" class="btn btn-default" onclick="clearURL();" data-dismiss="modal">Close</button>
+                            </div><!--modal footer -->
 
-                                    </div>
-                                    <!--<button id="addElement" type="button" value="Add another Translator"  class="btn btn-group-sm  button teal pull-left">Add another Translator</button>-->
+                        </div> <!--modal content-->          
+                    </div> <!--modal dialog-->
+                </div> <!--modal fade-->
 
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="backToTranslators();">Done</button>
-                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                </div> <!--modal footer -->
 
-                            </div> <!--modal content-->          
-                        </div> <!--modal dialog-->
-                    </div> <!--modal fade-->
-                    <!--<div class="pressCuttings" id="pressCuttings"></div>-->
-
-                    <!--<input type="hidden" value="pressCuttings" name="pressCuttings_image-file" id="label_pressCuttings"/>-->
-                    <!--Destination:-->
-                    <!--                <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />         -->
-                </form>
                 <form class="form-horizontal" 
                       role="form"  
                       autocomplete="on"  
@@ -3574,17 +4128,22 @@
 
                     <div class="basetext">  
                         <h2>Literature Ireland</h2>
-                        <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                    </div><!-- end of BaseText div -->
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+
+                    </div><!-- end of BaseText div -->    
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+                    <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
 
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                        <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
                 </div><!-- end of Base div -->
@@ -3593,20 +4152,125 @@
         </div><!-- end of Shadowholder container div -->
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2019 mgr Software
+            &copy; 2017-2019 mgr Software
         </div>
+        <!--contactUsModal-->
+        <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header"  style="background-color: #d9d1d1;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title" id="contactUsModalLabel"   style="background-color: #d9d1d1;">Contact Us</h1>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="container-fluid">         
+                            <div id="contentarea">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <p><strong>Director</strong>   Sinéad Mac Aodha</p>
+                                        <p>sinead@literatureireland.com </p>
+                                        <p> </p>
+                                        <p><strong>Deputy Director   </strong>Rita McCann </p>
+                                        <p>rita@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong>Administrator</strong>   Andrew Deering</p>
+                                        <p>andrew@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong style="white-space: pre;"><br/></strong></p>
+                                        <p><strong><span style="text-decoration: underline;">PLEASE NOTE OUR NEW ADDRESS: </span></strong></p>
+                                        <p>Literature Ireland</p>
+                                        <p>Trinity Centre for Literary and Cultural Translation</p>
+                                        <p>36 Fenian Street</p>
+                                        <p>Trinity College Dublin</p>
+                                        <p>Dublin D02 CH22</p>
+                                        <p>Ireland</p>
+                                        <p><strong>Telephone: +353 (0)1 896 4184</strong></p>
+                                        <p><span style="white-space: pre;"><strong>Email: info@literatureireland.com</strong></span></p>
+                                        <p> </p>
+                                        <p> </p>
+                                        <p> </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+        <!--showLegalNoteModal-->
+        <div class="modal fade" id="showLegalNoteModal" tabindex="-1" role="dialog" aria-labelledby="showLegalNoteModallLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header"   style="background-color: #d9d1d1;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title" id="showLegalNoteModallLabel" style="background-color: #d9d1d1;">Legal Note</h1>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="container-fluid">
+                            <div id="contentarea">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <h4>Company Registration</h4>
+                                        <p>Literature Ireland is registered in Dublin, Ireland, at the following address: </p>
+                                        <p>Trinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2.</p>
+                                        <p>Registered company number: 212420</p>
+                                        <p> </p>
+                                        <h4><span style="color: #3b3b3b;">Disclaimer</span></h4>
+                                        <p>Literature Ireland offers the material on this website, in good faith, for the information of visitors to the site, but disclaims any responsibility for error, omission or inaccuracy, and for the consequences of pursuing any link from these pages to another site.</p>
+                                        <p> </p>
+                                        <h4>Copyright</h4>
+                                        <p>The copyright in all material on this website is owned by Literature Ireland, or is reproduced with the permission (if required) of the copyright owner. The material may be retrieved and downloaded for personal use, but may not otherwise be reproduced or made available in any manner or form, and may not be modified or altered in any way, without the permission of Literature Ireland.</p>
+                                        <p> </p>
+                                        <h4>Privacy</h4>
+                                        <p>All documentation submitted to Literature Ireland will be treated with the utmost discretion. If you have any concerns in relation to privacy, please contact Literature Ireland at info@literatureireland.com.</p>
+                                    </div><!-- end of typography div -->
+                                </div><!-- end of text padding div -->
+                            </div><!-- end of contentarea div -->
+                        </div>
+                    </div><!-- modal body -->
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
+                                var $imageupload = $('.imageupload');
+                                $imageupload.imageupload();
 
-            function  showInfoModal() {
-                $("#showInfoModal").modal("show");
-            }
-            function  showNotesModal() {
-                $("#showNotesModal").modal("show");
-            }
+                                function  showInfoModal() {
+                                    $("#showInfoModal").modal("show");
+                                }
+                                function  showNotesModal() {
+                                    $("#showNotesModal").modal("show");
+                                }
+                                function  contactUsModal() {
+                                    $("#contactUsModal").modal("show");
+                                }
+                                function  showLegalNoteModal() {
+                                    $("#showLegalNoteModal").modal("show");
+                                }
         </script>
 
 

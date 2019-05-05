@@ -147,26 +147,33 @@ public class ACpublisherDAO_test {
         return publisherList;
     }
 
+   
     //isPublisherExists
-    public static boolean isPublisherExists(String Company) throws DBException {
+    /*
+     * check if publisher exists
+     * @param Company from: RegisterServlet
+     * @param returnPublisherID to: RegisterServlet
+     */
+    public static String isPublisherExists(String Company) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
-        boolean verified = false;
+        // boolean verified = false;
+        String returnPublisherID = "0";
         ResultSet res = null;
 
         try {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement("SELECT * FROM ILGAS.international_publishers "
-                    + "WHERE Company = ?");
-            System.out.println("isPublisherExists company: try:: " + ps);
+            ps = conn.prepareStatement("SELECT * FROM ILGAS.international_publishers WHERE Company = ?");
             ps.setString(1, Company);
+            System.out.println("isPublisherExists company: try:: " + ps);
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
                     System.out.println("isPublisherExists res:   " + res.getString(1));
-                    verified = true;
+//                    verified = true;
+                    returnPublisherID = res.getString(1);
                 }
             }
 
@@ -176,8 +183,9 @@ public class ACpublisherDAO_test {
             DBConn.close(conn, ps, res);
             throw new DBException("isPublisherExists - 3 Excepion while accessing database");
         }
-
-        return verified;
+        System.out.println("isPublisherExists :: verified " + returnPublisherID);
+//        return verified;
+        return returnPublisherID;
     }
 
     //isNewPublisher 

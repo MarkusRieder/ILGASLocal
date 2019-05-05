@@ -30,6 +30,7 @@
 
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
@@ -64,17 +65,16 @@
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 
+
         <title>Translation Grant Application System</title>
 
-        <!--Validation-->
         <script>
             $(document).ready(function () {
                 $("#alertSuccess").hide();
                 $("#errid").hide();
                 $("#errname").hide();
-                $("#erremail").hide();  //Initially hiding the error spans
+                $("#erremail").hide(); //Initially hiding the error spans
                 $("#errpass").hide();
-
                 $("#Rbtn").click(function () {
                     var userid = $("#id").val();
                     var username = $("#username").val();
@@ -82,7 +82,6 @@
                     var email = $("#email").val();
                     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     var letters = /^[A-Za-z]+$/;
-
                     if (userid == "" || userid == null) {
                         alert("UserID cannot be Empty");
                         return false;
@@ -92,7 +91,6 @@
                     } else if (password == "" || password == null) {
                         alert("Password cannot be Empty");
                         return false;
-
                     } else if (email == "" || email == null) {
 
                         alert("Email cannot be Empty");
@@ -103,7 +101,6 @@
                         return false;
                     } else if (!(email.match(mailformat))) {
                         alert("Please Enter Valid Mail ID");
-
                         return false;
                     } else if (!(username.match(letters))) {
                         alert("Pleas Enter only Characters for Username");
@@ -115,18 +112,14 @@
                     }
 
                 });
-
-
                 $("#id").change(function () {
-                    var userid = $("#id").val();   //here we are restricting the user at the time of typing,we called an event "Keyup"
+                    var userid = $("#id").val(); //here we are restricting the user at the time of typing,we called an event "Keyup"
                     if (isNaN(userid)) {
 
-                        $("#errid").show();  //if user enters other than number then the error span will be shown
+                        $("#errid").show(); //if user enters other than number then the error span will be shown
                         return false;
                     } else {
                         $("#errid").hide();
-
-
                         return true;
                     }
 
@@ -135,10 +128,8 @@
                 $("#username").change(function () {
                     var username = $("#username").val();
                     var letters = /^[A-Za-z]+$/;
-
                     if (!(username.match(letters))) {
                         $("#errname").show();
-
                         return false;
                     } else {
                         $("#errname").hide();
@@ -148,42 +139,32 @@
                 });
                 $("#email").change(function () {
                     var email = $("#email").val();
-
                     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     if (!(email.match(mailformat))) {
                         $("#erremail").show();
-
-
                         return false;
                     } else {
                         $("#erremail").hide();
                         return true;
-
-
                     }
 
                 });
-
                 $("#cpassword").change(function () {
                     var password = $("#password").val();
                     var cpassword = $("#cpassword").val();
                     if (!(password === cpassword)) {
                         $("#errpass").show();
                         return false;
-
                     } else {
                         $("#errpass").hide();
-
                         return true;
                     }
                 });
             });
-
         </script>
 
         <!--getTodaysDate-->
         <script type="text/javascript">
-
             function getTodaysDate() {
                 var date = new Date();
                 var day = date.getDate();
@@ -199,7 +180,6 @@
             ;
         </script>
 
-        <!--Global Variables-->
         <script>
             $.datepicker.setDefaults({
                 dateFormat: 'dd/mm/yy',
@@ -253,7 +233,8 @@
             var oTable;
         </script>
 
-        <!--newGenre-->
+
+        <!--Genre-->
         <script type="text/javascript">
             $(document).ready(function () {
                 $.fn.dataTable.ext.buttons.newGenre = {
@@ -270,16 +251,6 @@
                             attr: {
                                 id: 'newGenre'
                             }
-
-                            //                            action: function (e, dt, button, config) {
-                            //                                $('.reportFiltrsButton').attr(
-                            //                                        {
-                            //                                            "data-toggle": "modal",
-                            //                                            "data-target": "#createNewGenremodal"
-                            //                                        }
-                            //                                );
-                            ////                                $('#createNewGenremodal').modal('show');
-                            //                            }
                         }
                     ],
                     "bProcessing": false,
@@ -294,7 +265,7 @@
                         },
                         {"data": "genre",
                             "render": function (data, type, row) {
-                                console.log("genres: " + data);
+//                                console.log("genres: " + data);
                                 return  data;
                             }},
                         {"data": "idgenres"},
@@ -382,8 +353,8 @@
             $(document).ready(function () {
                 $.fn.dataTable.ext.buttons.newStaff = {
                     text: 'NewStaff'
-
                 };
+
                 var table = $("#user").DataTable({
 
                     dom: 'Bfrtip',
@@ -399,7 +370,7 @@
                         },
                         {
                             extend: 'newStaff',
-                            text: '<i class="fa fa-user-plus" style="font-size:24px;color:blue"></i>',
+                            text: '<i class="fas fa-user-plus" style="font-size:24px;color:blue"></i>',
                             titleAttr: 'Add new Staff Member',
                             action: function (e, dt, button, config) {
                                 $('.reportFiltrsButton').attr(
@@ -445,11 +416,10 @@
                 });
                 $('#user tbody').on('click', 'tr td.details-control', function () {
 
-
                     var tr = $(this).closest('tr');
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
-//                    console.log("rowdata  "  + rowdata.value);
+                    console.log("rowdata.EMAIL  " + rowdata.EMAIL);
 
                     $('#usr_name').html("User Details for: " + rowdata.FIRST_NAME + " " + rowdata.LAST_NAME);
                     var mail = 'mailto: ' + rowdata.EMAIL;
@@ -472,7 +442,6 @@
 
             });
         </script>
-
 
         <!--ExpertReader-->
         <script type="text/javascript">
@@ -562,15 +531,11 @@
                         url: "./ExpertReaderDelete",
                         data: "id=" + idToDelete,
                         success: function (data, status, xhr) {
-                            console.log("ajax  success:");
                             //delete the row
                             expReaderTable.ajax.reload();
-                            console.log("  expReaderTable.ajax.reload:");
                             $("#deleteExpReaderModal").modal('toggle');
-                            console.log("deleteExpReaderModal  toggle");
                             document.getElementById("showDeleteExpReader").innerHTML = "Expert Reader: <strong>'" + idToDelete + "'</strong> has been  <strong>successfully</strong> deleted!";
                             $("#deleteExpReaderSuccessModal").modal('show');
-                            console.log("deleteExpReaderSuccessModal  show");
                         },
                         error: function (xhr) {
                             alert("Error");
@@ -580,7 +545,6 @@
                 });
             });
         </script>
-
 
         <!--Books-->
         <script type="text/javascript">
@@ -856,9 +820,33 @@
                     console.log("hasCover2  " + hasCover);
                     console.log(booksTable.row(this).data());
                 });
+//                $('#books tbody').on('click', 'tr td.btn-control', function () {
+//
+//                    var cver = "";
+//                    var tr = $(this).closest('tr');
+//                    var row = table.row(tr);
+//                    var rowdata = (table.row(tr).data());
+//                    $("#editBooksModal").modal("show");
+//                    $("#referenceNumber2").val($(this).closest('tr').children()[3].textContent); // ID
+//                    $("#Author2").val($(this).closest('tr').children()[4].textContent); // uname
+//
+//                    if (typeof (rowdata.cover) === "undefined") {
+//                        var cver = 'images/not-available.jpg';
+//                    } else {
+//                        var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+//                    }
+//
+//                    $("#bookCover").val(cver);
+//                    document.getElementById("bookCover").src = cver;
+//                    $("#Title2").val($(this).closest('tr').children()[5].textContent); // First
+//                    $("#Genre2").val($(this).closest('tr').children()[7].textContent); // Last
+//                    $("#Language2").val($(this).closest('tr').children()[11].textContent); // Function
+//                    //      $("#ISBN2").val($(this).closest('tr').children()[16].textContent); // Role
+//
+//                    console.log(table.row(this).data());
+//                });
             });
         </script>
-
 
         <script type="text/javascript">
             $(document).ready(function () {
@@ -866,7 +854,7 @@
 
                     event.preventDefault();
 
-// $('#booksModal').modal('toggle');
+                    // $('#booksModal').modal('toggle');
                     var bookID = document.getElementById('bookID').value;
                     var referenceNumber = document.getElementById('referenceNumber').value;
                     var Author = document.getElementById('Author').value;
@@ -936,12 +924,7 @@
                 });
             });
         </script>
-
-        <script type="text/javascript">
-            function saveBooks() {
-                alert("save Books to do");
-            }
-        </script>
+        <!--applications-->
 
         <!-- detailsTable-->              
         <script>
@@ -949,12 +932,12 @@
                 var rowdata1 = [];
                 var rowdata = [];
                 detailsTable = $('#applications1').DataTable({
+                    data: [],
                     "processing": true,
-                    'language': {
-                        "loadingRecords": "&nbsp; ",
+                    "language": {
+                        "loadingRecords": "&nbsp; Loading Applications... ",
                         "processing": "Loading Applications..."
                     },
-                    data: [],
                     "columns": [
                         {
                             "targets": 0,
@@ -990,7 +973,6 @@
                         {"data": "plannedPageExtent",
                             "render": function (data, type, row) {
                                 console.log("88888 plannedPageExtent " + data);
-
                             }},
                         {"data": "translatorCV",
                             "render": function (data, type, row) {
@@ -1059,7 +1041,7 @@
                         {"data": "genre"},
                         {"data": "TranslatorName",
                             "render": function (data) {
-//                                console.log("data:TranslatorName  " + data);
+                                console.log("data:TranslatorName  " + data);
                                 return data;
                             }},
                         {"data": "expertReaderName",
@@ -1068,10 +1050,14 @@
                                 return data;
                             }},
                         {"data": "bookTitle",
-                            "render": function (data) {
-                                console.log("data:bookTitle  " + data);
-                                return data;
-                            }},
+                            "render": function (data, type, full, meta) {
+                                if (typeof (data) === "undefined") {
+                                    return 'n/a';
+                                } else {
+                                    return data;
+                                }
+                            }
+                        },
                         {"data": "TranslatorTrack2",
                             "render": function (data) {
                                 console.log("data:TranslatorTrack2  " + data);
@@ -1096,7 +1082,7 @@
                             "render": function (data) {
 
                                 if (typeof (data) === "undefined") {
-                                    return "";
+                                    return "n/a";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1108,7 +1094,7 @@
                             "render": function (data) {
 
                                 if (typeof (data) === "undefined") {
-                                    return "";
+                                    return "n/a";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1127,7 +1113,7 @@
                             "render": function (data) {
                                 console.log("originalDateOfPublication  " + data);
                                 if (typeof (data) === "undefined") {
-                                    return "";
+                                    return "n/a";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1145,7 +1131,7 @@
                             "render": function (data) {
 
                                 if (typeof (data) === "undefined") {
-                                    return "";
+                                    return "n/a";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1181,7 +1167,7 @@
                             "render": function (data) {
 
                                 if (typeof (data) === "undefined") {
-                                    return "";
+                                    return "n/a";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1194,7 +1180,7 @@
                             "render": function (data) {
 
                                 if (typeof (data) === "undefined") {
-                                    return "";
+                                    return "n/a";
                                 } else
                                 {
                                     var date = new Date(data);
@@ -1266,6 +1252,7 @@
                         {"data": "previousGrantAid"},
                         {"data": "award",
                             "render": function (data, type, row) {
+                                console.log("8888 award " + data);
                                 return (data === 1) ? '<span class="glyphicon glyphicon-ok"></span>' : '<span class="glyphicon glyphicon-remove"></span>';
                             }
                         },
@@ -1307,7 +1294,6 @@
                     filter: true,
                     info: true,
                     ordering: true,
-                    processing: true,
                     retrieve: true
                 });
                 $('#applications tbody').on('click', 'tr td.details-control', function (e) {
@@ -1325,7 +1311,6 @@
                     var rowdata = (oTable.row(tr).data());
                     console.log("oTable rowdata ");
                     console.log(rowdata);
-
                     /*
                      * 
                      * Pick up the ReferenceNumber
@@ -1333,9 +1318,7 @@
                      */
 
                     var ReferenceNumber = rowdata.ReferenceNumber;
-                    //      alert("ReferenceNumber  " + ReferenceNumber);
-
-
+                    //     alert("ReferenceNumber  " + ReferenceNumber);
                     /*
                      * 
                      * create new URL to retrieve ALL data for detailsTable
@@ -1343,7 +1326,6 @@
 
 
                     var newUrl = "./openSingleApplicationDataServlet?ReferenceNumber=" + ReferenceNumber;
-
                     $.ajax({
                         type: "get",
                         url: newUrl,
@@ -1355,8 +1337,6 @@
                             rowdata1 = data;
                         }
                     });
-
-
                     console.log("rowdata1 |BB||B");
                     console.log(rowdata1);
                     console.log("rowdata1[aaData][0]");
@@ -1367,11 +1347,6 @@
                     console.log(rowdata);
 //                    var ReferenceNumber1 = rowdata1.ReferenceNumber;
 //                    alert("ReferenceNumber 1 " + ReferenceNumber1);
-
-                    $("#applicationsModal").modal("show");
-
-                    var approveWithdrawnReject = rowdata.approveWithdrawnReject;
-                    console.log("13131 approveWithdrawnReject  " + approveWithdrawnReject);
 
                     $("#applicationsModal").modal("show");
                     var approveWithdrawnReject = rowdata.approveWithdrawnReject;
@@ -1390,6 +1365,7 @@
                         document.getElementById("Rejected").classList.add('active');
                         $("#Rejected").click();
                     }
+
 
 
                     cntr++;
@@ -1419,78 +1395,31 @@
                         console.log("awardValue:  FALSE");
                     }
 
+
+
                     readerReport = rowdata.readerReport;
                     console.log("rowdata readerReport " + readerReport);
                     bookTitles = rowdata.Titles;
                     console.log("rowdata bookTitles: " + bookTitles);
                     $("#appBookTitle").val(bookTitles.join(""));
                     $("#authorList").val(rowdata.Author);
-
-                    console.log("rowdata.boardMeeting " + rowdata.boardMeeting);
-                    if (typeof rowdata.boardMeeting === "undefined") {
-                        $("#appDateOfBoardMeeting").val("");
-                    } else {
+                    console.log("rowdata rowdata.Author " + rowdata.Author);
+                    if (rowdata.boardMeeting !== "undefined") {
                         $("#appDateOfBoardMeeting").val(formatDate(rowdata.boardMeeting));
                     }
 
-
-                    if (typeof rowdata.contractSentToPublisher === "undefined") {
-                        $("#dateContractSenttoPublisher").val("");
-                    } else {
-                        $("#dateContractSenttoPublisher").val(formatDate(rowdata.contractSentToPublisher));
-                    }
-//                    $("#dateContractSenttoPublisher").val(formatDate(rowdata.contractSentToPublisher));
-
-                    if (typeof rowdata.acknowledgementApproved === "undefined") {
-                        $("#dateILEAcknowledgementApproved").val("");
-                    } else {
-                        $("#dateILEAcknowledgementApproved").val(formatDate(rowdata.acknowledgementApproved));
-                    }
-//                    $("#dateILEAcknowledgementApproved").val(formatDate(rowdata.acknowledgementApproved));
-
-
-                    if (typeof rowdata.datePublishedBooksReceived === "undefined") {
-                        $("#datePublishedBooksReceived").val("");
-                    } else {
-                        $("#datePublishedBooksReceived").val(formatDate(rowdata.datePublishedBooksReceived));
-                    }
-//                    $("#datePublishedBooksReceived").val(formatDate(rowdata.datePublishedBooksReceived));
-
-                    if (typeof rowdata.datePaymentMadeToPublisher === "undefined") {
-                        $("#datePaymentMadeToPublisher").val("");
-                    } else {
-                        $("#datePaymentMadeToPublisher").val(formatDate(rowdata.datePaymentMadeToPublisher));
-                    }
-//                    $("#datePaymentMadeToPublisher").val(formatDate(rowdata.datePaymentMadeToPublisher));
-                    console.log("rowdata.paymentReferenceNumber " + rowdata.paymentReferenceNumber);
-                    if (rowdata.paymentReferenceNumber === 'null' || rowdata.paymentReferenceNumber === "") {
-                        $("#paymentReferenceNumber").val("");
-                    } else {
-                        $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
-                    }
-//                    $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
+                    console.log("rowdata.boardMeeting " + rowdata.boardMeeting);
+                    $("#dateContractSenttoPublisher").val(formatDate(rowdata.contractSentToPublisher));
+                    $("#dateILEAcknowledgementApproved").val(formatDate(rowdata.acknowledgementApproved));
+                    $("#datePublishedBooksReceived").val(formatDate(rowdata.datePublishedBooksReceived));
+                    $("#datePaymentMadeToPublisher").val(formatDate(rowdata.datePaymentMadeToPublisher));
+                    $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
                     var paymentStatusSelected = rowdata.paymentStatus;
                     console.log("13131 paymentStatusSelected " + paymentStatusSelected);
                     setSelectedIndex(document.getElementById('paymentStatus'), paymentStatusSelected);
                     $("#amountApproved").val(rowdata.amountApproved);
-                    console.log("rowdata.publisherInformedOfMeeting " + rowdata.publisherInformedOfMeeting);
-                    if (typeof rowdata.publisherInformedOfMeeting === "undefined") {
-                        $("#datePublisherInformedOfMeeting").val("");
-                    } else {
-                        $("#datePublisherInformedOfMeeting").val(formatDate(rowdata.publisherInformedOfMeeting));
-                    }
-//                    $("#datePublisherInformedOfMeeting").val(formatDate(rowdata.publisherInformedOfMeeting));
-
-
-                    console.log("rowdata.boardComments_Instructions " + rowdata.boardComments_Instructions);
-                    if (rowdata.boardComments_Instructions === 'null' || rowdata.boardComments_Instructions === "") {
-                        $("#commentsAboutMeeting").val("n/a");
-                    } else {
-                        $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
-                    }
-//                    $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
-
-                    console.log("rowdata.directorChairDecision " + rowdata.directorChairDecision);
+                    $("#datePublisherInformedOfMeeting").val(formatDate(rowdata.publisherInformedOfMeeting));
+                    $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
                     $("#directorChairDecision").val(rowdata.directorChairDecision);
                     var statii = rowdata.Status;
                     if (statii === 'new') {
@@ -1543,6 +1472,11 @@
                     $("#apptranslatorFee").val(rowdata.translatorFee);
                     $("#previousGrantAid").val(rowdata.previousGrantAid);
                     $("#amountRequested").val(rowdata.translatorFee);
+//                    var date = new Date(rowdata.proposedDateOfPublication);
+//                    var day = date.getDate();
+//                    var month = date.getMonth() + 1;
+//                    var year = date.getFullYear();
+//                    var proposedDateOfPublication = day + "/" + month + "/" + year;
                     var proposedDateOfPublication = formatDate(rowdata.proposedDateOfPublication);
                     $("#appproposedDateOfPublication").val(proposedDateOfPublication);
                     $("#appplannedPageExtent").val(rowdata.plannedPageExtent);
@@ -1550,8 +1484,8 @@
                     $("#appproposedPrintRun").val(rowdata.proposedPrintRun);
                     console.log("proposedPrintRun " + rowdata.proposedPrintRun);
                     $("#amountApproved").val(rowdata.amountApproved);
-//                    $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
-//                    $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
+                    $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
+                    $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
                     $("#ProofPaymentToTranslator").val(rowdata.proofOfPaymentToTranslator); // http://www.literatureirelandgrantapplication.com:8080undefined
                     $("#BankDetailsForm").val(rowdata.bankDetailsForm); // http://www.literatureirelandgrantapplication.com:8080undefined
                     $("#SignedLIContract").val(rowdata.SignedLIContract); // http://www.literatureirelandgrantapplication.com:8080undefined
@@ -1603,29 +1537,134 @@
                     var appReferenceNumber = rowdata.ReferenceNumber;
                     console.log("appReferenceNumber " + appReferenceNumber);
                     $("#appReferenceNumber").val(appReferenceNumber); //ok
-                    document.getElementById("ReferenceNumber").textContent = appReferenceNumber;
                     $("#unassignedERRefNo").val(appReferenceNumber);
                     var TranslName = rowdata.TranslatorName;
                     var translators = rowdata.TranslatorName;
-
-
+                    console.log("TranslatorDocs:  rowdata.transList   " + rowdata.transList);
                     var TranslatorDocs = [];
                     TranslatorDocs = rowdata.transList;
-                    translatorArray = rowdata.TranslatorTrack2;
+                    translatorArray = rowdata.transList;
                     $("#TranslatorName").val(TranslName);
                     // Generate table translatorTrackTable
                     var TranslTitles = rowdata.TranslatorTrack2;
-                    TranslTitles = TranslatorDocs;
-
+                    console.log("444 TranslTitles:  TranslatorTrack2::   " + TranslTitles);
+                    var TranslTitles = rowdata.TranslatorTrack2;
+                    console.log("444 TranslTitles:  TranslatorTrack2::   " + TranslTitles);
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#translatorTableDiv').empty(); // empty the div before fetching and adding new data
                     var docName = "";
+                    var translatorTableDiv = document.getElementById("translatorTableDiv");
+                    var tble = document.createElement('TABLE');
+                    tble.id = 'TranslatorTable';
+                    tble.border = '1';
+                    tble.title = 'TranslatorTable';
+                    tble.className = "table";
+                    tble.style = 'width: auto;overflow-x: auto';
+                    var tableBody = document.createElement('TBODY');
+                    var header = document.createElement('thead');
+                    header.style = 'font-weight: bold;';
+                    var headingRow = document.createElement('tr');
+                    var headingCell1 = document.createElement('td');
+                    var headingText1 = document.createTextNode('Translator name');
+                    headingCell1.appendChild(headingText1);
+                    headingRow.appendChild(headingCell1);
+                    var headingCell2 = document.createElement('td');
+                    var headingText2 = document.createTextNode('Translator CV');
+                    headingCell2.appendChild(headingText2);
+                    headingRow.appendChild(headingCell2);
+//                    var headingCell3 = document.createElement('td');
+//                    var headingText3 = document.createTextNode('Translator translation sample');
+//                    headingCell3.appendChild(headingText3);
+//                    headingRow.appendChild(headingCell3);
 
+                    header.appendChild(headingRow);
+                    tble.appendChild(header);
+                    var translatorNamesForGenerateTranslatorTab = [];
+                    var translators = [];
+                    for (var i = 0; i < TranslatorDocs.length; ++i) {
+                        console.log("TranslatorDocs.length " + TranslatorDocs.length);
+                        for (var j = 0; j < TranslatorDocs[i].length; ++j) {
+
+                            // skip undefined values to preserve sparse array
+                            if (TranslatorDocs[i][j] === undefined)
+                                continue;
+                            // create row if it doesn't exist yet
+                            if (translators[j] === undefined)
+                                translators[j] = [];
+                            // swap the x and y coords for the copy
+                            translators[i][j] = TranslatorDocs[i][j];
+                            console.log("1 translators[" + j + "][" + i + "] " + translators[j][i]);
+                        }
+                    }
+
+                    //TABLE ROWS
+                    for (i = 0; i < translators.length; i++) {
+                        var tr = document.createElement('TR');
+                        for (j = 0; j < translators[i].length; j++) {
+                            console.log("translators[i].length: " + translators[i].length);
+                            console.log("translators[i]: " + translators[i]);
+                            console.log("2 translators[i][j] " + translators[i][j]);
+                            var td = document.createElement('TD');
+                            if (i === 0) {
+                                td.className = 'highlightHeader';
+                            }
+                            // remove "undefined" cells
+                            if (typeof (translators[i][j]) === "undefined") {
+                                translators[i][j] = '';
+                            }
+
+                            console.log("3 translators[i][j] " + translators[i][j]);
+                            var nls = translators[i][j].split(",");
+                            for (k = 0; k < nls.length; k++) {
+                                console.log("1 nls [" + k + " ] " + nls[k]);
+                            }
+                            var newTranslatorName = nls[0];
+                            newTranslatorName = newTranslatorName.substring(1);
+                            translatorNamesForGenerateTranslatorTab.push(newTranslatorName);
+                            console.log("translatorNamesForGenerateTranslatorTab " + translatorNamesForGenerateTranslatorTab);
+                            for (o = 0; o < translatorNamesForGenerateTranslatorTab.length; o++) {
+                                console.log("translatorNamesForGenerateTranslatorTab " + translatorNamesForGenerateTranslatorTab[o]);
+                            }
+
+                            for (l = 0; l < nls.length; l++) {
+                                docName = "";
+                                if (l === 0) {
+                                    td = document.createElement('td');
+                                    td.className = 'highlightHeader';
+                                    var rep = nls[l].substr(1);
+                                    console.log("rep [" + l + " ] " + rep);
+                                    td.appendChild(document.createTextNode(rep));
+                                    tr.appendChild(td);
+                                } else if (l === 2) {
+                                    td = document.createElement('td');
+                                    var btn = document.createElement('input');
+                                    btn.type = "button";
+                                    btn.className = "btn btn-info";
+                                    btn.value = nls[1].trim();
+                                    var dir = nls[l].substr(1);
+                                    var destination = dir.replace("/home/markus/public_html/", "/~markus/");
+                                    console.log("destination " + destination);
+                                    var entry = "location.href='http://www.literatureirelandgrantapplication.com:8080" + destination + "'";
+                                    console.log("localhost " + entry);
+                                    btn.setAttribute("onclick", entry);
+                                    td.appendChild(btn);
+                                    console.log("nls[l] [" + l + " ] " + nls[l]);
+                                    td.appendChild(btn);
+                                    tr.appendChild(td);
+                                } else if (l === 3) {
+
+                                    docName = nls[l].trim();
+                                }
+                            }
+                            tr.appendChild(td);
+                            tableBody.appendChild(tr);
+                            tr = document.createElement('tr');
+                        }
+                        tableBody.appendChild(tr);
+                    }
+                    tble.appendChild(tableBody);
+                    translatorTableDiv.appendChild(tble);
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
-                    $('#translTrackDiv').empty(); // empty the div before fetching and adding new data
-
-                    var TranslTitles = rowdata.TranslatorTrack2;
-
                     $('#translTrackDiv').empty(); // empty the div before fetching and adding new data
 
                     var myTableDiv = document.getElementById("translTrackDiv");
@@ -1640,6 +1679,8 @@
                     var translatorTrack = [];
                     for (var i = 0; i < TranslTitles.length; ++i) {
                         for (var j = 0; j < TranslTitles[i].length; ++j) {
+
+                            console.log("before TranslTitles[" + i + "][" + j + "] " + TranslTitles[i][j]);
                             // skip undefined values to preserve sparse array
                             if (TranslTitles[i][j] === undefined)
                                 continue;
@@ -1665,6 +1706,7 @@
                             td2.width = '33.33%';
                             td3.width = '33.33%';
                             if (j === 0) {
+
                                 var stringyfiedTranslTitles = String(TranslTitles[i][j]);
                                 var translatorNameFromTranslTitles = stringyfiedTranslTitles.split(',');
                                 var TranslatorName = translatorNameFromTranslTitles[0];
@@ -1695,13 +1737,13 @@
                                     tr.appendChild(th2);
                                 }
                                 tableBody.appendChild(tr);
-//                                continue;
+                                continue;
                             }
                             // remove "undefined" cells
                             if (typeof (TranslTitles[i][j]) === "undefined") {
                                 TranslTitles[i][j] = '';
                             }
-
+                            console.log("555 last bit ");
                             var tr = document.createElement('TR');
                             td.width = '33.33%';
                             td2.width = '33.33%';
@@ -1709,12 +1751,12 @@
                             td.style = 'text-align:left';
                             td2.style = 'text-align: left';
                             td3.style = 'text-align: left';
-
                             var record = TranslTitles[i][j];
                             var Translator = record[0];
                             var Author = record[1];
                             var Title = record[2];
                             var ReferenceNumber = record[3];
+                            console.log("8 xyz record " + record);
                             idx++;
                             td.appendChild(document.createTextNode(Author));
                             td2.appendChild(document.createTextNode(Title));
@@ -1728,8 +1770,6 @@
 
                     tble.appendChild(tableBody);
                     myTableDiv.appendChild(tble);
-
-
                     for (i = 0; i < translatorTrack.length; i++) {
                         for (j = 0; j < translatorTrack[i].length; j++) {
 
@@ -1754,539 +1794,105 @@
                     }
 
 
-                    var translatorTableDiv = document.getElementById("translatorTableDiv");
-                    var tble = document.createElement('TABLE');
-                    tble.id = 'TranslatorTable';
-                    tble.border = '1';
-                    tble.title = 'TranslatorTable';
-                    tble.className = "table";
-                    tble.style = 'width: auto;overflow-x: auto';
-                    var tableBody = document.createElement('TBODY');
-                    var header = document.createElement('thead');
-                    header.style = 'font-weight: bold;';
-                    var headingRow = document.createElement('tr');
-                    var headingCell1 = document.createElement('td');
-                    var headingText1 = document.createTextNode('Translator name');
-                    headingCell1.appendChild(headingText1);
-                    headingRow.appendChild(headingCell1);
-                    var headingCell2 = document.createElement('td');
-                    var headingText2 = document.createTextNode('Translator CV');
-                    headingCell2.appendChild(headingText2);
-                    headingRow.appendChild(headingCell2);
-//                    var headingCell3 = document.createElement('td');
-//                    var headingText3 = document.createTextNode('Translator translation sample');
-//                    headingCell3.appendChild(headingText3);
-//                    headingRow.appendChild(headingCell3);
-
-//                    header.appendChild(headingRow);
-//                    tble.appendChild(header);
-
-
-                    console.log("8 xyz 000 translators.length: " + translators.length);
-                    console.log("8 xyz 000 TranslatorDocs[0].length: " + TranslatorDocs[0].length);
-                    console.log("8 xyz 000 TranslatorDocs.length: " + TranslatorDocs.length);
-                    console.log(TranslatorDocs[0]); // contais 2 arrays
-                    translatorNamesForGenerateTranslatorTab = [];
-                    translators = [];
-                    //    var loopLength = TranslatorDocs[0].length;
-                    //  console.log("8 xyz loopLength " + loopLength);
-                    for (var i = 0; i < TranslatorDocs.length; ++i) {
-                        console.log("8 xyz TranslatorDocs.length  first loop [" + i + "]");
-                        for (var j = 0; j < TranslatorDocs[i].length; ++j) {
-                            console.log("8 xyz TranslatorDocs.length  second loop ", TranslatorDocs[i].length);
-                            console.log("8 xyz TranslatorDocs[" + i + "] ");
-                            console.log(TranslatorDocs[i]);
-                            console.log("8 xyz TranslatorDocs[" + i + "] [" + j + "]");
-                            console.log(TranslatorDocs[i][j]);
-                            // skip undefined values to preserve sparse array
-                            if (TranslatorDocs[i][j] === undefined)
-                                continue;
-                            // create row if it doesn't exist yet
-                            if (translators[j] === undefined)
-                                translators[j] = [];
-                            // swap the x and y coords for the copy
-                            translators[i][j] = TranslatorDocs[i][j];
-                            console.log("8 xyz 1 translators[" + i + "][" + j + "] " + translators[i][j]);
-                        }
-                    }
-
-                    //TABLE ROWS
-                    for (i = 0; i < translators.length; i++) {
-                        var tr = document.createElement('TR');
-                        for (j = 0; j < translators[i].length; j++) {
-                            console.log("8 xyz  translators[i].length: " + translators[i].length);
-                            console.log("8 xyz  translators[i]: " + translators[i]);
-                            console.log("8 xyz translators[i][j] " + translators[i][j]);
-                            var td = document.createElement('TD');
-                            if (i === 0) {
-                                td.className = 'highlightHeader';
-                            }
-                            // remove "undefined" cells
-                            if (typeof (translators[i][j]) === "undefined") {
-                                translators[i][j] = '';
-                            }
-
-                            console.log("8 xyz   3 translators[i][j] " + translators[i][j]);
-                            var nls = translators[i][j].split(",");
-                            for (k = 0; k < nls.length; k++) {
-                                console.log("1 nls [" + k + " ] " + nls[k]);
-                            }
-
-
-                            var newTranslatorName = nls[0];
-                            newTranslatorName = newTranslatorName.substring(1);
-                            translatorNamesForGenerateTranslatorTab.push(newTranslatorName);
-                            console.log("8 xyz   translatorNamesForGenerateTranslatorTab " + translatorNamesForGenerateTranslatorTab);
-                            for (o = 0; o < translatorNamesForGenerateTranslatorTab.length; o++) {
-                                console.log("8 xyz   loop translatorNamesForGenerateTranslatorTab " + translatorNamesForGenerateTranslatorTab[o]);
-                            }
-
-                            for (l = 0; l < nls.length; l++) {
-                                docName = "";
-                                if (l === 0) {
-                                    td = document.createElement('td');
-                                    td.className = 'highlightHeader';
-                                    var rep = nls[l].substr(1);
-                                    console.log("rep [" + l + " ] " + rep);
-                                    td.appendChild(document.createTextNode(rep));
-                                    tr.appendChild(td);
-                                } else if (l === 2) {
-                                    td = document.createElement('td');
-                                    var btn = document.createElement('input');
-                                    btn.type = "button";
-                                    btn.className = "btn btn-info";
-                                    btn.value = nls[1].trim();
-                                    var dir = nls[l].substr(1);
-
-                                    var destination = dir.replace("/home/markus/public_html/", "/~markus/");
-                                    console.log("destination " + destination);
-                                    var entry = "location.href='http://www.literatureirelandgrantapplication.com:8080" + destination + "'";
-                                    console.log("localhost " + entry);
-                                    btn.setAttribute("onclick", entry);
-                                    td.appendChild(btn);
-                                    console.log("nls[l] [" + l + " ] " + nls[l]);
-                                    td.appendChild(btn);
-                                    tr.appendChild(td);
-                                } else if (l === 3) {
-
-                                    docName = nls[l].trim();
-                                }
-                            }
-                            tr.appendChild(td);
-                            tableBody.appendChild(tr);
-                            tr = document.createElement('tr');
-                        }
-                        tableBody.appendChild(tr);
-                    }
-                    tble.appendChild(tableBody);
-
-
-                    /*
-                     * Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
-                     */
-
-                    /*
-                     * 1: The Nav-Bar
-                     */
-
-                    //reset the blocks
-//                    document.getElementById("agreementToggle1").style.display = "block";
-//                    document.getElementById("agreement_button1").style.display = "none";
-//                    document.getElementById("addendumToggle1").style.display = "block";
-//                    document.getElementById("addendum_button1").style.display = "none";
-
-                    //Get all Expert Readers that are not assigned at the moment
-                    var unassignedExpertReaderList = rowdata.unassignedExpertReaderList;
-
-
-                    $('#tn').empty(); // empty the div before fetching and adding new data
-                    $('#tnc').empty(); // empty the div before fetching and adding new data
-
-                    console.log("8 xyz ##############Generate Translator Tabs in Rights Agreement & Contracts-Tab#########################################################################################");
-                    // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
-
-                    // 1: The Nav-Bar
-                    console.log("8 xyz  rowdata.rightsAgreement.length " + rowdata.rightsAgreement.length);
-                    var rightsAgreementContractsNavBar = '';
-                    rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
-                    rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
-                    for (var i = 0; i < rowdata.rightsAgreement.length; i++) {
-                        console.log("8 xyz translatorNamesForGenerateTranslatorTab[' + i + ' " + translatorNamesForGenerateTranslatorTab[i]);
-                        var j = i + 1;
-                        if (i === 0) {
-
-                            rightsAgreementContractsNavBar += '<li class="active"><a href="#tn' + j + '" data-toggle="tab">' + translatorNamesForGenerateTranslatorTab[i] + '</a></li>';
-                        } else {
-
-                            rightsAgreementContractsNavBar += '<li><a href="#tn' + j + '" data-toggle="tab">' + translatorNamesForGenerateTranslatorTab[i] + '</a></li>';
-                        }
-                    }
-
-                    rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
-                    rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
-
-
-                    $(rightsAgreementContractsNavBar).appendTo('#tn');
-
-
-
-                    // The Tabs themselves
-
-                    var rightsAgreementContractsNavContent = '';
-
-                    for (var i = 0; i < rowdata.rightsAgreement.length; i++) {
-
-                        var j = i + 1;
-
-                        if (i === 0) {
-
-                            rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
-                        } else {
-
-                            rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
-                        }
-
-
-                        rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
-
-                        //Upload a copy of the CV
-                        console.log("8 xyz Upload a copy of the CV v " + v + "  w  " + w + "  j  " + j);
-                        rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
-                        rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative;">';
-
-                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="cvToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
-                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadCV' + j + '"></strong></div>';
-                        rightsAgreementContractsNavContent += '<br/>';
-                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                        rightsAgreementContractsNavContent += '<div class="input-group cv"  style="margin-bottom: 40px;">';
-                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="CV-' + j + '" id="cv' + j + '">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                        rightsAgreementContractsNavContent += '</label>';
-                        rightsAgreementContractsNavContent += '<input  type="text" id="label_cv' + j + '" class="pull-left"/>';
-                        rightsAgreementContractsNavContent += '<input type="hidden" value="CV" name="destination" id="cv_upload' + j + '"/>';
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
-
-                        rightsAgreementContractsNavContent += '<div class="col-md-5" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
-                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="cv_button_label' + j + '" ></label>';
-                        rightsAgreementContractsNavContent += '<div class="input-group cv_buttonText pull-left">';
-                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="cv_link' + j + '" href="">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
-                        rightsAgreementContractsNavContent += 'Click to open</a>';
-                        rightsAgreementContractsNavContent += '</div>';
-                        rightsAgreementContractsNavContent += '</div>'; // -- col-md-10--
-
-
-                        rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
-                        rightsAgreementContractsNavContent += '</div>'; // row
-
-                        //Upload a copy of the contract with translator
-                        console.log("8 xyz Upload a copy of the contract with translator v " + v + "  w  " + w + "  j  " + j);
-                        rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 40px;">';
-                        rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
-
-                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="contractToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
-                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadContract' + j + '"></strong></div>';
-                        rightsAgreementContractsNavContent += '<br/>';
-                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                        rightsAgreementContractsNavContent += '<div class="input-group contract"  style="margin-bottom: 40px;">';
-                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                        rightsAgreementContractsNavContent += '</label>';
-                        rightsAgreementContractsNavContent += '<input  type="text" id="label_contract' + j + '" class="pull-left"/>';
-                        console.log("8 xyz Upload a copy of the contract with translator id=label_contract" + j);
-                        rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
-
-                        rightsAgreementContractsNavContent += '<div class="col-md-5" id="contract_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
-                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="contract_button_label' + j + '" ></label>';
-                        rightsAgreementContractsNavContent += '<div class="input-group contract_buttonText pull-left">';
-                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="contract_link' + j + '" href="">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
-                        rightsAgreementContractsNavContent += 'Click to open</a>';
-                        rightsAgreementContractsNavContent += '</div>';
-                        rightsAgreementContractsNavContent += '</div>'; // -- col-md-10--
-
-
-                        rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
-                        rightsAgreementContractsNavContent += '</div>'; // row
-
-                        rightsAgreementContractsNavContent += '</div>';  //  --container--
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
-
-                    }
-
-                    $(rightsAgreementContractsNavContent).appendTo('#tnc');
-
-                    //Fill the tabs
-
-                    var w = 1;
-
-                    console.log("8 xyz Fill the tabs v " + v + "  w  " + w + "  j  " + j);
-                    console.log("8 xyz 1: Fill the tabs translators.length " + translators.length);
-                    console.log("8 xyz 1: Fill the tabs TranslatorDocs.length " + TranslatorDocs.length);
-                    console.log("8 xyz 1: Fill the tabs rightsAgreement.length " + rowdata.rightsAgreement.length);
-                    for (var j = 0; j < rowdata.rightsAgreement.length; j++) {
-                        var rightsAgreementArray = rowdata.rightsAgreement[j].split(",");
-                        for (var v = 0; v < rightsAgreementArray.length; v++) {
-                            console.log("8 xyz Fill the tabs v " + v + "  w  " + w + "  j  " + j);
-                            console.log("8 xyz 1: Fill the tabs rightsAgreement " + rightsAgreementArray[v].substr(1));
-                            switch (v) {
-                                case 0:
-                                    // Agreement
-                                    console.log("8 xyz Agreement ");
-                                    if (w === 1) {
-                                        if (rightsAgreementArray[v].substr(1) !== 'null') {
-                                            console.log("8 xyz Agreement not null");
-                                            console.log("8 xyz case 0  j[" + j + "] w  " + w);
-                                            console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
-                                            document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
-                                        }
-                                    }
-                                    break;
-                                case 1:
-                                    // AgreementDocName
-                                    console.log("8 xyz AgreementDocName ");
-                                    console.log("8 xyz case 1 [" + j + "]");
-                                    console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
-                                    console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
-                                    if (w === 1) {
-                                        if (rightsAgreementArray[v].substr(1) === '') {
-                                            console.log("8 xyz AgreementDocName ===  empty");
-                                            console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
-                                            document.getElementById('uploadAgreement' + w).innerHTML = 'Upload a copy of the agreement with the translation rights holder';
-                                            document.getElementById('label_agreement' + w).value = "not entered";
-
-                                        } else {
-                                            console.log("8 xyz AgreementDocName toggle");
-                                            console.log("8 xyz case 1 toggle ");
-                                            $('#agreementToggle' + w).toggle();
-                                            $('#agreement_button' + w).toggle();
-
-                                            document.getElementById("agreement_button_label" + w).innerHTML = 'Open copy of the agreement with the translation rights holder';
-
-                                        }
-                                    }
-                                    break;
-                                case 2:
-                                    // Contract
-                                    if (rightsAgreementArray[v].substr(1) !== 'null') {
-                                        console.log("8 xyz Contract ===  available");
-                                        document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
-                                    } else {
-                                        console.log("8 xyz Contract ===  empty");
-                                    }
-                                    break;
-                                case 3:
-                                    // ContractDocName
-                                    console.log("8 xyz ContractDocName");
-                                    console.log("81 xyz Process ContractDocName #############################################");
-                                    console.log("81 xyz Process ContractDocName for ", translatorNamesForGenerateTranslatorTab[j]);
-                                    console.log("8 xyz v " + v + "  w  " + w + "  j  " + j); // 8 xyz v 3  w  1
-                                    if (rightsAgreementArray[v].substr(1) === '') {
-                                        console.log("8 xyz ContractDocName ===  empty");
-                                        console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
-                                        console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
-                                        document.getElementById('label_contract' + w).value = "not entered";
-                                        document.getElementById('uploadContract' + w).innerHTML = 'Upload a copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
-                                        console.log("8 xyz label_contract ", document.getElementById('label_contract' + w).value);
-                                    } else {
-
-                                        $('#contractToggle' + w).toggle();
-                                        $('#contract_button' + w).toggle();
-
-                                        document.getElementById("contract_button_label" + w).innerHTML = 'Open copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
-
-                                    }
-                                    break;
-                                case 4:
-                                    // AddendumRightsAgreement
-                                    if (w === 1) {
-                                        if (rightsAgreementArray[v].substr(1) !== 'null') {
-
-                                            document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
-                                        }
-                                    }
-                                    break;
-                                case 5:
-                                    // AddendumRightsAgreementName
-
-                                    console.log("8 xyz Process AddendumRightsAgreementName #############################################");
-                                    console.log("8 xyz Process AddendumRightsAgreementName for ", translatorNamesForGenerateTranslatorTab[j]);
-                                    console.log("8 xyz v " + v + "  w  " + w + "  j  " + j); // 8 xyz v 3  w  1
-                                    if (w === 1) {
-
-//                                        does not see if empty 
-                                        console.log("8 xyz  if (rightsAgreementArray[v].substr(1) !== 'null') " + rightsAgreementArray[v].substr(1)); // 8 xyz v 3  w  1
-                                        var test = rightsAgreementArray[v].substr(1);
-
-                                        if (test !== null && test !== '') {
-                                            console.log("8 xyz AddendumRightsAgreementName === empty");
-                                            document.getElementById('label_addendum' + w).value = "not entered";
-                                            var uploadAddendum = "Upload a copy of the addendum to the rights agreement &nbsp";
-
-                                            document.getElementById('uploadAddendum' + w).innerHTML = uploadAddendum;
-
-                                        } else {
-                                            console.log("8 xyz AddendumRightsAgreementName  toggle");
-                                            $('#addendumToggle' + w).toggle();
-                                            $('#addendum_button' + w).toggle();
-
-                                            document.getElementById("addendum_button_label" + w).innerHTML = "<strong>Open copy of the addendum to the rights agreement </strong>";
-                                        }
-                                    }
-                                    break;
-                            }
-                        }
-
-//                        console.log("8 xyz  #################   translatorNamesForGenerateTranslatorTab[" + j + "]", translators[j][0]);
-                        console.log("81 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
-
-
-                        // CV
-                        console.log("81 xyz  Process CVs #############################################");
-                        console.log("81 xyz Process CV for ", translatorNamesForGenerateTranslatorTab[j]);
-                        if (translatorNamesForGenerateTranslatorTab[j] === 'null') {
-                            console.log("81 xyz  translatorNamesForGenerateTranslatorTab[j] === 'null' ");
-                            console.log("81 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
-                            document.getElementById('uploadCV' + j).innerHTML = 'Upload a copy of the CV with ' + translatorNamesForGenerateTranslatorTab[j];
-                            document.getElementById('label_translator' + j).value = "not entered";
-
-                        } else {
-                            console.log("81 xyz  translatorNamesForGenerateTranslatorTab[j] NOT 'null' ");
-                            console.log("81 xyz ON i " + i);
-                            console.log("81 xyz ON j " + j);
-                            console.log("81 xyz ON w " + w);
-
-
-                            $('#cvToggle' + w).toggle();
-                            $('#cv_button' + w).toggle();
-                            for (var g = 0; g < translators.length; g++) {
-                                console.log("81 xyz transArray = translators[0] [" + g + "]", translators[0][g]);
-                            }
-                            var transArray = translators[0][j];
-
-                            console.log("81 xyz translators[j][0]  " + translators[j][0]);
-                            console.log("81 xyz translators[0][j]  " + translators[0][j]);
-
-                            transArray = transArray.replace("[", "");
-                            transArray = transArray.replace("]", "");
-
-                            var linkArray = transArray.split(",");
-                            for (var h = 0; h < linkArray.length; h++) {
-                                console.log("81 xyz linkArray[" + h + "]  " + linkArray[h]);
-                            }
-
-                            console.log("81 xyz linkArray[2]  " + linkArray[2]);
-
-                            document.getElementById("cv_button_label" + w).innerHTML = 'Open copy of the CV for ' + translatorNamesForGenerateTranslatorTab[j];
-                            document.getElementById('cv_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + linkArray[2].trim() + " ";
-
-                        }
-
-                        w++;  // next translator
-                    }
-
-                    console.log("123v rightsHolderArray ");
-                    console.log("123v rightsHolderArray.length " + rowdata.rightsHolderArray.length);
-                    for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
-
-                        console.log("123v rightsHolderArray " + rowdata.rightsHolderArray[i]);
-                    }
-                    console.log("123v TranslatorName ");
-                    for (var i = 0; i < rowdata.TranslatorName.length; i++) {
-
-                        console.log("123v TranslatorName " + rowdata.TranslatorName[i]);
-                    }
-                    $('#addAddRightsHolders').empty();
-                    if (rowdata.rightsHolderArray.length === 0) {
-                        $('#addAddRightsHolders').empty();
-                        document.getElementById("rightsHoldersName0").style.display = "inline";
-                        console.log("123v ist empty ");
-                        $("#RightsHolderGeneratedForm").empty();
-                        document.getElementById("rightsHoldersName0").value = "";
-                        document.getElementById("rightsHoldersName0").disabled = false;
-                        document.getElementById("rightsHoldersName0").readOnly = false;
-                    }
-                    /*
-                     * Process rights holders
-                     * 1) check if there is one in the array - if so fill the input field and disable it
-                     */
-//                    if (rowdata.rightsHolderArray.length > 1) {
-//                        document.getElementById("rightsHoldersName0").value = rowdata.rightsHolderArray[0];
-//                        document.getElementById("rightsHoldersName0").disabled = true;
+//                    var pressCoverageTag = '';
+//                    pressCoverageTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+//                    var pressCoverage = rowdata.pressCoverage;
+//                    for (var i = 0; i < pressCoverage.length; ++i) {
+////                        for (var j = 0; j < pressCoverage[i].length; ++j) {
+//
+//                        console.log("before111 pressCoverage[" + i + "    " + pressCoverage[i]);
+//                        var pressCoverageURL_cleaned = pressCoverage[i].substr(1).slice(0, -1);
+//                        console.log("before111 pressCoverageURL_cleaned  " + pressCoverageURL_cleaned);
+//                        var pressCoverageURL = pressCoverageURL_cleaned.split(",");
+//                        console.log("before111 pressCoverageURL split " + pressCoverageURL);
+////                        if (!pressCoverageURL.includes("Thumbs")) {
+//                        var jpgURL = pressCoverageURL[0];
+//                        var jpgURLName = pressCoverageURL[1];
+//                        console.log("before111 jpgURL  " + jpgURL);
+//                        console.log("before111 jpgURLName  " + jpgURLName);
+////                    }
+////                        if (jpgURL.includes("_thumb.jpg")) {
+//                        var thumbURL = pressCoverageURL[2];
+//                        var thumbURLName = pressCoverageURL[3];
+//                        console.log("before111 thumbURL  " + thumbURL);
+//                        console.log("before111 thumbURLName  " + thumbURLName);
+////                        }
+//
+//                        pressCoverageTag += '<a href="' + jpgURL + '" target="_blank"><img src="' + thumbURL + '" alt=""/></a>';
 //                    }
-
-                    /*
-                     * Process rights holders
-                     * 2) check if it's an array i.e. more data
-                     * if so
-                     * 3)  change title to plural
-                     * 4) iterate through the array - starting with 1 as we done 0 already
-                     * 5) make sure input fields are disabled so they wont be inserted into table again
-                     */
+//
+//                    pressCoverageTag += '</div>';
+//                    $(pressCoverageTag).appendTo('#pressCoverageTag');
 
 
-
-                    if (rowdata.rightsHolderArray.length > 0) {
-                        $('#addAddRightsHolders').empty();
-                        /*                         
-                         * Change Title from "Translation rights holder" to "Translation rights holder(s)"
-                         */
-                        document.getElementById("rightsHoldersName0").style.display = "none";
-                        document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holders';
-                        for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
-
-                            var additionalTranslatorTag = '';
-
-                            additionalTranslatorTag += '<div class="form-group has-feedback">';
-                            additionalTranslatorTag += ' <input id="rightsHoldersName' + i;
-                            additionalTranslatorTag += ' type="text"  ';
-                            additionalTranslatorTag += ' class="form-control"';
-                            additionalTranslatorTag += ' name="rightsHoldersName' + i + '"';
-                            additionalTranslatorTag += ' value="' + rowdata.rightsHolderArray[i] + '"';
-                            additionalTranslatorTag += ' disabled = ""';
-                            additionalTranslatorTag += ' </div>';
-
-                            $(additionalTranslatorTag).appendTo('#addAddRightsHolders');
-                        }
-                        ;
-                    } else {
-                        document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holder';
-                    }
-
-                    var pressCoverageTag = '';
-                    pressCoverageTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+//                    https://bootsnipp.com/snippets/P2gor
                     var pressCoverage = rowdata.pressCoverage;
+                    console.log("before111 The proposed width is " + leastSquareRoot(pressCoverage.length));
+                    var width = leastSquareRoot(pressCoverage.length);
+                    pressCoverageTag = '';
+                    pressCoverageTag += '<div class="container">';
+                    pressCoverageTag += '<div class="row">';
+                    pressCoverageTag += '<div class="row">';
+                    var width = leastSquareRoot(pressCoverage.length);
                     for (var i = 0; i < pressCoverage.length; ++i) {
-//                        for (var j = 0; j < pressCoverage[i].length; ++j) {
 
-                        console.log("before111 pressCoverage[" + i + "    " + pressCoverage[i]);
+                        if (i % width === 0)
+                        {
+                            pressCoverageTag += '<div class="col-md-12" style="margin-bottom: 20px">';
+                        }
                         var pressCoverageURL_cleaned = pressCoverage[i].substr(1).slice(0, -1);
                         console.log("before111 pressCoverageURL_cleaned  " + pressCoverageURL_cleaned);
                         var pressCoverageURL = pressCoverageURL_cleaned.split(",");
-                        console.log("before111 pressCoverageURL split " + pressCoverageURL);
-//                        if (!pressCoverageURL.includes("Thumbs")) {
                         var jpgURL = pressCoverageURL[0];
                         var jpgURLName = pressCoverageURL[1];
-                        console.log("before111 jpgURL  " + jpgURL);
-                        console.log("before111 jpgURLName  " + jpgURLName);
-//                    }
-//                        if (jpgURL.includes("_thumb.jpg")) {
                         var thumbURL = pressCoverageURL[2];
-                        var thumbURLName = pressCoverageURL[3];
-                        console.log("before111 thumbURL  " + thumbURL);
-                        console.log("before111 thumbURLName  " + thumbURLName);
-//                        }
+                        if (thumbURL.includes(".jpg")) {
+                            var thumbURLName = pressCoverageURL[3];
+                            console.log("before111 thumbURL  " + thumbURL);
+                            console.log("before111 thumbURLName  " + thumbURLName);
+                            pressCoverageTag += ' <div class="col-md-2 thumb">';
+                            pressCoverageTag += '<a class="thumbnail" href="' + jpgURL + '"  target="_blank">';
+                            pressCoverageTag += '<img class="img-thumbnail" src="' + thumbURL + '" alt = "' + jpgURLName + '-image" width="150" height="300"/>';
+                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+                            pressCoverageTag += '</a>';
+                            pressCoverageTag += '</div>';
 
-                        pressCoverageTag += '<a href="' + jpgURL + '" target="_blank"><img src="' + thumbURL + '" alt=""/></a>';
+                        } else {
+
+                            pressCoverageTag += ' <div class="col-md-2 thumb">';
+//                            pressCoverageTag += '<a class="thumbnail" href="' + jpgURL + '" data-image-id="" data-target = "#image-gallery" target="_blank">';
+                            pressCoverageTag += '<a class="thumbnail" href="#"  data-image-id="" data-toggle="modal" data-title="" data-image = "' + jpgURL + '" data-target="#image-gallery" > ';
+                            pressCoverageTag += '<img class="img-thumbnail" src="' + jpgURL + '"  alt = "' + jpgURLName + '-image" >';
+                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+                            pressCoverageTag += '</a>';
+                            pressCoverageTag += '</div>';
+
+                            if (i % width === width - 1 || i === pressCoverage.length - 1)
+                            {
+                                pressCoverageTag += '</div>';
+                            }
+                        }
                     }
 
-                    pressCoverageTag += '</div>';
+                    pressCoverageTag += '</div>'; //class="row"
+
+                    pressCoverageTag += '</div>'; //class="row"
+
+                    pressCoverageTag += '</div>'; // class="container"
+
+
                     $(pressCoverageTag).appendTo('#pressCoverageTag');
+
+                    gallery();
+
+                    function leastSquareRoot(n)
+                    {
+                        // maybe use ceil if you want a wider rectangle vs a taller one 
+                        // when a square is not possible
+                        var sr = Math.sqrt(n);
+                        return Math.floor(sr);
+                    }
+
                     var expertReaderName = rowdata.expertReaderList;
                     console.log("000 expertReaderName");
                     console.log(expertReaderName);
@@ -2302,7 +1908,6 @@
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#additionalExpertReader').empty(); // empty the div before fetching and adding new data
 
-                    //expertReaders
                     if (cntr === 1) {
 
 
@@ -2489,20 +2094,262 @@
 
 
 
+                    $('#tn').empty(); // empty the div before fetching and adding new data
+                    $('#tnc').empty(); // empty the div before fetching and adding new data
+
+                    /*
+                     * Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
+                     */
+
+                    /*
+                     * 1: The Nav-Bar
+                     */
+
+                    var rightsAgreementContractsNavBar = '';
+                    rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
+                    rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
+                    for (var i = 0; i < translators.length; i++) {
+
+                        var j = i + 1;
+                        if (i === 0) {
+
+                            rightsAgreementContractsNavBar += '<li class="active"><a href="#tn' + j + '" data-toggle="tab">' + translatorNamesForGenerateTranslatorTab[i] + '</a></li>';
+                        } else {
+
+                            rightsAgreementContractsNavBar += '<li><a href="#tn' + j + '" data-toggle="tab">' + translatorNamesForGenerateTranslatorTab[i] + '</a></li>';
+                        }
+                    }
+
+                    rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
+
+                    rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
+
+                    $(rightsAgreementContractsNavBar).appendTo('#tn');
+                    /*
+                     * 2: The Tabs themselves
+                     */
+
+                    var rightsAgreementContractsNavContent = '';
+                    var agreementTranslationRightsHolderContent = '';
+
+                    for (var i = 0; i < translators.length; i++) {
+
+                        var j = i + 1;
+                        if (i === 0) {
+
+                            rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
+                        } else {
+
+                            rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
+                        }
+
+
+                        agreementTranslationRightsHolderContent += '<div class="container wrapperContainer">';
+
+                        //Upload a copy of the agreement with the translation rights holder
+                        agreementTranslationRightsHolderContent += '<div class="row" style="margin-bottom: 80px;">';
+                        agreementTranslationRightsHolderContent += '<div style=" margin: 0 auto; position: relative;">';
+
+                        agreementTranslationRightsHolderContent += '<div class="col-md-9"  id="agreementToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
+                        agreementTranslationRightsHolderContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement' + j + '"></strong></div> ';
+                        agreementTranslationRightsHolderContent += '<br/>';
+                        agreementTranslationRightsHolderContent += '<div class="margin-bottom: 40px"></div>';
+                        agreementTranslationRightsHolderContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
+                        agreementTranslationRightsHolderContent += '<label class="btn btn-default btn-file pull-left">';
+                        agreementTranslationRightsHolderContent += 'Select file <input type="file" onchange="generatedLabels()" name="Agreement-' + j + '" id="agreement' + j + '">';
+                        agreementTranslationRightsHolderContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                        agreementTranslationRightsHolderContent += '</label>';
+                        agreementTranslationRightsHolderContent += '<input id="label_agreement' + j + '" class="pull-left"/>';
+                        agreementTranslationRightsHolderContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
+                        agreementTranslationRightsHolderContent += '</div>'; //<div class="input-group agreement" 
+                        agreementTranslationRightsHolderContent += '</div>'; //<div class="col-md-9" 
+
+                        agreementTranslationRightsHolderContent += '<div class="col-md-7" id="agreement_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+                        agreementTranslationRightsHolderContent += '<label  class="control-label pull-left" id="agreement_button_label' + j + '" ></label>';
+                        agreementTranslationRightsHolderContent += '<div class="input-group agreement_buttonText pull-left">';
+                        agreementTranslationRightsHolderContent += '<a class="btn btn-info btn-file pull-left" role="button" id="agreement_link' + j + '" href="">';
+                        agreementTranslationRightsHolderContent += '<span class="glyphicon glyphicon-file"></span>';
+                        agreementTranslationRightsHolderContent += 'Click to open</a>';
+                        agreementTranslationRightsHolderContent += '</div>';
+                        agreementTranslationRightsHolderContent += '</div>'; // -- col-md-10--
+
+
+                        agreementTranslationRightsHolderContent += '</div>'; //-- position:relative;--
+                        agreementTranslationRightsHolderContent += '</div>'; // row
+                        $(agreementTranslationRightsHolderContent).appendTo('#agreementTranslationRightsHolder');
+
+                        //Upload a copy of the contract with translator
+
+                        rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
+                        rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
+                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="contractToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
+                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadContract' + j + '"></strong></div>';
+                        rightsAgreementContractsNavContent += '<br/>';
+                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
+                        rightsAgreementContractsNavContent += '<div class="input-group contract"  style="margin-bottom: 40px;">';
+                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
+                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
+                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                        rightsAgreementContractsNavContent += '</label>';
+                        rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
+                        rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
+
+                        rightsAgreementContractsNavContent += '<div class="col-md-5" id="contract_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="contract_button_label' + j + '" ></label>';
+                        rightsAgreementContractsNavContent += '</br></br>';
+                        rightsAgreementContractsNavContent += '<div class="input-group contract_buttonText pull-left">';
+                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="contract_link' + j + '" href="">';
+                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
+                        rightsAgreementContractsNavContent += 'Click to open</a>';
+                        rightsAgreementContractsNavContent += '</div>';
+                        rightsAgreementContractsNavContent += '</div>'; // -- col-md-10--
+
+
+                        rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
+                        rightsAgreementContractsNavContent += '</div>'; // row
+
+
+
+                        rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
+                        rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
+                        //Upload form for addendum to the rights agreement
+
+                        rightsAgreementContractsNavContent += '<div class="col-md-10"  id="addendumToggle' + j + '"  style="margin-bottom: 40px; position:absolute; z-index:0; ">';
+                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left" id="uploadAddendum' + j + '" ></strong> <small class="pull-left"> &nbsp;  (where applicable)</small></div>';
+                        rightsAgreementContractsNavContent += '<br/>';
+                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
+                        rightsAgreementContractsNavContent += '<div class="input-group addendum"  style="margin-bottom: 40px;">';
+                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
+                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Addendum-' + j + '" id="addendum' + j + '">';
+                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                        rightsAgreementContractsNavContent += '</label>';
+                        rightsAgreementContractsNavContent += '<input id="label_addendum' + j + '" class="pull-left"/>';
+                        rightsAgreementContractsNavContent += '<input type="hidden" value="Addendum" name="destination" id="addendum_upload' + j + '"/>';
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-12" 
+
+                        rightsAgreementContractsNavContent += '<div class="col-md-8" id="addendum_button' + j + '"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  ';
+                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="addendum_button_label' + j + '" ></label>';
+                        rightsAgreementContractsNavContent += '</br></br>';
+                        rightsAgreementContractsNavContent += '<div class="input-group addendum_buttonText pull-left" style="width: 190px; hight: 34px" >';
+                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="addendum_link' + j + '" href="">';
+                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
+                        rightsAgreementContractsNavContent += 'Click to open</a>';
+                        rightsAgreementContractsNavContent += '</div>';
+                        rightsAgreementContractsNavContent += '</div>'; // -- col-md-5--
+
+
+                        rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
+                        rightsAgreementContractsNavContent += '</div>'; // row
+
+                        rightsAgreementContractsNavContent += '</div>'; //  --container--
+                        rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+                    }
+
+                    $(rightsAgreementContractsNavContent).appendTo('#tnc');
+                    /*
+                     * 3: Fill the tabs
+                     */
+
+
+                    var w = 1;
+                    for (var j = 0; j < rowdata.rightsAgreement.length; j++) {
+                        var rightsAgreementArray = rowdata.rightsAgreement[j].split(",");
+                        for (var v = 0; v < rightsAgreementArray.length; v++) {
+
+                            switch (v) {
+                                case 0:
+                                    // Agreement
+
+                                    if (rightsAgreementArray[v].substr(1) !== 'null') {
+                                        console.log("8 xyz case 0  [" + j + "]");
+                                        console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
+                                        document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                    }
+                                    break;
+                                case 1:
+                                    // AgreementDocName
+                                    console.log("8 xyz case 1 [" + j + "]");
+                                    if (rightsAgreementArray[v].substr(1) === 'null') {
+                                        console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
+                                        document.getElementById('uploadAgreement' + w).innerHTML = 'Upload a copy of the agreement with ' + translatorNamesForGenerateTranslatorTab[j];
+                                        document.getElementById('label_agreement' + w).value = "not entered";
+                                    } else {
+                                        console.log("8 xyz case 1 toggle ");
+                                        $('#agreementToggle' + w).toggle();
+                                        $('#agreement_button' + w).toggle();
+                                        document.getElementById("agreement_button_label" + w).innerHTML = 'Open copy agreement with the translation rights holder <br/>'; //+ translatorNamesForGenerateTranslatorTab[j];
+
+                                    }
+                                    break;
+                                case 2:
+                                    // Contract
+
+                                    if (rightsAgreementArray[v].substr(1) !== 'null') {
+
+                                        document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                    }
+                                    break;
+                                case 3:
+                                    // ContractDocName
+
+                                    if (rightsAgreementArray[v].substr(1) === 'null') {
+
+                                        document.getElementById('label_contract' + w).value = "not entered";
+                                        document.getElementById('uploadContract' + w).innerHTML = 'Upload a copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
+                                    } else {
+
+                                        $('#contractToggle' + w).toggle();
+                                        $('#contract_button' + w).toggle();
+                                        document.getElementById("contract_button_label" + w).innerHTML = 'Open copy of the contract '; //with ' + translatorNamesForGenerateTranslatorTab[j];
+
+                                    }
+                                    break;
+                                case 4:
+                                    // AddendumRightsAgreement
+
+                                    if (rightsAgreementArray[v].substr(1) !== 'null') {
+
+                                        document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                    }
+                                    break;
+                                case 5:
+                                    // AddendumRightsAgreementName
+                                    var test = rightsAgreementArray[v].substr(1);
+                                    if (test !== null && test !== '') {
+
+                                        document.getElementById('label_addendum' + w).value = "not entered";
+                                        document.getElementById('uploadAddendum' + w).innerHTML = 'Upload a copy of the addendum to the rights agreement ' + translatorNamesForGenerateTranslatorTab[j];
+                                    } else {
+
+                                        $('#addendumToggle' + w).toggle();
+                                        $('#addendum_button' + w).toggle();
+                                        document.getElementById("addendum_button_label" + w).innerHTML = 'Open copy of the addendum to the rights agreement'; // with ' + translatorNamesForGenerateTranslatorTab[j];
+                                    }
+                                    break;
+                            }
+                        }
+                        w++; // next translator
+                    }
+
                 });
             });
         </script>
 
-        <!--formatDate-->
         <script type="text/javascript">
             function formatDate(unformattedDate) {
-                var date = new Date(unformattedDate);
-                var day = date.getDate();
-                var month = date.getMonth() + 1;
-                var year = date.getFullYear();
-                var formattedDate = day + "/" + month + "/" + year;
-
-                return formattedDate;
+                if (typeof unformattedDate === "undefined") {
+                    formattedDate === "";
+                } else {
+                    var date = new Date(unformattedDate);
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    var formattedDate = day + "/" + month + "/" + year;
+                    return formattedDate;
+                }
             }
         </script>
 
@@ -2532,7 +2379,7 @@
                     "colReorder": true,
                     "processing": true,
                     "language": {
-                        "loadingRecords": "&nbsp; ",
+                        "loadingRecords": "&nbsp; Loading Applications... ",
                         "processing": "Loading Applications..."
                     },
                     "serverSide": true,
@@ -2542,7 +2389,6 @@
                     "iDisplayLength": 10,
                     "pageLength": 10,
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-
                     "language": {
                         "infoFiltered": " - filtered from _MAX_ records",
                         searchPlaceholder: "Search records",
@@ -2572,11 +2418,11 @@
                             }},
                         {"data": "bookTitle",
                             "render": function (data) {
-                                if (data !== null) {
+                                if (typeof data === "undefined") {
 //                                    console.log("bookTitle  " + data);
-                                    return data;
+                                    return  "n/a";
                                 } else {
-                                    return "n/a";
+                                    return data;
                                 }
                             }},
                         {"data": "Status",
@@ -2625,9 +2471,8 @@
             });
         </script>
 
-
-        <!--Stacked modals-->
         <script type="text/javascript">
+
             //Stacked modals
             //https://codepen.io/anon/pen/ZJgLGz
 
@@ -2655,53 +2500,6 @@
             });
         </script>
 
-
-
-        <!--get selectpicker selection--> 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('.selectpicker').on('change', function () {
-                    var selected = $(this).find("option:selected").val();
-                });
-//                document.getElementById('sSearch').value = '216/2018';
-
-            });</script>
-
-
-
-        <script type="text/javascript">
-            $(function () {
-                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                    var tab = $(e.target.attributes.href.value);
-                    $(tab).load(tab.data('url'));
-                });
-                $('.nav-tabs a:first').each(function () {
-                    $(this.attributes.href.value).load($(this.attributes.href.value).data('url'));
-                });
-            });
-        </script> 
-
-        <script>
-            function setSelectedIndex(s, v) {
-                for (var i = 0; i < s.options.length; i++) {
-                    if (s.options[i].text === v) {
-                        s.options[i].selected = true;
-                        console.log("13131 paymentStatusSelected " + s.options[i].text);
-                        return;
-                    }
-                }
-            }
-        </script>
-
-
-        <!--pressCuttingsModal-->
-        <script type="text/javascript">
-            function pressCuttingsModal() {
-                $("#pressCuttingsModal").modal("show");
-            }
-        </script> 
-
-        <!--Styles-->
         <style>
             .ui-datepicker { 
                 width: 17em; 
@@ -2742,7 +2540,19 @@
                 width: 400px;
                 height: 400px;
             }
+        </style>
 
+        <!--get selectpicker selection--> 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.selectpicker').on('change', function () {
+                    var selected = $(this).find("option:selected").val();
+                });
+//                document.getElementById('sSearch').value = '216/2018';
+
+            });</script>
+
+        <style>
             td.details-control {
                 background: url('images/details_open.png') no-repeat center center;
                 cursor: pointer;
@@ -2759,6 +2569,7 @@
                 background: url('images/add-control.png') no-repeat center center;
                 cursor: pointer;
             }
+
             application.dataTable tbody td {
                 word-break: break-all;
                 vertical-align: top;
@@ -2775,7 +2586,7 @@
                 overflow-y: auto;
             }
 
-            /*increase size of "Show entries"*/
+            /*increase size of "Show entries" */
             select.input-sm {
                 height: 33px;
             }
@@ -2786,27 +2597,20 @@
             }
 
             /* Tab Navigation */
-            /* Tab Navigation */
             .nav-tabs {
                 margin: 0;
                 padding: 0;
-                border: 0;   
-                border-bottom: 1px solid #d45500; 
+                border: 0;    
             }
             .nav-tabs > li > a {
                 background: #DADADA;
                 border-radius: 0;
                 box-shadow: inset 0 -8px 7px -9px rgba(0,0,0,.4),-2px -2px 5px -2px rgba(0,0,0,.4);
-                color: #575757;
             }
             .nav-tabs > li.active > a,
             .nav-tabs > li.active > a:hover {
                 background: #F5F5F5;
                 box-shadow: inset 0 0 0 0 rgba(0,0,0,.4),-2px -3px 5px -2px rgba(0,0,0,.4);
-                border-color: #d45500;
-                border-bottom-color: transparent;
-                color: #3c5a78;
-                font-size: 16px;
             }
             a, u {
                 text-decoration: none;
@@ -2819,22 +2623,6 @@
                 text-align: center;
                 padding: 10px;
             }
-
-            .nav-tabs.two-lines>li {
-                height:62px;
-            }
-            .nav-tabs.two-lines>li>a, .nav-tabs>li>a>div {
-                height:100%;
-            }
-            input[type="text"]:focus + .glyphicon-search{
-                color: #FF8C00;
-            }
-            .mytab .tab-pane{ border:solid 1px blue;  border-top: 0;    }
-            #myTab li a { border-color: blue;background-color:#A5C967; }
-            #myTab li.active a {border-bottom-color: transparent;background-color:Yellow; }
-            .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;
-            }
-
             .img {
                 max-width: 40%;
                 height: auto;
@@ -2871,11 +2659,29 @@
                 display: inline-block;
                 box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
             }
+            /*            .ImageBorder
+                        {
+                            border-width: 1px;
+                            border-color: Black;
+                        }
+            
+                        .imageupload{
+                            width: 100%;
+                            height: 180px;
+                            background-position: center center;
+                            background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+                            background-color:#fff;
+                            background-size: cover;
+                            background-repeat:no-repeat;
+                            display: inline-block;
+                            box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+                        }*/
 
             .h4{
                 font-size: 14px;
                 line-height: 14px;
             }
+
 
             .box .box-header{
                 background: #36a9e1;
@@ -2888,9 +2694,38 @@
             .onlytableScroll{
                 overflow-x:scroll;
             }
+            .btn.raised {
+                box-shadow: 0 3px 0 0 #007299;
+            }
+            .btn.raised:active, .btn.raised.active {
+                background: #33a6cc;
+                box-shadow: none;
+                margin-bottom: -3px;
+                margin-top: 3px;
+            }
+            .btn-file {
+                position: relative;
+                overflow: hidden;
+            }
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+        </style>
 
-            /*        <!--Styles for the approved/withdrawn/rejected buttons-->*/
-
+        <!--Styles for the approved/withdrawn/rejected buttons-->
+        <style>
             /*
                         .active {
                             background-color: #F7F5F5 !important;
@@ -2930,6 +2765,8 @@
             #myTab2 li.active a {border-bottom-color: transparent;background-color:Yellow; }
             .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
 
+
+
             body .modal-admin {
                 /* new custom width */
                 width: 750px;
@@ -2938,26 +2775,63 @@
                 margin-right: 0;
                 margin-top: 50px ;
             }
-            .btn-file {
-                position: relative;
-                overflow: hidden;
+
+            .btn:focus, .btn:active, button:focus, button:active {
+                outline: none !important;
+                box-shadow: none !important;
             }
-            .btn-file input[type=file] {
-                position: absolute;
-                top: 0;
-                right: 0;
-                min-width: 100%;
-                min-height: 100%;
-                font-size: 100px;
-                text-align: right;
-                filter: alpha(opacity=0);
-                opacity: 0;
-                outline: none;
-                background: white;
-                cursor: inherit;
+
+            #image-gallery .modal-footer{
                 display: block;
             }
+
+            .thumb{
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+
+            .img-responsive {
+                width:300px; /* This value will depend on what size you want for your loading image, let's say it's 50px */
+                height: 400px;
+                position:absolute;
+                left:50%;
+                top:50%;
+                margin-top:-200px; /* This needs to be half of the height */
+                margin-left:-150px; /* This needs to be half of the width */
+            }
         </style>
+
+
+        <script type="text/javascript">
+            $(function () {
+                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                    var tab = $(e.target.attributes.href.value);
+                    $(tab).load(tab.data('url'));
+                });
+                $('.nav-tabs a:first').each(function () {
+                    $(this.attributes.href.value).load($(this.attributes.href.value).data('url'));
+                });
+            });
+        </script> 
+
+
+        <script>
+            function setSelectedIndex(s, v) {
+                for (var i = 0; i < s.options.length; i++) {
+                    if (s.options[i].text === v) {
+                        s.options[i].selected = true;
+                        console.log("13131 paymentStatusSelected " + s.options[i].text);
+                        return;
+                    }
+                }
+            }
+        </script>
+
+        <script type="text/javascript">
+            function pressCuttingsModal() {
+                $("#pressCuttingsModal").modal("show");
+            }
+        </script> 
 
         <script>
             $(document).ready(function () {
@@ -2968,9 +2842,9 @@
 //                    $(this).addClass("bold");
                 });
             });
-
         </script>
 
+        <!--if directorChairDecision ticked set directorChairDecision value to ticked-->
         <script>
             function directorChairDecision_click(cb) {
                 console.log("directorChairDecision_click  set " + cb.checked);
@@ -2987,7 +2861,6 @@
             ;
         </script>
 
-        <!--reply_click-->
         <script type="text/javascript">
             function reply_click(clicked_id)
             {
@@ -3039,7 +2912,31 @@
                 var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
                 $("a[href='" + anchor + "']").tab("show");
             });
+        </script>
 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                /**
+                 * Vertically center Bootstrap 3 modals so they aren't always stuck at the top
+                 * https://www.abeautifulsite.net/vertically-centering-bootstrap-modals
+                 */
+                $(function () {
+                    function reposition() {
+                        var modal = $(this),
+                                dialog = modal.find('.modal-dialog1');
+                        modal.css('display', 'block');
+                        // Dividing by two centers the modal exactly, but dividing by three 
+                        // or four works better for larger screens.
+                        dialog.css("margin-top", Math.max(0, ($(window).height() - dialog.height()) / 2));
+                    }
+                    // Reposition when a modal is shown
+                    $('.modal').on('show.bs.modal', reposition);
+                    // Reposition when the window is resized
+                    $(window).on('resize', function () {
+                        $('.modal:visible').each(reposition);
+                    });
+                });
+            });
         </script>
 
 
@@ -3048,14 +2945,109 @@
             function selectER() {
                 var selectBox = document.getElementById("selectUnassignedER");
                 var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-//                alert("selectedValue " + selectedValue);
                 document.getElementById("selectUnassignedER").value = selectedValue;
                 document.getElementById("selectedUnassignedER").value = selectedValue;
             }
         </script>
+        <script type="text/javascript">
+            //https://bootsnipp.com/snippets/P2gor
+            //            let modalId = $('#image-gallery');
+            function gallery() {
+                //            $(document).ready(function () {
+                let modalId = $('#image-gallery');
+                loadGallery(true, 'a.thumbnail');
 
+                //This function disables buttons when needed
+                function disableButtons(counter_max, counter_current) {
+                    $('#show-previous-image, #show-next-image')
+                            .show();
+                    if (counter_max === counter_current) {
+                        $('#show-next-image')
+                                .hide();
+                    } else if (counter_current === 1) {
+                        $('#show-previous-image')
+                                .hide();
+                    }
+                }
+
+                /**
+                 *
+                 * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+                 * @param setClickAttr  Sets the attribute for the click handler.
+                 */
+
+                function loadGallery(setIDs, setClickAttr) {
+                    let current_image,
+                            selector,
+                            counter = 0;
+
+                    $('#show-next-image, #show-previous-image')
+                            .click(function () {
+                                if ($(this)
+                                        .attr('id') === 'show-previous-image') {
+                                    current_image--;
+                                } else {
+                                    current_image++;
+                                }
+
+                                selector = $('[data-image-id="' + current_image + '"]');
+                                console.log("selector " + selector);
+                                updateGallery(selector);
+                            });
+
+                    function updateGallery(selector) {
+                        let $sel = selector;
+                        current_image = $sel.data('image-id');
+                        console.log("current_image " + current_image);
+                        $('#image-gallery-title')
+                                .text($sel.data('title'));
+                        $('#image-gallery-image')
+                                .attr('src', $sel.data('image'));
+                        disableButtons(counter, $sel.data('image-id'));
+                    }
+
+                    if (setIDs === true) {
+                        $('[data-image-id]')
+                                .each(function () {
+                                    counter++;
+                                    console.log("counter " + counter);
+                                    $(this).attr('data-image-id', counter);
+                                });
+                    }
+                    $(setClickAttr)
+                            .on('click', function () {
+                                updateGallery($(this));
+                            });
+                }
+                //                    });
+            }
+
+            // build key actions
+            $(document)
+                    .keydown(function (e) {
+                        switch (e.which) {
+                            case 37: // left
+                                if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
+                                    $('#show-previous-image')
+                                            .click();
+                                }
+                                break;
+
+                            case 39: // right
+                                if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
+                                    $('#show-next-image')
+                                            .click();
+                                }
+                                break;
+
+                            default:
+                                return; // exit this handler for other keys
+                        }
+                        e.preventDefault(); // prevent the default action (scroll / move caret)
+                    });
+
+        </script> 
     </head>
-
     <body style="height: 100%">
         <div id="shadowholder">
             <div class="shadowtop"> </div>
@@ -3092,7 +3084,7 @@
 
                         <!-- Nav tabs -->
                         <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="myTab"  style="background-color: #d9d1d1">
+                        <div class="collapse navbar-collapse" id="myTab" style="background-color: #d9d1d1">
                             <ul class="nav navbar-nav nav-tabs two-lines" role="tablist">
                                 <li role="tab" class="active"><a href="#Application" data-toggle="tab">Application Management</a></li>
                                 <li role="tab" ><a href="#User" data-toggle="tab">User Management</a></li>
@@ -3306,7 +3298,6 @@
                                 </div> <!-- container-fluid -->  
                             </div>  
 
-
                             <!--applicationForm-->
                             <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/StaffServlet" >
                                 <%request.getSession().setAttribute("task", "StaffServlet");%>
@@ -3317,8 +3308,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header" style="background-color: #c3bcbc">
                                                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                <!--<h4 class="modal-title">Applications</h4>-->
-                                                <h4 class="modal-title">Application ReferenceNumber  <span id="ReferenceNumber"></span></h4>
+                                                <h4 class="modal-title">Applications</h4>
                                             </div>
                                             <div class="modal-body" style="background-color: #d9d1d1">
 
@@ -3426,105 +3416,6 @@
                                                             </div> <!-- container-fluid  -->
                                                         </div> <!-- class="tab-pane" id="OriginalContracts" -->
 
-
-                                                        <div class="container-fluid"  id="rightsAgreementContracts" style="margin-top: 40px;">
-
-
-                                                            <!--Upload form for agreement-->
-                                                            <div class="row" style="margin-bottom: 80px;">
-                                                                <div style=" margin: 0 auto; position: relative;">
-
-                                                                    <div class="col-md-10"  id="agreementToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
-                                                                        <!--<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement1"></strong></div>--> 
-                                                                        <label  class="control-label pull-left" id="uploadAgreement1" ></label>
-                                                                        <br/>
-                                                                        <div class="margin-bottom: 40px"></div>
-                                                                        <div class="input-group agreement"  style="margin-bottom: 40px;">
-                                                                            <label class="btn btn-default btn-file pull-left">
-                                                                                Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1">
-                                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                                            </label>
-                                                                            <input  type="text" id="label_agreement1" class="pull-left"/>
-                                                                            <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
-                                                                        </div> 
-                                                                    </div> <!-- position:absolute; z-index:0 -->
-
-                                                                    <div class="col-md-7" id="agreement_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
-                                                                        <label  class="control-label pull-left" id="agreement_button_label1" ></label>
-                                                                        <div class="input-group agreement_buttonText pull-left">
-                                                                            <a class="btn btn-info btn-file pull-left" role="button" id="agreement_link1" href="">
-                                                                                <span class="glyphicon glyphicon-file"></span>
-                                                                                Click to open</a>
-                                                                        </div>
-                                                                    </div> <!-- position:absolute; z-index:1; display:none -->
-
-                                                                </div> <!-- position: relative  -->
-                                                            </div> <!-- row  -->
-
-                                                            <!--Name of translation rights holder-->
-                                                            <div class="row" style="margin-bottom: 40px;margin-top: 60px">  
-
-                                                                <div class="col-sm-6">  
-                                                                    <div class="input-group has-feedback"  style="margin-bottom: 10px">  
-                                                                        <label for="rightsHoldersName0" class="pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
-                                                                        <input id="rightsHoldersName0"                                
-                                                                               type="text"                                
-                                                                               class="form-control"                                
-                                                                               name="rightsHoldersName"                                
-                                                                               value=""    
-
-                                                                               placeholder="Translation rights holder"
-                                                                               >
-                                                                    </div>
-
-                                                                    <div id="addAddRightsHolders"></div>
-                                                                </div>
-
-                                                                <!--                                                                <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addAdditionalRightsHoldersModalDiv">  
-                                                                                                                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                                                                                                       data-toggle="modal" 
-                                                                                                                                       data-target="#addAdditionalRightsHoldersModal"
-                                                                                                                                       onclick="copyFirstRightsHolderName();"
-                                                                                                                                       >Add more Translation rights holders</a>
-                                                                                                                                </div>-->
-
-                                                            </div> <!-- row  -->
-
-                                                            <!--Upload form for addendum to the rights agreement-->
-                                                            <div class="row" style="margin-bottom: 80px;">    
-
-                                                                <div style=" margin: 0 auto; position: relative;">
-
-                                                                    <div class="col-md-10"  id="addendumToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
-                                                                        <label  class="control-label pull-left"> <strong class="pull-left"  id="uploadAddendum1"></strong>
-                                                                            <!--                                                                            <small> (where applicable)</small>     -->
-                                                                        </label>
-                                                                        <br/>                                                               
-                                                                        <div class="input-group addendum  pull-left"  style="margin-bottom: 40px;">
-                                                                            <label class="btn btn-default btn-file pull-left">
-                                                                                Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1">
-                                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                                            </label>
-                                                                            <input type="text" id="label_addendum1" class="pull-left"/>
-                                                                            <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/>
-                                                                        </div> 
-                                                                    </div> <!-- position:absolute; z-index:0 -->
-
-                                                                    <div class="col-md-7" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
-                                                                        <label class="control-label pull-left" id="addendum_button_label1"></label> 
-                                                                        <!--<small class='pull-left'> &nbsp;  (where applicable)</small>'-->
-                                                                        <div class="input-group addendum_buttonText pull-left">
-                                                                            <a class="btn btn-info btn-file pull-left" role="button" id="addendum_link1" href="">
-                                                                                <span class="glyphicon glyphicon-file"></span>
-                                                                                Click to open</a>
-                                                                        </div>
-                                                                    </div> <!-- position:absolute; z-index:1; display:none -->
-
-                                                                </div> <!-- position: relative  -->
-                                                            </div> <!-- row  -->
-                                                        </div>
-
-
                                                         <!--translatorTableDiv-->
                                                         <div class="row" style="margin-bottom: 10px; margin-top: 30px">                                           
                                                             <div class="col-md-8" id="translatorTableDiv" style="margin-left: 40px;"></div>
@@ -3555,6 +3446,13 @@
                                                                     Translation Sample</a>
                                                             </div>
                                                         </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <div class="tab-content" id="agreementTranslationRightsHolder"></div>  
+                                                            </div>
+                                                        </div> <!--row-->
+
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
@@ -3629,25 +3527,6 @@
                                                                        >
                                                             </div>
                                                         </div> <!--row-->
-
-                                                        <!--                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                                                                    <div class="col-sm-3">
-                                                                                                        <label for="appTC_ACCEPTED" class="control-label pull-left">T&C accepted</label>
-                                                                                                        <input id="appTC_ACCEPTED"
-                                                                                                               type="text"                                
-                                                                                                               class="form-control"                                
-                                                                                                               name="appTC_ACCEPTED"                                
-                                                                                                               >
-                                                                                                    </div>
-                                                                                                    <div class="col-sm-4">
-                                                                                                        <label for="appAPPROVED" class="control-label pull-left">Application Approved</label>
-                                                                                                        <input id="appAPPROVED"
-                                                                                                               type="text"                                
-                                                                                                               class="form-control"                                
-                                                                                                               name="appAPPROVED"                                
-                                                                                                               >
-                                                                                                    </div>
-                                                                                                </div> row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
@@ -3791,10 +3670,11 @@
                                                                 <label for="directorChairDecision" class="control-label">Director/Chair decision</label>
                                                                 <br/> 
                                                                 <input id="directorChairDecision"
-                                                                       type="checkbox"       
-                                                                       value="ticked" 
-                                                                       class="form-control"                                
+                                                                       type="checkbox"      
+                                                                       class="form-control" 
+                                                                       value="ticked"                                                                                                
                                                                        name="directorChairDecision"  
+                                                                       onclick="directorChairDecision_click(this);"
                                                                        >
                                                             </div>
                                                         </div> <!--row-->
@@ -4321,6 +4201,8 @@
                                                                 <span class="glyphicon glyphicon-envelope"></span>
                                                                 <p id="msg"><span id="msg_val">_</span></p> </a>
                                                         </div>
+
+
                                                     </div> <!--row-->
 
 
@@ -4363,7 +4245,7 @@
                                                     <tr>
                                                         <th class="details-control"></th>
                                                         <th class="delete-control"></th>
-                                                        <th class="never">bookID</th>
+                                                        <th class="never">User ID</th>
                                                         <th class="all">First Name</th>
                                                         <th class="all">Last Name</th>
                                                         <th class="all">Email</th>
@@ -4399,7 +4281,13 @@
                                                         </div>
 
                                                         <div class="col-sm-1"></div>
-
+                                                        <!--
+                                                                                                                <div class="col-sm-4">
+                                                        
+                                                                                                                    <label for="expertReaderReferenceNumber"> Assign Expert Readers to Reference Number: </label>
+                                                                                                                    <input type="text" class="input-sm" id="expertReaderReferenceNumber"/>
+                                                        
+                                                                                                                </div>-->
                                                     </div>
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
@@ -4416,16 +4304,23 @@
                                                         </div>
                                                     </div>
 
+
+
+
                                                 </div><!-- modal body -->
 
                                                 <div class="modal-footer"  style="background-color: #c3bcbc">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                                                 </div><!-- modal-footer -->
 
                                             </div><!-- modal-content -->
                                         </div><!-- modal-dialog -->
-                                    </div><!-- modal -->                                
+                                    </div><!-- modal -->
+
+                                    <!--</div>  tab-pane expReader-->
+
+
 
                                     <!--deleteExpReaderModal-->
                                     <div class="modal fade" id="deleteExpReaderModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderModalLabel">
@@ -4480,12 +4375,13 @@
 
                                 </div> <!-- tab-pane expReader-->
 
+
                                 <!--Library-->
                                 <div class="tab-pane fade" id="Library">
                                     <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
 
                                         <div class="table-responsive">
-                                            <table id="books" class="display table table-striped table-bordered nowrap" width="100%" cellspacing="0">
+                                            <table id="books" class="  table table-striped table-bordered nowrap" width="100%" cellspacing="0">
                                                 <thead>
                                                     <tr>         
                                                         <th class="details-control"></th>
@@ -4505,10 +4401,12 @@
                                                         <th class="never">Notes</th>
                                                         <th class="never">ISBN</th>
                                                         <th class="never">ISSN</th>
-                                                        <th class="never"></th>                                                                                                         
+                                                        <th class="never"></th>                                                                                                            
                                                     </tr>
                                                 </thead>
-
+                                                <tbody>
+                                                    <!-- Main Grid -->   
+                                                </tbody>
                                                 <tfoot>
                                                     <tr>                                                                    
                                                         <th class="details-control"></th>
@@ -4528,141 +4426,13 @@
                                                         <th class="never">Notes</th>
                                                         <th class="never">ISBN</th>
                                                         <th class="never">ISSN</th>
-                                                        <th class="never"></th>                          
+                                                        <th class="never"></th>                           
                                                     </tr>
                                                 </tfoot>
                                             </table>
                                         </div>             
                                     <c:if test="${not empty error}">Error: ${error}</c:if>
 
-
-
-                                        <!--createNewGenremodal-->
-                                        <div class="modal fade" id="createNewGenremodal" tabindex="-1" role="dialog" aria-labelledby="createNewGenremodalLabel"  data-modal-index="3">
-
-                                            <div class="modal-admin" role="document">
-
-                                                <div class="modal-content">
-
-                                                    <div class="modal-header" style="background-color: #c3bcbc;">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="createNewGenremodalLabel">Add Genre</h4>
-                                                    </div>
-
-                                                    <div class="modal-body" style="background-color: #d9d1d1">
-
-                                                        <div class="row">
-                                                            <div class="col-sm-4"></div>
-                                                            <div class="col-sm-4">
-                                                                <label for="addGenre" class="control-label pull-left">Add Genre</label>
-                                                                <input type="text" class="form-control input-sm" id="addGenre"/>                               
-                                                            </div>
-                                                            <div class="col-sm-4"></div>
-                                                        </div>
-
-                                                    </div><!-- modal body -->
-
-                                                    <div class="modal-footer"  style="background-color: #c3bcbc;">                       
-                                                        <button type="button" class="btn btn-primary" id="addGenreButton" data-dismiss="modal" >Add Genre</button>
-                                                    </div><!-- modal-footer -->
-
-                                                </div><!-- modal-content -->
-                                            </div><!-- modal-dialog -->
-                                        </div><!-- modal -->
-
-
-                                        <!--addGenreSuccessModal-->
-                                        <div class="modal fade" id="addGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addGenreSuccessModalLabel"  data-modal-index="3">
-
-                                            <div class="modal-admin" role="document">
-
-                                                <div class="modal-content">
-
-                                                    <div class="modal-header" style="background-color: #5bdc18;">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="addGenreSuccessModalLabel">Success</h4>
-                                                    </div>
-
-                                                    <div class="modal-body" style="background-color: #d9d1d1">
-
-                                                        <div class="row">
-                                                            <div class="col-sm-3"></div>
-                                                            <div class="col-sm-6">                               
-                                                                <p id="showAddedGenre"></p>                       
-                                                            </div>
-                                                            <div class="col-sm-3"></div>
-                                                        </div>
-
-                                                    </div><!-- modal body -->
-
-                                                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div><!-- modal-footer -->
-
-                                                </div><!-- modal-content -->
-                                            </div><!-- modal-dialog -->
-                                        </div><!-- modal -->
-
-                                        <!--editBooksModal-->
-                                        <div class="modal fade" id="editBooksModal" tabindex="-1" role="dialog" aria-labelledby="editBooksModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="editBooksModalLabel">Edit books</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Reference number </label>
-                                                                <p><input type="text" class="input-sm" id="referenceNumber2"/></p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-6">
-                                                                <label class="pull-left" for="Author2"> Author </label>   
-                                                                <textarea  id="Author2" name="Author2"  rows="2" cols="65">
-                                                        
-                                                                </textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left" for="Title2"> Title</label>
-                                                                <p><input type="text" class="input-sm" id="Title2"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Genre</label>
-                                                                <p><input type="text" class="input-sm" id="Genre2"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left"> Language(s) </label>
-                                                                <p><input type="text" class="input-sm" id="Language2"/></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-4">                                                                                                          
-                                                                <label class="pull-left"> ISBN </label>
-                                                                <p><input type="text" class="input-sm" id="ISBN2"/></p>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div><!-- /.modal-content -->
-                                            </div><!-- /.modal-dialog -->
-                                        </div><!-- /.modal -->
                                     </div>
                                 </div> <!--Library-->
 
@@ -4694,14 +4464,11 @@
                                     </div>                             
                                 </div> <!--tab-pane Genres-->
 
-
                                 <div class="tab-pane fade" id="Queries">
                                     <h2>Queries go here</h2>
                                 </div>
                             </div>
-
                         </div>
-
                     </nav>
 
                     <!--footer start-->
@@ -4709,17 +4476,22 @@
 
                         <div class="basetext">  
                             <h2>Literature Ireland</h2>
-                            <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                        </div><!-- end of BaseText div -->
+                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                                <i  onclick="contactUsModal();">Contact Details</i>
+                            </a> &nbsp;|&nbsp; 
+                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+
+                        </div><!-- end of BaseText div -->  
 
                         <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                         <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                        <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+                        <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
 
                         <div class="mobile-baselogos visible-phone"> 
                             <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                             <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                            <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                         </div>
                     </div><!-- end of Base div -->
                 </div>
@@ -4727,19 +4499,105 @@
                 <div class="shadowbase"> </div>
             </div><!-- end of Shadow container div -->
             <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2019 mgr Software
+                &copy; 2017-2019 mgr Software
             </div>
 
 
-            <!--Add New Eexpert Reader modal-->
-            <div class="modal fade" id="createNewEReadermodal" data-modal-index="2">
+            <!--Add New Staff Member modal-->
+            <div class="modal fade" id="createNewStaffmodal" data-modal-index="2">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form 
-                            id="createNewEReaderForm"  
+                            id="createNewStaffmodalForm"  
                             method="POST"
                             role="form"                             
-                            action="${pageContext.request.contextPath}/AddUserExpertReader" 
+                            action="${pageContext.request.contextPath}/AddUserStaff" 
+                        >
+
+
+                        <input type="hidden" name="AddNewStaff"  class="form-control" value="AddNewStaff">
+                        <div class="modal-header" style="background-color: #c3bcbc">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title">Add new Staff member</h4>
+                        </div>
+                        <div class="modal-body" style="background-color: #d9d1d1">
+
+                            <div class="panel-body">
+
+                                <!--ENSURE signup is validated-->
+                                <div class="form-group">
+                                    <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="StaffUname" id="StaffUname" placeholder="Username" onblur="loadXMLDocStaff()"/>                                           
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--<label for="firstname" class="col-md-3 control-label">First Name</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="StaffFirstname" placeholder="First Name">                                            
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--<label for="lastname" class="col-md-3 control-label">Last Name</label>-->
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" name="StaffLastname" placeholder="Last Name">                                            
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>       
+
+                                <div class="form-group">
+                                    <!--<label for="email" class="col-md-3 control-label">Email</label>-->
+                                    <div class="col-md-9">
+                                        <input type="email" class="form-control" name="StaffEmail" id="StaffEmail" placeholder="Email Address">                                            
+                                        <span class="help-block" id="error"></span>   
+                                        <!--<span id="erremail" class="alert alert-danger col-lg-8 col-md-8 col-sm-8 col-xs-12">Invalid Email Address</span>-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <!--<label for="password" class="col-md-3 control-label">Password</label>-->
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control" id="StaffPassword" name="StaffPassword" placeholder="Password">                                           
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
+                                    <div class="col-md-9">
+                                        <input type="password" class="form-control"  id="StaffCpassword" name="StaffCpassword" placeholder="Confirm Password">                               
+                                        <span class="help-block" id="error"></span> 
+                                    </div>
+                                </div>
+                            </div><!--signup-form-container-->
+
+                            <!--<input type="hidden" name="NewAssignedERRefNo" id="NewAssignedERRefNo"  class="form-control">-->
+                        </div>
+                        <div class="modal-footer"  style="background-color: #c3bcbc">
+                            <input type="hidden" name="userID" value="${userID}">
+                            <input type="hidden" name="publisherID" value="${publisherID}">
+                            <input type="hidden" name="Company" value="${companyDetails.Company}">
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                            <button type="submit" class="btn btn-primary" >Add new Staff member</button>
+                        </div>
+
+                        <!--                                </div>-->
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->     
+
+        <!--Add New Expert Reader modal-->
+        <div class="modal fade" id="createNewEReadermodal" data-modal-index="2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form 
+                        id="createNewEReaderForm"  
+                        method="POST"
+                        role="form"                             
+                        action="${pageContext.request.contextPath}/AddUserExpertReader" 
                         >
 
 
@@ -4849,92 +4707,6 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->     
 
-        <!--Add New Staff Member modal-->
-        <div class="modal fade" id="createNewStaffmodal" data-modal-index="2">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form 
-                        id="createNewStaffmodalForm"  
-                        method="POST"
-                        role="form"                             
-                        action="${pageContext.request.contextPath}/AddUserStaff" 
-                        >
-
-
-                        <input type="hidden" name="AddNewStaff"  class="form-control" value="AddNewStaff">
-                        <div class="modal-header" style="background-color: #c3bcbc">
-                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Add new Staff member</h4>
-                        </div>
-                        <div class="modal-body" style="background-color: #d9d1d1">
-
-                            <div class="panel-body">
-
-                                <!--ENSURE signup is validated-->
-                                <div class="form-group">
-                                    <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="StaffUname" id="StaffUname" placeholder="Username" onblur="loadXMLDocStaff()"/>                                           
-                                        <span class="help-block" id="error"></span> 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <!--<label for="firstname" class="col-md-3 control-label">First Name</label>-->
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="StaffFirstname" placeholder="First Name">                                            
-                                        <span class="help-block" id="error"></span> 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <!--<label for="lastname" class="col-md-3 control-label">Last Name</label>-->
-                                    <div class="col-md-9">
-                                        <input type="text" class="form-control" name="StaffLastname" placeholder="Last Name">                                            
-                                        <span class="help-block" id="error"></span> 
-                                    </div>
-                                </div>       
-
-                                <div class="form-group">
-                                    <!--<label for="email" class="col-md-3 control-label">Email</label>-->
-                                    <div class="col-md-9">
-                                        <input type="email" class="form-control" name="StaffEmail" id="StaffEmail" placeholder="Email Address">                                            
-                                        <span class="help-block" id="error"></span>   
-                                        <!--<span id="erremail" class="alert alert-danger col-lg-8 col-md-8 col-sm-8 col-xs-12">Invalid Email Address</span>-->
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <!--<label for="password" class="col-md-3 control-label">Password</label>-->
-                                    <div class="col-md-9">
-                                        <input type="password" class="form-control" id="StaffPassword" name="StaffPassword" placeholder="Password">                                           
-                                        <span class="help-block" id="error"></span> 
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
-                                    <div class="col-md-9">
-                                        <input type="password" class="form-control"  id="StaffCpassword" name="StaffCpassword" placeholder="Confirm Password">                               
-                                        <span class="help-block" id="error"></span> 
-                                    </div>
-                                </div>
-                            </div><!--signup-form-container-->
-
-                            <!--<input type="hidden" name="NewAssignedERRefNo" id="NewAssignedERRefNo"  class="form-control">-->
-                        </div>
-                        <div class="modal-footer"  style="background-color: #c3bcbc">
-                            <input type="hidden" name="userID" value="${userID}">
-                            <input type="hidden" name="publisherID" value="${publisherID}">
-                            <input type="hidden" name="Company" value="${companyDetails.Company}">
-                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                            <button type="submit" class="btn btn-primary" >Add new Staff member</button>
-                        </div>
-
-                        <!--                                </div>-->
-                    </form>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->    
-
         <!--additionalExpertReaderModal-->
         <div id="additionalExpertReaderModal"></div>
 
@@ -5026,18 +4798,145 @@
                     </div>
 
                     <div class="modal-footer"  style="background-color: #c3bcbc">                      
-                        <!--                        <label class="btn btn-default btn-file">
-                                                    Add press coverage<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
-                                                </label>-->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
                         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                     </div> <!--modal footer -->
                 </div> <!--modal content-->          
             </div> <!--modal dialog-->
         </div> <!--modal fade-->
-
         <!--pressCuttingsModal-->
         <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
+
+        <!--createNewGenremodal-->
+        <div class="modal fade" id="createNewGenremodal" tabindex="-1" role="dialog" aria-labelledby="createNewGenremodalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #c3bcbc;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="createNewGenremodalLabel">Add Genre</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <label for="addGenre" class="control-label pull-left">Add Genre</label>
+                                <input type="text" class="form-control input-sm" id="addGenre"/>                               
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                       
+                        <button type="button" class="btn btn-primary" id="addGenreButton" data-dismiss="modal" >Add Genre</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+        <!--deleteGenreSuccessModal-->
+        <div class="modal fade" id="deleteGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteGenreSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="deleteGenreSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showDeletedGenre"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
+        <!--deleteExpReaderSuccessModal-->
+        <div class="modal fade" id="deleteExpReaderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="deleteExpReaderSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showDeleteExpReader"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
+        <!--addGenreSuccessModal-->
+        <div class="modal fade" id="addGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addGenreSuccessModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" style="background-color: #5bdc18;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="addGenreSuccessModalLabel">Success</h4>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">                               
+                                <p id="showAddedGenre"></p>                       
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
 
         <!--libraryUpdateSuccessModal-->
         <div class="modal fade" id="libraryUpdateSuccessModal" tabindex="-1" role="dialog" aria-labelledby="libraryUpdateSuccessModallLabel"  data-modal-index="3">
@@ -5071,19 +4970,21 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
-        <!--booksModal-->
-        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content" style="background-color: #d9d1d1">
+        <!--saveBooksForm-->
+        <form 
+            id="saveBooksForm"  
+            method="POST"
+            role="form"                             
+            action="${pageContext.request.contextPath}/LibraryUpdate" 
+            enctype="multipart/form-data">
+            <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content" style="background-color: #d9d1d1">
 
-                    <form 
-                        id="saveBooksForm"  
-                        method="POST"
-                        role="form"                             
-                        action="${pageContext.request.contextPath}/LibraryUpdate" 
-                        enctype="multipart/form-data">
 
-                        <div class="modal-header" style="background-color: #c3bcbc">                          
+
+                        <div class="modal-header" style="background-color: #c3bcbc">
+
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="booksModalLabel">Manage books</h4>
                         </div>
@@ -5153,7 +5054,7 @@
                                         <input type="text" class="input-sm pull-left" id="Author"/>                                   
                                     </div>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-6">
                                         <label class="pull-left" for="Translator"> Translator </label>   
                                         <input type="text" class="input-sm pull-left" id="Translator"/>
                                     </div>
@@ -5214,32 +5115,78 @@
                             <button type="submit" id="btnSubmit" class="btn btn-primary" data-dismiss="modal" >Save changes</button>
                             <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                         </div>  <!-- modal-footer -->
-                    </form>                     
-                </div> <!-- modal-content -->
-            </div> <!-- modal-dialog -->
-        </div> <!-- modal -->
+                        <!--                    </form>                     -->
+                    </div> <!-- modal-content -->
+                </div> <!-- modal-dialog -->
+            </div> <!-- modal -->
+        </form>     
 
+        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="image-gallery-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="image-gallery-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="position:relative; height: 800px;">
+                        <img id="image-gallery-image" class="img-responsive col-md-12" src="" alt="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                        </button>
 
-        <!--deleteExpReaderSuccessModal-->
-        <div class="modal fade" id="deleteExpReaderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderSuccessModalLabel"  data-modal-index="3">
+                        <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--contactUsModal-->
+        <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">
 
                 <div class="modal-content">
 
-                    <div class="modal-header" style="background-color: #5bdc18;">
+                    <div class="modal-header"  style="background-color: #d9d1d1;">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="deleteExpReaderSuccessModalLabel">Success</h4>
+                        <h1 class="modal-title" id="contactUsModalLabel"   style="background-color: #d9d1d1;">Contact Us</h1>
                     </div>
 
                     <div class="modal-body" style="background-color: #d9d1d1">
 
-                        <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">                               
-                                <p id="showDeleteExpReader"></p>                       
+                        <div class="container-fluid">         
+                            <div id="contentarea">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <p><strong>Director</strong>   Sinéad Mac Aodha</p>
+                                        <p>sinead@literatureireland.com </p>
+                                        <p> </p>
+                                        <p><strong>Deputy Director   </strong>Rita McCann </p>
+                                        <p>rita@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong>Administrator</strong>   Andrew Deering</p>
+                                        <p>andrew@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong style="white-space: pre;"><br/></strong></p>
+                                        <p><strong><span style="text-decoration: underline;">PLEASE NOTE OUR NEW ADDRESS: </span></strong></p>
+                                        <p>Literature Ireland</p>
+                                        <p>Trinity Centre for Literary and Cultural Translation</p>
+                                        <p>36 Fenian Street</p>
+                                        <p>Trinity College Dublin</p>
+                                        <p>Dublin D02 CH22</p>
+                                        <p>Ireland</p>
+                                        <p><strong>Telephone: +353 (0)1 896 4184</strong></p>
+                                        <p><span style="white-space: pre;"><strong>Email: info@literatureireland.com</strong></span></p>
+                                        <p> </p>
+                                        <p> </p>
+                                        <p> </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-3"></div>
+
                         </div>
 
                     </div><!-- modal body -->
@@ -5252,31 +5199,42 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
-
-        <!--deleteGenreSuccessModal-->
-        <div class="modal fade" id="deleteGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteGenreSuccessModalLabel"  data-modal-index="3">
+        <!--showLegalNoteModal-->
+        <div class="modal fade" id="showLegalNoteModal" tabindex="-1" role="dialog" aria-labelledby="showLegalNoteModallLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">
 
                 <div class="modal-content">
 
-                    <div class="modal-header" style="background-color: #5bdc18;">
+                    <div class="modal-header"   style="background-color: #d9d1d1;">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="deleteGenreSuccessModalLabel">Success</h4>
+                        <h1 class="modal-title" id="showLegalNoteModallLabel" style="background-color: #d9d1d1;">Legal Note</h1>
                     </div>
 
                     <div class="modal-body" style="background-color: #d9d1d1">
 
-                        <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">                               
-                                <p id="showDeletedGenre"></p>                       
-                            </div>
-                            <div class="col-sm-3"></div>
+                        <div class="container-fluid">
+                            <div id="contentarea">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <h4>Company Registration</h4>
+                                        <p>Literature Ireland is registered in Dublin, Ireland, at the following address: </p>
+                                        <p>Trinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2.</p>
+                                        <p>Registered company number: 212420</p>
+                                        <p> </p>
+                                        <h4><span style="color: #3b3b3b;">Disclaimer</span></h4>
+                                        <p>Literature Ireland offers the material on this website, in good faith, for the information of visitors to the site, but disclaims any responsibility for error, omission or inaccuracy, and for the consequences of pursuing any link from these pages to another site.</p>
+                                        <p> </p>
+                                        <h4>Copyright</h4>
+                                        <p>The copyright in all material on this website is owned by Literature Ireland, or is reproduced with the permission (if required) of the copyright owner. The material may be retrieved and downloaded for personal use, but may not otherwise be reproduced or made available in any manner or form, and may not be modified or altered in any way, without the permission of Literature Ireland.</p>
+                                        <p> </p>
+                                        <h4>Privacy</h4>
+                                        <p>All documentation submitted to Literature Ireland will be treated with the utmost discretion. If you have any concerns in relation to privacy, please contact Literature Ireland at info@literatureireland.com.</p>
+                                    </div><!-- end of typography div -->
+                                </div><!-- end of text padding div -->
+                            </div><!-- end of contentarea div -->
                         </div>
-
                     </div><!-- modal body -->
-
                     <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div><!-- modal-footer -->
@@ -5284,6 +5242,7 @@
                 </div><!-- modal-content -->
             </div><!-- modal-dialog -->
         </div><!-- modal -->
+
 
         <!--loadXMLDocER-->
         <script type="text/javascript">
@@ -5292,7 +5251,6 @@
                 var xmlhttp;
                 var uname = document.getElementById("uname").value;
                 var urls = "checkusername.jsp?uname=" + uname;
-
                 if (window.XMLHttpRequest)
                 {
                     xmlhttp = new XMLHttpRequest();
@@ -5320,7 +5278,6 @@
                 var xmlhttp;
                 var uname = document.getElementById("StaffUname").value;
                 var urls = "checkusername.jsp?uname=" + uname;
-
                 if (window.XMLHttpRequest)
                 {
                     xmlhttp = new XMLHttpRequest();
@@ -5350,6 +5307,12 @@
             }
             function  showNotesModal() {
                 $("#showNotesModal").modal("show");
+            }
+            function  contactUsModal() {
+                $("#contactUsModal").modal("show");
+            }
+            function  showLegalNoteModal() {
+                $("#showLegalNoteModal").modal("show");
             }
         </script>
     </body>

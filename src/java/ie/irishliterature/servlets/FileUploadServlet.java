@@ -40,8 +40,9 @@ public class FileUploadServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
+     *
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -68,8 +69,9 @@ public class FileUploadServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
+     *
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -95,7 +97,7 @@ public class FileUploadServlet extends HttpServlet {
 //        String translatorCV = fileNames[2];
 //        String copiesTranslationSample = fileNames[3];
         System.out.println("userID  " + request.getParameter("userID"));
-       // System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
+        // System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
         System.out.println("Company " + request.getParameter("Company"));
         System.out.println("PublisherID  " + request.getParameter("publisherID"));
 //        System.out.println("Agreement  " + agreement);
@@ -107,7 +109,7 @@ public class FileUploadServlet extends HttpServlet {
         System.out.println(" ----------------------processRequest-----------------------------  ");
 
         System.out.println("userID  " + request.getParameter("userID"));
-     //   System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
+        //   System.out.println("ApplicationNumber  " + request.getParameter("ApplicationNumber"));
         System.out.println("Company " + request.getParameter("Company"));
         System.out.println("PublisherID  " + request.getParameter("publisherID"));
         System.out.println("Agreement  " + request.getParameter("agreement"));
@@ -117,20 +119,20 @@ public class FileUploadServlet extends HttpServlet {
         System.out.println("NewApplicationID  " + request.getParameter("newApplicationID"));
 
         String userID = request.getParameter("userID");
-     //   String ApplicationNumber = request.getParameter("ApplicationNumber");
+        //   String ApplicationNumber = request.getParameter("ApplicationNumber");
         String Company = request.getParameter("Company");
         String PublisherID = request.getParameter("publisherID");
 
-    //    System.out.println("userID= " + userID + " ApplicationNumber= " + ApplicationNumber + " Company= " + Company + " PublisherID= " + PublisherID);
+        //    System.out.println("userID= " + userID + " ApplicationNumber= " + ApplicationNumber + " Company= " + Company + " PublisherID= " + PublisherID);
         Calendar now = Calendar.getInstance();
         int year = now.get(Calendar.YEAR);
         String yearInString = String.valueOf(year);
 
         // Create path components to save the file
         // path = path + File.separator + yearInString + File.separator + Company + File.separator + Type + ApplicationNumber;
-        String rootPath = "/home/markus/test";
+        String rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
 //ApplicationNumber
-        final String path = rootPath + File.separator + yearInString + File.separator + Company + File.separator  + File.separator + request.getParameter("destination");
+        final String path = rootPath + File.separator + yearInString + File.separator + Company + File.separator + File.separator + request.getParameter("destination");
         final Part filePart = request.getPart("file");
         final String fileName = getFileName(filePart);
 
@@ -140,10 +142,8 @@ public class FileUploadServlet extends HttpServlet {
         }
 
         System.out.println("Upload File Directory = " + path);
-        
-        String[] fileNames ;
-  
-        
+
+        String[] fileNames;
 
         OutputStream out = null;
         InputStream filecontent = null;
@@ -162,8 +162,7 @@ public class FileUploadServlet extends HttpServlet {
 
             }
 
-
-            String test = (String)request.getParameter("anchor");
+            String test = (String) request.getParameter("anchor");
             System.out.println("anchor = " + test);
 
             request.setAttribute("message", " '" + fileName + "' -  File uploaded successfully!");

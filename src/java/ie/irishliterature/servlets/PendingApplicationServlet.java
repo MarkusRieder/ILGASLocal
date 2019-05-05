@@ -54,8 +54,8 @@ public class PendingApplicationServlet extends HttpServlet {
     private final static Logger LOGGER
             = Logger.getLogger(PendingApplicationServlet.class.getCanonicalName());
 //    private static final long serialVersionUID = 7908187011456392847L;
- private static final long serialVersionUID = 1L;
- 
+    private static final long serialVersionUID = 1L;
+
     ////////////////////////////////////////////////////////////////////////////
     ///
     ///  For file upload
@@ -179,6 +179,8 @@ public class PendingApplicationServlet extends HttpServlet {
 
     private String[] translatorArrayContent;
 
+    private String[] pressCuttingArrayContent;
+
     private String[] authorArray;  //Array of Author/Title
 
     private String[] languageArray;
@@ -269,12 +271,10 @@ public class PendingApplicationServlet extends HttpServlet {
 
         System.out.println("PendingApplicationServlet :: ");
         System.out.println("HttpSession session :: sess: " + task);
- System.out.println("HttpSession session :: sess: " + publisherID1);
- 
+        System.out.println("HttpSession session :: sess: " + publisherID1);
+
         System.out.println("Here we are >>>>>>>>>.   Pending Applications :: PendingApplicationServlet");
 
-        
-       
         switch (task) {
             case "Pending Applications":
                 System.out.println("Here we are >>>>>>>>>.   Pending Applications :: PendingApplicationServlet");
@@ -282,6 +282,7 @@ public class PendingApplicationServlet extends HttpServlet {
                 //set Status
                 Status = "pending";
                 int translatorArrayLength = 0;
+                int pressCuttingArrayLength = 0;
                 int languageArrayLength = 0;
                 //set Timestamp and format
                 String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
@@ -347,7 +348,7 @@ public class PendingApplicationServlet extends HttpServlet {
 
                     for (FileItem item : items) {
                         if (item.isFormField()) {
-
+                            System.out.println("PendingApplicationServlet >> isFormField");
                             /*
                              * Process regular form field (input
                              * type="text|radio|checkbox|etc", select, etc).
@@ -361,6 +362,7 @@ public class PendingApplicationServlet extends HttpServlet {
                             switch (fieldname) {
                                 case "company":
                                     company = fieldvalue;
+                                    System.out.println("company >> " + company);
                                     break;
                                 case "Company_Number":
                                     publisherID = Integer.parseInt(fieldvalue);
@@ -627,8 +629,18 @@ public class PendingApplicationServlet extends HttpServlet {
                                 case "DateOfPublicationOriginal":
                                     originalDateOfPublication = fieldvalue;
                                     break;
-                                case "coverageCuttings":
+                                case "input25[]":
                                     String CoverageCuttings = fieldvalue;
+                                    System.out.println("input25 >>>> HERE " + CoverageCuttings);
+                                    break;
+                                case "pressCuttingArray":
+                                    System.out.println("pressCuttingArray >>>> HERE ");
+                                    pressCuttingArrayContent = fieldvalue.split(","); //split string by ","
+                                    pressCuttingArrayLength = pressCuttingArrayContent.length;
+                                    System.out.println("pressCuttingArray >>>> pressCuttingArrayContent.length " + pressCuttingArrayContent.length);
+                                    for (String individualValue : pressCuttingArrayContent) {
+                                        System.out.println("pressCuttingArray  GrantApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
+                                    }
                                     break;
 
                             } // end switch
@@ -759,14 +771,16 @@ public class PendingApplicationServlet extends HttpServlet {
                                         System.out.println("signedLIcontract switch fileName: " + filename + " filePath " + filePath);
                                         filesToBeMoved.add(fileNames[idxFolderNames]);
                                         break;
-                                    case "coverageCuttings":
+                                    case "pressCuttings_image-file":
                                         System.out.println("CoverageCuttings here we are");
+                                        for (int i = 0; i < pressCuttingArrayLength; i++) {
 //                                        System.out.println("CoverageCuttings switch fileName: " + filename + " filePath " + filePath);
-                                        filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                                + "CoverageCuttings" + File.separator;
-                                        fileNames[idxFolderNames] = filePath + filename;
-                                        System.out.println("CoverageCuttings switch fileName: " + filename + " filePath " + filePath);
-                                        filesToBeMoved.add(fileNames[idxFolderNames]);
+                                            filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                                    + "CoverageCuttings" + File.separator;
+                                            fileNames[idxFolderNames] = filePath + pressCuttingArrayContent[i];
+                                            System.out.println("CoverageCuttings switch fileName: " + filename + " filePath " + filePath);
+                                            filesToBeMoved.add(fileNames[idxFolderNames]);
+                                        }
                                         break;
                                 } // end switch
 
@@ -993,16 +1007,13 @@ public class PendingApplicationServlet extends HttpServlet {
                     String destinationDirectory = "";
 
                     String[] subDirs = filesToBeMoved.get(i).split("(?<!^)/");
-                                    for (int j = 0; j < subDirs.length; j++) {
-                    System.out.println(" Print Loop subDirs [" + j + "]  " + subDirs[j]);
-                }
+                    for (int j = 0; j < subDirs.length; j++) {
+                        System.out.println(" Print Loop subDirs [" + j + "]  " + subDirs[j]);
+                    }
                     String decider = subDirs[8];
                     System.out.println(" Print filesToBeMoved. decider " + decider);
                     System.out.println(" Print filesToBeMoved.get(" + i + ") " + filesToBeMoved.get(i));
 
-
-                                    
-                                    
                     switch (decider) {
 
                         case "Agreement":
@@ -1031,6 +1042,7 @@ public class PendingApplicationServlet extends HttpServlet {
                         case "ProofPayment":
                         case "BankDetailForm":
                         case "SignedLIcontract":
+
                         case "CoverageCuttings":
                             String Directory = subDirs[8];      // CoverageCuttings
                             moveFileName = subDirs[9];      // translation sample.docx
@@ -1061,12 +1073,9 @@ public class PendingApplicationServlet extends HttpServlet {
 
                     File sFile = new File(filesToBeMoved.get(i));
                     File destDir = new File(destinationDirectory);
-                    
-                    
+
                     //  fileDir.add(moveFile);
                     FileUtils.moveFileToDirectory(sFile, destDir, true);
-                    
-                    
 
 //                    add thumbails of pdf
                     if ("CoverageCuttings".equals(decider)) {
@@ -1077,7 +1086,6 @@ public class PendingApplicationServlet extends HttpServlet {
                         System.out.println("CoverageCuttings destinationDirectory  " + destinationDirectory);
                         System.out.println("CoverageCuttings filePath  " + filePath + " moveFile " + moveFile);
 
-                      
                         File pdfFile = new File(moveFile);
 
                         RandomAccessFile raf = new RandomAccessFile(pdfFile, "r");
@@ -1114,7 +1122,7 @@ public class PendingApplicationServlet extends HttpServlet {
                         moveFile = destinationDirectory + jpgFile;
                         System.out.println("jpgFile moveFile :" + moveFile);
 
-                   //     shortArrayList.add(moveFile);
+                        //     shortArrayList.add(moveFile);
                         directory = new File(destinationDirectory);
 
                         if (!directory.exists()) {
@@ -1125,7 +1133,7 @@ public class PendingApplicationServlet extends HttpServlet {
                         }
 
                         String thumbFile = basename + "_thumb.jpg";
-                                
+
                         ImageIO.write(bufferedImage, "JPG", new File(moveFile));
 
                         BufferedImage img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
@@ -1134,16 +1142,16 @@ public class PendingApplicationServlet extends HttpServlet {
                         moveFile = destinationDirectory + thumbFile;
                         sFile = new File(thumbFile);
                         destDir = new File(destinationDirectory);
-                    
-                    //  fileDir.add(moveFile);
-                    FileUtils.moveFileToDirectory(sFile, destDir, true);
+
+                        //  fileDir.add(moveFile);
+                        FileUtils.moveFileToDirectory(sFile, destDir, true);
                     }
 
                     System.out.println("BufferedImage jpgFile moveFile :" + moveFile);
 
                     shortArrayList.add(moveFile);
                 }
-                
+
                 System.out.println("####################### End creating the lists ##################################################");
                 ////////////////////////////////////////////////////////////
                 //  Process Application Translators
@@ -1254,7 +1262,7 @@ public class PendingApplicationServlet extends HttpServlet {
                         String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
 
                         if (elements.length == 10) {
-                            
+
                             decider = elements[7];      // Original
                             moveFileName = elements[9]; // copy of original work.docx
                             moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
@@ -1309,7 +1317,9 @@ public class PendingApplicationServlet extends HttpServlet {
                 System.out.println("Process library ISBN " + ISBN);
                 System.out.println("Process library ISSN " + ISSN);
 
-                library.setTitle(Title);
+                if (!"".equals(Title)) {
+                    library.setTitle(Title);
+                }
                 library.setPublisher(company);
                 library.setPublisheryear(publicationYear);
                 library.setGenre(Genre);
@@ -2017,5 +2027,5 @@ public class PendingApplicationServlet extends HttpServlet {
 
         return fdname;
     }
-    
+
 }

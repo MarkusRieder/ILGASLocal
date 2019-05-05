@@ -1,9 +1,9 @@
 package ie.irishliterature.dao;
 
-import static ie.irishliterature.dao.ApplicationDAO.getPreviousGrantAid;
-import static ie.irishliterature.dao.ApplicationDAO.getTitles;
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import static ie.irishliterature.dao.Test1DAO.getPressCoverage;
+import static ie.irishliterature.dao.Test1DAO.getPreviousGrantAid;
+import static ie.irishliterature.dao.Test1DAO.getTitles;
 import static ie.irishliterature.dao.Test1DAO.getTranslatorTracker;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
@@ -214,9 +214,10 @@ public class pendingApplicationDAO {
         return listApplications;
     }
 
+    @SuppressWarnings("unchecked")
     public static List<GrantApplication> getAllApplicationsPublisher(String publisherID) throws ClassNotFoundException, DBException, ParseException {
 
-        System.out.println("ReferenceNumber openApplicationDAO  getAllApplicationsPublisher  " + publisherID);
+        System.out.println("publisherID Remote pendingApplicationDAO  getAllApplicationsPublisher  " + publisherID);
         List<GrantApplication> GrantApplicationData = null;
         int counter = 1;
         if (GrantApplicationData == null) {
@@ -225,7 +226,7 @@ public class pendingApplicationDAO {
             Connection conn = null;
             PreparedStatement ps = null;
             ResultSet res = null;
-            System.out.println("GrantApplicationData openApplicationDAO  here ");
+            System.out.println("getAllApplicationsPublisher Remote pendingApplicationDAO  here ");
             ArrayList<String> translatorTrackId; // contains array with translator id's
             ArrayList<String> authorList = new ArrayList<>();
             ArrayList<String> translatorNamesList = new ArrayList<>();
@@ -236,8 +237,8 @@ public class pendingApplicationDAO {
             ArrayList<String> pressCoverage = new ArrayList<>();
             ArrayList<String> translatorNameList = new ArrayList<>();
 
-            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' ";
-            System.out.println("openApplicationDAO searchQuery  " + searchQuery);
+            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' AND Status = 'pending' ORDER BY ApplicationYear, ApplicationNumber";
+            System.out.println("getAllApplicationsPublisher Remote pendingApplicationDAO searchQuery  " + searchQuery);
             try {
 
                 conn = DBConn.getConnection();
@@ -245,7 +246,7 @@ public class pendingApplicationDAO {
                 ps = conn.prepareStatement(searchQuery);
 
                 res = ps.executeQuery(searchQuery);
-                System.out.println("searchQuery openApplicationDAO   " + searchQuery);
+                System.out.println("searchQuery pendingApplicationDAO   " + searchQuery);
                 while (res.next()) {
 
                     System.out.println("\n\n================================= Start: " + counter + "  =================================================\n\n");
@@ -258,6 +259,17 @@ public class pendingApplicationDAO {
                     application.setCompany(res.getString("company"));
                     application.setPublisherID(res.getInt("publisherID"));
                     application.setUserID(res.getString("userID"));
+
+                    application.setBoardMeeting(res.getDate("boardMeeting"));
+                    application.setContractSentToPublisher(res.getDate("contractSentToPublisher"));
+                    application.setAcknowledgementApproved(res.getDate("acknowledgementApproved"));
+                    application.setDatePublishedBooksReceived(res.getDate("datePublishedBooksReceived"));
+                    application.setDatePaymentMadeToPublisher(res.getDate("datePaymentMadeToPublisher"));
+                    application.setPaymentReferenceNumber(res.getString("paymentReferenceNumber"));
+                    application.setAmountApproved(res.getBigDecimal("amountApproved"));
+                    application.setPublisherInformedOfMeeting(res.getDate("publisherInformedOfMeeting"));
+                    application.setBoardComments_Instructions(res.getString("boardComments_Instructions"));
+                    application.setDirectorChairDecision(res.getInt("directorChairDecision"));
 
                     String[] bookTitle = getBookTitle(ReferenceNumber);
                     System.out.println("bookTitle:  " + bookTitle[0]);
@@ -282,10 +294,13 @@ public class pendingApplicationDAO {
                     String Notes = getBookNotes(ReferenceNumber);
                     application.setBookNotes(Notes);
                     application.setCopiesSent(res.getInt("copiesSent"));
-//                    application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
-
-                    System.out.println("setPublicationYear:  " + res.getString("dateCopiesWereSent"));
-                    String[] t = res.getString("dateCopiesWereSent").split("-");
+                    application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
+                    String translationTitle = getTranslationTitle(ReferenceNumber);
+                    application.setTranslationTitle(translationTitle);
+                    String Serie = getSeries(ReferenceNumber);
+                    application.setSeries(Serie);
+                    System.out.println("publicationYear:  " + res.getString("publicationYear"));
+                    String[] t = res.getString("publicationYear").split("-");
                     System.out.println("t.length:  " + t.length);
                     for (int g = 0; g < t.length; g++) {
                         System.out.println("setPublicationYear: [" + g + "] " + t[g]);
@@ -314,7 +329,12 @@ public class pendingApplicationDAO {
 //                    DateFormat inputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 //                    Date date2 = inputFormat1.parse(text);
                     application.setDateCopiesWereSent(res.getDate("dateCopiesWereSent"));
-
+                    String ISBN = getISBN(ReferenceNumber);
+                    String ISSN = getISSN(ReferenceNumber);
+                    System.out.println(ISBN);
+                    
+                    application.setISBN(ISBN);
+                    application.setISSN(ISSN);
                     application.setCopiesTranslationSample(res.getString("copiesTranslationSample"));
                     application.setCopiesTranslationSampleDocName(res.getString("copiesTranslationSampleDocName"));
                     application.setTC_ACCEPTED(res.getInt("TC_ACCEPTED"));
@@ -344,11 +364,13 @@ public class pendingApplicationDAO {
                     application.setPreviousGrantAid(getPreviousGrantAid(ReferenceNumber));
                     application.setGenre(bookTitle[1]);
                     application.setBoardComments_Instructions(res.getString("boardComments_Instructions"));
-
+                    application.setApproveWithdrawnReject(res.getString("approveWithdrawnReject"));
+                    System.out.println("setApproveWithdrawnReject  ");
+                    System.out.println("setApproveWithdrawnReject  " + res.getString("approveWithdrawnReject"));
                     String expertReaderName = getExpertReaderName(ReferenceNumber);
 
                     application.setExpertReaderName(expertReaderName);
-
+                    application.setPaymentStatus((res.getString("paymentStatus")));
                     ArrayList<String> rightsAgreementList;
                     rightsAgreementArray = new ArrayList<>();
 
@@ -423,8 +445,10 @@ public class pendingApplicationDAO {
                     application.setPressCoverage(pressCoverage);
 
                     application.setUnassignedExpertReaderList(unassignedExpertReaderList);
-//                    application.setTranslatorTitles(mixedList);
 
+                    application.setRightsHolderArray(getRightsHolderArrayContent(ReferenceNumber));
+
+//                    application.setTranslatorTitles(mixedList);
 //                   //  System.out.println("==================================================================================>");
 //                   //  System.out.println("ReferenceNumber   " + ReferenceNumber);
 //                   //  System.out.println("mixedList         " + mixedList);
@@ -441,7 +465,7 @@ public class pendingApplicationDAO {
             } catch (ClassNotFoundException | SQLException e) {
                 LOGGER.debug(e.getMessage());
                 DBConn.close(conn, ps, res);
-                throw new DBException("12 Excepion while accessing database");
+                throw new DBException("pendingApplicationDAO 12 Excepion while accessing database");
             }
 
             DBConn.close(conn, ps, res);
@@ -1649,6 +1673,130 @@ public class pendingApplicationDAO {
         DBConn.close(conn, ps, res);
 
         return ISSN;
+    }
+
+    public static boolean rightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int rightsHolderContent = 0;
+        boolean rightsHolderContentExists = false;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps.setString(1, ReferenceNumber);
+            res = ps.executeQuery();
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderContent = res.getInt(1);
+                }
+            }
+            DBConn.close(conn, ps, res);
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps, res);
+            throw new DBException("rightsHolderArrayContent Excepion while accessing database");
+        }
+
+        if (rightsHolderContent > 0) {
+            return rightsHolderContentExists = true;
+        } else {
+            return rightsHolderContentExists = false;
+        }
+
+    }
+
+    public static ArrayList<String> getRightsHolderArrayContent(String ReferenceNumber) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        ArrayList<String> rightsHolderArrayContent = new ArrayList<String>();
+        rightsHolderArrayContent.clear();
+        ResultSet res = null;
+
+        try {
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            ps1 = conn.prepareStatement("SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?");
+            ps1.setString(1, ReferenceNumber);
+            res = ps1.executeQuery();
+
+            if (res != null) {
+                while (res.next()) {
+                    rightsHolderArrayContent.add(res.getString(1));
+                    System.out.println("getRightsHolderArrayContent  retrieving " + res.getString(1) + "......................:");
+                }
+            }
+
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return rightsHolderArrayContent;
+
+    }
+
+    public static int updateRightsHolderArrayContent(String ReferenceNumber, String[] rightsHolderArrayContent) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps1 = null;
+        int id = 0;
+        ResultSet res = null;
+
+        try {
+
+            System.out.println("updaterightsHolderArrayContent......................:");
+
+            conn = DBConn.getConnection();
+            conn.setAutoCommit(false);
+
+            for (int i = 0; i < rightsHolderArrayContent.length; i++) {
+                String translationRightsHolderName = rightsHolderArrayContent[i];
+                //     String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName ) VALUES (?,?)";
+
+                String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName )SELECT * FROM (SELECT ?, ?) AS tmp WHERE NOT EXISTS ( SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE TranslationRightsHolderName = ?  AND ReferenceNumber = ?) LIMIT 1;";
+
+                ps1 = conn.prepareStatement(query);
+
+                ps1.setString(1, ReferenceNumber);
+                ps1.setString(2, translationRightsHolderName);
+                ps1.setString(3, translationRightsHolderName);
+                ps1.setString(4, ReferenceNumber);
+                System.out.println("updaterightsHolderArrayContent  inserting " + translationRightsHolderName + "......................:");
+
+                ps1.executeUpdate();
+
+                if (res != null) {
+                    while (res.next()) {
+
+                        id = res.getInt(1);
+//                    System.out.println("GrantApplicationDAO id::   " + id);
+                    }
+                }
+            }
+            conn.commit();
+
+            DBConn.close(conn, ps1, res);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.debug(e.getMessage());
+            DBConn.close(conn, ps1, res);
+            throw new DBException("4 Excepion while accessing database");
+        }
+
+        return id;
     }
 
 }

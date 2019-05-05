@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
 public class Test1DAO {
@@ -1821,8 +1822,6 @@ public class Test1DAO {
                     + "FROM ILGAS.PressCuttings\n"
                     + "WHERE ReferenceNumber = ?");
 
-//            ps = conn.prepareStatement("SELECT translatorCVDocName, translatorCV, copiesTranslationSample, copiesTranslationSampleDocName FROM TranslatorTrack "
-//                    + "WHERE ReferenceNumber = ?");
             ps.setString(1, ReferenceNumber);
 
             res = ps.executeQuery();
@@ -1835,24 +1834,35 @@ public class Test1DAO {
                     System.out.println("getPressCoverage pressCoverageLst Loop res.getString(1)  " + res.getString(1));
                     System.out.println("getPressCoverage pressCoverageLst Loop res.getString(2)  " + res.getString(2));
 
-//                    if (!res.getString(1).contains("Thumbs") || res.getString(1).contains("_thumb.jpg")) {
-                    if (!res.getString(1).contains("_thumb.jpg")) {
-                        pressCoverageArray[0] = "http://localhost" + res.getString(1).trim();
-                        pressCoverageArray[1] = res.getString(2).trim();
-                        System.out.println(" !Thumbs res.getString(1)   " + res.getString(1));
-                        System.out.println(" !Thumbs  res.getString(2)  " + res.getString(2));
-                    } else {
-                        pressCoverageArray[2] = "http://localhost" + res.getString(1).trim();
-                        pressCoverageArray[3] = res.getString(2).trim();
-                        System.out.println(" _thumb.jpg  res.getString(1)  " + res.getString(1));
-                        System.out.println(" _thumb.jpg  res.getString(2)  " + res.getString(2));
-                        pressCoverageLst.add(Arrays.toString(pressCoverageArray));
-                        pressCoverageArray = new String[4];
+
+                    String fileName = res.getString(1).trim();
+                    String basename = FilenameUtils.getBaseName(fileName);
+                    String fullPath = FilenameUtils.getFullPath(fileName); 
+                    String extension = FilenameUtils.getExtension(fileName);
+
+                    pressCoverageArray[0] = "http://www.literatureirelandgrantapplication.com:8080" + fileName;
+                    pressCoverageArray[1] = res.getString(2).trim();
+                    System.out.println(" !Thumbs res.getString(1)   " + res.getString(1));
+                    System.out.println(" !Thumbs  res.getString(2)  " + res.getString(2));
+
+                    if ("pdf".equals(extension)) {
+                        System.out.println(" IS PDF   ");
+
+                        String thumbFilename = basename + ".jpg";
+                        String thumbFullPath = fullPath + "Thumbs/" + thumbFilename;
+
+                        System.out.println(" thumbFilename   " + thumbFilename);
+                        System.out.println(" thumbFullPath   " + thumbFullPath);
+
+                        pressCoverageArray[2] = "http://www.literatureirelandgrantapplication.com:8080" + thumbFullPath;
+                        pressCoverageArray[3] = thumbFilename;
+
                     }
 
+                    pressCoverageLst.add(Arrays.toString(pressCoverageArray));
+                    pressCoverageArray = new String[4];
                     idx++;
 
-//                    System.out.println("getPressCoverage pressCoverageLst  " + pressCoverageLst.toString());
                 }
 
             }

@@ -159,8 +159,8 @@ public class GrantApplicationServlet extends HttpServlet {
     private String translationPublisherYear;
 
     private String[] translatorArrayContent;
-    
-        private String[] rightsHolderArrayContent;
+
+    private String[] rightsHolderArrayContent;
 
     private String[] authorArray;  //Array of Author/Title
 
@@ -240,21 +240,36 @@ public class GrantApplicationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                            
+
         request.setCharacterEncoding("UTF-8");
-        
+
         String name = "";
         HttpSession session = request.getSession();
         System.out.println("############################### /GrantApplicationServlet ####################################");
+
+        
+
+        Enumeration en = request.getParameterNames();
+
+        while (en.hasMoreElements()) {
+            Object objOri = en.nextElement();
+
+            String param = (String) objOri;
+
+            String value = request.getParameter(param);
+
+            System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+
+        }
+
         System.out.println("Enumeration keys   ");
         Enumeration keys = session.getAttributeNames();
         while (keys.hasMoreElements()) {
             String key = (String) keys.nextElement();
             System.out.println("key  :" + key + ": " + session.getValue(key));
-            if ("name".equals(key)) {
-                name = (String) session.getValue(key);
-            }
+
         }
+
         System.out.println("###################################################################");
 
         String task = request.getParameter("task");
@@ -266,6 +281,16 @@ public class GrantApplicationServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String userID = request.getParameter("userID");
+        name = request.getParameter("name");
+        String Company = request.getParameter("Company");
+        String PublisherID = request.getParameter("publisherID");
+
+        System.out.println("userID: " + userID);
+        System.out.println("name: " + name);
+        System.out.println("Company: " + Company);
+        System.out.println("PublisherID: " + PublisherID);
+
         task = "Start New Application";
 //        String lastLogon = request.getParameter("lastLogon");
 //        long lastLogonForm = Long.parseLong(lastLogon);
@@ -275,6 +300,23 @@ public class GrantApplicationServlet extends HttpServlet {
         switch (task) {
             case "Start New Application":
                 System.out.println("Start New Application :: ");
+
+                session.setAttribute("name", name);
+                session.setAttribute("publisherID", publisherID);
+                request.setAttribute("publisherID", publisherID);
+                request.setAttribute("firstname", firstname);
+                request.setAttribute("lastname", lastname);
+                request.setAttribute("name", name);
+                request.setAttribute("userID", userID);
+                userID = request.getParameter("userID");
+                name = request.getParameter("name");
+                Company = request.getParameter("Company");
+                PublisherID = request.getParameter("publisherID");
+                System.out.println("userID:1 " + userID);
+                System.out.println("name:1 " + name);
+                System.out.println("Company:1 " + Company);
+                System.out.println("PublisherID:1 " + PublisherID);
+
                 //set Status
                 Status = "open";
                 int translatorArrayLength = 0;
@@ -352,10 +394,14 @@ public class GrantApplicationServlet extends HttpServlet {
                              */
                             String fieldname = item.getFieldName();
 //                            String fieldvalue = item.getString();
-    String fieldvalue = item.getString("UTF-8").trim();
+                            String fieldvalue = item.getString("UTF-8").trim();
 
                             System.out.println(fieldname + " >> " + fieldvalue);
                             switch (fieldname) {
+                                case "name":
+                                    name = fieldvalue;
+                                    System.out.println("name = fieldvalue" + name);
+                                    break;
                                 case "Company":
                                     company = fieldvalue;
                                     break;
@@ -561,7 +607,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                         System.out.println("translatorArray  GrantApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength);
                                     }
                                     break;
-                                                                        
+
                                 case "rightsHolderArray":
                                     System.out.println("rightsHolderArray >>>> HERE ");
                                     rightsHolderArrayContent = fieldvalue.split(","); //split string by ","
@@ -746,7 +792,7 @@ public class GrantApplicationServlet extends HttpServlet {
 
                                     filecontent = item.getInputStream();
 
-                                      message = message + " '" + filename + "'<br/>";
+                                    message = message + " '" + filename + "'<br/>";
 
                                     int read;
                                     final byte[] bytes = new byte[1024];
@@ -985,8 +1031,7 @@ public class GrantApplicationServlet extends HttpServlet {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                 
-                 
+
                 /*
                  * Process translation rights holder
                  */
@@ -1030,7 +1075,7 @@ public class GrantApplicationServlet extends HttpServlet {
                     System.out.println("ffilesToBeMoved.get(i) " + filesToBeMoved.get(i));
                     String decider = subDirs[8];
 
-                     System.out.println("filesToBeMoved  decider --" + decider + "--->>>> ");
+                    System.out.println("filesToBeMoved  decider --" + decider + "--->>>> ");
 
                     switch (decider) {
 
@@ -1139,11 +1184,9 @@ public class GrantApplicationServlet extends HttpServlet {
                             /*
                              * insert them into the table TranslatorTrack
                              */
-                            
+
                             System.out.println("insert them into the table TranslatorTrack  decider  " + decider);
 
-
-                            
                             switch (decider) {
 
                                 case "Agreement":
@@ -1201,7 +1244,7 @@ public class GrantApplicationServlet extends HttpServlet {
                         String moveFileName = elements[11]; // copy of original work.docx
 //                        String moveFileNameReplaced = moveFile.replace("/home/glassfish/glassfish/domains/domain1", "/documents");
                         String moveFileNameReplaced = moveFile.replace("/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents");
-System.out.println("Process Original TranslationSample  decider  " + decider);
+                        System.out.println("Process Original TranslationSample  decider  " + decider);
                         switch (decider) {
 
                             case "Original":
@@ -1237,7 +1280,7 @@ System.out.println("Process Original TranslationSample  decider  " + decider);
                 library.setGenre(Genre);
                 library.setSeries(Series);
 //                library.setTranslationPublisher(translationPublisher);
-                  library.setTranslationPublisher(foreignPublisher);
+                library.setTranslationPublisher(foreignPublisher);
                 library.setTranslationTitle(translationTitle);
                 library.setTranslationPublisherYear(translationPublisherYear);
                 library.setPhysicalDescription(physicalDescription);
@@ -1259,7 +1302,7 @@ System.out.println("Process Original TranslationSample  decider  " + decider);
                 ////////////////////////////////////////////////////////////
                 //  Process Application Languages
                 ////////////////////////////////////////////////////////////
-             System.out.println("Process Languages");
+                System.out.println("Process Languages");
                 System.out.println("Languages languageArrayLength: " + languageArrayLength);
                 if (languageArrayLength != 0) {
 
@@ -1352,7 +1395,15 @@ System.out.println("Process Original TranslationSample  decider  " + decider);
                  * reset session
                  */
                 session.removeAttribute("task");
-     request.setAttribute("name", name);
+                session.setAttribute("name", name);
+                session.setAttribute("publisherID", publisherID);
+                request.setAttribute("publisherID", publisherID);
+                request.setAttribute("firstname", firstname);
+                request.setAttribute("lastname", lastname);
+                request.setAttribute("name", name);
+                request.setAttribute("userID", userID);
+                System.out.println(" request.setAttribute(name)" + name);
+                request.setAttribute("name", name);
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("/WEB-INF/views/uploadResponse.jsp").forward(request, response);
                 break;
