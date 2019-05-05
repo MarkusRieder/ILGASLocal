@@ -781,8 +781,8 @@
                     $("#appApplicationNumber").val($(this).closest('tr').children()[1].textContent);
                     $("#appApplicationYear").val($(this).closest('tr').children()[2].textContent);
                     $("#appReferenceNumber").val($(this).closest('tr').children()[3].textContent);
-                    $("#company").val($(this).closest('tr').children()[4].textContent);
-//                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
+                    $("#company").val($(this).closest('tr').children()[4].textContent);                 
+                    $("#appCompany").val($(this).closest('tr').children()[4].textContent);
 
                     var appReferenceNumber = rowdata.ReferenceNumber;
                     document.getElementById("appReferenceNumber").innerHTML = appReferenceNumber;
@@ -2861,7 +2861,7 @@
                                                                                value="${companyDetails.doNotMail}" 
                                                                                checked =""
                                                                                >  
-                                                                        <label for="doNotMail">Do not add to newsletter</label>
+                                                                         <label for="doNotMail">Sign up to newsletters</label>
                                                                     </div><!--checkbox-->
                                                                 </div> <!--well-->
                                                             </div> <!--<div class="col-sm-3">-->   
@@ -3505,14 +3505,14 @@
                                             </div> <!-- applicationEditForm-tab-content -->
 
                                         </form>
+
+                                    </div> <!-- container-fluid --> 
+                                </nav>   
+                            </div> <!-- /.modal-body -->    
                                         <div class="modal-footer"  style="background-color: #c3bcbc">
                                             <!--                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                                             <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                                         </div>
-                                    </div> <!-- container-fluid --> 
-                                </nav>   
-                            </div> <!-- /.modal-body -->    
-
                         </div> <!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal applicationsModal -->
@@ -3583,12 +3583,12 @@
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+                    <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
 
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+<!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
                 </div><!-- end of Base div -->

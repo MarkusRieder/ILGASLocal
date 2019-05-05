@@ -103,6 +103,7 @@
             var Name = "";
             var Author = "";
             var counter = 0;
+            var referenzNummer = "";
             var translationrightsholdercounter = 0;
             var Authorcounter = 0;
             var pressCuttingCounter = 0;
@@ -112,6 +113,8 @@
             var bookCover;
             var bookTranslationTitle;
             var uploadCounter = 1;
+            var newURLcoverageCuttingsUploadServlet = "";
+            var iAmGlobal = "some val";
 
             $.datepicker.setDefaults({
                 dateFormat: 'dd/mm/yy',
@@ -240,8 +243,6 @@
                         {"data": "ApplicationNumber"},
                         {"data": "ApplicationYear"},
                         {"data": "ReferenceNumber"},
-                        //    {"data": "ReferenceNumber"},
-
                         {"data": "company"},
                         {"data": "agreement",
                             "render": function (data, type, row) {
@@ -783,9 +784,10 @@
 
                 $('#applications tbody').on('click', 'tr td.details-control', function (e) {
                     e.preventDefault();
+
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#additionalExpertReaderModal').empty(); // empty the div before fetching and adding new data
-
+//$("#applications").DataTable().ajax.reload();
                     cntr++;
                     var agreemnt = "";
                     var contr = "";
@@ -805,6 +807,10 @@
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
                     var expertReaderName = "";
+
+
+
+
 //                    var TranslatorDocs = rowdata.transList;
 //                    console.log("1 TranslatorDocs rowdata.transList-> " + rowdata.transList);
 
@@ -913,11 +919,40 @@
                     $("#appReferenceNumber").val($(this).closest('tr').children()[3].textContent);
                     $("#company").val($(this).closest('tr').children()[4].textContent);
 //                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
+                    var publisherName = rowdata.company;
+                    document.getElementById("publisherName1").value = publisherName;
+                    console.log("publisherName " + publisherName);
 
                     var appReferenceNumber = rowdata.ReferenceNumber;
+                    referenzNummer = rowdata.ReferenceNumber;
+                    var ReferenceNumber = rowdata.ReferenceNumber;
+                    document.getElementById("ReferenceNumber1").value = ReferenceNumber;
                     document.getElementById("appReferenceNumber").innerHTML = appReferenceNumber;
+                    document.getElementById("appReferenceNumber1").innerHTML = appReferenceNumber;
                     document.getElementById("ReferenceNumber").value = appReferenceNumber;
-                    //          console.log("appReferenceNumber " + appReferenceNumber);
+                    console.log("ReferenceNumber 12 " + $("#ReferenceNumber1").val());
+                    console.log("ReferenceNumber 123 appReferenceNumber " + document.getElementById("appReferenceNumber").value);
+                    console.log("ReferenceNumber 123 " + ReferenceNumber + ' publisherName= ' + publisherName);
+
+//                    loadFileinput(ReferenceNumber, publisherName);
+
+//                    $("#input25").fileinput({
+//                        'theme': 'fas',
+//                        'uploadUrl': './coverageCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber").val() + '&publisherName=' + publisherName,
+//                        uploadExtraData: {ReferenceNumberABC: $("#appReferenceNumber").val(), publisherNameABC: publisherName},
+//                        'allowedFileExtensions': ["jpg", "gif", "png", "pdf"],
+//                        // ≈ 1.4mb
+//                        'maxFileSize': 1400,
+//                        'overwriteInitial': true
+//
+////                    uploadExtraData: function () {           
+////                       var ReferenceNumber = document.getElementsByName("ReferenceNumber");
+////
+////                        return ReferenceNumber;
+//// 
+////                    }
+//                    });
+
                     $("#unassignedERRefNo").val(appReferenceNumber);
                     var TranslName = rowdata.TranslatorName;
                     //          console.log("TranslName " + TranslName);
@@ -2349,14 +2384,13 @@
 
         <script type="text/javascript">
             window.onload = function () {
-//                document.getElementById('files').addEventListener('change', handleFileSelect, false);
+                //                document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 
                 //Set all filled input fields to readOnly
                 //so only empty ones can be filled in!!!
 
                 var emptyTextBoxes = $('input:text').filter(function () {
-                    console.log("this.value ", this.value);
                     return (this.value !== "" || this.value.length !== 0);
                 });
                 var string = "The following input fields have been marked readonly - \n";
@@ -2382,144 +2416,83 @@
 
         </script>
 
-        <!--            handleFileSelect
-                <script>
-                    // Loaded via <script> tag, create shortcut to access PDF.js exports.
-                    var pdfjsLib = window['pdfjs-dist/build/pdf'];
-        // The workerSrc property shall be specified.
-                    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
-        
-        //            https://stackoverflow.com/questions/23402187/multiple-files-upload-and-using-file-reader-to-preview
-                    function handleFileSelect(evt) {
-                        var files = evt.target.files; // FileList object
-                        console.log("files ", files);
-                        // Loop through the FileList and render image files as thumbnails.
-                        for (var i = 0, f; f = files[i]; i++) {
-        
-                            // Only process image files.
-                            if (!validFileType(files[i])) {
-                                continue;
-                            }
-        
-                            var reader = new FileReader();
-        
-                            // Closure to capture the file information.
-                            reader.onload = (function (theFile) {
-        
-                                if (theFile.type === "application/pdf") {
-                                    console.log("files pdf ", theFile.name);
-                                    var fileReader = new FileReader();
-                                    fileReader.onload = function () {
-                                        var pdfData = new Uint8Array(this.result);
-                                        // Using DocumentInitParameters object to load binary data.
-                                        var loadingTask = pdfjsLib.getDocument({data: pdfData});
-                                        loadingTask.promise.then(function (pdf) {
-                                            console.log('PDF loaded');
-        
-                                            // Fetch the first page
-                                            var pageNumber = 1;
-                                            pdf.getPage(pageNumber).then(function (page) {
-                                                console.log('Page loaded');
-        
-                                                var scale = 1.5;
-                                                var viewport = page.getViewport({scale: scale});
-        
-                                                // Prepare canvas using PDF page dimensions
-                                                var canvas = $("#pdfViewer")[0];
-                                                var context = canvas.getContext('2d');
-                                                canvas.height = viewport.height;
-                                                canvas.width = viewport.width;
-        
-                                                // Render PDF page into canvas context
-                                                var renderContext = {
-                                                    canvasContext: context,
-                                                    viewport: viewport
-                                                };
-                                                var renderTask = page.render(renderContext);
-                                                renderTask.promise.then(function () {
-                                                    console.log('Page rendered');
-                                                });
-                                            });
-                                        }, function (reason) {
-                                            // PDF loading error
-                                            console.error(reason);
-                                        });
-                                    };
-        
-                                    fileReader.readAsArrayBuffer(theFile);
-        
-                                } else
-                                {
-                                    return function (e) {
-                                        console.log("e.target.result ", e.target.result);
-                                        // Render thumbnail.
-                                        var span = document.createElement('span');
-        //                            var cleanFileName = decodeURI(escape(theFile.name));
-                                        span.innerHTML = ['<img class="thumbnail" src="', e.target.result,
-                                            '" title="', theFile.name, '"/>'].join('');
-                                        document.getElementById('coverageCuttings').insertBefore(span, null);
-                                    };
-                                }
-                            })(f);
-        
-                            // Read in the image file as a data URL.
-                            reader.readAsDataURL(f);
-                        }
-                    }
-        //            document.getElementById("files").addEventListener('change', handleFileSelect, false);
-                </script>-->
         <script>
-           // Check HTML5 File API Browser Support
-if (window.File && window.FileList && window.FileReader) {
-       function showFile() {
+            // Check HTML5 File API Browser Support
+            if (window.File && window.FileList && window.FileReader) {
+                function showFile() {
 //           var preview = document.getElementById("preview");
-           var fileInput = document.querySelector("#input25");
+                    var fileInput = document.querySelector("#input25");
 
-           for (var i = 0; i < fileInput.files.length; i++) {
-               var reader = new FileReader();
-               reader.onload = function(readerEvent) {
+//                    var ref = ReferenceNumber.value;
+//                    var pub = $("#publisherName").val();
+//                    console.log("showFile ReferenceNumber " + ref + " pub " + pub);
+
+                    for (var i = 0; i < fileInput.files.length; i++) {
+                        var reader = new FileReader();
+                        reader.onload = function (readerEvent) {
 //                   var listItem = document.createElement("li");
 //                   listItem.innerHTML = "<img src='" + readerEvent.target.result + "' />";
 //                   preview.append(listItem);
-               };
-               console.log("fileInput.files[i]" + fileInput.files[i].name);
-               reader.readAsDataURL(fileInput.files[i]);
-           }
-       }
-   } else {
-       alert("Your browser is too old to support HTML5 File API");
-   }
-   </script>
+                        };
+//                        document.getElementsByClassName("fileinput-upload-button").href = './coverageABCCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber1").val() + '&publisherName=' + $("#publisherName").val();
+//                        console.log("ReferenceNumber fileInput.files[i]" + fileInput.files[i].name);
+//                        console.log("ReferenceNumber 34 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val());
+                        reader.readAsDataURL(fileInput.files[i]);
+                    }
+                }
+            } else {
+                alert("Your browser is too old to support HTML5 File API");
+            }
+        </script>
 
         <!--coverageCuttings preview-->
         <script>
-            $(document).ready(function () {
-                $("#input25").fileinput({
+            $("#input25").fileinput({'showUpload': false, 'previewFileType': 'any'});
+            $('#input25').on('fileuploaded').fileinput('clear');
+
+//        https://github.com/kartik-v/bootstrap-fileinput/
+//        http://webtips.krajee.com/ajax-based-file-uploads-using-fileinput-plugin/
+//        https://stackoverflow.com/questions/30939225/bootstrap-file-input-jquery-plugin-designed-by-krajee-syntaxerror-unexpected-e
+
+            function clearURL() {
+//                document.getElementsByClassName("fileinput-upload-button").href = "";
+//                alert("clearURL ReferenceNumber1 " + document.getElementById("ReferenceNumber1").value);
+            }
+
+//            function loadFileinput() {
+////                document.getElementsByClassName("fileinput-upload-button").href = './coverageCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber1").val() + '&publisherName=' + $("#publisherName").val();
+// newURLcoverageCuttingsUploadServlet = './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val();
+// alert("loadFileinput iAmGlobal " + iAmGlobal);
+//  alert("loadFileinput newURL " + newURLcoverageCuttingsUploadServlet);
+// 
+//            }
+
+//            $(document).ready(function () {
+            function loadFileinput() {
+                $('#input25').fileinput('clear');
+                var newURLcoverageCuttingsUploadServlet = './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val();
+// document.getElementsByClassName("fileinput-upload-button").href = './coverageDEFCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val();
+// alert("loadFileinput newURL " + newURLcoverageCuttingsUploadServlet);
+//                console.log("ReferenceNumber 32 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + publisherName.value);
+//                console.log("ReferenceNumber 33 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber").val() + '&publisherName=' + $("#publisherName").val());
+//                 console.log("ReferenceNumber 34 newURL " + newURLcoverageCuttingsUploadServlet);
+                $("#input25").fileinput('refresh', {
                     'theme': 'fas',
-                    'uploadUrl': '#',
-                    'showUpload': false,
+                    'uploadUrl': newURLcoverageCuttingsUploadServlet,
+                    uploadExtraData: {ReferenceNumberABC: ReferenceNumber.value, publisherNameABC: $("#publisherName").val()},
+                    'allowedFileExtensions': ["jpg", "gif", "png", "pdf"],
+                    // ≈ 1.4mb
+                    'maxFileSize': 1400,
                     'overwriteInitial': true
                 });
-                $('#input25').on("change", function (event) {
-                    var files = event.target.files; //FileList object
-                    var coverageCuttings_upload = document.getElementById("output").value;
-                    for (var i = 0; i < files.length; i++)
-                    {
-                        var file = files[i];
-                        var fileName = files[i].name;
-                        console.log("fileName  " + fileName);
-                        console.log("file  " + file);
-                        pressCuttingArray.push(fileName);
-                    }
-                    var arrayLength = pressCuttingArray.length;
-                    for (var i = 0; i < arrayLength; i++) {
-                        console.log("pressCuttingArray  " + i);
-                        console.log(pressCuttingArray[i]);
-                    }
-                    $("#coverageCuttings_upload").val(pressCuttingArray);
-                    $("#pressCuttingArray").val(pressCuttingArray);
-                });
-            });
+
+
+
+
+            }
+//                });
+
+
         </script>
 
         <!--Styles-->
@@ -3062,6 +3035,8 @@ if (window.File && window.FileList && window.FileReader) {
                                             <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/PendingApplicationServlet" enctype="multipart/form-data">
                                             <%request.getSession().setAttribute("task", "Pending Applications");%>
                                             <%request.getSession().setAttribute("publisherID", "publisherID");%>
+
+                                            <input type="hidden" name="ReferenceNumber1" id="ReferenceNumber1"/>
                                             <div id="applicationEditForm-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
                                                 <!-- Contact details -->
@@ -3261,7 +3236,7 @@ if (window.File && window.FileList && window.FileReader) {
                                                             </div> <!--<div class="col-sm-3">-->   
                                                         </div> <!--row-->
                                                         <input type="hidden" id="authorArray" name="authorArray" >
-                                                        <input type="hidden" id="ReferenceNumber" name="ReferenceNumber" >
+
                                                         <input type="hidden" id="translatorArray" name="translatorArray" >
                                                         <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
                                                         <!--keep in one line otherwise placeholder doesn't show-->
@@ -3871,9 +3846,12 @@ if (window.File && window.FileList && window.FileReader) {
                                                                         <br/>
                                                                         <br/>          
                                                                         <input type="hidden" name="userID" value="${userID}">
+                                                                        <input type="hidden" name="ReferenceNumber" id="ReferenceNumber"/>
                                                                         <input type="hidden" name="name" value="${name}">
+                                                                        <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
                                                                         <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
                                                                         <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                        <input type="hidden" name="publisherName1" id="publisherName1" value="">
                                                                         <!--Destination:-->
                                                                         <input type="hidden" id="proofPayment_upload" value="proofPayment" name="destination" />                                          
                                                                     </div>
@@ -3943,7 +3921,7 @@ if (window.File && window.FileList && window.FileReader) {
                                                             <div class="col-md-4"   style="margin-bottom: 40px">
                                                                 <strong class="pull-left">&nbsp;</strong>    
                                                                 <!--<button type="button" data-toggle="modal" data-target="#pressCuttingsModal">Launch modal</button>-->
-                                                                <label class="btn btn-default pull-left callPressCuttingsModal" data-toggle="modal" data-target="#pressCuttingsModal">
+                                                                <label class="btn btn-default pull-left form-control callPressCuttingsModal" data-toggle="modal" onclick="loadFileinput();" data-target="#pressCuttingsModal">
                                                                     <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting.png" /> 
                                                                     Upload coverage cuttings
                                                                     <!--<span class="glyphicon glyphicon-upload"></span>-->
@@ -4020,16 +3998,18 @@ if (window.File && window.FileList && window.FileReader) {
                                                                                        class="form-control">
                                                                                 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok black"></i></span>
                                                                             </label>
-                                                                            <input type="hidden" name="userID" value="${userID}">
-                                                                            <input type="hidden" name="name" value="${name}">
-                                                                            <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                            <input type="hidden" name="publisherName" value="${companyDetails.Company}">
+                                                                            <input type="hidden" name="userID"  id="userID"  value="${userID}">
+                                                                            <input type="hidden" name="name" id="name" value="${name}">
+                                                                            <input type="hidden" name="publisherID"  id="publisherID" value="${publisherID}">
+                                                                            <input type="hidden" name="Company" id="Company"  value="${companyDetails.Company}">
+                                                                            <input type="hidden" name="publisherName"  id="publisherName"  value="${companyDetails.Company}">
+                                                                            <input type="hidden" name="ReferenceNumber" value="<%=session.getAttribute("ReferenceNumber")%>"/>
+                                                                            <c:set var="ReferenceNumber" scope="session" value="${ReferenceNumber}"/>
                                                                         </div>
                                                                     </div> <!-- col-md-7 -->
 
-                                                                    <div class="pressCuttingsClone" id="pressCuttingsClone"></div>
-  <input type="text" name="pressCuttings_image-file" id="pressCuttingArray"/>
+                                                                    <!--<div class="pressCuttingsClone" id="pressCuttingsClone"></div>-->
+                                                                    <!--<input type="text" name="pressCuttings_image-file" id="pressCuttingArray"/>-->
                                                                     <!--Date copies were sent:-->
                                                                     <div class="col-md-3" >
                                                                         <label for="copiesSent" class="pull-left"><strong>Date copies were sent</strong> </label>
@@ -4148,11 +4128,12 @@ if (window.File && window.FileList && window.FileReader) {
                       method="POST" 
                       name="regF"
                       >
+
                     <input type="hidden" name="userID" value="${userID}">
                     <input type="hidden" name="name" value="${name}">
-                    <input type="hidden" name="publisherID" value="${publisherID}">
+                    <input type="hidden" name="publisherID"  value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
-                    <input type="hidden" name="publisherName" value="${companyDetails.Company}">
+                    <input type="hidden" name="publisherName"    value="${companyDetails.Company}">
 
                     <div class="container col-sm-12" style="margin-bottom: 40px">
                         <input type="submit" id="NewApplication" name="task"  class = "btn btn-default btn-sm" value="Start New Application" />
@@ -4163,10 +4144,38 @@ if (window.File && window.FileList && window.FileReader) {
 
                 </form>
 
+                <!--pressCuttingsModal-->
+                <div class="modal autoModal coverageCuttings" id="pressCuttingsModal"  tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal"  style="background-color: #c3bcbc" data-modal-index="3">
+                    <div class="modal-dialog coverageCuttings" style="align-content: center">
+
+                        <!-- Modal content-->
+                        <div class="modal-content coverageCuttings" style="background-color: #d9d1d1;">
+
+
+                            <div class="modal-header" style="background-color: #c3bcbc">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="pressCuttingsModalLabel">Add coverage cuttings for Reference number  <span id="appReferenceNumber1"></span></h4>
+                            </div>
+                            <!-- Modal body-->
+                            <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
+                                <form id="coverageCuttingsForm" name="coverageCuttingsForm" enctype="multipart/form-data">
+                                    <div   style="margin-bottom: 40px">                                      
+                                        <input id="input25" name="input25[]" type="file" multiple onchange="showFile()">
+                                    </div>
+                                </form>
+                            </div> <!-- modal-body -->
+
+                            <div class="modal-footer"  style="background-color: #c3bcbc">
+                                <button type="button" class="btn btn-default" onclick="clearURL();" data-dismiss="modal">Close</button>
+                            </div><!--modal footer -->
+
+                        </div> <!--modal content-->          
+                    </div> <!--modal dialog-->
+                </div> <!--modal fade-->
+
 
                 <!-- footer start -->
                 <div id="base">  
-
                     <div class="basetext">  
                         <h2>Literature Ireland</h2>
                         <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
@@ -4190,77 +4199,18 @@ if (window.File && window.FileList && window.FileReader) {
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2019 mgr Software
         </div>
+
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
-            function  showInfoModal() {
-                $("#showInfoModal").modal("show");
-            }
-            function  showNotesModal() {
-                $("#showNotesModal").modal("show");
-            }
+                                    var $imageupload = $('.imageupload');
+                                    $imageupload.imageupload();
+                                    function  showInfoModal() {
+                                        $("#showInfoModal").modal("show");
+                                    }
+                                    function  showNotesModal() {
+                                        $("#showNotesModal").modal("show");
+                                    }
         </script>
-        <!--pressCuttingsModal-->
-        <div class="modal autoModal coverageCuttings" id="pressCuttingsModal"  tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal"  style="background-color: #c3bcbc" data-modal-index="3">
-            <div class="modal-dialog coverageCuttings" style="align-content: center">
-                <div class="modal-content coverageCuttings" style="background-color: #d9d1d1;">
-
-                    <div class="modal-header" style="background-color: #c3bcbc">
-                        <button type="button" class="close" data-dismiss="modal"    aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="pressCuttingsModalLabel">add coverage cuttings</h4>
-                    </div>
-
-                    <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
-
-                        <div class="row" style="background-color: #d9d1d1;">
-                            <div class='col-sm-8' style="margin-bottom: 40px">                                
-                                <div class="col-sm-12 center-block"  style="margin-bottom: 40px">   
-                                    <input type="file"  name="coverageCuttings" id="files" class="form-input upload pull-left" onchange="generatedLabels();" multiple="multiple"/>
-                                    <input id="input25" name="input25[]" type="file" multiple onchange="showFile()">
-                                    <input id="output" type="file" multiple><br/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="multipleFiles"> 
-                            <p>Please select either <u style="text-decoration: underline">one</u> file or <u style="text-decoration: underline">multiple</u> files.</p>
-                            <p>For multiple files please press the <strong>Ctrl-key and </strong> then select with your mouse</p></div>
-                    </div>
-
-                    <div class="modal-footer"  style="background-color: #c3bcbc">
-                        <div class="row">  
-                            <div class="col-xs-4">
-                                <div class="form-group pull-left upload">
-                                    <!--                                            <label class="pull-left">
-                                                                                    <button id="clearCoverageCuttings" class="btn btn-warning btn-xs">
-                                                                                        Clear the files selection
-                                                                                    </button>
-                                                                                </label>-->
-                                    <label for="files" class="custom-file-upload pull-left">
-                                        <i class="fa fa-cloud-upload"></i> Select press cuttings
-                                    </label>
-
-                                    <!--Destination:-->
-                                    <input type="text" id="coverageCuttings_upload" value="coverageCuttings_upload" name="destination" />                
-                                  
-                                    <ul id="preview"></ul>
-                                    <!--</div>--> 
-                                </div>  
-                            </div>   
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
-                        </div>
-                    </div> <!--modal footer -->
-
-                </div> <!--modal content-->          
-            </div> <!--modal dialog-->
-        </div> <!--modal fade-->
-        <!--<div class="pressCuttings" id="pressCuttings"></div>-->
-
-        <!--<input type="hidden" value="pressCuttings" name="pressCuttings_image-file" id="label_pressCuttings"/>-->
-        <!--Destination:-->
-        <!--                <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />         -->
-
     </body>
 </html>

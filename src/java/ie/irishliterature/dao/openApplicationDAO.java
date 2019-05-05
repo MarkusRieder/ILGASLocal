@@ -51,7 +51,7 @@ public class openApplicationDAO {
             ArrayList<String> pressCoverage = new ArrayList<>();
             ArrayList<String> translatorNameList = new ArrayList<>();
 
-            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' AND Status = 'open'";
+            String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' AND Status = 'open'  ORDER BY ApplicationYear";
             System.out.println("getAllApplicationsPublisher Local openApplicationDAO searchQuery  " + searchQuery);
             try {
 
@@ -251,6 +251,15 @@ public class openApplicationDAO {
                     unassignedExpertReaderList = getUnassignedExpertReader();
 
                     pressCoverage = getPressCoverage(ReferenceNumber);
+                                        for (int d = 0; d < pressCoverage.size(); d++) {
+                        String strings = pressCoverage.get(d);
+                        System.out.println("Array:  " + d);
+//                        application.setExpertReaderList(expertReaderList);
+//                        for (int j = 0; j < strings.length; j++) {
+//                            System.out.print("pressCoverageList :  " + strings + " j: " + j);
+//                        }
+//                        System.out.println();
+                    }
                     application.setPressCoverage(pressCoverage);
 
                     application.setUnassignedExpertReaderList(unassignedExpertReaderList);

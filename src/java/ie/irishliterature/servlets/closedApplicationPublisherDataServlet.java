@@ -8,7 +8,7 @@ package ie.irishliterature.servlets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ie.irishliterature.DataTables.DataTableApplications;
-import ie.irishliterature.dao.openApplicationDAO;
+import ie.irishliterature.dao.closedApplicationDAO;
 import ie.irishliterature.db.DBException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,12 +28,12 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet(name = "openSingleApplicationDataServlet", urlPatterns = {"/openSingleApplicationDataServlet"})
-public class openSingleApplicationDataServlet extends HttpServlet {
+@WebServlet(name = "closedApplicationPublisherDataServlet", urlPatterns = {"/closedApplicationPublisherDataServlet"})
+public class closedApplicationPublisherDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public openSingleApplicationDataServlet() {
+    public closedApplicationPublisherDataServlet() {
 
         super();
     }
@@ -42,16 +42,11 @@ public class openSingleApplicationDataServlet extends HttpServlet {
     @SuppressWarnings("unchecked")
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
- setAccessControlHeaders(response);
-        System.out.println("openSingleApplicationDataServlet:  ");
-        
-        String publisherID = "";
-        String ReferenceNumber = "";
 
+        System.out.println("closedApplicationPublisherDataServlet:  ");
+        String publisherID = "";
         HttpSession session = request.getSession();
-        
-        
+
         Enumeration en = request.getParameterNames();
 
         while (en.hasMoreElements()) {
@@ -60,24 +55,20 @@ public class openSingleApplicationDataServlet extends HttpServlet {
             String param = (String) objOri;
 
             String value = request.getParameter(param);
-
-            if ("ReferenceNumber".equals(param)) {
-                ReferenceNumber = value;
+            if (param.equals("publisherID")) {
+                publisherID = value;
             }
-
-            System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+            System.out.println("closedApplicationPublisherDataServlet Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
 
         }
-//        int pID = (Integer) session.getAttribute("publisherID");
-//        String publisherID = (String) Integer.toString(pID);
-//         String publisherID = request.getParameter("publisherID");
 
-//         String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
-        System.out.println("openSingleApplicationDataServlet  ReferenceNumber here  ReferenceNumber: getParameter >> " + ReferenceNumber);
+        Enumeration<String> attributes = request.getSession().getAttributeNames();
+        while (attributes.hasMoreElements()) {
+            String attribute = attributes.nextElement();
+            System.out.println("closedApplicationPublisherDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute(attribute));
+        }
 
-//        String ReferenceNumber = (String) session.getAttribute("ReferenceNumber");
-        System.out.println("publisherID: " + publisherID);
-        System.out.println("ReferenceNumber: " + ReferenceNumber);
+        System.out.println("closedApplicationPublisherDataServlet publisherID: " + publisherID);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -88,11 +79,11 @@ public class openSingleApplicationDataServlet extends HttpServlet {
 
         try {
 
-            listApplications = openApplicationDAO.getAllApplications(ReferenceNumber);
+            listApplications = closedApplicationDAO.getAllApplicationsPublisher(publisherID);
 
-            //    System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
+
         } catch (ClassNotFoundException | DBException | ParseException ex) {
-            Logger.getLogger(openSingleApplicationDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(closedApplicationPublisherDataServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         DataTableApplications dta = new DataTableApplications();
@@ -110,17 +101,4 @@ public class openSingleApplicationDataServlet extends HttpServlet {
 
         // doGet(request, response);
     }
-    
-         //for Preflight
-  @Override
-  protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
-      setAccessControlHeaders(response);
-      response.setStatus(HttpServletResponse.SC_OK);
-  }
-
-  private void setAccessControlHeaders(HttpServletResponse response) {
-      response.setHeader("Access-Control-Allow-Origin", "http://localhost");
-      response.setHeader("Access-Control-Allow-Methods", "GET");
-  }
 }

@@ -575,7 +575,7 @@
 
                 <script>
                     $(document).ready(function () {
-                        alert("bootstrapValidator")
+//                        alert("bootstrapValidator")
                         $('#register-form').bootstrapValidator({
                             message: 'This value is not valid',
                             live: 'enabled',

@@ -169,12 +169,19 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="userID" value="${userID}">
-                    <input type="hidden" name="publisherID" value="${publisherID}">
-                    <input type="hidden" name="Company" value="${companyDetails.Company}">
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-default" value="Back" onclick="history.go(-2);" style="margin-bottom: 50px">Return to previous page</button>
-                    </div>
+                    <form id="returnToLandingPageForm" 
+                          class="form-horizontal" 
+                          action="${pageContext.request.contextPath}/returnToLandingPageServlet" 
+                          method="POST"  
+                          role="form" 
+                          >
+                        <input type="hidden" name="userID" value="${userID}">
+                        <input type="hidden" name="publisherID" value="${publisherID}">
+                        <input type="hidden" name="Company" value="${companyDetails.Company}">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-default" value="Back"  style="margin-bottom: 50px">Return to previous page</button>
+                        </div>
+                    </form>
                     <div class="col-md-6"></div>
                     <div class="col-md-3"></div>
 

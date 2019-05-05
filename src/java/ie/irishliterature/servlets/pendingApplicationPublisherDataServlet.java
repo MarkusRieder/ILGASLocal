@@ -68,9 +68,6 @@ public class pendingApplicationPublisherDataServlet extends HttpServlet {
             System.out.println("pendingApplicationPublisherDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute(attribute));
         }
 
-//        int pID = (Integer) session.getAttribute("publisherID");
-//        String publisherID = (String) Integer.toString(pID);
-//        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
         System.out.println("pendingApplicationPublisherDataServlet publisherID: " + publisherID);
 
         response.setContentType("application/json");
@@ -84,7 +81,7 @@ public class pendingApplicationPublisherDataServlet extends HttpServlet {
 
             listApplications = pendingApplicationDAO.getAllApplicationsPublisher(publisherID);
 
-            //    System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
+
         } catch (ClassNotFoundException | DBException | ParseException ex) {
             Logger.getLogger(pendingApplicationPublisherDataServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

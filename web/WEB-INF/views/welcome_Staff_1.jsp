@@ -59,7 +59,7 @@
         <script type="text/javascript"   src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript"   src="js/jquery-ui.js"></script>
         <script type="text/javascript"   src="js/lightbox.min.js"></script>
-
+        <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
         <script type="text/javascript"   src="js/jquery.dataTables.yadcf.js"></script>
         <!--<script type="text/javascript"   src="js/widgEditor.js"></script>-->
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
@@ -322,7 +322,6 @@
                     $('#createNewGenremodal').modal('show');
                     console.log("genreToAdd " + genreToAdd);
                 });
-
                 $('#addGenreButton').on('click', function () {
                     var genreToAdd = document.getElementById('addGenre').value;
                     console.log("genreToAdd " + genreToAdd);
@@ -343,7 +342,6 @@
                             $('#edtModal').show();
                             //error handling
                         }});
-
                 });
             });
         </script>
@@ -354,7 +352,6 @@
                 $.fn.dataTable.ext.buttons.newStaff = {
                     text: 'NewStaff'
                 };
-
                 var table = $("#user").DataTable({
 
                     dom: 'Bfrtip',
@@ -420,7 +417,6 @@
                     var row = table.row(tr);
                     var rowdata = (table.row(tr).data());
                     console.log("rowdata.EMAIL  " + rowdata.EMAIL);
-
                     $('#usr_name').html("User Details for: " + rowdata.FIRST_NAME + " " + rowdata.LAST_NAME);
                     var mail = 'mailto: ' + rowdata.EMAIL;
                     $("#userClearEmail").val(rowdata.EMAIL);
@@ -513,19 +509,16 @@
                 });
                 $('#expReader tbody').on('click', 'tr td.delete-control', function () {
                     $("#deleteExpReaderModal").modal("show");
-                    $("#delExpertReaderID").val($(this).closest('tr').children()[2].textContent);  // ID
+                    $("#delExpertReaderID").val($(this).closest('tr').children()[2].textContent); // ID
                     $("#delFirstNameExpReader").val($(this).closest('tr').children()[3].textContent); // First Name
                     $("#delLastNameExpReader").val($(this).closest('tr').children()[4].textContent); // Last Name
                     $("#delEmailExpReader").val($(this).closest('tr').children()[5].textContent); // Email                    
                     console.log(expReaderTable.row(this).data());
                 });
-
                 $('#der').on('click', function () {
 
                     var idToDelete = document.getElementById("delExpertReaderID").value;
-
-                    console.log("idToDelete  " + idToDelete);                    
-
+                    console.log("idToDelete  " + idToDelete);
                     $.ajax({
                         type: "POST",
                         url: "./ExpertReaderDelete",
@@ -770,7 +763,6 @@
                     console.log("lib rowdata.Author  " + rowdata.Author);
                     $("#Author").val(authors);
                     $("#Translator").val(rowdata.Translator);
-
                     if (typeof (rowdata.cover) === "undefined") {
                         var cver = 'images/not-available.jpg';
                     } else {
@@ -813,7 +805,6 @@
                         document.getElementById("Cover1").src = cver;
                         document.getElementById("showUploadCoverTitle").innerHTML = "Book cover for \n" + rowdata.translationTitle;
                         console.log("cver  " + cver);
-
                         bookTranslationTitle = rowdata.translationTitle;
                         console.log("81 xyz show Book bookTranslationTitle for \n" + bookTranslationTitle);
                     }
@@ -853,7 +844,6 @@
                 $("#btnSubmit").click(function (event) {
 
                     event.preventDefault();
-
                     // $('#booksModal').modal('toggle');
                     var bookID = document.getElementById('bookID').value;
                     var referenceNumber = document.getElementById('referenceNumber').value;
@@ -873,7 +863,6 @@
 
                     console.log("bookCover  " + bookCover);
                     console.log("hasCover2  " + hasCover);
-
                     var formData = new FormData(); // Currently empty
 
                     formData.append("bookID", bookID);
@@ -889,10 +878,7 @@
                     formData.append("ISBN", ISBN);
                     formData.append("ISSN", ISSN);
                     console.log("rowdata.cover  " + rowdata.cover);
-
                     console.log("rowdata.cover cover21 " + document.getElementById("cover21").src);
-
-
                     if (!hasCover) {
                         formData.append("Cover", Cover1.files[0], bookCover);
                     }
@@ -1318,7 +1304,7 @@
                      */
 
                     var ReferenceNumber = rowdata.ReferenceNumber;
-                    alert("ReferenceNumber  " + ReferenceNumber);
+                    //      alert("ReferenceNumber  " + ReferenceNumber);
                     /*
                      * 
                      * create new URL to retrieve ALL data for detailsTable
@@ -1793,36 +1779,127 @@
                         }
                     }
 
+//
+//                    var pressCoverageTag = '';
+//                    pressCoverageTag = '<div class="row">';
+//                    pressCoverageTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+//                    var pressCoverage = rowdata.pressCoverage;
+//                    console.log("before111 The proposed width is " + leastSquareRoot(pressCoverage.length));
+//                    var width = leastSquareRoot(pressCoverage.length);
+//                    for (var i = 0; i < pressCoverage.length; ++i) {
+////                        for (var j = 0; j < pressCoverage[i].length; ++j) {
+//
+//                        console.log("################################################");
+//                        for (var z = 0; z < pressCoverage.length; ++z) {
+//                            console.log("before111 pressCoverage[" + z + "    " + pressCoverage[z]);
+//                        }
+//                        console.log("################################################");
+//                        console.log("before111 pressCoverage[" + i + "    " + pressCoverage[i]);
+//                        var pressCoverageURL_cleaned = pressCoverage[i].substr(1).slice(0, -1);
+//                        console.log("before111 pressCoverageURL_cleaned  " + pressCoverageURL_cleaned);
+//                        var pressCoverageURL = pressCoverageURL_cleaned.split(",");
+//                        console.log("before111 pressCoverageURL split " + pressCoverageURL);
+////                        if (!pressCoverageURL.includes("Thumbs")) {
+//                        var jpgURL = pressCoverageURL[0];
+//                        var jpgURLName = pressCoverageURL[1];
+//                        console.log("before111 jpgURL  " + jpgURL);
+//                        console.log("before111 jpgURLName  " + jpgURLName);
+////                    }
+//
+//                        var thumbURL = pressCoverageURL[2];
+//                        if (thumbURL.includes(".jpg")) {
+//                            var thumbURLName = pressCoverageURL[3];
+//                            console.log("before111 thumbURL  " + thumbURL);
+//                            console.log("before111 thumbURLName  " + thumbURLName);
+//                            pressCoverageTag += '<div class="image">';
+//                            pressCoverageTag += '<a href="' + jpgURL + '" target="_blank"><img src="' + thumbURL + '" alt="" width="150" height="300"/></a>';
+//                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+//                            pressCoverageTag += '</div>';
+//                        } else {
+//
+//                            pressCoverageTag += '<div class="image">';
+//                            pressCoverageTag += '<a href="' + jpgURL + '" target="_blank"><img src="' + jpgURL + '" alt="" width="150" height="300"/></a>';
+//                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+//                            pressCoverageTag += '</div>';
+//                            pressCoverageTag += '&nbsp&nbsp';
+//                            pressCoverageTag += '</div>';
+//                        }
+//                    }
+//
+//
+//
+//                    pressCoverageTag += '</div>';
+////                    $(pressCoverageTag).appendTo('#pressCoverageTag');
 
-                    var pressCoverageTag = '';
-                    pressCoverageTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+
+//                    https://bootsnipp.com/snippets/P2gor
                     var pressCoverage = rowdata.pressCoverage;
+                    console.log("before111 The proposed width is " + leastSquareRoot(pressCoverage.length));
+                    var width = leastSquareRoot(pressCoverage.length);
+                    pressCoverageTag = '';
+                    pressCoverageTag += '<div class="container">';
+                    pressCoverageTag += '<div class="row">';
+                    pressCoverageTag += '<div class="row">';
+                    var width = leastSquareRoot(pressCoverage.length);
                     for (var i = 0; i < pressCoverage.length; ++i) {
-//                        for (var j = 0; j < pressCoverage[i].length; ++j) {
 
-                        console.log("before111 pressCoverage[" + i + "    " + pressCoverage[i]);
+                        if (i % width === 0)
+                        {
+                            pressCoverageTag += '<div class="col-md-12" style="margin-bottom: 20px">';
+                        }
                         var pressCoverageURL_cleaned = pressCoverage[i].substr(1).slice(0, -1);
                         console.log("before111 pressCoverageURL_cleaned  " + pressCoverageURL_cleaned);
                         var pressCoverageURL = pressCoverageURL_cleaned.split(",");
-                        console.log("before111 pressCoverageURL split " + pressCoverageURL);
-//                        if (!pressCoverageURL.includes("Thumbs")) {
                         var jpgURL = pressCoverageURL[0];
                         var jpgURLName = pressCoverageURL[1];
-                        console.log("before111 jpgURL  " + jpgURL);
-                        console.log("before111 jpgURLName  " + jpgURLName);
-//                    }
-//                        if (jpgURL.includes("_thumb.jpg")) {
                         var thumbURL = pressCoverageURL[2];
-                        var thumbURLName = pressCoverageURL[3];
-                        console.log("before111 thumbURL  " + thumbURL);
-                        console.log("before111 thumbURLName  " + thumbURLName);
-//                        }
+                        if (thumbURL.includes(".jpg")) {
+                            var thumbURLName = pressCoverageURL[3];
+                            console.log("before111 thumbURL  " + thumbURL);
+                            console.log("before111 thumbURLName  " + thumbURLName);
+                            pressCoverageTag += ' <div class="col-md-2 thumb">';
+                            pressCoverageTag += '<a class="thumbnail" href="' + jpgURL + '"  target="_blank">';
+                            pressCoverageTag += '<img class="img-thumbnail" src="' + thumbURL + '" alt = "' + jpgURLName + '-image" width="150" height="300"/>';
+                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+                            pressCoverageTag += '</a>';
+                            pressCoverageTag += '</div>';
 
-                        pressCoverageTag += '<a href="' + jpgURL + '" target="_blank"><img src="' + thumbURL + '" alt=""/></a>';
+                        } else {
+
+                            pressCoverageTag += ' <div class="col-md-2 thumb">';
+//                            pressCoverageTag += '<a class="thumbnail" href="' + jpgURL + '" data-image-id="" data-target = "#image-gallery" target="_blank">';
+                            pressCoverageTag += '<a class="thumbnail" href="#"  data-image-id="" data-toggle="modal" data-title="" data-image = "' + jpgURL + '" data-target="#image-gallery" > ';
+                            pressCoverageTag += '<img class="img-thumbnail" src="' + jpgURL + '"  alt = "' + jpgURLName + '-image" >';
+                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+                            pressCoverageTag += '</a>';
+                            pressCoverageTag += '</div>';
+
+                            if (i % width === width - 1 || i === pressCoverage.length - 1)
+                            {
+                                pressCoverageTag += '</div>';
+                            }
+                        }
                     }
 
-                    pressCoverageTag += '</div>';
+                    pressCoverageTag += '</div>'; //class="row"
+
+                    pressCoverageTag += '</div>'; //class="row"
+
+                    pressCoverageTag += '</div>'; // class="container"
+
+
                     $(pressCoverageTag).appendTo('#pressCoverageTag');
+
+                    gallery();
+
+                    function leastSquareRoot(n)
+                    {
+                        // maybe use ceil if you want a wider rectangle vs a taller one 
+                        // when a square is not possible
+                        var sr = Math.sqrt(n);
+                        return Math.floor(sr);
+                    }
+
                     var expertReaderName = rowdata.expertReaderList;
                     console.log("000 expertReaderName");
                     console.log(expertReaderName);
@@ -2060,6 +2137,7 @@
                      */
 
                     var rightsAgreementContractsNavContent = '';
+                    var agreementTranslationRightsHolderContent = '';
                     for (var i = 0; i < translators.length; i++) {
 
                         var j = i + 1;
@@ -2072,39 +2150,37 @@
                         }
 
 
-                        rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
+                        agreementTranslationRightsHolderContent += '<div class="container wrapperContainer">';
                         //Upload a copy of the agreement with the translation rights holder
+                        agreementTranslationRightsHolderContent += '<div class="row" style="margin-bottom: 80px;">';
+                        agreementTranslationRightsHolderContent += '<div style=" margin: 0 auto; position: relative;">';
+                        agreementTranslationRightsHolderContent += '<div class="col-md-9"  id="agreementToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
+                        agreementTranslationRightsHolderContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement' + j + '"></strong></div> ';
+                        agreementTranslationRightsHolderContent += '<br/>';
+                        agreementTranslationRightsHolderContent += '<div class="margin-bottom: 40px"></div>';
+                        agreementTranslationRightsHolderContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
+                        agreementTranslationRightsHolderContent += '<label class="btn btn-default btn-file pull-left">';
+                        agreementTranslationRightsHolderContent += 'Select file <input type="file" onchange="generatedLabels()" name="Agreement-' + j + '" id="agreement' + j + '">';
+                        agreementTranslationRightsHolderContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                        agreementTranslationRightsHolderContent += '</label>';
+                        agreementTranslationRightsHolderContent += '<input id="label_agreement' + j + '" class="pull-left"/>';
+                        agreementTranslationRightsHolderContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
+                        agreementTranslationRightsHolderContent += '</div>'; //<div class="input-group agreement" 
+                        agreementTranslationRightsHolderContent += '</div>'; //<div class="col-md-9" 
 
-                        rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
-                        rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative;">';
-                        rightsAgreementContractsNavContent += '<div class="col-md-9"  id="agreementToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
-                        rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement' + j + '"></strong></div> ';
-                        rightsAgreementContractsNavContent += '<br/>';
-                        rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-                        rightsAgreementContractsNavContent += '<div class="input-group agreement"  style="margin-bottom: 40px;">';
-                        rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-                        rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Agreement-' + j + '" id="agreement' + j + '">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                        rightsAgreementContractsNavContent += '</label>';
-                        rightsAgreementContractsNavContent += '<input id="label_agreement' + j + '" class="pull-left"/>';
-                        rightsAgreementContractsNavContent += '<input type="hidden" value="Agreement" name="destination" id="agreement_upload' + j + '"/>';
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
-                        rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
-
-                        rightsAgreementContractsNavContent += '<div class="col-md-8" id="agreement_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
-                        rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="agreement_button_label' + j + '" ></label>';
-                        rightsAgreementContractsNavContent += '</br></br>';
-                        rightsAgreementContractsNavContent += '<div class="input-group agreement_buttonText pull-left">';
-                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="agreement_link' + j + '" href="">';
-                        rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
-                        rightsAgreementContractsNavContent += 'Click to open</a>';
-                        rightsAgreementContractsNavContent += '</div>';
-                        rightsAgreementContractsNavContent += '</div>'; // -- col-md-10--
+                        agreementTranslationRightsHolderContent += '<div class="col-md-7" id="agreement_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+                        agreementTranslationRightsHolderContent += '<label  class="control-label pull-left" id="agreement_button_label' + j + '" ></label>';
+                        agreementTranslationRightsHolderContent += '<div class="input-group agreement_buttonText pull-left">';
+                        agreementTranslationRightsHolderContent += '<a class="btn btn-info btn-file pull-left" role="button" id="agreement_link' + j + '" href="">';
+                        agreementTranslationRightsHolderContent += '<span class="glyphicon glyphicon-file"></span>';
+                        agreementTranslationRightsHolderContent += 'Click to open</a>';
+                        agreementTranslationRightsHolderContent += '</div>';
+                        agreementTranslationRightsHolderContent += '</div>'; // -- col-md-10--
 
 
-                        rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
-                        rightsAgreementContractsNavContent += '</div>'; // row
-
+                        agreementTranslationRightsHolderContent += '</div>'; //-- position:relative;--
+                        agreementTranslationRightsHolderContent += '</div>'; // row
+                        $(agreementTranslationRightsHolderContent).appendTo('#agreementTranslationRightsHolder');
                         //Upload a copy of the contract with translator
 
                         rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
@@ -2125,7 +2201,6 @@
 
                         rightsAgreementContractsNavContent += '<div class="col-md-5" id="contract_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
                         rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="contract_button_label' + j + '" ></label>';
-                        rightsAgreementContractsNavContent += '</br></br>';
                         rightsAgreementContractsNavContent += '<div class="input-group contract_buttonText pull-left">';
                         rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="contract_link' + j + '" href="">';
                         rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
@@ -2159,7 +2234,6 @@
 
                         rightsAgreementContractsNavContent += '<div class="col-md-8" id="addendum_button' + j + '"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  ';
                         rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="addendum_button_label' + j + '" ></label>';
-                        rightsAgreementContractsNavContent += '</br></br>';
                         rightsAgreementContractsNavContent += '<div class="input-group addendum_buttonText pull-left" style="width: 190px; hight: 34px" >';
                         rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="addendum_link' + j + '" href="">';
                         rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
@@ -2284,7 +2358,6 @@
         <!-- applications-->              
         <script type="text/javascript">
             $(document).ready(function () {
-
                 'use strict';
                 oTable = $("#applications").DataTable({
                     "initComplete": function (settings, json) {
@@ -2398,8 +2471,8 @@
             });
         </script>
 
+        <!--Stacked modals-->
         <script type="text/javascript">
-
             //Stacked modals
             //https://codepen.io/anon/pen/ZJgLGz
 
@@ -2586,23 +2659,6 @@
                 display: inline-block;
                 box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
             }
-            /*            .ImageBorder
-                        {
-                            border-width: 1px;
-                            border-color: Black;
-                        }
-            
-                        .imageupload{
-                            width: 100%;
-                            height: 180px;
-                            background-position: center center;
-                            background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
-                            background-color:#fff;
-                            background-size: cover;
-                            background-repeat:no-repeat;
-                            display: inline-block;
-                            box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
-                        }*/
 
             .h4{
                 font-size: 14px;
@@ -2692,8 +2748,6 @@
             #myTab2 li.active a {border-bottom-color: transparent;background-color:Yellow; }
             .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
 
-
-
             body .modal-admin {
                 /* new custom width */
                 width: 750px;
@@ -2701,6 +2755,30 @@
                 margin-left: 175px;
                 margin-right: 0;
                 margin-top: 50px ;
+            }
+
+            .btn:focus, .btn:active, button:focus, button:active {
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            #image-gallery .modal-footer{
+                display: block;
+            }
+
+            .thumb{
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+
+            .img-responsive {
+                width:300px; /* This value will depend on what size you want for your loading image, let's say it's 50px */
+                height: 400px;
+                position:absolute;
+                left:50%;
+                top:50%;
+                margin-top:-200px; /* This needs to be half of the height */
+                margin-left:-150px; /* This needs to be half of the width */
             }
         </style>
 
@@ -2741,8 +2819,8 @@
                 $("button").click(function () {
                     $("button").removeClass("active");
                     $(this).addClass("active");
-//                    $("button").removeClass("bold");
-//                    $(this).addClass("bold");
+                    //                    $("button").removeClass("bold");
+                    //                    $(this).addClass("bold");
                 });
             });
         </script>
@@ -2852,7 +2930,104 @@
                 document.getElementById("selectedUnassignedER").value = selectedValue;
             }
         </script>
+        <script type="text/javascript">
+            //https://bootsnipp.com/snippets/P2gor
+            //            let modalId = $('#image-gallery');
+            function gallery() {
+                //            $(document).ready(function () {
+                let modalId = $('#image-gallery');
+                loadGallery(true, 'a.thumbnail');
 
+                //This function disables buttons when needed
+                function disableButtons(counter_max, counter_current) {
+                    $('#show-previous-image, #show-next-image')
+                            .show();
+                    if (counter_max === counter_current) {
+                        $('#show-next-image')
+                                .hide();
+                    } else if (counter_current === 1) {
+                        $('#show-previous-image')
+                                .hide();
+                    }
+                }
+
+                /**
+                 *
+                 * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+                 * @param setClickAttr  Sets the attribute for the click handler.
+                 */
+
+                function loadGallery(setIDs, setClickAttr) {
+                    let current_image,
+                            selector,
+                            counter = 0;
+
+                    $('#show-next-image, #show-previous-image')
+                            .click(function () {
+                                if ($(this)
+                                        .attr('id') === 'show-previous-image') {
+                                    current_image--;
+                                } else {
+                                    current_image++;
+                                }
+
+                                selector = $('[data-image-id="' + current_image + '"]');
+                                console.log("selector " + selector);
+                                updateGallery(selector);
+                            });
+
+                    function updateGallery(selector) {
+                        let $sel = selector;
+                        current_image = $sel.data('image-id');
+                        console.log("current_image " + current_image);
+                        $('#image-gallery-title')
+                                .text($sel.data('title'));
+                        $('#image-gallery-image')
+                                .attr('src', $sel.data('image'));
+                        disableButtons(counter, $sel.data('image-id'));
+                    }
+
+                    if (setIDs === true) {
+                        $('[data-image-id]')
+                                .each(function () {
+                                    counter++;
+                                    console.log("counter " + counter);
+                                    $(this).attr('data-image-id', counter);
+                                });
+                    }
+                    $(setClickAttr)
+                            .on('click', function () {
+                                updateGallery($(this));
+                            });
+                }
+                //                    });
+            }
+
+            // build key actions
+            $(document)
+                    .keydown(function (e) {
+                        switch (e.which) {
+                            case 37: // left
+                                if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
+                                    $('#show-previous-image')
+                                            .click();
+                                }
+                                break;
+
+                            case 39: // right
+                                if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
+                                    $('#show-next-image')
+                                            .click();
+                                }
+                                break;
+
+                            default:
+                                return; // exit this handler for other keys
+                        }
+                        e.preventDefault(); // prevent the default action (scroll / move caret)
+                    });
+
+        </script> 
     </head>
     <body style="height: 100%">
         <div id="shadowholder">
@@ -3252,6 +3427,14 @@
                                                                     Translation Sample</a>
                                                             </div>
                                                         </div> <!--row-->
+
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                            <div class="col-sm-4">
+                                                                <div class="tab-content" id="agreementTranslationRightsHolder"></div>  
+                                                            </div>
+                                                        </div> <!--row-->
+
+
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-sm-4">
@@ -4275,17 +4458,22 @@
 
                         <div class="basetext">  
                             <h2>Literature Ireland</h2>
-                            <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
+                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                                <i  onclick="contactUsModal();">Contact Details</i>
+                            </a> &nbsp;|&nbsp; 
+                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+
                         </div><!-- end of BaseText div -->
 
                         <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                         <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                        <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+                        <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
 
                         <div class="mobile-baselogos visible-phone"> 
                             <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                             <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                            <!--<a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                         </div>
                     </div><!-- end of Base div -->
                 </div>
@@ -4404,30 +4592,6 @@
 
                             <div class="panel-body">
 
-                                <!--                              <div class="signup-form-container">
-                              
-                              
-                                                                      <div id="signupalert" style="display:none" class="alert alert-danger">
-                                                                          <p>Error:</p>
-                                                                          <span></span>
-                                                                      </div>
-                              
-                                                                      <div class="form-body">
-                                                                          <div class="alert alert-info" id="message" style="display:none;">
-                                                                              submitted
-                                                                          </div>
-                              
-                                                                          <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
-                                                                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                                              <span class="sr-only">Error:</span>
-                                                                              <span class="message"></span>
-                                                                          </div>
-                              
-                                                                          <div class="alert alert-success" role="alert" id="successField" style="display:none">
-                                                                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                                              <span class="sr-only">Success:</span>
-                                                                              <span class="message"></span>
-                                                                          </div>-->
                                 <!--ENSURE signup is validated-->
                                 <div class="form-group">
                                     <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
@@ -4476,13 +4640,6 @@
                                     </div>
                                 </div>
 
-                                <!--                                       </div><%--form-body --%>
-                               
-                                                                       <div class="form-footer">
-                                                                           <button type="submit" class="btn btn-info">
-                                                                               <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
-                                                                           </button>
-                                                                       </div>-->
                             </div><!--signup-form-container-->
 
                             <!--<input type="hidden" name="NewAssignedERRefNo" id="NewAssignedERRefNo"  class="form-control">-->
@@ -4575,7 +4732,7 @@
 
         <!--pressCuttingsModal-->
         <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #c3bcbc">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -4588,20 +4745,11 @@
 
                             <output id="result">Press coverage</output>
                             <div id="pressCoverageTag"></div>
+
                         </div>
-
-
-                        <!--                        <div class="row" style="margin-bottom: 10px">
-                                                    <div class='col-sm-12'>
-                                                        <button type="button" id="clear">Clear</button>
-                                                    </div>
-                                                </div>-->
                     </div>
 
                     <div class="modal-footer"  style="background-color: #c3bcbc">                      
-                        <!--                        <label class="btn btn-default btn-file">
-                                                    Add press coverage<input type="file" id="files" multiple  accept=".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf">
-                                                </label>-->
                         <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
                         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                     </div> <!--modal footer -->
@@ -4925,6 +5073,129 @@
             </div> <!-- modal -->
         </form>     
 
+
+        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="image-gallery-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="image-gallery-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="position:relative; height: 800px;">
+                        <img id="image-gallery-image" class="img-responsive col-md-12" src="" alt="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                        </button>
+
+                        <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--contactUsModal-->
+        <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header"  style="background-color: #d9d1d1;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title" id="contactUsModalLabel"   style="background-color: #d9d1d1;">Contact Us</h1>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="container-fluid">         
+                            <div id="contentarea">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <p><strong>Director</strong>   Sinéad Mac Aodha</p>
+                                        <p>sinead@literatureireland.com </p>
+                                        <p> </p>
+                                        <p><strong>Deputy Director   </strong>Rita McCann </p>
+                                        <p>rita@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong>Administrator</strong>   Andrew Deering</p>
+                                        <p>andrew@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong style="white-space: pre;"><br/></strong></p>
+                                        <p><strong><span style="text-decoration: underline;">PLEASE NOTE OUR NEW ADDRESS: </span></strong></p>
+                                        <p>Literature Ireland</p>
+                                        <p>Trinity Centre for Literary and Cultural Translation</p>
+                                        <p>36 Fenian Street</p>
+                                        <p>Trinity College Dublin</p>
+                                        <p>Dublin D02 CH22</p>
+                                        <p>Ireland</p>
+                                        <p><strong>Telephone: +353 (0)1 896 4184</strong></p>
+                                        <p><span style="white-space: pre;"><strong>Email: info@literatureireland.com</strong></span></p>
+                                        <p> </p>
+                                        <p> </p>
+                                        <p> </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+        <!--showLegalNoteModal-->
+        <div class="modal fade" id="showLegalNoteModal" tabindex="-1" role="dialog" aria-labelledby="showLegalNoteModallLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header"   style="background-color: #d9d1d1;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title" id="showLegalNoteModallLabel" style="background-color: #d9d1d1;">Legal Note</h1>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="container-fluid">
+                            <div id="contentarea">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <h4>Company Registration</h4>
+                                        <p>Literature Ireland is registered in Dublin, Ireland, at the following address: </p>
+                                        <p>Trinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2.</p>
+                                        <p>Registered company number: 212420</p>
+                                        <p> </p>
+                                        <h4><span style="color: #3b3b3b;">Disclaimer</span></h4>
+                                        <p>Literature Ireland offers the material on this website, in good faith, for the information of visitors to the site, but disclaims any responsibility for error, omission or inaccuracy, and for the consequences of pursuing any link from these pages to another site.</p>
+                                        <p> </p>
+                                        <h4>Copyright</h4>
+                                        <p>The copyright in all material on this website is owned by Literature Ireland, or is reproduced with the permission (if required) of the copyright owner. The material may be retrieved and downloaded for personal use, but may not otherwise be reproduced or made available in any manner or form, and may not be modified or altered in any way, without the permission of Literature Ireland.</p>
+                                        <p> </p>
+                                        <h4>Privacy</h4>
+                                        <p>All documentation submitted to Literature Ireland will be treated with the utmost discretion. If you have any concerns in relation to privacy, please contact Literature Ireland at info@literatureireland.com.</p>
+                                    </div><!-- end of typography div -->
+                                </div><!-- end of text padding div -->
+                            </div><!-- end of contentarea div -->
+                        </div>
+                    </div><!-- modal body -->
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
         <!--loadXMLDocER-->
         <script type="text/javascript">
             function loadXMLDocER()
@@ -4988,6 +5259,12 @@
             }
             function  showNotesModal() {
                 $("#showNotesModal").modal("show");
+            }
+            function  contactUsModal() {
+                $("#contactUsModal").modal("show");
+            }
+            function  showLegalNoteModal() {
+                $("#showLegalNoteModal").modal("show");
             }
         </script>
     </body>

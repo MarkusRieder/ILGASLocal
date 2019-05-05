@@ -43,61 +43,62 @@
         <script type="text/javascript" src="kartik/js/plugins/sortable.js"></script>
         <script type="text/javascript" src="kartik/js/plugins/piexif.js"></script>
         <script type="text/javascript" src="kartik/js/plugins/purify.js"></script>
-                        
+
         <script src="kartik/js/fileinput.js" type="text/javascript"></script>
-      
+
+
     </head>
     <body>
         <h1>Hello World!</h1>
+        <div class="container-fluid">
+            <div id="heading">
+                <div class="headingpadding">
+                    <h1>Contact Us</h1>
+                </div><!-- end of text padding div -->
+            </div><!-- end of heading div -->
 
 
 
-        <label for="input-25">Planets and Satellites</label>
-        <div class="file-loading">
-            <input id="input-25" name="input25[]" type="file" multiple>
-        </div>
-        <script>
-            $(document).on('ready', function () {
-                var url1 = 'http://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/631px-FullMoon2010.jpg',
-                        url2 = 'http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/600px-Earth_Eastern_Hemisphere.jpg';
-                $("#input-25").fileinput({
-                    initialPreview: [url1, url2],
-                    initialPreviewAsData: true,
-                    initialPreviewConfig: [
-                        {caption: "Moon.jpg", filename: "MoonFull.jpg", downloadUrl: url1, size: 930321, width: "120px", key: 1},
-                        {caption: "Earth.jpg", filename: "EarthFull.jpg", downloadUrl: url2, size: 1218822, width: "120px", key: 2}
-                    ],
-                    deleteUrl: "/site/file-delete",
-                    uploadUrl: "/~/public_html/test",
-                    overwriteInitial: false,
-                    initialCaption: "The Moon and the Earth"
-                });
-            });
-        </script>
+            <div id="contentarea">
 
-<hr/>
-
- <label for="input-26">Tesssssssssssting</label>
-        <div class="file-loading">
-            <input id="input-26" name="input26" type="file" >
-        </div>
-        <script>
-            $(document).on('ready', function () {
-              var url1 = 'http://localhost:8080/ILGAS/images/not-available.jpg';
-                $("#input-26").fileinput({
-                   initialPreview: [url1],
-                    initialPreviewAsData: true,
-                    initialPreviewConfig: [
-                        {caption: "not-available.jpg", filename: "not-available.jpg", downloadUrl: url1, size: 930321, width: "120px", key: 1}
-                    ],
-                    deleteUrl: "/site/file-delete",     
-                    uploadUrl: '/file-upload-batch/2',
-                    overwriteInitial: true,
-                    initialCaption: "Testing"
-                });
-            });
-        </script>
+                <div class="textpadding">
 
 
-    </body>
-</html>
+
+                    <div class="typography">
+
+
+
+
+
+                        <p><strong>Director</strong>   Sinéad Mac Aodha</p>
+                        <p>sinead@literatureireland.com </p>
+                        <p> </p>
+                        <p><strong>Deputy Director   </strong>Rita McCann </p>
+                        <p>rita@literatureireland.com</p>
+                        <p> </p>
+                        <p><strong>Administrator</strong>   Andrew Deering</p>
+                        <p>andrew@literatureireland.com</p>
+                        <p> </p>
+                        <p><strong style="white-space: pre;"><br/></strong></p>
+                        <p><strong><span style="text-decoration: underline;">PLEASE NOTE OUR NEW ADDRESS: </span></strong></p>
+                        <p>Literature Ireland</p>
+                        <p>Trinity Centre for Literary and Cultural Translation</p>
+                        <p>36 Fenian Street</p>
+                        <p>Trinity College Dublin</p>
+                        <p>Dublin D02 CH22</p>
+                        <p>Ireland</p>
+                        <p><strong>Telephone: +353 (0)1 896 4184</strong></p>
+                        <p><span style="white-space: pre;"><strong>Email: info@literatureireland.com</strong></span></p>
+                        <p> </p>
+                        <p> </p>
+                        <p> </p>
+
+                    </div>
+                    </div>
+                    </div>
+
+                    </div>
+
+                    </body>
+                    </html>

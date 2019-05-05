@@ -1329,7 +1329,8 @@ public class GrantApplicationServlet extends HttpServlet {
                  * reset session
                  */
                 session.removeAttribute("task");
-
+                System.out.println(" request.setAttribute(name)" + name);
+                
                 request.setAttribute("name", name);
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("/WEB-INF/views/uploadResponse.jsp").forward(request, response);
