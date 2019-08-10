@@ -15,13 +15,13 @@ public class ExpertReader {
     private String expertReaderName;
     private String referenceNumber;
     private String expertReaderEmail;
-    private String fileDestination;
+    private String expertReaderReport;
     private String sampleSentOut;
     private String sampleReturned;
     private String summaryReport;
+    private String expertReaderInvoice;
     private String bookTitle;
     private String authorName;
-
 
     /**
      * @return the expertReaderUserID
@@ -35,6 +35,20 @@ public class ExpertReader {
      */
     public void setExpertReaderUserID(int expertReaderUserID) {
         this.expertReaderUserID = expertReaderUserID;
+    }
+
+    /**
+     * @return the expertReaderName
+     */
+    public String getExpertReaderName() {
+        return expertReaderName;
+    }
+
+    /**
+     * @param expertReaderName the expertReaderName to set
+     */
+    public void setExpertReaderName(String expertReaderName) {
+        this.expertReaderName = expertReaderName;
     }
 
     /**
@@ -52,17 +66,31 @@ public class ExpertReader {
     }
 
     /**
-     * @return the fileDestination
+     * @return the expertReaderEmail
      */
-    public String getFileDestination() {
-        return fileDestination;
+    public String getExpertReaderEmail() {
+        return expertReaderEmail;
     }
 
     /**
-     * @param fileDestination the fileDestination to set
+     * @param expertReaderEmail the expertReaderEmail to set
      */
-    public void setFileDestination(String fileDestination) {
-        this.fileDestination = fileDestination;
+    public void setExpertReaderEmail(String expertReaderEmail) {
+        this.expertReaderEmail = expertReaderEmail;
+    }
+
+    /**
+     * @return the expertReaderReport
+     */
+    public String getExpertReaderReport() {
+        return expertReaderReport;
+    }
+
+    /**
+     * @param expertReaderReport the expertReaderReport to set
+     */
+    public void setExpertReaderReport(String expertReaderReport) {
+        this.expertReaderReport = expertReaderReport;
     }
 
     /**
@@ -108,31 +136,17 @@ public class ExpertReader {
     }
 
     /**
-     * @return the expertReaderName
+     * @return the expertReaderInvoice
      */
-    public String getExpertReaderName() {
-        return expertReaderName;
+    public String getExpertReaderInvoice() {
+        return expertReaderInvoice;
     }
 
     /**
-     * @param expertReaderName the expertReaderName to set
+     * @param expertReaderInvoice the expertReaderInvoice to set
      */
-    public void setExpertReaderName(String expertReaderName) {
-        this.expertReaderName = expertReaderName;
-    }
-
-    /**
-     * @return the expertReaderEmail
-     */
-    public String getExpertReaderEmail() {
-        return expertReaderEmail;
-    }
-
-    /**
-     * @param expertReaderEmail the expertReaderEmail to set
-     */
-    public void setExpertReaderEmail(String expertReaderEmail) {
-        this.expertReaderEmail = expertReaderEmail;
+    public void setExpertReaderInvoice(String expertReaderInvoice) {
+        this.expertReaderInvoice = expertReaderInvoice;
     }
 
     /**
@@ -162,4 +176,7 @@ public class ExpertReader {
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
+
+
+  
 }

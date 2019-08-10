@@ -514,8 +514,9 @@ public class openApplicationDAO {
 //                   //  System.out.println("titleList         " + titleList);
 //                   //  System.out.println("<==================================================================================");
                     application.setTitles(titleList);
-                    application.setStatus(res.getString("Status"));
 
+                    application.setStatus(res.getString("Status"));
+                    System.out.println("res.getString(Status)" + res.getString("Status"));
                     GrantApplicationData.add(application);
                     System.out.println("================================= End: " + counter + "  =================================================>");
                     counter++;
@@ -1151,7 +1152,7 @@ public class openApplicationDAO {
 
             ps = conn.prepareStatement("SELECT CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.users, ILGAS.expertReader\n"
                     + "WHERE expertReader.expertReaderUserID = users.userID\n"
-                       + " AND first_name <> 'removed'\n"
+                    + " AND first_name <> 'removed'\n"
                     + "AND expertReader.referenceNumber = ? ");
 
             ps.setString(1, appRef);
@@ -1236,9 +1237,9 @@ public class openApplicationDAO {
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement("SELECT referenceNumber, fileDestination, sampleSentOut, sampleReturned,summaryReport, "
-                    + "CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.expertReader, ILGAS.users\n"
+                    + "CONCAT(first_name, ' ', last_name) AS `expertReaderName`,  invoicePath FROM ILGAS.expertReader, ILGAS.users\n"
                     + "WHERE expertReaderUserID = userID\n"
-                       + " AND first_name <> 'removed'\n"
+                    + " AND first_name <> 'removed'\n"
                     + "AND referenceNumber  = ? ");
 
             ps.setString(1, appRef);
@@ -1250,7 +1251,7 @@ public class openApplicationDAO {
 
             while (res.next()) {
 
-                indExpertReaderList = new String[7];
+                indExpertReaderList = new String[8];
 
                 int i = 1;
 
@@ -1262,14 +1263,15 @@ public class openApplicationDAO {
 
                 System.out.println("indExpertReaderList.length " + indExpertReaderList.length);
 
-//Info:   indExpertReaderList.length 7
-//Info:   indExpertReaderList[0]  null
-//Info:   indExpertReaderList[1]  216/2018      referenceNumber
-//Info:   indExpertReaderList[2]  null          fileDestination
-//Info:   indExpertReaderList[3]  2018-12-09    sampleSentOut
-//Info:   indExpertReaderList[4]  null          sampleReturned
-//Info:   indExpertReaderList[5]  null          summaryReport
-//Info:   indExpertReaderList[6]  Froggy The Frog
+                //Info:   indExpertReaderList.length 7
+                //Info:   indExpertReaderList[0]  null
+                //Info:   indExpertReaderList[1]  216/2018      referenceNumber
+                //Info:   indExpertReaderList[2]  null          fileDestination
+                //Info:   indExpertReaderList[3]  2018-12-09    sampleSentOut
+                //Info:   indExpertReaderList[4]  null          sampleReturned
+                //Info:   indExpertReaderList[5]  null          summaryReport
+                //Info:   indExpertReaderList[6]  Froggy The Frog
+//                        indExpertReaderList[7]  invoicePath
                 for (int y = 0; y < indExpertReaderList.length; y++) {
                     System.out.println("indExpertReaderList[" + y + "]  " + indExpertReaderList[y]);
 
@@ -1295,6 +1297,14 @@ public class openApplicationDAO {
                     if (y == 5) {
                         if (indExpertReaderList[y] == null) {
                             indExpertReaderList[5] = "no report available";
+                        }
+                    }
+                    /*
+                     * invoicePath
+                     */
+                    if (y == 7) {
+                        if (indExpertReaderList[y] == null) {
+                            indExpertReaderList[7] = "";
                         }
                     }
                 }
@@ -1717,7 +1727,12 @@ public class openApplicationDAO {
 //                    System.out.printf("xxx  counter: " + counter + "  setLength:  " + setLength);
 //                    if (counter < setLength - 1) {
 //                        if (!"ApplicationNumber".equals(col) && !"ApplicationYear".equals(col) && !"ReferenceNumber".equals(col)  && !"boardMeeting".equals(col)) {
-                    prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
+                    if (col.equals("Status")) {
+
+                        prepStat = prepStat + " " + col + " = '" + value + "', ";
+                    } else {
+                        prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
+                    }
 //                        }
 //                    } else {
 //                        prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "') ";

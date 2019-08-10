@@ -9,12 +9,14 @@ import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.ExpertReader;
+import ie.irishliterature.util.MailUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import javax.mail.MessagingException;
 import org.apache.log4j.Logger;
 
 /**
@@ -25,7 +27,7 @@ public class ExpertReaderDAO {
 
     private static final Logger LOGGER = Logger.getLogger(ExpertReaderDAO.class.getName());
 
-    public static int insertExpertReaderReport(String ReferenceNumber, java.sql.Date upDate, String moveFileNameReplaced) throws DBException {
+    public static int insertExpertReaderReport(String ReferenceNumber, String ExpertReaderName, java.sql.Date upDate, String moveFileNameReplaced) throws DBException, MessagingException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -73,10 +75,12 @@ public class ExpertReaderDAO {
             throw new DBException("ExpertReaderDAO insertExpertReaderReport 4 Excepion while accessing database");
         }
 
+        MailUtil.sendEmailExpertReaderReportSubmit(ExpertReaderName, ReferenceNumber);
+
         return id;
     }
 
-    public static int insertExpertReaderInvoice(String ReferenceNumber, String moveFileNameReplaced) throws DBException {
+    public static int insertExpertReaderInvoice(String ReferenceNumber, String ExpertReaderName, String moveFileNameReplaced) throws DBException, MessagingException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -122,10 +126,12 @@ public class ExpertReaderDAO {
             throw new DBException("4 Excepion while accessing database");
         }
 
+        MailUtil.sendEmailExpertReaderInvoiceReceived(ExpertReaderName, ReferenceNumber);
+
         return id;
-    }    
-    
-  //updateExpertReader
+    }
+
+    //updateExpertReader
     public static boolean updateExpertReader(ExpertReader expertReader, String ReferenceNumber) throws DBException {
 
         Connection conn = null;
@@ -133,21 +139,22 @@ public class ExpertReaderDAO {
         boolean id;
         int committed;
         ResultSet res = null;
-      
 
-        System.out.println("doing updatePublisher::  ");
+        System.out.println("doing ExpertReaderDAO updateExpertReader::  ");
+
         try {
             conn = DBConn.getConnection();
             conn.setAutoCommit(false);
 
             java.sql.Timestamp timestamp = getcurrentTimeStamp();
 
-            String sql = "UPDATE ILGAS.expertReader SET setSummaryReport = ?";
-            sql += " WHERE ReferenceNumber = " + ReferenceNumber;
+            String sql = "UPDATE ILGAS.expertReader SET summaryReport = ?";
+            sql += " WHERE referenceNumber = ? ";
 
             ps1 = conn.prepareStatement(sql);
 
-            ps1.setString(1, expertReader.getSummaryReport());                      
+            ps1.setString(1, expertReader.getSummaryReport());
+            ps1.setString(2, ReferenceNumber);
 
             System.out.println("ps1::  " + ps1);
 
@@ -165,12 +172,12 @@ public class ExpertReaderDAO {
 
         } catch (ClassNotFoundException | SQLException e) {
             DBConn.close(conn, ps1, res);
-            throw new DBException("updateExpertReader - 4 Excepion while accessing database");
+            throw new DBException("ExpertReaderDAO updateExpertReader - 4 Excepion while accessing database");
         }
 
         return id;
     }
-    
+
     public static List<ExpertReader> getExpertReaderOpenReadings(String userID) throws ClassNotFoundException, SQLException, DBException {
 
         List<ExpertReader> ExpertReaderOpenReadingsData = null;
@@ -181,21 +188,23 @@ public class ExpertReaderDAO {
             Connection conn = null;
             PreparedStatement ps = null;
             ResultSet res = null;
-            System.out.println("ExpertReaderDAO   here ");
+            System.out.println("ExpertReaderDAO getExpertReaderOpenReadings for userID " + userID);
 
             try {
 
                 conn = DBConn.getConnection();
 
-                ps = conn.prepareStatement("SELECT expertReaderUserID, expertReader.referenceNumber, sampleSentOut, \n"
+                ps = conn.prepareStatement("SELECT expertReaderUserID, expertReader.referenceNumber, sampleSentOut,expertReader.fileDestination,\n"
+                        + "expertReader.summaryReport,\n"
+                        + "expertReader.sampleReturned,\n"
+                        + "expertReader.invoicePath, \n"
                         + "library.Title, Author.Name\n"
                         + "FROM ILGAS.expertReader\n"
                         + "INNER JOIN ILGAS.library on expertReader.referenceNumber = library.referenceNumber\n"
                         + "INNER JOIN ILGAS.Application_Author on library.referenceNumber = Application_Author.ReferenceNumber\n"
                         + "INNER JOIN ILGAS.Author on Application_Author.idAuthor = Author.idAuthor\n"
                         + "WHERE expertReaderUserID = ? \n"
-                        + "AND expertReader.referenceNumber = library.referenceNumber\n"
-                        + "AND reading = 'true' ");
+                        + "AND expertReader.referenceNumber = library.referenceNumber ");
 
                 ps.setString(1, userID);
                 res = ps.executeQuery();
@@ -205,8 +214,23 @@ public class ExpertReaderDAO {
                     System.out.println("\n\n================================= Start: " + counter + "  =================================================\n\n");
                     ExpertReader expertReader = new ExpertReader();
 
+                    System.out.println("expertReaderUserID " + res.getInt("expertReaderUserID"));
+                    System.out.println("referenceNumber " + res.getString("referenceNumber"));
+                    System.out.println("sampleSentOut " + res.getString("sampleSentOut"));
+                    System.out.println("sampleReturned " + res.getString("sampleReturned"));
+                    System.out.println("summaryReport " + res.getString("summaryReport"));
+                    System.out.println("fileDestination " + res.getString("fileDestination"));
+                    System.out.println("invoicePath " + res.getString("invoicePath"));
+                    System.out.println("Title " + res.getString("Title"));
+                    System.out.println("Name " + res.getString("Name"));
+
+                    expertReader.setExpertReaderUserID(res.getInt("expertReaderUserID"));
                     expertReader.setReferenceNumber(res.getString("referenceNumber"));
                     expertReader.setSampleSentOut(res.getString("sampleSentOut"));
+                    expertReader.setSampleReturned(res.getString("sampleReturned"));
+                    expertReader.setSummaryReport(res.getString("summaryReport"));
+                    expertReader.setExpertReaderReport(res.getString("fileDestination"));
+                    expertReader.setExpertReaderInvoice(res.getString("invoicePath"));
                     expertReader.setBookTitle(res.getString("Title"));
                     expertReader.setAuthorName(res.getString("Name"));
 
@@ -225,8 +249,8 @@ public class ExpertReaderDAO {
 
         return ExpertReaderOpenReadingsData;
     }
-    
-        //updateExpertReader
+
+    //updateExpertReader
     public static boolean deleteExpertReader(String userID) throws DBException {
 
         Connection conn = null;

@@ -55,7 +55,10 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
+
+        boolean newPublisher = false;
 
         // collect all input values
         //  PrintWriter out = response.getWriter();
@@ -76,40 +79,51 @@ public class RegisterServlet extends HttpServlet {
          */
         String company = request.getParameter("company");
         String companyNumber = request.getParameter("companyNumber");
-        String newPublisher = request.getParameter("newPublisher");
-        String cbnewPublisher = request.getParameter("cbnewPublisher");
+//        String newPublisher = request.getParameter("newPublisher");
+//        String cbnewPublisher = request.getParameter("cbnewPublisher");
 
-        if (!"".equals(companyNumber)) {
-            PublisherID = Integer.parseInt(request.getParameter("companyNumber"));
-        }
-        
-        
+//        if (!"".equals(companyNumber)) {
+//            PublisherID = Integer.parseInt(request.getParameter("companyNumber"));
+//        }
+//        
         int userID = 0;
+
+        try {
+            PublisherID = Integer.parseInt(ACpublisherDAO_test.ifPublisherExists(company));
+            if (PublisherID == 0) {
+                System.out.println("Publisher " + company + " not found");
+                newPublisher = true;
+            } else {
+                System.out.println("PublisherID  " + PublisherID);
+            }
+        } catch (DBException ex) {
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         System.out.println("username  " + username);
         System.out.println("company  " + company);
         System.out.println("companyNumber  " + companyNumber);
         System.out.println("newPublisher  " + newPublisher);
-        System.out.println("cbnewPublisher:::  " + cbnewPublisher);
+//        System.out.println("cbnewPublisher:::  " + cbnewPublisher);
 
-        request.setAttribute("newPublisher", request.getParameter("newPublisher"));
+//        request.setAttribute("newPublisher", request.getParameter("newPublisher"));
 
         /*
          * if newPublisher checkbox is checked
          */
-        if (request.getParameter("cbnewPublisher") != null) {
+        if (newPublisher) {
             try {
                 System.out.println("cbnewPublisher  IS here");
 
-                String cmpny = newPublisher;
+                String cmpny = company;
 
-                System.out.println("cmpny::  " + cmpny);
+                System.out.println("cmpny::  " + company);
 
                 /*
                  * double check if Publisher exists
                  */
-                           PublisherID =  Integer.parseInt(ACpublisherDAO_test.isPublisherExists(cmpny));
-                
+                PublisherID = Integer.parseInt(ACpublisherDAO_test.ifPublisherExists(cmpny));
+
                 if (PublisherID == 0) {
                     System.out.println("newPublisher does not exist - create new one");
 
@@ -118,7 +132,7 @@ public class RegisterServlet extends HttpServlet {
                      */
                     Publisher publisher = new Publisher();
 
-                    publisher.setCompany(newPublisher);
+                    publisher.setCompany(company);
                     publisher.setStatus("new");
 
                     PublisherID = ACpublisherDAO_test.insertRudimentaryPublisher(publisher);
@@ -147,7 +161,7 @@ public class RegisterServlet extends HttpServlet {
             output = Utils.toJson(sp);
         } else {
             User user = new User();
-             String fullName = firstname + " " + lastname ;
+            String fullName = firstname + " " + lastname;
             user.setUSERNAME(username);
             user.setFIRST_NAME(firstname);
             user.setLAST_NAME(lastname);
@@ -206,7 +220,8 @@ public class RegisterServlet extends HttpServlet {
                     /*
                      * send verification email
                      */
-                    MailUtil.sendEmailRegistrationLink(username, email, hash);
+                    MailUtil.sendEmailRegistrationLink(username, fullName, email, hash);
+                     System.out.println("/RegisterServlet: sendEmailRegistrationLink username " + username + " fullName " + fullName);
                     sp.setCode(0);
                     sp.setMessage("Registation Link Was Sent To Your Mail Successfully. Please Verify Your Email");
                     output = Utils.toJson(sp);
@@ -227,13 +242,15 @@ public class RegisterServlet extends HttpServlet {
 
         }
 
+//        response.setContentType("text/html;charset=UTF-8");
+
         request.getRequestDispatcher("/WEB-INF/views/registrationSuccess.jsp").forward(request, response);
 
         try (
-                /*
-                 * send output to user
-                 */
-                PrintWriter pw = response.getWriter()) {
+            /*
+             * send output to user
+             */
+            PrintWriter pw = response.getWriter()) {
             pw.write(output);
             pw.flush();
         }

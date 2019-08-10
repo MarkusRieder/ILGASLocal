@@ -5,15 +5,20 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
         <title>Translation Grant Application System</title>
 
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+        <!--Jquery-->
 
-        <!-- Bootstrap -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+
+        <!-- Stylesheets -->
 
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -28,6 +33,7 @@
         <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
 
 
+        <!--Javascript-->
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
@@ -42,6 +48,12 @@
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/2.1.0/bootstrap-filestyle.min.js"></script>
+
+        <!--Validation-->
+        <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+        <script src="js/xregexp-all.js"></script> 
+        <script src="js/validateFileName.js"></script>
 
 
         <style>
@@ -63,8 +75,7 @@
                 padding:0 15px 0 15px;
                 background: #d9d1d1;
             }
-        </style>
-        <style>
+
             .btn-file {
                 position: relative;
                 overflow: hidden;
@@ -134,7 +145,7 @@
             } 
 
             select.input-sm {
-                height: 33px;
+                height: 40px;
             }
         </style>
 
@@ -187,23 +198,72 @@
                         },
                         {"data": "referenceNumber",
                             "render": function (data) {
-                                console.log("referenceNumber  " + data);
+                                console.log("2121 referenceNumber  " + data);
                                 return data;
                             }},
                         {"data": "sampleSentOut",
                             "render": function (data) {
-                                console.log("sampleSentOut  " + data);
-                                return data;
+                                console.log("2121 sampleSentOut  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    var date = new Date(data);
+                                    var month = date.getMonth() + 1;
+                                    return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
+                                }
                             }},
                         {"data": "authorName",
                             "render": function (data) {
-                                console.log("Author  " + data);
+                                console.log("2121 Author  " + data);
                                 return data;
                             }},
                         {"data": "bookTitle",
                             "render": function (data) {
-                                console.log("Title  " + data);
+                                console.log("2121 Title  " + data);
                                 return data;
+                            }},
+                        {"data": "sampleReturned",
+                            "render": function (data) {
+                                console.log("2121 sampleReturned  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    var date = new Date(data);
+                                    var month = date.getMonth() + 1;
+                                    return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
+                                }
+                            }},
+                        {"data": "expertReaderReport",
+                            "render": function (data) {
+                                console.log("2121 ExpertReaderReport  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
+                        {"data": "expertReaderInvoice",
+                            "render": function (data) {
+                                console.log("2121 expertReaderInvoice  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
+                            }},
+                        {"data": "summaryReport",
+                            "render": function (data) {
+                                console.log("2121 summaryReport  " + data);
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
                             }}
 
                     ]
@@ -221,29 +281,116 @@
                     var row = table.row(tr);
                     var rowdata = table.row(tr).data();
 
+                    document.getElementById("expertReaderReportToggle1").style.display = "block";
+                    document.getElementById("expertReaderReport_button1").style.display = "none";
+                    document.getElementById("expertReaderInvoiceToggle1").style.display = "block";
+                    document.getElementById("expertReaderInvoice_button1").style.display = "none";
+
                     console.log("referenceNumber  " + rowdata.referenceNumber);
                     document.getElementById("referenceNumber").value = rowdata.referenceNumber;
+
+
                     var fullName = "${name}";
                     document.getElementById("expertReaderName").value = fullName;
+
+                    /**
+                     * reportSummary                     
+                     */
+
+                    // reportSummary found
+                    if (rowdata.summaryReport !== undefined) {
+                        document.getElementById("reportSummary").value = rowdata.summaryReport;
+                    } else
+                            // no reportSummary found
+                            {
+                                $('#reportSummary').val('');
+                            }
+
+
+                    /**
+                     * ExpertReader Report
+                     */
+
+                    //ExpertReader Report found
+                    if (rowdata.expertReaderReport !== undefined) {
+                        document.getElementById('expertReaderReport_link').href = "http://www.literatureirelandgrantapplication.com:8080" + rowdata.expertReaderReport + " ";
+                        document.getElementById("expertReaderReport_button_label").innerHTML = 'Open copy of the Expert Reader Report';
+                        $('#expertReaderReportToggle1').toggle();
+                        $('#expertReaderReport_button1').toggle();
+
+                    }
+                    //no ExpertReader Report found                
+                    else {
+//                        document.getElementById('uploadExpertReaderInvoice').innerHTML = 'Upload a copy of the agreement with the translation rights holder';
+//                        document.getElementById('label_expertReaderInvoice').value = "not entered";
+                        document.getElementById("expertReaderReportToggle1").style.display = "block";
+                        document.getElementById("expertReaderReport_button1").style.display = "none";
+
+                    }
+
+                    console.log("2121 ########################################  " + rowdata.referenceNumber + " ######################################## ");
+                    console.log("2121 expertReaderReport  " + rowdata.expertReaderReport);
+                    console.log("2121 summaryReport    " + rowdata.summaryReport);
+                    console.log("2121 sampleReturned   " + rowdata.sampleReturned);
+                    console.log("2121 expertReaderInvoice      " + rowdata.expertReaderInvoice);
+                    console.log("2121 ########################################  --- ########################################");
+
+
+                    /**
+                     * Invoice
+                     */
+
+                    // Invoice found
+                    if (rowdata.expertReaderInvoice !== undefined) {
+                        document.getElementById('expertReaderInvoice_link').href = "http://www.literatureirelandgrantapplication.com:8080" + rowdata.expertReaderInvoice + " ";
+                        document.getElementById("expertReaderInvoice_button_label").innerHTML = 'Open copy of the Expert Reader Invoice';
+                        $('#expertReaderInvoiceToggle1').toggle();
+                        $('#expertReaderInvoice_button1').toggle();
+
+                    }
+                    // no Invoice found                
+                    else {
+//                        document.getElementById('uploadExpertReaderInvoice').innerHTML = 'Upload a copy of the agreement with the translation rights holder';
+//                        document.getElementById('label_expertReaderInvoice').value = "not entered";
+                        document.getElementById("expertReaderInvoiceToggle1").style.display = "block";
+                        document.getElementById("expertReaderInvoice_button1").style.display = "none";
+
+                    }
+
                     $("#readerListModal").modal("show");
 
                 });
             });
         </script>
 
+        <script>
+            $(document).ready(function () {
+                var validator = $("#applicationForm").validate();
+//                alert("Validate");
+                validator.form();
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('input[type="file"]').change(function (e) {
+                    // $('input[type="file"]').valid();
+                    if ($(this).valid()) {
+//                        alert("Url is valid  --  " + $(this).val());
+                        $($(this)).closest('.form-group').addClass('has-success');
+                    } else {
+//                        alert("Url is not valid!");
+                        $($(this)).closest('.form-group').addClass('has-error');
+                    }
+                });
+            });
+
+        </script>
+
     </head>
 
     <body style="height: 100%">
-        <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Error:</span>
-            <span class="message"></span>
-        </div>
-        <div class="alert alert-success" role="alert" id="successField" style="display:none">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-            <span class="sr-only">Success:</span>
-            <span class="message"></span>
-        </div>
+
         <div id="shadowholder">
 
             <div class="shadowtop"> </div>
@@ -282,7 +429,11 @@
                                     <th class="all">Reference<br/>  No</th>
                                     <th class="all">Date sample<br/> sent out</th>       
                                     <th class="all">Author</th>                                    
-                                    <th class="all">Title</th>                            
+                                    <th class="all">Title</th>      
+                                    <th class="never"></th>  
+                                    <th class="never"></th>   
+                                    <th class="never"></th>  
+                                    <th class="never"></th>                          
                                 </tr>
                             </thead>
                             <tfoot>
@@ -291,7 +442,11 @@
                                     <th class="all">Reference<br/>  No</th>
                                     <th class="all">Date sample<br/> sent out</th>       
                                     <th class="all">Author</th>                                    
-                                    <th class="all">Title</th>            
+                                    <th class="all">Title</th>      
+                                    <th class="never"></th>  
+                                    <th class="never"></th>   
+                                    <th class="never"></th>  
+                                    <th class="never"></th>             
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -308,7 +463,7 @@
 
                             <div class="modal-header" style="background-color: #c3bcbc">
                                 <button type="button" class="close" data-dismiss="modal"    aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="readerListModalLabel">Expert Reader Report Submit Page</h4>
+                                <h4 class="modal-title" id="readerListModalLabel">Expert Reader Report/Invoice Submit Page</h4>
                             </div>
 
                             <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/ExpertReaderServlet" enctype="multipart/form-data">
@@ -334,76 +489,130 @@
                                             </div> <!-- row -->
 
                                             <!--  Upload your report  -->
-                                            <div class="row" style="margin-top: 60px;margin-left: 10px">                                      
-                                                <!--<div class="row">-->
-                                                <div class="col-xs-10 col-md-6">
-                                                    <div class="form-group">
-                                                        <label>
-                                                            Upload your report
-                                                            <span id="clearExpertReaderReport" class="btn btn-default btn-xs">
-                                                                Clear the file name
-                                                            </span>
-                                                        </label>
-                                                        <input type="file"  name="expertReaderReport" id="expertReaderReport" class="form-input">
-                                                        <!--Destination:-->
-                                                        <input type="hidden" id="expertReaderReport_upload" value="expertReaderReport_upload" name="destination" />                                          
-                                                    </div> 
-                                                    <script>
-                                                        $('#expertReaderReport').filestyle({
-                                                            text: 'Select file ',
-                                                            buttonName: 'btn-info',
-                                                            btnClass: "btn-primary",
-                                                            htmlIcon: '<span class="glyphicon glyphicon-folder-open"> &nbsp</span>',
-                                                            buttonBefore: 'true',
-                                                            placeholder: "No file selected"
-                                                        });
-                                                        $('#clearExpertReaderReport').click(function () {
-                                                            $('#expertReaderReport').filestyle('clear');
-                                                        });
-                                                    </script>
-                                                </div> 
-                                            </div> <!-- row -->
+                                            <div class="row" style="margin-top: 20px;margin-left: 10px;margin-bottom: 120px">
+
+                                                <div style=" margin: 0 auto; position: relative;">
+
+                                                    <div class="col-md-8"  id="expertReaderReportToggle1" style="margin-bottom: 80px; position:absolute; z-index:0;">
+                                                        <div class="form-group has-feedback"> 
+                                                            <label  class="control-label pull-left" id="uploadExpertReaderReport" ></label>
+                                                            <br/>
+                                                            <div class="margin-bottom: 40px"></div>
+                                                            <div class="input-group expertReaderReport">
+                                                                <label>
+                                                                    Upload your report
+                                                                    <span id="clearExpertReaderReport" class="btn btn-default btn-xs">
+                                                                        Clear the file name
+                                                                    </span>
+                                                                </label>
+
+                                                                <input type="file" name="ExpertReaderReport-1" id="expertReaderReport">
+
+                                                                <script>
+                                                                    $('#expertReaderReport').filestyle({
+                                                                        text: ' Select report ',
+                                                                        buttonName: 'btn-info',
+                                                                        btnClass: "btn-primary",
+                                                                        htmlIcon: '<span class="fa fa-upload"> &nbsp</span>',
+                                                                        buttonBefore: 'true',
+                                                                        placeholder: "No file selected"
+                                                                    });
+                                                                    $('#clearExpertReaderReport').click(function () {
+                                                                        $('#expertReaderReport').filestyle('clear');
+                                                                    });
+                                                                </script>
+
+                                                                <input type="hidden" value="ExpertReaderReport" name="ExpertReaderReport-1" id="expertReaderReport_upload1"/>
+                                                                <span class="help-block"></span> 
+                                                            </div> 
+                                                        </div> 
+
+                                                    </div> <!-- position:absolute; z-index:0 -->
+
+                                                    <div class="col-md-5" id="expertReaderReport_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+
+                                                        <label  class="control-label pull-left" id="expertReaderReport_button_label" ></label>
+                                                        <div class="input-group expertReaderReport_buttonText pull-left">
+                                                            <a class="btn btn-primary btn-file pull-left" role="button" id="expertReaderReport_link" href=""  target="_blank">
+                                                                <span class="fa fa-folder-open"></span>
+                                                                Click to open</a>
+                                                        </div>
+
+                                                    </div> <!-- position:absolute; z-index:1; display:none -->
+
+                                                </div> <!-- position: relative  -->
+
+                                            </div> <!-- row  -->
+
 
                                             <!--  Upload your invoice  -->
-                                            <div class="row" style="margin-top: 20px;margin-left: 10px">
-                                                <div class="col-xs-10 col-md-6">
-                                                    <div class="form-group">
-                                                        <label>
-                                                            Upload your invoice
-                                                            <span id="clearExpertReaderInvoice" class="btn btn-default btn-xs">
-                                                                Clear the file name
-                                                            </span>
-                                                        </label>
-                                                        <input type="file"  name="expertReaderInvoice" id="expertReaderInvoice" class="form-input">
-                                                        <!--Destination:-->
-                                                        <input type="hidden" id="expertReaderInvoice_upload" value="expertReaderInvoice_upload" name="destination" />                                          
-                                                    </div>
-                                                    <script>
-                                                        $('#expertReaderInvoice').filestyle({
-                                                            text: ' Select file ',
-                                                            buttonName: 'btn-info',
-                                                            btnClass: "btn-primary",
-                                                            htmlIcon: '<span class="glyphicon glyphicon-folder-open"> &nbsp</span>',
-                                                            buttonBefore: 'true',
-                                                            placeholder: "No file selected"
-                                                        });
-                                                        $('#clearExpertReaderInvoice').click(function () {
-                                                            $('#expertReaderInvoice').filestyle('clear');
-                                                        });
-                                                    </script>
-                                                </div> 
-                                            </div> <!-- row -->
+                                            <div class="row" style="margin-top: 80px;margin-left: 10px;margin-bottom: 150px">
+
+                                                <div style=" margin: 0 auto; position: relative;">
+
+                                                    <div class="col-md-8"  id="expertReaderInvoiceToggle1" style="margin-bottom: 60px; position:absolute; z-index:0;">
+                                                        <div class="form-group has-feedback">
+                                                            <label  class="control-label pull-left" id="uploadExpertReaderInvoice" ></label>
+                                                            <br/>
+                                                            <div class="margin-bottom: 40px"></div>
+                                                            <div class="input-group expertReaderInvoice">
+                                                                <label>
+                                                                    Upload your invoice
+                                                                    <span id="clearExpertReaderInvoice" class="btn btn-default btn-xs">
+                                                                        Clear the file name
+                                                                    </span>
+                                                                </label>
+
+                                                                <input type="file" name="ExpertReaderInvoice-1" id="expertReaderInvoice">
+
+                                                                <script>
+                                                                    $('#expertReaderInvoice').filestyle({
+                                                                        text: ' Select invoice ',
+                                                                        buttonName: 'btn-info',
+                                                                        btnClass: "btn-primary",
+                                                                        htmlIcon: '<span class="fa fa-upload"> &nbsp</span>',
+                                                                        buttonBefore: 'true',
+                                                                        placeholder: "No file selected"
+                                                                    });
+                                                                    $('#clearExpertReaderInvoice').click(function () {
+                                                                        $('#expertReaderInvoice').filestyle('clear');
+                                                                    });
+                                                                </script>
+
+                                                                <input type="hidden" value="ExpertReaderInvoice" name="destination" id="expertReaderInvoice_upload1"/>
+                                                                <span class="help-block"></span> 
+                                                            </div>
+                                                        </div>
+
+                                                    </div> <!-- position:absolute; z-index:0 -->
+
+                                                    <div class="col-md-5" id="expertReaderInvoice_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+
+                                                        <label  class="control-label pull-left" id="expertReaderInvoice_button_label" ></label>
+                                                        <div class="input-group expertReaderInvoice_buttonText pull-left">
+                                                            <a class="btn btn-primary btn-file pull-left" role="button" id="expertReaderInvoice_link" href=""  target="_blank">
+                                                                <span class="fa fa-folder-open"></span>
+                                                                Click to open</a>
+                                                        </div>                                                   
+
+                                                    </div> <!-- position:absolute; z-index:1; display:none -->
+
+                                                </div> <!-- position: relative  -->
+
+                                            </div> <!-- row  -->
 
                                             <!--  Summary of report  -->
-                                            <div class="row">  
-                                                <div class="col-md-12" style="margin-top: 50px;margin-left: 10px">
+                                            <div class="row" style="margin-top: 50px;margin-left: 10px">  
+                                                
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <textarea class="form-control" placeholder="Summary of report" id="reportSummary" name="reportSummary" style="width: 580px; height: 430px;"></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6"></div>
-                                            </div>
+                                                
+                                            </div> <!-- row  -->
 
                                             <!--  Submit form  -->
                                             <div class="col-md-9"  style="margin-top: 20px;margin-bottom: 30px" >
@@ -456,15 +665,15 @@
 
                 <div id="base">  
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
-                                <i  onclick="contactUsModal();">Contact Details</i>
-                            </a> &nbsp;|&nbsp; 
-                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
-                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
 
-                        </div><!-- end of BaseText div -->  
+                    </div><!-- end of BaseText div -->  
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
@@ -473,7 +682,7 @@
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-<!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
+                        <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
                 </div><!-- end of Base div -->
@@ -486,7 +695,7 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017-2019 mgr Software
         </div>
- <!--contactUsModal-->
+        <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">
@@ -557,7 +766,7 @@
                     <div class="modal-body" style="background-color: #d9d1d1">
 
                         <div class="container-fluid">
-                            <div id="contentarea">
+                            <div id="contentarea1">
                                 <div class="textpadding">
                                     <div class="typography">
                                         <h4>Company Registration</h4>

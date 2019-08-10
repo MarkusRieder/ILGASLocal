@@ -5,14 +5,18 @@ import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.ExpertReader;
 import ie.irishliterature.model.GrantApplication;
+import ie.irishliterature.util.MailUtil;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.mail.MessagingException;
 import org.apache.log4j.Logger;
 
 public class GrantApplicationDAO {
@@ -138,7 +142,7 @@ public class GrantApplicationDAO {
     }
 
     // insertRow
-    public static String insertRow(GrantApplication application) throws DBException {
+    public static String insertRow(GrantApplication application) throws DBException, MessagingException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
@@ -148,6 +152,8 @@ public class GrantApplicationDAO {
         java.sql.Timestamp timestamp = getcurrentTimeStamp();
 
         int ApplicationNumber = getNextApplicationNumber();
+        System.out.println("ApplicationNumber " + ApplicationNumber);
+        String Publisher = application.getCompany();
 
         System.out.println(" DAO  ApplicationNumber: " + ApplicationNumber);
         String ReferenceNumber = ApplicationNumber + "/" + yearInString;
@@ -303,7 +309,20 @@ public class GrantApplicationDAO {
             throw new DBException("4 Excepion while accessing database");
         }
 
-//        System.out.println("GrantApplicationDAO ApplicationNumber:1:   " + ApplicationNumber);
+        /*
+         * trigger newApplicationNotification
+         * Params:
+         * Publisher
+         * ReferenceNumber
+         * Date
+         */
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(formatter.format(date));
+        String datum = formatter.format(date);
+
+        MailUtil.newApplicationNotification(Publisher, ReferenceNumber, datum);
+
         return ReferenceNumber;
     }
 
@@ -987,7 +1006,6 @@ public class GrantApplicationDAO {
             conn.setAutoCommit(false);
 
             System.out.println("ReferenceNumber: " + ReferenceNumber);
-
             System.out.println("moveFile: " + moveFileNameReplaced);
             System.out.println("moveFileName: " + moveFileName);
 
@@ -1706,6 +1724,7 @@ public class GrantApplicationDAO {
             nextApplicationNumber++;
         }
 
+        System.out.println("getNextApplicationNumber " + nextApplicationNumber);
         return nextApplicationNumber;
     }
 
@@ -2258,13 +2277,12 @@ public class GrantApplicationDAO {
 
             ps = conn.prepareStatement("SELECT idTranslatorTrack FROM ILGAS.TranslatorTrack\n"
                     + "WHERE  idTranslator = ? \n"
-                    + "AND ReferenceNumber = ? \n"
-                    + "AND Title = ? ;");
+                    + "AND ReferenceNumber = ? ;");
 
             ps.setInt(1, idTranslator);
             ps.setString(2, ReferenceNumber);
-            ps.setString(3, Title);
-
+//            ps.setString(3, Title);
+            System.out.println("ifTranslatorTrackExist: ps:: " + ps);
             res = ps.executeQuery();
 
             if (res != null) {
@@ -2287,7 +2305,7 @@ public class GrantApplicationDAO {
 
         return idTranslatorTrack;
     }
-    
+
     public static boolean rightsHolderArrayContent(String ReferenceNumber) throws DBException {
 
         Connection conn = null;
@@ -2323,4 +2341,3 @@ public class GrantApplicationDAO {
 
     }
 }
-

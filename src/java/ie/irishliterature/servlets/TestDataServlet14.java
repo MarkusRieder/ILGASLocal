@@ -66,7 +66,7 @@ public class TestDataServlet14 extends HttpServlet {
         try {
             applications = Test1DAO.getEntryDb();
         } catch (ClassNotFoundException | DBException ex) {
-            Logger.getLogger(TestDataServlet1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestDataServlet14.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         String sEcho = request.getParameter("draw");
@@ -84,7 +84,7 @@ public class TestDataServlet14 extends HttpServlet {
         try {
             iTotalRecords = Test1DAO.getSizeOfApplications();
         } catch (DBException ex) {
-            Logger.getLogger(TestDataServlet1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestDataServlet14.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         System.out.println("iTotalRecords " + iTotalRecords);

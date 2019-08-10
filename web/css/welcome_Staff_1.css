@@ -1,0 +1,299 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-May-2019, 21:29:16
+    Author     : markus
+*/
+
+.ui-datepicker { 
+    width: 17em; 
+    padding: .2em .2em 0; 
+    display: none; 
+    position: relative; z-index: 100000 !important;
+    /*z-index: 2000 !important;*/
+}
+
+/*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
+.ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
+.ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
+.ui-datepicker-calendar a.ui-state-active { background: red; } 
+
+.highlightHeader {
+    background:yellow;
+    /*      background-color:#d9d1d1;*/
+}
+table#translatorTrackTable{
+    border: 1px solid black;
+}
+
+/*https://designshack.net/articles/css/joshuajohnson-2/*/
+
+/*GROW*/
+.grow img {
+    height: 300px;
+    width: 300px;
+
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.grow img:hover {
+    width: 400px;
+    height: 400px;
+}
+
+td.details-control {
+    background: url('../images/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../images/details_close.png') no-repeat center center;
+}
+td.delete-control {
+    background: url('../images/delete-control.png') no-repeat center center;
+    cursor: pointer;
+}
+
+td.add-control {
+    background: url('../images/add-control.png') no-repeat center center;
+    cursor: pointer;
+}
+
+application.dataTable tbody td {
+    word-break: break-all;
+    vertical-align: top;
+}
+
+textarea {
+    resize: vertical;
+    overflow-x:scroll;
+}
+
+/*https://stackoverflow.com/questions/10476632/how-to-scroll-the-page-when-a-modal-dialog-is-longer-than-the-screen*/
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/*increase size of "Show entries" */
+select.input-sm {
+    height: 33px;
+}
+
+​body {
+    margin: 5px;
+    background: #d9d1d1
+}
+
+/* Tab Navigation */
+.nav-tabs {
+    margin: 0;
+    padding: 0;
+    border: 0;    
+}
+.nav-tabs > li > a {
+    background: #DADADA;
+    border-radius: 0;
+    box-shadow: inset 0 -8px 7px -9px rgba(0,0,0,.4),-2px -2px 5px -2px rgba(0,0,0,.4);
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover {
+    background: #F5F5F5;
+    box-shadow: inset 0 0 0 0 rgba(0,0,0,.4),-2px -3px 5px -2px rgba(0,0,0,.4);
+}
+a, u {
+    text-decoration: none;
+}
+/* Tab Content */
+.tab-pane {
+    background: #d9d1d1;
+    box-shadow: 0 0 4px rgba(0,0,0,.4);
+    border-radius: 0;
+    text-align: center;
+    padding: 10px;
+}
+.img {
+    max-width: 40%;
+    height: auto;
+    display: block;
+    margin: auto;
+    width: auto\9; /* ie8 */
+}
+.ImageBorder
+{
+    border-width: 1px;
+    border-color: Black;
+}
+
+.imageupload{
+    margin: 0 auto;
+    width: 300px;
+}
+
+.panel {
+    background-color: #d9d1d1 ;
+    margin-top: 50px;
+    box-shadow: 0 0 30px  #b6a6a6;    
+    padding:0 15px 0 15px;
+}
+
+.imagePreview {
+    width: 100%;
+    height: 180px;
+    background-position: center center;
+    background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+    background-color:#fff;
+    background-size: cover;
+    background-repeat:no-repeat;
+    display: inline-block;
+    box-shadow:0px -3px 6px 2px rgba(0,0,0,0.2);
+}
+
+.h4{
+    font-size: 14px;
+    line-height: 14px;
+}
+
+
+.box .box-header{
+    background: #36a9e1;
+    color: white;
+    font-size: 16px;
+    overflow: hidden;
+    border-radius: 2px 2px 0 0;
+}
+
+.onlytableScroll{
+    overflow-x:scroll;
+}
+.btn.raised {
+    box-shadow: 0 3px 0 0 #007299;
+}
+.btn.raised:active, .btn.raised.active {
+    background: #33a6cc;
+    box-shadow: none;
+    margin-bottom: -3px;
+    margin-top: 3px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+
+/*Styles for the approved/withdrawn/rejected buttons*/
+
+/*
+            .active {
+                background-color: #F7F5F5 !important;
+            }*/
+.approved {
+
+    display:inline;
+    background-color: lightgreen !important;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+.withdrawn {             
+    display:inline;
+    background-color: #FFA500 !important;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+.rejected {
+    display:inline;
+    background-color: lightcoral !important;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.btn.outline {
+    background: none;
+    padding: 12px 22px;
+    border: 2px solid #0099cc;
+    box-shadow: 0 3px 0 0 #007299;
+    color: #0099cc;
+}
+.mytab .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+.mytab2 .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+#myTab li a { border-color: blue;background-color:#A5C967; }
+#myTab li.active a {border-bottom-color: transparent;background-color:Yellow; }
+#myTab2 li a { border-color: blue;background-color:#A5C967; }
+#myTab2 li.active a {border-bottom-color: transparent;background-color:Yellow; }
+.my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
+
+body .modal-admin {
+    /* new custom width */
+    width: 750px;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: 175px;
+    margin-right: 0;
+    margin-top: 50px ;
+}
+
+.btn:focus, .btn:active, button:focus, button:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+#image-gallery .modal-footer{
+    display: block;
+}
+
+.thumb{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.img-responsive {
+    width:300px; /* This value will depend on what size you want for your loading image, let's say it's 50px */
+    height: 400px;
+    position:absolute;
+    left:50%;
+    top:50%;
+    margin-top:-200px; /* This needs to be half of the height */
+    margin-left:-150px; /* This needs to be half of the width */
+}
+
+#showInstructionsModal .modal
+{
+    overflow: hidden;
+    position: relative;
+}
+#showInstructionsModal .modal-dialog{
+    position: fixed;
+    width: 40%;
+    margin-right: 0;
+    margin-left: 0;    
+    padding: 10px;
+}
+/*.modal-footer {  
+    background: #81ccfb;
+    padding: 1em;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}*/

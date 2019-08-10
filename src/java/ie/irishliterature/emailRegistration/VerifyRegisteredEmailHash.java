@@ -36,6 +36,7 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
     /**
      * @param request
      * @param response
+     *
      * @throws javax.servlet.ServletException
      * @throws java.io.IOException
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -45,6 +46,9 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // get user Id and email verification code Hash code  
         String uname = request.getParameter("userId");
+        String firstName = request.getParameter("inputFirstName");
+        String lastName = request.getParameter("inputLastName");
+        String fullName = firstName + " " + lastName;
         System.out.println("VerifyRegisteredEmailHash doGet username 1 : " + uname);
         String hash = BCrypt.hashpw(request.getParameter("hash"), GlobalConstants.SALT);
         String scope = request.getParameter("scope");
@@ -60,9 +64,8 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
                 ApplicationDAO.updateStatus(uname, "active");
 
                 message = "Email verified successfully. Account has been activated. Click <a href=\"index.jsp\">here</a> to login.";
-        
-              //  request.getRequestDispatcher("/WEB-INF/views/emailValidationSuccess.jsp").forward(request, response);
 
+                //  request.getRequestDispatcher("/WEB-INF/views/emailValidationSuccess.jsp").forward(request, response);
             } else if (ApplicationDAO.verifyEmailHash(uname, hash) && scope.equals(GlobalConstants.RESET_PASSWORD)) {
                 //update status as active
                 ApplicationDAO.updateStatus(uname, "active");
@@ -78,7 +81,7 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
                     String hashcode = Utils.prepareRandomString(30);
                     ApplicationDAO.updateEmailVerificationHash(uname, BCrypt.hashpw(hashcode, GlobalConstants.SALT));
                     User up = ApplicationDAO.selectUSER(uname);
-                    MailUtil.sendEmailRegistrationLink(uname, up.getEMAIL(), hashcode);
+                    MailUtil.sendEmailRegistrationLink(uname, fullName, up.getEMAIL(), hashcode);
                     message = "20 times Wrong Email Validation Input Given. So we are sent new activation link to your Email";
                 } else {
                     message = "Wrong Email Validation Input";

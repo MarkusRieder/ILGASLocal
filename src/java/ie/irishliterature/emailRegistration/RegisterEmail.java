@@ -1,17 +1,5 @@
 package ie.irishliterature.emailRegistration;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.mail.MessagingException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
-
 import ie.irishliterature.dao.ApplicationDAO;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.Status;
@@ -20,6 +8,15 @@ import ie.irishliterature.util.BCrypt;
 import ie.irishliterature.util.GlobalConstants;
 import ie.irishliterature.util.MailUtil;
 import ie.irishliterature.util.Utils;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.mail.MessagingException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class RegisterEmail
@@ -49,6 +46,7 @@ public class RegisterEmail extends HttpServlet {
 		String email = request.getParameter("inputEmail");
 		String firstName = request.getParameter("inputFirstName");
 		String lastName = request.getParameter("inputLastName");
+                String fullName = firstName + " " + lastName;
 		String password = request.getParameter("inputPassword");
 		Status sp = new Status(); 
 		String output = "";
@@ -79,7 +77,7 @@ public class RegisterEmail extends HttpServlet {
                                 
                                 String strID = id + "";
 		    		// send verification email
-					MailUtil.sendEmailRegistrationLink(strID, email, hash);
+					MailUtil.sendEmailRegistrationLink(strID, fullName, email, hash);
 					sp.setCode(0);
 					sp.setMessage("Registation Link Was Sent To Your Mail Successfully. Please Verify Your Email");
 					output = Utils.toJson(sp);

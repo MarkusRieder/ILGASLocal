@@ -1,0 +1,62 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24-May-2019, 11:20:28
+    Author     : Markus Rieder
+*/
+BODY,
+HTML {
+    padding: 0px;
+    margin: 0px;
+}
+BODY {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    background: #EEE;
+    padding: 15px;
+}
+
+H1 {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+H2 {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0px 0px 10px 0px;
+}
+
+.selectTemplate {
+    float: left;
+    margin: 15px;
+}
+
+.templateSelector {
+    width: 300px;
+    height: 200px;
+    border-top: solid 1px #BBB;
+    border-left: solid 1px #BBB;
+    border-bottom: solid 1px #FFF;
+    border-right: solid 1px #FFF;
+    background: #FFF;
+    overflow: scroll;
+    padding: 5px;
+    text-align: left;
+}
+.form-horizontal .control-label {
+    margin-bottom: 5px;
+}
+.form-horizontal .form-group {
+    margin-bottom: 5px;
+    margin-left:0px;
+    margin-right:0px;
+}
+body {
+    background: #d9d1d1;
+}

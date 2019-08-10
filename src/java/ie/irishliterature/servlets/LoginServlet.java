@@ -45,6 +45,17 @@ public class LoginServlet extends HttpServlet {
         System.out.println("username: " + username);
         System.out.println("password: " + password);
 
+        HttpSession session = request.getSession();
+
+//        boolean isLoggedIn = (session != null && session.getAttribute("username") != null);
+//        System.out.println("isLoggedIn " + isLoggedIn);
+//        if (isLoggedIn) {
+//            System.out.println("user already logged in  " + username);
+//            request.getRequestDispatcher("/WEB-INF/views/userloggedin.jsp").forward(request, response);
+//        } else {
+//            System.out.println("new user  " + username);
+//        }
+
         password = BCrypt.hashpw(request.getParameter("password"), GlobalConstants.SALT);
         System.out.println("password: 2 " + password);
 
@@ -79,7 +90,6 @@ public class LoginServlet extends HttpServlet {
             System.out.println("full name: " + name);
 
             // Setting user session
-            HttpSession session = request.getSession();
             session.setAttribute("username", username);
             session.setAttribute("firstname", firstname);
             session.setAttribute("lastname", lastname);

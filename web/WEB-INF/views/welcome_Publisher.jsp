@@ -117,14 +117,17 @@
                                 </div> <!--form-group selectpicker-->
                                 <input type="hidden" name="userID" value="${userID}">
                                 <input type="hidden" name="name" value="${name}">
-                                <input type="hidden" name="publisherID" value="${publisherID}">
+                                <input type="hidden" name="publisherID" id="publisherID" value="${publisherID}">
                                 <input type="hidden" name="Company" value="${companyDetails.Company}">
                                 <input type="hidden" name="publisherName" value="${companyDetails.Company}">
                                 <div class="form-group">
                                     <!-- Button -->
-                                    <div class="col-sm-12  pull-left">
-                                        <input type="submit" class="btn btn-success btn-send" style="margin-bottom: 10px" value="Submit">
-                                    </div> <!-- col-md-12 control -->
+<!--                                    <div class="col-sm-12  pull-left">
+                                        <input type="submit" class="btn btn-success btn-send" style="margin-bottom: 10px" value="Continue">
+                                    </div>  col-md-12 control -->
+                                                <button type="submit" class="btn btn-success  btn-send" id="nxtBtn">                           
+                                                    <span class="glyphicon glyphicon-thumbs-up"></span> Continue
+                                                </button>
                                 </div> <!-- form-group -->
                             </form>  
                         </div>

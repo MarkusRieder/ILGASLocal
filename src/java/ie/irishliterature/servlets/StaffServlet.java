@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -112,7 +113,7 @@ public class StaffServlet extends HttpServlet {
             System.out.println("Here we are >>>>>>>>>.   StaffServlet ::  name " + name);
 
             java.sql.Timestamp timestamp = getcurrentTimeStamp();
-            Status = "open";
+//            Status = "open";
 
             GrantApplication application = new GrantApplication();
 
@@ -304,7 +305,7 @@ public class StaffServlet extends HttpServlet {
             request.setAttribute("name", name);
             request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
 
-        } catch (ParseException | SQLException | DBException ex) {
+        } catch (ParseException | SQLException | DBException | MessagingException | ClassNotFoundException ex) {
             Logger.getLogger(StaffServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

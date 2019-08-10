@@ -89,6 +89,10 @@
         <!-- following theme script is needed to use the Font Awesome 5.x theme (`fas`) -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/themes/fas/theme.min.js"></script>
 
+        <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+        <script src="js/xregexp-all.js"></script>     
+        <script src="js/pendingApplicationsFormValidator.js"></script>
+
 
         <script>
             var translatorArray = [];
@@ -718,7 +722,13 @@
                             }},
                         {"data": "translationTitle",
                             "render": function (data) {
-                                console.log("translationTitle  " + data);
+
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
                             }},
                         {"data": "transList",
                             "render": function (data, type, row) {
@@ -739,12 +749,22 @@
                                 return data;
                             }},
                         {"data": "ISBN",
-                            "render": function (data) {
-                                console.log("ISBN  " + data);
+                            "render": function (data, type, row) {
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
                             }},
                         {"data": "ISSN",
-                            "render": function (data) {
-                                console.log("ISSN  " + data);
+                            "render": function (data, type, row) {
+                                if (typeof (data) === "undefined") {
+                                    return "n/a";
+                                } else
+                                {
+                                    return data;
+                                }
                             }},
                         {"data": "idTranslator"}
 
@@ -848,15 +868,63 @@
                     $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
 //                    document.getElementById("addendum").href = addendumRightsAgreemnt;
 
-                    var proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
+//                    var proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
+//                    console.log("proofOfPaymentToTrans rowdata.proofOfPaymentToTranslator-> " + rowdata.proofOfPaymentToTranslator);
+//                    $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
+//                    document.getElementById("proofPayment").href = proofOfPaymentToTrans;
+
+                    /*
+                     * Set proof of payment to translator DIVs
+                     * 
+                     */
+                    if (rowdata.proofOfPaymentToTranslator !== 'null' && rowdata.proofOfPaymentToTranslator !== undefined) {
+                        console.log("7771 A proofOfPaymentToTranslator null");
+                        $("#proofPaymentDiv1").toggle();
+                        $("#proofPaymentDiv2").toggle();
+                    }
+                    proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
                     $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
-                    document.getElementById("proofPayment").href = proofOfPaymentToTrans;
-                    var bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
+                    console.log("7771 A proofOfPaymentToTranslator rowdata.proofOfPaymentToTranslator " + rowdata.proofOfPaymentToTranslator);
+                    console.log("7771 A proofOfPaymentToTranslator proofOfPaymentToTrans " + proofOfPaymentToTrans);
+                    document.getElementById("proofPayment_link").href = proofOfPaymentToTrans;
+
+                    /*
+                     * Set bank details form DIVs
+                     * 
+                     */
+
+
+                    if (rowdata.bankDetailsForm !== 'null' && rowdata.bankDetailsForm !== undefined) {
+                        console.log("7771 B bankDetailsForm !== undefined");
+                        $("#bankDetailFormDiv1").toggle();
+                        $("#bankDetailFormDiv2").toggle();
+                    }
+                    bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
                     $("#appBankDetailsForm").val(bankDetailsFrm);
-                    document.getElementById("bankDetailForm").href = bankDetailsFrm;
-                    var signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
+                    console.log("7771 B bankDetailsForm rowdata.bankDetailsForm " + rowdata.bankDetailsForm);
+                    console.log("7771 B bankDetailsForm bankDetailsFrm " + bankDetailsFrm);
+                    document.getElementById("bankDetailForm_link").href = bankDetailsFrm;
+
+
+                    /*
+                     * Set signed LI contract DIVs
+                     * 
+                     */
+
+                    if (rowdata.SignedLIContract !== 'null' && rowdata.SignedLIContract !== undefined) {
+                        console.log("7771 C SignedLIContract undefined");
+                        $("#signedLIContractDiv1").toggle();
+                        $("#signedLIContractDiv2").toggle();
+                    }
+                    signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
                     $("#appSignedLIContract").val(signedLIContr);
-                    document.getElementById("signedLIcontract").href = signedLIContr;
+                    console.log("7771 C SignedLIContract rowdata.SignedLIContract " + rowdata.SignedLIContract);
+                    console.log("7771 C SignedLIContract signedLIContr signedLIContr " + signedLIContr);
+                    document.getElementById("signedLIcontract_link").href = signedLIContr;
+
+
+
+
                     //             console.log("showUploadCover rowdata.cover " + rowdata.cover);
 //
 //                    if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
@@ -891,7 +959,7 @@
                     $("#appCompany").val($(this).closest('tr').children()[4].textContent);
                     $("#company").val($(this).closest('tr').children()[4].textContent);
 //                    $("#appAgreement").val($(this).closest('tr').children()[5].textContent);
-                   var publisherName = rowdata.company;
+                    var publisherName = rowdata.company;
                     document.getElementById("publisherName1").value = publisherName;
                     document.getElementById("publisherName2").value = publisherName;
                     console.log("publisherName " + publisherName);
@@ -933,10 +1001,22 @@
                     document.getElementById("languages").value = rowdata.originalLanguage;
                     document.getElementById("translatorFee").value = rowdata.translatorFee;
                     document.getElementById("BreakDownOfTranslatorFee").value = rowdata.breakDownTranslatorFee;
+                    document.getElementById("amountApproved").value = rowdata.amountApproved;
 
-                    document.getElementById("isbn").value = rowdata.ISBN;
-                    document.getElementById("isnn").value = rowdata.ISSN;
+                    if (rowdata.ISBN === 'undefined') {
+                        document.getElementById("isbn").value = "";
+                    } else {
+                        document.getElementById("isbn").value = rowdata.ISBN;
+                    }
 
+                    console.log(" rowdata.ISSN " + rowdata.ISSN);
+                    if (rowdata.ISSN === '') {
+                        document.getElementById("isnn").value = "";
+                    } else {
+                        document.getElementById("isnn").value = rowdata.ISSN;
+                    }
+
+                    document.getElementById("dateCopiesWereSent").value = formatDate(rowdata.dateCopiesWereSent);
                     for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
 
                         console.log("123v rightsHolderArray " + rowdata.rightsHolderArray[i]);
@@ -1238,7 +1318,7 @@
                         rightsAgreementContractsNavContent += '<div class="col-md-5" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
                         rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="cv_button_label' + j + '" ></label>';
                         rightsAgreementContractsNavContent += '<div class="input-group cv_buttonText pull-left">';
-                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="cv_link' + j + '" href="">';
+                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="cv_link' + j + '" href=""  target="_blank">';
                         rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
                         rightsAgreementContractsNavContent += 'Click to open</a>';
                         rightsAgreementContractsNavContent += '</div>';
@@ -1269,7 +1349,7 @@
                         rightsAgreementContractsNavContent += '<div class="col-md-5" id="contract_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
                         rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="contract_button_label' + j + '" ></label>';
                         rightsAgreementContractsNavContent += '<div class="input-group contract_buttonText pull-left">';
-                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="contract_link' + j + '" href="">';
+                        rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="contract_link' + j + '" href=""  target="_blank">';
                         rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-file"></span>';
                         rightsAgreementContractsNavContent += 'Click to open</a>';
                         rightsAgreementContractsNavContent += '</div>';
@@ -1375,7 +1455,7 @@
                                     // AddendumRightsAgreementName
                                     console.log("8 xyz AddendumRightsAgreement ");
                                     if (w === 1) {
-                                        if (rightsAgreementArray[v].slice(0, -1)) {
+                                        if (rightsAgreementArray[v].substr(1) === '') {
                                             console.log("8 xyz AddendumRightsAgreementName is blank");
                                             console.log("8 xyz case 1 not entered");
                                             document.getElementById('label_addendum' + w).value = "not entered";
@@ -1457,13 +1537,17 @@
 //                    $("#bookNotes").val($(this).closest('tr').children()[14].textContent);
                     $("#appStatus").val($(this).closest('tr').children()[15].textContent);
                     $("#copiesSent").val($(this).closest('tr').children()[16].textContent);
-                    $("#dateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
+//                    $("#dateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
                     $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
                     $("#appAPPROVED").val($(this).closest('tr').children()[20].textContent);
 //                    $("#appGenre").val($(this).closest('tr').children()[21].textContent);
                     $("#appExpertReader").val($(this).closest('tr').children()[23].textContent);
 //                    $("#appBookTitle").val($(this).closest('tr').children()[24].textContent);
                     $("#expertReaderName").val($(this).closest('tr').children()[22].textContent);
+
+//                    document.getElementById("sampleSentOut").value = formatDate(rowdata.sampleSentOut);
+//                    document.getElementById("sampleReturned").value = formatDate(rowdata.sampleReturned);
+
                     $("#sampleSentOut").val($(this).closest('tr').children()[29].textContent);
                     $("#sampleReturned").val($(this).closest('tr').children()[30].textContent);
                     $("#appReadersReport").val($(this).closest('tr').children()[31].textContent);
@@ -1480,7 +1564,7 @@
 //                    $("#appForeignCountry").val($(this).closest('tr').children()[40].textContent);
 //                    $("#appTargetLanguage").val($(this).closest('tr').children()[41].textContent);
                     $("#amountRequested").val($(this).closest('tr').children()[43].textContent);
-                    $("#amountApproved").val($(this).closest('tr').children()[43].textContent);
+//                    $("#amountApproved").val($(this).closest('tr').children()[43].textContent);
                     $("#award").val($(this).closest('tr').children()[62].textContent);
                     $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
                     $("#authors").val($(this).closest('tr').children()[66].textContent);
@@ -2261,94 +2345,60 @@
             }
         </script>
 
-        <!--        <script>
-                    $(document).ready(function () {
-                        //Check File API support
-                        if (window.File && window.FileList && window.FileReader)
-                        {
-                            $('#files').on("change", function (event) {
-                                var files = event.target.files; //FileList object
-                                var output = document.getElementById("result");
-                                for (var i = 0; i < files.length; i++)
-                                {
-                                    var file = files[i];
-                                    var fileName = files[i].name;
-                                    console.log("fileName  " + fileName);
-        //                            if (file.type.match('image.*')) {
-                                    if (validFileType(files[i])) {
-                                        if (this.files[0].size < 2097152) {
-                                            var picReader = new FileReader();
-                                            picReader.addEventListener("load", function (event) {
-                                                var picFile = event.target;
-                                                var div = document.createElement("div");
-                                                div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
-                                                        "title='preview image'/>";
-                                                output.insertBefore(div, null);
-                                            });
-                                            //Read the image
-                                            $('#clear, #result').show();
-                                            picReader.readAsDataURL(file);
-                                        } else {
-                                            alert("Image Size is too big.Minimum size is 2MB.");
-                                            $(this).val("");
-                                        }
-                                    } else {
-                                        alert("You can only upload image file.");
-                                        $(this).val("");
-                                    }
-                                }
-        
-                            });
-                        } else
-                        {
-                            console.log("Your browser does not support File API");
-                        }
-                        //Set all filled input fields to readOnly
-                        //so only empty ones can be filled in!!!
-        
-                        var emptyTextBoxes = $('input:text').filter(function () {
-                            return (this.value !== "" || this.value.length !== 0);
-                        });
-                        var string = "The following input fields have been marked readonly - \n";
-        
-                        emptyTextBoxes.each(function () {
-                            string += "\n" + this.id;
-                            document.getElementById(this.id).readOnly = true;
-                        });
-                        console.log("7 xyz ", string);
-        
-                    });
-                    $(document).on("click", "#files", function () {
-                        $('.thumbnail').parent().remove();
-                        $('result').hide();
-                        $(this).val("");
-                    });
-                    $(document).on("click", "#clear", function () {
-                        $('.thumbnail').parent().remove();
-                        $('#result').hide();
-                        $('#files').val("");
-                        $(this).hide();
-                    });
-                </script>-->
+        <script type="text/javascript">
+
+            $(function () {
+
+                $(document).on('scroll', function () {
+
+                    if ($(window).scrollTop() > 100) {
+                        $('.scroll-top-wrapper').addClass('show');
+                    } else {
+                        $('.scroll-top-wrapper').removeClass('show');
+                    }
+                });
+            });
+
+
+            $(function () {
+
+                $(document).on('scroll', function () {
+
+                    if ($(window).scrollTop() > 100) {
+                        $('.scroll-top-wrapper').addClass('show');
+                    } else {
+                        $('.scroll-top-wrapper').removeClass('show');
+                    }
+                });
+
+                $('.scroll-top-wrapper').on('click', scrollToTop);
+            });
+
+            function scrollToTop() {
+                verticalOffset = typeof (verticalOffset) !== 'undefined' ? verticalOffset : 0;
+                element = $('body');
+                offset = element.offset();
+                offsetTop = offset.top;
+                $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+            }
+        </script>
 
         <script type="text/javascript">
             window.onload = function () {
 
-
-
                 //Set all filled input fields to readOnly
                 //so only empty ones can be filled in!!!
 
-                var emptyTextBoxes = $('input:text').filter(function () {
-                    return (this.value !== "" || this.value.length !== 0);
-                });
-                var string = "The following input fields have been marked readonly - \n";
-
-                emptyTextBoxes.each(function () {
-                    string += "\n" + this.id;
-                    document.getElementById(this.id).readOnly = true;
-                });
-                console.log("7 xyz ", string);
+//                var emptyTextBoxes = $('input:text').filter(function () {
+//                    return (this.value !== "" || this.value.length !== 0 || this.value !== "undefined");
+//                });
+//                var string = "The following input fields have been marked readonly - \n";
+//
+//                emptyTextBoxes.each(function () {
+//                    string += "\n" + this.id;
+//                    document.getElementById(this.id).readOnly = true;
+//                });
+//                console.log("7 xyz ", string);
 
             };
             $(document).on("click", "#files", function () {
@@ -2419,14 +2469,14 @@
 //            $(document).ready(function () {
             function loadFileinput() {
                 $('#input25').fileinput('clear');
-                  var publisherName = document.getElementById("publisherName1").value;
-                  console.log("ReferenceNumber 31 " + publisherName);
+                var publisherName = document.getElementById("publisherName1").value;
+                console.log("ReferenceNumber 31 " + publisherName);
                 var newURLcoverageCuttingsUploadServlet = './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + publisherName;
 // document.getElementsByClassName("fileinput-upload-button").href = './coverageDEFCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + $("#publisherName").val();
 // alert("loadFileinput newURL " + newURLcoverageCuttingsUploadServlet);
                 console.log("ReferenceNumber 32 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + ReferenceNumber.value + '&publisherName=' + publisherName);
 //                console.log("ReferenceNumber 33 " + './coverageCuttingsUploadServlet?ReferenceNumber=' + $("#appReferenceNumber").val() + '&publisherName=' + $("#publisherName").val());
-                 console.log("ReferenceNumber 34 newURL " + newURLcoverageCuttingsUploadServlet);
+                console.log("ReferenceNumber 34 newURL " + newURLcoverageCuttingsUploadServlet);
                 $("#input25").fileinput('refresh', {
                     'theme': 'fas',
                     'uploadUrl': newURLcoverageCuttingsUploadServlet,
@@ -2640,6 +2690,44 @@
             .black, .black a {
                 color: #000000;
             }
+
+            .scroll-top-wrapper {
+                position: fixed;
+                opacity: 0;
+                visibility: hidden;
+                overflow: hidden;
+                text-align: center;
+                z-index: 99999999;
+                background-color: #777777;
+                color: #eeeeee;
+                width: 50px;
+                height: 48px;
+                line-height: 48px;
+                right: 30px;
+                bottom: 30px;
+                padding-top: 2px;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                border-bottom-left-radius: 10px;
+                -webkit-transition: all 0.5s ease-in-out;
+                -moz-transition: all 0.5s ease-in-out;
+                -ms-transition: all 0.5s ease-in-out;
+                -o-transition: all 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
+            }
+            .scroll-top-wrapper:hover {
+                background-color: #888888;
+            }
+            .scroll-top-wrapper.show {
+                visibility:visible;
+                cursor:pointer;
+                opacity: 1.0;
+            }
+            .scroll-top-wrapper i.fa {
+                line-height: inherit;
+            }
+
         </style>
 
         <!--modal_counter-->
@@ -2700,17 +2788,45 @@
         </script>
 
         <!--formatDate-->
-        <script type="text/javascript">
+        <script>
             function formatDate(unformattedDate) {
-                var date = new Date(unformattedDate);
-                var day = date.getDate();
-                var month = date.getMonth() + 1;
-                var year = date.getFullYear();
-                var formattedDate = day + "/" + month + "/" + year;
-                return formattedDate;
+                if (typeof unformattedDate === "undefined") {
+                    formattedDate === "";
+                } else {
+                    var date = new Date(unformattedDate);
+                    var day = date.getDate();
+                    console.log("9 xyz day  " + day);
+                    if (day < 10)
+                        day = "0" + day;
+                    var month = date.getMonth() + 1;
+                    console.log("9 xyz month  " + month);
+                    if (month < 10)
+                        month = "0" + month;
+                    var year = date.getFullYear();
+                    var formattedDate = day + "/" + month + "/" + year;
+
+                    console.log("9 xyz unformattedDate  " + unformattedDate);
+                    console.log("9 xyz day  " + day);
+                    console.log("9 xyz month  " + month);
+                    console.log("9 xyz year  " + year);
+                    console.log("9 xyz formattedDate  " + formattedDate);
+
+
+                    return formattedDate;
+                }
             }
         </script>
 
+        <!--https://www.encodedna.com/javascript/how-to-add-dash-after-every-3rd-character-using-javascript-or-jquery.htm-->
+        <script>
+            function addHyphen(element) {
+                let ele = document.getElementById(element.id);
+                ele = ele.value.split('-').join('');    // Remove dash (-) if mistakenly entered.
+
+                let finalVal = ele.match(/.{1,4}/g).join('-');
+                document.getElementById(element.id).value = finalVal;
+            }
+        </script>
 
     </head>
 
@@ -2979,7 +3095,7 @@
                                                 </ul>
                                             </div><!-- /.navbar-collapse -->
 
-                                            <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/PendingApplicationServlet" enctype="multipart/form-data">
+                                            <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/PendingApplicationServlet" enctype="multipart/form-data">
                                             <%request.getSession().setAttribute("task", "Pending Applications");%>
                                             <%request.getSession().setAttribute("publisherID", "publisherID");%>
                                             <input type="hidden" name="ReferenceNumber1" id="ReferenceNumber1"/>
@@ -2989,7 +3105,7 @@
                                                 <div class="tab-pane active" id="Contact">
 
                                                     <!--wrapper for Contact tab pane-->
-                                                    <div class="container">
+                                                    <div class="container-fluid">
 
                                                         <!--first row-->
                                                         <!--get Company and Company_Number via autocomplete-->
@@ -3386,7 +3502,7 @@
                                                                 <div class="col-md-7" id="agreement_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
                                                                     <label  class="control-label pull-left" id="agreement_button_label1" ></label>
                                                                     <div class="input-group agreement_buttonText pull-left">
-                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="agreement_link1" href="">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="agreement_link1" href=""  target="_blank">
                                                                             <span class="glyphicon glyphicon-file"></span>
                                                                             Click to open</a>
                                                                     </div>
@@ -3444,10 +3560,10 @@
                                                                     </div> 
                                                                 </div> <!-- position:absolute; z-index:0 -->
 
-                                                                <div class="col-md-7" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
-                                                                    <label class="control-label pull-left" id="addendum_button_label1"></label> <small class='pull-left'> &nbsp;  (where applicable)</small>'
+                                                                <div class="col-md-6" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                    <label class="control-label pull-left" id="addendum_button_label1"></label>
                                                                     <div class="input-group addendum_buttonText pull-left">
-                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="addendum_link1" href="">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="addendum_link1" href=""  target="_blank">
                                                                             <span class="glyphicon glyphicon-file"></span>
                                                                             Click to open</a>
                                                                     </div>
@@ -3589,7 +3705,7 @@
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
 
-                                                                <div class="col-xs-5">
+                                                                <div class="col-xs-4">
                                                                     <div class="mini-box">
                                                                         <div class="form-group has-feedback">
                                                                             <label for="languages" class="pull-left" >Languages</label>
@@ -3698,7 +3814,9 @@
                                                         <div class="row"> 
 
                                                             <div style=" margin: 0 auto; position: relative;">
+
                                                                 <div class="col-sm-4"></div>
+
                                                                 <div id="showUploadCover1" class="col-sm-4"  style="margin-bottom:  40px; ">
 
                                                                     <!-- bootstrap-imageupload. -->                                                               
@@ -3719,10 +3837,13 @@
                                                                             <button type="button" class="btn btn-default">Remove</button>
                                                                         </div>
                                                                     </div>
+
                                                                     <input type="hidden" value="Cover" name="image-file" id="label_cover1"/>
-                                                                </div>
+
+                                                                </div> <!--showUploadCover1-->
 
                                                                 <div id="showUploadCover2" class="col-sm-4"  style="margin-bottom:  40px; "> 
+
                                                                     <div class="panel panel-default">
                                                                         <div class="panel-heading clearfix">
                                                                             <h3 class="panel-title" id="showUploadCoverTitle"></h3>
@@ -3734,9 +3855,10 @@
 
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <!--                                                            </div> position: relative;-->
+
+                                                                </div> <!--showUploadCover2-->
+
+                                                            </div>  <!-- </div> position: relative;-->
 
                                                         </div> <!--row-->
 
@@ -3745,69 +3867,81 @@
                                                     <div class="container-fluid">
 
                                                         <div class="row" style="position:static !important;">
-                                                            <div class="col-sm-3">
-                                                                <!--<div class="mini-box">-->   
-                                                                <label for="isbn" class="pull-left">ISBN</label>
-                                                                <input id="isbn"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="isbn"                                
-                                                                       value=""    
-                                                                       placeholder="ISBN"
-                                                                       >
+                                                            <div class="col-md-4" style="margin-bottom: 40px;">
+                                                                <div class="form-group has-feedback">   
+                                                                    <label for="isbn" class="control-label pull-left">ISBN</label>
+                                                                    <div class="input-group pull-left">
+                                                                        <span class="input-group-addon">  
+                                                                            <span class="glyphicon glyphicon-barcode"></span>                                                            
+                                                                        </span>
+                                                                        <input id="isbn"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="isbn"                                
+                                                                               value=""    
+                                                                               placeholder="ISBN"
+                                                                               >
 
-                                                                <!--</div>-->
-                                                            </div> <!--col-xs-6-->
-                                                            <div class="col-sm-3"></div>
-                                                            <div class="col-sm-3">
-                                                                <!--<div class="mini-box">-->
-                                                                <label for="isnn" class="pull-left">ISSN</label>
-                                                                <input id="isnn"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="issn"                                
-                                                                       value=""    
-                                                                       placeholder="ISSN"
-                                                                       >
-                                                                <!--</div>-->                                                                                    
-                                                            </div> <!--col-xs-6-->
+                                                                    </div>
+                                                                </div> 
+                                                            </div><!--col-md-3-->
+
+                                                            <div class="col-md-4 col-md-offset-2" style="margin-bottom: 40px;">
+                                                                <div class="form-group has-feedback">  
+                                                                    <label for="isnn" class="control-label pull-left">ISSN</label>
+                                                                    <div class="input-group pull-left">
+                                                                        <span class="input-group-addon">  
+                                                                            <span class="glyphicon glyphicon-barcode"></span>                                                            
+                                                                        </span>
+                                                                        <input id="isnn"                                
+                                                                               type="text"                                
+                                                                               class="form-control"                                
+                                                                               name="issn"                                
+                                                                               value=""    
+                                                                               onkeyup="addHyphen(this)"
+                                                                               placeholder="ISSN"
+                                                                               >
+                                                                    </div>  
+                                                                </div>  
+                                                            </div> <!--col-md-3 col-md-offset-3-->
+
                                                         </div> <!--row-->
 
-                                                        <div class="row">
+                                                        <div class="row" style="margin-bottom: 40px;">
+
                                                             <div style=" margin: 0 auto; position: relative; ">
-                                                                <div  id="proofPaymentDiv1"  class="col-md-6"   style="margin-top: 40px; margin-bottom: 40px; position: absolute; z-index:0;">
-                                                                    <strong class="pull-left">Proof of Payment to the translator</strong> 
-                                                                    <div class="input-group proofPayment pull-left"  
-                                                                         data-toggle="tooltip"
-                                                                         title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
-                                                                         data-placement="bottom" >
+
+                                                                <div  id="proofPaymentDiv1"  class="col-md-6"   style="position: absolute; z-index:0;">
+
+                                                                    <label  class="control-label pull-left" id="uploadProofPayment1">Proof of Payment to the translator</label>
+                                                                    <br/>
+                                                                    <div class="margin-bottom: 40px"></div>
+                                                                    <div class="input-group proofPayment">
                                                                         <label class="btn btn-default btn-file pull-left">
-                                                                            Select file 
-                                                                            <input type="file"  
-                                                                                   name="proofPayment" 
-                                                                                   id="proofPayment"
-                                                                                   >
+                                                                            Select file <input type="file"  name="ProofPayment-1" id="proofPayment">
                                                                             <span class="glyphicon glyphicon-folder-open"></span>
-                                                                        </label>
-                                                                        <input id="label_proofPayment" class="pull-left">                                                                               
-                                                                        <br/>
-                                                                        <br/>          
-                                                                        <input type="hidden" name="userID" value="${userID}">
-                                                                        <input type="hidden" name="ReferenceNumber" id="ReferenceNumber"/>
-                                                                        <input type="hidden" name="name" value="${name}">
-                                                                        <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
-                                                                        <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
-                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                        <input type="text" name="publisherName1" id="publisherName1" value="">
-                                                                        <!--Destination:-->
-                                                                        <input type="hidden" id="proofPayment_upload" value="proofPayment" name="destination" />                                          
-                                                                    </div>
+                                                                        </label>  
+                                                                        <input  type="text" id="label_proofPayment" class="pull-left"/>
+                                                                        <input type="hidden" id="proofPayment_upload" value="proofPayment" name="destination" /> 
+                                                                        <span class="help-block"></span>
+                                                                    </div> 
+
+                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                    <input type="hidden" name="ReferenceNumber" id="ReferenceNumber"/>
+                                                                    <input type="hidden" name="name" value="${name}">
+                                                                    <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
+                                                                    <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
+                                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                    <input type="hidden" name="publisherName1" id="publisherName1" value="">
+                                                                    <!-- Destination: -->
+
+
                                                                 </div> <!--proofPaymentDiv1-->
 
-                                                                <div class="col-md-5" id="proofPaymentDiv2" style="margin-top: 40px; margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                <div class="col-md-5" id="proofPaymentDiv2" style="position:absolute; z-index:1; display:none;"> 
                                                                     <label  class="control-label pull-left" id="proofPayment_button_label" >Open proof of payment to the translator</label>
                                                                     <div class="input-group pull-left">
-                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="proofPayment_link" href="">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="proofPayment_link" href=""  target="_blank">
                                                                             <span class="glyphicon glyphicon-file"></span>
                                                                             Click to open</a>
                                                                     </div>
@@ -3815,57 +3949,56 @@
 
                                                             </div> <!--position: relative-->
 
-                                                            <div class="col-md-6"   style="margin-top: 40px; margin-bottom: 40px; "></div>
-                                                            <div class="col-md-4"   style="margin-top: 40px; margin-bottom: 40px">
-                                                                <strong class="pull-left">Amount Requested</strong> 
+
+                                                            <div class="col-md-4 col-md-offset-6">
+                                                                <strong class="pull-left">Amount Approved</strong> 
                                                                 <div class="input-group pull-left">
-                                                                    <label class="input-group-addon" for="amountRequested">
+                                                                    <label class="input-group-addon" for="amountApproved">
                                                                         <span class="glyphicon glyphicon-euro"></span>                                     
                                                                     </label>
-                                                                    <input type="text" class="form-control" name="amountRequested" id="amountRequested" placeholder="Amount Requested" disabled="">    
+                                                                    <input type="text" class="form-control" name="amountApproved" id="amountApproved" placeholder="Amount Approved" disabled="">    
                                                                 </div>
                                                             </div>
+
                                                         </div> <!--row-->
 
                                                         <div class="row"  style="margin-bottom: 40px;">
-                                                            <div style="margin: 0 auto; position: relative;">
-                                                                <div  id="bankDetailForm1"   class="col-md-6"   style="margin-bottom: 40px; position: absolute; z-index:0;">                                                    
-                                                                    <strong class="pull-left">Completed bank details form</strong> <br/>
-                                                                    <div class="input-group bankDetailForm pull-left"  
-                                                                         data-toggle="tooltip"
-                                                                         title="pdf or image file most of the time but we should allow word doc/open office equivalent." 
-                                                                         data-placement="bottom" >
-                                                                        <label class="btn btn-default btn-file pull-left">
-                                                                            Select file 
-                                                                            <input type="file"  
-                                                                                   name="bankDetailForm" 
-                                                                                   id="bankDetailForm" >
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                                                        </label>
-                                                                        <input id="label_BankDetailForm" class="pull-left">                                                                               
-                                                                        <br/>
-                                                                        <br/>          
-                                                                        <input type="hidden" name="userID" value="${userID}">
-                                                                        <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                        <!--Destination:-->
-                                                                        <input type="hidden" id="bankDetailForm_upload" value="bankDetailForm" name="destination" />                                          
-                                                                    </div>
-                                                                </div> <!--bankDetailForm1-->
 
-                                                                <div class="col-md-5" id="bankDetailForm2" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                            <div style="margin: 0 auto; position: relative;">
+
+                                                                <div  id="bankDetailFormDiv1"  class="col-md-5"   style="position: absolute; z-index:0;">
+
+                                                                    <label  class="control-label pull-left"  id="uploadBankDetailForm1">Completed bank details form</label>
+                                                                    <br/>
+                                                                    <div class="margin-bottom: 40px"></div>
+                                                                    <div class="input-group bankDetailForm">
+                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                            Select file <input type="file"  name="BankDetailForm-1" id="bankDetailForm">
+                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                        </label>  
+                                                                        <input  type="text" id="label_BankDetailForm" class="pull-left"/>
+                                                                        <input type="hidden" id="bankDetailForm_upload" value="bankDetailForm" name="destination" /> 
+                                                                        <span class="help-block"></span>
+                                                                    </div> 
+
+                                                                </div> <!-- position:absolute; z-index:0 -->
+
+
+                                                                <div class="col-md-5" id="bankDetailFormDiv2" style="position:absolute; z-index:1; display:none;"> 
+
                                                                     <label  class="control-label pull-left" id="bankDetailForm_button_label" >Open completed bank details form</label>
                                                                     <div class="input-group pull-left">
-                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="bankDetailForm_link" href="">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="bankDetailForm_link" href=""  target="_blank">
                                                                             <span class="glyphicon glyphicon-file"></span>
                                                                             Click to open</a>
                                                                     </div>
-                                                                </div> <!--bankDetailForm2-->
+
+                                                                </div> <!-- position:absolute; z-index:1; display:none -->
 
                                                             </div> <!--position: relative-->
 
-                                                            <div class="col-md-6"   style="margin-bottom: 40px"></div>
-                                                            <div class="col-md-4"   style="margin-bottom: 40px">
+                                                            <!--<div class="col-md-6"   style="margin-bottom: 40px"></div>-->
+                                                            <div class="col-md-4 col-md-offset-6">
                                                                 <strong class="pull-left">&nbsp;</strong>    
                                                                 <!--<button type="button" data-toggle="modal" data-target="#pressCuttingsModal">Launch modal</button>-->
                                                                 <label class="btn btn-default pull-left form-control callPressCuttingsModal" data-toggle="modal" onclick="loadFileinput();" data-target="#pressCuttingsModal">
@@ -3877,46 +4010,46 @@
 
                                                         </div> <!--row-->
 
-                                                        <div class="row"  style="margin-bottom: 60px;">
-                                                            <div style=" margin: 0 auto; position: relative; ">
-                                                                <div  id="signedLIContract1"  class="col-md-6"   style="margin-bottom: 60px;  position: absolute; z-index:0;">
-                                                                    <!--<label for="label_signedLIcontract" class="control-label pull-left">Signed Literature Ireland contract</label>-->
-                                                                    <strong class="pull-left">Signed Literature Ireland contract</strong> <br/>
-                                                                    <div class="input-group signedLIcontract pull-left"  
-                                                                         data-toggle="tooltip"
-                                                                         title="pdf or image file." 
-                                                                         data-placement="bottom" >
-                                                                        <label class="btn btn-default btn-file pull-left">
-                                                                            Select file 
-                                                                            <input type="file"  
-                                                                                   name="signedLIcontract" 
-                                                                                   id="signedLIcontract" >
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                                                        </label>
-                                                                        <input id="label_signedLIcontract" class="pull-left">                                                                               
-                                                                        <br/>
-                                                                        <br/>          
-                                                                        <input type="hidden" name="userID" value="${userID}">
-                                                                        <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                        <!--Destination:-->
-                                                                        <input type="hidden" id="signedLIcontract_upload" value="signedLIcontract" name="destination" />                                          
-                                                                    </div>
-                                                                </div>  <!--signedLIContract1-->
 
-                                                                <div class="col-md-5" id="signedLIContract2" style="margin-bottom: 60px; position:absolute; z-index:1; display:none;"> 
-                                                                    <label  class="control-label pull-left" id="signedLIcontract_button_label" >Open signed Literature Ireland contract</label>
+                                                        <div class="row"  style="margin-bottom: 80px;">
+
+                                                            <div style="margin: 0 auto; position: relative;">
+
+                                                                <div  id="signedLIContractDiv1"  class="col-md-5"   style="position: absolute; z-index:0;">
+
+                                                                    <label  class="control-label pull-left" id="uploadSignedLIcontract1" >Signed Literature Ireland contract</label>
+                                                                    <br/>
+                                                                    <div class="margin-bottom: 40px"></div>
+                                                                    <div class="input-group signedLIcontract">
+                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                            Select file <input type="file"  name="SignedLIcontract" id="signedLIcontract">
+                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                        </label>  
+                                                                        <input  type="text" id="label_signedLIcontract" class="pull-left"/>
+                                                                        <input type="hidden" id="signedLIcontract_upload" value="signedLIcontract" name="destination" /> 
+                                                                        <span class="help-block"></span>
+                                                                    </div> 
+
+                                                                </div> <!-- position:absolute; z-index:0 -->
+
+
+                                                                <div class="col-md-5" id="signedLIContractDiv2" style="position:absolute; z-index:1; display:none;"> 
+
+                                                                    <label  class="control-label pull-left" id="signedLIcontract_button_label" >Open completed bank details form</label>
                                                                     <div class="input-group pull-left">
-                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="signedLIcontract_link" href="">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="signedLIcontract_link" href=""  target="_blank">
                                                                             <span class="glyphicon glyphicon-file"></span>
                                                                             Click to open</a>
                                                                     </div>
-                                                                </div>  <!--signedLIContract2-->
+
+                                                                </div> <!-- position:absolute; z-index:1; display:none -->
 
                                                             </div> <!--position: relative-->
+
                                                         </div> <!--row-->
 
                                                     </div> <!-- container-fluid -->
+
                                                 </div> <!-- tab-pane "Drawdown Requirements" -->  
 
                                                 <!-- Original Work & Sample Translation -->
@@ -4054,7 +4187,11 @@
                                                 </div> <!-- tab-pane "Original Work & Sample Translation" --> 
 
                                             </div> <!-- applicationEditForm-tab-content -->
-
+                                            <div class="scroll-top-wrapper ">
+                                                <span class="scroll-top-inner">
+                                                    <i class="fa fa-3x fa-arrow-circle-up"></i>
+                                                </span>
+                                            </div>
                                         </form>
                                     </div> <!-- container-fluid -->  
                                 </nav>    
@@ -4078,13 +4215,13 @@
                             <!-- Modal body-->
                             <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
                                 <form id="coverageCuttingsForm" name="coverageCuttingsForm" enctype="multipart/form-data">
-                                                                        <input type="hidden" name="userID" value="${userID}">
-                                                                        <input type="hidden" name="ReferenceNumber2" id="ReferenceNumber2"/>
-                                                                        <input type="hidden" name="name" value="${name}">
-                                                                        <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
-                                                                        <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
-                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                        <input type="hidden" name="publisherName2" id="publisherName2" value="">
+                                    <input type="hidden" name="userID" value="${userID}">
+                                    <input type="hidden" name="ReferenceNumber2" id="ReferenceNumber2"/>
+                                    <input type="hidden" name="name" value="${name}">
+                                    <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
+                                    <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
+                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                    <input type="hidden" name="publisherName2" id="publisherName2" value="">
                                     <div   style="margin-bottom: 40px">                                      
                                         <input id="input25" name="input25[]" type="file" multiple onchange="showFile()">
                                     </div>
@@ -4099,6 +4236,11 @@
                     </div> <!--modal dialog-->
                 </div> <!--modal fade-->
 
+                <div class="scroll-top-wrapper ">
+                    <span class="scroll-top-inner">
+                        <i class="fa fa-3x fa-arrow-circle-up"></i>
+                    </span>
+                </div>
 
                 <form class="form-horizontal" 
                       role="form"  

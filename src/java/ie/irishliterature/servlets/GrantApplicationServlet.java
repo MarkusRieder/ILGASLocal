@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -247,8 +248,6 @@ public class GrantApplicationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         System.out.println("############################### /GrantApplicationServlet ####################################");
 
-        
-
         Enumeration en = request.getParameterNames();
 
         while (en.hasMoreElements()) {
@@ -477,7 +476,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "proposedDateOfPublication":
                                     proposedDateOfPublication = fieldvalue;
                                     break;
-                                case "proposedPrintRun":
+                                case "appproposedPrintRun":
                                     String propPrintRun = fieldvalue.replaceAll("[^0-9]", "");
                                     proposedPrintRun = Integer.parseInt(propPrintRun);
                                     break;
@@ -509,12 +508,15 @@ public class GrantApplicationServlet extends HttpServlet {
                                     dateCopiesWereSent = fieldvalue;
                                     break;
                                 case "tcACCEPTED":
-                                    TCACCEPTED = fieldvalue;
+                                    TCACCEPTED = fieldvalue;      
+                                    System.out.println("TCACCEPTED  GrantApplicationServlet:: " + TCACCEPTED);
                                     System.out.println(" TCACCEPTED  " + TCACCEPTED);
                                     if ("ticked".equals(TCACCEPTED)) {
                                         TC_ACCEPTED = 1;
+                                         System.out.println("TC_ACCEPTED  GrantApplicationServlet:: " + TC_ACCEPTED);
                                     } else {
                                         TC_ACCEPTED = 0;
+                                         System.out.println("TC_ACCEPTED  GrantApplicationServlet:: " + TC_ACCEPTED);
                                     }
                                     break;
                                 case "gdprACCEPTED":
@@ -647,11 +649,13 @@ public class GrantApplicationServlet extends HttpServlet {
                                 case "issn":
                                     ISSN = fieldvalue;
                                     break;
-                                case "languageOfTheOriginal":
+                                case "appLanguageOriginal":
                                     originalLanguage = fieldvalue;
+                                    System.out.println("originalLanguage  GrantApplicationServlet:: " + originalLanguage);
                                     break;
-                                case "pageExtentOfTheOriginal":
+                                case "originalPageExtent":
                                     originalPageExtent = fieldvalue;
+                                    System.out.println("originalPageExtent  GrantApplicationServlet:: " + originalPageExtent);
                                     break;
                                 case "countryOfPublication":
                                     countryOfPublication = fieldvalue;
@@ -661,6 +665,7 @@ public class GrantApplicationServlet extends HttpServlet {
                                     break;
                                 case "appTargetLanguage":
                                     targetLanguage = fieldvalue;
+                                    System.out.println("targetLanguage  GrantApplicationServlet:: " + targetLanguage);
                                     languageArray = fieldvalue.split(","); //split string by ,
                                     languageArrayLength = languageArray.length;
                                     for (String individualValue : languageArray) {
@@ -971,6 +976,8 @@ public class GrantApplicationServlet extends HttpServlet {
                         }
 
                     } catch (DBException ex) {
+                        Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (MessagingException ex) {
                         Logger.getLogger(GrantApplicationServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
 

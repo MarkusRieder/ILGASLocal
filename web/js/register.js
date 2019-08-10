@@ -2,16 +2,15 @@
 
 /*global $, jQuery, alert*/
 $("document").ready(function () {
+    
     // name validation
-    var nameregex = /^[a-zA-Z ]+$/;
-
+    var nameregex = new XRegExp('^[\\p{L}\\p{Nd} _-]+$');
     $.validator.addMethod("validname", function (value, element) {
         return this.optional(element) || nameregex.test(value);
     });
 
     // valid email pattern
     var eregex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
     $.validator.addMethod("validemail", function (value, element) {
         return this.optional(element) || eregex.test(value);
     });
@@ -53,17 +52,17 @@ $("document").ready(function () {
                 {
                     username: {
                         required: "Please Enter User Name",
-                        validname: "Name must contain only alphabets and space",
+                        validname: "User name must contain only letters and spaces",
                         minlength: "Your Name is Too Short"
                     },
                     firstname: {
                         required: "Please Enter First Name",
-                        validname: "Name must contain only alphabets and space",
+                        validname: "First name must contain only letters and spaces",
                         minlength: "Your Name is Too Short"
                     },
                     lastname: {
                         required: "Please Enter Last Name",
-                        validname: "Name must contain only alphabets and space",
+                        validname: "Last name must contain only letters and spaces",
                         minlength: "Your Name is Too Short"
                     },
                     email: {
@@ -76,7 +75,7 @@ $("document").ready(function () {
                     },
                     cpassword: {
                         required: "Please Retype your Password",
-                        equalTo: "Password Did not Match !"
+                        equalTo: "Password do NOT Match !"
                     }
                 },
         errorPlacement: function (error, element) {

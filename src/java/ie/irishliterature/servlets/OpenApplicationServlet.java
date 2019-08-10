@@ -249,6 +249,8 @@ public class OpenApplicationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+        
         HttpSession session = request.getSession();
 
         //  String task = "Start New Application";
@@ -515,7 +517,7 @@ public class OpenApplicationServlet extends HttpServlet {
                                     AuthorLastName = fieldvalue;
                                     //              System.out.println("AuthorLastName OpenApplicationServlet:: " + AuthorLastName);
                                     break;
-                                case "bookTitle":
+                                case "appBookTitle":
                                     Title = fieldvalue;
                                     System.out.println("Process library Title " + Title);
                                     break;
@@ -1052,7 +1054,7 @@ public class OpenApplicationServlet extends HttpServlet {
                      */
                     System.out.println("####################### sending files to tables ##################################################");
 
-System.out.println("####################### longArrayList ##################################################");
+                    System.out.println("####################### longArrayList ##################################################");
                     /*
                      * loop through the Translators and insert each into
                      * TranslatorTrack
@@ -1069,11 +1071,16 @@ System.out.println("####################### longArrayList ######################
                         }
 
                         System.out.println("longArrayList decider " + elements[10]);
+                        System.out.println("longArrayList translatorName " + elements[11]);
+                        System.out.println("longArrayList moveFileName " + elements[12]);
 
                         String moveFile = longArrayList.get(i);
-                        String decider = elements[9];
-                        translatorName = elements[10];
-                        String moveFileName = elements[11];
+//                        String decider = elements[9];
+//                        translatorName = elements[10];
+//                        String moveFileName = elements[11];
+                        String decider = elements[10];
+                        translatorName = elements[11];
+                        String moveFileName = elements[12];
                         String moveFileNameReplaced = moveFile.replace("/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents");
 
                         /*
@@ -1137,7 +1144,7 @@ System.out.println("####################### longArrayList ######################
                 }  // end else
 
                 System.out.println("####################### shortArrayList ##################################################");
-                
+
                 /*
                  * Process Original TranslationSample
                  */

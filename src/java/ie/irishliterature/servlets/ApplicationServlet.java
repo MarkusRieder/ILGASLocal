@@ -61,6 +61,8 @@ public class ApplicationServlet extends HttpServlet {
         session.setAttribute("name", name);
         session.setAttribute("publisherID", publisherID);
 
+        System.out.println("############################### /Application ####################################");
+
         Enumeration en = request.getParameterNames();
 
         while (en.hasMoreElements()) {
@@ -73,6 +75,16 @@ public class ApplicationServlet extends HttpServlet {
             System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
 
         }
+
+        System.out.println("Enumeration keys   ");
+        Enumeration keys = session.getAttributeNames();
+        while (keys.hasMoreElements()) {
+            String key = (String) keys.nextElement();
+            System.out.println("key  :" + key + ": " + session.getValue(key));
+
+        }
+
+        System.out.println("###################################################################");
 
         String task = request.getParameter("task");
 
@@ -92,7 +104,6 @@ public class ApplicationServlet extends HttpServlet {
 
         int tc_ACCEPTED = 0;
         int gdpr_ACCEPTED = 0;
-
 
         if (request.getParameter("tcACCEPTED") == null) {
             System.out.println("doPost getParameter - tcACCEPTED not checked ");
@@ -158,6 +169,7 @@ public class ApplicationServlet extends HttpServlet {
                     request.setAttribute("userID", userID);
                     request.setAttribute("TCACCEPTED", tc_ACCEPTED);
                     request.setAttribute("gdprACCEPTED", gdpr_ACCEPTED);
+                    System.out.println("/Application  --->   :Start New Application: publisherID::  " + publisherID);
                     session.setAttribute("name", name);
                     session.setAttribute("publisherID", publisherID);
 
@@ -185,6 +197,7 @@ public class ApplicationServlet extends HttpServlet {
                     request.setAttribute("name", name);
                     request.setAttribute("userID", userID);
                     session.setAttribute("name", name);
+                    System.out.println("/Application  --->   :NewApplicationTCconfirmed: publisherID::  " + publisherID);
                     session.setAttribute("publisherID", publisherID);
 
                 } catch (DBException ex) {
@@ -199,6 +212,7 @@ public class ApplicationServlet extends HttpServlet {
                 System.out.println("publisherID: Application:: 1 " + publisherID);
                 System.out.println("task: Application:: 1 " + task);
                 session.setAttribute("name", name);
+                System.out.println("/Application  --->   :List Open Applications: publisherID::  " + publisherID);
                 session.setAttribute("publisherID", publisherID);
                 request.setAttribute("publisherID", publisherID);
                 request.setAttribute("publisherName", publisherName);
@@ -208,11 +222,13 @@ public class ApplicationServlet extends HttpServlet {
                 request.setAttribute("userID", userID);
                 request.getRequestDispatcher("/WEB-INF/views/openApplications.jsp").forward(request, response);
                 break;
+
             case "List Pending Applications":
                 System.out.println("task: Application:: 2 " + task);
                 System.out.println("publisherID: Application:: 2 " + publisherID);
                 System.out.println("name: Application:: 2 " + name);
                 session.setAttribute("name", name);
+                System.out.println("/Application  --->   :List Pending Applications: publisherID::  " + publisherID);
                 session.setAttribute("publisherID", publisherID);
                 request.setAttribute("publisherID", publisherID);
                 request.setAttribute("publisherName", publisherName);
@@ -224,6 +240,7 @@ public class ApplicationServlet extends HttpServlet {
                 break;
             case "List Closed Applications":
                 session.setAttribute("name", name);
+                System.out.println("/Application  --->   :List Closed Applications: publisherID::  " + publisherID);
                 session.setAttribute("publisherID", publisherID);
                 request.setAttribute("publisherID", publisherID);
                 request.setAttribute("publisherName", publisherName);

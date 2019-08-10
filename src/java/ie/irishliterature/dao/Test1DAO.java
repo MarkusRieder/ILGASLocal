@@ -7,11 +7,13 @@ import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.TranslatorTracker;
 import ie.irishliterature.model.User;
 import ie.irishliterature.util.GlobalConstants;
+import ie.irishliterature.util.MailUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -20,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import javax.mail.MessagingException;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
@@ -216,7 +219,6 @@ public class Test1DAO {
 
                     }
 
-                            
                     application.setTransList(listOfTranslatorArray);
                     application.setTranslatorName(translatorNamesList);
                     application.setTranslatorTrack2(translatorTrackList);
@@ -511,7 +513,7 @@ public class Test1DAO {
 
     }
 
-    public static boolean updateApplication(GrantApplication app, String ApplicationNumber, String applicationYear) throws SQLException, DBException {
+    public static boolean updateApplication(GrantApplication app, String ApplicationNumber, String applicationYear) throws SQLException, DBException, MessagingException, ClassNotFoundException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -598,6 +600,32 @@ public class Test1DAO {
         } catch (ClassNotFoundException | SQLException e) {
             DBConn.close(conn, ps1, res);
             throw new DBException("Test1DAO updateApplication 4 Excepion while accessing database" + e);
+        }
+
+        String approveWithdrawnRejectSelected = app.getApproveWithdrawnReject();
+        System.out.println("updateApplication approveWithdrawnReject " + approveWithdrawnRejectSelected);
+
+        String referenceNumber = ApplicationNumber + "/" + applicationYear;
+        System.out.println("updateApplication getReferenceNumber " + referenceNumber);
+
+        String amountApproved = new DecimalFormat("#0.00").format(app.getAmountApproved());
+        System.out.println("updateApplication amountApproved " + amountApproved);
+
+        String[] emailDataArray;
+
+        emailDataArray = ACpublisherDAO_test.getpublisherByReferenceNumber(referenceNumber);
+
+        String Full_Name = emailDataArray[0];
+        String email = emailDataArray[1];
+
+        if (approveWithdrawnRejectSelected.equals("Approved")) {
+
+            MailUtil.informPublisherAwarded(Full_Name, email, amountApproved, referenceNumber);
+
+        } else if (approveWithdrawnRejectSelected.equals("Rejected")) {
+
+            MailUtil.informPublisherRejected(Full_Name, email, amountApproved, referenceNumber);
+
         }
 
         return id;
@@ -887,7 +915,7 @@ public class Test1DAO {
                 while (res.next()) {
 
                     translatorTrackID.add(res.getString(1));
-                    
+
                 }
             }
 
@@ -896,7 +924,7 @@ public class Test1DAO {
         }
 
         DBConn.close(conn, ps, res);
-        
+
         System.out.println("Test1DAO getTranslatorTrackId " + translatorTrackID);
 
         return translatorTrackID;
@@ -1190,12 +1218,12 @@ public class Test1DAO {
             throw new DBException("12 Excepion while accessing database");
         }
 
-        DBConn.close(conn, ps, res);               
+        DBConn.close(conn, ps, res);
 
-        for(int u = 0; u < resultList.size(); u++){
+        for (int u = 0; u < resultList.size(); u++) {
             System.out.println("Test1DAO resultList " + u + "  " + resultList.get(u));
         }
-        
+
         return resultList;
     }
 
@@ -1834,10 +1862,9 @@ public class Test1DAO {
                     System.out.println("getPressCoverage pressCoverageLst Loop res.getString(1)  " + res.getString(1));
                     System.out.println("getPressCoverage pressCoverageLst Loop res.getString(2)  " + res.getString(2));
 
-
                     String fileName = res.getString(1).trim();
                     String basename = FilenameUtils.getBaseName(fileName);
-                    String fullPath = FilenameUtils.getFullPath(fileName); 
+                    String fullPath = FilenameUtils.getFullPath(fileName);
                     String extension = FilenameUtils.getExtension(fileName);
 
                     pressCoverageArray[0] = "http://www.literatureirelandgrantapplication.com:8080" + fileName;

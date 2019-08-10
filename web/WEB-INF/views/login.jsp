@@ -1,5 +1,5 @@
 <%-- 
-    Document   : template
+    Document   : login.jsp - remote
     Created on : 17-Mar-2017, 11:57:10
     Author     : markus
 --%>
@@ -17,16 +17,14 @@
 
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/my-block-ui.css">   
         <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
         <link rel="stylesheet" type="text/css" href="css/form.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" />
 
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
         <script src="js/jquery-1.11.3.min.js"></script>
 
@@ -34,12 +32,13 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
-        <script src="js/register.js"></script>
+        <!--<script src="https://unpkg.com/xregexp/xregexp-all.js"></script>-->
+        <!--<script src="js/register.js"></script>-->
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>
         <script src="js/bootstrap-show-password.js"></script>
         <script src="js/jquery-ui.js"></script>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 
         <!--clear localStorage and sessionStorage-->
         <script type="text/javascript">
@@ -91,7 +90,7 @@
 
         <!--autocomplete-->
         <!--AutoComplete_international_publishers-->
-        <script type="text/javascript">
+<!--        <script type="text/javascript">
             $(function () {
                 $("#company").autocomplete({
                     source: 'ACintPublishers_test', // The source of the AJAX results
@@ -128,7 +127,7 @@
         </script>
 
 
-        <!--AutoComplete_country-->
+        AutoComplete_country
         <script type="text/javascript">
             $(function () {
                 $("#country").autocomplete({
@@ -146,7 +145,7 @@
                     }
                 });
             });
-        </script>
+        </script>-->
 
         <!--Tooltips-->
         <script  type="text/javascript">
@@ -308,17 +307,6 @@
                                         </div> <!-- col-md-12 control -->
                                     </div> <!-- form-group -->
 
-<!--                                    <div class="form-group">
-                                        <div class="col-md-12 control">
-                                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                                Don't have an account? 
-                                                <a href="#" onClick="$('#loginbox').hide();
-                                                        $('#signupbox').show()">
-                                                    Sign Up Here
-                                                </a>
-                                            </div> <%-- div style --%>
-                                        </div>  col-md-12 control 
-                                    </div>  form-group -->
                                 </form>  <!--loginform-->
                             </div>  <!-- panel-body -->
                         </div>  <!--panel-info-->
@@ -326,7 +314,7 @@
 
 
                     <!--Signup-->
-                    <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+<!--                    <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 
                         <div class="panel panel-info">
                             <div class="panel-heading">
@@ -337,7 +325,7 @@
                                        href="#" 
                                        onclick="$('#signupbox').hide();
                                                $('#loginbox').show()">Sign In</a></div>
-                            </div>   <!--panel-heading-->
+                            </div>   panel-heading
 
                             <div class="panel-body">
 
@@ -356,16 +344,16 @@
                                             <span></span>
                                         </div>
 
-                                        <!--form-body-->
+                                        form-body
                                         <div class="form-body">
 
                                             <div class="alert alert-info" id="message" style="display:none;">
                                                 submitted
                                             </div>
 
-                                            <!--uname-->
+                                            uname
                                             <div class="form-group">
-                                                <!-- <label for="username" class="col-md-3 control-label">Username</label>-->
+                                                 <label for="username" class="col-md-3 control-label">Username</label>
                                                 <div class="col-md-9">
                                                     <input type="text" 
                                                            class="form-control" 
@@ -380,9 +368,9 @@
                                                            >     
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group uname-->  
+                                            </div> form-group uname  
 
-                                            <!--firstname-->
+                                            firstname
                                             <div class="form-group">
                                                 <div class="col-md-9">
                                                     <input type="text" 
@@ -396,9 +384,9 @@
                                                            >              
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group firstname-->     
+                                            </div> form-group firstname     
 
-                                            <!--lastname-->
+                                            lastname
                                             <div class="form-group">
                                                 <div class="col-md-9">
                                                     <input type="text" 
@@ -412,9 +400,9 @@
                                                            >    
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group lastname-->      
+                                            </div> form-group lastname      
 
-                                            <!--email-->
+                                            email
                                             <div class="form-group">
                                                 <div class="col-md-9">
                                                     <input type="email" 
@@ -428,9 +416,9 @@
                                                            >                                            
                                                     <span class="help-block" id="error"></span>      
                                                 </div>
-                                            </div> <!--form-group email-->
+                                            </div> form-group email
 
-                                            <!--password-->
+                                            password
                                             <div class="form-group">
                                                 <div class="col-md-9">
                                                     <input type="password" 
@@ -445,11 +433,11 @@
                                                            >                                           
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group password-->
+                                            </div> form-group password
 
-                                            <!--cpassword-->
+                                            cpassword
                                             <div class="form-group">
-                                                <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
+                                                <label for="cpassword" class="col-md-3 control-label">Confirm Password</label>
                                                 <div class="col-md-9">
                                                     <input type="password" 
                                                            class="form-control"  
@@ -461,13 +449,13 @@
                                                            >                               
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group cpassword-->
+                                            </div> form-group cpassword
 
-                                            <!--selectpicker-->
+                                            selectpicker
                                             <div class="form-group">
-                                                <!--<label for="location" class="col-sm-3 control-label">Select your function</label>-->
+                                                <label for="location" class="col-sm-3 control-label">Select your function</label>
                                                 <div class="col-sm-10">
-                                                    <!--<select class="selectpicker" title="Select Your Function" style="display: none;">-->
+                                                    <select class="selectpicker" title="Select Your Function" style="display: none;">
                                                     <select class="selectpicker" 
                                                             title="Select Your Function" 
                                                             style="display: none;" 
@@ -476,19 +464,19 @@
                                                             onchange="changeFunc();"
                                                             required
                                                             >
-<!--                                                        <option value="">Select Your Function</option>
-                                                        <option>Literature Ireland Staff</option>-->
+                                                                                                                <option value="">Select Your Function</option>
+                                                                                                                <option>Literature Ireland Staff</option>
                                                         <option>Publisher</option>
-                                                        <!--<option>Expert Reader</option>-->
+                                                        <option>Expert Reader</option>
                                                     </select>                                        
                                                     <span class="help-block" id="error"></span> 
                                                 </div>
-                                            </div> <!--form-group selectpicker-->
+                                            </div> form-group selectpicker
 
-                                            <!--publisherBox-->
+                                            publisherBox
                                             <div id="publisherBox" style="display:none; margin-top:50px; ">
 
-                                                <!--get Company and Company_Number via autocomplete-->
+                                                get Company and Company_Number via autocomplete
                                                 <div class="row" style="margin-bottom: 40px;margin-top: 30px">
                                                     <div class="form-group has-feedback has-feedback-left">
                                                         <div class="col-sm-10">
@@ -504,9 +492,9 @@
                                                                     >
                                                             <i class="glyphicon glyphicon-search form-control-feedback" id="companyGlyphicon"></i>
                                                         </div>
-                                                    </div> <!--form-group-->
+                                                    </div> form-group
 
-                                                    <!--companyNumber-->
+                                                    companyNumber
                                                     <div class="form-group">
                                                         <input id="companyNumber"                                
                                                                type="hidden"                                
@@ -514,9 +502,9 @@
                                                                name="companyNumber"                                
                                                                value=""                                
                                                                >
-                                                    </div> <!--form-group-->
+                                                    </div> form-group
 
-                                                    <!-- tick box if company is not in database and display input for new company name  -->    
+                                                     tick box if company is not in database and display input for new company name      
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
                                                             <div class="checkbox" style="margin-top: 30px; margin-bottom: 30px">
@@ -531,11 +519,11 @@
                                                                     Tick the box                                                           
                                                                     <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span>
                                                                 </label>             
-                                                            </div> <!-- checkbox -->
+                                                            </div>  checkbox 
                                                         </div>
-                                                    </div> <!--form-group-->
+                                                    </div> form-group
 
-                                                    <!--input for new company name-->  
+                                                    input for new company name  
                                                     <div class="form-group">
                                                         <div class="col-sm-10">
                                                             <input type="text" 
@@ -546,9 +534,9 @@
                                                                    style="display:none"
                                                                    >
                                                         </div> 
-                                                    </div> <!--form-group-->
-                                                </div>  <!-- row -->
-                                            </div>  <!--publisherBox-->
+                                                    </div> form-group
+                                                </div>   row 
+                                            </div>  publisherBox
 
                                         </div>  <%--form-body --%>
 
@@ -557,21 +545,21 @@
                                                 <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
                                             </button>
                                         </div>  <%--form-footer --%>
-                                    </form> <!--register-form-->
+                                    </form> register-form
 
-                                    <!--blockUiDiv-->
+                                    blockUiDiv
                                     <div id="blockUiDiv">
                                         <img src="images/gears.svg" alt="spinner.gif"/>
                                     </div>
                                     <div id="blockUiBackdrop">
                                     </div>
 
-                                </div>  <!--signup-form-container-->
+                                </div>  signup-form-container
                             </div> <%--form-body --%>
 
                             <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group"> </div>
-                        </div>  <!--panel-info-->
-                    </div>  <!-- signupbox -->
+                        </div>  panel-info
+                    </div>   signupbox -->
                 </div> <!-- /container-fluid -->
 
 
@@ -662,15 +650,15 @@
 
                 <div id="base">  
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
-                                <i  onclick="contactUsModal();">Contact Details</i>
-                            </a> &nbsp;|&nbsp; 
-                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
-                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
 
-                        </div><!-- end of BaseText div -->   
+                    </div><!-- end of BaseText div -->   
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
@@ -679,7 +667,7 @@
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-<!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
+                        <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
                 </div><!-- end of Base div -->
@@ -692,7 +680,7 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017-2019 mgr Software
         </div>
- <!--contactUsModal-->
+        <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">
@@ -763,7 +751,7 @@
                     <div class="modal-body" style="background-color: #d9d1d1">
 
                         <div class="container-fluid">
-                            <div id="contentarea">
+                            <div id="contentarea1">
                                 <div class="textpadding">
                                     <div class="typography">
                                         <h4>Company Registration</h4>

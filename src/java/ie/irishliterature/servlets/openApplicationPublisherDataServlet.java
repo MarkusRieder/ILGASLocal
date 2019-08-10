@@ -46,10 +46,11 @@ public class openApplicationPublisherDataServlet extends HttpServlet {
         System.out.println("openApplicationPublisherDataServlet:  ");
 
         String publisherID = "";
-                
-        HttpSession session = request.getSession();
 
-                Enumeration en = request.getParameterNames();
+        HttpSession session = request.getSession();
+        System.out.println("############################### /openApplicationPublisherDataServlet ####################################");
+
+        Enumeration en = request.getParameterNames();
 
         while (en.hasMoreElements()) {
             Object objOri = en.nextElement();
@@ -57,20 +58,26 @@ public class openApplicationPublisherDataServlet extends HttpServlet {
             String param = (String) objOri;
 
             String value = request.getParameter(param);
-            
-            if(param.equals("publisherID")){
-                 publisherID = value;
-            }
 
             System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
 
         }
-        
+
+        System.out.println("Enumeration keys   ");
+        Enumeration keys = session.getAttributeNames();
+        while (keys.hasMoreElements()) {
+            String key = (String) keys.nextElement();
+            System.out.println("key  :" + key + ": " + session.getValue(key));
+
+        }
+
+        System.out.println("###################################################################");
+
 //        int pID = (Integer) session.getAttribute("publisherID");
 //        String publisherID = (String) Integer.toString(pID);
 //        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
-                System.out.println("openApplicationPublisherDataServlet publisherID: " + publisherID);
-
+        publisherID = request.getParameter("publisherID");
+        System.out.println("openApplicationPublisherDataServlet publisherID: " + publisherID);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

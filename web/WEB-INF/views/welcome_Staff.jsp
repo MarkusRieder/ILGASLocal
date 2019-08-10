@@ -440,7 +440,7 @@
                     var authors = rowdata.Author;
                     $("#Author").val(authors);
                     if (typeof (rowdata.cover) === "undefined") {
-                        var cver = 'images/not-available.jpg';
+                        var cver = 'ILGAS/images/not-available.jpg';
                     } else {
                         var cver = 'http://localhost' + rowdata.cover + '';
                     }
@@ -464,7 +464,7 @@
                     $("#Author2").val($(this).closest('tr').children()[4].textContent); // uname
 
                     if (typeof (rowdata.cover) === "undefined") {
-                        var cver = 'images/not-available.jpg';
+                        var cver = 'ILGAS/images/not-available.jpg';
                     } else {
                         var cver = 'http://localhost' + rowdata.cover + '';
                     }
@@ -960,7 +960,7 @@
                     $("#appSignedLIContract").val(signedLIContr);
                     document.getElementById("signedLIContract").href = signedLIContr;
                     if (typeof (rowdata.cover) === "undefined") {
-                        var cver = 'images/not-available.jpg';
+                        var cver = 'ILGAS/images/not-available.jpg';
                     } else {
                         var cver = 'http://localhost' + rowdata.cover + '';
                     }

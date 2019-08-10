@@ -162,7 +162,7 @@ public class MailUtil {
         }
     }
 
-    public static void sendEmailRegistrationLink(String uname, String email, String hash) throws AddressException, MessagingException {
+    public static void sendEmailRegistrationLink(String uname, String fullname, String email, String hash) throws AddressException, MessagingException {
         Properties props = new Properties();
 
         props.put("mail.smtp.host", "lh30.dnsireland.com");
@@ -183,8 +183,9 @@ public class MailUtil {
 
             StringBuilder bodyText = new StringBuilder();
             bodyText.append("<div>")
-                    .append("  Dear Irish Literature User,<br/><br/>")
-                    .append("  ")
+                    .append("<p>  Dear ")
+                    .append(fullname)
+                    .append(", </p>")
                     .append("  This email has been sent to validate the email address that you have")
                     .append("  provided for your login to the Literature Ireland Translation Grant Application System (TGA). ")
                     .append("   <br/><br/>")
@@ -315,7 +316,7 @@ public class MailUtil {
                     .append(expectedReturnDate)
                     .append("</strong>. Please let me know if you would like to receive a gratis copy of the finished translation on publication.<br />")
                     .append("<br/><br/>")
-                    .append("We ask that submit an invoice, citing the project reference number, at the same time as your report, along with a completed bank details form. A copy of this form can be requested via email to <a href='mailto:florence@irelandliterature.com'>florence@irelandliterature.com</a>.<br /><br />")
+                    .append("We ask that submit an invoice, citing the project reference number, at the same time as your report, along with a completed bank details form. A copy of this form can be requested via email to <a href='mailto:info@irelandliterature.com'>info@irelandliterature.com</a>.<br /><br />")
                     .append("<br/><br/>")
                     .append("If you have any queries, please do not hesitate to contact me.")
                     .append("<br/><br/>")
@@ -339,7 +340,7 @@ public class MailUtil {
             message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(expertReaderEmail));
-            message.setSubject("Irish Literature - New book for review");
+            message.setSubject("Literature Ireland - New Translation for Review");
 
             // creates message part
             MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -374,6 +375,312 @@ public class MailUtil {
 
         } catch (MessagingException e) {
 
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void sendEmailExpertReaderReportSubmit(String expertReaderName, String ReferenceNumber) throws AddressException, MessagingException {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "lh30.dnsireland.com");
+        props.put("mail.smtp.port", "26");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD);
+            }
+        });
+
+        String LIemail = "online@literatureireland.com";
+        String Testemail = "markus@rieder.ie";
+
+        try {
+
+            StringBuilder bodyText = new StringBuilder();
+            bodyText.append("<div>")
+                    .append("  For your information!!! ")
+                    .append(",<br/><br/>")
+                    .append(expertReaderName)
+                    .append(" has submitted the review for application no.: ")
+                    .append(ReferenceNumber)
+                    .append("<br/><br/>")
+                    .append("</div>");
+
+            //   System.out.println(bodyText);
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(LIemail));
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(Testemail));
+            message.setSubject("Irish Literature - Expert Reader Submission");
+
+            // creates message part
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(bodyText.toString(), "text/html");
+
+            // creates multi-part
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+//            // adds attachments
+//            if (attachFiles != null && attachFiles.length > 0) {
+//                for (String filePath : attachFiles) {
+//
+//                    messageBodyPart = new MimeBodyPart();
+//                    DataSource source = new FileDataSource(filePath);
+//                    messageBodyPart.setDataHandler(new DataHandler(source));
+//                    messageBodyPart.setFileName(filePath);
+//
+//                    multipart.addBodyPart(messageBodyPart);
+//
+//                }
+//            }
+            // sets the multi-part as e-mail's content
+            message.setContent(multipart, "text/html; charset=utf-8");
+
+            //   message.setContent(bodyText.toString(), "text/html; charset=utf-8");
+            message.setSentDate(new Date());
+
+            // sends the e-mail
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void sendEmailExpertReaderInvoiceReceived(String expertReaderName, String ReferenceNumber) throws AddressException, MessagingException {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "lh30.dnsireland.com");
+        props.put("mail.smtp.port", "26");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD);
+            }
+        });
+
+        String LIemail = "online@literatureireland.com";
+        String Testemail = "markus@rieder.ie";
+
+        try {
+
+            StringBuilder bodyText = new StringBuilder();
+
+            bodyText.append("<div>")
+                    .append("  For your information!!! ")
+                    .append(",<br/><br/>")
+                    .append(expertReaderName)
+                    .append(" has submitted the invoice for application no.: ")
+                    .append(ReferenceNumber)
+                    .append("<br/><br/>")
+                    .append("</div>");
+
+            //   System.out.println(bodyText);
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(LIemail));
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(Testemail));
+            message.setSubject("Irish Literature - Expert Reader Invoice received");
+
+            // creates message part
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(bodyText.toString(), "text/html");
+
+            // creates multi-part
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+
+            // sets the multi-part as e-mail's content
+            message.setContent(multipart, "text/html; charset=utf-8");
+
+            //   message.setContent(bodyText.toString(), "text/html; charset=utf-8");
+            message.setSentDate(new Date());
+
+            // sends the e-mail
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void informPublisherAwarded(String Full_Name, String email, String amountRewarded, String ReferenceNumber) throws AddressException, MessagingException {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "lh30.dnsireland.com");
+        props.put("mail.smtp.port", "26");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD);
+            }
+        });
+
+          String LIemail = "online@literatureireland.com";
+          
+        try {
+
+            StringBuilder bodyText = new StringBuilder();
+            bodyText.append("<div>")
+                    .append("  Wohooooo, You're a winner ")
+                    .append(Full_Name)
+                    .append(" <br/><br/>")
+                    .append("  Your application ")
+                    .append(ReferenceNumber)
+                    .append(" for a Translation Grant has been successful! <br/>")
+                    .append("  <br/><br/>")
+                    .append(" Yippee  <br/>")
+                    .append("<br/><br/>")
+                    .append("  We are soooo delighted to inform you that the Amount of  €")
+                    .append(amountRewarded)
+                    .append("  has been awarded <br/>")
+                    .append("<br/><br/>")
+                    .append("Kind regards, <br />")
+                    .append("Rita McCann<br />")
+                    .append("<br/><br/>")
+                    .append("<br/><br/>")
+                    .append("--<br />")
+                    .append("Deputy Director<br />")
+                    .append("Literature Ireland<br />")
+                    .append("<br/><br/>")
+                    .append("Trinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2<br />")
+                    .append("Ireland <br />")
+                    .append("Tel: +353 1 896 4179")
+                    .append("</div>");
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("markus@rieder.ie"));
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(LIemail));
+            message.setSubject("Irish Literature - Your translation grant application");
+            message.setContent(bodyText.toString(), "text/html; charset=utf-8");
+            message.setSentDate(new Date());
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void informPublisherRejected(String Full_Name, String email, String amountRewarded, String ReferenceNumber) throws AddressException, MessagingException {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "lh30.dnsireland.com");
+        props.put("mail.smtp.port", "26");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD);
+            }
+        });
+
+          String LIemail = "online@literatureireland.com";
+          
+        try {
+
+            StringBuilder bodyText = new StringBuilder();
+            bodyText.append("<div>")
+                    .append("  Dear ")
+                    .append(Full_Name)
+                    .append(" <br/><br/>")
+                    .append("  Unfortunately you're the loser in this round  ")
+                    .append(" <br/><br/>")
+                    .append(" No Translation Grant for <br/>")
+                    .append(ReferenceNumber)
+                    .append("  <br/><br/>")
+                    .append(" More Luck next time <br/>")
+                    .append("<br/><br/>")
+                    .append("Kind regards, <br />")
+                    .append("Rita McCann<br />")
+                    .append("<br/><br/>")
+                    .append("<br/><br/>")
+                    .append("--<br />")
+                    .append("Deputy Director<br />")
+                    .append("Literature Ireland<br />")
+                    .append("<br/><br/>")
+                    .append("Trinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2<br />")
+                    .append("Ireland <br />")
+                    .append("Tel: +353 1 896 4179")
+                    .append("</div>");
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("markus@rieder.ie"));
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(LIemail));
+            message.setSubject("Irish Literature - Your translation grant application");
+            message.setContent(bodyText.toString(), "text/html; charset=utf-8");
+            message.setSentDate(new Date());
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void newApplicationNotification(String Publisher, String ReferenceNumber, String today) throws AddressException, MessagingException {
+
+        Properties props = new Properties();
+
+        props.put("mail.smtp.host", "lh30.dnsireland.com");
+        props.put("mail.smtp.port", "26");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD);
+            }
+        });
+
+        try {
+
+            String email = "online@literatureireland.com";
+
+            StringBuilder bodyText = new StringBuilder();
+            bodyText.append("<div>")
+                    .append("<p>  The publisher <strong>")
+                    .append("<br/> ")
+                    .append("<br/> ")
+                    .append(Publisher)
+                    .append("<br/>")
+                    .append("</strong> </p>")
+                    .append("<p> has created a new application with the Reference number ")
+                    .append(ReferenceNumber)
+                    .append("</p> ")
+                    .append("<br/>")
+                    .append("<p> Date: ")
+                    .append(today)
+                    .append("</p> ")
+                    .append("</div>");
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(Setup.MAIL_USERNAME));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("markus@rieder.ie"));
+            message.setSubject("Irish Literature - New Application");
+            message.setContent(bodyText.toString(), "text/html; charset=utf-8");
+            message.setSentDate(new Date());
+            Transport.send(message);
+
+        } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }

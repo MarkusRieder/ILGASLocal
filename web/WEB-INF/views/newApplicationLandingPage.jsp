@@ -184,8 +184,8 @@
 
         <script>
             $(document).ready(function () {
-                        var tcACCEPTED = '${tcACCEPTED}';
-                        var gdprACCEPTED = '${gdprACCEPTED}';
+                var tcACCEPTED = '${tcACCEPTED}';
+                var gdprACCEPTED = '${gdprACCEPTED}';
                 document.getElementById("tcACCEPTED").value = tcACCEPTED;
                 document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
 
@@ -237,7 +237,8 @@
                         <input type="hidden" name="lastname" value ="${lastname}">
                         <input type="hidden" name="name" value ="${name}">
                         <input type="hidden" name="userID" value ="${userID}">
-                        <input type="hidden" name="publisherID" value ="${publisherID}">
+                        <input type="hidden" name="publisherID" id="publisherID" value ="${publisherID}">
+                        <input type="hidden" name="Company_Number" id="Company_Number" value ="${publisherID}">
                         <input type="hidden" name="publisherName" value ="${publisherName}">
                         <input type="hidden" name="task" value="NewApplicationTCconfirmed"> 
                         <div class="background">
@@ -308,6 +309,17 @@
                                             <div style="margin-left: 40px; margin-top: 10px">   
                                                 <a target="_blank" href="http://www.literatureireland.com/privacy-policy/">Read Privacy Policy</a>                                          
                                             </div>
+                                        </div>
+
+                                        <div>
+                                            <!-- NOTE FOR USERS: -->
+                                            <p style="margin-bottom: 1px; font-weight: bold">
+                                                NOTE FOR USERS:
+                                                <br/><br/>
+                                                This site does not use cookies. <br/> 
+                                                Please note that any data entered into the system as part of an application that is not submitted will not be saved. <br/> 
+                                                We recommend that you check you have all of the information and documentation required before beginning the application. 
+                                            </p>
                                         </div>
 
 
@@ -438,7 +450,7 @@
                                                 of the original work (e.g. a PDF). One print copy of the original
                                                 work should also be sent, with the application reference number, by
                                                 post to Literature Ireland, Trinity Centre for Literary Translation,
-                                                36 Fenian Street, Trinity College Dublin, Dublin D02 FK54, Ireland. 
+                                                36 Fenian Street, Trinity College Dublin, Dublin D02 CH22, Ireland. 
                                             </span>
                                         </p>
                                         <li/>
@@ -749,7 +761,7 @@
                                             <span lang="en-IE">Successful applicants are required to post </span><span lang="en-IE"><b>eight
                                                     copies</b></span><span lang="en-IE"> of the published work (gratis)
                                                 to Literature Ireland, Trinity Centre for Literary Translation, 36
-                                                Fenian Street, Trinity College Dublin, Dublin D02 FK54, Ireland.
+                                                Fenian Street, Trinity College Dublin, Dublin D02 CH22, Ireland.
                                                 [</span><span lang="en-IE"><b>French publishers</b></span><span lang="en-IE">
                                                 are requested to send seven copies of the work to this address and
                                                 one copy to: Libraries and Archives Officer, Centre Culturel
@@ -856,15 +868,15 @@
                 <!--footer start-->
                 <div id="base">  
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
-                                <i  onclick="contactUsModal();">Contact Details</i>
-                            </a> &nbsp;|&nbsp; 
-                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
-                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
 
-                        </div><!-- end of BaseText div -->   
+                    </div><!-- end of BaseText div -->   
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
@@ -873,7 +885,6 @@
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-<!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
                 </div><!-- end of Base div -->
             </div>
@@ -883,7 +894,7 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017-2019 mgr Software
         </div>
-         <!--contactUsModal-->
+        <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">

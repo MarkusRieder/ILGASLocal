@@ -147,14 +147,64 @@ public class ACpublisherDAO_test {
         return publisherList;
     }
 
-   
+    public static String[] getpublisherByReferenceNumber(String ReferenceNumber) throws SQLException, ClassNotFoundException {
+        /*
+         * getDocuments returns a list with all data needed for emailing
+         * Publisher
+         * FULL_NAME of user who applied for grant
+         * EMAIL of user who applied for grant
+         * for a specific ReferenceNumber
+         */
+        Connection conn;
+        PreparedStatement ps1;
+        ResultSet res;
+
+        String[] emailDataArray = new String[8];
+        System.out.println("doing getpublisherByReferenceNumber::  ");
+
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps1 = conn.prepareStatement("SELECT * \n"
+                    + "FROM ILGAS.users \n"
+                    + "INNER JOIN \n"
+                    + "ILGAS.GrantApplication ON GrantApplication.userID = users.userID \n"
+                    + " WHERE GrantApplication.ReferenceNumber = ? ");
+
+            ps1.setString(1, ReferenceNumber);
+
+            System.out.println("ps1::  " + ps1);
+
+            res = ps1.executeQuery();
+
+            System.out.println("res::  " + res.toString());
+
+            while (res.next()) {
+
+                System.out.println("FULL_NAME::  " + res.getString("fullName"));
+                System.out.println("EMAIL::  " + res.getString("email"));
+                emailDataArray[0] = res.getString("fullName"); // FULL_NAME of user who applied for grant
+                emailDataArray[1] = res.getString("email"); // EMAIL of user who applied for grant
+
+            }
+
+//            conn.commit();
+            DBConn.close(conn, ps1, res);
+        } catch (ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(ACpublisherDAO_test.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return emailDataArray;
+    }
+
     //isPublisherExists
     /*
      * check if publisher exists
      * @param Company from: RegisterServlet
      * @param returnPublisherID to: RegisterServlet
      */
-    public static String isPublisherExists(String Company) throws DBException {
+    public static String ifPublisherExists(String Company) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         // boolean verified = false;
@@ -167,11 +217,11 @@ public class ACpublisherDAO_test {
 
             ps = conn.prepareStatement("SELECT * FROM ILGAS.international_publishers WHERE Company = ?");
             ps.setString(1, Company);
-            System.out.println("isPublisherExists company: try:: " + ps);
+            System.out.println("ifPublisherExists company: try:: " + ps);
             res = ps.executeQuery();
             if (res != null) {
                 while (res.next()) {
-                    System.out.println("isPublisherExists res:   " + res.getString(1));
+                    System.out.println("ifPublisherExists res:   " + res.getString(1));
 //                    verified = true;
                     returnPublisherID = res.getString(1);
                 }
@@ -181,9 +231,9 @@ public class ACpublisherDAO_test {
 
         } catch (ClassNotFoundException | SQLException e) {
             DBConn.close(conn, ps, res);
-            throw new DBException("isPublisherExists - 3 Excepion while accessing database");
+            throw new DBException("ifPublisherExists - 3 Excepion while accessing database");
         }
-        System.out.println("isPublisherExists :: verified " + returnPublisherID);
+        System.out.println("ifPublisherExists :: verified " + returnPublisherID);
 //        return verified;
         return returnPublisherID;
     }
@@ -371,7 +421,7 @@ public class ACpublisherDAO_test {
             ps1.setInt(2, Company_Number);
 
             System.out.println("ps1 " + ps1.toString());
-            
+
             ps1.executeUpdate();
 
             ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
@@ -526,8 +576,8 @@ public class ACpublisherDAO_test {
 
             ps1 = conn.prepareStatement(sql);
 
-            ps1.setString(1, publisher.getCompany());            
-            ps1.setInt(2, publisher.getCompany_Number());            
+            ps1.setString(1, publisher.getCompany());
+            ps1.setInt(2, publisher.getCompany_Number());
             ps1.setString(3, publisher.getAddress1());
             ps1.setString(4, publisher.getAddress2());
             ps1.setString(5, publisher.getAddress3());
