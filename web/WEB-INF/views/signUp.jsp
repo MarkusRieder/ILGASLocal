@@ -45,6 +45,7 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="js/xregexp-all.js"></script> 
         <script src="js/register.js"></script>
         <script src="js/validator.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
@@ -117,7 +118,7 @@
                 $("#username").change(function () {
                     var username = $("#username").val();
                     var letters = /^[A-Za-z]+$/;
-console.log("username: ", username);
+                    console.log("username: ", username);
                     if (!(username.match(letters))) {
                         $("#errname").show();
 

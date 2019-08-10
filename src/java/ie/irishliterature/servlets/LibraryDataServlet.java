@@ -25,45 +25,49 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet("/LibraryDataServlet")
+@WebServlet( "/LibraryDataServlet" )
 public class LibraryDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public LibraryDataServlet() {
+    public LibraryDataServlet()
+    {
 
         super();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        response.setContentType("application/json");
+        response.setContentType( "application/json" );
 
-        System.out.println("running LibraryDataServlet......  ");
+        System.out.println( "running LibraryDataServlet......  " );
 
         PrintWriter out = response.getWriter();
 
         List listLibrary = null;
 
-        try {
+        try
+        {
 
 //            listLibrary = LibraryDAO.getAllBooks();
             listLibrary = LibraryDAO.listAllLibrary();
-            
-        } catch (DBException ex) {
-            Logger.getLogger(LibraryDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch ( DBException ex )
+        {
+            Logger.getLogger( LibraryDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableLibrary dtl = new DataTableLibrary();
-        dtl.setAaData(listLibrary);
+        dtl.setAaData( listLibrary );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dtl);
-       // System.out.println("json:  " + json);
-        out.print(json);
+        String json = gson.toJson( dtl );
+        // System.out.println("json:  " + json);
+        out.print( json );
 
     }
 }

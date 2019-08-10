@@ -14,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-         <title>Translation Grant Application System</title>
+        <title>Translation Grant Application System</title>
 
         <!-- Bootstrap -->
 
@@ -311,7 +311,7 @@
                                     <option value=" ${row.Company_Number}">${row.Company}</option>
                                 </c:forEach>
                             </select>
-                                  <c:set var="empId" value="${results}"/>
+                            <c:set var="empId" value="${results}"/>
                             <br/>results <div id="results"></div>
                             <br/>
 
@@ -320,9 +320,9 @@
                                     var selected = $(this).val();
                                     $("#results").html("You selected: " + selected);
                                 });
-                              
+
                             </script>
-                            
+
 
                             <!--<form method="POST">-->
 

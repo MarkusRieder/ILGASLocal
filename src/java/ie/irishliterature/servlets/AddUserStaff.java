@@ -26,7 +26,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "AddUserStaff", urlPatterns = {"/AddUserStaff"})
+@WebServlet( name = "AddUserStaff", urlPatterns =
+{
+    "/AddUserStaff"
+} )
 public class AddUserStaff extends HttpServlet {
 
     /**
@@ -39,22 +42,24 @@ public class AddUserStaff extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        response.setContentType( "text/html;charset=UTF-8" );
+        try ( PrintWriter out = response.getWriter() )
+        {
             /*
              * TODO output your page here. You may use following sample code.
              */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddUserStaff</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddUserStaff at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println( "<!DOCTYPE html>" );
+            out.println( "<html>" );
+            out.println( "<head>" );
+            out.println( "<title>Servlet AddUserStaff</title>" );
+            out.println( "</head>" );
+            out.println( "<body>" );
+            out.println( "<h1>Servlet AddUserStaff at " + request.getContextPath() + "</h1>" );
+            out.println( "</body>" );
+            out.println( "</html>" );
         }
     }
 
@@ -69,9 +74,10 @@ public class AddUserStaff extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        processRequest( request, response );
     }
 
     /**
@@ -84,88 +90,92 @@ public class AddUserStaff extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        String username = request.getParameter("StaffUname");
-        String firstname = request.getParameter("StaffFirstname");
-        String lastname = request.getParameter("StaffLastname");
-        String password = request.getParameter("StaffPassword");
-        String email = request.getParameter("StaffEmail");
+        String username = request.getParameter( "StaffUname" );
+        String firstname = request.getParameter( "StaffFirstname" );
+        String lastname = request.getParameter( "StaffLastname" );
+        String password = request.getParameter( "StaffPassword" );
+        String email = request.getParameter( "StaffEmail" );
         String function = "Literature Ireland Staff";
         String role = "";
         int userID = 0;
-        
-        
+
         String fullname = firstname + " " + lastname;
-        
-        System.out.println("AddUserStaff doPost::username " + username);
-        System.out.println("AddUserStaff doPost::firstname " + firstname);
-        System.out.println("AddUserStaff doPost::lastname " + lastname);
-        System.out.println("AddUserStaff doPost::password " + password);
-        System.out.println("AddUserStaff doPost::email " + email);
-        System.out.println("AddUserStaff doPost::function " + function);
-        System.out.println("AddUserStaff doPost::fullname " + fullname);
-        
+
+        System.out.println( "AddUserStaff doPost::username " + username );
+        System.out.println( "AddUserStaff doPost::firstname " + firstname );
+        System.out.println( "AddUserStaff doPost::lastname " + lastname );
+        System.out.println( "AddUserStaff doPost::password " + password );
+        System.out.println( "AddUserStaff doPost::email " + email );
+        System.out.println( "AddUserStaff doPost::function " + function );
+        System.out.println( "AddUserStaff doPost::fullname " + fullname );
+
         Status sp = new Status();
         String output = "";
         String message = "";
 
         User user = new User();
-        user.setUSERNAME(username);
-        user.setFIRST_NAME(firstname);
-        user.setLAST_NAME(lastname);
-        user.setFull_NAME(fullname);
+        user.setUSERNAME( username );
+        user.setFIRST_NAME( firstname );
+        user.setLAST_NAME( lastname );
+        user.setFull_NAME( fullname );
 
         /*
          * generate hash for password
          */
-        user.setPASSWORD(BCrypt.hashpw(password, GlobalConstants.SALT));
+        user.setPASSWORD( BCrypt.hashpw( password, GlobalConstants.SALT ) );
 
-        user.setEMAIL(email);
+        user.setEMAIL( email );
 
         /*
          * generate hash code for email verification
          */
-        String hash = Utils.prepareRandomString(30);
+        String hash = Utils.prepareRandomString( 30 );
 
         /*
          * generate hash for password
          */
-        user.setEMAIL_VERIFICATION_HASH(BCrypt.hashpw(hash, GlobalConstants.SALT));
+        user.setEMAIL_VERIFICATION_HASH( BCrypt.hashpw( hash, GlobalConstants.SALT ) );
 
-        if (role
-                == null) {
+        if ( role
+                == null )
+        {
             role = "not assigned";
         }
 
-        user.setROLE(role);
+        user.setROLE( role );
 
-        user.setFUNCTION(function);
+        user.setFUNCTION( function );
 
-        try {
+        try
+        {
 
             /*
              * check whether email exists or not
              */
-            if (!ApplicationDAO.isEmailExists(email)) {
+            if ( !ApplicationDAO.isEmailExists( email ) )
+            {
 
-                System.out.println("isEmailExists Not:: ");
+                System.out.println( "isEmailExists Not:: " );
 
                 /*
                  * create account if email not exists
                  */
-                userID = ApplicationDAO.insertRow(user);
-                System.out.println("userID:: " + userID);
+                userID = ApplicationDAO.insertRow( user );
+                System.out.println( "userID:: " + userID );
 
 
                 /*
                  * send verification email
                  */
-                MailUtil.sendEmailRegistrationLinkNewStaff(username,firstname, password, email, hash);
+                MailUtil.sendEmailRegistrationLinkNewStaff( username, firstname, password, email, hash );
 
                 message = "New Staff member <strong>" + fullname + "</strong> has been created  <br/><br/>and email has been sent";
-            } else {
+            } else
+            {
                 /*
                  * tell user that the email already in use
                  */
@@ -174,15 +184,15 @@ public class AddUserStaff extends HttpServlet {
             }
 
 //ENSURE signup is validated
-
-        } catch (DBException | MessagingException e) {
-            sp.setCode(-1);
-            sp.setMessage(e.getMessage());
-            output = Utils.toJson(sp);
+        } catch ( DBException | MessagingException e )
+        {
+            sp.setCode( -1 );
+            sp.setMessage( e.getMessage() );
+            output = Utils.toJson( sp );
         }
 
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/WEB-INF/views/AddNewStaffRegistrationMessage.jsp").forward(request, response);
+        request.setAttribute( "message", message );
+        request.getRequestDispatcher( "/WEB-INF/views/AddNewStaffRegistrationMessage.jsp" ).forward( request, response );
     }
 
     /**
@@ -191,7 +201,8 @@ public class AddUserStaff extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 

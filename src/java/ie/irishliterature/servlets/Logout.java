@@ -2,6 +2,8 @@ package ie.irishliterature.servlets;
 
 import ie.irishliterature.util.GlobalConstants;
 import java.io.IOException;
+import java.util.Enumeration;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Logout
  */
-@WebServlet("/Logout")
+@WebServlet( "/Logout" )
 public class Logout extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -20,7 +22,8 @@ public class Logout extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public Logout()
+    {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,15 +38,36 @@ public class Logout extends HttpServlet {
      * response)
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
 
+        System.out.println( "Logout servlet called" );
         /*
          * Getting session and then invalidating it
          */
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession( false );
 
-        if (request.isRequestedSessionIdValid() && session != null) {
+        ServletContext context = request.getSession().getServletContext();
 
+        System.out.println( "\n" + " ############################ Logout servlet  #######################################" + "\n" );
+
+        System.out.println( "Logout servlet \n " );
+        System.out.println( "Enumeration keys   " );
+        Enumeration keys = context.getAttributeNames();
+        while ( keys.hasMoreElements() )
+        {
+            String key = ( String ) keys.nextElement();
+            if ( key == "currentusers" || key == "userData" || key == "logins" )
+            {
+                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+            }
+        }
+
+        System.out.println( "\n" + " ############################ END Logout servlet  #######################################" + "\n" );
+
+        if ( request.isRequestedSessionIdValid() && session != null )
+        {
+            System.out.println( "Logout servlet session.invalidate()" );
             session.invalidate();
 
         }
@@ -60,9 +84,8 @@ public class Logout extends HttpServlet {
 //
 //            response.addCookie(cookie);
 //        }
-
-        request.getSession().setAttribute(GlobalConstants.USER, null);
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        request.getSession().setAttribute( GlobalConstants.USER, null );
+        request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
 
     }
 
@@ -75,7 +98,8 @@ public class Logout extends HttpServlet {
 //            session.invalidate();
     /**
      *
-     * This method would edit the cookie information and make JSESSIONID empty
+     * This method would edit the cookie information and make JSESSIONID
+     * empty
      *
      * while responding to logout. This would further help in order to. This
      * would help

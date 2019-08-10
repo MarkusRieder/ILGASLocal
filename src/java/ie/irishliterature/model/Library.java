@@ -21,7 +21,7 @@ public class Library {
     private String Publisheryear;
 
     private String Genre;
-    
+
     private String Series;
 
     private String translationTitle;
@@ -32,7 +32,7 @@ public class Library {
 
     private ArrayList<String> Translator;
 
-    private ArrayList<String>  Language;
+    private ArrayList<String> Language;
 
     private String physicalDescription;
 
@@ -49,314 +49,358 @@ public class Library {
     private String ISBN;
 
     private String ISSN;
-    
+
     private java.sql.Timestamp LASTUPDATED;
 
     /**
      * @return the bookID
      */
-    public int getBookID() {
+    public int getBookID()
+    {
         return bookID;
     }
 
     /**
      * @param bookID the bookID to set
      */
-    public void setBookID(int bookID) {
+    public void setBookID( int bookID )
+    {
         this.bookID = bookID;
     }
 
     /**
      * @return the referenceNumber
      */
-    public String getReferenceNumber() {
+    public String getReferenceNumber()
+    {
         return referenceNumber;
     }
 
     /**
      * @param referenceNumber the referenceNumber to set
      */
-    public void setReferenceNumber(String referenceNumber) {
+    public void setReferenceNumber( String referenceNumber )
+    {
         this.referenceNumber = referenceNumber;
     }
 
     /**
      * @return the Author
      */
-    public ArrayList<String> getAuthor() {
+    public ArrayList<String> getAuthor()
+    {
         return Author;
     }
 
     /**
      * @param Author the Author to set
      */
-    public void setAuthor(ArrayList<String> Author) {
+    public void setAuthor( ArrayList<String> Author )
+    {
         this.Author = Author;
     }
 
     /**
      * @return the Title
      */
-    public String getTitle() {
+    public String getTitle()
+    {
         return Title;
     }
 
     /**
      * @param Title the Title to set
      */
-    public void setTitle(String Title) {
+    public void setTitle( String Title )
+    {
         this.Title = Title;
     }
 
     /**
      * @return the Publisher
      */
-    public String getPublisher() {
+    public String getPublisher()
+    {
         return Publisher;
     }
 
     /**
      * @param Publisher the Publisher to set
      */
-    public void setPublisher(String Publisher) {
+    public void setPublisher( String Publisher )
+    {
         this.Publisher = Publisher;
     }
 
     /**
      * @return the Publisheryear
      */
-    public String getPublisheryear() {
+    public String getPublisheryear()
+    {
         return Publisheryear;
     }
 
     /**
      * @param Publisheryear the Publisheryear to set
      */
-    public void setPublisheryear(String Publisheryear) {
+    public void setPublisheryear( String Publisheryear )
+    {
         this.Publisheryear = Publisheryear;
     }
 
     /**
      * @return the Genre
      */
-    public String getGenre() {
+    public String getGenre()
+    {
         return Genre;
     }
 
     /**
      * @param Genre the Genre to set
      */
-    public void setGenre(String Genre) {
+    public void setGenre( String Genre )
+    {
         this.Genre = Genre;
     }
 
     /**
      * @return the translationTitle
      */
-    public String getTranslationTitle() {
+    public String getTranslationTitle()
+    {
         return translationTitle;
     }
 
     /**
      * @param translationTitle the translationTitle to set
      */
-    public void setTranslationTitle(String translationTitle) {
+    public void setTranslationTitle( String translationTitle )
+    {
         this.translationTitle = translationTitle;
     }
 
     /**
      * @return the translationPublisher
      */
-    public String getTranslationPublisher() {
+    public String getTranslationPublisher()
+    {
         return translationPublisher;
     }
 
     /**
      * @param translationPublisher the translationPublisher to set
      */
-    public void setTranslationPublisher(String translationPublisher) {
+    public void setTranslationPublisher( String translationPublisher )
+    {
         this.translationPublisher = translationPublisher;
     }
 
     /**
      * @return the translationPublisherYear
      */
-    public String getTranslationPublisherYear() {
+    public String getTranslationPublisherYear()
+    {
         return translationPublisherYear;
     }
 
     /**
      * @param translationPublisherYear the translationPublisherYear to set
      */
-    public void setTranslationPublisherYear(String translationPublisherYear) {
+    public void setTranslationPublisherYear( String translationPublisherYear )
+    {
         this.translationPublisherYear = translationPublisherYear;
     }
 
     /**
      * @return the Translator
      */
-    public ArrayList<String>getTranslator() {
+    public ArrayList<String> getTranslator()
+    {
         return Translator;
     }
 
     /**
      * @param Translator the Translator to set
      */
-    public void setTranslator(ArrayList<String> Translator) {
+    public void setTranslator( ArrayList<String> Translator )
+    {
         this.Translator = Translator;
     }
 
     /**
      * @return the Language
      */
-    public ArrayList<String>  getLanguage() {
+    public ArrayList<String> getLanguage()
+    {
         return Language;
     }
 
     /**
      * @param Language the Language to set
      */
-    public void setLanguage(ArrayList<String>  Language) {
+    public void setLanguage( ArrayList<String> Language )
+    {
         this.Language = Language;
     }
 
     /**
      * @return the physicalDescription
      */
-    public String getPhysicalDescription() {
+    public String getPhysicalDescription()
+    {
         return physicalDescription;
     }
 
     /**
      * @param physicalDescription the physicalDescription to set
      */
-    public void setPhysicalDescription(String physicalDescription) {
+    public void setPhysicalDescription( String physicalDescription )
+    {
         this.physicalDescription = physicalDescription;
     }
 
     /**
      * @return the Duplicates
      */
-    public int getDuplicates() {
+    public int getDuplicates()
+    {
         return Duplicates;
     }
 
     /**
      * @param Duplicates the Duplicates to set
      */
-    public void setDuplicates(int Duplicates) {
+    public void setDuplicates( int Duplicates )
+    {
         this.Duplicates = Duplicates;
     }
 
     /**
      * @return the Copies
      */
-    public String getCopies() {
+    public String getCopies()
+    {
         return Copies;
     }
 
     /**
      * @param Copies the Copies to set
      */
-    public void setCopies(String Copies) {
+    public void setCopies( String Copies )
+    {
         this.Copies = Copies;
     }
 
     /**
      * @return the Notes
      */
-    public String getNotes() {
+    public String getNotes()
+    {
         return Notes;
     }
 
     /**
      * @param Notes the Notes to set
      */
-    public void setNotes(String Notes) {
+    public void setNotes( String Notes )
+    {
         this.Notes = Notes;
     }
 
     /**
      * @return the ISBN
      */
-    public String getISBN() {
+    public String getISBN()
+    {
         return ISBN;
     }
 
     /**
      * @param ISBN the ISBN to set
      */
-    public void setISBN(String ISBN) {
+    public void setISBN( String ISBN )
+    {
         this.ISBN = ISBN;
     }
 
     /**
      * @return the ISSN
      */
-    public String getISSN() {
+    public String getISSN()
+    {
         return ISSN;
     }
 
     /**
      * @param ISSN the ISSN to set
      */
-    public void setISSN(String ISSN) {
+    public void setISSN( String ISSN )
+    {
         this.ISSN = ISSN;
     }
 
     /**
      * @return the LASTUPDATED
      */
-    public java.sql.Timestamp getLASTUPDATED() {
+    public java.sql.Timestamp getLASTUPDATED()
+    {
         return LASTUPDATED;
     }
 
     /**
      * @param LASTUPDATED the LASTUPDATED to set
      */
-    public void setLASTUPDATED(java.sql.Timestamp LASTUPDATED) {
+    public void setLASTUPDATED( java.sql.Timestamp LASTUPDATED )
+    {
         this.LASTUPDATED = LASTUPDATED;
     }
 
     /**
      * @return the coverName
      */
-    public String getCoverName() {
+    public String getCoverName()
+    {
         return coverName;
     }
 
     /**
      * @param coverName the coverName to set
      */
-    public void setCoverName(String coverName) {
+    public void setCoverName( String coverName )
+    {
         this.coverName = coverName;
     }
 
     /**
      * @return the cover
      */
-    public String getCover() {
+    public String getCover()
+    {
         return cover;
     }
 
     /**
      * @param cover the cover to set
      */
-    public void setCover(String cover) {
+    public void setCover( String cover )
+    {
         this.cover = cover;
     }
 
     /**
      * @return the Series
      */
-    public String getSeries() {
+    public String getSeries()
+    {
         return Series;
     }
 
     /**
      * @param Series the Series to set
      */
-    public void setSeries(String Series) {
+    public void setSeries( String Series )
+    {
         this.Series = Series;
     }
 

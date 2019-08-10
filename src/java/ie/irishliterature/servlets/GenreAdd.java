@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "GenreAdd", urlPatterns = {"/GenreAdd"})
+@WebServlet( name = "GenreAdd", urlPatterns =
+{
+    "/GenreAdd"
+} )
 public class GenreAdd extends HttpServlet {
 
     /**
@@ -34,22 +37,24 @@ public class GenreAdd extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        response.setContentType( "text/html;charset=UTF-8" );
+        try ( PrintWriter out = response.getWriter() )
+        {
             /*
              * TODO output your page here. You may use following sample code.
              */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GenreDelete</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GenreDelete at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println( "<!DOCTYPE html>" );
+            out.println( "<html>" );
+            out.println( "<head>" );
+            out.println( "<title>Servlet GenreDelete</title>" );
+            out.println( "</head>" );
+            out.println( "<body>" );
+            out.println( "<h1>Servlet GenreDelete at " + request.getContextPath() + "</h1>" );
+            out.println( "</body>" );
+            out.println( "</html>" );
         }
     }
 
@@ -64,10 +69,11 @@ public class GenreAdd extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        System.out.println("GenreAdd doGet ");
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+
+        System.out.println( "GenreAdd doGet " );
     }
 
     /**
@@ -80,10 +86,11 @@ public class GenreAdd extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        System.out.println("GenreAdd doPost ");
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+
+        System.out.println( "GenreAdd doPost " );
 //        Enumeration en = request.getParameterNames();
 //
 //        while (en.hasMoreElements()) {
@@ -103,21 +110,21 @@ public class GenreAdd extends HttpServlet {
 //            System.out.println("pendingApplicationDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute(attribute));
 //        }
 
-        System.out.println("genre:  " + request.getParameter("genre"));
-     
-        String genres = request.getParameter("genre");
-        
+        System.out.println( "genre:  " + request.getParameter( "genre" ) );
+
+        String genres = request.getParameter( "genre" );
+
         boolean result = false;
-      
-        try {
+
+        try
+        {
             result = GenresDAO.insertGenre( genres );
-        } catch (DBException ex) {
-            Logger.getLogger(GenreAdd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( DBException ex )
+        {
+            Logger.getLogger( GenreAdd.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        
-        
-        
-System.out.println("result  " + result);
+
+        System.out.println( "result  " + result );
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Your Input Date Format
 //        Date date = null;
 //        try {
@@ -130,7 +137,7 @@ System.out.println("result  " + result);
 
 //        out.print("<h2 align=\"left\">" + ft.format(date) + "</h2>");
 //        out.print("<h2 align=\"left\">" + id + "</h2>");
-        response.setContentType("text/html");
+        response.setContentType( "text/html" );
         PrintWriter out = response.getWriter();
 
 //        out.println("<html><body>");
@@ -158,7 +165,8 @@ System.out.println("result  " + result);
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 

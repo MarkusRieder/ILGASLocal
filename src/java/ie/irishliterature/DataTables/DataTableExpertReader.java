@@ -24,43 +24,53 @@ public class DataTableExpertReader {
 
     List<User> aaData;
 
-    public int getiTotalRecords() {
+    public int getiTotalRecords()
+    {
         return iTotalRecords;
     }
 
-    public void setiTotalRecords(int iTotalRecords) {
+    public void setiTotalRecords( int iTotalRecords )
+    {
         this.iTotalRecords = iTotalRecords;
     }
 
-    public int getiTotalDisplayRecords() {
+    public int getiTotalDisplayRecords()
+    {
         return iTotalDisplayRecords;
     }
 
-    public void setiTotalDisplayRecords(int iTotalDisplayRecords) {
+    public void setiTotalDisplayRecords( int iTotalDisplayRecords )
+    {
         this.iTotalDisplayRecords = iTotalDisplayRecords;
     }
 
-    public String getsEcho() {
+    public String getsEcho()
+    {
         return sEcho;
     }
 
-    public void setsEcho(String sEcho) {
+    public void setsEcho( String sEcho )
+    {
         this.sEcho = sEcho;
     }
 
-    public String getsColumns() {
+    public String getsColumns()
+    {
         return sColumns;
     }
 
-    public void setsColumns(String sColumns) {
+    public void setsColumns( String sColumns )
+    {
         this.sColumns = sColumns;
     }
 
-    public List<User> getAaData() {
+    public List<User> getAaData()
+    {
         return aaData;
     }
 
-    public void setAaData(List<User> aaData) {
+    public void setAaData( List<User> aaData )
+    {
         this.aaData = aaData;
     }
 

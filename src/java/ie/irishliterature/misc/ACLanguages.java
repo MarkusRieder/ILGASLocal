@@ -6,6 +6,8 @@
 package ie.irishliterature.misc;
 
 import com.google.gson.Gson;
+import ie.irishliterature.dao.ACLanguagesDAO;
+import ie.irishliterature.model.AClanguages;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -16,52 +18,60 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ie.irishliterature.dao.ACLanguagesDAO;
-import ie.irishliterature.model.AClanguages;
-
 /**
  *
  * @author markus
  */
-@WebServlet(name = "ACLanguages", urlPatterns = {"/ACLanguages"})
+@WebServlet( name = "ACLanguages", urlPatterns =
+{
+    "/ACLanguages"
+} )
 public class ACLanguages extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public ACLanguages() {
+    public ACLanguages()
+    {
 
         super();
 
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String text = request.getParameter("term");
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
 
-        System.out.println(
-                "term:: " + text);
+        response.setContentType( "application/json" );
+        response.setCharacterEncoding( "UTF-8" );
+
+        String text = request.getParameter( "term" );
+
+        System.out.println( "/ACLanguages term:: " + text );
 
         ACLanguagesDAO languagesDAO = new ACLanguagesDAO();
 
-        try {
+        try
+        {
 
-            ArrayList<AClanguages> languages = languagesDAO.getLanguage(text);
+            ArrayList<AClanguages> languages = languagesDAO.getLanguage( text );
 
-            languages.stream().map((language) -> {
-                //  System.out.println(genre.getValue());
+            languages.stream().map( ( language ) ->
+            {
+                System.out.println( language.getValue() );
                 return language;
-            }).forEachOrdered((AClanguages language) -> {
-                //      System.out.println(country.getId());
-            });
+            } ).forEachOrdered( ( AClanguages language ) ->
+            {
+                System.out.println( language.getId() );
+            } );
 
-            String searchResult = new Gson().toJson(languages);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            String searchResult = new Gson().toJson( languages );
+
             PrintWriter writer = response.getWriter();
-            writer.write(searchResult);
+            writer.write( searchResult );
 
-        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
+        } catch ( IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e )
+        {
         }
     }
 }

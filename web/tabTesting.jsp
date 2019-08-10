@@ -157,16 +157,16 @@
 
                                 <h2>Translation Grant Programme Application Checklist</h2>
 
-<div id="divUser">
-    Welcome ${username} ${name}
-    
- 
-</div>
+                                <div id="divUser">
+                                    Welcome ${username} ${name}
 
-<% 
-String name=(String)session.getAttribute("username"); 
-out.print("Hello User: You have entered the name: "+name); 
-%> 
+
+                                </div>
+
+                                <% 
+                                String name=(String)session.getAttribute("username"); 
+                                out.print("Hello User: You have entered the name: "+name); 
+                                %> 
                                 <ul class="dashed">
                                     <li>Your application to the Literature Ireland Translation Grant Programme should include the following:</li>
                                 </ul>

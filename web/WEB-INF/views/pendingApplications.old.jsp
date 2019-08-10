@@ -120,7 +120,7 @@
                 <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid" style="margin-bottom: 20px"></div>
-           
+
                 <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
                     <h3 align="center" style="align-content: center">Display pending applications</h3>
 
@@ -197,7 +197,7 @@
                         <button type = "submit" class = "btn btn-default btn-sm"  name="List Open Applications">
                             List Open Applications
                         </button>
-                        
+
                         <button type = "submit" class = "btn btn-default btn-sm active" name="List Pending Applications">
                             List Pending Applications
                         </button>

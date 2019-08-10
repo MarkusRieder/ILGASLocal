@@ -25,70 +25,78 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-
-@WebServlet(name = "UserDataServlet", urlPatterns = {"/UserDataServlet"})
+@WebServlet( name = "UserDataServlet", urlPatterns =
+{
+    "/UserDataServlet"
+} )
 public class UserDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-      public UserDataServlet() {
-          
-          super();
-    }
+    public UserDataServlet()
+    {
 
+        super();
+    }
 
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
+     *
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("UserDataServlet:  ");
+        System.out.println( "UserDataServlet:  " );
 
-        response.setContentType("application/json");
+        response.setContentType( "application/json" );
 
         PrintWriter out = response.getWriter();
 
         List listUsers = null;
 
-        try {
+        try
+        {
 
             listUsers = UserDAO.getAllUsers();
 
-        } catch (ClassNotFoundException | DBException ex) {
-            Logger.getLogger(UserDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( ClassNotFoundException | DBException ex )
+        {
+            Logger.getLogger( UserDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableUser dtu = new DataTableUser();
-        dtu.setAaData(listUsers);
+        dtu.setAaData( listUsers );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dtu);
-   //     System.out.println("json:  " + json);
-        out.print(json);
+        String json = gson.toJson( dtu );
+        //     System.out.println("json:  " + json);
+        out.print( json );
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
+     *
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        System.out.println("UserDataServlet:  ");
-        doGet(request, response);
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+
+        System.out.println( "UserDataServlet:  " );
+        doGet( request, response );
     }
 
     /**
@@ -97,7 +105,8 @@ public class UserDataServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }
 

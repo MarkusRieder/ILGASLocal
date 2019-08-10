@@ -26,17 +26,20 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "ExpertReadingListDataServlet", urlPatterns = {"/ExpertReadingListDataServlet"})
+@WebServlet( name = "ExpertReadingListDataServlet", urlPatterns =
+{
+    "/ExpertReadingListDataServlet"
+} )
 public class ExpertReadingListDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public ExpertReadingListDataServlet() {
+    public ExpertReadingListDataServlet()
+    {
 
         super();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -47,36 +50,34 @@ public class ExpertReadingListDataServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        response.setContentType("application/json");
+        response.setContentType( "application/json" );
         PrintWriter out = response.getWriter();
-        String userID = request.getParameter("userID");
-        
-        System.out.println("userID  " + userID);
+        String userID = request.getParameter( "userID" );
+
+        System.out.println( "ExpertReadingListDataServlet userID  " + userID );
         List readingListExpertReader = null;
 
-        try {
-            readingListExpertReader = ExpertReaderDAO.getExpertReaderOpenReadings(userID);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ExpertReadingListDataServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ExpertReadingListDataServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DBException ex) {
-            Logger.getLogger(ExpertReadingListDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            readingListExpertReader = ExpertReaderDAO.getExpertReaderOpenReadings( userID );
+        } catch ( ClassNotFoundException | SQLException | DBException ex )
+        {
+            Logger.getLogger( ExpertReadingListDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        
-//              System.out.println("listExpertReader:  " + listExpertReader);
 
+//              System.out.println("listExpertReader:  " + listExpertReader);
         DataTableExpertReader dter = new DataTableExpertReader();
-        dter.setAaData(readingListExpertReader);
+        dter.setAaData( readingListExpertReader );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dter);
-        System.out.println("json:  " + json);
-        out.print(json);
+        String json = gson.toJson( dter );
+        System.out.println( "json:  " + json );
+        out.print( json );
     }
 
     /**
@@ -89,8 +90,9 @@ public class ExpertReadingListDataServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
     }
 
@@ -100,8 +102,9 @@ public class ExpertReadingListDataServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

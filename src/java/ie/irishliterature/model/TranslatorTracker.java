@@ -7,12 +7,10 @@ package ie.irishliterature.model;
 
 import java.util.ArrayList;
 
-
 /**
  *
  * @author markus
  */
-
 public class TranslatorTracker {
 
     private String translatorID;
@@ -30,75 +28,86 @@ public class TranslatorTracker {
     /**
      * @return the translatorID
      */
-    public String getTranslatorID() {
+    public String getTranslatorID()
+    {
         return translatorID;
     }
 
     /**
      * @param translatorID the translatorID to set
      */
-    public void setTranslatorID(String translatorID) {
+    public void setTranslatorID( String translatorID )
+    {
         this.translatorID = translatorID;
     }
 
     /**
      * @return the translatorName
      */
-    public String getTranslatorName() {
+    public String getTranslatorName()
+    {
         return translatorName;
     }
 
     /**
      * @param translatorName the translatorName to set
      */
-    public void setTranslatorName(String translatorName) {
+    public void setTranslatorName( String translatorName )
+    {
         this.translatorName = translatorName;
     }
 
     /**
      * @return the ReferenceNumber
      */
-    public String getReferenceNumber() {
+    public String getReferenceNumber()
+    {
         return ReferenceNumber;
     }
 
     /**
      * @param ReferenceNumber the ReferenceNumber to set
      */
-    public void setReferenceNumber(String ReferenceNumber) {
+    public void setReferenceNumber( String ReferenceNumber )
+    {
         this.ReferenceNumber = ReferenceNumber;
     }
 
     /**
      * @return the titles
      */
-    public ArrayList<String> getTitles() {
+    public ArrayList<String> getTitles()
+    {
         return titles;
     }
 
     /**
      * @param titles the titles to set
      */
-    public void setTitles(ArrayList<String> titles) {
+    public void setTitles( ArrayList<String> titles )
+    {
         this.titles = titles;
     }
 
     /**
      * @return the authorName
      */
-    public ArrayList<String> getAuthorName() {
+    public ArrayList<String> getAuthorName()
+    {
         return authorName;
     }
 
     /**
      * @param authorName the authorName to set
      */
-    public void setAuthorName(ArrayList<String> authorName) {
+    public void setAuthorName( ArrayList<String> authorName )
+    {
         this.authorName = authorName;
     }
-    
-    
-  @Override public String toString() {
-    return "ToStringExample(" + this.getTranslatorID() + ", " + this.getTranslatorName() + ", " + this.getTitles() + ", " + this.getReferenceNumber() + ", " + this.getAuthorName() + ")";
-  }
+
+    @Override
+    public String toString()
+    {
+        return "ToStringExample(" + this.getTranslatorID() + ", " + this.getTranslatorName() + ", " + this.getTitles() + ", " + this.getReferenceNumber() + ", " + this.getAuthorName() + ")";
+    }
 }

@@ -151,12 +151,13 @@
                         <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
                     </div>
                 </div><!-- end of Base div -->
-            </div>
-            <!-- end of container div -->
+            </div><!-- end of container div -->
             <div class="shadowbase"> </div>
-        </div><!-- end of Shadow container div -->
+        </div><!-- end of Shadowholder container div -->
+
+
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017 mgr Software
+            &copy; 2017-2019 mgr Software
         </div>
     </body>
 </html>

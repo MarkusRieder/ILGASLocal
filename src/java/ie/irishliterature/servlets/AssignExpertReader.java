@@ -5,6 +5,7 @@
  */
 package ie.irishliterature.servlets;
 
+import ie.irishliterature.dao.GrantApplicationDAO;
 import static ie.irishliterature.dao.GrantApplicationDAO.getAttachments;
 import static ie.irishliterature.dao.GrantApplicationDAO.getExpertReaderEmail;
 import static ie.irishliterature.dao.GrantApplicationDAO.getExpertReaderUserID;
@@ -33,11 +34,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "AssignExpertReader", urlPatterns = {"/AssignExpertReader"})
+@WebServlet( name = "AssignExpertReader", urlPatterns =
+{
+    "/AssignExpertReader"
+} )
 public class AssignExpertReader extends HttpServlet {
 
     private final static Logger LOGGER
-            = Logger.getLogger(AssignExpertReader.class.getCanonicalName());
+            = Logger.getLogger( AssignExpertReader.class.getCanonicalName() );
     private static final long serialVersionUID = 7908187011456392847L;
 
     ////////////////////////////////////////////////////////////////////////////
@@ -55,14 +59,15 @@ public class AssignExpertReader extends HttpServlet {
     private String message = "";
 
     @Override
-    public void init() {
+    public void init()
+    {
 
         // Get the file location where they would be stored.
         tempPath = "/home/markus/test/tempDir";
         rootPath = "/home/markus/public_html/test";
 
-        System.out.println("file location :tempPath: " + tempPath);
-        System.out.println("file location :rootPath: " + rootPath);
+        System.out.println( "file location :tempPath: " + tempPath );
+        System.out.println( "file location :rootPath: " + rootPath );
     }
 
     /**
@@ -75,53 +80,54 @@ public class AssignExpertReader extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+
         String expertReaderEmail = "";
         List<String[]> fileAttachment = new ArrayList<>();
 
-        String expertReaderName = request.getParameter("selectedUnassignedER");
-        String expectedReturnDate = request.getParameter("expectedReturnDate");
+        String expertReaderName = request.getParameter( "selectedUnassignedER" );
+        String expectedReturnDate = request.getParameter( "expectedReturnDate" );
 
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>  AssignExpertReader GrantApplicationServlet<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-        
-        
+        System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>  AssignExpertReader GrantApplicationServlet<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
+
         Enumeration en = request.getParameterNames();
 
-        while (en.hasMoreElements()) {
+        while ( en.hasMoreElements() )
+        {
             Object objOri = en.nextElement();
 
-            String param = (String) objOri;
+            String param = ( String ) objOri;
 
-            String value = request.getParameter(param);
+            String value = request.getParameter( param );
 
 //            if ("ReferenceNumber".equals(param)) {
 //                ReferenceNumber = value;
 //            }
-            System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+            System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
 
         }
 
-        System.out.println(" expertReaderName " + expertReaderName);
-        System.out.println(" expectedReturnDate " + expectedReturnDate);
+        System.out.println( " expertReaderName " + expertReaderName );
+        System.out.println( " expectedReturnDate " + expectedReturnDate );
 
-        
-        String newAssignedReferenceNumber = request.getParameter("NewAssignedERRefNo");
-        System.out.println(" newAssignedReferenceNumber " + newAssignedReferenceNumber);
+        String newAssignedReferenceNumber = request.getParameter( "NewAssignedERRefNo" );
+        System.out.println( " newAssignedReferenceNumber " + newAssignedReferenceNumber );
         int expertReaderUserID = 0;
-        try {
+        try
+        {
 
-            expertReaderUserID = getExpertReaderUserID(expertReaderName);
-            expertReaderEmail = getExpertReaderEmail(expertReaderName);
-            fileAttachment = getAttachments(newAssignedReferenceNumber);
+            expertReaderUserID = getExpertReaderUserID( expertReaderName );
+            expertReaderEmail = getExpertReaderEmail( expertReaderName );
+            fileAttachment = getAttachments( newAssignedReferenceNumber );
 
-            System.out.println(" expertReaderUserID " + expertReaderUserID);
-            System.out.println(" expertReaderEmail " + expertReaderEmail);
+            System.out.println( " expertReaderUserID " + expertReaderUserID );
+            System.out.println( " expertReaderEmail " + expertReaderEmail );
 
-        } catch (DBException ex) {
-            Logger.getLogger(AssignExpertReader.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( DBException ex )
+        {
+            Logger.getLogger( AssignExpertReader.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         String originalPath;
@@ -134,55 +140,70 @@ public class AssignExpertReader extends HttpServlet {
         ////////////////////////////////////////////////////////////
         ExpertReader expertReader = new ExpertReader();
 
-        expertReader.setExpertReaderUserID(expertReaderUserID);
-        expertReader.setExpertReaderName(expertReaderName);
-        expertReader.setReferenceNumber(newAssignedReferenceNumber);
+        expertReader.setExpertReaderUserID( expertReaderUserID );
+        expertReader.setExpertReaderName( expertReaderName );
+        expertReader.setReferenceNumber( newAssignedReferenceNumber );
 
         {
-            try {
-                String[] attachFiles = new String[2];
+            try
+            {
+                String[] attachFiles = new String[ 2 ];
 
-                for (String[] filePath : fileAttachment) {
-                    System.out.println(" filePath 1 AssignExpertReader " + filePath[1]);
-                    System.out.println(" filePath 3 AssignExpertReader " + filePath[3]);
+                for ( String[] filePath : fileAttachment )
+                {
+                    System.out.println( " filePath 1 AssignExpertReader " + filePath[ 1 ] );
+                    System.out.println( " filePath 3 AssignExpertReader " + filePath[ 3 ] );
 
-                    originalPath = filePath[1].replace("~markus", "/home/markus/public_html/test");
-                    originalName = filePath[2];
+//Info:   filePath 1 AssignExpertReader /~markus/test/2019/Discworld Publishers/59/Original/copy of original work.docx
+//Info:   filePath 3 AssignExpertReader /~markus/test/2019/Discworld Publishers/59/TranslationSample/translation sample.docx
+//
+//  nested exception is:
+//java.io.FileNotFoundException: /home/markus/public_html/test/test/2019/Discworld Publishers/59/Original/copy of original work.docx (No such file or directory)
+//        
+//        in database:
+//        /~markus/test/2019/Discworld Publishers/59/Original/copy of original work.docx
+                    originalPath = filePath[ 1 ].replace( "~markus", "/home/markus/public_html" );
+                    originalName = filePath[ 2 ];
 
-                    translationPath = filePath[3].replace("~markus", "/home/markus/public_html/test");
-                    translationName = filePath[4];
+                    translationPath = filePath[ 3 ].replace( "~markus", "/home/markus/public_html" );
+                    translationName = filePath[ 4 ];
 
-                    attachFiles[0] = originalPath;
-                    attachFiles[1] = translationPath;
+                    attachFiles[ 0 ] = originalPath;
+                    attachFiles[ 1 ] = translationPath;
 
                 }
 
                 java.sql.Date today = getTodaySQL();
-                int result = updateExpertReader(expertReader, today);
 
-                if (result > 0) {
+                int result = GrantApplicationDAO.updateExpertReader( expertReader, today );
 
-                    try {
+                if ( result > 0 )
+                {
+
+                    try
+                    {
 
                         /*
                          * send email with attachment
                          */
-                        MailUtil.sendEmailWithAttachmentExpertReader(expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate);
+                        MailUtil.sendEmailWithAttachmentExpertReader( expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate );
 
-                    } catch (MessagingException ex) {
-                        Logger.getLogger(AssignExpertReader.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch ( MessagingException ex )
+                    {
+                        Logger.getLogger( AssignExpertReader.class.getName() ).log( Level.SEVERE, null, ex );
                     }
                 }
 
-            } catch (DBException ex) {
-                Logger.getLogger(AssignExpertReader.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( DBException ex )
+            {
+                Logger.getLogger( AssignExpertReader.class.getName() ).log( Level.SEVERE, null, ex );
             }
         }
 
         message = "The email to '" + expertReaderName + "' has been sent <br/>"
                 + "electronic copies of '" + originalName + "' and '" + translationName + "' have been attached";
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
+        request.setAttribute( "message", message );
+        request.getRequestDispatcher( "/WEB-INF/views/response.jsp" ).forward( request, response );
 
     }
 
@@ -192,17 +213,20 @@ public class AssignExpertReader extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 
-    public java.sql.Date getTodaySQL() {
+    public java.sql.Date getTodaySQL()
+    {
         java.util.Date today = new java.util.Date();
-        return new java.sql.Date(today.getTime());
+        return new java.sql.Date( today.getTime() );
 
     }
 
-    public static int updateExpertReader(ExpertReader expertReader, java.sql.Date today) throws DBException {
+    public static int updateExpertReader( ExpertReader expertReader, java.sql.Date today ) throws DBException
+    {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -212,43 +236,47 @@ public class AssignExpertReader extends HttpServlet {
 
         int idExpertReader = 0;
 
-        try {
+        try
+        {
 
             conn = DBConn.getConnection();
-            conn.setAutoCommit(false);
+            conn.setAutoCommit( false );
 
             String sql = "INSERT INTO ILGAS.expertReader (expertReaderUserID, referenceNumber, sampleSentOut) values (?,?,?)";
 
-            ps1 = conn.prepareStatement(sql);
+            ps1 = conn.prepareStatement( sql );
 
-            ps1.setInt(1, expertReader.getExpertReaderUserID());
-            ps1.setString(2, expertReader.getReferenceNumber());
-            ps1.setDate(3, today);
+            ps1.setInt( 1, expertReader.getExpertReaderUserID() );
+            ps1.setString( 2, expertReader.getReferenceNumber() );
+            ps1.setDate( 3, today );
 
             ps1.executeUpdate();
 
-            ps2 = conn.prepareStatement("SELECT LAST_INSERT_ID()");
+            ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if (res != null) {
-                while (res.next()) {
+            if ( res != null )
+            {
+                while ( res.next() )
+                {
 
-                    idExpertReader = res.getInt(1);
+                    idExpertReader = res.getInt( 1 );
 
                 }
             }
 
             conn.commit();
 
-            DBConn.close(conn, ps1, ps2, res);
+            DBConn.close( conn, ps1, ps2, res );
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch ( ClassNotFoundException | SQLException e )
+        {
 
-            Logger.getLogger(AssignExpertReader.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger( AssignExpertReader.class.getName() ).log( Level.SEVERE, null, e );
 
-            DBConn.close(conn, ps1, ps2, res);
+            DBConn.close( conn, ps1, ps2, res );
 
-            throw new DBException("updateExpertReader 4 Excepion while accessing database " + e);
+            throw new DBException( "AssignExpertReader updateExpertReader 4 Excepion while accessing database " + e );
         }
 
         return idExpertReader;

@@ -48,9 +48,9 @@ textarea {
 }
 
 .modal-dialog {
-    width: 100%;
-    height: 100%;
-    margin: 0;
+    width: 90%;
+    height: 70%;
+    /*margin: 0;*/
     padding: 0;
 }
 
@@ -287,6 +287,12 @@ h1 {
     background-color: #d9d1d1;
     border-radius: 0 4px 4px 0;
     border-left: 1px solid #ddd;
+}
+.panel-default > .panel-heading-translationRightsHolder {
+    background: #d9d1d1; color: #000000;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
 }
 
 .longLabel{

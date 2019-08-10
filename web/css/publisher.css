@@ -1,0 +1,48 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15-Jun-2019, 21:33:39
+    Author     : markus
+*/
+
+.form-horizontal .control-label {
+    margin-bottom: 5px;
+}
+.form-horizontal .form-group {
+    margin-bottom: 5px;
+    margin-left:0px;
+    margin-right:0px;
+}
+body {
+    background: #d9d1d1;
+}
+/* icon exclamation */
+
+.icon-exclamation {
+    color: #ff0000;
+}
+ul {
+    margin: 0;
+}
+ul.dashed {
+    list-style-type: none;
+}
+ul.dashed > li {
+    text-indent: -5px;
+}
+ul.dashed > li:before {
+    content: "-";
+    text-indent: -5px;
+}
+
+
+input {
+    vertical-align: -2px;
+}
+input[type="text"]:focus + .glyphicon-search{
+    color: #FF8C00;
+}
+

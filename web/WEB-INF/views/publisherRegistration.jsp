@@ -68,7 +68,6 @@
             });
         </script>
 
-
         <!--AutoComplete_country-->
         <script>
             $(function () {
@@ -89,10 +88,10 @@
             });
         </script>
 
-
-
         <!-- checks for http:// in URL
              if not then URL will be preceded with http:// -->
+
+        <!--addhttp-->
         <script type="text/javascript">
             function addhttp(url) {
                 var urlValue = url.value;
@@ -104,12 +103,7 @@
                 url.value = urlValue;
                 return urlValue;
             }
-            ;
-
-
         </script>
-
-
 
     </head>
 
@@ -446,6 +440,21 @@
         <script>
             $(document).ready(function () {
                 $("#newPublisherForm").validate({
+                    /*
+                     * validate on onkeyup
+                     * 
+                     * @param {type} element
+                     * @param {type} event
+                     * @returns {undefined}
+                     */
+                    onkeyup: function (element, event) {
+                        console.log("newPublisherFormvalidate  element " + element + " event " + event);
+                        if (event.which === 9 && this.elementValue(element) === "") {
+                            return;
+                        } else {
+                            this.element(element);
+                        }
+                    },
                     rules: {
                         Email: {
                             required: true,
@@ -511,11 +520,11 @@
                 });
             });
 
-            $(document).ready(function () {
-                var validator = $("#newPublisherForm").validate();
-                alert("Validate");
-                validator.form();
-            });
+//            $(document).ready(function () {
+//                var validator = $("#newPublisherForm").validate();
+//                alert("Validate");
+//                validator.form();
+//            });
         </script>
         <script>
             $(document).ready(function () {

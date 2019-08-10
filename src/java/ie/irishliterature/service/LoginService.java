@@ -6,30 +6,32 @@ import java.util.logging.Logger;
 
 public class LoginService {
 
-    public String[] loginCheck(String username, String password) {
-        System.out.println("LoginService username before : " + username);
+    public String[] loginCheck( String username, String password )
+    {
+        System.out.println( "LoginService username before : " + username );
+
         boolean login;
         boolean LogonPassed;
-        String[] reply = new String[9];
 
-        try {
+        String[] reply = new String[ 9 ];
+
+        try
+        {
             //loading drivers for mysql
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName( "com.mysql.jdbc.Driver" );
 
             //creating connection with the database 
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ILGAS", "root", "ankh573");
-            PreparedStatement pst = conn.prepareStatement("Select userID, uname, lastLogon, first_name, last_name,password,email,function,role  FROM ILGAS.users WHERE uname=? AND password=?");
+            Connection conn = DriverManager.getConnection( "jdbc:mysql://localhost:3306/ILGAS", "root", "ankh573" );
+            PreparedStatement pst = conn.prepareStatement( "Select userID, uname, lastLogon, first_name, last_name,password,email,function,role  FROM ILGAS.users WHERE uname=? AND password=?" );
 
-            pst.setString(1, username);
-            pst.setString(2, password);
+            pst.setString( 1, username );
+            pst.setString( 2, password );
 
 //            System.out.println("username  loginCheck: " + username);
 //            System.out.println("password: loginCheck  " + password);
-
             ResultSet rs = pst.executeQuery();
 
 //            System.out.println("ResultSet: loginCheck  " + rs);
-
             login = rs.first();
 //            System.out.println("ResultSet: loginCheck login " + login);
 
@@ -41,16 +43,15 @@ public class LoginService {
 //            System.out.println("lastname: 0: " + rs.getString("last_name"));
 //            System.out.println("email: 0: " + rs.getString("email"));
             // build full name
-            String name = rs.getString("first_name") + " " + rs.getString("last_name");
-            
+            String name = rs.getString( "first_name" ) + " " + rs.getString( "last_name" );
+
             boolean loginSuccess = login;
 //            System.out.println("SUCCESS " + Boolean.toString(loginSuccess));
-            
+
             LogonPassed = true;
 
 //            https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2
 //            Solving the logout problem properly and elegantly
-
 //            long lastLogonDB = rs.getLong("lastLogon");
 //            if ((lastLogonForm > lastLogonDB) && (login == true)) {
 //                // set LogonPassed = true and update lastLogon in users table
@@ -62,23 +63,22 @@ public class LoginService {
 //            } else {
 //                LogonPassed = false;
 //            }
-            
             //We send reply back to LoginServlet
             //There the redirects will be performed
-            reply[0] = Boolean.toString(login);
-            reply[1] = rs.getString("role");
-            reply[2] = rs.getString("function");
-            reply[3] = rs.getString("first_name");
-            reply[4] = rs.getString("last_name");
-            reply[5] = name;
-            reply[6] = rs.getString("email");
-            reply[7] = rs.getString("userID");
-            reply[8] = Boolean.toString(LogonPassed);
+            reply[ 0 ] = Boolean.toString( login );
+            reply[ 1 ] = rs.getString( "role" );
+            reply[ 2 ] = rs.getString( "function" );
+            reply[ 3 ] = rs.getString( "first_name" );
+            reply[ 4 ] = rs.getString( "last_name" );
+            reply[ 5 ] = name;
+            reply[ 6 ] = rs.getString( "email" );
+            reply[ 7 ] = rs.getString( "userID" );
+            reply[ 8 ] = Boolean.toString( LogonPassed );
 
 //            System.out.println("reply " + Arrays.toString(reply));
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(LoginService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( ClassNotFoundException | SQLException ex )
+        {
+            Logger.getLogger( LoginService.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         return reply;

@@ -1,10 +1,9 @@
 package ie.irishliterature.util;
 
 //http://blog.sodhanalibrary.com/2015/11/user-email-registration-using-java.html#.XA0soxCYRxA
-
-
 public class Setup {
-	  public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS?autoReconnect=true&useSSL=false&useUnicode=true&charset=UTF-8";
+
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS?autoReconnect=true&useSSL=false&useUnicode=true&charset=UTF-8";
 
 //    public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS";
     public static final String DB_USERNAME = "root";

@@ -22,7 +22,7 @@
                             });
                         </script>-->
 
-       <title>Translation Grant Application System</title>
+        <title>Translation Grant Application System</title>
 
 
 
@@ -65,127 +65,127 @@
                 <h1 align="center">Publisher</h1>
 
 
-<!--                <div class="container-fluid">  
+                <!--                <div class="container-fluid">  
+                
+                                    <div class="pull-right">
+                                        <h6> <small>Welcome Sparky The Cat - not Sparky The Cat? <a href="/ILGAS/Logout">Click here to log out </a></small></h6>
+                                    </div>
+                                    <br/>
+                                    <br/>-->
 
-                    <div class="pull-right">
-                        <h6> <small>Welcome Sparky The Cat - not Sparky The Cat? <a href="/ILGAS/Logout">Click here to log out </a></small></h6>
-                    </div>
-                    <br/>
-                    <br/>-->
-
-                    <div class="container">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#tab_a" data-toggle="tab">Tab A</a></li>
-                            <li><a href="#tab_b" data-toggle="tab">Tab B</a></li>
-                            <li><a href="#tab_c" data-toggle="tab">Tab C</a></li>
-                            <li><a href="#tab_d" data-toggle="tab">Tab D</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab_a">
-                                <h4>Pane A</h4>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                                    ac turpis egestas.</p>
-                            </div>
-                            <div class="tab-pane" id="tab_b">
-                                <h4>Pane B</h4>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                                    ac turpis egestas.</p>
-                            </div>
-                            <div class="tab-pane" id="tab_c">
-                                <h4>Pane C</h4>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                                    ac turpis egestas.</p>
-                            </div>
-                            <div class="tab-pane" id="tab_d">
-                                <h4>Pane D</h4>
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-                                    ac turpis egestas.</p>
-                            </div>
-                        </div><!-- tab content -->
-                    </div><!-- end of container -->
-
-
-                    <script type="text/javascript" src="js/bootstrap.js"></script><!--footer start-->
-
-
-                    <div id="base">  
-
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                        </div><!-- end of BaseText div -->
-
-                        <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
-                        <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                        <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
-
-                        <div class="mobile-baselogos visible-phone"> 
-                            <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
-                            <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                <div class="container">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_a" data-toggle="tab">Tab A</a></li>
+                        <li><a href="#tab_b" data-toggle="tab">Tab B</a></li>
+                        <li><a href="#tab_c" data-toggle="tab">Tab C</a></li>
+                        <li><a href="#tab_d" data-toggle="tab">Tab D</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_a">
+                            <h4>Pane A</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                                ac turpis egestas.</p>
                         </div>
+                        <div class="tab-pane" id="tab_b">
+                            <h4>Pane B</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                                ac turpis egestas.</p>
+                        </div>
+                        <div class="tab-pane" id="tab_c">
+                            <h4>Pane C</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                                ac turpis egestas.</p>
+                        </div>
+                        <div class="tab-pane" id="tab_d">
+                            <h4>Pane D</h4>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames
+                                ac turpis egestas.</p>
+                        </div>
+                    </div><!-- tab content -->
+                </div><!-- end of container -->
 
-                    </div><!-- end of Base div -->
 
-                </div><!-- end of container div -->
-                <div class="shadowbase"> </div>
-            </div><!-- end of Shadow container div -->
+                <script type="text/javascript" src="js/bootstrap.js"></script><!--footer start-->
 
 
-            <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2017 mgr Software
-            </div>
+                <div id="base">  
+
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
+                    </div><!-- end of BaseText div -->
+
+                    <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
+                    <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
+                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+
+                    <div class="mobile-baselogos visible-phone"> 
+                        <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
+                        <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
+                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                    </div>
+
+                </div><!-- end of Base div -->
+
+            </div><!-- end of container div -->
+            <div class="shadowbase"> </div>
+        </div><!-- end of Shadow container div -->
 
 
-            <script src="js/bootstrap-select.min.js"></script>
-            <script src="js/register.js"></script>
-            <script src="js/my-block-ui.js"></script>
-            <script src="js/blockui.js"></script>
-            <script src="js/bootstrap-show-password.js"></script>
-            <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+            &copy; 2017 mgr Software
+        </div>
 
-            <script type="text/javascript">
-                function loadXMLDoc()
+
+        <script src="js/bootstrap-select.min.js"></script>
+        <script src="js/register.js"></script>
+        <script src="js/my-block-ui.js"></script>
+        <script src="js/blockui.js"></script>
+        <script src="js/bootstrap-show-password.js"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+
+        <script type="text/javascript">
+            function loadXMLDoc()
+            {
+                var xmlhttp;
+                var uname = document.getElementById("uname").value;
+                var urls = "checkusername.jsp?uname=" + uname;
+
+                if (window.XMLHttpRequest)
                 {
-                    var xmlhttp;
-                    var uname = document.getElementById("uname").value;
-                    var urls = "checkusername.jsp?uname=" + uname;
-
-                    if (window.XMLHttpRequest)
-                    {
-                        xmlhttp = new XMLHttpRequest();
-                    } else
-                    {
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-                    xmlhttp.onreadystatechange = function ()
-                    {
-                        if (xmlhttp.readyState === 4)
-                        {
-                            document.getElementById("error").innerHTML = xmlhttp.responseText;
-                        }
-                    };
-                    xmlhttp.open("GET", urls, true);
-                    xmlhttp.send();
+                    xmlhttp = new XMLHttpRequest();
+                } else
+                {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-                ;
-            </script>
-
-            <script type="text/javascript">
-                window.onload = function () {
-                    $('.selectpicker').selectpicker();
-                    $('.functionDataset').each(function () {
-                        $(this).rules('add', {
-                            required: true,
-                            messages: {
-                                required: "Choose a function"
-                            }
-                        });
-                        // scrollYou
-                        $('.scrollMe .dropdown-menu').scrollyou();
-                        prettyPrint();
-                    });
+                xmlhttp.onreadystatechange = function ()
+                {
+                    if (xmlhttp.readyState === 4)
+                    {
+                        document.getElementById("error").innerHTML = xmlhttp.responseText;
+                    }
                 };
-            </script>
+                xmlhttp.open("GET", urls, true);
+                xmlhttp.send();
+            }
+            ;
+        </script>
+
+        <script type="text/javascript">
+            window.onload = function () {
+                $('.selectpicker').selectpicker();
+                $('.functionDataset').each(function () {
+                    $(this).rules('add', {
+                        required: true,
+                        messages: {
+                            required: "Choose a function"
+                        }
+                    });
+                    // scrollYou
+                    $('.scrollMe .dropdown-menu').scrollyou();
+                    prettyPrint();
+                });
+            };
+        </script>
     </body>
 </html>

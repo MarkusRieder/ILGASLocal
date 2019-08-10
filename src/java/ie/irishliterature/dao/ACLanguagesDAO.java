@@ -16,34 +16,38 @@ import java.util.ArrayList;
  *
  * @author markus
  */
-
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class ACLanguagesDAO {
-    
-     public ArrayList getLanguage(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+
+    public ArrayList getLanguage( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+    {
 
         ArrayList languageList = new ArrayList();
         Database db = new Database();
         Connection connection = db.getConnection();
-
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * from ILGAS.Languages WHERE lang  like ?");
-            ps.setString(1, "%" + s + "%");
+        System.out.println( "ACLanguagesDAO :term " + s );
+        try
+        {
+            PreparedStatement ps = connection.prepareStatement( "SELECT * from ILGAS.Languages WHERE lang  like ?" );
+            ps.setString( 1, "%" + s + "%" );
+            System.out.println( "ACLanguagesDAO :ps " + ps );
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while ( rs.next() )
+            {
                 AClanguages language = new AClanguages();
-                language.setId(rs.getString("id"));
-                language.setValue(rs.getString("lang"));
-//
-//                System.out.println("language.setId : " + rs.getString("id"));
-//                System.out.println("language.setValue : " + rs.getString("lang"));
+                language.setId( rs.getString( "id" ) );
+                language.setValue( rs.getString( "lang" ) );
 
-                languageList.add(language);
+                System.out.println( "language.setId : " + rs.getString( "id" ) );
+                System.out.println( "language.setValue : " + rs.getString( "lang" ) );
+
+                languageList.add( language );
             }
-        } catch (SQLException e) {
+        } catch ( SQLException e )
+        {
         }
         return languageList;
     }
-    
+
 }

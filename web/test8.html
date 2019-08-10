@@ -54,7 +54,7 @@
             function make2(pdfUrl, pdfName, i) {
 
                 console.log("receiving  make2(" + pdfUrl + " " + pdfName + " " + i);
-                
+
                 console.log("i >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + i);
 
                 PDFJS.getDocument(pdfUrl).promise.then(function (doc) {
@@ -67,20 +67,20 @@
                         console.log(err);
                     });
 
-console.log("pages.length    " + pages.length );
-console.log("doc.numPages    " + doc.numPages );
+                    console.log("pages.length    " + pages.length);
+                    console.log("doc.numPages    " + doc.numPages);
 
                     while (pages.length < doc.numPages)
                         pages.push(pages.length + 1);
-                    
+
                     return Promise.all(pages.map(function (num) {
                         // create a div for each page and build a small canvas for it
                         var div = document.createElement("div" + i);
-                            div.className = "pdf";
+                        div.className = "pdf";
                         console.log("div i   " + i);
                         var p = document.createElement("p");
-                        p.innerHTML = pdfName;                       
-                        $(p).appendTo($(".pdf"));                        
+                        p.innerHTML = pdfName;
+                        $(p).appendTo($(".pdf"));
                         document.body.appendChild(div);
                         return doc.getPage(num).then(makeThumb)
                                 .then(function (canvas) {

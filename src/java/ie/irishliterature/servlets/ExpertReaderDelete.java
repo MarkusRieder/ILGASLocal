@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "ExpertReaderDelete", urlPatterns = {"/ExpertReaderDelete"})
+@WebServlet( name = "ExpertReaderDelete", urlPatterns =
+{
+    "/ExpertReaderDelete"
+} )
 public class ExpertReaderDelete extends HttpServlet {
 
     /**
@@ -34,22 +37,24 @@ public class ExpertReaderDelete extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        response.setContentType( "text/html;charset=UTF-8" );
+        try ( PrintWriter out = response.getWriter() )
+        {
             /*
              * TODO output your page here. You may use following sample code.
              */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ExpertReaderDelete</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ExpertReaderDelete at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println( "<!DOCTYPE html>" );
+            out.println( "<html>" );
+            out.println( "<head>" );
+            out.println( "<title>Servlet ExpertReaderDelete</title>" );
+            out.println( "</head>" );
+            out.println( "<body>" );
+            out.println( "<h1>Servlet ExpertReaderDelete at " + request.getContextPath() + "</h1>" );
+            out.println( "</body>" );
+            out.println( "</html>" );
         }
     }
 
@@ -64,9 +69,10 @@ public class ExpertReaderDelete extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        processRequest( request, response );
     }
 
     /**
@@ -78,30 +84,31 @@ public class ExpertReaderDelete extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("ExpertReaderDelete doPost ");
+        System.out.println( "ExpertReaderDelete doPost " );
 
-        System.out.println("ID  " + request.getParameter("id"));
+        System.out.println( "ID  " + request.getParameter( "id" ) );
 
 //        int id = Integer.parseInt(request.getParameter("id"));
-        String id = request.getParameter("id");
+        String id = request.getParameter( "id" );
 
         boolean result = false;
 
-        try {
-            result = ExpertReaderDAO.deleteExpertReader(id);
-        } catch (DBException ex) {
-            Logger.getLogger(ExpertReaderDelete.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            result = ExpertReaderDAO.deleteExpertReader( id );
+        } catch ( DBException ex )
+        {
+            Logger.getLogger( ExpertReaderDelete.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
-        System.out.println("ExpertReaderDelete result  " + result);
-        
-            response.setContentType("text/html");
+        System.out.println( "ExpertReaderDelete result  " + result );
+
+        response.setContentType( "text/html" );
         PrintWriter out = response.getWriter();
 
 //        out.println("<html><body>");
@@ -118,7 +125,8 @@ public class ExpertReaderDelete extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 

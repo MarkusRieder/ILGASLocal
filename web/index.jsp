@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>Translation Grant Application System</title>
-<!--index.jsp-->
+        <!--index.jsp-->
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -678,7 +678,7 @@
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017 mgr Software
+            &copy; 2017-2019 mgr Software
         </div>
 
     </body>

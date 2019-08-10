@@ -29,6 +29,7 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="js/xregexp-all.js"></script> 
         <script src="js/register.js"></script>
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>
@@ -107,11 +108,11 @@
 
             </div><!-- end of container div -->
             <div class="shadowbase"> </div>
-        </div><!-- end of Shadow container div -->
+        </div><!-- end of Shadowholder container div -->
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2019 mgr Software
+            &copy; 2017-2019 mgr Software
         </div>
     </body>
 </html>

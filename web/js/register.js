@@ -3,8 +3,8 @@
 /*global $, jQuery, alert*/
 $("document").ready(function () {
     // name validation
-    var nameregex = /^[a-zA-Z ]+$/;
-
+//    var nameregex = /^[a-zA-Z ]+$/;
+    var nameregex = new XRegExp('^[\\p{L}\\p{Nd} ._-]+$');
     $.validator.addMethod("validname", function (value, element) {
         return this.optional(element) || nameregex.test(value);
     });
@@ -16,7 +16,7 @@ $("document").ready(function () {
         return this.optional(element) || eregex.test(value);
     });
     $.validator.addMethod("nowhitespace", function (value, element) {
-    return value.indexOf(" ") < 0 && value !== ""; 
+        return value.indexOf(" ") < 0 && value !== "";
     }, "No white space please");
 
     $("#register-form").validate({
@@ -57,17 +57,17 @@ $("document").ready(function () {
                 {
                     username: {
                         required: "Please Enter User Name",
-                        validname: "Name must contain only alphabets and space",
+                        validname: "User name must contain only letters and spaces",
                         minlength: "Your Name is Too Short"
                     },
                     firstname: {
                         required: "Please Enter First Name",
-                        validname: "Name must contain only alphabets and space",
+                        validname: "First name must contain only letters and spaces",
                         minlength: "Your Name is Too Short"
                     },
                     lastname: {
                         required: "Please Enter Last Name",
-                        validname: "Name must contain only alphabets and space",
+                        validname: "Last name must contain only letters and spaces",
                         minlength: "Your Name is Too Short"
                     },
                     email: {

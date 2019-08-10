@@ -17,7 +17,8 @@ public class EntryDb {
     private String Status;
     private String Author;
 
-    public EntryDb(String ReferenceNumber, String company, String bookTitle, String Status, String Author) {
+    public EntryDb( String ReferenceNumber, String company, String bookTitle, String Status, String Author )
+    {
         super();
         this.ReferenceNumber = ReferenceNumber;
         this.company = company;
@@ -26,43 +27,53 @@ public class EntryDb {
         this.Author = Author;
     }
 
-    public String getReferenceNumber() {
+    public String getReferenceNumber()
+    {
         return ReferenceNumber;
     }
 
-    public void setReferenceNumber(String ReferenceNumber) {
+    public void setReferenceNumber( String ReferenceNumber )
+    {
         this.ReferenceNumber = ReferenceNumber;
     }
 
-    public String getCompany() {
+    public String getCompany()
+    {
         return company;
     }
 
-    public void setCompany(String company) {
+    public void setCompany( String company )
+    {
         this.company = company;
     }
 
-    public String getBookTitle() {
+    public String getBookTitle()
+    {
         return bookTitle;
     }
 
-    public void setBookTitle(String bookTitle) {
+    public void setBookTitle( String bookTitle )
+    {
         this.bookTitle = bookTitle;
     }
 
-    public String getStatus() {
+    public String getStatus()
+    {
         return Status;
     }
 
-    public void setStatus(String Status) {
+    public void setStatus( String Status )
+    {
         this.Status = Status;
     }
 
-    public String getAuthor() {
+    public String getAuthor()
+    {
         return Author;
     }
 
-    public void setAuthor(String Author) {
+    public void setAuthor( String Author )
+    {
         this.Author = Author;
     }
 }

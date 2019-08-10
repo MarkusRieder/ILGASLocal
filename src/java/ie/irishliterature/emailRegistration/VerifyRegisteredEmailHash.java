@@ -20,16 +20,17 @@ import org.apache.log4j.Logger;
 /**
  * Servlet implementation class VerifyRegisteredEmailHash
  */
-@WebServlet("/VerifyRegisteredEmailHash")
+@WebServlet( "/VerifyRegisteredEmailHash" )
 public class VerifyRegisteredEmailHash extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger LOGGER = Logger.getLogger(VerifyRegisteredEmailHash.class.getName());
+    private static final Logger LOGGER = Logger.getLogger( VerifyRegisteredEmailHash.class.getName() );
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VerifyRegisteredEmailHash() {
+    public VerifyRegisteredEmailHash()
+    {
         super();
     }
 
@@ -43,62 +44,76 @@ public class VerifyRegisteredEmailHash extends HttpServlet {
      * response)
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
         // get user Id and email verification code Hash code  
-        String uname = request.getParameter("userId");
-        System.out.println("VerifyRegisteredEmailHash servlet doGet username 1 : " + uname);
-        String hash = BCrypt.hashpw(request.getParameter("hash"), GlobalConstants.SALT);
-        String scope = request.getParameter("scope");
-        System.out.println("VerifyRegisteredEmailHash doGet  hash 1 : " + hash);
-        System.out.println("VerifyRegisteredEmailHash doGet scope 1 : " + scope);
+        String uname = request.getParameter( "userId" );
+        System.out.println( "VerifyRegisteredEmailHash servlet doGet username 1 : " + uname );
+        String firstName = request.getParameter( "inputFirstName" );
+        String lastName = request.getParameter( "inputLastName" );
+        String fullName = firstName + " " + lastName;
+        String hash = BCrypt.hashpw( request.getParameter( "hash" ), GlobalConstants.SALT );
+        String scope = request.getParameter( "scope" );
+        System.out.println( "VerifyRegisteredEmailHash doGet  hash 1 : " + hash );
+        System.out.println( "VerifyRegisteredEmailHash doGet scope 1 : " + scope );
         String message = null;
 
-        try {
+        try
+        {
             // verify with database
-            if (ApplicationDAO.verifyEmailHash(uname, hash) && scope.equals(GlobalConstants.ACTIVATION)) {
+            if ( ApplicationDAO.verifyEmailHash( uname, hash ) && scope.equals( GlobalConstants.ACTIVATION ) )
+            {
                 //update status as active
 
-                System.out.println("VerifyRegisteredEmailHash doGet username 2 : " + uname);
+                System.out.println( "VerifyRegisteredEmailHash doGet username 2 : " + uname );
 
-                ApplicationDAO.updateStatus(uname, "active");
+                ApplicationDAO.updateStatus( uname, "active" );
 
                 message = "Email verified successfully. Account was activated. Click <a href=\"index.jsp\">here</a> to login";
 
                 //  request.getRequestDispatcher("/WEB-INF/views/emailValidationSuccess.jsp").forward(request, response);
-            } else if (ApplicationDAO.verifyEmailHash(uname, hash) && scope.equals(GlobalConstants.RESET_PASSWORD)) {
+            } else if ( ApplicationDAO.verifyEmailHash( uname, hash ) && scope.equals( GlobalConstants.RESET_PASSWORD ) )
+            {
                 //update status as active
-                ApplicationDAO.updateStatus(uname, "active");
+                ApplicationDAO.updateStatus( uname, "active" );
                 //put some session for user
-                request.getSession().setAttribute(GlobalConstants.USER, uname);
-                request.getSession().setAttribute(GlobalConstants.IS_RESET_PASSWORD_VERIFIED, GlobalConstants.YES);
-                request.getRequestDispatcher("/WEB-INF/resetPassword.html").forward(request, response);
-            } else {
+                request.getSession().setAttribute( GlobalConstants.USER, uname );
+                request.getSession().setAttribute( GlobalConstants.IS_RESET_PASSWORD_VERIFIED, GlobalConstants.YES );
+                request.getRequestDispatcher( "/WEB-INF/resetPassword.html" ).forward( request, response );
+            } else
+            {
                 //now increment verification attempts 
-                int attempts = ApplicationDAO.incrementVerificationAttempts(uname);
-                if (attempts == 20) {
+                int attempts = ApplicationDAO.incrementVerificationAttempts( uname );
+                if ( attempts == 20 )
+                {
                     // reset verification code if attempts equal to 20 
-                    String hashcode = Utils.prepareRandomString(30);
-                    ApplicationDAO.updateEmailVerificationHash(uname, BCrypt.hashpw(hashcode, GlobalConstants.SALT));
-                    User up = ApplicationDAO.selectUSER(uname);
-                    MailUtil.sendEmailRegistrationLink(uname, up.getEMAIL(), hashcode);
+                    String hashcode = Utils.prepareRandomString( 30 );
+                    ApplicationDAO.updateEmailVerificationHash( uname, BCrypt.hashpw( hashcode, GlobalConstants.SALT ) );
+                    User up = ApplicationDAO.selectUSER( uname );
+                    MailUtil.sendEmailRegistrationLink( uname, fullName, up.getEMAIL(), hashcode );
                     message = "20 times Wrong Email Validation Input Given. So we are sent new activation link to your Email";
-                } else {
+                } else
+                {
                     message = "Wrong Email Validation Input";
                 }
             }
-        } catch (DBException e) {
-            LOGGER.debug(e.getMessage());
+        } catch ( DBException e )
+        {
+            LOGGER.debug( e.getMessage() );
             message = e.getMessage();
-        } catch (AddressException e) {
+        } catch ( AddressException e )
+        {
             message = e.getMessage();
-            LOGGER.debug(e.getMessage());
-        } catch (MessagingException e) {
+            LOGGER.debug( e.getMessage() );
+        } catch ( MessagingException e )
+        {
             message = e.getMessage();
-            LOGGER.debug(e.getMessage());
+            LOGGER.debug( e.getMessage() );
         }
-        if (message != null) {
-            request.setAttribute(GlobalConstants.MESSAGE, message);
-            request.getRequestDispatcher("/messageToUser.jsp").forward(request, response);
+        if ( message != null )
+        {
+            request.setAttribute( GlobalConstants.MESSAGE, message );
+            request.getRequestDispatcher( "/messageToUser.jsp" ).forward( request, response );
         }
     }
 

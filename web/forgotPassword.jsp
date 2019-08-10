@@ -22,7 +22,7 @@
                 });
             </script>-->
 
-               <title>Translation Grant Application System</title>
+        <title>Translation Grant Application System</title>
 
 
         <!-- Bootstrap -->
@@ -58,7 +58,7 @@
         <script src="js/bootstrap-select.min.js" type="text/javascript" async=""></script>
         <script src="js/validator.js" type="text/javascript" async=""></script>
         <script src="js/my-block-ui.js" type="text/javascript" async=""></script>
-        
+
         <script src="js/bootstrap.min.js"></script>
         <script src="js/validator.min.js"></script>
 
@@ -187,7 +187,7 @@
                         </form>
                         <div id="blockUiDiv">
                             <img src="images/gears.svg"  alt="spinner"/>
-                            
+
                         </div>
                         <div id="blockUiBackdrop">
                         </div>

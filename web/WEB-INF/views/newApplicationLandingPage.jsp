@@ -181,19 +181,21 @@
                 margin-right: 0;
             }
         </style>
-        
-                <script>
+
+        <script>
             $(document).ready(function () {
 
-                var tcACCEPTED = '${tcACCEPTED}';
-                var gdprACCEPTED = '${gdprACCEPTED}';
-                document.getElementById("tcACCEPTED").value = tcACCEPTED;
-                document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
+//                var tcACCEPTED = '${tcACCEPTED}';
+//                var gdprACCEPTED = '${gdprACCEPTED}';
+//                document.getElementById("tcACCEPTED").value = tcACCEPTED;
+//                document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
+                var tcACCEPTED = document.getElementById("tcACCEPTED").value;
+                var gdprACCEPTED = document.getElementById("gdprACCEPTED").value;
 
             });
 
         </script>
-        
+
     </head>
     <body style="height: 100%">
 
@@ -201,7 +203,7 @@
             <div class="shadowtop"> </div>
             <div id="container">
                 <div id="topspacer"> </div>
-                
+
                 <div id="topbar">
 
                     <div class="animateddiv">
@@ -210,8 +212,8 @@
                     <a class="logo"><span class="hidden">Literature Ireland</span></a>
 
                 </div> <!--  End of topbar div -->
-                
-                
+
+
                 <!--container for welcome/logout-->
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
@@ -238,7 +240,7 @@
                         <input type="hidden" name="lastname" value ="${lastname}">
                         <input type="hidden" name="name" value ="${name}">
                         <input type="hidden" name="userID" value ="${userID}">
-                        <input type="hidden" name="publisherID" value ="${publisherID}">
+                        <input type="hidden" name="publisherID" id="publisherID" value ="${publisherID}">
                         <input type="hidden" name="publisherName" value ="${publisherName}">
                         <input type="hidden" name="task" value="NewApplicationTCconfirmed"> 
                         <div class="background">
@@ -311,6 +313,16 @@
                                             </div>
                                         </div>
 
+                                        <div>
+                                            <!-- NOTE FOR USERS: -->
+                                            <p style="margin-bottom: 1px; font-weight: bold">
+                                                NOTE FOR USERS:
+                                                <br/><br/>
+                                                This site does not use cookies. <br/> 
+                                                Please note that any data entered into the system as part of an application that is not submitted will not be saved. <br/> 
+                                                We recommend that you check you have all of the information and documentation required before beginning the application. 
+                                            </p>
+                                        </div>
 
                                         <div class="form-group">
                                             <div class="col-xs-4">
@@ -439,7 +451,7 @@
                                                 of the original work (e.g. a PDF). One print copy of the original
                                                 work should also be sent, with the application reference number, by
                                                 post to Literature Ireland, Trinity Centre for Literary Translation,
-                                                36 Fenian Street, Trinity College Dublin, Dublin D02 FK54, Ireland. 
+                                                36 Fenian Street, Trinity College Dublin, Dublin D02 CH22, Ireland. 
                                             </span>
                                         </p>
                                         <li/>
@@ -750,7 +762,7 @@
                                             <span lang="en-IE">Successful applicants are required to post </span><span lang="en-IE"><b>eight
                                                     copies</b></span><span lang="en-IE"> of the published work (gratis)
                                                 to Literature Ireland, Trinity Centre for Literary Translation, 36
-                                                Fenian Street, Trinity College Dublin, Dublin D02 FK54, Ireland.
+                                                Fenian Street, Trinity College Dublin, Dublin D02 CH22, Ireland.
                                                 [</span><span lang="en-IE"><b>French publishers</b></span><span lang="en-IE">
                                                 are requested to send seven copies of the work to this address and
                                                 one copy to: Libraries and Archives Officer, Centre Culturel

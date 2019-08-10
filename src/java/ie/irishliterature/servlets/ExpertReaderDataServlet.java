@@ -25,51 +25,58 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "ExpertReaderDataServlet", urlPatterns = {"/ExpertReaderDataServlet"})
+@WebServlet( name = "ExpertReaderDataServlet", urlPatterns =
+{
+    "/ExpertReaderDataServlet"
+} )
 public class ExpertReaderDataServlet extends HttpServlet {
 
-        private static final long serialVersionUID = 1L;
-        
-           public ExpertReaderDataServlet() {
-               
-                       super();
+    private static final long serialVersionUID = 1L;
+
+    public ExpertReaderDataServlet()
+    {
+
+        super();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
+     *
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
-     @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-                response.setContentType("application/json");
+        response.setContentType( "application/json" );
         PrintWriter out = response.getWriter();
 
-          List listExpertReader = null;
-        
-        try {
-            
+        List listExpertReader = null;
+
+        try
+        {
+
             listExpertReader = UserDAO.getAllExpertReaders();
-            
+
 //              System.out.println("listExpertReader:  " + listExpertReader);
-            
-        } catch (ClassNotFoundException | DBException ex) {
-            Logger.getLogger(ExpertReaderDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( ClassNotFoundException | DBException ex )
+        {
+            Logger.getLogger( ExpertReaderDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableExpertReader dter = new DataTableExpertReader();
-        dter.setAaData(listExpertReader);
+        dter.setAaData( listExpertReader );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dter);
+        String json = gson.toJson( dter );
 //        System.out.println("json:  " + json);
-        out.print(json);
-    }   
+        out.print( json );
+    }
 }

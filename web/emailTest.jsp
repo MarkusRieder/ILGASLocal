@@ -9,9 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-       <title>Translation Grant Application System</title>
-        
-          <style> 
+        <title>Translation Grant Application System</title>
+
+        <style> 
             #formWrap {
                 padding:10px; position:absolute; float:left; background-color:#000;
                 background:rgba(0,0,0,.5); -moz-border-radius:10px;
@@ -65,23 +65,23 @@
         </style> 
     </head>
     <body>
-                  <div id="formWrap">
-                        <form id="messageForm" action="#">
-                            <fieldset>
-                                <legend>New message form</legend>
-                                <span>New Message</span>
-                                <label id="toLabel">To:</label>
-                                <div id="friends" class="ui-helper-clearfix">
-                                    <input id="to" type="text">
-                                </div>
-                                <label>Subject:</label>
-                                <input id="subject" name="subject" type="text">
-                                <label>Message:</label>
-                                <textarea id="message" name="message" rows="5" cols="50"></textarea>
-                                <button type="button" id="cancel">Cancel</button>
-                                <button type="submit" id="send">Send</button>
-                            </fieldset>
-                        </form>
-                  </div>
+        <div id="formWrap">
+            <form id="messageForm" action="#">
+                <fieldset>
+                    <legend>New message form</legend>
+                    <span>New Message</span>
+                    <label id="toLabel">To:</label>
+                    <div id="friends" class="ui-helper-clearfix">
+                        <input id="to" type="text">
+                    </div>
+                    <label>Subject:</label>
+                    <input id="subject" name="subject" type="text">
+                    <label>Message:</label>
+                    <textarea id="message" name="message" rows="5" cols="50"></textarea>
+                    <button type="button" id="cancel">Cancel</button>
+                    <button type="submit" id="send">Send</button>
+                </fieldset>
+            </form>
+        </div>
     </body>
 </html>

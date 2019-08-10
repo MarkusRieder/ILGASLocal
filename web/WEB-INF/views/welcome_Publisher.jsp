@@ -31,6 +31,25 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script src="js/bootstrap-datepicker.js"></script>
 
+        <!--        <script>
+                    window.addEventListener('beforeunload', function (e) {
+                        // Cancel the event
+                        e.preventDefault();
+                        // Chrome requires returnValue to be set
+                        e.returnValue = '';
+                    });
+                    window.addEventListener('unload', function (event) {
+                        console.log('I am the 3rd one.');
+                        $.get('Logout', function (data) {
+                            alert(data);
+                        });
+        //     $(window).unload(function() {
+        //        document.location.href='/Logout';
+        //    });
+                      
+                    });
+                </script>-->
+
         <style>
 
             .container-bg { 
@@ -58,6 +77,31 @@
                 /* (853 / 1280 * 100) */
             }
         </style>
+        <!--<script type="text/javascript">
+                    $(document).ready(function () {
+        //                var username =  ${name};
+                         var username = '<%= session.getAttribute("username") %>';
+                        console.log("username  " + username);
+                        
+                                var name = '<%= session.getAttribute("name") %>';
+                        console.log("name  " + name);
+                        
+                        
+                  console.log("session storage  1");
+                        for (i = 0; i < sessionStorage.length; i++) {
+                            console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+                        }
+        
+        
+                        sessionStorage.setItem("username", username);
+        
+        
+                        console.log("session storage  2");
+                        for (i = 0; i < sessionStorage.length; i++) {
+                            console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
+                        }
+                });
+                </script>-->
 
     </head>
     <body>
@@ -124,7 +168,12 @@
                                 <div class="form-group">
                                     <!-- Button -->
                                     <div class="col-sm-12  pull-left">
-                                        <input type="submit" class="btn btn-success btn-send" style="margin-bottom: 10px" value="Submit">
+                                        <!--<input type="submit" class="btn btn-success btn-send" style="margin-bottom: 10px" value="Continue">-->
+                                        <!--<div class="col-xs-2 pull-left" style="margin-top:3px;">-->
+                                        <button type="submit" class="btn btn-success  btn-send" id="nxtBtn">                           
+                                            <span class="glyphicon glyphicon-thumbs-up"></span> Continue
+                                        </button>
+                                        <!--</div>-->
                                     </div> <!-- col-md-12 control -->
                                 </div> <!-- form-group -->
                             </form>  

@@ -32,11 +32,14 @@ import org.apache.commons.io.FilenameUtils;
  *
  * @author markus
  */
-@WebServlet(name = "LibraryUpdate", urlPatterns = {"/LibraryUpdate"})
+@WebServlet( name = "LibraryUpdate", urlPatterns =
+{
+    "/LibraryUpdate"
+} )
 public class LibraryUpdate extends HttpServlet {
 
     private final static Logger LOGGER
-            = Logger.getLogger(LibraryUpdate.class.getCanonicalName());
+            = Logger.getLogger( LibraryUpdate.class.getCanonicalName() );
 
     private static final long serialVersionUID = 1L;
 
@@ -69,7 +72,8 @@ public class LibraryUpdate extends HttpServlet {
     String filename = "";
 
     @Override
-    public void init() {
+    public void init()
+    {
 
 //         Get the file location where they would be stored.
         tempPath = "/home/markus/test/tempDir";
@@ -87,9 +91,10 @@ public class LibraryUpdate extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        System.out.println("LibraryUpdate doGet ");
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        System.out.println( "LibraryUpdate doGet " );
     }
 
     /**
@@ -102,72 +107,75 @@ public class LibraryUpdate extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding( "UTF-8" );
 
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        String timeStamp = new SimpleDateFormat( "yyyy.MM.dd.HH.mm.ss" ).format( new Date() );
         Calendar now = Calendar.getInstance();
         //set Year used in filePath
-        int year = now.get(Calendar.YEAR);
-        String yearInString = String.valueOf(year);
+        int year = now.get( Calendar.YEAR );
+        String yearInString = String.valueOf( year );
 
         java.sql.Timestamp timestamp = getcurrentTimeStamp();
 
-        System.out.println("############################### /LibraryUpdate ####################################");
+        System.out.println( "############################### /LibraryUpdate ####################################" );
 
         Enumeration en = request.getParameterNames();
 
-        while (en.hasMoreElements()) {
+        while ( en.hasMoreElements() )
+        {
             Object objOri = en.nextElement();
 
-            String param = (String) objOri;
+            String param = ( String ) objOri;
 
-            String value = request.getParameter(param);
+            String value = request.getParameter( param );
 
-            System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+            System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
 
         }
-        
-        
+
         HttpSession session = request.getSession();
 
-        System.out.println("Enumeration keys   ");
+        System.out.println( "Enumeration keys   " );
         Enumeration keys = session.getAttributeNames();
-        while (keys.hasMoreElements()) {
-            String key = (String) keys.nextElement();
-            System.out.println("key  :" + key + ": " + session.getValue(key));
+        while ( keys.hasMoreElements() )
+        {
+            String key = ( String ) keys.nextElement();
+            System.out.println( "key  :" + key + ": " + session.getValue( key ) );
 
         }
 
-        System.out.println("###################################################################");
+        System.out.println( "###################################################################" );
 
         /*
          * Check that we have a file upload request
          */
-        try {
-            
-            isMultipart = ServletFileUpload.isMultipartContent(request);
-            System.out.println("isMultipart:: " + isMultipart);
-            response.setContentType("text/html;charset=UTF-8");
+        try
+        {
+
+            isMultipart = ServletFileUpload.isMultipartContent( request );
+            System.out.println( "isMultipart:: " + isMultipart );
+            response.setContentType( "text/html;charset=UTF-8" );
 
             DiskFileItemFactory factory = new DiskFileItemFactory();
 
             /*
              * maximum size that will be stored in memory
              */
-            factory.setSizeThreshold(maxMemSize);
+            factory.setSizeThreshold( maxMemSize );
 
             /*
              * Location to save data that is larger than maxMemSize.
              */
-            factory.setRepository(new File(tempPath));
+            factory.setRepository( new File( tempPath ) );
 
             /*
              * Create a new file upload handler
              */
-            ServletFileUpload upload = new ServletFileUpload(factory);
+            ServletFileUpload upload = new ServletFileUpload( factory );
             /*
              * maximum file size to be uploaded.
              */
@@ -177,10 +185,12 @@ public class LibraryUpdate extends HttpServlet {
             /*
              * Parse the request to get file items.
              */
-            List<FileItem> items = upload.parseRequest(request);
+            List<FileItem> items = upload.parseRequest( request );
 
-            for (FileItem item : items) {
-                if (item.isFormField()) {
+            for ( FileItem item : items )
+            {
+                if ( item.isFormField() )
+                {
 
                     /*
                      * Process regular form field (input
@@ -188,69 +198,71 @@ public class LibraryUpdate extends HttpServlet {
                      * collect all data input from input fileds
                      */
                     String fieldname = item.getFieldName();
-                    String fieldvalue = item.getString("UTF-8").trim();
+                    String fieldvalue = item.getString( "UTF-8" ).trim();
 
-                    System.out.println(fieldname + " >> " + fieldvalue);
+                    System.out.println( fieldname + " >> " + fieldvalue );
 
-                    switch (fieldname) {
+                    switch ( fieldname )
+                    {
                         case "bookID":
-                            bookID = Integer.parseInt(fieldvalue);
+                            bookID = Integer.parseInt( fieldvalue );
                             break;
                         case "referenceNumber":
                             referenceNumber = fieldvalue;
-                            System.out.println("referenceNumber   :" + referenceNumber);
+                            System.out.println( "referenceNumber   :" + referenceNumber );
                             break;
                         case "OrgTitle":
                             OrgTitle = fieldvalue;
-                            System.out.println("OrgTitle   :" + OrgTitle);
+                            System.out.println( "OrgTitle   :" + OrgTitle );
                             break;
                         case "Publisher":
                             Publisher = fieldvalue;
-                            System.out.println("Publisher   :" + Publisher);
+                            System.out.println( "Publisher   :" + Publisher );
                             break;
                         case "Genre":
                             Genre = fieldvalue;
-                            System.out.println("Genre   :" + Genre);
+                            System.out.println( "Genre   :" + Genre );
                             break;
                         case "translationPublisher":
                             translationPublisher = fieldvalue;
-                            System.out.println("translationPublisher   :" + translationPublisher);
+                            System.out.println( "translationPublisher   :" + translationPublisher );
                             break;
                         case "TransTitle":
                             TransTitle = fieldvalue;
-                            System.out.println("TransTitle   :" + TransTitle);
+                            System.out.println( "TransTitle   :" + TransTitle );
                             break;
                         case "ISBN":
                             ISBN = fieldvalue;
-                            System.out.println("ISBN   :" + ISBN);
+                            System.out.println( "ISBN   :" + ISBN );
                             break;
                         case "ISSN":
                             ISSN = fieldvalue;
-                            System.out.println("ISSN   :" + ISSN);
+                            System.out.println( "ISSN   :" + ISSN );
                             break;
 
                     } // end switch
 
-                } else {
+                } else
+                {
 
                     //////////////////////////////////////////////////////////////
                     //  Process Application Form file field (input type="file") //
                     //////////////////////////////////////////////////////////////
                     String fieldname = item.getFieldName();
-                    filename = FilenameUtils.getName(item.getName());
+                    filename = FilenameUtils.getName( item.getName() );
 
-                    System.out.println("filename :" + filename + " :fieldname: ");
+                    System.out.println( "filename :" + filename + " :fieldname: " );
 
 //                    if (!filename.isEmpty()) {
-                    System.out.println("sending " + filename + " fieldname " + fieldname + "   to getCounter");
+                    System.out.println( "sending " + filename + " fieldname " + fieldname + "   to getCounter" );
 
-                    System.out.println("company " + Publisher);
+                    System.out.println( "company " + Publisher );
 
-                    System.out.println("Cover here we are");
+                    System.out.println( "Cover here we are" );
                     filePath = tempPath + File.separator + yearInString + File.separator + Publisher + File.separator
                             + "Cover" + File.separator;
                     filesToBeMoved = filePath + filename;
-                    System.out.println("Cover switch fileName: " + filename + " filePath " + filePath);
+                    System.out.println( "Cover switch fileName: " + filename + " filePath " + filePath );
 
 //                    }
 
@@ -258,53 +270,65 @@ public class LibraryUpdate extends HttpServlet {
                      * create temporary Directory if it does not
                      * exist
                      */
-                    System.out.println("fileName.equals 1 zero " + filename + " filePath " + filePath);
-                    if (filename.isEmpty()) {
-                        System.out.println("fileName.equals 2 zero filename.isEmpty " + filename + " filePath " + filePath);
-                    } else {
-                        File file = new File(filePath);
-                        if (!file.exists()) {
+                    System.out.println( "fileName.equals 1 zero " + filename + " filePath " + filePath );
+                    if ( filename.isEmpty() )
+                    {
+                        System.out.println( "fileName.equals 2 zero filename.isEmpty " + filename + " filePath " + filePath );
+                    } else
+                    {
+                        File file = new File( filePath );
+                        if ( !file.exists() )
+                        {
 
                             file.mkdirs();
                         }
-                        System.out.println("createTemporaryDirectory");
-                        System.out.println("filePath: " + filePath + " filename: " + filename);
+                        System.out.println( "createTemporaryDirectory" );
+                        System.out.println( "filePath: " + filePath + " filename: " + filename );
                         OutputStream outS = null;
                         InputStream filecontent = null;
 
-                        try {
-                            outS = new FileOutputStream(new File(filePath + filename));
+                        try
+                        {
+                            outS = new FileOutputStream( new File( filePath + filename ) );
 
                             filecontent = item.getInputStream();
 
                             message = message + " '" + filename + "' has been uploaded <br/>";
 
                             int read;
-                            final byte[] bytes = new byte[1024];
+                            final byte[] bytes = new byte[ 1024 ];
 
-                            while ((read = filecontent.read(bytes)) != -1) {
-                                outS.write(bytes, 0, read);
+                            while ( ( read = filecontent.read( bytes ) ) != -1 )
+                            {
+                                outS.write( bytes, 0, read );
 
                             }
 
-                        } catch (FileNotFoundException fne) {
+                        } catch ( FileNotFoundException fne )
+                        {
 
                             String errMsg = "<br/><br/>You either did not specify a file to upload or are "
                                     + "trying to upload a file to a protected or nonexistent "
                                     + "location.<br/> <br/><strong> ERROR:<strong> '" + fne.getMessage() + "' ";
 
-                            request.setAttribute("message", " '<strong>" + filename + "</strong>" + errMsg);
-                            request.getRequestDispatcher("/WEB-INF/views/uploadErrorResponse.jsp").forward(request, response);
-                            LOGGER.log(Level.SEVERE, "Problems during file upload. Error: {0}",
-                                    new Object[]{fne.getMessage()});
+                            request.setAttribute( "message", " '<strong>" + filename + "</strong>" + errMsg );
+                            request.getRequestDispatcher( "/WEB-INF/views/uploadErrorResponse.jsp" ).forward( request, response );
+                            LOGGER.log( Level.SEVERE, "Problems during file upload. Error: {0}",
+                                    new Object[]
+                                    {
+                                        fne.getMessage()
+                                    } );
 
-                        } finally {
+                        } finally
+                        {
 
-                            if (outS != null) {
+                            if ( outS != null )
+                            {
                                 outS.close();
                             }
 
-                            if (filecontent != null) {
+                            if ( filecontent != null )
+                            {
                                 filecontent.close();
                             }
                         }
@@ -315,14 +339,15 @@ public class LibraryUpdate extends HttpServlet {
                          * by a "/"
                          * find the first occurrence of "/"
                          */
-                        int iend = referenceNumber.indexOf("/");
+                        int iend = referenceNumber.indexOf( "/" );
 
                         /*
                          * get ApplicationNumber from ReferenceNumber
                          */
-                        if (iend != -1) {
-                            ApplicationNumber = Integer.parseInt(referenceNumber.substring(0, iend));
-                            System.out.println("ApplicationNumber ---->> " + ApplicationNumber);
+                        if ( iend != -1 )
+                        {
+                            ApplicationNumber = Integer.parseInt( referenceNumber.substring( 0, iend ) );
+                            System.out.println( "ApplicationNumber ---->> " + ApplicationNumber );
                         }
 
                         filePath = tempPath + File.separator + yearInString + File.separator + Publisher + File.separator + "Cover" + File.separator;
@@ -339,69 +364,74 @@ public class LibraryUpdate extends HttpServlet {
                         /*
                          * create directory if it does not exist
                          */
-                        File directory = new File(destinationDirectory);
+                        File directory = new File( destinationDirectory );
 
-                        if (!directory.exists()) {
+                        if ( !directory.exists() )
+                        {
 
-                            System.out.println("destinationDirectory :" + destinationDirectory);
+                            System.out.println( "destinationDirectory :" + destinationDirectory );
 
                             directory.mkdirs();
                         }
 
-                        System.out.println("sFile :" + filesToBeMoved);
+                        System.out.println( "sFile :" + filesToBeMoved );
 
-                        File sFile = new File(filesToBeMoved);
-                        File destDir = new File(destinationDirectory);
+                        File sFile = new File( filesToBeMoved );
+                        File destDir = new File( destinationDirectory );
 
                         //  fileDir.add(moveFile);
-                        FileUtils.moveFileToDirectory(sFile, destDir, true);
+                        FileUtils.moveFileToDirectory( sFile, destDir, true );
 
-                        String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
+                        String moveFileNameReplaced = moveFile.replace( "/home/markus/public_html", "/~markus" );
 
-                        System.out.println("updateCover:: shortArrayList " + moveFile);
-                        try {
-                            GrantApplicationDAO.updateCover(referenceNumber, moveFileName, moveFileNameReplaced);
-                        } catch (DBException ex) {
-                            Logger.getLogger(LibraryUpdate.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println( "updateCover:: shortArrayList " + moveFile );
+                        try
+                        {
+                            GrantApplicationDAO.updateCover( referenceNumber, moveFileName, moveFileNameReplaced );
+                        } catch ( DBException ex )
+                        {
+                            Logger.getLogger( LibraryUpdate.class.getName() ).log( Level.SEVERE, null, ex );
                         }
                     }
                 } // else
 
             }  // for (FileItem item : items)
 
-        } catch (FileUploadException ex) {
-            Logger.getLogger(LibraryUpdate.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( FileUploadException ex )
+        {
+            Logger.getLogger( LibraryUpdate.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         Library library = new Library();
 
-        System.out.println("bookID : " + bookID);
+        System.out.println( "bookID : " + bookID );
 
-        library.setReferenceNumber(referenceNumber);
-        library.setTitle(OrgTitle);
-        library.setPublisher(Publisher);
-        library.setGenre(Genre);
-        library.setTranslationPublisher(translationPublisher);
-        library.setTranslationTitle(TransTitle);
-        library.setISBN(ISBN);
-        library.setISSN(ISSN);
-        library.setLASTUPDATED(timestamp);
+        library.setReferenceNumber( referenceNumber );
+        library.setTitle( OrgTitle );
+        library.setPublisher( Publisher );
+        library.setGenre( Genre );
+        library.setTranslationPublisher( translationPublisher );
+        library.setTranslationTitle( TransTitle );
+        library.setISBN( ISBN );
+        library.setISSN( ISSN );
+        library.setLASTUPDATED( timestamp );
 
-        try {
-            LibraryDAO.updateLibrary2(library, bookID);
-        } catch (DBException ex) {
-            Logger.getLogger(LibraryUpdate.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            LibraryDAO.updateLibrary2( library, bookID );
+        } catch ( DBException ex )
+        {
+            Logger.getLogger( LibraryUpdate.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        
+
         message = " Test message";
-        System.out.println("message : " + message);
-        
-        
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/WEB-INF/views/response.jsp").forward(request, response);
+        System.out.println( "message : " + message );
+
+        request.setAttribute( "message", message );
+        request.getRequestDispatcher( "/WEB-INF/views/response.jsp" ).forward( request, response );
 //        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/response.jsp");
 //        rd.forward(request, response);
-        System.out.println("success");
-        
+        System.out.println( "success" );
+
     }
 }

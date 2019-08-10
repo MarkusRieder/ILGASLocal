@@ -807,7 +807,7 @@
                 }
 
 //                $(rightsAgreementContractsNavContent).appendTo('#tnc');
-document.body.insertBefore('#tnc', rightsAgreementContractsNavContent);
+                document.body.insertBefore('#tnc', rightsAgreementContractsNavContent);
             }
 
         </script>

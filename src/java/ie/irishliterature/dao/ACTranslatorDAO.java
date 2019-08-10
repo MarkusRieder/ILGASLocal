@@ -16,32 +16,35 @@ import java.util.ArrayList;
  *
  * @author markus
  */
-
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class ACTranslatorDAO {
 
-    public ArrayList getTranslators(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+    public ArrayList getTranslators( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+    {
 
         ArrayList translatorList = new ArrayList();
         Database db = new Database();
         Connection connection = db.getConnection();
 
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * from ILGAS.Translator WHERE Name  like ?");
-            ps.setString(1, "%" + s + "%");
+        try
+        {
+            PreparedStatement ps = connection.prepareStatement( "SELECT * from ILGAS.Translator WHERE Name  like ?" );
+            ps.setString( 1, "%" + s + "%" );
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while ( rs.next() )
+            {
                 ACtranslator translator = new ACtranslator();
-                translator.setId(rs.getString("idTranslator"));
-                translator.setValue(rs.getString("Name"));
+                translator.setId( rs.getString( "idTranslator" ) );
+                translator.setValue( rs.getString( "Name" ) );
 
-                System.out.println("translator.setId : " + rs.getString("idTranslator"));
-                System.out.println("translator.setValue : " + rs.getString("Name"));
+                System.out.println( "translator.setId : " + rs.getString( "idTranslator" ) );
+                System.out.println( "translator.setValue : " + rs.getString( "Name" ) );
 
-                translatorList.add(translator);
+                translatorList.add( translator );
             }
-        } catch (SQLException e) {
+        } catch ( SQLException e )
+        {
         }
 
         return translatorList;

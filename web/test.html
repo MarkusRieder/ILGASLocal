@@ -1,1228 +1,817 @@
 <!DOCTYPE html>
-<html style="height: 100%" lang="en" >
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+<html>
 
-        <title>Translation Grant Application System</title>
-
-        <!-- Bootstrap -->
-
-
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
-        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
-
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-        <script type="text/javascript"  src="js/moment.js"></script>
-        <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
-        <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript"  src="js/jquery-ui.js"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.7/purify.min.js.map"></script>
-        <script type="text/javascript"  src="js/purify.min.js"></script>
-        <script type="text/javascript"  src="js/pdf.js"></script>
-        <script type="text/javascript"  src="js/pdf.worker.js"></script>
-
-        <script>
-            //Global Variables
-            var translatorArray = [];
-            var authorArray = [];
-            var languageArray = [];
-            var pressCuttingArray = [];
-            var Name = "";
-            var Author = "";
-            var counter = 0;
-            var Authorcounter = 0;
-            var pressCuttingCounter = 0;
-            var translatorCounter = 0;
-//            var translatorCounter1 = 0;
-            var translatorName876 = "";
-            var itemValue = "";
-
-            $.datepicker.setDefaults({
-                dateFormat: 'dd/mm/yy',
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                autoclose: true,
-                changeMonth: true,
-                changeYear: true,
-                gotoCurrent: true,
-                orientation: "bottom" // <-- and add this
-            });
-
-            //    localStorage.clear();
-
-            PDFJS.workerSrc = 'js/pdf.worker.js';
-        </script>
-
-        <!-- Section AutoComplete -->
-
-        <!--AutoComplete_Genres-->
-        <script type="text/javascript">
-            $(function () {
-                $("#genre").autocomplete({
-                    source: 'ACGenre', // The source of the AJAX results
-                    dataType: 'json',
-                    contentType: "application/json",
-                    data: '',
-                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                        $("#genre").val(ui.item.name);
-                        return false;
-                    },
-                    select: function (event, ui) { // What happens when an autocomplete result is selected
-                        $("#genre").val(ui.item.name);
-                        $('#idgenres').val(ui.item.id);
-                    }
-                });
-            });
-        </script>
-
-        <!--AutoComplete_international_publishers-->
-        <script>
-            $(function () {
-                $("#publisher").autocomplete({
-                    source: 'ACintPublishers_test', // The source of the AJAX results
-                    dataType: 'json',
-                    data: '',
-                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                        $("#publisher").val(ui.item.name);
-                        return false;
-                    },
-                    select: function (event, ui) { // What happens when an autocomplete result is selected
-                        $("#publisher").val(ui.item.name);
-                        conslole.log("publisher :: ", ui.item.name);
-                        $('#Company_Number').val(ui.item.id);
-                        $('#Address1').val(ui.item.Address1);
-                        $('#Address2').val(ui.item.Address2);
-                        $('#Address3').val(ui.item.Address3);
-                        $('#Address4').val(ui.item.Address4);
-                        $('#postCode').val(ui.item.postCode);
-                        $('#City').val(ui.item.City);
-                        $('#country').val(ui.item.Country);
-                        $('#countryCode').val(ui.item.CountryCode);
-                        $('#Telephone').val(ui.item.Telephone);
-                        $('#Fax_Number').val(ui.item.Fax);
-                        $('#Web_Address').val(ui.item.WWW);
-                        $('#doNotMail').val(ui.item.DoNotMail);
-                        $('#Bursaries').val(ui.item.Bursaries);
-                        $('#Founded').val(ui.item.Founded);
-                        $('#Number_Of_Titles').val(ui.item.NumberOfTitles);
-                        $('#Date_modified').val(ui.item.DateModified);
-                        $('#note').val(ui.item.Notes);
-                    }
-                });
-            });
-        </script>
-
-        <!--AutoComplete_Authors-->
-        <!--  
-       <script type="text/javascript">
-           $(function () {
-               $("#author").autocomplete({
-                   source: 'ACAuthor', // The source of the AJAX results
-                   dataType: 'json',
-                   contentType: "application/json",
-                   data: '',
-                   minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                   focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                       $("#author").val(ui.item.name);
-                       return false;
-                   },
-                   select: function (event, ui) { // What happens when an autocomplete result is selected
-                       $("#author").val(ui.item.name);
-                       $('#idauthor').val(ui.item.id);
-                   }
-               });
-           });
-       </script>
-        -->
-
-        <!--    AutoComplete_Translators    -->
-        <!--    
-        <script type="text/javascript">
-                $(function () {
-                    $("#translatorName").autocomplete({
-                        source: 'ACTranslator', // The source of the AJAX results
-                        dataType: 'json',
-                        contentType: "application/json",
-                        data: '',
-                        minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                        focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                            $("#translatorName").val(ui.item.name);
-                            return false;
-                        },
-                        select: function (event, ui) { // What happens when an autocomplete result is selected
-                            $("#translatorName").val(ui.item.name);
-                            $('#idTranslator').val(ui.item.id);
-                        }
-                    });
-                });
-            </script>   
-        -->
-
-        <!--    AutoComplete_Languages   -->
-        <script>
-            console.log(" AutoComplete_Languages ");
-            $(function () {
-                function split(val) {
-                    return val.split(/,\s*/);
-                }
-                function extractLast(term) {
-                    return split(term).pop();
-                }
-
-                $("#appTargetLanguage")
-                        // don't navigate away from the field on tab when selecting an item
-                        .on("keydown", function (event) {
-                            if (event.keyCode === $.ui.keyCode.TAB &&
-                                    $(this).autocomplete("instance").menu.active) {
-                                event.preventDefault();
-                            }
-                        })
-                        .autocomplete({
-                            source: function (request, response) {
-                                $.getJSON("ACLanguages", {
-                                    term: extractLast(request.term)
-                                }, response);
-                            },
-                            search: function () {
-                                // custom minLength
-                                var term = extractLast(this.value);
-                                if (term.length < 2) {
-                                    return false;
-                                }
-                            },
-                            focus: function () {
-                                // prevent value inserted on focus
-                                return false;
-                            },
-                            select: function (event, ui) {
-                                var terms = split(this.value);
-                                // remove the current input
-                                terms.pop();
-                                // add the selected item
-                                terms.push(ui.item.value);
-                                languageArray.push(ui.item.value);
-                                // add placeholder to get the comma-and-space at the end
-                                terms.push("");
-                                this.value = terms.join(", ");
-                                console.log("this.value:  ", this.value); //List
-                                console.log("terms: ", terms); //Array
-
-                                //languageArray.push(ui.item.value);
-
-                                //Do something
-                                var arrayLength = languageArray.length;
-                                for (var i = 0; i < arrayLength; i++) {
-                                    console.log("itemValue   " + i + ":  ", languageArray[i]);
-                                }
-
-                                $("#language_array").val(languageArray);
-                                return false;
-                            }
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>awesome bootstrap checkbox demo</title>
+        <link rel="stylesheet" href="bootstrap.css" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="awesome-bootstrap-checkbox.css" />
 
 
-                        });
-            });
-        </script>
-
-        <!-- Load mobile menu -->
-        <script type="text/javascript" src="js/jquery.mobile-menu.js"></script>
-
-        <!--phonenav-->
-        <script type="text/javascript">
-            $(function () {
-                $("body").mobile_menu({
-                    menu: "#phonenav"
-                });
-            });
-        </script>
-
-        <!--get selectpicker selection--> 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('.selectpicker').on('change', function () {
-                    var selected = $(this).find("option:selected").val();
-                });
-            });
-        </script>
-
-        <!--icon exclamation-->
         <style>
-            .icon-exclamation {
-                color: #ff0000;
 
-                ul {
-                    margin: 0;
-                }
-                ul.dashed {
-                    list-style-type: none;
-                }
-                ul.dashed > li {
-                    text-indent: -5px;
-                }
-                ul.dashed > li:before {
-                    content: "-";
-                    text-indent: -5px;
-                }
+            /*# sourceMappingURL=bootstrap.css.map */
+            .checkbox {
+                padding-left: 20px;
             }
-
-            /*
-             * rewrite h1              
-             */
-
-            .header1 {
-                display: block;
-                font-size: 2em;
-                margin-top: 0.67em;
-                margin-bottom: 0.67em;
-                margin-left: 0;
-                margin-right: 0;
-                font-weight: bold;
-                text-align: center;
-            }
-
-
-            /*
-             * Checkboxes with tick mark
-             */
-
-            .checkbox label:after, 
-            .radio label:after {
-                content: '';
-                display: table;
-                clear: both;
-            }
-
-            .checkbox .cr,
-            .radio .cr {
-                position: relative;
+            .checkbox label {
                 display: inline-block;
-                border: 1px solid #a9a9a9;
-                border-radius: .25em;
-                width: 1.3em;
-                height: 1.3em;
-                float: left;
-                margin-right: .5em;
+                vertical-align: middle;
+                position: relative;
+                padding-left: 5px;
             }
-
-            .radio .cr {
+            .checkbox label::before {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                width: 17px;
+                height: 17px;
+                left: 0;
+                margin-left: -20px;
+                border: 1px solid #cccccc;
+                border-radius: 3px;
+                background-color: #fff;
+                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            }
+            .checkbox label::after {
+                display: inline-block;
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                left: 0;
+                top: 0;
+                margin-left: -20px;
+                padding-left: 3px;
+                padding-top: 1px;
+                font-size: 11px;
+                color: #555555;
+            }
+            .checkbox input[type="checkbox"],
+            .checkbox input[type="radio"] {
+                opacity: 0;
+                z-index: 1;
+            }
+            .checkbox input[type="checkbox"]:focus + label::before,
+            .checkbox input[type="radio"]:focus + label::before {
+                outline: thin dotted;
+                outline: 5px auto -webkit-focus-ring-color;
+                outline-offset: -2px;
+            }
+            .checkbox input[type="checkbox"]:checked + label::after,
+            .checkbox input[type="radio"]:checked + label::after {
+                font-family: "FontAwesome";
+                content: "\f00c";
+            }
+            .checkbox input[type="checkbox"]:disabled + label,
+            .checkbox input[type="radio"]:disabled + label {
+                opacity: 0.65;
+            }
+            .checkbox input[type="checkbox"]:disabled + label::before,
+            .checkbox input[type="radio"]:disabled + label::before {
+                background-color: #eeeeee;
+                cursor: not-allowed;
+            }
+            .checkbox.checkbox-circle label::before {
                 border-radius: 50%;
             }
-
-            .checkbox .cr .cr-icon,
-            .radio .cr .cr-icon {
-                position: absolute;
-                font-size: .8em;
-                line-height: 0;
-                top: 50%;
-                left: 20%;
+            .checkbox.checkbox-inline {
+                margin-top: 0;
             }
 
-            .radio .cr .cr-icon {
-                margin-left: 0.04em;
+            .checkbox-primary input[type="checkbox"]:checked + label::before,
+            .checkbox-primary input[type="radio"]:checked + label::before {
+                background-color: #337ab7;
+                border-color: #337ab7;
             }
-
-            .checkbox label input[type="checkbox"],
-            .radio label input[type="radio"] {
-                display: none;
-            }
-
-            .checkbox label input[type="checkbox"] + .cr > .cr-icon,
-            .radio label input[type="radio"] + .cr > .cr-icon {
-                transform: scale(3) rotateZ(-20deg);
-                opacity: 0;
-                transition: all .3s ease-in;
-            }
-
-            .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
-            .radio label input[type="radio"]:checked + .cr > .cr-icon {
-                transform: scale(1) rotateZ(0deg);
-                opacity: 1;
-            }
-
-            .checkbox label input[type="checkbox"]:disabled + .cr,
-            .radio label input[type="radio"]:disabled + .cr {
-                opacity: .5;
-            }
-
-
-            .checkbox-inline.no_indent,
-            .checkbox-inline.no_indent+.checkbox-inline.no_indent {
-                margin-left: 0;
-                margin-right: 10px;
-            }
-            .checkbox-inline.no_indent:last-child {
-                margin-right: 0;
-            }
-
-            body {
-                margin: 5px;
-                background: #d9d1d1
-            }
-            /* Tab Navigation */
-            .nav-tabs {
-                margin: 0;
-                padding: 0;
-                border: 0;    
-            }
-            .nav-tabs > li > a {
-                background: #DADADA;
-                border-radius: 0;
-                box-shadow: inset 0 -8px 7px -9px rgba(0,0,0,.4),-2px -2px 5px -2px rgba(0,0,0,.4);
-            }
-            .nav-tabs > li.active > a,
-            .nav-tabs > li.active > a:hover {
-                background: #F5F5F5;
-                box-shadow: inset 0 0 0 0 rgba(0,0,0,.4),-2px -3px 5px -2px rgba(0,0,0,.4);
-            }
-            a, u {
-                text-decoration: none;
-            }
-            /* Tab Content */
-            .tab-pane {
-                background: #d9d1d1;
-                box-shadow: 0 0 4px rgba(0,0,0,.4);
-                border-radius: 0;
-                text-align: center;
-                padding: 10px;
-            }
-
-            .nav-tabs.two-lines>li {
-                height:62px;
-            }
-            .nav-tabs.two-lines>li>a, .nav-tabs>li>a>div {
-                height:100%;
-            }
-            input[type="text"]:focus + .glyphicon-search{
-                color: #FF8C00;
-            }
-
-            .ui-state-highlight, 
-            .ui-widget-content .ui-state-highlight, 
-            .ui-widget-header .ui-state-highlight {
-                border: 1px solid #003399;
-                background: #003399 url("css/images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
-            }
-
-            .ui-datepicker { 
-                width: 17em; 
-                padding: .2em .2em 0; 
-                display: none; 
-                position: relative; z-index: 100000 !important;
-                /*z-index: 2000 !important;*/
-            }
-
-            /*.ui-datepicker-calendar a.ui-state-default { background: cyan; }*/
-            .ui-datepicker-calendar td.ui-datepicker-today a { background: lime; } 
-            .ui-datepicker-calendar a.ui-state-hover { background: yellow; } 
-            .ui-datepicker-calendar a.ui-state-active { background: red; } 
-
-            /* Set whitespace between the generated input fields*/
-            input.wsp{
-
-                margin-right: 5px;
-            }
-
-            h1 {
-                text-align: center;
-            }
-            .pressCuttingsUpload {
-                margin: 20px 0;
-            }
-
-            .imageupload{
-                margin: 20px 0;
-            }
-        </style>
-
-
-        <!--http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh -->
-        <script type="text/javascript">
-            $(document).ready(function () {
-                if (location.hash) {
-                    $("a[href='" + location.hash + "']").tab("show");
-                }
-                $(document.body).on("click", "a[data-toggle]", function (event) {
-                    location.hash = this.getAttribute("href");
-                });
-            });
-            $(window).on("popstate", function () {
-                var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
-                $("a[href='" + anchor + "']").tab("show");
-            });
-        </script>
-
-        <!--https://www.experts-exchange.com/questions/28687200/how-to-load-extrenal-url-in-bootstrap-tabs.html-->
-        <script type="text/javascript">
-            $(function () {
-                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                    var tab = $(e.target.attributes.href.value);
-                    $(tab).load(tab.data('url'));
-                });
-                $('.nav-tabs a:first').each(function () {
-                    $(this.attributes.href.value).load($(this.attributes.href.value).data('url'));
-                });
-            });
-        </script> 
-
-
-        <!--Triggering the Tooltips-->
-        <script type="text/javascript">
-
-            $(document).ready(function () {
-
-                $('[data-toggle="tooltip"]').tooltip();
-                $(".tip-top").tooltip({placement: 'top'});
-            });
-
-        </script>
-
-
-        <!-- the following functions will copy
-         the selected file name (for upload) to the label input-->
-        <script>
-
-            $(function () {
-                $('div.agreement').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_agreement").value = label;
-                });
-            });
-            $(function () {
-                $('div.contract').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_contract").value = label;
-                });
-            });
-            $(function () {
-                $('div.addendum').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_addendum").value = label;
-                });
-            });
-            $(function () {
-                $('div.translator_cv').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-//                  var label_translatorid2 = "label_translator" + id2;
-                    document.getElementById("label_translator0").value = label;
-                });
-            });
-            $(function () {
-                $(document).on('change', 'div.translatorcv :file', function () {
-
-                    var id = parseInt(this.id.replace("translator_cv", ""));
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    var label_translatorid = "label_translator" + id;
-                    document.getElementById(label_translatorid).value = label;
-                });
-            });
-            $(function () {
-                $('div.originalSample').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_originalSample").value = label;
-                });
-            });
-            $(function () {
-                $('div.translationSample').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_translationSample").value = label;
-                });
-            });
-            $(function () {
-                $('div.cover').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_cover").value = label;
-                });
-            });
-            $(function () {
-                $('div.proofPayment').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_proofPayment").value = label;
-                });
-            });
-            $(function () {
-                $('div.bankDetailForm').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_BankDetailForm").value = label;
-                });
-            });
-            $(function () {
-                $('div.signedLIcontract').on('change', ':file', function () {
-                    var input = $(this),
-                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-                    input.trigger('fileselect', [numFiles, label]);
-                    document.getElementById("label_signedLIcontract").value = label;
-                });
-            });
-        </script>
-
-        <script type="text/javascript">
-            function del_file(eleId) {
-                var ele = document.getElementById("delete_file" + eleId);
-                ele.parentNode.removeChild(ele);
-            }
-        </script>
-
-        <!--add more Translators-->
-        <script type="text/javascript">
-            $(document).ready(function () {
-                counter = 1;
-                $("#addElement").click(function (event) {
-                    counter++;
-                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counter + ". Translator  </div>");
-                    var $newInput = $("<input placeholder='Translator Name' type='text'> ");
-                    $newInput
-                            .attr("name", "Name" + counter)
-                            .attr("id", "name" + counter)
-                            .addClass("text wsp");
-                    $newInput.appendTo($newDiv);
-                    $newDiv.appendTo($("#generatedForm"));
-                });
-            });
-        </script>
-
-        <script>
-            function  copyFirstRow() {
-                var fn = document.getElementById("translatorName");
-                document.getElementById("first0").value = fn.value;
-                Name = fn.value;
-                translatorArray.push(Name);
-                console.log(" first entry in translatorArray ", fn.value);
-            }
-        </script>
-
-        <script>
-            function backToBooks() {
-                var upload_number = 2;
-
-                for (var i = 2; i <= counter; i++) {
-
-                    var nr = "name" + i;
-                    var item = document.getElementById(nr);
-                    itemValue = item.value;
-
-                    translatorArray.push(itemValue);
-
-                    var moreUploadTag = '';
-
-                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
-                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
-                    moreUploadTag += '<br>';
-                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
-                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
-                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
-                    moreUploadTag += 'Select file ';
-                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
-                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
-                    moreUploadTag += '</label>';
-                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
-                    moreUploadTag += '<br>';
-                    moreUploadTag += '<br>';
-                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
-                    moreUploadTag += '</div>';
-                    moreUploadTag += '</div>';
-
-                    $(moreUploadTag).appendTo('#additionalTranslator');
-
-                    upload_number++;
-                }
-
-                $('#bs-example-navbar-collapse-1 a[href="#Translator"]').tab('show');
-                var arrayLength = translatorArray.length;
-                for (var i = 0; i < arrayLength; i++) {
-                }
-                $("#translatorArray").val(translatorArray);
-            }
-        </script>
-
-        <!-- Add another Press Cutting-->
-        <script type="text/javascript">
-            $(document).ready(function () {
-                pressCuttingCounter = 1;
-                $("#pressCutting").click(function (event) {
-                    console.log("pressCuttingCounter   ", pressCuttingCounter);
-                    pressCuttingCounter++;
-                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + pressCuttingCounter + ". Press Cutting  </div>");
-                    var $newInput = $("<input placeholder='Press Cutting' type='text'> ");
-                    $newInput
-                            .attr("name", "pressCutting" + pressCuttingCounter)
-                            .attr("id", "pressCutting" + pressCuttingCounter)
-                            .addClass("text wsp");
-                    $newInput.appendTo($newDiv);
-                    $newDiv.appendTo($("#addPressCuttingForm"));
-                });
-            });
-        </script>
-
-        <script>
-            function backToMisc() {
-                var upload_number = 2;
-                for (var i = 2; i <= pressCuttingCounter; i++) {
-                    console.log("backToMisc()   ");
-                    var nr = "name" + i;
-                    var item = document.getElementById(nr);
-                    var itemValue = item.value;
-
-                    pressCuttingArray.push(itemValue);
-
-                    var moreUploadTag = '';
-
-                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
-                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
-                    moreUploadTag += '<br>';
-                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
-                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
-                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
-                    moreUploadTag += 'Select file ';
-                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
-                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
-                    moreUploadTag += '</label>';
-                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
-                    moreUploadTag += '<br>';
-                    moreUploadTag += '<br>';
-                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
-                    moreUploadTag += '</div>';
-                    moreUploadTag += '</div>';
-
-                    $(moreUploadTag).appendTo('#additionalTranslator');
-
-                    upload_number++;
-                }
-
-                $('#bs-example-navbar-collapse-1 a[href="#Misc"]').tab('show');
-                var arrayLength = pressCuttingArray.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    console.log("pressCuttingArray   ", pressCuttingArray[i]);
-                }
-                $("#pressCuttingArray").val(pressCuttingArray);
-            }
-        </script>
-
-        <!--';-->
-        <!--add more Authors -->
-        <script type="text/javascript">
-
-            $(document).ready(function () {
-
-                Authorcounter = 1;
-                $("#addAuthor").click(function (event) {
-
-                    Authorcounter++;
-                    var $newDiv = $("<div class='col-sm-12' style='margin-bottom:2px'>" + Authorcounter + ". Author  </div>");
-                    var $newInput = $("<input placeholder='First Name'  type='text' autofocus>");
-                    $newInput
-                            .attr("name", "FirstName")
-                            .attr("id", "authorFirstName" + Authorcounter)
-                            .addClass("text wsp");
-                    $newInput.appendTo($newDiv);
-                    var $newInput = $("<input placeholder='Last Name' type='text'> ");
-                    $newInput
-                            .attr("name", "LastName")
-                            .attr("id", "authorLastName" + Authorcounter)
-                            .addClass("text");
-                    $newInput.appendTo($newDiv);
-                    $newDiv.appendTo($("#generatedFormAuthors"));
-                });
-            });
-        </script>
-
-        <script>
-            function  copyFirstRow2() {
-
-                console.log("document.getElementById(aFirstName)   ", document.getElementById("aFirstName").value);
-                var aFirstName = document.getElementById("aFirstName");
-                console.log("aFirstName.value   ", aFirstName.value);
-                document.getElementById("firstAuthor0").value = aFirstName.value;
-                var aLastName = document.getElementById("aLastName");
-                document.getElementById("lastAuthor0").value = aLastName.value;
-                var fulln = aFirstName.value + " " + aLastName.value;
-                authorArray.push(fulln, aFirstName.value, aLastName.value);
-            }
-
-        </script>
-
-        <script>
-            function backToBooks2() {
-
-                for (var i = 2; i <= Authorcounter; i++) {
-
-                    var nr = "authorFirstName" + i;
-                    var nrL = "authorLastName" + i;
-                    var first = document.getElementById(nr);
-                    var last = document.getElementById(nrL);
-                    var firstValue = first.value;
-                    var lastValue = last.value;
-                    var fullName = firstValue + " " + lastValue;
-
-                    authorArray.push(fullName, firstValue, lastValue);
-                }
-
-                $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
-                var arrayLength = authorArray.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    console.log("authorArray   " + i + ":  ", authorArray[i]);
-                }
-                $("#author_array").val(authorArray);
-            }
-        </script>
-
-
-        <script>
-
-            function myFunction() {
-                translatorName876 = "";
-                var x = document.getElementById("translatorName");
-                translatorName876 = x.value;
-                var tester = "Upload a copy of " + translatorName876 + "'s CV:";
-                localStorage.setItem('translatorName876', tester);
-                localStorage.setItem('translatorName8', translatorName876);
-                var tripper = localStorage.getItem("translatorName876");
-                document.getElementById("123").innerHTML = tripper;
-                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
-//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-//                console.log("tester   ", tester);
-//                console.log("tripper   ", tripper);
-            }
-
-        </script>
-
-        <script>
-
-            $(document).ready(function () {
-
-                var tripper = localStorage.getItem("translatorName876");
-                document.getElementById("123").innerHTML = tripper;
-                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
-//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-//                console.log("tripper 1  ", tripper);
-            });
-        </script>
-
-        <style>
-            .btn-file {
-                position: relative;
-                overflow: hidden;
-            }
-            .btn-file input[type=file] {
-                position: absolute;
-                top: 0;
-                right: 0;
-                min-width: 100%;
-                min-height: 100%;
-                font-size: 100px;
-                text-align: right;
-                filter: alpha(opacity=0);
-                opacity: 0;
-                outline: none;
-                background: white;
-                cursor: inherit;
-                display: block;
-            }
-        </style>
-        <style>
-            .panel {
-                background-color: #d9d1d1 ;
-                margin-top: 50px;
-                box-shadow: 0 0 30px  #b6a6a6;    
-                padding:0 15px 0 15px;
-            }
-            .panel-horizontal {
-                background-color: #d9d1d1;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-            }
-            .panel-horizontal > .panel-body {
-                background-color: #d9d1d1;
-                border-radius: 0 4px 4px 0;
-                border-left: 1px solid #ddd;
-            }
-
-            .longLabel{
-                display: inline-table;
-                line-height: initial;
-            }
-
-            .form-input {
-                height: 50px;
-                font-size: 16px;    
-            }
-
-            .form-btn {
-                line-height: 50px;
-                font-size: 16px;
-            }
-        </style>
-
-        <script>
-            var fileTypes = [
-                'image/jpeg',
-                'image/pjpeg',
-                'image/png',
-                'image/*',
-                'application/pdf',
-                '.doc,.docx,.xml,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-
-            ];
-
-            function validFileType(file) {
-                for (var i = 0; i < fileTypes.length; i++) {
-                    if (file.type === fileTypes[i]) {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        </script>
-        <script>
-            $(document).ready(function () {
-                //Check File API support
-                if (window.File && window.FileList && window.FileReader)
-                {
-                    $('#files').on("change", function (event) {
-                        var files = event.target.files; //FileList object
-                        var output = document.getElementById("result");
-                        for (var i = 0; i < files.length; i++)
-                        {
-                            var file = files[i];
-                            var fileName = files[i].name;
-                            console.log("fileName  " + fileName);
-
-//                            if (file.type.match('image.*')) {
-                            if (validFileType(files[i])) {
-                                if (this.files[0].size < 2097152) {
-
-                                    var picReader = new FileReader();
-                                    picReader.addEventListener("load", function (event) {
-                                        var picFile = event.target;
-                                        var div = document.createElement("div");
-                                        div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
-                                                "title='preview image'/>";
-                                        output.insertBefore(div, null);
-                                    });
-                                    //Read the image
-                                    $('#clear, #result').show();
-                                    picReader.readAsDataURL(file);
-
-                                } else {
-                                    alert("Image Size is too big.Minimum size is 2MB.");
-                                    $(this).val("");
-                                }
-                            } else {
-                                alert("You can only upload image file.");
-                                $(this).val("");
-                            }
-                        }
-
-                    });
-                } else
-                {
-                    console.log("Your browser does not support File API");
-                }
-            });
-
-            $(document).on("click", "#files", function () {
-                $('.thumbnail').parent().remove();
-                $('result').hide();
-                $(this).val("");
-            });
-
-            $(document).on("click", "#clear", function () {
-                $('.thumbnail').parent().remove();
-                $('#result').hide();
-                $('#files').val("");
-                $(this).hide();
-            });
-$(document).ready(function() {
-    var table = $('#example').DataTable();
- 
-    $('#example tbody').on( 'click', 'tr', function () {
-        if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-        }
-        else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-    } );
- 
-    $('#button').click( function () {
-        table.row('.selected').remove().draw( false );
-    } );
-} );
-        </script>
-
-        <style>
-
-            header h1{
-                font-size:12pt;
+            .checkbox-primary input[type="checkbox"]:checked + label::after,
+            .checkbox-primary input[type="radio"]:checked + label::after {
                 color: #fff;
-                background-color: #1BA1E2;
-                padding: 20px;
-
-            }
-            #article
-            {
-                width: 80%;
-                margin:auto;
-                margin-top:10px;
             }
 
-            .thumbnail{
-
-                height: 100px;
-                margin: 10px;
-                float: left;
+            .checkbox-danger input[type="checkbox"]:checked + label::before,
+            .checkbox-danger input[type="radio"]:checked + label::before {
+                background-color: #d9534f;
+                border-color: #d9534f;
             }
-            #clear{
-                display:none;
-            }
-            #result {
-                border: 4px dotted #cccccc;
-                display: none;
-                float: right;
-                margin:0 auto;
-                width: 511px;
-
-                .hovering i::before {
-                    display: none;
-                }
-
-                .hovering:hover i::before {
-                    display: block;
-                }
+            .checkbox-danger input[type="checkbox"]:checked + label::after,
+            .checkbox-danger input[type="radio"]:checked + label::after {
+                color: #fff;
             }
 
-            .zoom {
-                transition: transform .2s; /* Animation */
-                margin: 0 auto;
+            .checkbox-info input[type="checkbox"]:checked + label::before,
+            .checkbox-info input[type="radio"]:checked + label::before {
+                background-color: #5bc0de;
+                border-color: #5bc0de;
+            }
+            .checkbox-info input[type="checkbox"]:checked + label::after,
+            .checkbox-info input[type="radio"]:checked + label::after {
+                color: #fff;
             }
 
-            .zoom:hover {
-                transform: scale(2.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+            .checkbox-warning input[type="checkbox"]:checked + label::before,
+            .checkbox-warning input[type="radio"]:checked + label::before {
+                background-color: #f0ad4e;
+                border-color: #f0ad4e;
             }
+            .checkbox-warning input[type="checkbox"]:checked + label::after,
+            .checkbox-warning input[type="radio"]:checked + label::after {
+                color: #fff;
+            }
+
+            .checkbox-success input[type="checkbox"]:checked + label::before,
+            .checkbox-success input[type="radio"]:checked + label::before {
+                background-color: #5cb85c;
+                border-color: #5cb85c;
+            }
+            .checkbox-success input[type="checkbox"]:checked + label::after,
+            .checkbox-success input[type="radio"]:checked + label::after {
+                color: #fff;
+            }
+
+            .checkbox.checkbox-sm label::before {
+                width: 30px;
+                height: 30px;
+                top: -13px;
+            }
+            .checkbox.checkbox-sm label::after {
+                width: 30px;
+                height: 30px;
+                padding-left: 4px;
+                font-size: 20px;
+                left: 1px;
+                top: -13px;
+            }
+            .checkbox.checkbox-sm label {
+                padding-left: 18px;
+                top: 13px;
+            }
+            .checkbox.checkbox-md label::before {
+                width: 34px;
+                height: 34px;
+                top: -17px;
+            }
+            .checkbox.checkbox-md label::after {
+                width: 34px;
+                height: 34px;
+                padding-left: 4px;
+                font-size: 24px;
+                left: 1px;
+                top: -18px;
+            }
+            .checkbox.checkbox-md label {
+                padding-left: 22px;
+                top: 17px;
+            }
+            .checkbox.checkbox-lg label::before {
+                width: 46px;
+                height: 46px;
+                top: -28px;
+            }
+            .checkbox.checkbox-lg label::after {
+                width: 46px;
+                height: 46px;
+                padding-left: 4px;
+                font-size: 36px;
+                left: 1px;
+                top: -31px;
+            }
+            .checkbox.checkbox-lg label {
+                padding-left: 34px;
+                top: 32px;
+            }
+
+            .radio {
+                padding-left: 20px;
+            }
+            .radio label {
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                padding-left: 5px;
+            }
+            .radio label::before {
+                content: "";
+                display: inline-block;
+                position: absolute;
+                width: 17px;
+                height: 17px;
+                left: 0;
+                margin-left: -20px;
+                border: 1px solid #cccccc;
+                border-radius: 50%;
+                background-color: #fff;
+                -webkit-transition: border 0.15s ease-in-out;
+                -o-transition: border 0.15s ease-in-out;
+                transition: border 0.15s ease-in-out;
+            }
+            .radio label::after {
+                display: inline-block;
+                position: absolute;
+                content: " ";
+                width: 11px;
+                height: 11px;
+                left: 3px;
+                top: 3px;
+                margin-left: -20px;
+                border-radius: 50%;
+                background-color: #555555;
+                -webkit-transform: scale(0, 0);
+                -ms-transform: scale(0, 0);
+                -o-transform: scale(0, 0);
+                transform: scale(0, 0);
+                -webkit-transition: -webkit-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+                -moz-transition: -moz-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+                -o-transition: -o-transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+                transition: transform 0.1s cubic-bezier(0.8, -0.33, 0.2, 1.33);
+            }
+            .radio input[type="radio"] {
+                opacity: 0;
+                z-index: 1;
+            }
+            .radio input[type="radio"]:focus + label::before {
+                outline: thin dotted;
+                outline: 5px auto -webkit-focus-ring-color;
+                outline-offset: -2px;
+            }
+            .radio input[type="radio"]:checked + label::after {
+                -webkit-transform: scale(1, 1);
+                -ms-transform: scale(1, 1);
+                -o-transform: scale(1, 1);
+                transform: scale(1, 1);
+            }
+            .radio input[type="radio"]:disabled + label {
+                opacity: 0.65;
+            }
+            .radio input[type="radio"]:disabled + label::before {
+                cursor: not-allowed;
+            }
+            .radio.radio-inline {
+                margin-top: 0;
+            }
+
+            .radio-primary input[type="radio"] + label::after {
+                background-color: #337ab7;
+            }
+            .radio-primary input[type="radio"]:checked + label::before {
+                border-color: #337ab7;
+            }
+            .radio-primary input[type="radio"]:checked + label::after {
+                background-color: #337ab7;
+            }
+
+            .radio-danger input[type="radio"] + label::after {
+                background-color: #d9534f;
+            }
+            .radio-danger input[type="radio"]:checked + label::before {
+                border-color: #d9534f;
+            }
+            .radio-danger input[type="radio"]:checked + label::after {
+                background-color: #d9534f;
+            }
+
+            .radio-info input[type="radio"] + label::after {
+                background-color: #5bc0de;
+            }
+            .radio-info input[type="radio"]:checked + label::before {
+                border-color: #5bc0de;
+            }
+            .radio-info input[type="radio"]:checked + label::after {
+                background-color: #5bc0de;
+            }
+
+            .radio-warning input[type="radio"] + label::after {
+                background-color: #f0ad4e;
+            }
+            .radio-warning input[type="radio"]:checked + label::before {
+                border-color: #f0ad4e;
+            }
+            .radio-warning input[type="radio"]:checked + label::after {
+                background-color: #f0ad4e;
+            }
+
+            .radio-success input[type="radio"] + label::after {
+                background-color: #5cb85c;
+            }
+            .radio-success input[type="radio"]:checked + label::before {
+                border-color: #5cb85c;
+            }
+            .radio-success input[type="radio"]:checked + label::after {
+                background-color: #5cb85c;
+            }
+
+            input[type="checkbox"].styled:checked + label:after,
+            input[type="radio"].styled:checked + label:after {
+                font-family: 'FontAwesome';
+                content: "\f00c";
+            }
+            input[type="checkbox"] .styled:checked + label::before,
+            input[type="radio"] .styled:checked + label::before {
+                color: #fff;
+            }
+            input[type="checkbox"] .styled:checked + label::after,
+            input[type="radio"] .styled:checked + label::after {
+                color: #fff;
+            }
+
+            .radio.radio-sm label::before {
+                width: 30px;
+                height: 30px;
+                top: -13px;
+            }
+            .radio.radio-sm label::after {
+                width: 22px;
+                height: 22px;
+                padding-left: 4px;
+                font-size: 20px;
+                left: 4px;
+                top: -9px;
+            }
+            .radio.radio-sm label {
+                padding-left: 18px;
+                top: 13px;
+            }
+            .radio.radio-md label::before {
+                width: 34px;
+                height: 34px;
+                top: -17px;
+            }
+            .radio.radio-md label::after {
+                width: 26px;
+                height: 26px;
+                padding-left: 4px;
+                font-size: 24px;
+                left: 4px;
+                top: -13px;
+            }
+            .radio.radio-md label {
+                padding-left: 22px;
+                top: 17px;
+            }
+            .radio.radio-lg label::before {
+                width: 46px;
+                height: 46px;
+                top: -28px;
+            }
+            .radio.radio-lg label::after {
+                width: 36px;
+                height: 36px;
+                padding-left: 4px;
+                font-size: 36px;
+                left: 5px;
+                top: -23px;
+            }
+            .radio.radio-lg label {
+                padding-left: 34px;
+                top: 32px;
+            }
+
         </style>
-
-
     </head>
-    <body style="height: 100%;" class=""><div id="build-menu"></div><div id="build-menu-page"><div id="build-menu-overlay" style="position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px; z-index: 99; background: rgb(255, 255, 255) none repeat scroll 0% 0%; opacity: 0.4; display: none;"></div>
 
-            <div id="shadowholder">
-                <div class="shadowtop"> </div>
-                <div id="container">
-                    <div id="topspacer"> </div>
-                    <div id="topbar">
-                        <div class="animateddiv">
-                            <a href="/the-translation-grant-programme"><img src="images/flashtext-animated2.gif" alt="Promoting Irish Literature Abroad" height="80"></a>
-                        </div>
-                        <a href="/" class="logo"><span class="hidden">Literature Ireland</span></a>
-                    </div> <!--  End of topbar div -->
-
-
-                    <!--container for welcome/logout-->                
-
-                    <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
-                        <div class="pull-right">
-                            <h6> <small>Welcome <strong>Moist van Lipwick</strong> - <strong>not Moist van Lipwick</strong>? <a href="/ILGAS/Logout">Click here to log out </a></small></h6>
-                        </div>
-                    </div> <!--container for welcome/logout-->
-
-                    <h1 style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
-
-                    <div class="container-fluid" style="margin-bottom: 20px"></div> 
-
-                    <table id="example" class="display" style="width:100%"> 
-                        <thead>
-                            <tr> 
-                                <th>Name</th> 
-                                <th>Position</th> 
-                                <th>Office</th> 
-                                <th>Age</th> 
-                                <th>Start date</th> 
-                                <th>Salary</th> 
-                            </tr> </thead> 
-                        <tbody> 
-                            <tr> 
-                                <td>Tiger Nixon</td> <td>System Architect</td> <td>Edinburgh</td> <td>61</td> <td>2011/04/25</td> <td>$320,800</td> </tr> <tr> <td>Garrett Winters</td> <td>Accountant</td> <td>Tokyo</td> <td>63</td> <td>2011/07/25</td> <td>$170,750</td> </tr> <tr> <td>Ashton Cox</td> <td>Junior Technical Author</td> <td>San Francisco</td> <td>66</td> <td>2009/01/12</td> <td>$86,000</td> </tr> <tr> <td>Cedric Kelly</td> <td>Senior Javascript Developer</td> <td>Edinburgh</td> <td>22</td> <td>2012/03/29</td> <td>$433,060</td> </tr> <tr> <td>Airi Satou</td> <td>Accountant</td> <td>Tokyo</td> <td>33</td> <td>2008/11/28</td> <td>$162,700</td> </tr> <tr> <td>Brielle Williamson</td> <td>Integration Specialist</td> <td>New York</td> <td>61</td> <td>2012/12/02</td> <td>$372,000</td> </tr> <tr> <td>Herrod Chandler</td> <td>Sales Assistant</td> <td>San Francisco</td> <td>59</td> <td>2012/08/06</td> <td>$137,500</td> </tr> <tr> <td>Rhona Davidson</td> <td>Integration Specialist</td> <td>Tokyo</td> <td>55</td> <td>2010/10/14</td> <td>$327,900</td> </tr> <tr> <td>Colleen Hurst</td> <td>Javascript Developer</td> <td>San Francisco</td> <td>39</td> <td>2009/09/15</td> <td>$205,500</td> </tr> <tr> <td>Sonya Frost</td> <td>Software Engineer</td> <td>Edinburgh</td> <td>23</td> <td>2008/12/13</td> <td>$103,600</td> </tr> <tr> <td>Jena Gaines</td> <td>Office Manager</td> <td>London</td> <td>30</td> <td>2008/12/19</td> <td>$90,560</td> </tr> <tr> <td>Quinn Flynn</td> <td>Support Lead</td> <td>Edinburgh</td> <td>22</td> <td>2013/03/03</td> <td>$342,000</td> </tr> <tr> <td>Charde Marshall</td> <td>Regional Director</td> <td>San Francisco</td> <td>36</td> <td>2008/10/16</td> <td>$470,600</td> </tr> <tr> <td>Haley Kennedy</td> <td>Senior Marketing Designer</td> <td>London</td> <td>43</td> <td>2012/12/18</td> <td>$313,500</td> </tr> <tr> <td>Tatyana Fitzpatrick</td> <td>Regional Director</td> <td>London</td> <td>19</td> <td>2010/03/17</td> <td>$385,750</td> </tr> <tr> <td>Michael Silva</td> <td>Marketing Designer</td> <td>London</td> <td>66</td> <td>2012/11/27</td> <td>$198,500</td> </tr> <tr> <td>Paul Byrd</td> <td>Chief Financial Officer (CFO)</td> <td>New York</td> <td>64</td> <td>2010/06/09</td> <td>$725,000</td> </tr> <tr> <td>Gloria Little</td> <td>Systems Administrator</td> <td>New York</td> <td>59</td> <td>2009/04/10</td> <td>$237,500</td> </tr> <tr> <td>Bradley Greer</td> <td>Software Engineer</td> <td>London</td> <td>41</td> <td>2012/10/13</td> <td>$132,000</td> </tr> <tr> <td>Dai Rios</td> <td>Personnel Lead</td> <td>Edinburgh</td> <td>35</td> <td>2012/09/26</td> <td>$217,500</td> </tr> <tr> <td>Jenette Caldwell</td> <td>Development Lead</td> <td>New York</td> <td>30</td> <td>2011/09/03</td> <td>$345,000</td> </tr> <tr> <td>Yuri Berry</td> <td>Chief Marketing Officer (CMO)</td> <td>New York</td> <td>40</td> <td>2009/06/25</td> <td>$675,000</td> </tr> <tr> <td>Caesar Vance</td> <td>Pre-Sales Support</td> <td>New York</td> <td>21</td> <td>2011/12/12</td> <td>$106,450</td> </tr> <tr> <td>Doris Wilder</td> <td>Sales Assistant</td> <td>Sidney</td> <td>23</td> <td>2010/09/20</td> <td>$85,600</td> </tr> <tr> <td>Angelica Ramos</td> <td>Chief Executive Officer (CEO)</td> <td>London</td> <td>47</td> <td>2009/10/09</td> <td>$1,200,000</td> </tr> <tr> <td>Gavin Joyce</td> <td>Developer</td> <td>Edinburgh</td> <td>42</td> <td>2010/12/22</td> <td>$92,575</td> </tr> <tr> <td>Jennifer Chang</td> <td>Regional Director</td> <td>Singapore</td> <td>28</td> <td>2010/11/14</td> <td>$357,650</td> </tr> <tr> <td>Brenden Wagner</td> <td>Software Engineer</td> <td>San Francisco</td> <td>28</td> <td>2011/06/07</td> <td>$206,850</td> </tr> <tr> <td>Fiona Green</td> <td>Chief Operating Officer (COO)</td> <td>San Francisco</td> <td>48</td> <td>2010/03/11</td> <td>$850,000</td> </tr> <tr> <td>Shou Itou</td> <td>Regional Marketing</td> <td>Tokyo</td> <td>20</td> <td>2011/08/14</td> <td>$163,000</td> </tr> <tr> <td>Michelle House</td> <td>Integration Specialist</td> <td>Sidney</td> <td>37</td> <td>2011/06/02</td> <td>$95,400</td> </tr> <tr> <td>Suki Burks</td> <td>Developer</td> <td>London</td> <td>53</td> <td>2009/10/22</td> <td>$114,500</td> </tr> <tr> <td>Prescott Bartlett</td> <td>Technical Author</td> <td>London</td> <td>27</td> <td>2011/05/07</td> <td>$145,000</td> </tr> <tr> <td>Gavin Cortez</td> <td>Team Leader</td> <td>San Francisco</td> <td>22</td> <td>2008/10/26</td> <td>$235,500</td> </tr> <tr> <td>Martena Mccray</td> <td>Post-Sales support</td> <td>Edinburgh</td> <td>46</td> <td>2011/03/09</td> <td>$324,050</td> </tr> <tr> <td>Unity Butler</td> <td>Marketing Designer</td> <td>San Francisco</td> <td>47</td> <td>2009/12/09</td> <td>$85,675</td> </tr> <tr> <td>Howard Hatfield</td> <td>Office Manager</td> <td>San Francisco</td> <td>51</td> <td>2008/12/16</td> <td>$164,500</td> </tr> <tr> <td>Hope Fuentes</td> <td>Secretary</td> <td>San Francisco</td> <td>41</td> <td>2010/02/12</td> <td>$109,850</td> </tr> <tr> <td>Vivian Harrell</td> <td>Financial Controller</td> <td>San Francisco</td> <td>62</td> <td>2009/02/14</td> <td>$452,500</td> </tr> <tr> <td>Timothy Mooney</td> <td>Office Manager</td> <td>London</td> <td>37</td> <td>2008/12/11</td> <td>$136,200</td> </tr> <tr> <td>Jackson Bradshaw</td> <td>Director</td> <td>New York</td> <td>65</td> <td>2008/09/26</td> <td>$645,750</td> </tr> <tr> <td>Olivia Liang</td> <td>Support Engineer</td> <td>Singapore</td> <td>64</td> <td>2011/02/03</td> <td>$234,500</td> </tr> <tr> <td>Bruno Nash</td> <td>Software Engineer</td> <td>London</td> <td>38</td> <td>2011/05/03</td> <td>$163,500</td> </tr> <tr> <td>Sakura Yamamoto</td> <td>Support Engineer</td> <td>Tokyo</td> <td>37</td> <td>2009/08/19</td> <td>$139,575</td> </tr> <tr> <td>Thor Walton</td> <td>Developer</td> <td>New York</td> <td>61</td> <td>2013/08/11</td> <td>$98,540</td> </tr> <tr> <td>Finn Camacho</td> <td>Support Engineer</td> <td>San Francisco</td> <td>47</td> <td>2009/07/07</td> <td>$87,500</td> </tr> <tr> <td>Serge Baldwin</td> <td>Data Coordinator</td> <td>Singapore</td> <td>64</td> <td>2012/04/09</td> <td>$138,575</td> </tr> <tr> <td>Zenaida Frank</td> <td>Software Engineer</td> <td>New York</td> <td>63</td> <td>2010/01/04</td> <td>$125,250</td> </tr> <tr> <td>Zorita Serrano</td> <td>Software Engineer</td> <td>San Francisco</td> <td>56</td> <td>2012/06/01</td> <td>$115,000</td> </tr> <tr> <td>Jennifer Acosta</td> <td>Junior Javascript Developer</td> <td>Edinburgh</td> <td>43</td> <td>2013/02/01</td> <td>$75,650</td> </tr> <tr> <td>Cara Stevens</td> <td>Sales Assistant</td> <td>New York</td> <td>46</td> <td>2011/12/06</td> <td>$145,600</td> </tr> <tr> <td>Hermione Butler</td> <td>Regional Director</td> <td>London</td> <td>47</td> <td>2011/03/21</td> <td>$356,250</td> </tr> <tr> <td>Lael Greer</td> <td>Systems Administrator</td> <td>London</td> <td>21</td> <td>2009/02/27</td> <td>$103,500</td> </tr> <tr> <td>Jonas Alexander</td> <td>Developer</td> <td>San Francisco</td> <td>30</td> <td>2010/07/14</td> <td>$86,500</td> </tr> <tr> <td>Shad Decker</td> <td>Regional Director</td> <td>Edinburgh</td> <td>51</td> <td>2008/11/13</td> <td>$183,000</td> </tr> <tr> <td>Michael Bruce</td> <td>Javascript Developer</td> <td>Singapore</td> <td>29</td> <td>2011/06/27</td> <td>$183,000</td> </tr> <tr> <td>Donna Snider</td> <td>Customer Support</td> <td>New York</td> <td>27</td> <td>2011/01/25</td> <td>$112,000</td> </tr> </tbody> <tfoot> <tr> <th>Name</th> <th>Position</th> <th>Office</th> <th>Age</th> <th>Start date</th> <th>Salary</th> </tr> </tfoot> 
-                    </table>
-                    <table cellspacing="0" cellpadding="0" border="0">
-                        <tbody>
-                            <tr>
-                                <td class="gutter">
-                                    <div class="line number1 index0 alt2">1</div>
-                                    <div class="line number2 index1 alt1">2</div>
-                                    <div class="line number3 index2 alt2">3</div>
-                                    <div class="line number4 index3 alt1">4</div>
-                                    <div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div>
-                                    <div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div>
-                                    <div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div>
-                                    <div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div>
-                                    <div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div>
-                                    <div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div>
-                                    <div class="line number17 index16 alt2">17</div></td><td class="code">
-                                    <div class="container"><div class="line number1 index0 alt2">
-                                            <code class="js plain">$(document).ready(</code><code class="js keyword">function</code>
-                                            <code class="js plain">() {</code></div><div class="line number2 index1 alt1">
-                                                <code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">var</code> <code class="js plain">table = $(</code><code class="js string">'#example'</code><code class="js plain">).DataTable();</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#example tbody'</code><code class="js plain">).on( </code><code class="js string">'click'</code><code class="js plain">, </code><code class="js string">'tr'</code><code class="js plain">, </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number5 index4 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">if</code> <code class="js plain">( $(</code><code class="js keyword">this</code><code class="js plain">).hasClass(</code><code class="js string">'selected'</code><code class="js plain">) ) {</code></div><div class="line number6 index5 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js keyword">this</code><code class="js plain">).removeClass(</code><code class="js string">'selected'</code><code class="js plain">);</code></div><div class="line number7 index6 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number8 index7 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js keyword">else</code> <code class="js plain">{</code></div><div class="line number9 index8 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">table.$(</code><code class="js string">'tr.selected'</code><code class="js plain">).removeClass(</code><code class="js string">'selected'</code><code class="js plain">);</code></div><div class="line number10 index9 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js keyword">this</code><code class="js plain">).addClass(</code><code class="js string">'selected'</code><code class="js plain">);</code></div><div class="line number11 index10 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">}</code></div><div class="line number12 index11 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">} );</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">$(</code><code class="js string">'#button'</code><code class="js plain">).click( </code><code class="js keyword">function</code> <code class="js plain">() {</code></div><div class="line number15 index14 alt2"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">table.row(</code><code class="js string">'.selected'</code><code class="js plain">).remove().draw( </code><code class="js keyword">false</code> <code class="js plain">);</code></div><div class="line number16 index15 alt1"><code class="js spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="js plain">} );</code></div><div class="line number17 index16 alt2"><code class="js plain">} );</code></div></div></td></tr>
-                        </tbody>
-                    </table>
-                    <table cellspacing="0" cellpadding="0" border="0">
-                        <tbody>
-                            <tr>
-                                <td class="gutter">
-                                    <div class="line number1 index0 alt2" style="display: none;">1</div>
-                                </td>
-                                <td class="code">
-                                    <div class="container" style="display: none;">
-                                        <div class="line number1 index0 alt2" style="display: none;">&nbsp;</div>
-
+    <body>
+        <div class="container">
+            <h2>Checkboxes</h2>
+            <form role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>
+                                Basic
+                            </legend>
+                            <p>
+                                Supports bootstrap brand colors: <code>.checkbox-primary</code>, <code>.checkbox-info</code> etc.
+                            </p>
+                            <div class="checkbox">
+                                <input id="checkbox1" class="styled" type="checkbox">
+                                <label for="checkbox1">
+                                    Default
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-primary">
+                                <input id="checkbox2" class="styled" type="checkbox" checked>
+                                <label for="checkbox2">
+                                    Primary
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input id="checkbox3" class="styled" type="checkbox">
+                                <label for="checkbox3">
+                                    Success
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-info">
+                                <input id="checkbox4" class="styled" type="checkbox">
+                                <label for="checkbox4">
+                                    Info
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-warning">
+                                <input id="checkbox5" type="checkbox" class="styled" checked>
+                                <label for="checkbox5">
+                                    Warning
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-danger">
+                                <input id="checkbox6" type="checkbox" class="styled" checked>
+                                <label for="checkbox6">
+                                    Check me out
+                                </label>
+                            </div>
+                            <p>Checkboxes without label text</p>
+                            <div class="checkbox">
+                                <input type="checkbox" class="styled" id="singleCheckbox1" value="option1" aria-label="Single checkbox One">
+                                <label></label>
+                            </div>
+                            <div class="checkbox checkbox-primary">
+                                <input type="checkbox" class="styled styled-primary" id="singleCheckbox2" value="option2" checked aria-label="Single checkbox Two">
+                                <label></label>
+                            </div>
+                            <p>Inline checkboxes</p>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" class="styled" id="inlineCheckbox1" value="option1">
+                                <label for="inlineCheckbox1"> Inline One </label>
+                            </div>
+                            <div class="checkbox checkbox-success checkbox-inline">
+                                <input type="checkbox" class="styled" id="inlineCheckbox2" value="option1" checked>
+                                <label for="inlineCheckbox2"> Inline Two </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" class="styled" id="inlineCheckbox3" value="option1">
+                                <label for="inlineCheckbox3"> Inline Three </label>
+                            </div>
+                            <br/><br/>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>
+                                Circled
+                            </legend>
+                            <p>
+                                <code>.checkbox-circle</code> for roundness.
+                            </p>
+                            <div class="checkbox checkbox-circle">
+                                <input id="checkbox7" class="styled" type="checkbox">
+                                <label for="checkbox7">
+                                    Simply Rounded
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <input id="checkbox8" class="styled" type="checkbox" checked>
+                                <label for="checkbox8">
+                                    Me too
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>
+                                Disabled
+                            </legend>
+                            <p>
+                                Disabled state also supported.
+                            </p>
+                            <div class="checkbox">
+                                <input class="styled" id="checkbox9" type="checkbox" disabled>
+                                <label for="checkbox9">
+                                    Can't check this
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input class="styled styled" id="checkbox10" type="checkbox" disabled checked>
+                                <label for="checkbox10">
+                                    This too
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-warning checkbox-circle">
+                                <input class="styled" id="checkbox11" type="checkbox" disabled checked>
+                                <label for="checkbox11">
+                                    And this
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>
+                                Sizing
+                            </legend>
+                            <p>
+                                Supports bootstrap sizing class: <code>.checkbox-sm</code>, <code>.checkbox-md</code>, <code>.checkbox-lg</code>.
+                            </p>
+                            <div class="checkbox checkbox-inline checkbox-sm">
+                                <input type="checkbox" class="styled" id="inlineCheckbox1smd" value="option1" disabled>
+                                <label for="inlineCheckbox1smd"> Disabled small </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-circle checkbox-sm">
+                                <input type="checkbox" class="styled" id="inlineCheckbox1smc" value="option1">
+                                <label for="inlineCheckbox1smc"> Circled small </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-primary checkbox-sm">
+                                <input type="checkbox" class="styled" id="inlineCheckbox2sm" value="option2">
+                                <label for="inlineCheckbox2sm"> Primary small </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-success checkbox-sm">
+                                <input type="checkbox" class="styled" id="inlineCheckbox3sm" value="option3">
+                                <label for="inlineCheckbox3sm"> Success small </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-info checkbox-sm">
+                                <input type="checkbox" class="styled" id="inlineCheckbox4sm" value="option4">
+                                <label for="inlineCheckbox4sm"> Info small </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-warning checkbox-sm">
+                                <input type="checkbox" class="styled" id="inlineCheckbox5sm" value="option5">
+                                <label for="inlineCheckbox5sm"> Warning small </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-danger checkbox-sm">
+                                <input type="checkbox" class="styled" id="inlineCheckbox6sm" value="option6">
+                                <label for="inlineCheckbox6sm"> Danger small </label>
+                            </div>
+                            <br/><br/>
+                            <div class="checkbox checkbox-inline checkbox-md">
+                                <input type="checkbox" class="styled" id="inlineCheckbox1mdd" value="option1" disabled>
+                                <label for="inlineCheckbox1mdd"> Disabled medium </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-circle checkbox-md">
+                                <input type="checkbox" class="styled" id="inlineCheckbox1mdc" value="option1">
+                                <label for="inlineCheckbox1mdc"> Circled medium </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-primary checkbox-md">
+                                <input type="checkbox" class="styled" id="inlineCheckbox2md" value="option2">
+                                <label for="inlineCheckbox2md"> Primary </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-success checkbox-md">
+                                <input type="checkbox" class="styled" id="inlineCheckbox3md" value="option3">
+                                <label for="inlineCheckbox3md"> Success medium </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-info checkbox-md">
+                                <input type="checkbox" class="styled" id="inlineCheckbox4md" value="option4">
+                                <label for="inlineCheckbox4md"> Info medium </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-warning checkbox-md">
+                                <input type="checkbox" class="styled" id="inlineCheckbox5md" value="option5">
+                                <label for="inlineCheckbox5md"> Warning medium </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-danger checkbox-md">
+                                <input type="checkbox" class="styled" id="inlineCheckbox6md" value="option6">
+                                <label for="inlineCheckbox6md"> Danger medium </label>
+                            </div>
+                            <br/><br/>
+                            <div class="checkbox checkbox-inline checkbox-lg">
+                                <input type="checkbox" class="styled" id="inlineCheckbox1lgd" value="option1" disabled>
+                                <label for="inlineCheckbox1lgd"> Disabled large </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-circle checkbox-lg">
+                                <input type="checkbox" class="styled" id="inlineCheckbox1lgc" value="option1">
+                                <label for="inlineCheckbox1lgc"> Circled large </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-primary checkbox-lg">
+                                <input type="checkbox" class="styled" id="inlineCheckbox2lg" value="option2">
+                                <label for="inlineCheckbox2lg"> Primary large </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-success checkbox-lg">
+                                <input type="checkbox" class="styled" id="inlineCheckbox3lg" value="option3">
+                                <label for="inlineCheckbox3lg"> Success large </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-info checkbox-lg">
+                                <input type="checkbox" class="styled" id="inlineCheckbox4lg" value="option4">
+                                <label for="inlineCheckbox4lg"> Info large </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-warning checkbox-lg">
+                                <input type="checkbox" class="styled" id="inlineCheckbox5lg" value="option5">
+                                <label for="inlineCheckbox5lg"> Warning large </label>
+                            </div>
+                            <div class="checkbox checkbox-inline checkbox-danger checkbox-lg">
+                                <input type="checkbox" class="styled" id="inlineCheckbox6lg" value="option6">
+                                <label for="inlineCheckbox6lg"> Danger large </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </form>
+            <br/><br/>
+            <h2>Radios</h2>
+            <form role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>
+                                Basic
+                            </legend>
+                            <p>
+                                Supports bootstrap brand colors: <code>.radio-primary</code>, <code>.radio-danger</code> etc.
+                            </p>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="radio">
+                                        <input type="radio" name="radio1" id="radio1" value="option1" checked>
+                                        <label for="radio1">
+                                            Small
+                                        </label>
                                     </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <form class="form-horizontal" role="form" autocomplete="on" action="/ILGAS/Application" method="POST" name="regF">
-
-                        <div class="container col-sm-12" style="margin-bottom: 40px">
-                            <button type="submit" class="btn btn-default btn-sm active" name="New Application">
-                                New Application
-                            </button>
-
-                            <button type="submit" class="btn btn-default btn-sm" name="List Open Applications">
-                                List Open Applications
-                            </button>
-
-                            <button type="submit" class="btn btn-default btn-sm" name="List Pending Applications">
-                                List Pending Applications
-                            </button>
-
-                            <button type="submit" class="btn btn-default btn-sm" name="List Closed Applications">
-                                List Closed Applications
-                            </button>
-                        </div>
-                    </form>
-
-                    <!--footer start-->
-
-                    <div id="base">  
-
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                        </div><!-- end of BaseText div -->
-
-                        <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
-                        <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                        <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
-
-                        <div class="mobile-baselogos visible-phone"> 
-                            <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
-                            <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
-                        </div>
-
-                    </div><!-- end of Base div -->
-
-                </div><!-- end of container div -->
-                <div class="shadowbase"> </div>
-            </div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div><!-- end of Shadowholder container div -->
-
-            <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2017 mgr Software
-            </div>
-            <script src="js/bootstrap-imageupload.js"></script>
-
-            <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
-            //                                                $('#imageupload-disable').on('click', function () {
-            //                                                    alert("imageupload-disable");
-            //                                                    $imageupload.imageupload('disable');
-            //                                                    $(this).blur();
-            //                                                });
-            //
-            //                                                $('#imageupload-enable').on('click', function () {
-            //                                                    alert("imageupload-enable");
-            //                                                    $imageupload.imageupload('enable');
-            //                                                    $(this).blur();
-            //                                                });
-            //
-            //                                                $('#imageupload-reset').on('click', function () {
-            //                                                     alert("imageupload-reset");
-            //                                                    $imageupload.imageupload('reset');
-            //                                                    $(this).blur();
-            //                                                });
-
-            function pressCuttingsModal() {
-                $("#pressCuttingsModal").modal("show");
-            }
-
-            var pressCuttingsUpload = $('.pressCuttingsUpload');
-            pressCuttingsUpload.imageupload();
-            //                                                $('#pressCuttingsUpload-disable').on('click', function () {
-            //                                                     alert("imageupload-disable");
-            //                                                    pressCuttingsUpload.imageupload('disable');
-            //                                                    $(this).blur();
-            //                                                });
-
-            function  showInfoModal() {
-                $("#showInfoModal").modal("show");
-            }
-            function  showNotesModal() {
-                $("#showNotesModal").modal("show");
-            }
-            </script>
+                                    <div class="radio">
+                                        <input type="radio" name="radio1" id="radio2" value="option2">
+                                        <label for="radio2">
+                                            Big
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="radio radio-danger">
+                                        <input type="radio" name="radio2" id="radio3" value="option1">
+                                        <label for="radio3">
+                                            Next
+                                        </label>
+                                    </div>
+                                    <div class="radio radio-danger">
+                                        <input type="radio" name="radio2" id="radio4" value="option2" checked>
+                                        <label for="radio4">
+                                            One
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>Radios without label text</p>
+                            <div class="radio">
+                                <input type="radio" id="singleRadio1" value="option1" name="radioSingle1" aria-label="Single radio One">
+                                <label></label>
+                            </div>
+                            <div class="radio radio-success">
+                                <input type="radio" id="singleRadio2" value="option2" name="radioSingle1" checked aria-label="Single radio Two">
+                                <label></label>
+                            </div>
+                            <p>Inline radios</p>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked>
+                                <label for="inlineRadio1"> Inline One </label>
+                            </div>
+                            <div class="radio radio-inline">
+                                <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+                                <label for="inlineRadio2"> Inline Two </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>
+                                Disabled
+                            </legend>
+                            <p>
+                                Disabled state also supported.
+                            </p>
+                            <div class="radio radio-danger">
+                                <input type="radio" name="radio3" id="radio5" value="option1" disabled>
+                                <label for="radio5">
+                                    Next
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" name="radio3" id="radio6" value="option2" checked disabled>
+                                <label for="radio6">
+                                    One
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset>
+                            <legend>
+                                As Checkboxes
+                            </legend>
+                            <p>
+                                Radios can be made to look like checkboxes.
+                            </p>
+                            <div class="checkbox checkbox">
+                                <input type="radio" name="radio4" id="radio7" value="option1" checked>
+                                <label for="radio7">
+                                    Defeault
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input type="radio" name="radio4" id="radio8" value="option2">
+                                <label for="radio8">
+                                    Success
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-danger">
+                                <input type="radio" name="radio4" id="radio9" value="option3">
+                                <label for="radio9">
+                                    Danger
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                            <legend>
+                                Sizing
+                            </legend>
+                            <p>
+                                Supports bootstrap sizing class: <code>.radio-sm</code>, <code>.radio-md</code>, <code>.radio-lg</code>.
+                            </p>
+                            <div class="radio radio-inline radio-sm">
+                                <input type="radio" id="inlineRadio1smd" value="option1" name="radioInlineSm" disabled>
+                                <label for="inlineRadio1smd"> Disabled small </label>
+                            </div>
+                            <div class="checkbox checkbox-sm checkbox-inline">
+                                <input type="radio" id="inlineRadio1sms" value="option2" name="radioInlineSm">
+                                <label for="inlineRadio1sms"> Squared small </label>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="radio radio-inline radio-primary radio-sm">
+                                <input type="radio" id="inlineRadio2sm" value="option3" name="radioInlineSm">
+                                <label for="inlineRadio2sm"> Primary small </label>
+                            </div>
+                            <div class="radio radio-inline radio-success radio-sm">
+                                <input type="radio" id="inlineRadio3sm" value="option3" name="radioInlineSm">
+                                <label for="inlineRadio3sm"> Success small </label>
+                            </div>
+                            <div class="radio radio-inline radio-info radio-sm">
+                                <input type="radio" id="inlineRadio4sm" value="option3" name="radioInlineSm">
+                                <label for="inlineRadio4sm"> Info small </label>
+                            </div>
+                            <div class="radio radio-inline radio-warning radio-sm">
+                                <input type="radio" id="inlineRadio5sm" value="option3" name="radioInlineSm">
+                                <label for="inlineRadio5sm"> Warning small </label>
+                            </div>
+                            <div class="radio radio-inline radio-danger radio-sm">
+                                <input type="radio" id="inlineRadio6sm" value="option3" name="radioInlineSm">
+                                <label for="inlineRadio6sm"> Danger small </label>
+                            </div>
+                            <br/><br/>
+                            <div class="radio radio-inline radio-md">
+                                <input type="radio" id="inlineRadio1mdd" value="option1" name="radioInlineMd" disabled>
+                                <label for="inlineRadio1mdd"> Disabled medium </label>
+                            </div>
+                            <div class="checkbox checkbox-md checkbox-inline">
+                                <input type="radio" id="inlineRadio1mds" value="option2" name="radioInlineMd">
+                                <label for="inlineRadio1mds"> Squared medium </label>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="radio radio-inline radio-primary radio-md">
+                                <input type="radio" id="inlineRadio2md" value="option3" name="radioInlineMd">
+                                <label for="inlineRadio2md"> Primary medium </label>
+                            </div>
+                            <div class="radio radio-inline radio-success radio-md">
+                                <input type="radio" id="inlineRadio3md" value="option3" name="radioInlineMd">
+                                <label for="inlineRadio3md"> Success medium </label>
+                            </div>
+                            <div class="radio radio-inline radio-info radio-md">
+                                <input type="radio" id="inlineRadio4md" value="option3" name="radioInlineMd">
+                                <label for="inlineRadio4md"> Info medium </label>
+                            </div>
+                            <div class="radio radio-inline radio-warning radio-md">
+                                <input type="radio" id="inlineRadio5md" value="option3" name="radioInlineMd">
+                                <label for="inlineRadio5md"> Warning medium </label>
+                            </div>
+                            <div class="radio radio-inline radio-danger radio-md">
+                                <input type="radio" id="inlineRadio6md" value="option3" name="radioInlineMd">
+                                <label for="inlineRadio6md"> Danger medium </label>
+                            </div>
+                            <br/><br/>
+                            <div class="radio radio-inline radio-lg">
+                                <input type="radio" id="inlineRadio1lgd" value="option1" name="radioInlineLg" disabled>
+                                <label for="inlineRadio1lgd"> Disabled large </label>
+                            </div>
+                            <div class="checkbox checkbox-lg checkbox-inline">
+                                <input type="radio" id="inlineRadio1lgs" value="option2" name="radioInlineLg">
+                                <label for="inlineRadio1lgs"> Squared large </label>
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="radio radio-inline radio-primary radio-lg">
+                                <input type="radio" id="inlineRadio2lg" value="option3" name="radioInlineLg">
+                                <label for="inlineRadio2lg"> Primary large </label>
+                            </div>
+                            <div class="radio radio-inline radio-success radio-lg">
+                                <input type="radio" id="inlineRadio3lg" value="option3" name="radioInlineLg">
+                                <label for="inlineRadio3lg"> Success large </label>
+                            </div>
+                            <div class="radio radio-inline radio-info radio-lg">
+                                <input type="radio" id="inlineRadio4lg" value="option3" name="radioInlineLg">
+                                <label for="inlineRadio4lg"> Info large </label>
+                            </div>
+                            <div class="radio radio-inline radio-warning radio-lg">
+                                <input type="radio" id="inlineRadio5lg" value="option3" name="radioInlineLg">
+                                <label for="inlineRadio5lg"> Warning large </label>
+                            </div>
+                            <div class="radio radio-inline radio-danger radio-lg">
+                                <input type="radio" id="inlineRadio6lg" value="option3" name="radioInlineLg">
+                                <label for="inlineRadio6lg"> Danger large </label>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </form>
+            <br/><br/><br/><br/>
+        </div>
     </body>
 </html>

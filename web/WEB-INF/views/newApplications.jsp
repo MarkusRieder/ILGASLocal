@@ -118,7 +118,7 @@
                         <a><img src="images/flashtext-animated2.gif" height="80" alt="Promoting Irish Literature Abroad" /></a>
                     </div>
                     <a class="logo"><span class="hidden">Literature Ireland</span></a>
-                    
+
                     <!--container for welcome/logout-->
                     <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                         <div class="pull-right">

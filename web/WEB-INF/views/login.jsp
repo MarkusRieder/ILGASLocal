@@ -1,5 +1,5 @@
 <%-- 
-    Document   : template
+    Document   : login.jsp - remote
     Created on : 17-Mar-2017, 11:57:10
     Author     : markus
 --%>
@@ -13,14 +13,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
-
         <title>Translation Grant Application System</title>
-        <!--login.jsp-->
+
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css">-->
         <link rel="stylesheet" type="text/css" href="css/layout.css">
         <link rel="stylesheet" type="text/css" href="css/my-block-ui.css">   
         <link rel="stylesheet" type="text/css" href="css/bootstrap-select.css">
@@ -36,12 +32,14 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
-        <script src="js/register.js"></script>
+        <!--<script src="https://unpkg.com/xregexp/xregexp-all.js"></script>-->
+        <!--<script src="js/register.js"></script>-->
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>
         <script src="js/bootstrap-show-password.js"></script>
         <script src="js/jquery-ui.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+
 
         <!--clear localStorage and sessionStorage-->
         <script type="text/javascript">
@@ -93,62 +91,62 @@
 
         <!--autocomplete-->
         <!--AutoComplete_international_publishers-->
-        <script type="text/javascript">
-            $(function () {
-                $("#company").autocomplete({
-                    source: 'ACintPublishers_test', // The source of the AJAX results
-                    dataType: 'json',
-                    data: '',
-                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                        $("#company").val(ui.item.name);
-                        return false;
-                    },
-                    select: function (event, ui) { // What happens when an autocomplete result is selected
-                        $("#company").val(ui.item.name);
-                        $('#companyNumber').val(ui.item.id);
-                        $('#Address1').val(ui.item.Address1);
-                        $('#Address2').val(ui.item.Address2);
-                        $('#Address3').val(ui.item.Address3);
-                        $('#Address4').val(ui.item.Address4);
-                        $('#postCode').val(ui.item.postCode);
-                        $('#City').val(ui.item.City);
-                        $('#country').val(ui.item.Country);
-                        $('#countryCode').val(ui.item.CountryCode);
-                        $('#Telephone').val(ui.item.Telephone);
-                        $('#Fax_Number').val(ui.item.Fax);
-                        $('#Web_Address').val(ui.item.WWW);
-                        $('#doNotMail').val(ui.item.DoNotMail);
-                        $('#Bursaries').val(ui.item.Bursaries);
-                        $('#Founded').val(ui.item.Founded);
-                        $('#Number_Of_Titles').val(ui.item.NumberOfTitles);
-                        $('#Date_modified').val(ui.item.DateModified);
-                        $('#note').val(ui.item.Notes);
-                    }
-                });
-            });
-        </script>
-
-
-        <!--AutoComplete_country-->
-        <script type="text/javascript">
-            $(function () {
-                $("#country").autocomplete({
-                    source: 'AutoComplete_country', // The source of the AJAX results
-                    dataType: 'json',
-                    data: '',
-                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                        $("#country").val(ui.item.name);
-                        return false;
-                    },
-                    select: function (event, ui) { // What happens when an autocomplete result is selected
-                        $("#country").val(ui.item.name);
-                        $('#countryCode').val(ui.item.id);
-                    }
-                });
-            });
-        </script>
+        <!--        <script type="text/javascript">
+                    $(function () {
+                        $("#company").autocomplete({
+                            source: 'ACintPublishers_test', // The source of the AJAX results
+                            dataType: 'json',
+                            data: '',
+                            minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                            focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                                $("#company").val(ui.item.name);
+                                return false;
+                            },
+                            select: function (event, ui) { // What happens when an autocomplete result is selected
+                                $("#company").val(ui.item.name);
+                                $('#companyNumber').val(ui.item.id);
+                                $('#Address1').val(ui.item.Address1);
+                                $('#Address2').val(ui.item.Address2);
+                                $('#Address3').val(ui.item.Address3);
+                                $('#Address4').val(ui.item.Address4);
+                                $('#postCode').val(ui.item.postCode);
+                                $('#City').val(ui.item.City);
+                                $('#country').val(ui.item.Country);
+                                $('#countryCode').val(ui.item.CountryCode);
+                                $('#Telephone').val(ui.item.Telephone);
+                                $('#Fax_Number').val(ui.item.Fax);
+                                $('#Web_Address').val(ui.item.WWW);
+                                $('#doNotMail').val(ui.item.DoNotMail);
+                                $('#Bursaries').val(ui.item.Bursaries);
+                                $('#Founded').val(ui.item.Founded);
+                                $('#Number_Of_Titles').val(ui.item.NumberOfTitles);
+                                $('#Date_modified').val(ui.item.DateModified);
+                                $('#note').val(ui.item.Notes);
+                            }
+                        });
+                    });
+                </script>
+        
+        
+                AutoComplete_country
+                <script type="text/javascript">
+                    $(function () {
+                        $("#country").autocomplete({
+                            source: 'AutoComplete_country', // The source of the AJAX results
+                            dataType: 'json',
+                            data: '',
+                            minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                            focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                                $("#country").val(ui.item.name);
+                                return false;
+                            },
+                            select: function (event, ui) { // What happens when an autocomplete result is selected
+                                $("#country").val(ui.item.name);
+                                $('#countryCode').val(ui.item.id);
+                            }
+                        });
+                    });
+                </script>-->
 
         <!--Tooltips-->
         <script  type="text/javascript">
@@ -253,7 +251,7 @@
 
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">login Translation Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
 
@@ -310,18 +308,6 @@
                                         </div> <!-- col-md-12 control -->
                                     </div> <!-- form-group -->
 
-                                    <div class="form-group">
-                                        <div class="col-md-12 control">
-                                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                                Don't have an account? 
-                                                <a href="#" onClick="$('#loginbox').hide();
-                                                        $('#signupbox').show();
-                                                        $('#uname').focus();">
-                                                    Sign Up Here
-                                                </a>
-                                            </div> <%-- div style --%>
-                                        </div> <!-- col-md-12 control -->
-                                    </div> <!-- form-group -->
                                 </form>  <!--loginform-->
                             </div>  <!-- panel-body -->
                         </div>  <!--panel-info-->
@@ -329,374 +315,264 @@
 
 
                     <!--Signup-->
-                    <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="panel-title">Sign Up</div>
-
-                                <div style="float:right; font-size: 85%; position: relative; top:-10px">
-                                    <a id="signinlink" 
-                                       href="#" 
-                                       onclick="$('#signupbox').hide();
-                                               $('#loginbox').show()">Sign In</a></div>
-                            </div>   <!--panel-heading-->
-
-                            <div class="panel-body">
-
-                                <div class="signup-form-container">
-
-                                    <form class="form-horizontal" 
-                                          role="form"  
-                                          id="register-form" 
-                                          autocomplete="on"  
-                                          action="${pageContext.request.contextPath}/RegisterServlet" 
-                                          method="POST" 
-                                          name="regF"
-                                          >
-                                        <div id="signupalert" style="display:none" class="alert alert-danger">
-                                            <p>Error:</p>
-                                            <span></span>
-                                        </div>
-
-                                        <!--form-body-->
-                                        <div class="form-body">
-
-                                            <div class="alert alert-info" id="message" style="display:none;">
-                                                submitted
-                                            </div>
-
-                                            <!--uname-->
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           name="uname" 
-                                                           id="uname" 
-                                                           placeholder="User name"                                             
-                                                           onblur="loadXMLDoc()"
-                                                           required 
-                                                           pattern="^\S+$"
-                                                           title='The username can only consist of alphabetical, number and underscore'
-                                                           >    
-                                                    <span  id="checkusernameResultMessage"></span> 
-                                                </div>
-                                            </div> <!--form-group uname-->  
-
-                                            <!--firstname-->
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           id="firstname" 
-                                                           name="firstname" 
-                                                           placeholder="First Name" 
-                                                           required="required"
-                                                           >              
-                                                </div>
-                                            </div> <!--form-group firstname-->     
-
-                                            <!--lastname-->
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           id="lastname" 
-                                                           name="lastname" 
-                                                           placeholder="Last Name"
-                                                           required="required"
-                                                           >    
-                                                </div>
-                                            </div> <!--form-group lastname-->      
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           name="username" 
-                                                           id="username" 
-                                                           placeholder="User name"                                                         
-                                                           required 
-                                                           pattern="^\S+$"
-                                                           title='The username can only consist of alphabetical, number and underscore'
-                                                           >    
-                                                </div>
-                                            </div> <!--form-group uname-->  
-                                            <!--email-->
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="email" 
-                                                           class="form-control" 
-                                                           name="email" 
-                                                           placeholder="Email Address"
-                                                           pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-                                                           data-error="Enter valid Email"
-                                                           required
-                                                           >                                            
-
-                                                </div>
-                                            </div> <!--form-group email-->
-
-                                            <!--password-->
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           id="password"
-                                                           name="password" 
-                                                           placeholder="Enter Password"    
-                                                           pattern="[A-Za-z0-9@#$%!^&*]{6,30}" 
-                                                           data-error="Password should not be null. It should be greater than 6 and less than 30 characters . 
-                                                           Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
-                                                           required                                                                                     
-                                                           >                                           
-                                                </div>
-                                            </div> <!--form-group password-->
-
-                                            <!--cpassword-->
-                                            <div class="form-group">
-                                                <!--<label for="cpassword" class="col-md-3 control-label">Confirm Password</label>-->
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control"  
-                                                           id="cpassword" 
-                                                           name="cpassword" 
-                                                           placeholder="Confirm Password"                                           
-                                                           data-match="#password"                                                                      
-                                                           required
-                                                           >                               
-                                                </div>
-                                            </div> <!--form-group cpassword-->
-
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <label for="functionDataset" >Your function</label>
-                                                    <div style="clear: both;"></div>
-                                                    <input type="text" 
-                                                           class="form-control"  
-                                                           id="functionDataset" 
-                                                           name="function" 
-                                                           placeholder="Publisher"                                           
-                                                           value="Publisher" 
-                                                           style=" background-color:#00c0ef"
-                                                           readonly
-                                                           >                               
-                                                </div>
-                                            </div> <!--form-group functionDataset-->
-
-                                            <!--publisherBox-->
-                                            <div id="publisherBox" style="margin-top:50px; ">
-
-                                                <!--get Company and Company_Number via autocomplete-->
-                                                <div class="row" style="margin-bottom: 40px;margin-top: 30px">
-                                                    <div class="form-group has-feedback has-feedback-left">
-                                                        <div class="col-sm-10">
-                                                            <input  id="company" 
-                                                                    name="company" 
-                                                                    type="text" 
-                                                                    value="" 
-                                                                    data-toggle="tooltip"
-                                                                    title="Please Enter your Company's Name - if it does not show up please fill in the form"
-                                                                    class="form-control  move-left"     
-                                                                    onblur="CheckboxValue();"
-                                                                    placeholder="Company Name"
-                                                                    >
-                                                            <i class="glyphicon glyphicon-search form-control-feedback" id="companyGlyphicon"></i>
+                    <!--                    <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                    
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <div class="panel-title">Sign Up</div>
+                    
+                                                    <div style="float:right; font-size: 85%; position: relative; top:-10px">
+                                                        <a id="signinlink" 
+                                                           href="#" 
+                                                           onclick="$('#signupbox').hide();
+                                                                   $('#loginbox').show()">Sign In</a></div>
+                                                </div>   panel-heading
+                    
+                                                <div class="panel-body">
+                    
+                                                    <div class="signup-form-container">
+                    
+                                                        <form class="form-horizontal" 
+                                                              role="form"  
+                                                              id="register-form" 
+                                                              autocomplete="on"  
+                                                              action="${pageContext.request.contextPath}/RegisterServlet" 
+                                                              method="POST" 
+                                                              name="regF"
+                                                              >
+                                                            <div id="signupalert" style="display:none" class="alert alert-danger">
+                                                                <p>Error:</p>
+                                                                <span></span>
+                                                            </div>
+                    
+                                                            form-body
+                                                            <div class="form-body">
+                    
+                                                                <div class="alert alert-info" id="message" style="display:none;">
+                                                                    submitted
+                                                                </div>
+                    
+                                                                uname
+                                                                <div class="form-group">
+                                                                     <label for="username" class="col-md-3 control-label">Username</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" 
+                                                                               class="form-control" 
+                                                                               name="uname" 
+                                                                               id="uname" 
+                                                                               placeholder="Username" 
+                                                                               data-toggle="validator"
+                                                                               onblur="loadXMLDoc()"
+                                                                               pattern="[A-Za-z0-9 \-']{1,20}" 
+                                                                               data-error="Username should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
+                                                                               required
+                                                                               >     
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group uname  
+                    
+                                                                firstname
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" 
+                                                                               class="form-control" 
+                                                                               name="firstname" 
+                                                                               placeholder="First Name" 
+                                                                               data-toggle="validator"
+                                                                               pattern="[A-Za-z0-9]{1,20}" 
+                                                                               data-error="First name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
+                                                                               required
+                                                                               >              
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group firstname     
+                    
+                                                                lastname
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" 
+                                                                               class="form-control" 
+                                                                               name="lastname" 
+                                                                               placeholder="Last Name"
+                                                                               data-toggle="validator"
+                                                                               pattern="[A-Za-z0-9 \-']{1,20}" 
+                                                                               data-error="Last name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
+                                                                               required
+                                                                               >    
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group lastname      
+                    
+                                                                email
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="email" 
+                                                                               class="form-control" 
+                                                                               name="email" 
+                                                                               placeholder="Email Address"
+                                                                               data-toggle="validator"
+                                                                               pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                                                                               data-error="Enter valid Email"
+                                                                               required
+                                                                               >                                            
+                                                                        <span class="help-block" id="error"></span>      
+                                                                    </div>
+                                                                </div> form-group email
+                    
+                                                                password
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="password" 
+                                                                               class="form-control" 
+                                                                               id="password"
+                                                                               name="password" 
+                                                                               placeholder="Enter Password"    
+                                                                               pattern="[A-Za-z0-9@#$%!^&*]{6,30}" 
+                                                                               data-error="Password should not be null. It should be greater than 6 and less than 30 characters . 
+                                                                               Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
+                                                                               required                                                                                     
+                                                                               >                                           
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group password
+                    
+                                                                cpassword
+                                                                <div class="form-group">
+                                                                    <label for="cpassword" class="col-md-3 control-label">Confirm Password</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="password" 
+                                                                               class="form-control"  
+                                                                               id="cpassword" 
+                                                                               name="cpassword" 
+                                                                               placeholder="Confirm Password"                                           
+                                                                               data-match="#password"                                                                      
+                                                                               required
+                                                                               >                               
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group cpassword
+                    
+                                                                selectpicker
+                                                                <div class="form-group">
+                                                                    <label for="location" class="col-sm-3 control-label">Select your function</label>
+                                                                    <div class="col-sm-10">
+                                                                        <select class="selectpicker" title="Select Your Function" style="display: none;">
+                                                                        <select class="selectpicker" 
+                                                                                title="Select Your Function" 
+                                                                                style="display: none;" 
+                                                                                name="function" 
+                                                                                id="functionDataset" 
+                                                                                onchange="changeFunc();"
+                                                                                required
+                                                                                >
+                                                                                                                                    <option value="">Select Your Function</option>
+                                                                                                                                    <option>Literature Ireland Staff</option>
+                                                                            <option>Publisher</option>
+                                                                            <option>Expert Reader</option>
+                                                                        </select>                                        
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group selectpicker
+                    
+                                                                publisherBox
+                                                                <div id="publisherBox" style="display:none; margin-top:50px; ">
+                    
+                                                                    get Company and Company_Number via autocomplete
+                                                                    <div class="row" style="margin-bottom: 40px;margin-top: 30px">
+                                                                        <div class="form-group has-feedback has-feedback-left">
+                                                                            <div class="col-sm-10">
+                                                                                <input  id="company" 
+                                                                                        name="company" 
+                                                                                        type="text" 
+                                                                                        value="" 
+                                                                                        data-toggle="tooltip"
+                                                                                        title="Please Enter your Company's Name - if it does not show up please fill in the form"
+                                                                                        class="form-control  move-left"     
+                                                                                        onblur="CheckboxValue();"
+                                                                                        placeholder="Company Name"
+                                                                                        >
+                                                                                <i class="glyphicon glyphicon-search form-control-feedback" id="companyGlyphicon"></i>
+                                                                            </div>
+                                                                        </div> form-group
+                    
+                                                                        companyNumber
+                                                                        <div class="form-group">
+                                                                            <input id="companyNumber"                                
+                                                                                   type="hidden"                                
+                                                                                   class="form-control"                                
+                                                                                   name="companyNumber"                                
+                                                                                   value=""                                
+                                                                                   >
+                                                                        </div> form-group
+                    
+                                                                         tick box if company is not in database and display input for new company name      
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="checkbox" style="margin-top: 30px; margin-bottom: 30px">
+                                                                                    <label>    
+                                                                                        <input type="checkbox"  
+                                                                                               id="cbnewPublisher"
+                                                                                               name="cbnewPublisher"         
+                                                                                               value="cbnewPublisher"  
+                                                                                               onclick="clearCompany(this);"
+                                                                                               > 
+                                                                                        Can't find your company? 
+                                                                                        Tick the box                                                           
+                                                                                        <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span>
+                                                                                    </label>             
+                                                                                </div>  checkbox 
+                                                                            </div>
+                                                                        </div> form-group
+                    
+                                                                        input for new company name  
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-10">
+                                                                                <input type="text" 
+                                                                                       id="newPublisher"
+                                                                                       name="newPublisher"
+                                                                                       class="form-control"     
+                                                                                       placeholder="Please enter your company's name"
+                                                                                       style="display:none"
+                                                                                       >
+                                                                            </div> 
+                                                                        </div> form-group
+                                                                    </div>   row 
+                                                                </div>  publisherBox
+                    
+                                                            </div>  <%--form-body --%>
+                    
+                                                            <div class="form-footer">
+                                                                <button type="submit" class="btn btn-info">
+                                                                    <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
+                                                                </button>
+                                                            </div>  <%--form-footer --%>
+                                                        </form> register-form
+                    
+                                                        blockUiDiv
+                                                        <div id="blockUiDiv">
+                                                            <img src="images/gears.svg" alt="spinner.gif"/>
                                                         </div>
-                                                    </div> <!--form-group-->
-
-                                                    <!--companyNumber-->
-                                                    <div class="form-group">
-                                                        <input id="companyNumber"                                
-                                                               type="hidden"                                
-                                                               class="form-control"                                
-                                                               name="companyNumber"                                
-                                                               value=""                                
-                                                               >
-                                                    </div> <!--form-group-->
-
-                                                    <!-- tick box if company is not in database and display input for new company name  -->    
-                                                    <div class="form-group">
-                                                        <div class="col-sm-12">
-                                                            <div class="checkbox" style="margin-top: 30px; margin-bottom: 30px">
-                                                                <label>    
-                                                                    <input type="checkbox"  
-                                                                           id="cbnewPublisher"
-                                                                           name="cbnewPublisher"         
-                                                                           value="cbnewPublisher"  
-                                                                           onclick="clearCompany(this);"
-                                                                           > 
-                                                                    Can't find your company? 
-                                                                    Tick the box                                                           
-                                                                    <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span>
-                                                                </label>             
-                                                            </div> <!-- checkbox -->
+                                                        <div id="blockUiBackdrop">
                                                         </div>
-                                                    </div> <!--form-group-->
-
-                                                    <!--input for new company name-->  
-                                                    <div class="form-group">
-                                                        <div class="col-sm-10">
-                                                            <input type="text" 
-                                                                   id="newPublisher"
-                                                                   name="newPublisher"
-                                                                   class="form-control"     
-                                                                   placeholder="Please enter your company's name"
-                                                                   style="display:none"
-                                                                   >
-                                                        </div> 
-                                                    </div> <!--form-group-->
-                                                </div>  <!-- row -->
-                                            </div>  <!--publisherBox-->
-
-                                        </div>  <%--form-body --%>
-
-                                        <div class="form-footer">
-                                            <button type="submit" class="btn btn-info">
-                                                <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
-                                            </button>
-                                        </div>  <%--form-footer --%>
-                                    </form> <!--register-form-->
-
-                                    <!--blockUiDiv-->
-                                    <div id="blockUiDiv">
-                                        <img src="images/gears.svg" alt="spinner.gif"/>
-                                    </div>
-                                    <div id="blockUiBackdrop">
-                                    </div>
-
-                                </div>  <!--signup-form-container-->
-                            </div> <%--form-body --%>
-
-                            <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group"> </div>
-                        </div>  <!--panel-info-->
-                    </div>  <!-- signupbox -->
-                </div> <!-- /container-fluid -->
-
-
-                <script>
-                    $(document).ready(function () {
-//                        alert("bootstrapValidator")
-                        $('#register-form').bootstrapValidator({
-                            message: 'This value is not valid',
-                            live: 'enabled',
-                            trigger: "keyup",
-                            feedbackIcons: {
-                                valid: 'glyphicon glyphicon-ok',
-                                invalid: 'glyphicon glyphicon-remove',
-                                validating: 'glyphicon glyphicon-refresh'
-                            },
-                            fields: {
-                                uname: {
-                                    message: 'The username is not valid',
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The username is required and cannot be empty'
-                                        },
-                                        stringLength: {
-                                            min: 6,
-                                            max: 30,
-                                            message: 'The username must be more than 6 and less than 30 characters long'
-                                        },
-                                        regexp: {
-                                            regexp: /^\S+$/,
-                                            message: 'The username can only consist of alphabetical, number and underscore'
-                                        }
-                                    }
-                                },
-                                username: {
-                                    message: 'The username is not valid',
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The username is required and cannot be empty'
-                                        },
-                                        stringLength: {
-                                            min: 6,
-                                            max: 30,
-                                            message: 'The username must be more than 6 and less than 30 characters long'
-                                        },
-                                        regexp: {
-                                            regexp: /^\S+$/,
-                                            message: 'The username can only consist of alphabetical, number and underscore'
-                                        }
-                                    }
-                                },
-                                firstname: {
-                                    message: 'The first name is not valid',
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The first name is required and cannot be empty'
-                                        },
-                                        stringLength: {
-                                            min: 6,
-                                            max: 30,
-                                            message: 'The first name must be more than 6 and less than 30 characters long'
-                                        },
-                                        regexp: {
-                                            regexp: /^[a-zA-Z0-9_]+$/,
-                                            message: 'The first name can only consist of alphabetical, number and underscore'
-                                        }
-                                    }
-                                },
-                                lastname: {
-                                    message: 'The last name is not valid',
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The last name is required and cannot be empty'
-                                        },
-                                        stringLength: {
-                                            min: 6,
-                                            max: 30,
-                                            message: 'The last name must be more than 6 and less than 30 characters long'
-                                        },
-                                        regexp: {
-                                            regexp: /^[a-zA-Z0-9_]+$/,
-                                            message: 'The last name can only consist of alphabetical, number and underscore'
-                                        }
-                                    }
-                                },
-                                email: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The email address is required and cannot be empty'
-                                        },
-                                        emailAddress: {
-                                            message: 'The email address is not a valid'
-                                        }
-                                    }
-                                },
-                                password: {
-                                    validators: {
-                                        notEmpty: {
-                                            message: 'The password is required and cannot be empty'
-                                        },
-                                        different: {
-                                            field: 'username',
-                                            message: 'The password cannot be the same as username'
-                                        },
-                                        stringLength: {
-                                            min: 8,
-                                            message: 'The password must have at least 8 characters'
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    });
-                </script>
-
+                    
+                                                    </div>  signup-form-container
+                                                </div> <%--form-body --%>
+                    
+                                                <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group"> </div>
+                                            </div>  panel-info
+                                        </div>   signupbox -->
+                </div>  <!--container-fluid--> 
 
                 <script  type="text/javascript">
                     $(function () {
                         $('#register-form').validator().on('submit', function (e) {
                             if (e.isDefaultPrevented()) {
                                 // handle the invalid form...
-                                console.log(e);
                             } else {
                                 blockUi();
                                 // everything looks good!
                                 $.post("RegisterServlet", $("#register-form").serialize(), function (data) {
                                     var jdata = JSON.parse(data);
-                                    console.log(jdata.message);
                                     if (jdata.code === -1) {
                                         $("#errorField .message").text(jdata.message);
                                         $("#errorField").show();
@@ -731,22 +607,20 @@
                     {
                         var xmlhttp;
                         var uname = document.getElementById("uname").value;
-                        if (uname !== "") {
-                            var urls = "checkusername.jsp?uname=" + uname;
+                        var urls = "checkusername.jsp?uname=" + uname;
 
-                            if (window.XMLHttpRequest)
-                            {
-                                xmlhttp = new XMLHttpRequest();
-                            } else
-                            {
-                                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                            }
+                        if (window.XMLHttpRequest)
+                        {
+                            xmlhttp = new XMLHttpRequest();
+                        } else
+                        {
+                            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                         }
                         xmlhttp.onreadystatechange = function ()
                         {
                             if (xmlhttp.readyState === 4)
                             {
-                                document.getElementById("checkusernameResultMessage").innerHTML = xmlhttp.responseText;
+                                document.getElementById("error").innerHTML = xmlhttp.responseText;
                             }
                         };
                         xmlhttp.open("GET", urls, true);
@@ -778,17 +652,22 @@
 
                     <div class="basetext">  
                         <h2>Literature Ireland</h2>
-                        <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
-                    </div><!-- end of BaseText div -->
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+
+                    </div><!-- end of BaseText div -->   
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
+                    <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
 
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
+                        <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
                 </div><!-- end of Base div -->
@@ -799,8 +678,116 @@
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2019 mgr Software
+            &copy; 2017-2019 mgr Software
         </div>
+        <!--contactUsModal-->
+        <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header"  style="background-color: #d9d1d1;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title" id="contactUsModalLabel"   style="background-color: #d9d1d1;">Contact Us</h1>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="container-fluid">         
+                            <div id="contentarea">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <p><strong>Director</strong>   Sinéad Mac Aodha</p>
+                                        <p>sinead@literatureireland.com </p>
+                                        <p> </p>
+                                        <p><strong>Deputy Director   </strong>Rita McCann </p>
+                                        <p>rita@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong>Administrator</strong>   Andrew Deering</p>
+                                        <p>andrew@literatureireland.com</p>
+                                        <p> </p>
+                                        <p><strong style="white-space: pre;"><br/></strong></p>
+                                        <p><strong><span style="text-decoration: underline;">PLEASE NOTE OUR NEW ADDRESS: </span></strong></p>
+                                        <p>Literature Ireland</p>
+                                        <p>Trinity Centre for Literary and Cultural Translation</p>
+                                        <p>36 Fenian Street</p>
+                                        <p>Trinity College Dublin</p>
+                                        <p>Dublin D02 CH22</p>
+                                        <p>Ireland</p>
+                                        <p><strong>Telephone: +353 (0)1 896 4184</strong></p>
+                                        <p><span style="white-space: pre;"><strong>Email: info@literatureireland.com</strong></span></p>
+                                        <p> </p>
+                                        <p> </p>
+                                        <p> </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div><!-- modal body -->
+
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+        <!--showLegalNoteModal-->
+        <div class="modal fade" id="showLegalNoteModal" tabindex="-1" role="dialog" aria-labelledby="showLegalNoteModallLabel"  data-modal-index="3">
+
+            <div class="modal-admin" role="document">
+
+                <div class="modal-content">
+
+                    <div class="modal-header"   style="background-color: #d9d1d1;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title" id="showLegalNoteModallLabel" style="background-color: #d9d1d1;">Legal Note</h1>
+                    </div>
+
+                    <div class="modal-body" style="background-color: #d9d1d1">
+
+                        <div class="container-fluid">
+                            <div id="contentarea1">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <h4>Company Registration</h4>
+                                        <p>Literature Ireland is registered in Dublin, Ireland, at the following address: </p>
+                                        <p>Trinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2.</p>
+                                        <p>Registered company number: 212420</p>
+                                        <p> </p>
+                                        <h4><span style="color: #3b3b3b;">Disclaimer</span></h4>
+                                        <p>Literature Ireland offers the material on this website, in good faith, for the information of visitors to the site, but disclaims any responsibility for error, omission or inaccuracy, and for the consequences of pursuing any link from these pages to another site.</p>
+                                        <p> </p>
+                                        <h4>Copyright</h4>
+                                        <p>The copyright in all material on this website is owned by Literature Ireland, or is reproduced with the permission (if required) of the copyright owner. The material may be retrieved and downloaded for personal use, but may not otherwise be reproduced or made available in any manner or form, and may not be modified or altered in any way, without the permission of Literature Ireland.</p>
+                                        <p> </p>
+                                        <h4>Privacy</h4>
+                                        <p>All documentation submitted to Literature Ireland will be treated with the utmost discretion. If you have any concerns in relation to privacy, please contact Literature Ireland at info@literatureireland.com.</p>
+                                    </div><!-- end of typography div -->
+                                </div><!-- end of text padding div -->
+                            </div><!-- end of contentarea div -->
+                        </div>
+                    </div><!-- modal body -->
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
+        <script>
+            function  contactUsModal() {
+                $("#contactUsModal").modal("show");
+            }
+            function  showLegalNoteModal() {
+                $("#showLegalNoteModal").modal("show");
+            }
+        </script>
     </body>
 </html>

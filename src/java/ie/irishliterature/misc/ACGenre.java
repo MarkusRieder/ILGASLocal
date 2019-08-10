@@ -24,46 +24,54 @@ import javax.servlet.http.HttpServletResponse;
  *
  * AC for AutoComplete
  */
-
-@WebServlet(name = "ACGenre", urlPatterns = {"/ACGenre"})
+@WebServlet( name = "ACGenre", urlPatterns =
+{
+    "/ACGenre"
+} )
 public class ACGenre extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public ACGenre() {
+    public ACGenre()
+    {
 
         super();
 
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
 
-        String text = request.getParameter("term");
+        String text = request.getParameter( "term" );
 
-        System.out.println("term:: " + text);
+        System.out.println( "/ACGenre term:: " + text );
 
         ACCGenreDAO genreDAO = new ACCGenreDAO();
 
-        try {
+        try
+        {
 
-            ArrayList<ACgenre> genres = genreDAO.getGenre(text);
+            ArrayList<ACgenre> genres = genreDAO.getGenre( text );
 
-            genres.stream().map((genre) -> {
-                //  System.out.println(genre.getValue());
+            genres.stream().map( ( genre ) ->
+            {
+                System.out.println( genre.getValue() );
                 return genre;
-            }).forEachOrdered((ACgenre genre) -> {
-                //      System.out.println(country.getId());
-            });
+            } ).forEachOrdered( ( ACgenre genre ) ->
+            {
+                System.out.println( genre.getId() );
+            } );
 
-            String searchResult = new Gson().toJson(genres);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            String searchResult = new Gson().toJson( genres );
+            response.setContentType( "application/json" );
+            response.setCharacterEncoding( "UTF-8" );
             PrintWriter writer = response.getWriter();
-            writer.write(searchResult);
+            writer.write( searchResult );
 
-        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
+        } catch ( IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e )
+        {
         }
 
     }

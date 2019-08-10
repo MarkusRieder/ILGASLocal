@@ -16,7 +16,7 @@
         <title>Translation Grant Application System</title>
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
-        
+
         <!-- Bootstrap -->
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
@@ -29,6 +29,7 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="js/xregexp-all.js"></script> 
         <script src="js/register.js"></script>
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>

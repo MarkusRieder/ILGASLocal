@@ -122,7 +122,7 @@
                                                 <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
                                                     Sign Up Here
                                                 </a>
-                                                  <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="/signUp.jsp">Forgot password ?</a></div>
+                                                <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="/signUp.jsp">Forgot password ?</a></div>
                                             </div>
                                         </div>
                                     </div>    

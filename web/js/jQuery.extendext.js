@@ -12,11 +12,9 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
-    }
-    else if (typeof module === 'object' && module.exports) {
+    } else if (typeof module === 'object' && module.exports) {
         module.exports = factory(require('jquery'));
-    }
-    else {
+    } else {
         factory(root.jQuery);
     }
 }(this, function ($) {
@@ -24,11 +22,11 @@
 
     $.extendext = function () {
         var options, name, src, copy, copyIsArray, clone,
-            target = arguments[0] || {},
-            i = 1,
-            length = arguments.length,
-            deep = false,
-            arrayMode = 'default';
+                target = arguments[0] || {},
+                i = 1,
+                length = arguments.length,
+                deep = false,
+                arrayMode = 'default';
 
         // Handle a deep copy situation
         if (typeof target === "boolean") {
@@ -68,27 +66,27 @@
                     clone = target && $.isArray(target) ? target : [];
 
                     switch (arrayMode) {
-                    case 'concat':
-                        target = clone.concat($.extend(deep, [], options));
-                        break;
+                        case 'concat':
+                            target = clone.concat($.extend(deep, [], options));
+                            break;
 
-                    case 'replace':
-                        target = $.extend(deep, [], options);
-                        break;
+                        case 'replace':
+                            target = $.extend(deep, [], options);
+                            break;
 
-                    case 'extend':
-                        options.forEach(function (e, i) {
-                            if (typeof e === 'object') {
-                                var type = $.isArray(e) ? [] : {};
-                                clone[i] = $.extendext(deep, arrayMode, clone[i] || type, e);
+                        case 'extend':
+                            options.forEach(function (e, i) {
+                                if (typeof e === 'object') {
+                                    var type = $.isArray(e) ? [] : {};
+                                    clone[i] = $.extendext(deep, arrayMode, clone[i] || type, e);
 
-                            } else if (clone.indexOf(e) === -1) {
-                                clone.push(e);
-                            }
-                        });
+                                } else if (clone.indexOf(e) === -1) {
+                                    clone.push(e);
+                                }
+                            });
 
-                        target = clone;
-                        break;
+                            target = clone;
+                            break;
                     }
 
                 } else {
@@ -103,8 +101,8 @@
                         }
 
                         // Recurse if we're merging plain objects or arrays
-                        if (deep && copy && ( $.isPlainObject(copy) ||
-                            (copyIsArray = $.isArray(copy)) )) {
+                        if (deep && copy && ($.isPlainObject(copy) ||
+                                (copyIsArray = $.isArray(copy)))) {
 
                             if (copyIsArray) {
                                 copyIsArray = false;
