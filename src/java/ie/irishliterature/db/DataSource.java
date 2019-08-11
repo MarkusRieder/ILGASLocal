@@ -9,7 +9,6 @@ package ie.irishliterature.db;
  *
  * @author markus
  */
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,66 +26,81 @@ public class DataSource {
     private static final String USER = "markus";
     private static final String PASS = "ankh573";
 
-    public DataSource() {
+    public DataSource()
+    {
 
     }
 
-    public static DataSource getInstance() {
-        if (ds == null) {
+    public static DataSource getInstance()
+    {
+        if ( ds == null )
+        {
             ds = new DataSource();
         }
         return ds;
     }
 
-    public static Connection getConnection() {
+    public static Connection getConnection()
+    {
         Connection conn = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
-        } catch (ClassNotFoundException | SQLException e) {
-            try {
+        try
+        {
+            Class.forName( "com.mysql.jdbc.Driver" );
+            conn = ( Connection ) DriverManager.getConnection( DB_URL, USER, PASS );
+        }
+        catch ( ClassNotFoundException | SQLException e )
+        {
+            try
+            {
                 conn.close();
-            } catch (SQLException e1) {
+            }
+            catch ( SQLException e1 )
+            {
             }
         }
         return conn;
     }
 
-    public static List GetCategoryList(String Keyword) throws SQLException {
+    public static List GetCategoryList( String Keyword ) throws SQLException
+    {
         List<String> CategoryList = new ArrayList<>();
         Connection conn = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = (Connection) DriverManager.getConnection(DB_URL, USER, PASS);
+        try
+        {
+            Class.forName( "com.mysql.jdbc.Driver" );
+            conn = ( Connection ) DriverManager.getConnection( DB_URL, USER, PASS );
             PreparedStatement preStatement;
             ResultSet resultSet;
 //            String query = "SELECT Company, Company_Number FROM international_publishers";
             String query = "SELECT * FROM international_publishers";
-            preStatement = conn.prepareStatement(query);
-            resultSet = preStatement.executeQuery(query);
-            while (resultSet.next()) {
-                CategoryList.add(resultSet.getString(1));
-                CategoryList.add(resultSet.getString(2));
-                CategoryList.add(resultSet.getString(3));
-                CategoryList.add(resultSet.getString(4));
-                CategoryList.add(resultSet.getString(5));
-                CategoryList.add(resultSet.getString(6));
-                CategoryList.add(resultSet.getString(7));
-                CategoryList.add(resultSet.getString(8));
-                CategoryList.add(resultSet.getString(9));
-                CategoryList.add(resultSet.getString(10));
-                CategoryList.add(resultSet.getString(11));
-                CategoryList.add(resultSet.getString(12));
-                CategoryList.add(resultSet.getString(13));
-                CategoryList.add(resultSet.getString(14));
-                CategoryList.add(resultSet.getString(15));
+            preStatement = conn.prepareStatement( query );
+            resultSet = preStatement.executeQuery( query );
+            while ( resultSet.next() )
+            {
+                CategoryList.add( resultSet.getString( 1 ) );
+                CategoryList.add( resultSet.getString( 2 ) );
+                CategoryList.add( resultSet.getString( 3 ) );
+                CategoryList.add( resultSet.getString( 4 ) );
+                CategoryList.add( resultSet.getString( 5 ) );
+                CategoryList.add( resultSet.getString( 6 ) );
+                CategoryList.add( resultSet.getString( 7 ) );
+                CategoryList.add( resultSet.getString( 8 ) );
+                CategoryList.add( resultSet.getString( 9 ) );
+                CategoryList.add( resultSet.getString( 10 ) );
+                CategoryList.add( resultSet.getString( 11 ) );
+                CategoryList.add( resultSet.getString( 12 ) );
+                CategoryList.add( resultSet.getString( 13 ) );
+                CategoryList.add( resultSet.getString( 14 ) );
+                CategoryList.add( resultSet.getString( 15 ) );
             }
             resultSet.close();
             preStatement.close();
             conn.close();
 
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DataSource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch ( ClassNotFoundException ex )
+        {
+            java.util.logging.Logger.getLogger( DataSource.class.getName() ).log( Level.SEVERE, null, ex );
         }
         return CategoryList;
     }

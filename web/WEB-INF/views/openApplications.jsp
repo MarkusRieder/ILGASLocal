@@ -1482,8 +1482,8 @@
                     console.log("generateTranslatorTab translatorArray " + translators.length);
 
                 });
-                
-                
+
+
 //                $('#applicationForm :file').each(function () {
 //                    var input = $(this); // This is the jquery object of the input, do what you will
 //                    console.log("88 xyz ", input[0].name);
@@ -2505,8 +2505,8 @@
             #myTab li a { border-color: blue;background-color:#A5C967; }
             #myTab li.active a {border-bottom-color: transparent;background-color:Yellow; }
             .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
-            
-                        
+
+
             .scroll-top-wrapper {
                 position: fixed;
                 opacity: 0;
@@ -3534,7 +3534,7 @@
                                                                 </div> <!-- position:absolute; z-index:1; display:none -->
 
                                                             </div> <!-- position: relative  -->
-                                                            
+
                                                         </div> <!-- row  -->
 
                                                         <!--Name of translation rights holder-->

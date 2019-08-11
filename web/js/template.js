@@ -1,18 +1,18 @@
 
 function replaceEditor() {
-    
+
     var editor = CKEDITOR.replace('editor1', {
         extraPlugins: 'allowsave',
         filebrowserBrowseUrl: 'product/browseFile.jsp',
         filebrowserWindowWidth: 800,
         filebrowserWindowHeight: 500,
-              
-      height: 500
+
+        height: 500
     });
 }
 
 function getTemplate(template) {
-    
+
     $.ajax({
         url: "templateHandler?action=openFile&filename=" + template,
         type: 'GET',
@@ -27,7 +27,7 @@ function getTemplate(template) {
 
 function selectTemplate() {
 
-    $('#selectTemplate').fileTree({root: '/home/glassfish/glassfish/domains/domain1/docroot/templates//', script: 'connectors/jqueryFileTree.jsp'}, function (file) {       
+    $('#selectTemplate').fileTree({root: '/home/glassfish/glassfish/domains/domain1/docroot/templates//', script: 'connectors/jqueryFileTree.jsp'}, function (file) {
         $('#fileName').val(file);
         getTemplate(file);
     });

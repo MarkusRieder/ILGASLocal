@@ -5,13 +5,13 @@
  */
 package ie.irishliterature.dao;
 
-
 import ie.irishliterature.model.ACgenre;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 /**
  *
  * @author markus
@@ -19,31 +19,36 @@ import java.util.ArrayList;
  * AC = autocomplete
  *
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class ACCGenreDAO {
 
-    public ArrayList getGenre(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+    public ArrayList getGenre( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+    {
 
         ArrayList genreList = new ArrayList();
         Database db = new Database();
         Connection connection = db.getConnection();
 
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * from ILGAS.genres WHERE genres  like ?");
-            ps.setString(1, "%" + s + "%");
+        try
+        {
+            PreparedStatement ps = connection.prepareStatement( "SELECT * from ILGAS.genres WHERE genres  like ?" );
+            ps.setString( 1, "%" + s + "%" );
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while ( rs.next() )
+            {
                 ACgenre genre = new ACgenre();
-                genre.setId(rs.getString("idgenres"));
-                genre.setValue(rs.getString("genres"));
+                genre.setId( rs.getString( "idgenres" ) );
+                genre.setValue( rs.getString( "genres" ) );
 
-                System.out.println("genre.setId : " + rs.getString("idgenres"));
-                System.out.println("genre.setValue : " + rs.getString("genres"));
+                System.out.println( "genre.setId : " + rs.getString( "idgenres" ) );
+                System.out.println( "genre.setValue : " + rs.getString( "genres" ) );
 
-                genreList.add(genre);
+                genreList.add( genre );
             }
-        } catch (SQLException e) {
+        }
+        catch ( SQLException e )
+        {
         }
         return genreList;
     }

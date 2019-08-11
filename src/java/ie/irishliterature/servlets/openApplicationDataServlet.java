@@ -27,62 +27,71 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet(name = "openApplicationDataServlet", urlPatterns = {"/openApplicationDataServlet"})
+@WebServlet( name = "openApplicationDataServlet", urlPatterns =
+{
+    "/openApplicationDataServlet"
+} )
 public class openApplicationDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public openApplicationDataServlet() {
+    public openApplicationDataServlet()
+    {
 
         super();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("openApplicationDataServlet:  ");
+        System.out.println( "openApplicationDataServlet:  " );
 
         HttpSession session = request.getSession();
 
 //        int pID = (Integer) session.getAttribute("publisherID");
 //        String publisherID = (String) Integer.toString(pID);
-        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
+        String publisherID = String.valueOf( request.getSession().getAttribute( "publisherID" ) );
 
-        System.out.println("publisherID:  111 " + session.getAttribute("publisherID"));
+        System.out.println( "publisherID:  111 " + session.getAttribute( "publisherID" ) );
 
-        System.out.println("publisherID:  222  " + session.getAttribute(publisherID));
-        System.out.println("publisherID: " + publisherID);
+        System.out.println( "publisherID:  222  " + session.getAttribute( publisherID ) );
+        System.out.println( "publisherID: " + publisherID );
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType( "application/json" );
+        response.setCharacterEncoding( "UTF-8" );
 
         PrintWriter out = response.getWriter();
 
         List listApplications = null;
 
-        try {
+        try
+        {
 
-            listApplications = openApplicationDAO.getAllApplicationsPublisher(publisherID);
+            listApplications = openApplicationDAO.getAllApplicationsPublisher( publisherID );
 
             //    System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
-        } catch (ClassNotFoundException | DBException | ParseException ex) {
-            Logger.getLogger(openApplicationDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch ( ClassNotFoundException | DBException | ParseException ex )
+        {
+            Logger.getLogger( openApplicationDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableApplications dta = new DataTableApplications();
-        dta.setAaData(listApplications);
+        dta.setAaData( listApplications );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dta);
-        System.out.println("json:  " + json);
-        out.print(json);
+        String json = gson.toJson( dta );
+        System.out.println( "json:  " + json );
+        out.print( json );
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
         // doGet(request, response);
     }

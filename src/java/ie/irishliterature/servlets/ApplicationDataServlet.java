@@ -24,53 +24,60 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "ApplicationDataServlet", urlPatterns = {"/ApplicationDataServlet"})
+@WebServlet( name = "ApplicationDataServlet", urlPatterns =
+{
+    "/ApplicationDataServlet"
+} )
 public class ApplicationDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public ApplicationDataServlet() {
+    public ApplicationDataServlet()
+    {
 
         super();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("ApplicationDataServlet:  ");
+        System.out.println( "ApplicationDataServlet:  " );
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType( "application/json" );
+        response.setCharacterEncoding( "UTF-8" );
 
 //        PrintWriter out = response.getWriter();
-
         List listApplications = null;
 
-        try {
+        try
+        {
 
             listApplications = ApplicationDAO.getAllApplications();
-            
-    //        System.out.println("ApplicationDataServlet listApplications: " + listApplications);
 
-        } catch (ClassNotFoundException | DBException ex) {
-            Logger.getLogger(UserDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+            //        System.out.println("ApplicationDataServlet listApplications: " + listApplications);
+        }
+        catch ( ClassNotFoundException | DBException ex )
+        {
+            Logger.getLogger( UserDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableApplications dta = new DataTableApplications();
-        dta.setAaData(listApplications);
+        dta.setAaData( listApplications );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dta);
-        System.out.println("json:  " + json);
+        String json = gson.toJson( dta );
+        System.out.println( "json:  " + json );
 //        out.print(json);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-            // doGet(request, response);
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+
+        // doGet(request, response);
     }
 }

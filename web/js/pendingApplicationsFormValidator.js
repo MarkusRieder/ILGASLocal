@@ -80,7 +80,7 @@ $("document").ready(function () {
     var ISBNRegex = new XRegExp("^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$");
     $.validator.addMethod("ISBN", function (value, element) {
 //        return value.indexOf(" ") < 0 && value !== "";
- return this.optional(element) || ISBNRegex.test(value);
+        return this.optional(element) || ISBNRegex.test(value);
     }, "Please enter a valid ISBN number");
     /*
      * validFileName
@@ -401,7 +401,7 @@ $("document").ready(function () {
             publicationYear1: {
                 year: "Please enter the year (yyyy)",
                 minlength: "Publication year has 4 digits"
-            },            
+            },
             rightsHoldersName0: {
                 required: "Please enter Translation rights holder",
                 validname: "Last name must contain only letters and spaces"

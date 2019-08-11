@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Logout
  */
-@WebServlet("/Logout")
+@WebServlet( "/Logout" )
 public class Logout extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -20,7 +20,8 @@ public class Logout extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public Logout()
+    {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,14 +36,16 @@ public class Logout extends HttpServlet {
      * response)
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
 
         /*
          * Getting session and then invalidating it
          */
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession( false );
 
-        if (request.isRequestedSessionIdValid() && session != null) {
+        if ( request.isRequestedSessionIdValid() && session != null )
+        {
 
             session.invalidate();
 
@@ -60,9 +63,8 @@ public class Logout extends HttpServlet {
 //
 //            response.addCookie(cookie);
 //        }
-
-        request.getSession().setAttribute(GlobalConstants.USER, null);
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        request.getSession().setAttribute( GlobalConstants.USER, null );
+        request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
 
     }
 

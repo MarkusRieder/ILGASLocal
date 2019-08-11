@@ -26,15 +26,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "GenresDataServlet", urlPatterns = {"/GenresDataServlet"})
+@WebServlet( name = "GenresDataServlet", urlPatterns =
+{
+    "/GenresDataServlet"
+} )
 public class GenresDataServlet extends HttpServlet {
 
-    public GenresDataServlet() {
+    public GenresDataServlet()
+    {
 
         super();
     }
 
- 
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -45,30 +48,34 @@ public class GenresDataServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        response.setContentType("application/json");
+        response.setContentType( "application/json" );
         PrintWriter out = response.getWriter();
 
         List<Genres> listGenres = null;
 
-        try {
+        try
+        {
 
             listGenres = GenresDAO.getAllGenres();
 
 //              System.out.println("listExpertReader:  " + listExpertReader);
-        } catch (DBException ex) {
-            Logger.getLogger(GenresDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch ( DBException ex )
+        {
+            Logger.getLogger( GenresDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableGenres dter = new DataTableGenres();
-        dter.setAaData(listGenres);
+        dter.setAaData( listGenres );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dter);
-        System.out.println("json:  " + json);
-        out.print(json);
+        String json = gson.toJson( dter );
+        System.out.println( "json:  " + json );
+        out.print( json );
     }
 
     /**
@@ -81,8 +88,9 @@ public class GenresDataServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
     }
 
@@ -92,7 +100,8 @@ public class GenresDataServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }
 

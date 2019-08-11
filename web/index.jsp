@@ -240,7 +240,7 @@
                     <a class="logo"><span class="hidden">Literature Ireland</span></a>
 
                 </div> <!--  End of topbar div -->
-  
+
                 <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
@@ -299,11 +299,11 @@
                                     <div class="form-group">
                                         <div class="col-md-12 control">
                                             <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-<!--                                                Don't have an account! 
-                                                <a href="#" onClick="$('#loginbox').hide();
-                                                        $('#signupbox').show()">
-                                                    Sign Up Here
-                                                </a>-->
+                                                <!--                                                Don't have an account! 
+                                                                                                <a href="#" onClick="$('#loginbox').hide();
+                                                                                                        $('#signupbox').show()">
+                                                                                                    Sign Up Here
+                                                                                                </a>-->
                                             </div> <%-- div style --%>
                                         </div> <!-- col-md-12 control -->
                                     </div> <!-- form-group -->
@@ -656,15 +656,15 @@
 
                 <div id="base">  
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
-                                <i  onclick="contactUsModal();">Contact Details</i>
-                            </a> &nbsp;|&nbsp; 
-                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
-                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
 
-                        </div><!-- end of BaseText div -->    
+                    </div><!-- end of BaseText div -->    
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
@@ -686,7 +686,7 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017-2019 mgr Software
         </div>
- <!--contactUsModal-->
+        <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">

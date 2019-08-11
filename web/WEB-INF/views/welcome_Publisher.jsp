@@ -122,12 +122,12 @@
                                 <input type="hidden" name="publisherName" value="${companyDetails.Company}">
                                 <div class="form-group">
                                     <!-- Button -->
-<!--                                    <div class="col-sm-12  pull-left">
-                                        <input type="submit" class="btn btn-success btn-send" style="margin-bottom: 10px" value="Continue">
-                                    </div>  col-md-12 control -->
-                                                <button type="submit" class="btn btn-success  btn-send" id="nxtBtn">                           
-                                                    <span class="glyphicon glyphicon-thumbs-up"></span> Continue
-                                                </button>
+                                    <!--                                    <div class="col-sm-12  pull-left">
+                                                                            <input type="submit" class="btn btn-success btn-send" style="margin-bottom: 10px" value="Continue">
+                                                                        </div>  col-md-12 control -->
+                                    <button type="submit" class="btn btn-success  btn-send" id="nxtBtn">                           
+                                        <span class="glyphicon glyphicon-thumbs-up"></span> Continue
+                                    </button>
                                 </div> <!-- form-group -->
                             </form>  
                         </div>
@@ -138,16 +138,16 @@
 
                 <div id="base">  
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
-                                <i  onclick="contactUsModal();">Contact Details</i>
-                            </a> &nbsp;|&nbsp; 
-                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
-                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
 
-                        </div><!-- end of BaseText div --> 
-                        
+                    </div><!-- end of BaseText div --> 
+
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
                     <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
@@ -155,7 +155,7 @@
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-<!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
+                        <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
                 </div><!-- end of Base div -->
@@ -168,7 +168,7 @@
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
             &copy; 2017-2019 mgr Software
         </div>
- <!--contactUsModal-->
+        <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
             <div class="modal-admin" role="document">

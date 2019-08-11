@@ -22,7 +22,7 @@
                 });
             </script>-->
 
-               <title>Translation Grant Application System</title>
+        <title>Translation Grant Application System</title>
 
 
         <!-- Bootstrap -->
@@ -58,7 +58,7 @@
         <script src="js/bootstrap-select.min.js" type="text/javascript" async=""></script>
         <script src="js/validator.js" type="text/javascript" async=""></script>
         <script src="js/my-block-ui.js" type="text/javascript" async=""></script>
-        
+
         <script src="js/bootstrap.min.js"></script>
         <script src="js/validator.min.js"></script>
 
@@ -187,7 +187,7 @@
                         </form>
                         <div id="blockUiDiv">
                             <img src="images/gears.svg"  alt="spinner"/>
-                            
+
                         </div>
                         <div id="blockUiBackdrop">
                         </div>
@@ -198,15 +198,15 @@
 
                 <div id="base">  
 
-                        <div class="basetext">  
-                            <h2>Literature Ireland</h2>
-                            <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
-                                <i  onclick="contactUsModal();">Contact Details</i>
-                            </a> &nbsp;|&nbsp; 
-                            <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
-                                <i  onclick="showLegalNoteModal();">Legal Note</i></a>
+                    <div class="basetext">  
+                        <h2>Literature Ireland</h2>
+                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
+                            <i  onclick="contactUsModal();">Contact Details</i>
+                        </a> &nbsp;|&nbsp; 
+                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
+                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
 
-                        </div><!-- end of BaseText div --> 
+                    </div><!-- end of BaseText div --> 
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
@@ -226,7 +226,7 @@
 
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Paw" height="30" /></a>
-      &copy; 2017-2019 mgr Software
+            &copy; 2017-2019 mgr Software
         </div>
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">

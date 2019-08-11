@@ -14,13 +14,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author Markus Rieder
  */
-@WebServlet(name = "templateHandler", urlPatterns = {"/templateHandler"})
+@WebServlet( name = "templateHandler", urlPatterns =
+{
+    "/templateHandler"
+} )
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 10, // 10 MB
+         fileSizeThreshold = 1024 * 1024 * 10, // 10 MB
         maxFileSize = 1024 * 1024 * 50, // 50 MB
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
@@ -28,97 +32,109 @@ public class TemplateHandler extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public TemplateHandler() {
+    public TemplateHandler()
+    {
         super();
-        System.out.println("TemplateHandler");
+        System.out.println( "TemplateHandler" );
     }
 
     /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request  servlet request
-     * @param response servlet response   
+     * @param response servlet response
      *
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      *
      * * @param editor1  contains the edited text
-     * * @param action defines the action to take
-     * 
+     * * @param action   defines the action to take
+     *
      * If editor is NOT null then doGet_SaveTemplate is run
-     * 
+     *
      * If editor1 is null then 'actions' are performed
-     *   
+     *
      *
      * TemplateHandler has three doGet methods and one doPost methods
      *
      * doGet_Home - return to index.jsp
      * doGet_OpenFile - open the selected template
      * doGet_SaveTemplate - save the template
-     * 
-     * 
+     *
+     *
      * doPost_Upload - actually not used
      *
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        String editor1 = request.getParameter("editor1");
+        String editor1 = request.getParameter( "editor1" );
 
-        if (editor1 == null) {
-            System.out.println("doGet editor1 == null ");
+        if ( editor1 == null )
+        {
+            System.out.println( "doGet editor1 == null " );
 
-            String action = request.getParameter("action");
-            System.out.println("doGet action " + action);
+            String action = request.getParameter( "action" );
+            System.out.println( "doGet action " + action );
 
-            if (action == null) {
-                doGet_Home(request, response);
-            } else {
-                doGet_OpenFile(request, response);
-            } 
-        } else {
-            System.out.println("doGet editor1 != null ");
-            doGet_SaveTemplate(request, response);
+            if ( action == null )
+            {
+                doGet_Home( request, response );
+            }
+            else
+            {
+                doGet_OpenFile( request, response );
+            }
+        }
+        else
+        {
+            System.out.println( "doGet editor1 != null " );
+            doGet_SaveTemplate( request, response );
         }
     }
 
-    protected void doGet_Home(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        System.out.println("doGet_Home ");
-        request.getRequestDispatcher("welcome_Staff_1.jsp").forward(request, response);
+    protected void doGet_Home( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        System.out.println( "doGet_Home " );
+        request.getRequestDispatcher( "welcome_Staff_1.jsp" ).forward( request, response );
     }
 
-    protected void doGet_OpenFile(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
+    protected void doGet_OpenFile( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+
+        response.setContentType( "text/html" );
+        response.setCharacterEncoding( "UTF-8" );
 
         PrintWriter pw = response.getWriter();
 
-        String filename = request.getParameter("filename");
-        System.out.println("doGet_OpenFile filename:  " + request.getParameter("filename"));
-        BufferedReader br = new BufferedReader(new FileReader(filename));
+        String filename = request.getParameter( "filename" );
+        System.out.println( "doGet_OpenFile filename:  " + request.getParameter( "filename" ) );
+        BufferedReader br = new BufferedReader( new FileReader( filename ) );
 
         String str;
-        while ((str = br.readLine()) != null) {
-            pw.println(str);
+        while ( ( str = br.readLine() ) != null )
+        {
+            pw.println( str );
         }
 
         br.close();
         pw.close();
     }
 
-    protected void doGet_SaveTemplate(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        System.out.println("doGet_SaveTemplate ");
-        String newText = request.getParameter("editor1");
-        String fileName = request.getParameter("fileName");
-        System.out.println("doGet_SaveTemplate editor1:  " + request.getParameter("editor1"));
-        System.out.println("doGet_SaveTemplate fileName:  " + request.getParameter("fileName"));
-        WriteTemplates.writeStrTxt(newText, fileName);
-        request.getRequestDispatcher("/WEB-INF/views/welcome_Staff_1.jsp").forward(request, response);
+    protected void doGet_SaveTemplate( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        System.out.println( "doGet_SaveTemplate " );
+        String newText = request.getParameter( "editor1" );
+        String fileName = request.getParameter( "fileName" );
+        System.out.println( "doGet_SaveTemplate editor1:  " + request.getParameter( "editor1" ) );
+        System.out.println( "doGet_SaveTemplate fileName:  " + request.getParameter( "fileName" ) );
+        WriteTemplates.writeStrTxt( newText, fileName );
+        request.getRequestDispatcher( "/WEB-INF/views/welcome_Staff_1.jsp" ).forward( request, response );
     }
 
     /**
@@ -131,25 +147,29 @@ public class TemplateHandler extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        String action = request.getParameter("action");
-        System.out.println("doPost action " + action);
+        String action = request.getParameter( "action" );
+        System.out.println( "doPost action " + action );
 
-        if (action.equalsIgnoreCase("upload")) {
-            doPost_Upload(request, response);
+        if ( action.equalsIgnoreCase( "upload" ) )
+        {
+            doPost_Upload( request, response );
         }
     }
 
-    protected void doPost_Upload(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost_Upload( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        String fileName = UploadHelper.upload("assets/uploads", request);
-        System.out.println("doPost fileName " + fileName);
+        String fileName = UploadHelper.upload( "assets/uploads", request );
+        System.out.println( "doPost fileName " + fileName );
         Gson gson = new Gson();
-        try (PrintWriter out = response.getWriter()) {
-            out.print(gson.toJson(new JSONFileUpload("./assets/uploads/" + fileName)));
+        try ( PrintWriter out = response.getWriter() )
+        {
+            out.print( gson.toJson( new JSONFileUpload( "./assets/uploads/" + fileName ) ) );
             out.flush();
         }
     }

@@ -28,79 +28,91 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet(name = "pendingApplicationPublisherDataServlet", urlPatterns = {"/pendingApplicationPublisherDataServlet"})
+@WebServlet( name = "pendingApplicationPublisherDataServlet", urlPatterns =
+{
+    "/pendingApplicationPublisherDataServlet"
+} )
 public class pendingApplicationPublisherDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public pendingApplicationPublisherDataServlet() {
+    public pendingApplicationPublisherDataServlet()
+    {
 
         super();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("pendingApplicationPublisherDataServlet:  ");
+        System.out.println( "pendingApplicationPublisherDataServlet:  " );
         String publisherID = "";
         HttpSession session = request.getSession();
 
         Enumeration en = request.getParameterNames();
 
-        while (en.hasMoreElements()) {
+        while ( en.hasMoreElements() )
+        {
             Object objOri = en.nextElement();
 
-            String param = (String) objOri;
+            String param = ( String ) objOri;
 
-            String value = request.getParameter(param);
-            if (param.equals("publisherID")) {
+            String value = request.getParameter( param );
+            if ( param.equals( "publisherID" ) )
+            {
                 publisherID = value;
             }
-            System.out.println("pendingApplicationPublisherDataServlet Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+            System.out.println( "pendingApplicationPublisherDataServlet Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
 
         }
 
         Enumeration<String> attributes = request.getSession().getAttributeNames();
-        while (attributes.hasMoreElements()) {
+        while ( attributes.hasMoreElements() )
+        {
             String attribute = attributes.nextElement();
-            System.out.println("pendingApplicationPublisherDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute(attribute));
+            System.out.println( "pendingApplicationPublisherDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute( attribute ) );
         }
 
 //        int pID = (Integer) session.getAttribute("publisherID");
 //        String publisherID = (String) Integer.toString(pID);
 //        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
-        System.out.println("pendingApplicationPublisherDataServlet publisherID: " + publisherID);
+        System.out.println( "pendingApplicationPublisherDataServlet publisherID: " + publisherID );
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType( "application/json" );
+        response.setCharacterEncoding( "UTF-8" );
 
         PrintWriter out = response.getWriter();
 
         List listApplications = null;
 
-        try {
+        try
+        {
 
-            listApplications = pendingApplicationDAO.getAllApplicationsPublisher(publisherID);
+            listApplications = pendingApplicationDAO.getAllApplicationsPublisher( publisherID );
 
             //    System.out.println("ApplicationDataServlet listApplications: " + listApplications + " publisherID  "  + publisherID);
-        } catch (ClassNotFoundException | DBException | ParseException ex) {
-            Logger.getLogger(pendingApplicationPublisherDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch ( ClassNotFoundException | DBException | ParseException ex )
+        {
+            Logger.getLogger( pendingApplicationPublisherDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableApplications dta = new DataTableApplications();
-        dta.setAaData(listApplications);
+        dta.setAaData( listApplications );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dta);
-        System.out.println("json:  " + json);
-        out.print(json);
+        String json = gson.toJson( dta );
+        System.out.println( "json:  " + json );
+        out.print( json );
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
         // doGet(request, response);
     }

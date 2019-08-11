@@ -51,19 +51,19 @@ textarea {
 .icon-exclamation {
     color: #ff0000;
 }
-    ul {
-        margin: 0;
-    }
-    ul.dashed {
-        list-style-type: none;
-    }
-    ul.dashed > li {
-        text-indent: -5px;
-    }
-    ul.dashed > li:before {
-        content: "-";
-        text-indent: -5px;
-    }
+ul {
+    margin: 0;
+}
+ul.dashed {
+    list-style-type: none;
+}
+ul.dashed > li {
+    text-indent: -5px;
+}
+ul.dashed > li:before {
+    content: "-";
+    text-indent: -5px;
+}
 
 
 /*        <!--Checkboxes with tick mark-->*/

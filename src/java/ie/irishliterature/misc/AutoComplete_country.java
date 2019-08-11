@@ -16,42 +16,52 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class AutoComplete_international_publishers
  */
-@WebServlet(name = "AutoComplete_country", urlPatterns = {"/AutoComplete_country"})
+@WebServlet( name = "AutoComplete_country", urlPatterns =
+{
+    "/AutoComplete_country"
+} )
 public class AutoComplete_country extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public AutoComplete_country() {
+    public AutoComplete_country()
+    {
         super();
 
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
+    {
 
-        String text = request.getParameter("term");
+        String text = request.getParameter( "term" );
 
         System.out.println(
-                "term:: " + text);
+                "term:: " + text );
 
         ACCountryDAO countryDAO = new ACCountryDAO();
-        try {
-            ArrayList<ACcountry> countries = countryDAO.getCountry(text);
-            countries.stream().map((country) -> {
+        try
+        {
+            ArrayList<ACcountry> countries = countryDAO.getCountry( text );
+            countries.stream().map( ( country ) ->
+            {
                 //    System.out.println(country.getValue());
                 return country;
-            }).forEachOrdered((country) -> {
+            } ).forEachOrdered( ( country ) ->
+            {
                 //      System.out.println(country.getId());
-            });
+            } );
 
-            String searchResult = new Gson().toJson(countries);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            String searchResult = new Gson().toJson( countries );
+            response.setContentType( "application/json" );
+            response.setCharacterEncoding( "UTF-8" );
             PrintWriter writer = response.getWriter();
-            writer.write(searchResult);
+            writer.write( searchResult );
 
-        } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e) {
+        }
+        catch ( IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e )
+        {
         }
 
     }

@@ -26,59 +26,68 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet(name = "pendingApplicationDataServlet", urlPatterns = {"/pendingApplicationDataServlet"})
+@WebServlet( name = "pendingApplicationDataServlet", urlPatterns =
+{
+    "/pendingApplicationDataServlet"
+} )
 public class pendingApplicationDataServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public pendingApplicationDataServlet() {
+    public pendingApplicationDataServlet()
+    {
 
         super();
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("pendingApplicationDataServlet:  ");
+        System.out.println( "pendingApplicationDataServlet:  " );
 
         HttpSession session = request.getSession();
 
-        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
+        String publisherID = String.valueOf( request.getSession().getAttribute( "publisherID" ) );
 
-        System.out.println("pendingApplicationDataServlet  publisherID here  publisherID: getParameter >> " + publisherID);
+        System.out.println( "pendingApplicationDataServlet  publisherID here  publisherID: getParameter >> " + publisherID );
 
 //        request.setAttribute("task", task);
 //        request.setAttribute("publisherID", publisherID);
 //        request.getSession().setAttribute("publisherID", publisherID);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType( "application/json" );
+        response.setCharacterEncoding( "UTF-8" );
 
         PrintWriter out = response.getWriter();
 
         List listApplications = null;
 
-        try {
+        try
+        {
 
-            listApplications = pendingApplicationDAO.getAllApplications(publisherID);
+            listApplications = pendingApplicationDAO.getAllApplications( publisherID );
 
-        } catch (ClassNotFoundException | DBException ex) {
-            Logger.getLogger(UserDataServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch ( ClassNotFoundException | DBException ex )
+        {
+            Logger.getLogger( UserDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         DataTableApplications dta = new DataTableApplications();
-        dta.setAaData(listApplications);
+        dta.setAaData( listApplications );
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(dta);
-        System.out.println("json:  " + json);
-        out.print(json);
+        String json = gson.toJson( dta );
+        System.out.println( "json:  " + json );
+        out.print( json );
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
         // doGet(request, response);
     }

@@ -719,7 +719,7 @@
 
                                                     <!--Board  Meeting-->
                                                     <div class="tab-pane" id="boardMeeting">
-                                                        
+
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 20px">   
 
                                                             <div class='col-md-offset-1 col-md-3'>
@@ -818,7 +818,7 @@
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">  
 
                                                             <div class="col-md-offset-1 col-md-3">
-                                                               <label for="commentsAboutMeeting" class="control-label pull-left">Amount approved</label> 
+                                                                <label for="commentsAboutMeeting" class="control-label pull-left">Amount approved</label> 
                                                                 <div class="input-group pull-left">
                                                                     <label class="input-group-addon" for="amountApproved">
                                                                         <span class="glyphicon glyphicon-euro"></span>                                     
@@ -1767,7 +1767,7 @@
                         <input type="hidden" name="AssignExpertReader"  class="form-control" value="AssignExpertReader">
                         <div class="modal-header" style="background-color: #c3bcbc">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">Assign expert reader to reference number  <input id="appReferenceNumber1" value="" disabled /></h4>
+                            <h4 class="modal-title">Assign expert reader to reference number  <input id="appReferenceNumber1" value="" disabled /></h4>
                         </div>
                         <div class="modal-body" style="background-color: #d9d1d1">
 

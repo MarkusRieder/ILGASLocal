@@ -18,7 +18,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet(name = "returnToLandingPageServlet", urlPatterns = {"/returnToLandingPageServlet"})
+@WebServlet( name = "returnToLandingPageServlet", urlPatterns =
+{
+    "/returnToLandingPageServlet"
+} )
 public class returnToLandingPageServlet extends HttpServlet {
 
     /**
@@ -31,57 +34,60 @@ public class returnToLandingPageServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        response.setContentType( "text/html;charset=UTF-8" );
+        request.setCharacterEncoding( "UTF-8" );
 
         String name = "";
 
         String Company = "";
 
         HttpSession session = request.getSession();
-        System.out.println("############################### /GrantApplicationServlet ####################################");
+        System.out.println( "############################### /GrantApplicationServlet ####################################" );
 
         Enumeration en = request.getParameterNames();
 
-        while (en.hasMoreElements()) {
+        while ( en.hasMoreElements() )
+        {
             Object objOri = en.nextElement();
 
-            String param = (String) objOri;
+            String param = ( String ) objOri;
 
-            String value = request.getParameter(param);
+            String value = request.getParameter( param );
 
-            System.out.println("Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
+            System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
 
         }
 
-        System.out.println("Enumeration keys   ");
+        System.out.println( "Enumeration keys   " );
         Enumeration keys = session.getAttributeNames();
-        while (keys.hasMoreElements()) {
-            String key = (String) keys.nextElement();
-            System.out.println("key  :" + key + ": " + session.getValue(key));
+        while ( keys.hasMoreElements() )
+        {
+            String key = ( String ) keys.nextElement();
+            System.out.println( "key  :" + key + ": " + session.getValue( key ) );
 
         }
 
-        System.out.println("###################################################################");
+        System.out.println( "###################################################################" );
 
-        String userID = request.getParameter("userID");
-        name = request.getParameter("name");
-        Company = request.getParameter("Company");
-        String publisherID = request.getParameter("publisherID");
-        System.out.println("userID:1 " + userID);
-        System.out.println("name:1 " + name);
-        System.out.println("Company:1 " + Company);
-        System.out.println("PublisherID:1 " + publisherID);
+        String userID = request.getParameter( "userID" );
+        name = request.getParameter( "name" );
+        Company = request.getParameter( "Company" );
+        String publisherID = request.getParameter( "publisherID" );
+        System.out.println( "userID:1 " + userID );
+        System.out.println( "name:1 " + name );
+        System.out.println( "Company:1 " + Company );
+        System.out.println( "PublisherID:1 " + publisherID );
 
-        session.setAttribute("name", name);
-        session.setAttribute("publisherID", publisherID);
-        request.setAttribute("name", name);
-        request.setAttribute("userID", userID);
-        request.setAttribute("Company", Company);
+        session.setAttribute( "name", name );
+        session.setAttribute( "publisherID", publisherID );
+        request.setAttribute( "name", name );
+        request.setAttribute( "userID", userID );
+        request.setAttribute( "Company", Company );
 
-        request.getRequestDispatcher("/WEB-INF/views/welcome_Publisher.jsp").forward(request, response);
+        request.getRequestDispatcher( "/WEB-INF/views/welcome_Publisher.jsp" ).forward( request, response );
 
     }
 
@@ -96,9 +102,10 @@ public class returnToLandingPageServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        processRequest( request, response );
     }
 
     /**
@@ -111,9 +118,10 @@ public class returnToLandingPageServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        processRequest( request, response );
     }
 
     /**
@@ -122,7 +130,8 @@ public class returnToLandingPageServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 

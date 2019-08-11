@@ -2,7 +2,7 @@
 
 /*global $, jQuery, alert*/
 $("document").ready(function () {
-    
+
     // name validation
     var nameregex = new XRegExp('^[\\p{L}\\p{Nd} _-]+$');
     $.validator.addMethod("validname", function (value, element) {

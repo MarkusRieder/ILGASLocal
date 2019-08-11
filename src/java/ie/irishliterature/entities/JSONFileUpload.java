@@ -17,27 +17,31 @@ public class JSONFileUpload implements Serializable {
 
     private String path;
 
-    public JSONFileUpload(String path) {
+    public JSONFileUpload( String path )
+    {
         super();
-            System.out.println("JSONFileUpload path " + path);
+        System.out.println( "JSONFileUpload path " + path );
         this.path = path;
     }
 
-    public JSONFileUpload() {
+    public JSONFileUpload()
+    {
         super();
     }
 
     /**
      * @return the path
      */
-    public String getPath() {
+    public String getPath()
+    {
         return path;
     }
 
     /**
      * @param path the path to set
      */
-    public void setPath(String path) {
+    public void setPath( String path )
+    {
         this.path = path;
     }
 }

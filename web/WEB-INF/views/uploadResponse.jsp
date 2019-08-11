@@ -178,7 +178,7 @@
                           role="form" 
                           >
                         <input type="hidden" name="userID" value="${userID}">
-                         <input type="hidden" name="name" value="${name}">
+                        <input type="hidden" name="name" value="${name}">
                         <input type="hidden" name="publisherID" value="${publisherID}">
                         <input type="hidden" name="Company" value="${companyDetails.Company}">
                         <div class="col-md-3">

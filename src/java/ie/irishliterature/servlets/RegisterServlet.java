@@ -30,16 +30,20 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
+@WebServlet( name = "RegisterServlet", urlPatterns =
+{
+    "/RegisterServlet"
+} )
 public class RegisterServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     // private LoginService userValidationService = new LoginService();
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/views/signUp.jsp").forward(request, response);
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws IOException, ServletException
+    {
+        request.getRequestDispatcher( "/WEB-INF/views/signUp.jsp" ).forward( request, response );
     }
 
     /**
@@ -53,23 +57,24 @@ public class RegisterServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType( "text/html;charset=UTF-8" );
 
         boolean newPublisher = false;
 
         // collect all input values
         //  PrintWriter out = response.getWriter();
         // values for user table
-        String username = request.getParameter("uname");
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String function = request.getParameter("function");
-        String role = request.getParameter("role");
+        String username = request.getParameter( "uname" );
+        String firstname = request.getParameter( "firstname" );
+        String lastname = request.getParameter( "lastname" );
+        String password = request.getParameter( "password" );
+        String email = request.getParameter( "email" );
+        String function = request.getParameter( "function" );
+        String role = request.getParameter( "role" );
 
         int PublisherID = 0;
 
@@ -77,8 +82,8 @@ public class RegisterServlet extends HttpServlet {
         /*
          * values for new publisher
          */
-        String company = request.getParameter("company");
-        String companyNumber = request.getParameter("companyNumber");
+        String company = request.getParameter( "company" );
+        String companyNumber = request.getParameter( "companyNumber" );
 //        String newPublisher = request.getParameter("newPublisher");
 //        String cbnewPublisher = request.getParameter("cbnewPublisher");
 
@@ -88,22 +93,28 @@ public class RegisterServlet extends HttpServlet {
 //        
         int userID = 0;
 
-        try {
-            PublisherID = Integer.parseInt(ACpublisherDAO_test.ifPublisherExists(company));
-            if (PublisherID == 0) {
-                System.out.println("Publisher " + company + " not found");
+        try
+        {
+            PublisherID = Integer.parseInt( ACpublisherDAO_test.ifPublisherExists( company ) );
+            if ( PublisherID == 0 )
+            {
+                System.out.println( "Publisher " + company + " not found" );
                 newPublisher = true;
-            } else {
-                System.out.println("PublisherID  " + PublisherID);
             }
-        } catch (DBException ex) {
-            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+            else
+            {
+                System.out.println( "PublisherID  " + PublisherID );
+            }
+        }
+        catch ( DBException ex )
+        {
+            Logger.getLogger( RegisterServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
-        System.out.println("username  " + username);
-        System.out.println("company  " + company);
-        System.out.println("companyNumber  " + companyNumber);
-        System.out.println("newPublisher  " + newPublisher);
+        System.out.println( "username  " + username );
+        System.out.println( "company  " + company );
+        System.out.println( "companyNumber  " + companyNumber );
+        System.out.println( "newPublisher  " + newPublisher );
 //        System.out.println("cbnewPublisher:::  " + cbnewPublisher);
 
 //        request.setAttribute("newPublisher", request.getParameter("newPublisher"));
@@ -111,165 +122,186 @@ public class RegisterServlet extends HttpServlet {
         /*
          * if newPublisher checkbox is checked
          */
-        if (newPublisher) {
-            try {
-                System.out.println("cbnewPublisher  IS here");
+        if ( newPublisher )
+        {
+            try
+            {
+                System.out.println( "cbnewPublisher  IS here" );
 
                 String cmpny = company;
 
-                System.out.println("cmpny::  " + company);
+                System.out.println( "cmpny::  " + company );
 
                 /*
                  * double check if Publisher exists
                  */
-                PublisherID = Integer.parseInt(ACpublisherDAO_test.ifPublisherExists(cmpny));
+                PublisherID = Integer.parseInt( ACpublisherDAO_test.ifPublisherExists( cmpny ) );
 
-                if (PublisherID == 0) {
-                    System.out.println("newPublisher does not exist - create new one");
+                if ( PublisherID == 0 )
+                {
+                    System.out.println( "newPublisher does not exist - create new one" );
 
                     /*
                      * create Publisher if account does not exists
                      */
                     Publisher publisher = new Publisher();
 
-                    publisher.setCompany(company);
-                    publisher.setStatus("new");
+                    publisher.setCompany( company );
+                    publisher.setStatus( "new" );
 
-                    PublisherID = ACpublisherDAO_test.insertRudimentaryPublisher(publisher);
+                    PublisherID = ACpublisherDAO_test.insertRudimentaryPublisher( publisher );
 
-                    System.out.println("PublisherID:: 1 " + PublisherID);
+                    System.out.println( "PublisherID:: 1 " + PublisherID );
 
                 }
-            } catch (DBException ex) {
-                Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch ( DBException ex )
+            {
+                Logger.getLogger( RegisterServlet.class.getName() ).log( Level.SEVERE, null, ex );
             }
         }
 
-        System.out.println("PublisherID:: 2 " + PublisherID);
+        System.out.println( "PublisherID:: 2 " + PublisherID );
 
-        request.setAttribute("uname", request.getParameter("uname"));
-        request.setAttribute("firstname", request.getParameter("firstname"));
-        request.setAttribute("lastname", request.getParameter("lastname"));
-        request.setAttribute("email", request.getParameter("email"));
-        request.setAttribute("PublisherID", PublisherID);
+        request.setAttribute( "uname", request.getParameter( "uname" ) );
+        request.setAttribute( "firstname", request.getParameter( "firstname" ) );
+        request.setAttribute( "lastname", request.getParameter( "lastname" ) );
+        request.setAttribute( "email", request.getParameter( "email" ) );
+        request.setAttribute( "PublisherID", PublisherID );
 
         Status sp = new Status();
         String output = "";
-        if (!validate(username, firstname, lastname, password, email)) {
-            sp.setCode(-1);
-            sp.setMessage("Invalid Input");
-            output = Utils.toJson(sp);
-        } else {
+        if ( !validate( username, firstname, lastname, password, email ) )
+        {
+            sp.setCode( -1 );
+            sp.setMessage( "Invalid Input" );
+            output = Utils.toJson( sp );
+        }
+        else
+        {
             User user = new User();
             String fullName = firstname + " " + lastname;
-            user.setUSERNAME(username);
-            user.setFIRST_NAME(firstname);
-            user.setLAST_NAME(lastname);
-            user.setFull_NAME(fullName);
+            user.setUSERNAME( username );
+            user.setFIRST_NAME( firstname );
+            user.setLAST_NAME( lastname );
+            user.setFull_NAME( fullName );
 
             /*
              * generate hash for password
              */
-            user.setPASSWORD(BCrypt.hashpw(password, GlobalConstants.SALT));
+            user.setPASSWORD( BCrypt.hashpw( password, GlobalConstants.SALT ) );
 
-            user.setEMAIL(email);
+            user.setEMAIL( email );
 
             /*
              * generate hash code for email verification
              */
-            String hash = Utils.prepareRandomString(30);
+            String hash = Utils.prepareRandomString( 30 );
 
             /*
              * generate hash for password
              */
-            user.setEMAIL_VERIFICATION_HASH(BCrypt.hashpw(hash, GlobalConstants.SALT));
+            user.setEMAIL_VERIFICATION_HASH( BCrypt.hashpw( hash, GlobalConstants.SALT ) );
 
-            if (role
-                    == null) {
+            if ( role
+                    == null )
+            {
                 role = "not assigned";
             }
 
-            user.setROLE(role);
+            user.setROLE( role );
 
-            user.setFUNCTION(function);
+            user.setFUNCTION( function );
 
-            try {
+            try
+            {
 
                 /*
                  * check whether email exists or not
                  */
-                if (!ApplicationDAO.isEmailExists(email)) {
+                if ( !ApplicationDAO.isEmailExists( email ) )
+                {
 
-                    System.out.println("isEmailExists Not:: ");
+                    System.out.println( "isEmailExists Not:: " );
 
                     /*
                      * create account if email not exists
                      */
-                    userID = ApplicationDAO.insertRow(user);
-                    System.out.println("userID:: " + userID);
+                    userID = ApplicationDAO.insertRow( user );
+                    System.out.println( "userID:: " + userID );
 
-                    System.out.println("PublisherID:: " + PublisherID);
+                    System.out.println( "PublisherID:: " + PublisherID );
 
                     /*
                      * here we insert userID and PublisherID into PublisherUser
                      * joined table
                      */
-                    int result = ACpublisherDAO_test.insertPublisherUserJoined(userID, PublisherID);
-                    System.out.println("insertPublisherUserJoined:  " + result);
+                    int result = ACpublisherDAO_test.insertPublisherUserJoined( userID, PublisherID );
+                    System.out.println( "insertPublisherUserJoined:  " + result );
 
                     /*
                      * send verification email
                      */
-                    MailUtil.sendEmailRegistrationLink(username, fullName, email, hash);
-                     System.out.println("/RegisterServlet: sendEmailRegistrationLink username " + username + " fullName " + fullName);
-                    sp.setCode(0);
-                    sp.setMessage("Registation Link Was Sent To Your Mail Successfully. Please Verify Your Email");
-                    output = Utils.toJson(sp);
-                } else {
+                    MailUtil.sendEmailRegistrationLink( username, fullName, email, hash );
+                    System.out.println( "/RegisterServlet: sendEmailRegistrationLink username " + username + " fullName " + fullName );
+                    sp.setCode( 0 );
+                    sp.setMessage( "Registation Link Was Sent To Your Mail Successfully. Please Verify Your Email" );
+                    output = Utils.toJson( sp );
+                }
+                else
+                {
                     /*
                      * tell user that the email already in use
                      */
-                    sp.setCode(-1);
-                    sp.setMessage("This Email is already registered");
-                    output = Utils.toJson(sp);
+                    sp.setCode( -1 );
+                    sp.setMessage( "This Email is already registered" );
+                    output = Utils.toJson( sp );
                 }
 
-            } catch (DBException | MessagingException e) {
-                sp.setCode(-1);
-                sp.setMessage(e.getMessage());
-                output = Utils.toJson(sp);
+            }
+            catch ( DBException | MessagingException e )
+            {
+                sp.setCode( -1 );
+                sp.setMessage( e.getMessage() );
+                output = Utils.toJson( sp );
             }
 
         }
 
 //        response.setContentType("text/html;charset=UTF-8");
-
-        request.getRequestDispatcher("/WEB-INF/views/registrationSuccess.jsp").forward(request, response);
+        request.getRequestDispatcher( "/WEB-INF/views/registrationSuccess.jsp" ).forward( request, response );
 
         try (
-            /*
-             * send output to user
-             */
-            PrintWriter pw = response.getWriter()) {
-            pw.write(output);
+                /*
+                 * send output to user
+                 */
+                PrintWriter pw = response.getWriter() )
+        {
+            pw.write( output );
             pw.flush();
         }
     }
 
-    public static boolean validate(String username, String firstName, String lastName, String password, String email) {
-        if (username == null) {
+    public static boolean validate( String username, String firstName, String lastName, String password, String email )
+    {
+        if ( username == null )
+        {
             return false;
         }
-        if (firstName == null) {
+        if ( firstName == null )
+        {
             return false;
         }
-        if (lastName == null) {
+        if ( lastName == null )
+        {
             return false;
         }
-        if (password == null) {
+        if ( password == null )
+        {
             return false;
         }
-        if (email == null) {
+        if ( email == null )
+        {
             return false;
         }
         return true;

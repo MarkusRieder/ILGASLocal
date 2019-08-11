@@ -2,21 +2,23 @@ package ie.irishliterature.db;
 
 public class DBException extends Exception {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String message;
+    private String message;
 
-	public DBException(String string) {
-		message = string;
-	}
+    public DBException( String string )
+    {
+        message = string;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getMessage()
+    {
+        return message;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
-}			
-	
+    public void setMessage( String message )
+    {
+        this.message = message;
+    }
+
+}

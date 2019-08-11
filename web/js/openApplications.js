@@ -1240,7 +1240,7 @@ $(document).ready(function () {
                         // AddendumRightsAgreementName
 
                         console.log("8 xyz Process AddendumRightsAgreementName #############################################");
-                        console.log("8 xyz Process AddendumRightsAgreementName for ", translatorNamesForGenerateTranslatorTab[j]);                        
+                        console.log("8 xyz Process AddendumRightsAgreementName for ", translatorNamesForGenerateTranslatorTab[j]);
                         console.log("8 xyz v " + v + "  w  " + w + "  j  " + j); // 8 xyz v 3  w  1
                         console.log("8 xyz rightsAgreementArray[v].slice(0, -1)  :" + rightsAgreementArray[v].slice(0, -1) + ":");
                         if (w === 1) {

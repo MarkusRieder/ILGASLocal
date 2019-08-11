@@ -23,112 +23,128 @@ public class ExpertReader1 {
     /**
      * @return the expertReaderUserID
      */
-    public int getExpertReaderUserID() {
+    public int getExpertReaderUserID()
+    {
         return expertReaderUserID;
     }
 
     /**
      * @param expertReaderUserID the expertReaderUserID to set
      */
-    public void setExpertReaderUserID(int expertReaderUserID) {
+    public void setExpertReaderUserID( int expertReaderUserID )
+    {
         this.expertReaderUserID = expertReaderUserID;
     }
 
     /**
      * @return the referenceNumber
      */
-    public String getReferenceNumber() {
+    public String getReferenceNumber()
+    {
         return referenceNumber;
     }
 
     /**
      * @param referenceNumber the referenceNumber to set
      */
-    public void setReferenceNumber(String referenceNumber) {
+    public void setReferenceNumber( String referenceNumber )
+    {
         this.referenceNumber = referenceNumber;
     }
 
     /**
      * @return the fileDestination
      */
-    public String getFileDestination() {
+    public String getFileDestination()
+    {
         return fileDestination;
     }
 
     /**
      * @param fileDestination the fileDestination to set
      */
-    public void setFileDestination(String fileDestination) {
+    public void setFileDestination( String fileDestination )
+    {
         this.fileDestination = fileDestination;
     }
 
     /**
      * @return the sampleSentOut
      */
-    public String getSampleSentOut() {
+    public String getSampleSentOut()
+    {
         return sampleSentOut;
     }
 
     /**
      * @param sampleSentOut the sampleSentOut to set
      */
-    public void setSampleSentOut(String sampleSentOut) {
+    public void setSampleSentOut( String sampleSentOut )
+    {
         this.sampleSentOut = sampleSentOut;
     }
 
     /**
      * @return the sampleReturned
      */
-    public String getSampleReturned() {
+    public String getSampleReturned()
+    {
         return sampleReturned;
     }
 
     /**
      * @param sampleReturned the sampleReturned to set
      */
-    public void setSampleReturned(String sampleReturned) {
+    public void setSampleReturned( String sampleReturned )
+    {
         this.sampleReturned = sampleReturned;
     }
 
     /**
      * @return the summaryReport
      */
-    public String getSummaryReport() {
+    public String getSummaryReport()
+    {
         return summaryReport;
     }
 
     /**
      * @param summaryReport the summaryReport to set
      */
-    public void setSummaryReport(String summaryReport) {
+    public void setSummaryReport( String summaryReport )
+    {
         this.summaryReport = summaryReport;
     }
 
     /**
      * @return the expertReaderName
      */
-    public String getExpertReaderName() {
+    public String getExpertReaderName()
+    {
         return expertReaderName;
     }
 
     /**
      * @param expertReaderName the expertReaderName to set
      */
-    public void setExpertReaderName(String expertReaderName) {
+    public void setExpertReaderName( String expertReaderName )
+    {
         this.expertReaderName = expertReaderName;
     }
 
     /**
      * @return the expertReaderEmail
      */
-    public String getExpertReaderEmail() {
+    public String getExpertReaderEmail()
+    {
         return expertReaderEmail;
     }
 
     /**
      * @param expertReaderEmail the expertReaderEmail to set
      */
-    public void setExpertReaderEmail(String expertReaderEmail) {
+    public void setExpertReaderEmail( String expertReaderEmail )
+    {
         this.expertReaderEmail = expertReaderEmail;
     }
 

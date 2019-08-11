@@ -28,7 +28,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "TestDataServlet1", urlPatterns = {"/TestDataServlet1"})
+@WebServlet( name = "TestDataServlet1", urlPatterns =
+{
+    "/TestDataServlet1"
+} )
 public class TestDataServlet1 extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +39,8 @@ public class TestDataServlet1 extends HttpServlet {
     /**
      * Default constructor.
      */
-    public TestDataServlet1() {
+    public TestDataServlet1()
+    {
         // TODO Auto-generated constructor stub
     }
 
@@ -50,52 +54,60 @@ public class TestDataServlet1 extends HttpServlet {
      * response)
      */
     @Override
-    @SuppressWarnings("unchecked")
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @SuppressWarnings( "unchecked" )
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        DataTableStaff param = DataTablesParamUtility.getParam(request);
+        DataTableStaff param = DataTablesParamUtility.getParam( request );
 
-        System.out.println("param " + param.getsColumns());
+        System.out.println( "param " + param.getsColumns() );
 
         String sEcho = param.getsEcho();
         int iTotalRecords = 0; // total number of records (unfiltered)
         int iTotalDisplayRecords = 0; //value will be set when code filters companies by keyword
 
-
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  iTotalRecords = Test1DAO.getAllApplications().size() START %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        try {
+        System.out.println( "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  iTotalRecords = Test1DAO.getAllApplications().size() START %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" );
+        try
+        {
             //            iTotalRecords = Test1DAO.getAllApplications().size();
             iTotalRecords = Test1DAO.getSizeOfApplications();
-        } catch (DBException ex) {
-            Logger.getLogger(TestDataServlet1.class.getName()).log(Level.SEVERE, null, ex);
         }
-            System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  iTotalRecords = Test1DAO.getAllApplications().size() END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            System.out.println("iTotalRecords " + iTotalRecords);
-
-
+        catch ( DBException ex )
+        {
+            Logger.getLogger( TestDataServlet1.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        System.out.println( "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  iTotalRecords = Test1DAO.getAllApplications().size() END %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" );
+        System.out.println( "iTotalRecords " + iTotalRecords );
 
         List<GrantApplication> applications = new LinkedList<>();
 
-        try {
-            for (GrantApplication c : Test1DAO.getAllApplications()) {
-                if (c.getReferenceNumber().toLowerCase().contains(param.getsSearch().toLowerCase())
-                        || c.getCompany().toLowerCase().contains(param.getsSearch().toLowerCase())) {
-                    applications.add(c); // add applications that matches given search criterion
+        try
+        {
+            for ( GrantApplication c : Test1DAO.getAllApplications() )
+            {
+                if ( c.getReferenceNumber().toLowerCase().contains( param.getsSearch().toLowerCase() )
+                        || c.getCompany().toLowerCase().contains( param.getsSearch().toLowerCase() ) )
+                {
+                    applications.add( c ); // add applications that matches given search criterion
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TestDataServlet1.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (DBException ex) {
-            Logger.getLogger(TestDataServlet1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch ( ClassNotFoundException ex )
+        {
+            Logger.getLogger( TestDataServlet1.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        catch ( DBException ex )
+        {
+            Logger.getLogger( TestDataServlet1.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
         iTotalDisplayRecords = applications.size(); // number of companies that match search criterion should be returned
 
-        System.out.println("iTotalDisplayRecords " + iTotalDisplayRecords);
+        System.out.println( "iTotalDisplayRecords " + iTotalDisplayRecords );
 
         final int sortColumnIndex = param.getiSortColumnIndex();
-        final int sortDirection = param.getsSortDirection().equals("asc") ? -1 : 1;
+        final int sortDirection = param.getsSortDirection().equals( "asc" ) ? -1 : 1;
 
 //		Collections.sort(applications, new Comparator<GrantApplication>(){
 //			@Override
@@ -114,37 +126,44 @@ public class TestDataServlet1 extends HttpServlet {
 //    
 //      System.out.println("applications " + applications.get(i));
 //}
-        if (applications.size() < param.getiDisplayStart() + param.getiDisplayLength()) {
-            applications = applications.subList(param.getiDisplayStart(), applications.size());
-        } else {
-            applications = applications.subList(param.getiDisplayStart(), param.getiDisplayStart() + param.getiDisplayLength());
+        if ( applications.size() < param.getiDisplayStart() + param.getiDisplayLength() )
+        {
+            applications = applications.subList( param.getiDisplayStart(), applications.size() );
+        }
+        else
+        {
+            applications = applications.subList( param.getiDisplayStart(), param.getiDisplayStart() + param.getiDisplayLength() );
         }
 
-        try {
+        try
+        {
             JsonObject jsonResponse = new JsonObject();
-            jsonResponse.addProperty("sEcho", sEcho);
-            jsonResponse.addProperty("iTotalRecords", iTotalRecords);
-            jsonResponse.addProperty("iTotalDisplayRecords", iTotalDisplayRecords);
+            jsonResponse.addProperty( "sEcho", sEcho );
+            jsonResponse.addProperty( "iTotalRecords", iTotalRecords );
+            jsonResponse.addProperty( "iTotalDisplayRecords", iTotalDisplayRecords );
 
             Gson gson = new Gson();
-            jsonResponse.add("aaData", gson.toJsonTree(applications));
+            jsonResponse.add( "aaData", gson.toJsonTree( applications ) );
 
 //            System.out.println("aaData:  " + data);
-            response.setContentType("application/Json");
-            response.getWriter().print(jsonResponse.toString());
+            response.setContentType( "application/Json" );
+            response.getWriter().print( jsonResponse.toString() );
 
 //            System.out.println(" jsonResponse.toString():  " + jsonResponse.toString());
-        } catch (JsonIOException e) {
+        }
+        catch ( JsonIOException e )
+        {
             e.printStackTrace();
-            response.setContentType("text/html");
-            response.getWriter().print(e.getMessage());
+            response.setContentType( "text/html" );
+            response.getWriter().print( e.getMessage() );
         }
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
         // doGet(request, response);
     }

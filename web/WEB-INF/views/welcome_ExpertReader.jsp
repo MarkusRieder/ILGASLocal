@@ -603,7 +603,7 @@
 
                                             <!--  Summary of report  -->
                                             <div class="row" style="margin-top: 50px;margin-left: 10px">  
-                                                
+
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <textarea class="form-control" placeholder="Summary of report" id="reportSummary" name="reportSummary" style="width: 580px; height: 430px;"></textarea>
@@ -611,7 +611,7 @@
                                                 </div>
 
                                                 <div class="col-md-6"></div>
-                                                
+
                                             </div> <!-- row  -->
 
                                             <!--  Submit form  -->

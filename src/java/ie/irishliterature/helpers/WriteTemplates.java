@@ -20,17 +20,21 @@ import org.apache.log4j.Logger;
  */
 public class WriteTemplates {
 
-    private static final Logger LOGGER = Logger.getLogger(WriteTemplates.class.getName());
+    private static final Logger LOGGER = Logger.getLogger( WriteTemplates.class.getName() );
 
-    public static void writeStrTxt(String templateText, String fileName) {
+    public static void writeStrTxt( String templateText, String fileName )
+    {
         FileWriter fileWriter;
-        try {
-            fileWriter = new FileWriter(new File(fileName));
-            System.out.println(templateText);
-            fileWriter.write(templateText);
+        try
+        {
+            fileWriter = new FileWriter( new File( fileName ) );
+            System.out.println( templateText );
+            fileWriter.write( templateText );
             fileWriter.close();
-        } catch (IOException e) {
-            LOGGER.debug(e.getMessage());
+        }
+        catch ( IOException e )
+        {
+            LOGGER.debug( e.getMessage() );
         }
     }
 }

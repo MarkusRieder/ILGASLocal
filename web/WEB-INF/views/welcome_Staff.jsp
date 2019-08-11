@@ -98,7 +98,7 @@
 
 
         <!--script for DataTable Modal popup-->
-        
+
         <!--User-->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -220,7 +220,7 @@
             ;
         </script>
         <!--script for DataTable Modal popup-->
-        
+
         <!--ExpertReader-->
         <script type="text/javascript">
             $(document).ready(function () {
@@ -1576,7 +1576,7 @@
             .onlytableScroll{
                 overflow-x:scroll;
             }
-            
+
 
         </style>
 
@@ -2323,7 +2323,7 @@
                                                                     </label>
                                                                 </div> 
                                                             </div>
-                                                            
+
                                                             <script>
                                                                 $("#datePublisherInformedOfMeeting").datepicker({
                                                                     showWeekDays: true,
@@ -2348,7 +2348,7 @@
                                                                     <button class='btn btn-danger'>Reject</button>
                                                                 </div>
                                                             </div> <!--row-->
-                                                            
+
                                                         </div>
                                                     </div> <!--tab-pane" id="page 4" -->
 
@@ -3038,15 +3038,15 @@
 
                         </div><!-- end of BaseText div -->   
 
-                    <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
-                    <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                    <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
+                        <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
+                        <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
+                        <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
 
-                    <div class="mobile-baselogos visible-phone"> 
-                        <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
-                        <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-<!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
-                    </div>
+                        <div class="mobile-baselogos visible-phone"> 
+                            <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
+                            <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
+                            <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
+                        </div>
                     </div><!-- end of Base div -->
                 </div>
                 <!-- end of container div -->

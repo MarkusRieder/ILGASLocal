@@ -894,9 +894,9 @@
                                                         </div>
                                                     </div>
 
-                                                   <div class="col-md-5">   
-                                                     <div class="form-group has-feedback"> 
-                                                        <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                        
+                                                    <div class="col-md-5">   
+                                                        <div class="form-group has-feedback"> 
+                                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                        
                                                             <!--keep in one line otherwise placeholder doesn't show-->
                                                             <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
                                                         </div>
@@ -912,7 +912,7 @@
                                                 <div class="panel-body">
 
                                                     <div class="col-sm-4"> 
-                                                        
+
                                                         <div class="input-group">
                                                             <div class="form-group has-feedback  has-clear">
                                                                 <label for="translatorName" class="pull-left" id="translatorNameLabel">Translator</label>

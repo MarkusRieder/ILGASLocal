@@ -208,7 +208,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -317,28 +318,6 @@ public class pendingApplicationDAO {
                         System.out.println( "setPublicationYear: [" + g + "] " + t[ g ] );
                     }
 
-////                    Info:   setPublicationYear:  2018-09-25 00:00:00.0
-//                    SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-//                    SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-//
-//                    Date date = in.parse(res.getString("dateCopiesWereSent"));
-//                    String result = out.format(date);
-////                    Info:   setPublicationYear: result  25/09/2018
-//                    System.out.println("setPublicationYear: result  " + result);
-//
-//                    // Convert input string into a date
-//                    DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-//                    Date date1 = inputFormat.parse(result);
-//
-//                    System.out.println("setPublicationYear: date1  " + date1);
-//
-//Date date3 = res.getDate("dateCopiesWereSent");  // wherever you get this
-//DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-//String text = df.format(date);
-//System.out.println(text);
-//                                        // Convert input string into a date
-//                    DateFormat inputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
-//                    Date date2 = inputFormat1.parse(text);
                     application.setDateCopiesWereSent( res.getDate( "dateCopiesWereSent" ) );
                     String ISBN = getISBN( ReferenceNumber );
                     String ISSN = getISSN( ReferenceNumber );
@@ -476,7 +455,8 @@ public class pendingApplicationDAO {
                     counter++;
                 }
 
-            } catch ( ClassNotFoundException | SQLException e )
+            }
+            catch ( ClassNotFoundException | SQLException e )
             {
                 LOGGER.debug( e.getMessage() );
                 DBConn.close( conn, ps, res );
@@ -519,7 +499,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -580,7 +561,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -629,7 +611,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -677,7 +660,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -734,21 +718,20 @@ public class pendingApplicationDAO {
 
                     idx++;
                     System.out.println( "Application dao getTranslatorTrack  setTranslatorName: " + res.getString( 1 ) );
-//                    auth = new ArrayList<>();
+
                     auth = getAuthors( res.getString( 3 ) );
                     testList.add( auth );
                     TITLELIST.add( res.getString( 2 ) );
                     testList.add( res.getString( 2 ) );
 
-                    //        System.out.println("Application dao testlist: " + testList);
-                    //       System.out.println("Application dao getTranslatorTrack  titleList: " + res.getString(2) + " RefNo:  " + res.getString(3));
                 }
 
             }
 
             translatorTracker.setTitles( TITLELIST );
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -794,7 +777,8 @@ public class pendingApplicationDAO {
                 }
             }
 
-        } catch ( SQLException ex )
+        }
+        catch ( SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -934,7 +918,8 @@ public class pendingApplicationDAO {
 //Info:   3  getRightsAgreement .... 1 == translator cv 2.docx
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -994,7 +979,8 @@ public class pendingApplicationDAO {
                 }
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -1041,7 +1027,8 @@ public class pendingApplicationDAO {
                 }
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -1087,7 +1074,8 @@ public class pendingApplicationDAO {
                 }
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -1135,7 +1123,8 @@ public class pendingApplicationDAO {
                 }
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -1194,7 +1183,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -1240,7 +1230,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -1283,7 +1274,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -1326,7 +1318,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -1373,7 +1366,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -1419,7 +1413,8 @@ public class pendingApplicationDAO {
                 }
             }
 
-        } catch ( ClassNotFoundException | SQLException ex )
+        }
+        catch ( ClassNotFoundException | SQLException ex )
         {
             java.util.logging.Logger.getLogger( pendingApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
@@ -1495,7 +1490,8 @@ public class pendingApplicationDAO {
 
                 counter++;
 
-            } catch ( IllegalArgumentException | IllegalAccessException ex )
+            }
+            catch ( IllegalArgumentException | IllegalAccessException ex )
             {
                 java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
             }
@@ -1525,7 +1521,8 @@ public class pendingApplicationDAO {
 
             DBConn.close( conn, ps1, res );
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" + e );
@@ -1579,7 +1576,8 @@ public class pendingApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
@@ -1627,7 +1625,8 @@ public class pendingApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
@@ -1702,7 +1701,8 @@ public class pendingApplicationDAO {
 
             DBConn.close( conn, ps1, res );
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" + e );
@@ -1748,7 +1748,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -1797,7 +1798,8 @@ public class pendingApplicationDAO {
 
             }
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -1834,7 +1836,8 @@ public class pendingApplicationDAO {
                 }
             }
             DBConn.close( conn, ps, res );
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
@@ -1844,7 +1847,8 @@ public class pendingApplicationDAO {
         if ( rightsHolderContent > 0 )
         {
             return rightsHolderContentExists = true;
-        } else
+        }
+        else
         {
             return rightsHolderContentExists = false;
         }
@@ -1883,7 +1887,8 @@ public class pendingApplicationDAO {
 
             DBConn.close( conn, ps1, res );
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, res );
@@ -1941,7 +1946,8 @@ public class pendingApplicationDAO {
 
             DBConn.close( conn, ps1, res );
 
-        } catch ( ClassNotFoundException | SQLException e )
+        }
+        catch ( ClassNotFoundException | SQLException e )
         {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, res );

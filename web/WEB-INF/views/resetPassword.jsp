@@ -62,38 +62,37 @@
 
             </div> <!-- /container-fluid -->
 
-    <script>
-        $(function () {
-            $('#formChangePassword').validator().on('submit', function (e) {
-                if (e.isDefaultPrevented()) {
-                    // handle the invalid form...
-                } else {
-                    blockUi();
-                    // everything looks good!
-                    $.post("ChangePassword", $("#formChangePassword").serialize(), function (data) {
-                        var jdata = JSON.parse(data);
-                        if (jdata.code === -1) {
-                            $("#errorField .message").text(jdata.message);
-                            $("#errorField").show();
-                            $("#successField").hide();
-                            $("#loginUser").hide();
+            <script>
+                $(function () {
+                    $('#formChangePassword').validator().on('submit', function (e) {
+                        if (e.isDefaultPrevented()) {
+                            // handle the invalid form...
                         } else {
-                            $("#successField .message").text(jdata.message);
-                            $("#errorField").hide();
-                            $("#successField").show();
-                            $("#loginUser").show();
-                            $("#formChangePassword").hide();
+                            blockUi();
+                            // everything looks good!
+                            $.post("ChangePassword", $("#formChangePassword").serialize(), function (data) {
+                                var jdata = JSON.parse(data);
+                                if (jdata.code === -1) {
+                                    $("#errorField .message").text(jdata.message);
+                                    $("#errorField").show();
+                                    $("#successField").hide();
+                                    $("#loginUser").hide();
+                                } else {
+                                    $("#successField .message").text(jdata.message);
+                                    $("#errorField").hide();
+                                    $("#successField").show();
+                                    $("#loginUser").show();
+                                    $("#formChangePassword").hide();
+                                }
+                            }).always(function () {
+                                unBlockUi();
+                            });
                         }
-                    }).always(function () {
-                        unBlockUi();
+                        return false;
                     });
-                }
-                return false;
-            });
-        });
-    </script>
+                });
+            </script>
 
-    
-         <!--footer start-->
-         
-         
+
+            <!--footer start-->
+

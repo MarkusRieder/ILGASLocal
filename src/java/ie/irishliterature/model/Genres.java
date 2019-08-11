@@ -10,36 +10,40 @@ package ie.irishliterature.model;
  * @author markus
  */
 public class Genres {
-    
+
     private int idgenres;
     private String genre;
 
     /**
      * @return the idgenres
      */
-    public int getIdgenres() {
+    public int getIdgenres()
+    {
         return idgenres;
     }
 
     /**
      * @param idgenres the idgenres to set
      */
-    public void setIdgenres(int idgenres) {
+    public void setIdgenres( int idgenres )
+    {
         this.idgenres = idgenres;
     }
 
     /**
      * @return the genre
      */
-    public String getGenre() {
+    public String getGenre()
+    {
         return genre;
     }
 
     /**
      * @param genre the genre to set
      */
-    public void setGenre(String genre) {
+    public void setGenre( String genre )
+    {
         this.genre = genre;
     }
-    
+
 }

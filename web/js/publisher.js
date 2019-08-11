@@ -137,7 +137,7 @@ function checkUserName() {
             data: $('#register-form').serialize(),
 //            dataType: "html",
             cache: false,
-            success: function (msg) {              
+            success: function (msg) {
                 $('#error').show();
                 $("#error").html(msg);
             },

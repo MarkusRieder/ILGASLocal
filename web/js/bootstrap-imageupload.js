@@ -9,7 +9,7 @@ if (typeof jQuery === 'undefined') {
     throw new Error('bootstrap-imageupload\'s JavaScript requires jQuery.');
 }
 
-(function($) {
+(function ($) {
     'use strict';
 
     var options = {};
@@ -25,24 +25,22 @@ if (typeof jQuery === 'undefined') {
     // Plugin Definition
     // -----------------------------------------------------------------------------
 
-    $.fn.imageupload = function(methodOrOptions) {
+    $.fn.imageupload = function (methodOrOptions) {
         var givenArguments = arguments;
 
-        return this.filter('div').each(function() {
+        return this.filter('div').each(function () {
             if (methods[methodOrOptions]) {
                 methods[methodOrOptions].apply($(this), Array.prototype.slice.call(givenArguments, 1));
-            }
-            else if (typeof methodOrOptions === 'object' || !methodOrOptions) {
+            } else if (typeof methodOrOptions === 'object' || !methodOrOptions) {
                 methods.init.apply($(this), givenArguments);
-            }
-            else {
+            } else {
                 throw new Error('Method "' + methodOrOptions + '" is not defined for imageupload.');
             }
         });
     };
 
     $.fn.imageupload.defaultOptions = {
-        allowedFormats: [ 'jpg', 'jpeg', 'png', 'gif' ],
+        allowedFormats: ['jpg', 'jpeg', 'png', 'gif'],
         maxWidth: 250,
         maxHeight: 250,
         maxFileSizeKb: 2048
@@ -70,7 +68,7 @@ if (typeof jQuery === 'undefined') {
         resetUrlTab($urlTab);
         showFileTab($fileTab);
         enable.call($imageupload);
-        
+
         // Unbind all previous bound event handlers.
         $fileTabButton.off();
         $browseFileButton.off();
@@ -79,32 +77,32 @@ if (typeof jQuery === 'undefined') {
         $submitUrlButton.off();
         $removeUrlButton.off();
 
-        $fileTabButton.on('click', function() {
+        $fileTabButton.on('click', function () {
             $(this).blur();
             showFileTab($fileTab);
         });
 
-        $browseFileButton.on('change', function() {
+        $browseFileButton.on('change', function () {
             $(this).blur();
             submitImageFile($fileTab);
         });
 
-        $removeFileButton.on('click', function() {
+        $removeFileButton.on('click', function () {
             $(this).blur();
             resetFileTab($fileTab);
         });
 
-        $urlTabButton.on('click', function() {
+        $urlTabButton.on('click', function () {
             $(this).blur();
             showUrlTab($urlTab);
         });
 
-        $submitUrlButton.on('click', function() {
+        $submitUrlButton.on('click', function () {
             $(this).blur();
             submitImageUrl($urlTab);
         });
 
-        $removeUrlButton.on('click', function() {
+        $removeUrlButton.on('click', function () {
             $(this).blur();
             resetUrlTab($urlTab);
         });
@@ -159,8 +157,7 @@ if (typeof jQuery === 'undefined') {
         var fileExtension = getFileExtension(file.name);
         if ($.inArray(fileExtension, options.allowedFormats) > -1) {
             callback(true, 'Image file is valid.');
-        }
-        else {
+        } else {
             callback(false, 'File type is not allowed.');
         }
     }
@@ -171,7 +168,7 @@ if (typeof jQuery === 'undefined') {
         var timeout = false;
         var image = new Image();
 
-        image.onload = function() {
+        image.onload = function () {
             if (!timeout) {
                 window.clearTimeout(timer);
 
@@ -185,14 +182,13 @@ if (typeof jQuery === 'undefined') {
                 var fileExtension = getFileExtension(tempUrl);
                 if ($.inArray(fileExtension, options.allowedFormats) > -1) {
                     callback(true, 'Image URL is valid.');
-                }
-                else {
+                } else {
                     callback(false, 'File type is not allowed.');
                 }
             }
         };
 
-        image.onerror = function() {
+        image.onerror = function () {
             if (!timeout) {
                 window.clearTimeout(timer);
                 callback(false, 'Image could not be found.');
@@ -202,7 +198,7 @@ if (typeof jQuery === 'undefined') {
         image.src = url;
 
         // Abort if image takes longer than 3000ms to load.
-        timer = window.setTimeout(function() {
+        timer = window.setTimeout(function () {
             timeout = true;
             image.src = '???'; // Trigger error to stop loading.
             callback(false, 'Loading image timed out.');
@@ -239,7 +235,7 @@ if (typeof jQuery === 'undefined') {
         var $browseFileButton = $fileTab.find('.btn:eq(0)');
         var $removeFileButton = $fileTab.find('.btn:eq(1)');
         var $fileInput = $browseFileButton.find('input');
-        
+
         $fileTab.find('.alert').remove();
         $fileTab.find('img').remove();
         $browseFileButton.find('span').text('Browse');
@@ -251,28 +247,27 @@ if (typeof jQuery === 'undefined') {
         }
 
         $browseFileButton.prop('disabled', true);
-        
+
         var file = $fileInput[0].files[0];
 
-        isValidImageFile(file, function(isValid, message) {
+        isValidImageFile(file, function (isValid, message) {
             if (isValid) {
                 var fileReader = new FileReader();
 
-                fileReader.onload = function(e) {
+                fileReader.onload = function (e) {
                     // Show thumbnail and remove button.
                     $fileTab.prepend(getImageThumbnailHtml(e.target.result));
                     $browseFileButton.find('span').text('Change');
                     $removeFileButton.css('display', 'inline-block');
                 };
 
-                fileReader.onerror = function() {
+                fileReader.onerror = function () {
                     $fileTab.prepend(getAlertHtml('Error loading image file.'));
                     $fileInput.val('');
                 };
 
                 fileReader.readAsDataURL(file);
-            }
-            else {
+            } else {
                 $fileTab.prepend(getAlertHtml(message));
                 $browseFileButton.find('span').text('Browse');
                 $fileInput.val('');
@@ -324,8 +319,8 @@ if (typeof jQuery === 'undefined') {
 
         $urlInput.prop('disabled', true);
         $submitUrlButton.prop('disabled', true);
-        
-        isValidImageUrl(url, function(isValid, message) {
+
+        isValidImageUrl(url, function (isValid, message) {
             if (isValid) {
                 // Submit URL value.
                 $urlTab.find('input[type="hidden"]').val(url);
@@ -333,8 +328,7 @@ if (typeof jQuery === 'undefined') {
                 // Show thumbnail and remove button.
                 $(getImageThumbnailHtml(url)).insertAfter($submitUrlButton.closest('.input-group'));
                 $removeUrlButton.css('display', 'inline-block');
-            }
-            else {
+            } else {
                 $urlTab.prepend(getAlertHtml(message));
             }
 

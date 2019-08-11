@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author markus
  */
-@WebServlet(name = "GenreDelete", urlPatterns = {"/GenreDelete"})
+@WebServlet( name = "GenreDelete", urlPatterns =
+{
+    "/GenreDelete"
+} )
 public class GenreDelete extends HttpServlet {
 
     /**
@@ -34,22 +37,24 @@ public class GenreDelete extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+    protected void processRequest( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
+        response.setContentType( "text/html;charset=UTF-8" );
+        try ( PrintWriter out = response.getWriter() )
+        {
             /*
              * TODO output your page here. You may use following sample code.
              */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet GenreDelete</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet GenreDelete at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println( "<!DOCTYPE html>" );
+            out.println( "<html>" );
+            out.println( "<head>" );
+            out.println( "<title>Servlet GenreDelete</title>" );
+            out.println( "</head>" );
+            out.println( "<body>" );
+            out.println( "<h1>Servlet GenreDelete at " + request.getContextPath() + "</h1>" );
+            out.println( "</body>" );
+            out.println( "</html>" );
         }
     }
 
@@ -64,10 +69,11 @@ public class GenreDelete extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("GenreDelete doGet ");
+        System.out.println( "GenreDelete doGet " );
     }
 
     /**
@@ -80,10 +86,11 @@ public class GenreDelete extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response )
+            throws ServletException, IOException
+    {
 
-        System.out.println("GenreDelete doPost ");
+        System.out.println( "GenreDelete doPost " );
 //        Enumeration en = request.getParameterNames();
 //
 //        while (en.hasMoreElements()) {
@@ -103,18 +110,21 @@ public class GenreDelete extends HttpServlet {
 //            System.out.println("pendingApplicationDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute(attribute));
 //        }
 
-        System.out.println("ID  " + request.getParameter("id"));
+        System.out.println( "ID  " + request.getParameter( "id" ) );
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt( request.getParameter( "id" ) );
 
         boolean result = false;
-        try {
-            result = GenresDAO.deleteGenre(id);
-        } catch (SQLException ex) {
-            Logger.getLogger(GenreDelete.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            result = GenresDAO.deleteGenre( id );
+        }
+        catch ( SQLException ex )
+        {
+            Logger.getLogger( GenreDelete.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
-        System.out.println("result  " + result);
+        System.out.println( "result  " + result );
 //        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Your Input Date Format
 //        Date date = null;
 //        try {
@@ -127,15 +137,15 @@ public class GenreDelete extends HttpServlet {
 
 //        out.print("<h2 align=\"left\">" + ft.format(date) + "</h2>");
 //        out.print("<h2 align=\"left\">" + id + "</h2>");
-        response.setContentType("text/html");
+        response.setContentType( "text/html" );
         PrintWriter out = response.getWriter();
 
-        out.println("<html><body>");
-        out.println("<script type=\"text/javascript\">");
-        out.println("var popwin = window.open(\"pag/WEB-INF/views/welcome_Staff_1.jsp\")");
-        out.println("setTimeout(function(){ popwin.close(); window.location.href='/WEB-INF/views/welcome_Staff_1';},5000)");
-        out.println("</script>");
-        out.println("</body></html>");
+        out.println( "<html><body>" );
+        out.println( "<script type=\"text/javascript\">" );
+        out.println( "var popwin = window.open(\"pag/WEB-INF/views/welcome_Staff_1.jsp\")" );
+        out.println( "setTimeout(function(){ popwin.close(); window.location.href='/WEB-INF/views/welcome_Staff_1';},5000)" );
+        out.println( "</script>" );
+        out.println( "</body></html>" );
 
 //        out.println("<HTML>");
 //        out.println("<HEAD><TITLE>Hello World</TITLE></HEAD>");
@@ -155,7 +165,8 @@ public class GenreDelete extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }// </editor-fold>
 

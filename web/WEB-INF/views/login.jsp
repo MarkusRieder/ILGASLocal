@@ -90,62 +90,62 @@
 
         <!--autocomplete-->
         <!--AutoComplete_international_publishers-->
-<!--        <script type="text/javascript">
-            $(function () {
-                $("#company").autocomplete({
-                    source: 'ACintPublishers_test', // The source of the AJAX results
-                    dataType: 'json',
-                    data: '',
-                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                        $("#company").val(ui.item.name);
-                        return false;
-                    },
-                    select: function (event, ui) { // What happens when an autocomplete result is selected
-                        $("#company").val(ui.item.name);
-                        $('#companyNumber').val(ui.item.id);
-                        $('#Address1').val(ui.item.Address1);
-                        $('#Address2').val(ui.item.Address2);
-                        $('#Address3').val(ui.item.Address3);
-                        $('#Address4').val(ui.item.Address4);
-                        $('#postCode').val(ui.item.postCode);
-                        $('#City').val(ui.item.City);
-                        $('#country').val(ui.item.Country);
-                        $('#countryCode').val(ui.item.CountryCode);
-                        $('#Telephone').val(ui.item.Telephone);
-                        $('#Fax_Number').val(ui.item.Fax);
-                        $('#Web_Address').val(ui.item.WWW);
-                        $('#doNotMail').val(ui.item.DoNotMail);
-                        $('#Bursaries').val(ui.item.Bursaries);
-                        $('#Founded').val(ui.item.Founded);
-                        $('#Number_Of_Titles').val(ui.item.NumberOfTitles);
-                        $('#Date_modified').val(ui.item.DateModified);
-                        $('#note').val(ui.item.Notes);
-                    }
-                });
-            });
-        </script>
-
-
-        AutoComplete_country
-        <script type="text/javascript">
-            $(function () {
-                $("#country").autocomplete({
-                    source: 'AutoComplete_country', // The source of the AJAX results
-                    dataType: 'json',
-                    data: '',
-                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
-                        $("#country").val(ui.item.name);
-                        return false;
-                    },
-                    select: function (event, ui) { // What happens when an autocomplete result is selected
-                        $("#country").val(ui.item.name);
-                        $('#countryCode').val(ui.item.id);
-                    }
-                });
-            });
-        </script>-->
+        <!--        <script type="text/javascript">
+                    $(function () {
+                        $("#company").autocomplete({
+                            source: 'ACintPublishers_test', // The source of the AJAX results
+                            dataType: 'json',
+                            data: '',
+                            minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                            focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                                $("#company").val(ui.item.name);
+                                return false;
+                            },
+                            select: function (event, ui) { // What happens when an autocomplete result is selected
+                                $("#company").val(ui.item.name);
+                                $('#companyNumber').val(ui.item.id);
+                                $('#Address1').val(ui.item.Address1);
+                                $('#Address2').val(ui.item.Address2);
+                                $('#Address3').val(ui.item.Address3);
+                                $('#Address4').val(ui.item.Address4);
+                                $('#postCode').val(ui.item.postCode);
+                                $('#City').val(ui.item.City);
+                                $('#country').val(ui.item.Country);
+                                $('#countryCode').val(ui.item.CountryCode);
+                                $('#Telephone').val(ui.item.Telephone);
+                                $('#Fax_Number').val(ui.item.Fax);
+                                $('#Web_Address').val(ui.item.WWW);
+                                $('#doNotMail').val(ui.item.DoNotMail);
+                                $('#Bursaries').val(ui.item.Bursaries);
+                                $('#Founded').val(ui.item.Founded);
+                                $('#Number_Of_Titles').val(ui.item.NumberOfTitles);
+                                $('#Date_modified').val(ui.item.DateModified);
+                                $('#note').val(ui.item.Notes);
+                            }
+                        });
+                    });
+                </script>
+        
+        
+                AutoComplete_country
+                <script type="text/javascript">
+                    $(function () {
+                        $("#country").autocomplete({
+                            source: 'AutoComplete_country', // The source of the AJAX results
+                            dataType: 'json',
+                            data: '',
+                            minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                            focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                                $("#country").val(ui.item.name);
+                                return false;
+                            },
+                            select: function (event, ui) { // What happens when an autocomplete result is selected
+                                $("#country").val(ui.item.name);
+                                $('#countryCode').val(ui.item.id);
+                            }
+                        });
+                    });
+                </script>-->
 
         <!--Tooltips-->
         <script  type="text/javascript">
@@ -314,252 +314,252 @@
 
 
                     <!--Signup-->
-<!--                    <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                <div class="panel-title">Sign Up</div>
-
-                                <div style="float:right; font-size: 85%; position: relative; top:-10px">
-                                    <a id="signinlink" 
-                                       href="#" 
-                                       onclick="$('#signupbox').hide();
-                                               $('#loginbox').show()">Sign In</a></div>
-                            </div>   panel-heading
-
-                            <div class="panel-body">
-
-                                <div class="signup-form-container">
-
-                                    <form class="form-horizontal" 
-                                          role="form"  
-                                          id="register-form" 
-                                          autocomplete="on"  
-                                          action="${pageContext.request.contextPath}/RegisterServlet" 
-                                          method="POST" 
-                                          name="regF"
-                                          >
-                                        <div id="signupalert" style="display:none" class="alert alert-danger">
-                                            <p>Error:</p>
-                                            <span></span>
-                                        </div>
-
-                                        form-body
-                                        <div class="form-body">
-
-                                            <div class="alert alert-info" id="message" style="display:none;">
-                                                submitted
-                                            </div>
-
-                                            uname
-                                            <div class="form-group">
-                                                 <label for="username" class="col-md-3 control-label">Username</label>
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           name="uname" 
-                                                           id="uname" 
-                                                           placeholder="Username" 
-                                                           data-toggle="validator"
-                                                           onblur="loadXMLDoc()"
-                                                           pattern="[A-Za-z0-9 \-']{1,20}" 
-                                                           data-error="Username should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
-                                                           required
-                                                           >     
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div> form-group uname  
-
-                                            firstname
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           name="firstname" 
-                                                           placeholder="First Name" 
-                                                           data-toggle="validator"
-                                                           pattern="[A-Za-z0-9]{1,20}" 
-                                                           data-error="First name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
-                                                           required
-                                                           >              
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div> form-group firstname     
-
-                                            lastname
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="text" 
-                                                           class="form-control" 
-                                                           name="lastname" 
-                                                           placeholder="Last Name"
-                                                           data-toggle="validator"
-                                                           pattern="[A-Za-z0-9 \-']{1,20}" 
-                                                           data-error="Last name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
-                                                           required
-                                                           >    
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div> form-group lastname      
-
-                                            email
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="email" 
-                                                           class="form-control" 
-                                                           name="email" 
-                                                           placeholder="Email Address"
-                                                           data-toggle="validator"
-                                                           pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-                                                           data-error="Enter valid Email"
-                                                           required
-                                                           >                                            
-                                                    <span class="help-block" id="error"></span>      
-                                                </div>
-                                            </div> form-group email
-
-                                            password
-                                            <div class="form-group">
-                                                <div class="col-md-9">
-                                                    <input type="password" 
-                                                           class="form-control" 
-                                                           id="password"
-                                                           name="password" 
-                                                           placeholder="Enter Password"    
-                                                           pattern="[A-Za-z0-9@#$%!^&*]{6,30}" 
-                                                           data-error="Password should not be null. It should be greater than 6 and less than 30 characters . 
-                                                           Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
-                                                           required                                                                                     
-                                                           >                                           
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div> form-group password
-
-                                            cpassword
-                                            <div class="form-group">
-                                                <label for="cpassword" class="col-md-3 control-label">Confirm Password</label>
-                                                <div class="col-md-9">
-                                                    <input type="password" 
-                                                           class="form-control"  
-                                                           id="cpassword" 
-                                                           name="cpassword" 
-                                                           placeholder="Confirm Password"                                           
-                                                           data-match="#password"                                                                      
-                                                           required
-                                                           >                               
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div> form-group cpassword
-
-                                            selectpicker
-                                            <div class="form-group">
-                                                <label for="location" class="col-sm-3 control-label">Select your function</label>
-                                                <div class="col-sm-10">
-                                                    <select class="selectpicker" title="Select Your Function" style="display: none;">
-                                                    <select class="selectpicker" 
-                                                            title="Select Your Function" 
-                                                            style="display: none;" 
-                                                            name="function" 
-                                                            id="functionDataset" 
-                                                            onchange="changeFunc();"
-                                                            required
-                                                            >
-                                                                                                                <option value="">Select Your Function</option>
-                                                                                                                <option>Literature Ireland Staff</option>
-                                                        <option>Publisher</option>
-                                                        <option>Expert Reader</option>
-                                                    </select>                                        
-                                                    <span class="help-block" id="error"></span> 
-                                                </div>
-                                            </div> form-group selectpicker
-
-                                            publisherBox
-                                            <div id="publisherBox" style="display:none; margin-top:50px; ">
-
-                                                get Company and Company_Number via autocomplete
-                                                <div class="row" style="margin-bottom: 40px;margin-top: 30px">
-                                                    <div class="form-group has-feedback has-feedback-left">
-                                                        <div class="col-sm-10">
-                                                            <input  id="company" 
-                                                                    name="company" 
-                                                                    type="text" 
-                                                                    value="" 
-                                                                    data-toggle="tooltip"
-                                                                    title="Please Enter your Company's Name - if it does not show up please fill in the form"
-                                                                    class="form-control  move-left"     
-                                                                    onblur="CheckboxValue();"
-                                                                    placeholder="Company Name"
-                                                                    >
-                                                            <i class="glyphicon glyphicon-search form-control-feedback" id="companyGlyphicon"></i>
+                    <!--                    <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                    
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <div class="panel-title">Sign Up</div>
+                    
+                                                    <div style="float:right; font-size: 85%; position: relative; top:-10px">
+                                                        <a id="signinlink" 
+                                                           href="#" 
+                                                           onclick="$('#signupbox').hide();
+                                                                   $('#loginbox').show()">Sign In</a></div>
+                                                </div>   panel-heading
+                    
+                                                <div class="panel-body">
+                    
+                                                    <div class="signup-form-container">
+                    
+                                                        <form class="form-horizontal" 
+                                                              role="form"  
+                                                              id="register-form" 
+                                                              autocomplete="on"  
+                                                              action="${pageContext.request.contextPath}/RegisterServlet" 
+                                                              method="POST" 
+                                                              name="regF"
+                                                              >
+                                                            <div id="signupalert" style="display:none" class="alert alert-danger">
+                                                                <p>Error:</p>
+                                                                <span></span>
+                                                            </div>
+                    
+                                                            form-body
+                                                            <div class="form-body">
+                    
+                                                                <div class="alert alert-info" id="message" style="display:none;">
+                                                                    submitted
+                                                                </div>
+                    
+                                                                uname
+                                                                <div class="form-group">
+                                                                     <label for="username" class="col-md-3 control-label">Username</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" 
+                                                                               class="form-control" 
+                                                                               name="uname" 
+                                                                               id="uname" 
+                                                                               placeholder="Username" 
+                                                                               data-toggle="validator"
+                                                                               onblur="loadXMLDoc()"
+                                                                               pattern="[A-Za-z0-9 \-']{1,20}" 
+                                                                               data-error="Username should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
+                                                                               required
+                                                                               >     
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group uname  
+                    
+                                                                firstname
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" 
+                                                                               class="form-control" 
+                                                                               name="firstname" 
+                                                                               placeholder="First Name" 
+                                                                               data-toggle="validator"
+                                                                               pattern="[A-Za-z0-9]{1,20}" 
+                                                                               data-error="First name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
+                                                                               required
+                                                                               >              
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group firstname     
+                    
+                                                                lastname
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" 
+                                                                               class="form-control" 
+                                                                               name="lastname" 
+                                                                               placeholder="Last Name"
+                                                                               data-toggle="validator"
+                                                                               pattern="[A-Za-z0-9 \-']{1,20}" 
+                                                                               data-error="Last name should not be null. It should be less than 20 characters. Use only A-Z, a-z, 0-9 charecters"
+                                                                               required
+                                                                               >    
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group lastname      
+                    
+                                                                email
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="email" 
+                                                                               class="form-control" 
+                                                                               name="email" 
+                                                                               placeholder="Email Address"
+                                                                               data-toggle="validator"
+                                                                               pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                                                                               data-error="Enter valid Email"
+                                                                               required
+                                                                               >                                            
+                                                                        <span class="help-block" id="error"></span>      
+                                                                    </div>
+                                                                </div> form-group email
+                    
+                                                                password
+                                                                <div class="form-group">
+                                                                    <div class="col-md-9">
+                                                                        <input type="password" 
+                                                                               class="form-control" 
+                                                                               id="password"
+                                                                               name="password" 
+                                                                               placeholder="Enter Password"    
+                                                                               pattern="[A-Za-z0-9@#$%!^&*]{6,30}" 
+                                                                               data-error="Password should not be null. It should be greater than 6 and less than 30 characters . 
+                                                                               Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
+                                                                               required                                                                                     
+                                                                               >                                           
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group password
+                    
+                                                                cpassword
+                                                                <div class="form-group">
+                                                                    <label for="cpassword" class="col-md-3 control-label">Confirm Password</label>
+                                                                    <div class="col-md-9">
+                                                                        <input type="password" 
+                                                                               class="form-control"  
+                                                                               id="cpassword" 
+                                                                               name="cpassword" 
+                                                                               placeholder="Confirm Password"                                           
+                                                                               data-match="#password"                                                                      
+                                                                               required
+                                                                               >                               
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group cpassword
+                    
+                                                                selectpicker
+                                                                <div class="form-group">
+                                                                    <label for="location" class="col-sm-3 control-label">Select your function</label>
+                                                                    <div class="col-sm-10">
+                                                                        <select class="selectpicker" title="Select Your Function" style="display: none;">
+                                                                        <select class="selectpicker" 
+                                                                                title="Select Your Function" 
+                                                                                style="display: none;" 
+                                                                                name="function" 
+                                                                                id="functionDataset" 
+                                                                                onchange="changeFunc();"
+                                                                                required
+                                                                                >
+                                                                                                                                    <option value="">Select Your Function</option>
+                                                                                                                                    <option>Literature Ireland Staff</option>
+                                                                            <option>Publisher</option>
+                                                                            <option>Expert Reader</option>
+                                                                        </select>                                        
+                                                                        <span class="help-block" id="error"></span> 
+                                                                    </div>
+                                                                </div> form-group selectpicker
+                    
+                                                                publisherBox
+                                                                <div id="publisherBox" style="display:none; margin-top:50px; ">
+                    
+                                                                    get Company and Company_Number via autocomplete
+                                                                    <div class="row" style="margin-bottom: 40px;margin-top: 30px">
+                                                                        <div class="form-group has-feedback has-feedback-left">
+                                                                            <div class="col-sm-10">
+                                                                                <input  id="company" 
+                                                                                        name="company" 
+                                                                                        type="text" 
+                                                                                        value="" 
+                                                                                        data-toggle="tooltip"
+                                                                                        title="Please Enter your Company's Name - if it does not show up please fill in the form"
+                                                                                        class="form-control  move-left"     
+                                                                                        onblur="CheckboxValue();"
+                                                                                        placeholder="Company Name"
+                                                                                        >
+                                                                                <i class="glyphicon glyphicon-search form-control-feedback" id="companyGlyphicon"></i>
+                                                                            </div>
+                                                                        </div> form-group
+                    
+                                                                        companyNumber
+                                                                        <div class="form-group">
+                                                                            <input id="companyNumber"                                
+                                                                                   type="hidden"                                
+                                                                                   class="form-control"                                
+                                                                                   name="companyNumber"                                
+                                                                                   value=""                                
+                                                                                   >
+                                                                        </div> form-group
+                    
+                                                                         tick box if company is not in database and display input for new company name      
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-12">
+                                                                                <div class="checkbox" style="margin-top: 30px; margin-bottom: 30px">
+                                                                                    <label>    
+                                                                                        <input type="checkbox"  
+                                                                                               id="cbnewPublisher"
+                                                                                               name="cbnewPublisher"         
+                                                                                               value="cbnewPublisher"  
+                                                                                               onclick="clearCompany(this);"
+                                                                                               > 
+                                                                                        Can't find your company? 
+                                                                                        Tick the box                                                           
+                                                                                        <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span>
+                                                                                    </label>             
+                                                                                </div>  checkbox 
+                                                                            </div>
+                                                                        </div> form-group
+                    
+                                                                        input for new company name  
+                                                                        <div class="form-group">
+                                                                            <div class="col-sm-10">
+                                                                                <input type="text" 
+                                                                                       id="newPublisher"
+                                                                                       name="newPublisher"
+                                                                                       class="form-control"     
+                                                                                       placeholder="Please enter your company's name"
+                                                                                       style="display:none"
+                                                                                       >
+                                                                            </div> 
+                                                                        </div> form-group
+                                                                    </div>   row 
+                                                                </div>  publisherBox
+                    
+                                                            </div>  <%--form-body --%>
+                    
+                                                            <div class="form-footer">
+                                                                <button type="submit" class="btn btn-info">
+                                                                    <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
+                                                                </button>
+                                                            </div>  <%--form-footer --%>
+                                                        </form> register-form
+                    
+                                                        blockUiDiv
+                                                        <div id="blockUiDiv">
+                                                            <img src="images/gears.svg" alt="spinner.gif"/>
                                                         </div>
-                                                    </div> form-group
-
-                                                    companyNumber
-                                                    <div class="form-group">
-                                                        <input id="companyNumber"                                
-                                                               type="hidden"                                
-                                                               class="form-control"                                
-                                                               name="companyNumber"                                
-                                                               value=""                                
-                                                               >
-                                                    </div> form-group
-
-                                                     tick box if company is not in database and display input for new company name      
-                                                    <div class="form-group">
-                                                        <div class="col-sm-12">
-                                                            <div class="checkbox" style="margin-top: 30px; margin-bottom: 30px">
-                                                                <label>    
-                                                                    <input type="checkbox"  
-                                                                           id="cbnewPublisher"
-                                                                           name="cbnewPublisher"         
-                                                                           value="cbnewPublisher"  
-                                                                           onclick="clearCompany(this);"
-                                                                           > 
-                                                                    Can't find your company? 
-                                                                    Tick the box                                                           
-                                                                    <span class="glyphicon glyphicon-exclamation-sign icon-exclamation"></span>
-                                                                </label>             
-                                                            </div>  checkbox 
+                                                        <div id="blockUiBackdrop">
                                                         </div>
-                                                    </div> form-group
-
-                                                    input for new company name  
-                                                    <div class="form-group">
-                                                        <div class="col-sm-10">
-                                                            <input type="text" 
-                                                                   id="newPublisher"
-                                                                   name="newPublisher"
-                                                                   class="form-control"     
-                                                                   placeholder="Please enter your company's name"
-                                                                   style="display:none"
-                                                                   >
-                                                        </div> 
-                                                    </div> form-group
-                                                </div>   row 
-                                            </div>  publisherBox
-
-                                        </div>  <%--form-body --%>
-
-                                        <div class="form-footer">
-                                            <button type="submit" class="btn btn-info">
-                                                <span class="glyphicon glyphicon-log-in"></span> Sign Me Up !
-                                            </button>
-                                        </div>  <%--form-footer --%>
-                                    </form> register-form
-
-                                    blockUiDiv
-                                    <div id="blockUiDiv">
-                                        <img src="images/gears.svg" alt="spinner.gif"/>
-                                    </div>
-                                    <div id="blockUiBackdrop">
-                                    </div>
-
-                                </div>  signup-form-container
-                            </div> <%--form-body --%>
-
-                            <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group"> </div>
-                        </div>  panel-info
-                    </div>   signupbox -->
+                    
+                                                    </div>  signup-form-container
+                                                </div> <%--form-body --%>
+                    
+                                                <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group"> </div>
+                                            </div>  panel-info
+                                        </div>   signupbox -->
                 </div> <!-- /container-fluid -->
 
 

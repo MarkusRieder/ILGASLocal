@@ -1,4 +1,4 @@
-      
+
 /*global $, jQuery, alert*/
 $("document").ready(function () {
 

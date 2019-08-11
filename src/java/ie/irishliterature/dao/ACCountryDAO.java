@@ -19,27 +19,32 @@ import java.util.ArrayList;
  * AC = autocomplete
  *
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class ACCountryDAO {
 
-    public ArrayList getCountry(String s) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+    public ArrayList getCountry( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
+    {
 
         ArrayList publisherList = new ArrayList();
         Database db = new Database();
         Connection connection = db.getConnection();
 
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT nicename, iso  from ILGAS.country WHERE nicename  like ?");
-            ps.setString(1, "%" + s + "%");
+        try
+        {
+            PreparedStatement ps = connection.prepareStatement( "SELECT nicename, iso  from ILGAS.country WHERE nicename  like ?" );
+            ps.setString( 1, "%" + s + "%" );
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
+            while ( rs.next() )
+            {
                 ACcountry country = new ACcountry();
-                country.setId(rs.getString("iso"));
-                country.setValue(rs.getString("nicename"));
-                publisherList.add(country);
+                country.setId( rs.getString( "iso" ) );
+                country.setValue( rs.getString( "nicename" ) );
+                publisherList.add( country );
             }
-        } catch (SQLException e) {
+        }
+        catch ( SQLException e )
+        {
         }
         return publisherList;
     }
