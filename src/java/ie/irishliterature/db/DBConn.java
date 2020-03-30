@@ -17,7 +17,6 @@ public class DBConn {
 
     private static final Logger LOGGER = Logger.getLogger( DBConn.class.getName() );
     Connection con = null;
-//	static String className = "class sodhana.sdb.connection.DBConnection";
 
     /**
      * @return @throws ClassNotFoundException

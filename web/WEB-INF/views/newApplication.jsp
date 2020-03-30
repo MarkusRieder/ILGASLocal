@@ -1,6 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%--<%@page contentType="text/html" pageEncoding="UTF-8"%>--%>
 <%-- 
-    Document   : newApplication
+    Document   : newApplication.jsp
     Created on : 19-Mar-2017, 11:27:58
     Author     : markus
 --%>
@@ -8,11 +9,12 @@
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
-<html style="height: 100%" lang="en">
+<html style="height: 100%" lang="en"> 
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">-->
+ <meta name="robots" content="noindex, nofollow">
 
         <title>Translation Grant Application System</title>
 
@@ -49,13 +51,14 @@
 
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
-        <script src="js/bootstrap-validate.js"></script>
+
         <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
         <script type="text/javascript" src="js/xregexp-all.js"></script> 
         <!--<script src="js/validateFileName.js"></script>-->
         <!--          <script src="js/formValidator.js"></script>-->
         <script  type="text/javascript"  src="js/newApplicationFormValidator.js"></script>
         <script src="js/newApplication.js"></script>
+
 
 
     </head>
@@ -122,8 +125,8 @@
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
                             <div style="margin: 20px; text-align: center">
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons zoom" onclick="showInfoModal()();">info</i></a>
-                                <a href="#" data-toggle="tooltip" data-placement="top" title="Notes" ><i class="material-icons zoom" onclick="showNotesModal()();">note</i></a>                           
+                                <a data-toggle="tooltip" data-placement="top" title="Info" ><i class="material-icons zoom" onclick="showInfoModal();">info</i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Notes" ><i class="material-icons zoom" onclick="showNotesModal();">note</i></a>                           
                             </div>
 
                         </div><!-- /.navbar-collapse -->
@@ -133,7 +136,7 @@
                             id="applicationForm" 
                             name="applicationForm" 
                             action="${pageContext.request.contextPath}/GrantApplicationServlet" 
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data"> 
 
                             <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
@@ -146,7 +149,6 @@
                                 <input type="hidden" name="userID" value ="${userID}">
                                 <input type="hidden" name="publisherID" value ="${publisherID}">
                                 <input type="hidden" name="publisherName" value ="${publisherName}">
-                                <input type="hidden" name="task" id="task">
 
                                 <!--////////////////////////////////////////////////////////////////////////////
                                     ///
@@ -158,7 +160,7 @@
                                 <div class="tab-pane active" id="Contact">
 
                                     <!--wrapper for Contact tab pane-->
-                                    <div class="container">
+                                    <div class="container" id="top">
 
                                         <!--first row-->
                                         <!--get Company and Company_Number via autocomplete-->
@@ -267,7 +269,7 @@
                                         <div class="row" style="margin-bottom: 10px">
 
                                             <div class="col-sm-4">
-                                                <label class="pull-left">Address3</label>
+                                                <label class="control-label pull-left">Address3</label>
                                                 <input id="Address3"                                
                                                        type="text"                                
                                                        class="form-control"                                
@@ -351,9 +353,6 @@
                                                            placeholder="Main Email"
                                                            required
                                                            >
-                                                    <script type="text/javascript">
-                                                        bootstrapValidate('#Email', 'required:fill out this field|email:Enter a valid email address');
-                                                    </script>
                                                 </div>
                                             </div>
 
@@ -367,12 +366,9 @@
                                                            pattern="(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)"
                                                            value="${companyDetails.WWW}"                                
                                                            placeholder="Web Address"
-                                                           onblur="validate();"
+                                                           onblur="validateURL();"
                                                            required
                                                            >
-                                                    <script type="text/javascript">
-                                                        bootstrapValidate('#WWW', 'required:fill out this field|url:Enter a valid URL');
-                                                    </script>
                                                 </div>
                                             </div>
 
@@ -380,7 +376,6 @@
 
                                         <!--eighth row-->
                                         <div class="row" style="margin-bottom: 10px;margin-top: 20px">
-
                                             <div class="col-sm-4"> 
                                                 <div class="well well-sm">
                                                     <div class="checkbox">                                                        
@@ -396,15 +391,12 @@
                                             </div> <!--<div class="col-sm-3">-->   
 
                                         </div> <!--row-->
-
                                         <input type="hidden" id="translatorArray" name="translatorArray" >
                                         <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
                                         <!--keep in one line otherwise placeholder doesn't show-->
                                         <label class="pull-left">Additional contact information (where applicable)</label>
                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
-
                                     </div> <!--container-->
-
                                 </div> <!--tab contact-->
 
                                 <!--////////////////////////////////////////////////////////////////////////////
@@ -422,42 +414,40 @@
 
                                         <div class="row" style="margin-bottom: 10px">
 
-                                            <!--<div class="col-sm-4">-->    
-                                            <div class="form-group has-feedback col-sm-4">
-                                                <label for="aFirstName" class="control-label pull-left">Author&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;</label>                                                
-                                                <div class="input-group pull-left">
-
-                                                    <input id="aFirstName"                               
-                                                           type="text"                                
-                                                           class="form-control"                                
-                                                           name="AuthorFirstName"      
-                                                           required="required"
-                                                           value=""    
-                                                           placeholder="Author First Name"
-                                                           >                                                               
+                                            <div class="col-sm-4">    
+                                                <div class="form-group has-feedback">
+                                                    <label for="aFirstName" class="control-label pull-left">Author&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;</label>
+                                                    <div class="input-group pull-left">
+                                                        <!--<label for="aFirstName" class="control-label pull-left">Author</label>-->
+                                                        <!--                                                        <label for="aFirstName" class="control-label pull-left">Author&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;</label>                                                -->
+                                                        <input id="aFirstName"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="AuthorFirstName"                                
+                                                               value=""    
+                                                               placeholder="Author First Name"
+                                                               >                                                               
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!--</div>-->
 
-                                            <!--<div class="col-sm-4">-->    
-                                            <div class="form-group has-feedback col-sm-4">
-                                                <label for="aLastName" class="control-label pull-left">&nbsp;</label>
-                                                <div class="input-group pull-left">
-
-                                                    <input id="aLastName"                                
-                                                           type="text"                                
-                                                           class="form-control"                                
-                                                           name="AuthorLastName"      
-                                                           required="required"
-                                                           value=""    
-                                                           onblur="copyFirstRow2();"
-                                                           placeholder="Author Last Name"
-                                                           >                                                                
+                                            <div class="col-sm-4">    
+                                                <div class="form-group has-feedback">
+                                                    <div class="input-group pull-left">
+                                                        <label for="aLastName" class="control-label pull-left">&nbsp;</label>
+                                                        <input id="aLastName"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="AuthorLastName"                                
+                                                               value=""    
+                                                               onblur="copyFirstRow2();"
+                                                               placeholder="Author Last Name"
+                                                               >                                                                
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <!--</div>-->
 
-                                            <div class="col-sm-3" style="margin-top: 30px; ">  
+                                            <div class="col-sm-4" style="margin-top: 30px; ">  
                                                 <a href="#" class="btn btn-group-sm btn-default pull-left" 
                                                    data-toggle="modal" 
                                                    data-target="#addAuthorModal"
@@ -472,16 +462,16 @@
                                         <input type="hidden" id="author_array" name="authorArray" >
 
                                         <!--Second row-->
-                                        <div class="row" style="margin-bottom: 15px">
+                                        <div class="row" style="margin-bottom: 10px">
 
-                                            <div class="col-sm-4">    
+                                            <div class="col-sm-4">  
                                                 <div class="form-group has-feedback"> 
                                                     <div class="input-group pull-left">
-                                                        <label for="title" class="control-label pull-left">Title</label> 
-                                                        <input id="title"                                
+                                                        <label for="appBookTitle" class="control-label pull-left">Title</label> 
+                                                        <input id="appBookTitle"                                
                                                                type="text"                                
                                                                class="form-control"                                
-                                                               name="title"                                
+                                                               name="appBookTitle"                                
                                                                value=""    
                                                                placeholder="Title"
                                                                >
@@ -489,11 +479,11 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">          
+                                            <div class="col-sm-4">  
                                                 <div class="form-group has-feedback">  
                                                     <div class="input-group pull-left">
                                                         <label for="appForeignPublisher" class="control-label pull-left">Publisher (of the original work)</label>                                                           
-                                                        <input id="appForeignPublisher"                                  
+                                                        <input id="appForeignPublisher"                                
                                                                type="text"                                
                                                                class="form-control"                                
                                                                name="appForeignPublisher"                                
@@ -504,7 +494,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-3">    
+                                            <div class="col-sm-3">  
                                                 <div class="form-group has-feedback">  
                                                     <div class="input-group pull-left">
                                                         <label for="publicationYear" class="control-label pull-left">Publication year</label>
@@ -529,11 +519,11 @@
                                             <div class="col-sm-4">    
                                                 <div class="form-group has-feedback">
                                                     <div class="input-group pull-left">
-                                                        <label for="genre" class="control-label pull-left">Genre</label>
-                                                        <input id="genre"                                
+                                                        <label for="appGenre" class="control-label pull-left">Genre</label>
+                                                        <input id="appGenre"                                
                                                                type="text"                                
                                                                class="form-control"                                
-                                                               name="genre"                                
+                                                               name="appGenre"                                
                                                                value=""    
                                                                placeholder="Genre"
                                                                >
@@ -600,13 +590,13 @@
                                                         <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 15px"></i>
                                                     </div>   
                                                 </div>   
-                                            </div> <!--col-xs-4-->  
+                                            </div> <!--col-xs-4-->   
 
                                         </div> <!--row-->
 
                                         <div class="row" style="margin-bottom: 10px">
 
-                                            <div class="col-xs-4">
+                                            <div class="col-xs-4">                                                
                                                 <div class="form-group has-feedback">  
                                                     <div class="input-group pull-left">
                                                         <label for="series" class="control-label pull-left"> Series</label>
@@ -620,7 +610,6 @@
                                                     </div>
                                                 </div>
                                             </div> <!--col-xs-6-->
-
 
                                             <div class="col-sm-4">           
                                                 <div class="form-group has-feedback">  
@@ -650,113 +639,21 @@
                                                 <label for="bookNotes" class="control-label pull-left">Notes</label>
                                                 <div class="form-group">
                                                     <!--keep in one line otherwise placeholder doesn't show-->
-                                                    <textarea class="form-control" id="bookNotes" name="bookNotes" style="width: 800px; height: 215px"  maxlength="2000" placeholder="Notes"></textarea>
+                                                    <textarea class="form-control" id="bookNotes" name="bookNotes" style="width: 800px; height: 215px" placeholder="Notes"></textarea>
                                                 </div>
-                                            </div>      
-
-                                        </div> <!-- row  -->       
-
+                                                <!--</div>-->                                                    
+                                            </div> <!-- row  -->
+                                            <!--                                                </div>   panel-body     
+                                                                                        </div>   panel  -->
+                                        </div> <!-- row  -->
                                     </div>  <!-- container-fluid  -->
-
                                 </div> <!-- class="tab-pane" id="books" -->
 
-                                <!-- Rights Agreement -->
-                                <div class="tab-pane" id="Rights">
-                                    <p class="header1" style="margin-bottom: 40px">
-                                        Rights Agreement & Contracts
-                                    </p>
 
-                                    <div class="container-fluid"  id="rightsAgreementContracts">
-
-                                        <div class="tab-content">
-
-                                            <div class="row" style="margin-bottom: 10px;">
-
-                                                <!--Upload a copy of the agreement with the translation rights holder-->
-                                                <div class="col-md-10">
-                                                    <div class="form-group has-feedback">
-                                                        <label for="agreement1" class="control-label pull-left">Upload a copy of the agreement with the translation rights holder</label>
-                                                        <div class="input-group pull-left">
-                                                            <label class="input-group-addon btn btn-default btn-file">
-                                                                <input type="file"  
-                                                                       id="agreement1" 
-                                                                       name="Agreement-1"                                                                       
-                                                                       onchange="generatedLabels();"
-                                                                       >
-                                                                Select file 
-                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                            </label> 
-                                                            <input id="label_agreement1" class="pull-left" value=""/>  
-                                                        </div>  
-                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
-                                                    </div>                                                                
-                                                    <label for="Agreement-1" class="validation_error_message help-block"></label>                                                         
-                                                </div> 
-
-                                            </div> <!-- row  -->
-
-                                            <!--Name of translation rights holder-->
-                                            <div class="row" style="margin-bottom: 10px;">                                               
-                                                <div class="col-sm-6">      
-                                                    <div class="form-group has-feedback">
-                                                        <label for="rightsHoldersName0" class="control-label pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
-                                                        <input id="rightsHoldersName0"                                 
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="rightsHoldersName0"                                
-                                                               value=""    
-                                                               onblur="copyFirstRightsHolderName();"
-                                                               placeholder="Translation rights holder"
-                                                               >
-                                                    </div>
-
-                                                    <div id="addAddRightsHolders"></div>
-                                                </div>
-
-
-                                                <div class="col-sm-4" style="margin-top: 30px; visibility: block;display:none" id="addAdditionalRightsHoldersModalDiv">  
-                                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                       data-toggle="modal" 
-                                                       data-target="#addAdditionalRightsHoldersModal"
-                                                       onclick="copyFirstRightsHolderName();"
-                                                       >Add more Translation rights holders</a>
-                                                </div>
-
-                                            </div> <!-- row  -->
-
-                                            <div class="row" style="margin-bottom: 10px;">
-                                                <!--Upload form for addendum to the rights agreement-->
-                                                <div class="col-md-10">
-                                                    <div class="form-group has-feedback">
-                                                        <label for="addendum1" class="control-label pull-left">Upload a copy of the addendum to the rights agreement</label>
-                                                        <div class="input-group pull-left">
-                                                            <label class="input-group-addon btn btn-default btn-file">
-                                                                <input type="file"  
-                                                                       id="addendum1" 
-                                                                       name="Addendum-1"      
-                                                                       class="form-control"
-                                                                       onchange="generatedLabels();"
-                                                                       >
-                                                                Select file 
-                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                            </label> 
-                                                            <input id="label_addendum1" class="pull-left" value=""/>      
-                                                        </div> 
-                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1" class="destination"/>
-                                                    </div>  
-                                                    <label for="Addendum-1" class="validation_error_message help-block"></label>                                         
-                                                </div> 
-
-                                            </div> <!-- row  -->
-
-                                        </div> <!--tab-content-->
-
-                                    </div> <!-- container-fluid  -->
-
-                                </div> <!-- class="tab-pane" id="Rights" -->
 
                                 <!-- Publication Details -->
                                 <div class="tab-pane" id="Publication">
+
                                     <p class="header1" style="margin-bottom: 40px">
                                         Publication Details
                                     </p>
@@ -764,7 +661,7 @@
                                     <div class="container-fluid">
 
 
-                                        <div class="row">
+                                        <div class="row" style="margin-bottom: 40px">
 
                                             <div class='col-sm-4'>
                                                 <div class="form-group has-feedback">
@@ -787,7 +684,7 @@
                                                         // '$(this)' refers to '$("#datepicker")'
                                                     });
                                                 </script>
-                                            </div>    
+                                            </div>   
 
                                         </div> <!-- row  -->
 
@@ -818,7 +715,7 @@
 
                                         </div> <!-- row  -->
 
-                                        <div class="row">
+                                        <div class="row" style="margin-bottom: 40px;">
 
                                             <div class='col-sm-4'>        
                                                 <div class="form-group has-feedback">
@@ -838,32 +735,40 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">   
-                                                <div class="form-group has-feedback">
-                                                    <label for="appTargetLanguage" class="control-label pull-left"> Target language(s)</label>
-                                                    <input id="appTargetLanguage"                                
-                                                           type="text"                                
-                                                           class="form-control"                                
-                                                           name="appTargetLanguage"                                
-                                                           >
-                                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+
+
+                                            <div class="col-sm-4">  
+                                                <div class="form-group has-feedback"> 
+                                                    <label for="appTargetLanguage" class="control-label"> Target language(s)</label>
+                                                    <div class="input-group pull-left">
+                                                        <span class="input-group-addon">  
+                                                            <i class="fa fa-language  fa-1x"></i>                                                            
+                                                        </span>
+                                                        <input id="appTargetLanguage"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="appTargetLanguage"                                
+                                                               >
+                                                        <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 20px"></i>
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <input type="hidden" id="language_Array" name="languageArray" >
 
-                                            <div class="col-sm-3">                                              
-                                                <label for="bilingual" class="control-label">Bilingual edition</label>
-                                                <br/> 
-                                                <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
-                                                    <input id="bilingual"
-                                                           type="checkbox"                                
-                                                           class="form-control"                                
-                                                           name="bilingual"  
-                                                           >
-                                                </label>
+                                            <div class="col-sm-3">  
+                                                <div class="form-group has-feedback">
+                                                    <label for="bilingual" class="control-label">Bilingual edition</label>
+                                                    <br/> 
+                                                    <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
+                                                        <input id="bilingual"
+                                                               type="checkbox"                                
+                                                               class="form-control"                                
+                                                               name="bilingual"  
+                                                               >
+                                                    </label>
+                                                </div>
                                             </div>
-
                                         </div> <!--row-->   
 
                                     </div> <!-- container-fluid  -->
@@ -878,30 +783,29 @@
                                     <div class="container-fluid" id="torget">
 
                                         <div class="row" style="margin-bottom: 40px">
-
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-
-                                                    <div class="col-md-3">                                                   
+                                                    <div class="col-md-3">                                              
                                                         <div class="form-group has-feedback"> 
-                                                            <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee</label>                                                                        
+                                                            <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>                                                                        
                                                             <div class="input-group pull-left">
-                                                                <label class="input-group-addon" for="translatorFee">
+                                                                <span class="input-group-addon">
                                                                     <span class="glyphicon glyphicon-euro"></span>                                     
-                                                                </label>
-                                                                <input type="text" class="form-control pull-left" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                                                </span>
+                                                                <input type="text" class="form-control" name="translatorFee" id="translatorFee" placeholder="fee">    
                                                             </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-5">   
+                                                    <div class="col-md-5"> 
                                                         <div class="form-group has-feedback"> 
-                                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                        
-                                                            <!--keep in one line otherwise placeholder doesn't show-->
-                                                            <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
+                                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
+                                                            <div class="input-group">
+                                                                <!--keep in one line otherwise placeholder doesn't show-->
+                                                                <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
+                                                            </div>
                                                         </div>
                                                     </div>
-
                                                 </div>  <!--panel--body-->
                                             </div> <!--panel-default-->
                                         </div> <!-- row -->
@@ -913,18 +817,17 @@
 
                                                     <div class="col-sm-4"> 
 
-                                                        <div class="input-group">
-                                                            <div class="form-group has-feedback  has-clear">
-                                                                <label for="translatorName" class="pull-left" id="translatorNameLabel">Translator</label>
-                                                                <input id="translatorName"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="translatorName"                                
-                                                                       value=""    
-                                                                       placeholder="Translator Name"
-                                                                       >
-                                                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
-                                                            </div>
+                                                        <div class="form-group has-feedback">
+                                                            <label for="translatorName" class="control-label pull-left" id="translatorNameLabel">Translator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                                                            <input id="translatorName"                                
+                                                                   type="text"                                
+                                                                   class="form-control"                                
+                                                                   name="translatorName"                                
+                                                                   value=""    
+                                                                   placeholder="Translator Name"
+                                                                   >
+
+
                                                         </div>
                                                         <div id="addTransl"></div>
                                                     </div>
@@ -985,22 +888,109 @@
                                             </div> <!-- container-fluid  -->
 
                                         </div> <!--row-->
-
                                     </div> <!-- container-fluid  -->
-
                                 </div> <!-- class="tab-pane" id="Translator" -->
 
+                                <!-- Rights Agreement -->
+                                <div class="tab-pane" id="Rights">
+                                    <p class="header1" style="margin-bottom: 40px">
+                                        Rights Agreement & Contracts
+                                    </p>
+
+                                    <div class="container-fluid"  id="rightsAgreementContracts">
+
+                                        <div class="tab-content">
+
+                                            <div class="row" style="margin-bottom: 10px;">
+
+                                                <div class="col-md-10">
+                                                    <div class="form-group has-feedback">
+                                                        <label for="agreement1" class="control-label pull-left">Upload a copy of the agreement with the translation rights holder</label>
+                                                        <div class="input-group pull-left">
+                                                            <label class="input-group-addon btn btn-default btn-file">
+                                                                <input type="file"  
+                                                                       id="agreement1" 
+                                                                       name="Agreement-1"                                                                       
+                                                                       onchange="generatedLabels();"
+                                                                       >
+                                                                Select file 
+                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                            </label> 
+                                                            <input id="label_agreement1" class="pull-left" value=""/>  
+                                                        </div>  
+                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
+                                                    </div>                                                                
+                                                    <label for="Agreement-1" class="validation_error_message help-block"></label>                                                         
+                                                </div> 
+
+                                            </div> <!-- row  -->
+
+                                            <!--Name of translation rights holder-->
+                                            <div class="row" style="margin-bottom: 10px;"> 
+
+                                                <div class="col-sm-6">      
+                                                    <div class="form-group has-feedback">
+                                                        <label for="rightsHoldersName0" class="control-label pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
+                                                        <input id="rightsHoldersName0"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="rightsHoldersName0"                                
+                                                               value=""  
+                                                               onblur="copyFirstRightsHolderName();"
+                                                               placeholder="Translation rights holder"
+                                                               >
+                                                    </div>
+                                                    <div id="addAddRightsHolders"></div>
+                                                </div>
+
+
+                                                <div class="col-sm-4" style="margin-top: 30px; visibility: block;display:none" id="addAdditionalRightsHoldersModalDiv">  
+                                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                       data-toggle="modal" 
+                                                       data-target="#addAdditionalRightsHoldersModal"
+                                                       onclick="copyFirstRightsHolderName();"
+                                                       >Add more Translation rights holders</a>
+                                                </div>
+
+                                            </div> <!-- row  -->
+
+                                            <div class="row" style="margin-bottom: 10px;">
+
+                                                <!--Upload form for addendum to the rights agreement-->
+                                                <div class="col-md-10">
+                                                    <div class="form-group has-feedback">
+                                                        <label for="addendum1" class="control-label pull-left">Upload a copy of the addendum to the rights agreement</label>
+                                                        <div class="input-group pull-left">
+                                                            <label class="input-group-addon btn btn-default btn-file">
+                                                                <input type="file"  
+                                                                       id="addendum1" 
+                                                                       name="Addendum-1"      
+                                                                       class="form-control"
+                                                                       onchange="generatedLabels();"
+                                                                       >
+                                                                Select file 
+                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                            </label> 
+                                                            <input id="label_addendum1" class="pull-left" value=""/>      
+                                                        </div> 
+                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1" class="destination"/>
+                                                    </div>  
+                                                    <label for="Addendum-1" class="validation_error_message help-block"></label>                                         
+                                                </div> 
+
+                                            </div> <!-- row  -->
+
+                                        </div> <!--tab-content-->
+                                    </div> <!-- container-fluid  -->
+                                </div> <!-- class="tab-pane" id="Rights" -->             
 
                                 <!-- Original Work & Sample Translation -->
                                 <div class="tab-pane" id="Original">
                                     <p class="header1" style="margin-bottom: 40px">
                                         Original Work & Sample Translation
                                     </p>
-
                                     <div class="container-fluid">
-
                                         <div class="row" >
-
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
 
@@ -1011,7 +1001,7 @@
                                                             <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
                                                                 <input type="checkbox" 
                                                                        name="copiesSent" 
-                                                                       id="copiesSent" 
+                                                                       id="copiesSent"                   
                                                                        value="ticked" 
                                                                        class="form-control">
                                                                 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
@@ -1036,98 +1026,92 @@
                                                         </div>  <!-- input-group -->
                                                     </div> <!--col-md-3-->
 
-                                                    <!--datepicker  dateCopiesWereSent-->
+                                                    <!--datepicker  mail-sent-->
                                                     <script>
                                                         $("#dateCopiesWereSent").datepicker().on('change', function () {
                                                             $(this).valid();  // triggers the validation test
                                                             // '$(this)' refers to '$("#datepicker")'
                                                         });
                                                     </script>
-
                                                 </div> <!--panel--body-->
                                             </div> <!--panel-default-->
-
                                         </div> <!-- row -->
 
                                         <div class="row" >
-
                                             <div class="panel panel-default">        
                                                 <div class="panel-body">
+                                                    <!--<div class="col-md-12">-->
 
-                                                    <div class="col-md-12">
+                                                    <!--                                                        <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
+                                                                                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                                                                                <span class="sr-only">Error:</span>
+                                                                                                                <span class="message"></span>
+                                                                                                            </div>
+                                                                                                            <div class="alert alert-success" role="alert" id="successField" style="display:none">
+                                                                                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                                                                                <span class="sr-only">Success:</span>
+                                                                                                                <span class="message"></span>
+                                                                                                            </div>-->
 
-                                                        <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
-                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                            <span class="sr-only">Error:</span>
-                                                            <span class="message"></span>
-                                                        </div>
-                                                        <div class="alert alert-success" role="alert" id="successField" style="display:none">
-                                                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                            <span class="sr-only">Success:</span>
-                                                            <span class="message"></span>
-                                                        </div>
+                                                    <div class="row" style="margin-bottom: 10px">
 
-                                                        <div class="row">
+                                                        <div class="col-md-8">
+                                                            <div class="form-group has-feedback">
+                                                                <label for="originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
+                                                                <div class="input-group originalSample pull-left">                                                                         
+                                                                    <label class="input-group-addon btn btn-default btn-file">
+                                                                        Select file 
+                                                                        <input type="file"  
+                                                                               name="Original" 
+                                                                               id="originalSample" 
+                                                                               onchange="generatedLabels();"
+                                                                               class="form-input">
+                                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    </label>
+                                                                    <input id="label_originalSample" class="pull-left">   
 
-                                                            <div class="col-md-8">
-                                                                <div class="form-group has-feedback">
-                                                                    <label for="originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
-                                                                    <div class="input-group originalSample pull-left">                                                                         
-                                                                        <label class="input-group-addon btn btn-default btn-file">
-                                                                            Select file 
-                                                                            <input type="file"  
-                                                                                   name="Original" 
-                                                                                   id="originalSample" 
-                                                                                   onchange="generatedLabels();"
-                                                                                   class="form-input">
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                                                        </label>
-                                                                        <input id="label_originalSample" class="pull-left">   
+                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                    <!--Destination:-->
 
-                                                                        <input type="hidden" name="userID" value="${userID}">
-                                                                        <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                        <!--Destination:-->
-
-                                                                    </div>
-                                                                    <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />                           
                                                                 </div>
-                                                                <label for="Original" class="validation_error_message help-block"></label>      
+                                                                <input type="hidden" id="originalSample_upload" value="originalSample" name="destination" />                           
                                                             </div>
+                                                            <label for="Original" class="validation_error_message help-block"></label>      
+                                                        </div>
 
-                                                        </div> <!--row-->
+                                                    </div> <!--row-->
 
-                                                        <div class="row" style="margin-bottom: 40px">
+                                                    <div class="row">
 
-                                                            <div class="col-md-8">
-                                                                <div class="form-group has-feedback">
-                                                                    <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
-                                                                    <div class="input-group translationSample pull-left" >
-                                                                        <label class="input-group-addon btn btn-default btn-file">
-                                                                            Select file 
-                                                                            <input type="file"  name="TranslationSample" id="translationSample" class="form-control">
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                                                        </label>
-                                                                        <input id="label_translationSample" class="pull-left"/>
+                                                        <div class="col-md-8">
+                                                            <div class="form-group has-feedback">
+                                                                <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
+                                                                <div class="input-group translationSample pull-left" >
+                                                                    <label class="input-group-addon btn btn-default btn-file">
+                                                                        Select file 
+                                                                        <input type="file"  name="TranslationSample" id="translationSample" class="form-control">
+                                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    </label>
+                                                                    <input id="label_translationSample" class="pull-left"/>
 
-                                                                        <input type="hidden" name="userID" value="${userID}">
-                                                                        <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                        <!--Destination:-->
-                                                                        <input type="hidden" id="translationSample_upload" value="translationSample" name="destination" />                                          
-                                                                    </div>
-                                                                    <label for="TranslationSample" class="validation_error_message help-block"></label>  
+                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                    <!--Destination:-->
+                                                                    <input type="hidden" id="translationSample_upload" value="translationSample" name="destination" />                                          
                                                                 </div>
-                                                            </div> <!-- col-md-8 -->
+                                                                <label for="TranslationSample" class="validation_error_message help-block"></label>  
+                                                            </div>
+                                                        </div> <!-- col-md-8 -->
 
-                                                        </div> <!--row-->                                                            
+                                                    </div> <!--row-->                                                            
 
-                                                        <!-- translationSampleForm -->                                                                                                              
-                                                    </div>  <!-- col-md-12 -->
-
+                                                    <!-- translationSampleForm -->                                                                                                              
+                                                    <!--</div>   col-md-12 -->
                                                 </div>  <!--panel--body-->
                                             </div> <!--panel-default-->
-
                                         </div> <!-- row -->
 
                                         <div class="row" >
@@ -1136,7 +1120,7 @@
 
                                                     <div class="col-md-9"   >
                                                         <div class="input-group input-group-lg">
-                                                            <button type="submit"                                                                          
+                                                            <button type="submit"              
                                                                     data-toggle="tooltip" 
                                                                     class="btn btn-success"
                                                                     title="Click to submit the application!"
@@ -1145,10 +1129,9 @@
                                                                     >
                                                                 Submit the application
                                                                 <span class="glyphicon glyphicon-import"></span>
-                                                            </button>
+                                                            </button>                                        
                                                         </div><!-- input-group -->
                                                     </div>  <!-- col-md-9 -->
-
                                                 </div>  <!-- panel--body -->
                                             </div>  <!--panel--default-->                                                
                                         </div> <!-- row -->
@@ -1159,6 +1142,7 @@
                                         </div>    
                                     </div>  <!-- container-fluid -->
                                 </div> <!-- tab-pane Original --> 
+
 
                             </div> <!-- my-tab-content -->
 
@@ -1326,12 +1310,6 @@
                                                 <li>The proposed date of publication<br/>
                                                 <li>The proposed print run<br/></li>
                                                 <li>The planned page extent of the published translation </li>
-                                            </ul>
-
-                                            <h3> Translator's Details</h3>
-                                            <ul class="dashed">
-                                                <li>A copy of the translator's CV, including a list of previous published literary translations</li>
-                                                <li>Details of the fee to be paid to the translator (this should include the total sum in Euro and a breakdown of the rate according to which this sum has been calculated)</li>
                                             </ul>
 
                                             <h3> Original Work & Sample Translation</h3>
@@ -1524,6 +1502,7 @@
                     </div>  <!-- container-fluid -->
                 </nav>
 
+
                 <div class="scroll-top-wrapper ">
                     <span class="scroll-top-inner">
                         <i class="fa fa-3x fa-arrow-circle-up"></i>
@@ -1537,7 +1516,6 @@
                       method="POST" 
                       name="regF"
                       >
-                    <input type="hidden" name="name" value="${name}">
                     <input type="hidden" name="userID" value="${userID}">
                     <input type="hidden" name="publisherID" value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
@@ -1557,22 +1535,17 @@
 
                     <div class="basetext">  
                         <h2>Literature Ireland</h2>
-                        <a data-toggle="tooltip" data-placement="top" title="Contact Details" >
-                            <i  onclick="contactUsModal();">Contact Details</i>
-                        </a> &nbsp;|&nbsp; 
-                        <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
-                            <i  onclick="showLegalNoteModal();">Legal Note</i></a>
-
-                    </div><!-- end of BaseText div -->  
+                        <a href="contact-us">Contact Details</a> &nbsp;|&nbsp; <a href="legal-note">Legal Note</a>
+                    </div><!-- end of BaseText div -->
 
                     <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                     <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
-                    <!--<div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>-->
+                    <div class="baselogo-4 hidden-phone"><a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a></div>
 
                     <div class="mobile-baselogos visible-phone"> 
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                        <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
+                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
                     </div>
 
                 </div><!-- end of Base div -->
@@ -1582,132 +1555,27 @@
         </div><!-- end of Shadowholder container div -->
 
         <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
+            &copy; 2019 mgr Software
         </div>
-        <!--contactUsModal-->
-        <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
-
-            <div class="modal-admin" role="document">
-
-                <div class="modal-content">
-
-                    <div class="modal-header"  style="background-color: #d9d1d1;">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h1 class="modal-title" id="contactUsModalLabel"   style="background-color: #d9d1d1;">Contact Us</h1>
-                    </div>
-
-                    <div class="modal-body" style="background-color: #d9d1d1">
-
-                        <div class="container-fluid">         
-                            <div id="contentarea">
-                                <div class="textpadding">
-                                    <div class="typography">
-                                        <p><strong>Director</strong>   Sinéad Mac Aodha</p>
-                                        <p>sinead@literatureireland.com </p>
-                                        <p> </p>
-                                        <p><strong>Deputy Director   </strong>Rita McCann </p>
-                                        <p>rita@literatureireland.com</p>
-                                        <p> </p>
-                                        <p><strong>Administrator</strong>   Andrew Deering</p>
-                                        <p>andrew@literatureireland.com</p>
-                                        <p> </p>
-                                        <p><strong style="white-space: pre;"><br/></strong></p>
-                                        <p><strong><span style="text-decoration: underline;">PLEASE NOTE OUR NEW ADDRESS: </span></strong></p>
-                                        <p>Literature Ireland</p>
-                                        <p>Trinity Centre for Literary and Cultural Translation</p>
-                                        <p>36 Fenian Street</p>
-                                        <p>Trinity College Dublin</p>
-                                        <p>Dublin D02 CH22</p>
-                                        <p>Ireland</p>
-                                        <p><strong>Telephone: +353 (0)1 896 4184</strong></p>
-                                        <p><span style="white-space: pre;"><strong>Email: info@literatureireland.com</strong></span></p>
-                                        <p> </p>
-                                        <p> </p>
-                                        <p> </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div><!-- modal body -->
-
-                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div><!-- modal-footer -->
-
-                </div><!-- modal-content -->
-            </div><!-- modal-dialog -->
-        </div><!-- modal -->
-
-        <!--showLegalNoteModal-->
-        <div class="modal fade" id="showLegalNoteModal" tabindex="-1" role="dialog" aria-labelledby="showLegalNoteModallLabel"  data-modal-index="3">
-
-            <div class="modal-admin" role="document">
-
-                <div class="modal-content">
-
-                    <div class="modal-header"   style="background-color: #d9d1d1;">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h1 class="modal-title" id="showLegalNoteModallLabel" style="background-color: #d9d1d1;">Legal Note</h1>
-                    </div>
-
-                    <div class="modal-body" style="background-color: #d9d1d1">
-
-                        <div class="container-fluid">
-                            <div id="contentarea">
-                                <div class="textpadding">
-                                    <div class="typography">
-                                        <h4>Company Registration</h4>
-                                        <p>Literature Ireland is registered in Dublin, Ireland, at the following address: </p>
-                                        <p>Trinity Centre for Literary Translation, 36 Fenian Street, Trinity College Dublin, Dublin 2.</p>
-                                        <p>Registered company number: 212420</p>
-                                        <p> </p>
-                                        <h4><span style="color: #3b3b3b;">Disclaimer</span></h4>
-                                        <p>Literature Ireland offers the material on this website, in good faith, for the information of visitors to the site, but disclaims any responsibility for error, omission or inaccuracy, and for the consequences of pursuing any link from these pages to another site.</p>
-                                        <p> </p>
-                                        <h4>Copyright</h4>
-                                        <p>The copyright in all material on this website is owned by Literature Ireland, or is reproduced with the permission (if required) of the copyright owner. The material may be retrieved and downloaded for personal use, but may not otherwise be reproduced or made available in any manner or form, and may not be modified or altered in any way, without the permission of Literature Ireland.</p>
-                                        <p> </p>
-                                        <h4>Privacy</h4>
-                                        <p>All documentation submitted to Literature Ireland will be treated with the utmost discretion. If you have any concerns in relation to privacy, please contact Literature Ireland at info@literatureireland.com.</p>
-                                    </div><!-- end of typography div -->
-                                </div><!-- end of text padding div -->
-                            </div><!-- end of contentarea div -->
-                        </div>
-                    </div><!-- modal body -->
-                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div><!-- modal-footer -->
-
-                </div><!-- modal-content -->
-            </div><!-- modal-dialog -->
-        </div><!-- modal -->
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-                                var $imageupload = $('.imageupload');
-                                $imageupload.imageupload();
+            var $imageupload = $('.imageupload');
+            $imageupload.imageupload();
 
-                                function pressCuttingsModal() {
-                                    $("#pressCuttingsModal").modal("show");
-                                }
+            function pressCuttingsModal() {
+                $("#pressCuttingsModal").modal("show");
+            }
 
-                                var pressCuttingsUpload = $('.pressCuttingsUpload');
-                                pressCuttingsUpload.imageupload();
+            var pressCuttingsUpload = $('.pressCuttingsUpload');
+            pressCuttingsUpload.imageupload();
 
-                                function  showInfoModal() {
-                                    $("#showInfoModal").modal("show");
-                                }
-                                function  showNotesModal() {
-                                    $("#showNotesModal").modal("show");
-                                }
-                                function  contactUsModal() {
-                                    $("#contactUsModal").modal("show");
-                                }
-                                function  showLegalNoteModal() {
-                                    $("#showLegalNoteModal").modal("show");
-                                }
+            function  showInfoModal() {
+                $("#showInfoModal").modal("show");
+            }
+            function  showNotesModal() {
+                $("#showNotesModal").modal("show");
+            };
         </script>
     </body>
 </html>

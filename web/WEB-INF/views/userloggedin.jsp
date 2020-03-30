@@ -1,5 +1,5 @@
 <%-- 
-    Document   : template
+    Document   : userloggedin
     Created on : 17-Mar-2017, 11:57:10
     Author     : markus
 --%>
@@ -36,6 +36,7 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
+        <script type="text/javascript" src="js/xregexp-all.js"></script> 
         <script src="js/register.js"></script>
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>
@@ -229,7 +230,7 @@
         <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
-            <span class="message"></span>
+            <span class="errorMessage"></span>
         </div>
         <div class="alert alert-success" role="alert" id="successField" style="display:none">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -253,20 +254,19 @@
 
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">login Translation Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">userloggedin Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
 
                     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
                         <div class="panel panel-danger" >
                             <div class="panel-heading">
-                                <div class="panel-title">You are already signed in</div>
+                                <div class="panel-title"> ${requestScope.errorMessage}</div>
                                 <div style="float:right; font-size: 80%; position: relative; top:-10px;"><a href="forgotPassword.jsp">Forgot password ?</a></div>
                                 <br/>    
                             </div>     
 
                             <div style="padding-top:30px" class="panel-body" >
-
                                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
                                 <form id="loginform" 

@@ -13,6 +13,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+
         <title>Translation Grant Application System</title>
 
         <!-- Bootstrap -->
@@ -32,7 +35,7 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
-        <!--<script src="https://unpkg.com/xregexp/xregexp-all.js"></script>-->
+        <script src="https://unpkg.com/xregexp/xregexp-all.js"></script>
         <!--<script src="js/register.js"></script>-->
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>
@@ -297,7 +300,7 @@
 
                                     </div>
                                     <!--https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2-->
-                                    <input name="lastLogon" type="hidden" value="<%= new java.lang.Long(System.currentTimeMillis()).toString()%>"/>
+                                    <input name="lastLogon" type="hidden" value="<%= new java.lang.Long( System.currentTimeMillis() ).toString()%>"/>
                                     <div class="help-block with-errors"></div>
 
                                     <div style="margin-top:10px" class="form-group">

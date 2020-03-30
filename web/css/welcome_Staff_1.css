@@ -79,7 +79,6 @@ textarea {
 .modal-body {
     max-height: calc(100vh - 210px);
     overflow-y: auto;
-    overflow-x: hidden;
 }
 
 /*increase size of "Show entries" */
@@ -277,6 +276,19 @@ body .modal-admin {
     margin-left:-150px; /* This needs to be half of the width */
 }
 
+/*#showInstructionsModal {
+  position: relative;
+}
+
+
+ #showInstructionsModal.modal-dialog {
+  position: fixed;
+  width: 50%;
+  margin: 0;
+  padding: 10px;
+  z-index: 5;
+}*/
+
 #showInstructionsModal .modal
 {
     overflow: hidden;
@@ -289,11 +301,15 @@ body .modal-admin {
     margin-left: 0;    
     padding: 10px;
 }
-/*.modal-footer {  
+
+select, option {
+    width:150px;
+}
+.modal-footer {  
     background: #81ccfb;
     padding: 1em;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-}*/
+}

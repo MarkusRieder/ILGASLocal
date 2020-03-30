@@ -25,8 +25,8 @@ public class LoginService {
             pst.setString( 1, username );
             pst.setString( 2, password );
 
-//            System.out.println("username  loginCheck: " + username);
-//            System.out.println("password: loginCheck  " + password);
+            System.out.println("username  loginCheck: " + username);
+            System.out.println("password: loginCheck  " + password);
             ResultSet rs = pst.executeQuery();
 
 //            System.out.println("ResultSet: loginCheck  " + rs);

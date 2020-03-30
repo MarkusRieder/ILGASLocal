@@ -4,7 +4,7 @@ public class Setup {
 
     public static final String DB_URL = "jdbc:mysql://literatureirelandgrantapplication.com:3306/ILGAS?autoReconnect=true&useSSL=false&useUnicode=yes&charset=UTF-8";
 
-//    public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS";
+  //  public static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS";
     public static final String DB_USERNAME = "markus";
     public static final String DB_PASSWORD = "ankh573";
     public static final String MAIL_USERNAME = "markus@rieder.ie"; // like example@outlook.com

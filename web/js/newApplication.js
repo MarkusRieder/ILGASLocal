@@ -4,11 +4,8 @@
  * and open the template in the editor.
  * 
  * newApplication.js
- * 
  */
 
-
-//  Global Variables  
 
 var translatorArray = [];
 var rightsHolderArray = [];
@@ -41,12 +38,12 @@ $.datepicker.setDefaults({
 PDFJS.workerSrc = 'js/pdf.worker.js';
 
 
-// Section AutoComplete 
+//Section AutoComplete
 
 //AutoComplete_Genres
 
 $(function () {
-    $("#genre").autocomplete({
+    $("#genre1").autocomplete({
         source: 'ACGenre', // The source of the AJAX results
         dataType: 'json',
         contentType: "application/json",
@@ -67,7 +64,7 @@ $(function () {
 //AutoComplete_international_publishers
 
 $(function () {
-    $("#publisher").autocomplete({
+    $("#publisher1").autocomplete({
         source: 'ACintPublishers_test', // The source of the AJAX results
         dataType: 'json',
         data: '',
@@ -102,10 +99,11 @@ $(function () {
 });
 
 
+
 //AutoComplete_country
 
 $(function () {
-    $("#countryOfPublication").autocomplete({
+    $("#countryOfPublication1").autocomplete({
         source: 'AutoComplete_country', // The source of the AJAX results
         dataType: 'json',
         data: '',
@@ -121,129 +119,98 @@ $(function () {
     });
 });
 
-//    AutoComplete_Languages   
-
-console.log(" AutoComplete_Languages ");
 $(function () {
-    function split(val) {
-        return val.split(/,\s*/);
-    }
-    function extractLast(term) {
-        return split(term).pop();
-    }
-
-    $("#appTargetLanguage")
-//                  $("#appLanguageOriginal")
-
-            // don't navigate away from the field on tab when selecting an item
-            .on("keydown", function (event) {
-                if (event.keyCode === $.ui.keyCode.TAB &&
-                        $(this).autocomplete("instance").menu.active) {
-                    event.preventDefault();
-                }
-            })
-            .autocomplete({
-                source: function (request, response) {
-                    $.getJSON("ACLanguages", {
-                        term: extractLast(request.term)
-                    }, response);
-                },
-                search: function () {
-                    // custom minLength
-                    var term = extractLast(this.value);
-                    if (term.length < 2) {
-                        return false;
-                    }
-                },
-                focus: function () {
-                    // prevent value inserted on focus
-                    return false;
-                },
-                select: function (event, ui) {
-                    var terms = split(this.value);
-                    // remove the current input
-                    terms.pop();
-                    // add the selected item
-                    terms.push(ui.item.value);
-                    languageArray.push(ui.item.value);
-                    // add placeholder to get the comma-and-space at the end
-                    terms.push("");
-                    this.value = terms.join(", ");
-                    console.log("this.value:  ", this.value); //List
-                    console.log("terms: ", terms); //Array
-
-                    //languageArray.push(ui.item.value);
-
-                    //Do something
-                    var arrayLength = languageArray.length;
-                    for (var i = 0; i < arrayLength; i++) {
-                        console.log("itemValue   " + i + ":  ", languageArray[i]);
-                    }
-
-                    $("#language_array").val(languageArray);
-                    return false;
-                }
-
-
-            });
-
-
-    $("#appLanguageOriginal")
-
-            // don't navigate away from the field on tab when selecting an item
-            .on("keydown", function (event) {
-                if (event.keyCode === $.ui.keyCode.TAB &&
-                        $(this).autocomplete("instance").menu.active) {
-                    event.preventDefault();
-                }
-            })
-            .autocomplete({
-                source: function (request, response) {
-                    $.getJSON("ACLanguages", {
-                        term: extractLast(request.term)
-                    }, response);
-                },
-                search: function () {
-                    // custom minLength
-                    var term = extractLast(this.value);
-                    if (term.length < 2) {
-                        return false;
-                    }
-                },
-                focus: function () {
-                    // prevent value inserted on focus
-                    return false;
-                },
-                select: function (event, ui) {
-                    var terms = split(this.value);
-                    // remove the current input
-                    terms.pop();
-                    // add the selected item
-                    terms.push(ui.item.value);
-                    languageArray.push(ui.item.value);
-                    // add placeholder to get the comma-and-space at the end
-                    terms.push("");
-                    this.value = terms.join(", ");
-                    console.log("this.value:  ", this.value); //List
-                    console.log("terms: ", terms); //Array
-
-                    //languageArray.push(ui.item.value);
-
-                    //Do something
-                    var arrayLength = languageArray.length;
-                    for (var i = 0; i < arrayLength; i++) {
-                        console.log("itemValue   " + i + ":  ", languageArray[i]);
-                    }
-
-                    $("#language_array").val(languageArray);
-                    return false;
-                }
-
-
-            });
+    $("#appLanguageOriginal").autocomplete({
+        source: 'ACLanguages', // The source of the AJAX results
+        dataType: 'json',
+        data: '',
+        minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+        focus: function (event, ui) { // What happens when an autocomplete result is focused on
+            $("#appLanguageOriginal").val(ui.item.name);
+            return false;
+        },
+        select: function (event, ui) { // What happens when an autocomplete result is selected
+            $("#appLanguageOriginal").val(ui.item.name);
+        }
+    });
 });
+//   AutoComplete_Languages  
+
+//            console.log(" AutoComplete_Languages ");
+//$(function () {
+//    function split(val) {
+//        return val.split(/,\s*/);
+//    }
+//    function extractLast(term) {
+//        return split(term).pop();
+//    }
+//
+//    $("#appLanguageOriginal")
+//            // don't navigate away from the field on tab when selecting an item
+//            .on("keydown", function (event) {
+//                if (event.keyCode === $.ui.keyCode.TAB &&
+//                        $(this).autocomplete("instance").menu.active) {
+//                    event.preventDefault();
+//                }
+//            })
+//            .autocomplete({
+//                source: function (request, response) {
+//                    $.getJSON("ACLanguages", {
+//                        term: extractLast(request.term)
+//                    }, response);
+//                },
+//                search: function () {
+//                    // custom minLength
+//                    var term = extractLast(this.value);
+//                     console.log("search terms: ", term); //Array
+//                    if (term.length < 2) {
+//                        return false;
+//                    }
+//                },
+//                focus: function () {
+//                    // prevent value inserted on focus
+//                    return false;
+//                },
+//                select: function (event, ui) {
+//                    var terms = split(this.value);
+//                    // remove the current input
+//                    terms.pop();
+//                    // add the selected item
+//                    terms.push(ui.item.value);
+//                    languageArray.push(ui.item.value);
+//                    // add placeholder to get the comma-and-space at the end
+//                    terms.push("");
+//                    this.value = terms.join(", ");
+//                    console.log("select this.value:  ", this.value); //List
+//                    console.log("select terms: ", terms); //Array
+//
+//                    //languageArray.push(ui.item.value);
+//
+//                    //Do something
+//                    var arrayLength = languageArray.length;
+//                    for (var i = 0; i < arrayLength; i++) {
+//                        console.log("itemValue   " + i + ":  ", languageArray[i]);
+//                    }
+//
+//                    $("#language_array").val(languageArray);
+//                    return false;
+//                }
+//
+//
+//            });
+//});
 
 
+//Load mobile menu
+//<script type="text/javascript" src="js/jquery.mobile-menu.js"></script>
+
+//phonenav
+//      
+//$(function () {
+//    $("body").mobile_menu({
+//        menu: "#phonenav"
+//    });
+//});
 
 
 //get selectpicker selection 
@@ -252,12 +219,18 @@ $(document).ready(function () {
     $('.selectpicker').on('change', function () {
         var selected = $(this).find("option:selected").val();
     });
+
+    $("#whichkey").on("mousedown", function (event) {
+        $("#log").html(event.type + ": " + event.which);
+    });
+
 });
 
 
 
 
-//http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh 
+
+//http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
 
 $(document).ready(function () {
     if (location.hash) {
@@ -299,10 +272,12 @@ $(document).ready(function () {
 
 
 
-// the following functions will copy the selected file name (for upload) to the label input
+//the following functions will copy
+//the selected file name (for upload) to the label input
 
 $(function () {
     $('div.translator_cv').on('change', ':file', function () {
+//                    alert("translator_cv");
         var input = $(this),
                 numFiles = input.get(0).files ? input.get(0).files.length : 1,
                 label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -313,6 +288,7 @@ $(function () {
 });
 $(function () {
     $('div.agreement').on('change', ':file', function () {
+        alert("div.agreement");
         var input = $(this),
                 numFiles = input.get(0).files ? input.get(0).files.length : 1,
                 label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -419,6 +395,7 @@ function generatedLabels() {
 
 
 
+
 function del_file(eleId) {
     var ele = document.getElementById("delete_file" + eleId);
     ele.parentNode.removeChild(ele);
@@ -461,9 +438,10 @@ $(document).ready(function () {
 });
 
 
-//copyFirstTranslatorName
+
 
 // Copy the first translator name to the pop up modal
+
 function  copyFirstTranslatorName() {
 
     translatorArray = [];
@@ -493,9 +471,10 @@ function  copyFirstTranslatorName() {
 
 
 
-//copyFirstRightsHolderName
+
 
 // Copy the first translator name to the pop up modal
+
 function  copyFirstRightsHolderName() {
 
     rightsHolderArray = [];
@@ -657,7 +636,7 @@ function  generateTranslatorTab(indicator) {
 
 function backToRightsAgreement() {
 
-//                alert("backToRightsAgreement");
+    alert("backToRightsAgreement");
     console.log("backToRightsAgreement rightsHolderArray  ", rightsHolderArray);
 
     var upload_number = 2;
@@ -690,11 +669,14 @@ function backToRightsAgreement() {
         console.log("backToRightsAgreement next entry in translatorArray ", itemValue);
     }
 
+
     // Switch off "Add more translators"
     $('#addAdditionalRightsHoldersModalDiv').toggle();
 
     // Change Title from "Translation rights holder" to "Translation rights holder(s)"
     document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holder(s)';
+
+
 
     // Disable first Translation rights holder name input element
     document.getElementById("rightsHoldersName0").disabled = 'true';
@@ -830,7 +812,7 @@ function backToTranslators() {
 }
 
 
-// Add another Press Cutting
+//Add another Press Cutting
 
 $(document).ready(function () {
     pressCuttingCounter = 1;
@@ -849,7 +831,6 @@ $(document).ready(function () {
 });
 
 
-//backToMisc
 
 function backToMisc() {
     var upload_number = 2;
@@ -895,11 +876,10 @@ function backToMisc() {
 }
 
 
-//add more Authors 
 
+//add more Authors
 
 $(document).ready(function () {
-
     Authorcounter = 1;
     $("#addAuthor").click(function (event) {
 
@@ -922,7 +902,6 @@ $(document).ready(function () {
 });
 
 
-//copyFirstRow2
 
 function  copyFirstRow2() {
     authorArray = [];
@@ -931,15 +910,13 @@ function  copyFirstRow2() {
     console.log("aFirstName.value   ", aFirstName.value);
     document.getElementById("firstAuthor0").value = aFirstName.value;
     var aLastName = document.getElementById("aLastName");
-    console.log("aLastName.value   ", aLastName.value);
     document.getElementById("lastAuthor0").value = aLastName.value;
     var fulln = aFirstName.value + " " + aLastName.value;
     authorArray.push(fulln, aFirstName.value, aLastName.value);
 }
+;
 
 
-
-//backToBooks2
 
 function backToBooks2() {
 
@@ -955,6 +932,7 @@ function backToBooks2() {
 
         authorArray.push(fullName, firstValue, lastValue);
     }
+    ;
 
     $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
     var arrayLength = authorArray.length;
@@ -965,7 +943,7 @@ function backToBooks2() {
 }
 
 
-//myFunction
+
 
 function myFunction() {
 //                alert("myfunction");
@@ -997,18 +975,15 @@ function myFunction() {
     translatorArray.push(Name);
     console.log(" first entry in translatorArray ", fn.value);
 
-
-
 //                copyFirstTranslatorName();
     generateTranslatorTab(1);
 }
-
+;
 
 
 //https://stackoverflow.com/questions/3392493/adjust-width-of-input-field-to-its-input
 
 $(document).ready(function () {
-
     var input = document.querySelector('input'); // get the input element
 //                alert(input);
     input.addEventListener('input', resizeInput); // bind the "resizeInput" callback on "input" event
@@ -1089,6 +1064,7 @@ $(document).ready(function () {
     });
 });
 
+//https://www.thewebflash.com/clear-button-in-bootstrap-input-group-component/
 $(document).ready(function () {
     $('.has-clear input[type="text"]').on('input propertychange', function () {
         var $this = $(this);
@@ -1111,21 +1087,6 @@ $(document).ready(function () {
         }
     });
 });
-
-
-
-$(document).ready(function () {
-//                var tripper = localStorage.getItem("translatorName");
-//                document.getElementById("123").innerHTML = tripper;
-//                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
-//                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
-//                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
-//                console.log("tripper 1  ", tripper);
-});
-
-
-
-
 
 var fileTypes = [
     'image/jpeg',
@@ -1208,11 +1169,13 @@ $(document).on("click", "#clear", function () {
 });
 
 
-
-
+$(document).ready(function () {
+    var validator = $("#applicationForm").validate();
+//    alert("Validate");
+    validator.form();
+});
 
 $(document).ready(function () {
-
     var tcACCEPTED = '${tcACCEPTED}';
     var gdprACCEPTED = '${gdprACCEPTED}';
     document.getElementById("tcACCEPTED").value = tcACCEPTED;
@@ -1220,13 +1183,8 @@ $(document).ready(function () {
 
 });
 
-
-
-
-
-
 $(document).ready(function () {
-    function validate() {
+    function validateURL() {
         var url = document.getElementById("url").value;
         // var  pattern="(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)";
         var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -1241,12 +1199,44 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function () {
+    $('input[type="file"]').change(function (e) {
+        // $('input[type="file"]').valid();
+        console.log("$(this)  " + $(this).val());
+        console.log("e   " + e.target.files[0].name);
+        if ($(this).valid()) {
+//            alert("Url is valid  --  " + $(this).val());
+//            $($(this)).closest('.form-group').addClass('has-success');
+        } else {
+//            alert("Url is not valid!");
+//            $($(this)).closest('.form-group').addClass('has-error');
+        }
+    });
+});
+
+
+
+
+
+
+//window.onscroll = function () {
+//    scrollFunction();
+//};
+//function scrollFunction() {
+//    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+//        document.getElementById("totopBtn").style.display = "block";
+//    } else {
+//        document.getElementById("totopBtn").style.display = "none";
+//    }
+//}
+//function topFunction() {
+//    document.body.scrollTop = 0;
+//    document.documentElement.scrollTop = 0;
+//}
 
 
 $(function () {
-
     $(document).on('scroll', function () {
-
         if ($(window).scrollTop() > 100) {
             $('.scroll-top-wrapper').addClass('show');
         } else {
@@ -1257,9 +1247,7 @@ $(function () {
 
 
 $(function () {
-
     $(document).on('scroll', function () {
-
         if ($(window).scrollTop() > 100) {
             $('.scroll-top-wrapper').addClass('show');
         } else {
@@ -1278,5 +1266,3 @@ function scrollToTop() {
     $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
 }
 
-
-    

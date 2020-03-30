@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * welcome_Staff_1.js
+ * 
+ * @type String
+ */
 
 var agreemnt = "";
 var contr = "";
@@ -838,7 +843,7 @@ $(document).ready(function () {
         if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
 
             // no cover - show upload
-            var cver = '..ILGAS/images/not-available.jpg';
+            var cver = '..images/not-available.jpg';
             $("#showUploadCover1").show();
             $("#showUploadCover2").hide();
             document.getElementById("cover21").src = cver;
@@ -847,7 +852,7 @@ $(document).ready(function () {
             // we have a cover - show cover
             $("#showUploadCover2").show();
             $("#showUploadCover1").hide();
-            var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+           var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
             console.log("rowdata.cover cver " + cver);
             hasCover = true;
             $("#cover").val(cver);
@@ -962,7 +967,7 @@ function getdetailsTableData(urlNew, callback) {
 
 //detailsTable
 $(document).ready(function () {
-//    console.log("555 load detailsTable  ");
+    console.log("555 load detailsTable  ");
     var rowdata1 = [];
     var rowdata = [];
 //    var detailsTableData = [];
@@ -1029,15 +1034,7 @@ $(document).ready(function () {
                 }
             },
             {"data": "bookNotes"},
-            {"data": "Status",
-                "render": function (data) {
-                    if (data !== null) {
-//                                    console.log("Status  " + data);
-                        return data;
-                    } else {
-                        return "n/a";
-                    }
-                }},
+            {"data": "Status"},
             {"data": "copiesSent",
                 "render": function (data) {
                     console.log("88888 copiesSent " + data);
@@ -1111,18 +1108,12 @@ $(document).ready(function () {
                     console.log("data:Titles  " + data);
                     return data;
                 }},
-            {"data": "translatorCVDocName",
-                "render": function (data, type, row) {
-                    if (typeof (data) === "undefined") {
-                        return "";
-                    } else
-                        return data;
-                }},
+            {"data": "translatorCVDocName"},
             {"data": "cover",
                 "render": function (data, type, row) {
                     if (typeof (data) === "undefined") {
 
-                        return '<img src="http://www.literatureirelandgrantapplication.com:8080/ILGAS/images/not-available.jpg" width="275" height="275" alt="not-available"/>';
+                        return '<img src="http://www.literatureirelandgrantapplication.com:8080/ILGASLocal/images/not-available.jpg" width="275" height="275" alt="not-available"/>';
                     } else {
                         return '<img src="http://www.literatureirelandgrantapplication.com:8080' + data + '">';
                     }
@@ -1170,20 +1161,12 @@ $(document).ready(function () {
                         return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
                     }
                 }},
-            {"data": "originalLanguage",
-                "render": function (data) {
-                    console.log("originalLanguage  " + data);
-                    return data;
-                }},
+            {"data": "originalLanguage"},
             {"data": "originalPageExtent"},
             {"data": "countryOfPublication"},
             {"data": "foreignPublisher"},
             {"data": "foreignCountry"},
-            {"data": "targetLanguage",
-                "render": function (data) {
-                    console.log("targetLanguage  " + data);
-                    return data;
-                }},
+            {"data": "targetLanguage"},
             {"data": "boardMeeting",
                 "render": function (data) {
 
@@ -1232,13 +1215,7 @@ $(document).ready(function () {
                         return  date.getDate() + "/" + (month.length < 10 ? month : "0" + month) + "/" + date.getFullYear();
                     }
                 }},
-            {"data": "boardComments_Instructions",
-                "render": function (data, type, row) {
-                    if (typeof (data) === "undefined") {
-                        return "";
-                    } else
-                        return data;
-                }},
+            {"data": "boardComments_Instructions"},
             {"data": "contractSentToPublisher",
                 "render": function (data) {
 
@@ -1463,7 +1440,6 @@ $(document).ready(function () {
         var TranslTitles = "";
         var TranslatorDocs = [];
         var readerReport = "";
-        var readerInvoice = "";
         var expertReaderName = "";
         var awardValue = rowdata.award;
 
@@ -1481,9 +1457,6 @@ $(document).ready(function () {
 
         readerReport = rowdata.readerReport;
         console.log("rowdata readerReport " + readerReport);
-
-
-
         bookTitles = rowdata.Titles;
         console.log("rowdata bookTitles: " + bookTitles);
         $("#appBookTitle").val(bookTitles.join(""));
@@ -1498,23 +1471,13 @@ $(document).ready(function () {
         $("#dateILEAcknowledgementApproved").val(formatDate(rowdata.acknowledgementApproved));
         $("#datePublishedBooksReceived").val(formatDate(rowdata.datePublishedBooksReceived));
         $("#datePaymentMadeToPublisher").val(formatDate(rowdata.datePaymentMadeToPublisher));
-        var paymentReferenceNumber = rowdata.paymentReferenceNumber;
-        console.log("13131 paymentReferenceNumber " + paymentReferenceNumber);
-        if (paymentReferenceNumber === "null") {
-            paymentReferenceNumber = "";
-        }
-        $("#paymentReferenceNumber").val(paymentReferenceNumber);
+        $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
         var paymentStatusSelected = rowdata.paymentStatus;
         console.log("13131 paymentStatusSelected " + paymentStatusSelected);
         setSelectedIndex(document.getElementById('paymentStatus'), paymentStatusSelected);
         $("#amountApproved").val(rowdata.amountApproved);
         $("#datePublisherInformedOfMeeting").val(formatDate(rowdata.publisherInformedOfMeeting));
-        if (rowdata.boardComments_Instructions === 'null') {
-            $("#commentsAboutMeeting").val("Nothing entered");
-        } else {
-            $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
-        }
-
+        $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
         $("#directorChairDecision").val(rowdata.directorChairDecision);
         var statii = rowdata.Status;
         if (statii === 'new') {
@@ -1579,97 +1542,47 @@ $(document).ready(function () {
         $("#appproposedPrintRun").val(rowdata.proposedPrintRun);
         console.log("proposedPrintRun " + rowdata.proposedPrintRun);
         $("#amountApproved").val(rowdata.amountApproved);
-//        $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
-//        $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
-        $("#ProofPaymentToTranslator").val(rowdata.proofOfPaymentToTranslator); // http://www.literatureirelandgrantapplication.com:8080undefined
-        $("#BankDetailsForm").val(rowdata.bankDetailsForm); // http://www.literatureirelandgrantapplication.com:8080undefined
-        $("#SignedLIContract").val(rowdata.SignedLIContract); // http://www.literatureirelandgrantapplication.com:8080undefined
+        $("#commentsAboutMeeting").val(rowdata.boardComments_Instructions);
+        $("#paymentReferenceNumber").val(rowdata.paymentReferenceNumber);
+        $("#ProofPaymentToTranslator").val(rowdata.proofOfPaymentToTranslator); // http://localhostundefined
+        $("#BankDetailsForm").val(rowdata.bankDetailsForm); // http://localhostundefined
+        $("#SignedLIContract").val(rowdata.SignedLIContract); // http://localhostundefined
         $("#salesFigures").val(rowdata.salesFigures);
 //                    $("#dateUpdate").val(rowdata.foreignPublisher);
 
 //                    ##################################################################################################################
 
-//                    var agreemnt = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.agreement + '';
+//                    var agreemnt = 'http://localhost' + rowdata.agreement + '';
 //                    $("#appAgreement").val(agreemnt);
 //                    document.getElementById("agreement").href = agreemnt;
-        var orig = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.original + ' ';
-        console.log("7771 original " + rowdata.original);
-        console.log("7771 original " + orig);
+        var orig = 'http://www.literatureirelandgrantapplication.com' + rowdata.original + '';
         $("#appOriginal").val(orig);
         document.getElementById("original").href = orig;
-//                    var addendumRightsAgreemnt = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.addendumRightsAgreement + '';
+//                    var addendumRightsAgreemnt = 'http://localhost' + rowdata.addendumRightsAgreement + '';
 //                    $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
 //                    document.getElementById("addendumRightsAgreement").href = addendumRightsAgreemnt;
-
-
         var proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
         $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
         document.getElementById("proofPaymentToTranslator").href = proofOfPaymentToTrans;
-        console.log("7771  proofOfPaymentToTrans rowdata.proofOfPaymentToTranslator " + rowdata.proofOfPaymentToTranslator);
-
         var bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
         $("#appBankDetailsForm").val(bankDetailsFrm);
         document.getElementById("bankDetailsForm").href = bankDetailsFrm;
-        console.log("7771  bankDetailsForm rowdata.bankDetailsForm " + rowdata.bankDetailsForm);
-
         var signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
         $("#appSignedLIContract").val(signedLIContr);
         document.getElementById("signedLIContract").href = signedLIContr;
-        console.log("7771  SignedLIContract rowdata.SignedLIContract " + rowdata.SignedLIContract);
-
-//        if (typeof (rowdata.cover) === "undefined") {
-//            var cver = 'http://www.literatureirelandgrantapplication.com:8080/ILGAS/images/not-available.jpg';
-//        } else {
-//            var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
-//        }
-//
-//        $("#cover").val(cver);
-//        document.getElementById("cover").src = cver;
-//        
         if (typeof (rowdata.cover) === "undefined") {
             var cver = 'http://www.literatureirelandgrantapplication.com:8080/ILGASLocal/images/not-available.jpg';
         } else {
             var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
         }
-        var bookCover;
-        $("#bookCover").val(cver);
-        document.getElementById("Cover1").src = cver;
-        if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
-            console.log("rowdata.cover undefined ");
-            // no cover - show upload
-            var cver = '..images/not-available.jpg';
-            $("#showUploadCover1").show();
-            $("#showUploadCover2").hide();
-            document.getElementById("cover21").src = cver;
-            document.getElementById("cover").src = cver;
-            hasCover = false;
-        } else {
-            // we have a cover - show cover
-            $("#showUploadCover2").show();
-            $("#showUploadCover1").hide();
-            var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
-            console.log("rowdata.cover cver " + cver);
 
-            hasCover = true;
-            document.getElementById("cover").src = cver;
-            console.log("81 xyz show bookCover cover " + bookCover);
-            console.log("81 xyz show Book cover for \n" + rowdata.translationTitle);
-            document.getElementById("cover21").src = cver;
-            document.getElementById("Cover1").src = cver;
-            document.getElementById("showUploadCoverTitle").innerHTML = "Book cover for \n" + rowdata.translationTitle;
-            console.log("cver  " + cver);
-            bookTranslationTitle = rowdata.translationTitle;
-            console.log("81 xyz show Book bookTranslationTitle for \n" + bookTranslationTitle);
-        }
-        console.log("hasCover2  " + hasCover);
-
-
-
-//                    var contr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.contract + '';
+        $("#cover").val(cver);
+        document.getElementById("cover").src = cver;
+//                    var contr = 'http://localhost' + rowdata.contract + '';
 //                    document.getElementById("contract").href = contr;
-//                    var trans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.translatorCV + '';
+//                    var trans = 'http://localhost' + rowdata.translatorCV + '';
 //                    document.getElementById("translatorCV").href = trans;
-        var transSamp = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.copiesTranslationSample + ' ';
+        var transSamp = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.copiesTranslationSample + '';
         console.log("444  copiesTranslationSample " + transSamp);
         document.getElementById("copiesTranslationSample").href = transSamp;
 //                    $("#applicationsModal").modal("show");
@@ -1682,8 +1595,10 @@ $(document).ready(function () {
         var appReferenceNumber = rowdata.ReferenceNumber;
         console.log("appReferenceNumber " + appReferenceNumber);
         $("#appReferenceNumber").val(appReferenceNumber); //ok
-        $("#appReferenceNumber1").val(appReferenceNumber); //ok
+        document.getElementById("assign_expert_reader_to_reference_number_Btn").innerHTML = "Assign expert reader to reference number  " + appReferenceNumber;
+
         $("#unassignedERRefNo").val(appReferenceNumber);
+        $("#unassignedERRefNo1").val(appReferenceNumber);
         var TranslName = rowdata.TranslatorName;
         var translators = rowdata.TranslatorName;
         console.log("555 TranslatorDocs:  rowdata.transList   " + rowdata.transList);
@@ -1790,8 +1705,8 @@ $(document).ready(function () {
                         var dir = nls[l].substr(1);
                         var destination = dir.replace("/home/markus/public_html/", "/~markus/");
                         console.log("destination " + destination);
-                        var entry = "location.href='http://www.literatureirelandgrantapplication.com:8080" + destination + "'";
-                        console.log("www.literatureirelandgrantapplication.com:8080 " + entry);
+                        var entry = "location.href='http://localhost" + destination + "'";
+                        console.log("localhost " + entry);
                         btn.setAttribute("onclick", entry);
                         td.appendChild(btn);
                         console.log("nls[l] [" + l + " ] " + nls[l]);
@@ -2056,9 +1971,9 @@ $(document).ready(function () {
                 addExpertReaderModal += '<h4 class="modal-title">Assigned Expert Reader</h4>';
                 addExpertReaderModal += '</div>';
                 addExpertReaderModal += '<div class="modal-body" style="background-color: #d9d1d1">';
-                addExpertReaderModal += '<div class="row" style="margin-bottom: 20px;margin-top: 15px"> ';
-                addExpertReaderModal += '<div class="col-md-4">';
-                addExpertReaderModal += '<label for="appExpertReader' + i + '" class="control-label pull-left"> Expert reader</label>';
+                addExpertReaderModal += '<div class="row" style="margin-bottom: 20px;margin-top: 5px"> ';
+                addExpertReaderModal += '<div class="col-sm-6">';
+                addExpertReaderModal += '<strong class="pull-left">Expert Reader</strong>';
                 addExpertReaderModal += '<div class="input-group pull-left">';
                 var ExpertReader = "appExpertReader" + i;
                 console.log("ExpertReader  " + ExpertReader);
@@ -2069,7 +1984,7 @@ $(document).ready(function () {
                 addExpertReaderModal += ' </div> ';
                 addExpertReaderModal += '<div class="row" style="margin-top: 30px;margin-bottom: 10px">';
                 addExpertReaderModal += '<div class="col-sm-4">';
-                addExpertReaderModal += '<label for="sampleSentOut" class="control-label pull-left"> Sample sent out</label>';
+                addExpertReaderModal += '<strong class=" pull-left"> Sample sent out</strong>';
                 addExpertReaderModal += '<div class="input-group pull-left">';
                 var sampleSentOut = "sampleSentOut" + i;
                 console.log("sampleSentOut  " + sampleSentOut);
@@ -2079,8 +1994,8 @@ $(document).ready(function () {
                 addExpertReaderModal += '</label>';
                 addExpertReaderModal += '</div>';
                 addExpertReaderModal += ' </div>';
-                addExpertReaderModal += '<div class="col-sm-4">';
-                addExpertReaderModal += '<label for="sampleReturned" class="control-label pull-left"> Sample returned</label>';
+                addExpertReaderModal += '<div class="col-sm-5">';
+                addExpertReaderModal += '<strong class=" pull-left"> Sample returned</strong>';
                 addExpertReaderModal += '<div class="input-group pull-left">';
                 var sampleReturned = "sampleReturned" + i;
                 console.log("sampleReturned  " + sampleReturned);
@@ -2091,10 +2006,7 @@ $(document).ready(function () {
                 addExpertReaderModal += '</div>';
                 addExpertReaderModal += '</div>';
                 addExpertReaderModal += '</div>';
-
                 addExpertReaderModal += '<div class="row" style="margin-bottom: 20px;">';
-
-//                Reader’s Report
                 addExpertReaderModal += '<div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">';
                 addExpertReaderModal += '<div class="col-sm-2">';
                 addExpertReaderModal += '<input id="ReadersReport' + i + '"';
@@ -2102,25 +2014,10 @@ $(document).ready(function () {
                 addExpertReaderModal += 'name="ReadersReport"';
                 addExpertReaderModal += ' >';
                 addExpertReaderModal += '</div>';
-                addExpertReaderModal += '<a class="btn btn-info" role="button" id="appReadersReport' + i + '"target="_blank">';
+                addExpertReaderModal += '<a class="btn btn-info" role="button" id="appReadersReport' + i + '">';
                 addExpertReaderModal += '<span class="glyphicon glyphicon-file"></span>';
                 addExpertReaderModal += 'Reader’s Report</a>';
                 addExpertReaderModal += '</div>';
-
-//                Reader’s Invoice
-                addExpertReaderModal += '<div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">';
-                addExpertReaderModal += '<div class="col-sm-2">';
-                addExpertReaderModal += '<input id="ReadersInvoice' + i + '"';
-                addExpertReaderModal += 'type="hidden"';
-                addExpertReaderModal += 'name="ReadersInvoice"';
-                addExpertReaderModal += ' >';
-                addExpertReaderModal += '</div>';
-                addExpertReaderModal += '<a class="btn btn-info" role="button" id="appReadersInvoice' + i + '"target="_blank">';
-                addExpertReaderModal += '<span class="glyphicon glyphicon-file"></span>';
-                addExpertReaderModal += 'Reader’s Invoice</a>';
-                addExpertReaderModal += '</div>';
-
-
                 addExpertReaderModal += '<div class="col-sm-10">';
                 addExpertReaderModal += '<label for="readerReportSummary' + i + '" class="control-label pull-left"> Reader’s Report Summary</label>';
                 addExpertReaderModal += '<textarea id="readerReportSummary' + i + '" ';
@@ -2143,7 +2040,7 @@ $(document).ready(function () {
                  * get the data from the array
                  */
 
-                for (var j = 0; j <= 7; ++j) {
+                for (var j = 0; j <= 6; ++j) {
 
                     var ExpReader = expertReaderName[i][6];
                     console.log("676767 ExpReader  " + ExpReader);
@@ -2182,14 +2079,6 @@ $(document).ready(function () {
                     var readerReportLink = 'http://www.literatureirelandgrantapplication.com:8080' + expertReaderName[i][2] + '';
                     console.log("676767 expertReaderName[i][2]  " + expertReaderName[i][2]);
                     var readersReportElementID = "appReadersReport" + i;
-
-                    var expertInvoiceElementID = "appReadersInvoice" + i;
-                    document.getElementById(expertInvoiceElementID).href = 'http://www.literatureirelandgrantapplication.com:8080' + expertReaderName[i][7] + '';
-
-
-                    console.log("rowdata readerInvoice " + expertReaderName[i][7]);
-
-
                     console.log("676767 readersReportElementID  " + readersReportElementID);
                     console.log("676767 readerReportLink  " + readerReportLink);
                     document.getElementById(readersReportElementID).href = readerReportLink;
@@ -2297,7 +2186,7 @@ $(document).ready(function () {
             agreementTranslationRightsHolderContent += '</div>';
             agreementTranslationRightsHolderContent += '</div>'; //<div class="input-group agreement" 
             agreementTranslationRightsHolderContent += '</div>'; //<div class="col-md-9" 
-            //Open Agreement with the translation rights holder
+
             agreementTranslationRightsHolderContent += '<div class="col-md-7" id="agreement_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
             agreementTranslationRightsHolderContent += '<label  class="control-label pull-left" id="agreement_button_label' + j + '" ></label>';
             agreementTranslationRightsHolderContent += '<div class="input-group agreement_buttonText pull-left">';
@@ -2327,7 +2216,7 @@ $(document).ready(function () {
 
             rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
             rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
-            //Open CV
+
             rightsAgreementContractsNavContent += '<div class="col-md-3" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
             rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="cv_button_label' + j + '" ></label>';
             rightsAgreementContractsNavContent += '<div class="input-group cv_buttonText pull-left">';
@@ -2353,7 +2242,7 @@ $(document).ready(function () {
 
             rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
             rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
-            //Open Contract
+
             rightsAgreementContractsNavContent += '<div class="col-md-3" id="contract_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
             rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="contract_button_label' + j + '" ></label>';
             rightsAgreementContractsNavContent += '<div class="input-group contract_buttonText pull-left">';
@@ -2366,7 +2255,7 @@ $(document).ready(function () {
             rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
             rightsAgreementContractsNavContent += '</div>'; // row
 
-            addendumAgreementTranslationRightsHolder += '<div class="container wrapperContainer">';
+
             //Addendum to the rights agreement
             addendumAgreementTranslationRightsHolder += '<div class="row" style="margin-bottom: 80px;">';
             addendumAgreementTranslationRightsHolder += '<div style=" margin: 0 auto; position: relative; ">';
@@ -2379,10 +2268,9 @@ $(document).ready(function () {
             addendumAgreementTranslationRightsHolder += '<label id="uploadAddendum" class="control-label pull-left"></label>';
             addendumAgreementTranslationRightsHolder += '<label  class="control-label pull-left">No addendum to the rights agreement has been uploaded!</label>';
 
-
             addendumAgreementTranslationRightsHolder += '</div>'; //<div class="input-group agreement" 
             addendumAgreementTranslationRightsHolder += '</div>'; //<div class="col-md-10" 
-            //Open Addendum
+
             addendumAgreementTranslationRightsHolder += '<div class="col-md-7" id="addendum_button' + j + '"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  ';
             addendumAgreementTranslationRightsHolder += '<label  class="control-label pull-left" id="addendum_button_label' + j + '" ></label>';
             addendumAgreementTranslationRightsHolder += '<div class="input-group addendum_buttonText pull-left" style="width: 190px; hight: 34px" >';
@@ -2410,16 +2298,15 @@ $(document).ready(function () {
         for (var j = 0; j < rowdata.rightsAgreement.length; j++) {
             var rightsAgreementArray = rowdata.rightsAgreement[j].split(",");
             for (var v = 0; v < rightsAgreementArray.length; v++) {
-                console.log("8 xyz  rightsAgreementArray  v:" + v + ":");
+
                 switch (v) {
                     case 0:
                         // Agreement
-                        console.log("8 xyz  rightsAgreementArray  :" + rightsAgreementArray[v].substr(1) + ":");
-                        console.log("8 xyz  rightsAgreementArray  w:" + w + ":");
+                        console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
+                        console.log("8 xyz  rightsAgreementArray  w:", w + ":");
                         if (rightsAgreementArray[v].substr(1) !== 'null') {
-                            console.log("8 xyz  Agreement found");
                             console.log("8 xyz case 0  [" + j + "]");
-                            console.log("8 xyz  rightsAgreementArray  :" + rightsAgreementArray[v].substr(1) + ":");
+                            console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
                             document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
                         }
                         break;
@@ -2427,8 +2314,8 @@ $(document).ready(function () {
                         // AgreementDocName
                         console.log("8 xyz case 1 [" + j + "]");
                         if (rightsAgreementArray[v].substr(1) === 'null') {
-                            console.log("8 xyz  " + translatorNamesForGenerateTranslatorTab[j]);
-//                            document.getElementById('uploadAgreement' + w).innerHTML = 'Copy of the agreement with ' + translatorNamesForGenerateTranslatorTab[j];
+                            console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
+                            document.getElementById('uploadAgreement' + w).innerHTML = 'Copy of the agreement with ' + translatorNamesForGenerateTranslatorTab[j];
                         } else {
                             console.log("8 xyz case 1 toggle ");
                             $('#agreementToggle' + w).toggle();
@@ -2441,7 +2328,7 @@ $(document).ready(function () {
                         // Contract
 
                         if (rightsAgreementArray[v].substr(1) !== 'null') {
-                            console.log("8 xyz  Contract found");
+
                             document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
                         }
                         break;
@@ -2449,7 +2336,7 @@ $(document).ready(function () {
                         // ContractDocName
 
                         if (rightsAgreementArray[v].substr(1) === 'null') {
-//                            document.getElementById('uploadContract' + w).innerHTML = 'Copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
+                            document.getElementById('uploadContract' + w).innerHTML = 'Copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
                         } else {
 
                             $('#contractToggle' + w).toggle();
@@ -2462,7 +2349,7 @@ $(document).ready(function () {
                         // AddendumRightsAgreement
 
                         if (rightsAgreementArray[v].substr(1) !== 'null') {
-                            console.log("8 xyz  Addendum found");
+
                             document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
                         }
                         break;
@@ -2470,8 +2357,13 @@ $(document).ready(function () {
                         // AddendumRightsAgreementName
                         var test = rightsAgreementArray[v].substr(1).replace("]", "");
 //                        test = test.replace("]", "");
+                        if (test !== 'null' && test !== '') {
+                            console.log("8 xyz  Addendum found  test:" + test);
+                        } else {
+                            console.log("8 xyz  Addendum NOT found:");
+                        }
 
-//                        if (test !== null && test !== '') {
+//                        
                         if (rightsAgreementArray[v].substr(1).replace("]", "") === 'null') {
 //                            document.getElementById('uploadAddendum' + w).innerHTML = 'Copy of the addendum to the rights agreement ';// + translatorNamesForGenerateTranslatorTab[j];
                         } else {
@@ -2818,104 +2710,6 @@ function selectER() {
     document.getElementById("selectedUnassignedER").value = selectedValue;
 }
 
-//https://bootsnipp.com/snippets/P2gor
-//$(document).ready(function () {
-//    function  gallery(){
-// let modalId = $('#image-gallery');
-//    loadGallery(true, 'a.thumbnail');
-//    
-//       //This function disables buttons when needed
-//    function disableButtons(counter_max, counter_current) {
-//        $('#show-previous-image, #show-next-image')
-//                .show();
-//        if (counter_max === counter_current) {
-//            $('#show-next-image')
-//                    .hide();
-//        } else if (counter_current === 1) {
-//            $('#show-previous-image')
-//                    .hide();
-//        }
-//    }
-//
-//    /**
-//     *
-//     * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
-//     * @param setClickAttr  Sets the attribute for the click handler.
-//     */
-//
-//    function loadGallery(setIDs, setClickAttr) {
-//        let current_image,
-//                selector,
-//                counter = 0;
-//
-//        $('#show-next-image, #show-previous-image')
-//                .click(function () {
-//                    if ($(this)
-//                            .attr('id') === 'show-previous-image') {
-//                        current_image--;
-//                    } else {
-//                        current_image++;
-//                    }
-//
-//                    selector = $('[data-image-id="' + current_image + '"]');
-//                    console.log("selector " + selector.name);
-//                    updateGallery(selector);
-//                });
-//
-//        function updateGallery(selector) {
-//            let $sel = selector;
-//            current_image = $sel.data('image-id');
-//            console.log("current_image " + current_image);
-//            var filename = $sel.data('image').replace(/^.*[\\\/]/, '');
-//            $('#image-gallery-title')
-//                    .text(filename);
-//            console.log("current_image " + $sel.data('image'));
-//            console.log("current_image filename " + filename);
-//            $('#image-gallery-image')
-//                    .attr('src', $sel.data('image'));
-//            disableButtons(counter, $sel.data('image-id'));
-//        }
-//
-//        if (setIDs === true) {
-//            $('[data-image-id]')
-//                    .each(function () {
-//                        counter++;
-//                        console.log("counter " + counter);
-//                        $(this).attr('data-image-id', counter);
-//                    });
-//        }
-//        $(setClickAttr)
-//                .on('click', function () {
-//                    updateGallery($(this));
-//                });
-//    }
-//
-//
-//// build key actions
-//    $(document)
-//            .keydown(function (e) {
-//                switch (e.which) {
-//                    case 37: // left
-//                        if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
-//                            $('#show-previous-image')
-//                                    .click();
-//                        }
-//                        break;
-//
-//                    case 39: // right
-//                        if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
-//                            $('#show-next-image')
-//                                    .click();
-//                        }
-//                        break;
-//
-//                    default:
-//                        return; // exit this handler for other keys
-//                }
-//                e.preventDefault(); // prevent the default action (scroll / move caret)
-//            });
-//        }
-//});
 
 function  showInfoModal() {
     $("#showInfoModal").modal("show");
@@ -2930,33 +2724,187 @@ function  showLegalNoteModal() {
     $("#showLegalNoteModal").modal("show");
 }
 
+//function replaceEditor() {
+//    console.log("replaceEditor()");
+//    CKEDITOR.replace('editor1', {
+//        extraPlugins: 'allowsave',
+//        width: 400,
+//        height: 500
+//    });
+//
+//}
+
+//function getTemplate(template) {
+//    console.log("getTemplate" + template);
+//    console.log("getTemplate  url  templateHandler?action=openFile&filename=" + template);
+//    $.ajax({
+//        url: "TemplateHandler?action=openFile&filename=" + template,
+//        type: 'GET',
+//        dataType: 'text'
+//    }).then(function (data) {
+//        console.log(data);
+//        CKEDITOR.instances.editor1.setData(data);
+//    });
+//}
+
+//$(document).ready(function () {
+//function getTemplate(template) {
+//    console.log("getTemplate" + template);
+//    console.log("getTemplate  url  templateHandler?action=openFile&filename=" + template);
+//      alert("getTemplate clicked ");
+//    $.ajax({
+//        url: "TemplateHandler?action=openFile&filename=" + template,
+//        type: 'GET',
+////        dataType: 'text'
+//        dataType: "json"
+//    }).then(function (data) {
+//        var length = data.length - 2;
+//        var datacut = data.slice(9, length);
+//        CKEDITOR.instances.editor1.setData(data);
+//
+//    });
+//}
+//});
+
+//function selectTemplate() {
+//    console.log("selectTemplate");
+//    $('#selectTemplate').cleanData;
+//    selectTemplate1();
+//}
+
+//$(document).ready(function () {
+//function selectTemplate() {
+//    console.log("selectTemplate1");
+//    $('#selectTemplate').fileTree({root: '/home/markus/uploads/', script: 'connectors/jqueryFileTree.jsp'}, function (file) {
+//        $('#fileName').val(file);
+//        $('#emailTemplateSelected').val(file);
+//        console.log("selectTemplate1:  " + file);
+//    });
+//}
+//});
+
+
+
+
+$(document).ready(function () {
+    console.log("call StaffUserDataServlet");
+    $.ajax({
+        type: "GET",
+        url: "StaffUserDataServlet",
+        dataType: "json",
+        success: function (data) {
+            var rs = data.aaData;
+            console.log(rs);
+            $.each(rs, function (i, obj)
+            {
+                var optionValue = '<%= ' + rs[i].Full_NAME + ' %>';
+                var div_data = '<option value="' + rs[i].EMAIL + '">' + rs[i].Full_NAME + '</option>';
+                $(div_data).appendTo('#from');
+            });
+        }
+    });
+});
+
+
+$(document).ready(function () {
+    $('#showInstructionsModalBtn').click(function () {
+
+        $('#showInstructionsModal .modal-content').resizable();
+
+        $("#showInstructionsModal").draggable({
+            handle: ".modal-header"
+        });
+    });
+
+});
+
+$(document).ready(function () {
+    var validator = $("#applicationEditForm").validate();
+//    alert("Validate");
+    validator.form();
+});
+
 function replaceEditor() {
-    alert("replaceEditor")
+    CKEDITOR.plugins.addExternal('allowsave', '/ILGASLocal/assets/js/ckeditor/plugins/allowsave/', 'plugin.js');
+    CKEDITOR.plugins.addExternal('simplebox', '/ILGASLocal/assets/js/ckeditor/plugins/simplebox/', 'plugin.js');
+
+    console.log("welcome_Staff_1.js replaceEditor");
     var editor = CKEDITOR.replace('editor1', {
-        extraPlugins: 'allowsave',
-        filebrowserBrowseUrl: 'product/browseFile.jsp',
-        filebrowserWindowWidth: 800,
-        filebrowserWindowHeight: 500,
-        width: 400,
-        height: 500
+        customConfig: '/ILGASLocal/assets/js/ckeditor/config.js',
+        contentsCss: [
+            'http://cdn.ckeditor.com/4.12.1/full-all/contents.css',
+            '/ILGASLocal/assets/js/ckeditor/contents.css'
+        ],
+//        width: 800,
+        height: 500,
+        on: {
+            pluginsLoaded: function () {
+                var editor = this,
+                        config = editor.config;
+
+                editor.ui.addRichCombo('my-combo', {
+                    label: 'Salutation',
+                    title: 'Salutation',
+                    toolbar: 'basicstyles,0',
+
+                    panel: {
+                        css: [CKEDITOR.skin.getPath('editor')].concat(config.contentsCss),
+                        multiSelect: false,
+                        attributes: {'aria-label': 'Salutation'}
+                    },
+
+                    init: function () {
+                        this.startGroup('Salutations');
+                        this.add('First_Name', 'First name');
+                        this.add('Last_Name', 'Last name');
+                        this.add('Full_Name', 'Full name');
+                    },
+
+                    onClick: function (value) {
+                        editor.focus();
+                        editor.fire('saveSnapshot');
+
+                        editor.insertHtml(value);
+
+                        editor.fire('saveSnapshot');
+                    }
+                });
+            }
+        }
     });
 }
+//});
 
 function getTemplate(template) {
+    console.log("welcome_Staff_1.js getTemplate " + template);
     $.ajax({
         url: "templateHandler?action=openFile&filename=" + template,
         type: 'GET',
         dataType: 'text'
     }).then(function (data) {
+        var length = data.length - 2;
+        var datacut = data.slice(9, length);
         CKEDITOR.instances.editor1.setData(data);
 
     });
 }
 
 function selectTemplate() {
-    $('#selectTemplate').fileTree({root: '/home/glassfish/glassfish/domains/domain1/docroot/templates/', script: '/connectors/jqueryFileTree.jsp'}, function (file) {
+    console.log("welcome_Staff_1.js selectTemplate");
+    $('#selectTemplate').fileTree({root: '/home/markus/uploads/', script: 'connectors/jqueryFileTree.jsp'}, function (file) {
         $('#fileName').val(file);
+        $('#emailTemplateSelected').val(file);
         getTemplate(file);
     });
 }
-      
+
+
+//    $(function () {
+$(".jqueryFileTree li").click(function (e) {
+    var str = $(this);
+    console.log("jqueryFileTree li e " + e);
+    console.log("jqueryFileTree li str " + str);
+    console.log(str);
+    alert("selectTemplate clicked ");
+});
+            

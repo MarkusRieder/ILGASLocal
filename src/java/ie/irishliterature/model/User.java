@@ -28,6 +28,24 @@ public class User {
 
     private String STATUS;
 
+    private String ReferenceNumber;
+
+    /**
+     * @return the USER_ID
+     */
+    public String getUSER_ID()
+    {
+        return USER_ID;
+    }
+
+    /**
+     * @param USER_ID the USER_ID to set
+     */
+    public void setUSER_ID( String USER_ID )
+    {
+        this.USER_ID = USER_ID;
+    }
+
     public String getUSERNAME()
     {
         return USERNAME;
@@ -138,12 +156,6 @@ public class User {
         this.CREATED_TIME = CREATED_TIME;
     }
 
-    @Override
-    public String toString()
-    {
-        return "ClassPojo [USERNAME = " + USERNAME + ", EMAIL = " + EMAIL + ", FIRST_NAME = " + FIRST_NAME + ", LAST_NAME = " + LAST_NAME + ", EMAIL_VERIFICATION_HASH = " + EMAIL_VERIFICATION_HASH + ", EMAIL_VERIFICATION_ATTEMPTS = " + EMAIL_VERIFICATION_ATTEMPTS + ", PASSWORD = " + PASSWORD + ", STATUS = " + STATUS + ", CREATED_TIME = " + CREATED_TIME + "]";
-    }
-
     /**
      * @return the Full_NAME
      */
@@ -161,19 +173,25 @@ public class User {
     }
 
     /**
-     * @return the USER_ID
+     * @return the ReferenceNumber
      */
-    public String getUSER_ID()
+    public String getReferenceNumber()
     {
-        return USER_ID;
+        return ReferenceNumber;
     }
 
     /**
-     * @param USER_ID the USER_ID to set
+     * @param ReferenceNumber the ReferenceNumber to set
      */
-    public void setUSER_ID( String USER_ID )
+    public void setReferenceNumber( String ReferenceNumber )
     {
-        this.USER_ID = USER_ID;
+        this.ReferenceNumber = ReferenceNumber;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "[USERNAME = " + USERNAME + ", EMAIL = " + EMAIL + ", FULL_NAME = " + Full_NAME + ", FIRST_NAME = " + FIRST_NAME + ", LAST_NAME = " + LAST_NAME + ", EMAIL_VERIFICATION_HASH = " + EMAIL_VERIFICATION_HASH + ", EMAIL_VERIFICATION_ATTEMPTS = " + EMAIL_VERIFICATION_ATTEMPTS + ", PASSWORD = " + PASSWORD + ", STATUS = " + STATUS + ", CREATED_TIME = " + CREATED_TIME + "]";
     }
 
 }

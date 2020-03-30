@@ -1,6 +1,15 @@
+<%-- 
+    Document   : welcome_Staff_1
+    Created on : 15-May-2018, 07:09:54
+    Author     : Markus Rieder
+--%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
+           prefix="fn" %> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
@@ -10,18 +19,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+        <meta name="robots" content="noindex, nofollow">
+
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
         <!--JQuery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+        <!-- Bootstrap -->
         <!--welcome_Staff_1-->
         <script src="js/welcome_Staff_1.js" type="text/javascript"></script>
-
-
-        <!-- Bootstrap -->
-
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
         <!--DataTables-->
@@ -45,6 +53,7 @@
         <link rel="stylesheet" href="css/jquery.dataTables.yadcf.css" />
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css">
         <link rel="stylesheet" type="text/css" href="css/irishLiterature.css">
+        <link href="css/template.css" rel="stylesheet" type="text/css"/>
 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>        
         <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
@@ -61,22 +70,23 @@
         <script type="text/javascript"   src="//cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js "></script>
         <script type="text/javascript"   src="//cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
         <script type="text/javascript"   src="js/bootstrap-datepicker.js"></script>
-        <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
         <script type="text/javascript"   src="js/jquery-ui.js"></script>
         <script type="text/javascript"   src="js/lightbox.min.js"></script>
-
+        <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
         <script type="text/javascript"   src="js/jquery.dataTables.yadcf.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
 
         <!--template-->
-        <script src="js/template.js" type="text/javascript"></script>
 
 
-        <!--<script type="text/javascript" src="../../js/"-->
+
+
         <!--ckeditor-->
-        <script type="text/javascript" src="./assets/js/ckeditor/ckeditor.js"></script>
-        <script type="text/javascript" src="./assets/js/ckeditor/adapters/jquery.js"></script>
+        <!--        <script type="text/javascript" src="assets/js/ckeditor/ckeditor.js"></script>
+                <script type="text/javascript" src="assets/js/ckeditor/adapters/jquery.js"></script>
+                <script type="text/javascript" src="assets/js/ckeditor/config.js"></script>-->
+        <script src="https://cdn.ckeditor.com/4.12.1/standard-all/ckeditor.js"></script>
 
         <!--jqueryFileTree-->
         <script src="js/jquery.easing.js" type="text/javascript"></script>
@@ -87,25 +97,74 @@
         <!--jqueryFileTree-->
         <link href="css/jqueryFileTree.css" rel="stylesheet" type="text/css" media="screen" />
 
-        <!--template-->
-        <link href="css/template.css" rel="stylesheet" type="text/css"/>
 
+        <!--               template-->
+
+        <!--<script src="js/template.js" type="text/javascript"></script>-->
         <title>Translation Grant Application System</title>
 
-
+        <!--        <script>
+        
+                    $(document).ready(function () {
+        //    $(function () {
+                        $(".jqueryFileTree li").click(function (e) {
+                            var str = $(this);
+                            console.log("jqueryFileTree li e " + e);
+                            console.log("jqueryFileTree li str " + str);
+                            console.log(str);
+                            alert("selectTemplate clicked ");
+                        });
+        //    });
+                    });
+                    
+                    
+                    $(document).ready(function () {
+                        function selectTemplate() {
+                            console.log("selectTemplate1");
+                            $('#selectTemplate').fileTree({root: '/home/markus/uploads/', script: 'connectors/jqueryFileTree.jsp'}, function (file) {
+                                $('#fileName').val(file);
+                                $('#emailTemplateSelected').val(file);
+                                console.log("selectTemplate1:  " + file);
+                            });
+                        }
+                    });
+        
+        
+        
+        
+                    $(document).ready(function () {
+                        function getTemplate(template) {
+                            console.log("getTemplate" + template);
+                            console.log("getTemplate  url  templateHandler?action=openFile&filename=" + template);
+                            alert("getTemplate clicked ");
+                            $.ajax({
+                                url: "TemplateHandler?action=openFile&filename=" + template,
+                                type: 'GET',
+                dataType: 'text'
+        //                        dataType: "json"
+                            }).then(function (data) {
+                                var length = data.length - 2;
+                                var datacut = data.slice(9, length);
+                                CKEDITOR.instances.editor1.setData(data);
+        
+                            });
+                        }
+                    });
+        
+                </script>-->
         <style>
-            .form-horizontal .control-label {
-                margin-bottom: 5px;
+            .btn-link {
+                border: none;
+                outline: none;
+                background: none;
+                cursor: pointer;
+                color: #0000EE;
+                padding: 0;
+                text-decoration: underline;
+                font-family: inherit;
+                font-size: inherit;
             }
-            .form-horizontal .form-group {
-                margin-bottom: 5px;
-                margin-left:0px;
-                margin-right:0px;
-            }
-            body {
-                background: #d9d1d1;
-            }
-        </style>  
+        </style>
 
     </head>
     <body style="height: 100%">
@@ -119,14 +178,18 @@
                     </div>
                     <a class="logo"><span class="hidden">Literature Ireland</span></a>
                 </div> <!--  End of topbar div -->
-
+                <input type="text" name="username" value="${username}">
+                <input type="text" name="name" value="${name}">
                 <!--container for welcome/logout-->
                 <div class="container-fluid" >
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="GET">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" value="${username}">
+                        </form>
                     </div>
-                </div> <!--container for welcome/logout-->
-
+                </div> <!--container for welcome/logout-->   
                 <div style="margin-bottom: 10px"> </div>
 
                 <nav class="navbar navbar-default" >
@@ -163,6 +226,7 @@
                             <input type="hidden" name="ReferenceNumber" id="sSearch" class="sSearch">
                             <input type="hidden" name="Status" id="Status" class="Status">
                             <input type="hidden" name="userID" value="${userID}">
+                            <input type="hidden" name="username" value="${username}">
                             <input type="hidden" name="publisherID" value="${publisherID}">
                             <input type="hidden" name="Company" value="${companyDetails.Company}">
                             <!-- Table id="applications1" -->
@@ -360,7 +424,7 @@
 
                             <!--applicationForm-->
                             <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/StaffServlet" >
-                                <%request.getSession().setAttribute("task", "StaffServlet");%>
+                                <%request.getSession().setAttribute( "task", "StaffServlet" );%>
 
                                 <!--applicationsModal-->
                                 <div class="modal fade" id="applicationsModal" data-modal-index="1">
@@ -476,11 +540,6 @@
                                                             </div> <!-- container-fluid  -->
                                                         </div> <!-- class="tab-pane" id="OriginalContracts" -->
 
-                                                        <!--translatorTableDiv-->
-                                                        <div class="row" style="margin-bottom: 10px; margin-top: 30px">                                           
-                                                            <div class="col-md-8" id="translatorTableDiv" style="margin-left: 40px;"></div>
-                                                        </div> <!--row-->
-
                                                         <div class="row">
                                                             <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
                                                                 <div class="col-md-2">
@@ -501,11 +560,12 @@
                                                                            name="appcopiesTranslationSample"                                
                                                                            >
                                                                 </div>
-                                                                <a class="btn btn-info" role="button" id="copiesTranslationSample" target="_blank">
+                                                                <a class="btn btn-info" role="button" id="copiesTranslationSample" >
                                                                     <span class="glyphicon glyphicon-file"></span>
                                                                     Translation Sample</a>
                                                             </div>
                                                         </div> <!--row-->
+
 
                                                         <div class = "panel panel-default">
                                                             <div class="panel-heading panel-heading-translationRightsHolder pull-left"> <h3 class="panel-title">Translation rights holder</h3></div>
@@ -525,7 +585,6 @@
 
                                                             </div> <!--panel-heading-translationRightsHolder-->
                                                         </div> <!--panel-default-->
-
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                             <div class="col-md-4">
@@ -699,149 +758,172 @@
 
                                                     <!-- Reader’s  Report -->
                                                     <div class="tab-pane" id="readerReport">
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 20px"> 
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 20px;"> 
 
-                                                            <div class='col-md-6'>
-                                                                <button class="btn btn-success btn-xs pull-left" style="margin-bottom: 20px;" type="button" onclick="getTodaysDate()" data-toggle="modal" data-target="#assignEReadermodal">
-                                                                    Assign expert reader to reference number
-                                                                </button>                                                            
+                                                            <div class='col-md-6' style="margin-bottom: 100px;"> 
+                                                                <button class="btn btn-success btn-xs pull-left" 
+                                                                        style="margin-bottom: 20px;" 
+                                                                        id="assign_expert_reader_to_reference_number_Btn" 
+                                                                        type="button" 
+                                                                        onclick="getTodaysDate()" 
+                                                                        data-toggle="modal" 
+                                                                        data-target="#assignEReadermodal">                                                                   
+                                                                </button>
+                                                                <!--<a class="btn" data-toggle="modal" href="#stack2">Launch modal</a>-->
                                                                 <!-- additionalExpertReader -->
-                                                                <div class="row" style="margin-bottom: 170px;margin-top: 5px"> 
+                                                                <div class="row" style="margin-top: 5px"> 
                                                                     <div id="additionalExpertReader"></div>
                                                                 </div> <!--row-->   
                                                             </div>
                                                         </div> <!--row-->      
 
-                                                    </div> 
-                                                    <!--tab-pane" id="readerReport" -->
-
-
+                                                    </div>  <!--tab-pane" id="readerReport" -->
 
                                                     <!--Board  Meeting-->
                                                     <div class="tab-pane" id="boardMeeting">
 
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 20px">   
+                                                        <div class="row" style="margin-bottom: 40px;margin-top: 40px">   
 
-                                                            <div class='col-md-offset-1 col-md-3'>
-                                                                <label for="appDateOfBoardMeeting" class="control-label pull-left">Board meeting</label>
-                                                                <!--<strong class="pull-left">Board meeting<br/>&nbsp;</strong>-->
-                                                                <div class="input-group  pull-left date datepicker" >
-                                                                    <input type="text" name="appDateOfBoardMeeting" id="appDateOfBoardMeeting" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="appDateOfBoardMeeting">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
-                                                                </div> 
+                                                            <div class='col-md-3 col-sm-offset-1'>
+                                                                <div class="form-group has-feedback">
+                                                                    <label for="appDateOfBoardMeeting" class="control-label pull-left">Board meeting</label>                                                                   
+                                                                    <div class="input-group  pull-left" >
+                                                                        <input type="text" 
+                                                                               name="appDateOfBoardMeeting" 
+                                                                               id="appDateOfBoardMeeting" 
+                                                                               class="form-control" 
+                                                                               placeholder="DD/MM/YYYY" />    
+                                                                        <label class="input-group-addon" for="appDateOfBoardMeeting">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </label>
+                                                                    </div> 
+                                                                </div>                                                            
+
+                                                                <script>
+                                                                    $("#appDateOfBoardMeeting").datepicker().on('change', function () {
+                                                                        $(this).valid(); // triggers the validation test
+                                                                        // '$(this)' refers to '$("#datepicker")'
+                                                                    });
+                                                                </script>
                                                             </div>
 
-                                                            <script>
-                                                                $("#appDateOfBoardMeeting").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
-                                                                });
-                                                            </script>
                                                             <div class="col-md-4">
-                                                                <label for="directorChairDecision" class="control-label">Director/Chair decision</label>
-                                                                <br/> 
-                                                                <input id="directorChairDecision"
-                                                                       type="checkbox"      
-                                                                       class="form-control" 
-                                                                       value="ticked"                                                                                                
-                                                                       name="directorChairDecision"  
-                                                                       onclick="directorChairDecision_click(this);"
-                                                                       >
+                                                                <div class="form-row">
+                                                                    <div class="form-group  text-center">
+                                                                        <label for="directorChairDecision" class="control-label">Director/Chair decision</label>
+                                                                        <input id="directorChairDecision"
+                                                                               type="checkbox"      
+                                                                               class="form-control" 
+                                                                               value="ticked"             
+                                                                               name="directorChairDecision"  
+                                                                               onclick="directorChairDecision_click(this);"
+                                                                               >
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
                                                         </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
-                                                            <div class="col-md-offset-1 col-md-3">
-                                                                <strong class="pull-left">Amount requested</strong> 
-                                                                <div class="input-group pull-left">
-                                                                    <label class="input-group-addon" for="amountRequested">
-                                                                        <span class="glyphicon glyphicon-euro"></span>                                     
-                                                                    </label>
-                                                                    <input type="text" class="form-control" name="amountRequested" id="amountRequested" placeholder="Amount Requested">    
+                                                            <div class="col-md-3 col-sm-offset-1">
+                                                                <div class="form-group">
+                                                                    <label for="amountRequested" class="pull-left control-label">Amount requested</label> 
+                                                                    <!--<strong class="pull-left">Amount requested</strong>--> 
+                                                                    <div class="input-group pull-left">
+                                                                        <label class="input-group-addon" for="amountRequested">
+                                                                            <span class="glyphicon glyphicon-euro"></span>                                     
+                                                                        </label>
+                                                                        <input type="text" class="form-control" name="amountRequested" id="amountRequested" placeholder="Amount Requested">    
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class='col-md-3 col-md-offset-1'>
-                                                                <label for="appproposedDateOfPublication" class="control-label pull-left">Proposed  publication date</label>
-                                                                <!--                                                                <strong class="pull-left">Proposed  publication date &nbsp;&nbsp;&nbsp; </strong>-->
-                                                                <div class="input-group pull-left" >
-                                                                    <input type="text" name="appproposedDateOfPublication" 
-                                                                           id="appproposedDateOfPublication" 
-                                                                           class="form-control" 
-                                                                           placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="appproposedDateOfPublication">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
-                                                                </div> 
+                                                            <div class='col-md-3'>
+                                                                <div class="form-group">
+                                                                    <label for="amountRequested" class="pull-left control-label">Proposed  publication date </label>
+                                                                    <div class="input-group pull-left" >
+                                                                        <input type="text" name="appproposedDateOfPublication" 
+                                                                               id="appproposedDateOfPublication" 
+                                                                               class="form-control" 
+                                                                               placeholder="DD/MM/YYYY" />    
+                                                                    </div> 
+                                                                </div>
                                                             </div>
 
                                                         </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
-                                                            <div class="col-md-offset-1 col-md-3">        
-                                                                <label for="appplannedPageExtent" class="control-label pull-left">Planned page extent</label>
-                                                                <input id="appplannedPageExtent"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="appplannedPageExtent"  
-                                                                       >
+                                                            <div class="col-md-3 col-sm-offset-1">   
+                                                                <div class="form-group">
+                                                                    <label for="appplannedPageExtent" class="control-label pull-left">Planned page extent</label>
+                                                                    <input id="appplannedPageExtent"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="appplannedPageExtent"  
+                                                                           >
+                                                                </div>
                                                             </div>
 
-                                                            <div class="col-md-3 col-md-offset-1">
-                                                                <label for="appproposedPrintRun" class="control-label pull-left">Proposed print run</label>
-                                                                <input  id="appproposedPrintRun" 
-                                                                        name="appproposedPrintRun" 
-                                                                        type="text"                                                                
-                                                                        class="form-control"                                                            
-                                                                        >
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="appproposedPrintRun" class="control-label pull-left">Proposed print run</label>
+                                                                    <input  id="appproposedPrintRun" 
+                                                                            name="appproposedPrintRun" 
+                                                                            type="text"                                                                
+                                                                            class="form-control"                                                            
+                                                                            >
+                                                                </div>
                                                             </div>
 
                                                             <div class="col-md-4">
-                                                                <label for="award" class="control-label"> &nbsp;<br/>Award &nbsp; &nbsp; &nbsp;</label>
-                                                                <br/> 
-                                                                <input id="award"
-                                                                       type="checkbox"                                
-                                                                       class="form-control"   
-                                                                       value="ticked" 
-                                                                       name="award"     
-                                                                       onclick="return false;"
-                                                                       >
+                                                                <div class="form-group">
+                                                                    <label for="award" class="control-label"> Award </label>
+                                                                    <br/> 
+                                                                    <input id="award"
+                                                                           type="checkbox"                                
+                                                                           class="form-control"   
+                                                                           value="ticked" 
+                                                                           name="award"     
+                                                                           onclick="return false;"
+                                                                           >
+                                                                </div>
                                                             </div>
+
                                                         </div> <!--row-->
 
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px">  
 
-                                                            <div class="col-md-offset-1 col-md-3">
-                                                                <label for="commentsAboutMeeting" class="control-label pull-left">Amount approved</label> 
-                                                                <div class="input-group pull-left">
-                                                                    <label class="input-group-addon" for="amountApproved">
-                                                                        <span class="glyphicon glyphicon-euro"></span>                                     
-                                                                    </label>
-                                                                    <input type="text" class="form-control" name="amountApproved" id="amountApproved" placeholder="Amount Approved">    
+                                                            <div class="col-md-3 col-sm-offset-1">
+                                                                <div class="form-group">
+                                                                    <label for="amountApproved"   class="control-label pull-left">Amount approved<br/> &nbsp;</label> 
+                                                                    <div class="input-group pull-left">
+                                                                        <label class="input-group-addon" for="amountApproved">
+                                                                            <span class="glyphicon glyphicon-euro"></span>                                     
+                                                                        </label>
+                                                                        <input type="text" class="form-control" name="amountApproved" id="amountApproved" placeholder="Amount Approved">    
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
-                                                            <div class='col-md-3 col-md-offset-1'>
-                                                                <label for="commentsAboutMeeting" class="control-label pull-left">Publisher informed of meeting</label>
-                                                                <div class="input-group pull-left">
-                                                                    <input type="text" name="datePublisherInformedOfMeeting" id="datePublisherInformedOfMeeting" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                    <label class="input-group-addon" for="datePublisherInformedOfMeeting">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </label>
-                                                                </div> 
+                                                            <div class='col-md-3'>
+                                                                <div class="form-group">
+                                                                    <label for="datePublisherInformedOfMeeting"  class="control-label pull-left">Publisher informed of meeting</label>
+                                                                    <div class="input-group pull-left">
+                                                                        <input type="text" name="datePublisherInformedOfMeeting" id="datePublisherInformedOfMeeting" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                        <label class="input-group-addon" for="datePublisherInformedOfMeeting">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </label>
+                                                                    </div> 
+                                                                </div>
                                                             </div>
 
                                                             <script>
-                                                                $("#datePublisherInformedOfMeeting").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
+                                                                $("#datePublisherInformedOfMeeting").datepicker().on('change', function () {
+                                                                    $(this).valid(); // triggers the validation test
+                                                                    // '$(this)' refers to '$("#datepicker")'
                                                                 });
                                                             </script>
 
@@ -849,13 +931,13 @@
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
 
-                                                            <div class="col-md-offset-1 col-md-11">
+                                                            <div class="col-md-11 col-sm-offset-1">
                                                                 <label for="commentsAboutMeeting" class="control-label pull-left">Board comments/instructions </label>
-                                                                <textarea id="commentsAboutMeeting" class="form-control" name="commentsAboutMeeting" style="height: 245px; width: 750px" placeholder="'Refuse funding’ , ‘Award €1,000’ , ‘Postpone to next round’ , ‘Request revised sample'"></textarea>
+                                                                <textarea id="commentsAboutMeeting" class="form-control" name="commentsAboutMeeting" style="height: 98px" placeholder="'Refuse funding’ , ‘Award €1,000’ , ‘Postpone to next round’ , ‘Request revised sample'"></textarea>
                                                             </div>
 
                                                             <div class="row"> 
-                                                                <div class='col-xs-12 button-wrapper' style="margin-bottom: 20px;margin-top: 60px"> 
+                                                                <div class='col-md-12 button-wrapper' style="margin-bottom: 40px;margin-top: 60px"> 
                                                                     <!--<div class="btn-group btn-group-toggle" data-toggle="buttons">-->
                                                                     <button class='btn btn-success outline approved' onClick="reply_click(this.id)" type="button" name="Approved"   id="Approved">Approved</button>
                                                                     <button class='btn btn-warning outline withdrawn' onClick="reply_click(this.id)" type="button" name="Withdrawn" id="Withdrawn">Withdrawn</button>
@@ -870,16 +952,18 @@
 
                                                     <!--Contract -->
                                                     <div class="tab-pane" id="contract">
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-8">        
+
+                                                        <div class="row" style="margin-bottom: 60px;margin-top: 30px">
+
+                                                            <div class="col-md-8 col-sm-offset-1">        
                                                                 <label class="control-label">Book cover</label>                                                               
                                                                 <img id="cover" src="" alt="Book Cover" class="img grow ImageBorder form-control" title="Book Cover"/>
                                                             </div>
+
                                                         </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
-                                                            <div class='col-md-4'>
+                                                            <div class='col-md-3 col-sm-offset-1'>
                                                                 <strong class=" pull-left">Contract sent to publisher</strong>
                                                                 <div class="input-group pull-left">
                                                                     <input type="text" name="dateContractSenttoPublisher" id="dateContractSenttoPublisher" class="form-control" placeholder="DD/MM/YYYY" />    
@@ -890,14 +974,13 @@
                                                             </div>
 
                                                             <script>
-                                                                $("#dateContractSenttoPublisher").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
+                                                                $("#dateContractSenttoPublisher").datepicker().on('change', function () {
+                                                                    $(this).valid(); // triggers the validation test
+                                                                    // '$(this)' refers to '$("#datepicker")'
                                                                 });
                                                             </script>
 
-                                                            <div class='col-md-4'>
+                                                            <div class='col-md-3 col-sm-offset-1'>
                                                                 <strong class=" pull-left">Acknowledgement approved</strong>
                                                                 <br/>
                                                                 <div class="input-group">
@@ -909,16 +992,16 @@
                                                             </div>
 
                                                             <script>
-                                                                $("#dateILEAcknowledgementApproved").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
+                                                                $("#dateILEAcknowledgementApproved").datepicker().on('change', function () {
+                                                                    $(this).valid(); // triggers the validation test
+                                                                    // '$(this)' refers to '$("#datepicker")'
                                                                 });
                                                             </script>
                                                         </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
-                                                            <div class='col-md-4'>
+
+                                                            <div class='col-md-3 col-sm-offset-1'>
                                                                 <strong class=" pull-left"> Date published books received</strong>
                                                                 <br/>
                                                                 <div class="input-group">
@@ -930,14 +1013,13 @@
                                                             </div>
 
                                                             <script>
-                                                                $("#datePublishedBooksReceived").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
+                                                                $("#datePublishedBooksReceived").datepicker().on('change', function () {
+                                                                    $(this).valid(); // triggers the validation test
+                                                                    // '$(this)' refers to '$("#datepicker")'
                                                                 });
                                                             </script>
 
-                                                            <div class='col-md-4'>
+                                                            <div class='col-md-3 col-sm-offset-1'>
                                                                 <strong class=" pull-left"> Date Payment Made to Publisher </strong>
                                                                 <br/>
                                                                 <div class="input-group">
@@ -949,17 +1031,17 @@
                                                             </div>
 
                                                             <script>
-                                                                $("#datePaymentMadeToPublisher").datepicker({
-                                                                    showWeekDays: true,
-                                                                    todayHighlight: true,
-                                                                    autoclose: true
+                                                                $("#datePaymentMadeToPublisher").datepicker().on('change', function () {
+                                                                    $(this).valid(); // triggers the validation test
+                                                                    // '$(this)' refers to '$("#datepicker")'
                                                                 });
                                                             </script>
 
                                                         </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
-                                                            <div class="col-md-4">
+
+                                                            <div class="col-md-4 col-sm-offset-1">
                                                                 <label for="paymentReferenceNumber" class="control-label pull-left">Payment reference number</label>
                                                                 <input id="paymentReferenceNumber"
                                                                        type="text"                                
@@ -970,7 +1052,8 @@
                                                         </div> <!--row-->
 
                                                         <div class="row">
-                                                            <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px">
+
+                                                            <div class="pull-left col-sm-offset-1" style="margin-bottom: 20px;margin-top: 30px">
                                                                 <div class="col-md-2">
                                                                     <input id="appProofPaymentToTranslator"
                                                                            type="hidden"                                                             
@@ -1008,9 +1091,11 @@
                                                                     <span class="glyphicon glyphicon-file"></span>
                                                                     Signed Literature <br/> Ireland contract</a>
                                                             </div>
+
                                                         </div> <!--row-->
 
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">  
+
                                                             <div class="form-group">
                                                                 <label for="paymentStatus" >Payment status</label>
                                                                 <div class="col-md-12">
@@ -1022,22 +1107,25 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
+
                                                         </div> <!--row-->
 
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">   
-                                                            <div class="col-md-5"   style="margin-top: 25px; margin-bottom: 40px">
+                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px"> 
+
+                                                            <div class="col-md-5 col-sm-offset-1"   style="margin-top: 25px; margin-bottom: 40px">
                                                                 <strong class="pull-left">&nbsp;</strong>                                                 
                                                                 <label class="btn btn-default pull-left" onclick = "pressCuttingsModal();">
                                                                     <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting" /> 
                                                                     Show press coverage                     
                                                                 </label>
                                                             </div>
+
                                                         </div> <!--row-->
 
-                                                    </div> <!--contract-->
+                                                    </div>   <!--tab-pane" id="contract" -->
                                                 </div> <!--tab content-->
-                                            </div><!--modal body-->
 
+                                            </div><!--modal body-->
                                             <div class="modal-footer"  style="background-color: #c3bcbc">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 <input type="submit" class="btn btn-primary" value="Save changes">
@@ -1059,13 +1147,11 @@
 
                                             <div class="modal-body" style="background-color: #d9d1d1">
 
-                                                <div class="row" style="margin-bottom: 20px;margin-top: 15px"> 
+                                                <div class="row" style="margin-bottom: 20px;margin-top: 5px"> 
                                                     <div class='col-md-6'>
-                                                        <!--<strong class="pull-left">Expert reader</strong>-->
-                                                        <label for="appExpertReader" class="control-label pull-left"> Expert reader</label>
+                                                        <strong class=" pull-left">Expert reader</strong>
                                                         <div class="input-group pull-left">
-                                                            <input type="text" 
-                                                                   name="appExpertReader" 
+                                                            <input type="text" name="appExpertReader" 
                                                                    id="appExpertReader" 
                                                                    class="form-control" 
                                                                    />    
@@ -1075,14 +1161,9 @@
 
                                                 <div class="row" style="margin-top: 30px;margin-bottom: 10px">
                                                     <div class='col-md-4'>
-                                                        <label for="sampleSentOut" class="control-label pull-left"> Sample sent out</label>
+                                                        <strong class=" pull-left"> Sample sent out</strong>
                                                         <div class="input-group pull-left">
-                                                            <input type="text" 
-                                                                   name="sampleSentOut" 
-                                                                   id="sampleSentOut" 
-                                                                   class="form-control" 
-                                                                   placeholder="DD/MM/YYYY" 
-                                                                   />    
+                                                            <input type="text" name="sampleSentOut" id="sampleSentOut" class="form-control" placeholder="DD/MM/YYYY" />    
                                                             <label class="input-group-addon" for="sampleSentOut">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </label>
@@ -1098,8 +1179,7 @@
                                                     </script>
 
                                                     <div class='col-md-4'>
-                                                        <label for="sampleReturned" class="control-label pull-left"> Sample returned</label>
-                                                        <!--<strong class=" pull-left"> Sample returned</strong>-->
+                                                        <strong class=" pull-left"> Sample returned</strong>
                                                         <div class="input-group pull-left">
                                                             <input type="text" name="sampleReturned" id="sampleReturned" class="form-control" placeholder="DD/MM/YYYY" />    
                                                         </div>
@@ -1107,22 +1187,9 @@
                                                 </div> <!--row-->
 
                                                 <div class="row" style="margin-bottom: 20px;">
-
                                                     <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
                                                         <div class="col-md-2">
                                                             <input id="ReadersReport"                                
-                                                                   type="hidden"                                                            
-                                                                   name="ReadersReport"                                
-                                                                   >
-                                                        </div>
-                                                        <a class="btn btn-info" role="button" id="appReadersInvoice" >
-                                                            <span class="glyphicon glyphicon-file"></span>
-                                                            Reader’s Report</a>
-                                                    </div>
-
-                                                    <div class="pull-left" style="margin-bottom: 20px;margin-top: 30px;">  
-                                                        <div class="col-md-2">
-                                                            <input id="ReadersInvoice"                                
                                                                    type="hidden"                                                            
                                                                    name="ReadersReport"                                
                                                                    >
@@ -1133,7 +1200,7 @@
                                                     </div>
 
                                                     <div class="col-md-10">
-                                                        <label for="readerReportSummary" class="control-label pull-left"> Reader’s report summary</label>
+                                                        <label for="readerReportSummary" class="control-label pull-left"> Reader’s report summary1</label>
                                                         <textarea id="readerReportSummary" 
                                                                   class="form-control"                                               
                                                                   name="readerReportSummary"    
@@ -1141,14 +1208,12 @@
                                                                   >                 
                                                         </textarea>
                                                     </div>
-
-                                                </div> <!--row-->                          
-                                            </div>
-                                            <!-- /.modal-body -->
-                                            <div class="modal-footer"  style="background-color: #c3bcbc">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                                            </div>
+                                                </div> <!--row-->  
+                                                <div class="modal-footer"  style="background-color: #c3bcbc">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                                                </div>
+                                            </div><!-- /.modal-body -->
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
@@ -1345,18 +1410,9 @@
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
 
                                                         <div class="col-md-4">
-                                                            <label for="FirstNameExpReader" class="control-label pull-left">First name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                            <label for="FirstNameExpReader" class="control-label pull-left">First name</label>
                                                             <input type="text" class="input-sm" id="FirstNameExpReader"/>
                                                         </div>
-
-                                                        <div class="col-md-1"></div>
-                                                        <!--
-                                                                                                                <div class="col-md-4">
-                                                        
-                                                                                                                    <label for="expertReaderReferenceNumber"> Assign Expert Readers to Reference Number: </label>
-                                                                                                                    <input type="text" class="input-sm" id="expertReaderReferenceNumber"/>
-                                                        
-                                                                                                                </div>-->
                                                     </div>
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
@@ -1368,28 +1424,18 @@
 
                                                     <div class="row" style="margin-bottom: 20px;margin-top: 30px">
                                                         <div class="col-md-4">
-                                                            <label for="EmailExpReader" class="control-label pull-left"> Email</label>
+                                                            <label for="EmailExpReader" class="control-label pull-left"> Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                             <input type="text" class="input-sm" id="EmailExpReader"/>
                                                         </div>
                                                     </div>
-
-
-
-
                                                 </div><!-- modal body -->
 
                                                 <div class="modal-footer"  style="background-color: #c3bcbc">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                                                 </div><!-- modal-footer -->
-
                                             </div><!-- modal-content -->
                                         </div><!-- modal-dialog -->
                                     </div><!-- modal -->
-
-                                    <!--</div>  tab-pane expReader-->
-
-
 
                                     <!--deleteExpReaderModal-->
                                     <div class="modal fade" id="deleteExpReaderModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderModalLabel">
@@ -1443,7 +1489,6 @@
                                     </div><!-- modal -->
 
                                 </div> <!-- tab-pane expReader-->
-
 
                                 <!--Library-->
                                 <div class="tab-pane fade" id="Library">
@@ -1533,15 +1578,18 @@
                                     </div>                             
                                 </div> <!--tab-pane Genres-->
 
+                                <!--Maintenance-->
                                 <div class="tab-pane fade" id="Maintenance">
-                                    <h2>Queries go here</h2>
+                                    <h2>Maintenance</h2>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editEmailTemplatesModal">
-                                        Edit Email Templates
+                                        Edit email templates
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </nav>
+
+
 
                     <!--footer start-->
                     <div id="base">  
@@ -1554,7 +1602,7 @@
                             <a data-toggle="tooltip" data-placement="top" title="Legal Note" >
                                 <i  onclick="showLegalNoteModal();">Legal Note</i></a>
 
-                        </div><!-- end of BaseText div -->  
+                        </div><!-- end of BaseText div -->
 
                         <div class="baselogo-1 hidden-phone"><a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a></div>
                         <div class="baselogo-2 hidden-phone"><a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a></div>
@@ -1563,16 +1611,15 @@
                         <div class="mobile-baselogos visible-phone"> 
                             <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                             <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
-                            <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
+                            <!--<a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                         </div>
                     </div><!-- end of Base div -->
-                </div>
-                <!-- end of container div -->
-                <div class="shadowbase"> </div>
-            </div><!-- end of Shadow container div -->
 
+                </div> <!-- end of container div -->
+                <div class="shadowbase"> </div>
+            </div><!-- shadowholder -->
             <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                &copy; 2017-2019 mgr Software
+                &copy; 2019 mgr Software
             </div>
 
 
@@ -1762,16 +1809,16 @@
                         role="form"                             
                         action="${pageContext.request.contextPath}/AssignExpertReader" 
                         >
-                        <%request.getSession().setAttribute("task", "AssignExpertReader");%>
+                        <%request.getSession().setAttribute( "task", "AssignExpertReader" );%>
 
                         <input type="hidden" name="AssignExpertReader"  class="form-control" value="AssignExpertReader">
                         <div class="modal-header" style="background-color: #c3bcbc">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h4 class="modal-title">Assign expert reader to reference number  <input id="appReferenceNumber1" value="" disabled /></h4>
+                            <h4 class="modal-title">Assign expert reader to reference number  <input id="unassignedERRefNo" value="" disabled /></h4>
                         </div>
                         <div class="modal-body" style="background-color: #d9d1d1">
 
-                            <div class="row" style="margin-bottom: 80px;">  
+                            <div class="row" style="margin-bottom: 20px;">  
                                 <div class='col-md-4'>
                                     <label for="selectUnassignedER" class="pull-left control-label">Select</label>
                                     <select class="selectpicker form-control" id="selectUnassignedER" onchange="selectER();"></select>
@@ -1779,13 +1826,13 @@
                                 <input type="hidden" name="selectedUnassignedER" id="selectedUnassignedER"  class="form-control">
                                 <div class='col-md-4' style="padding-left: 5px">
                                     <label for="unassignedERRefNo"  class="pull-left  control-label">for Reference Number</label>
-                                    <input id="unassignedERRefNo" class="form-control" value="" disabled />
+                                    <input id="unassignedERRefNo1" class="form-control" value="" disabled />
                                 </div>
                             </div> <!--row-->
 
-                            <div class="row" style="margin-bottom: 100px;">  
+                            <div class="row" style="margin-bottom: 20px;">  
                                 <div class='col-md-4'>
-                                    <strong class=" pull-left">Sample sent out</strong>
+                                    <strong class=" pull-left">&nbsp;<br/> Sample sent out</strong>
                                     <div class="input-group pull-left">
                                         <input type="text" name="sampleSentOut" readonly="" id="sampleSentOut1" class="form-control" placeholder="DD/MM/YYYY" />    
                                     </div>
@@ -1808,11 +1855,11 @@
                                 </script>
                             </div> <!--row-->
                             <input type="hidden" name="NewAssignedERRefNo" id="NewAssignedERRefNo"  class="form-control">
-                        </div>
-                        <div class="modal-footer"  style="background-color: #c3bcbc">
                             <input type="hidden" name="userID" value="${userID}">
                             <input type="hidden" name="publisherID" value="${publisherID}">
                             <input type="hidden" name="Company" value="${companyDetails.Company}">
+                        </div>
+                        <div class="modal-footer"  style="background-color: #c3bcbc">                            
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" >Assign expert reader</button>
                         </div>
@@ -1823,7 +1870,7 @@
 
         <!--pressCuttingsModal-->
         <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #c3bcbc">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -1836,11 +1883,13 @@
 
                             <output id="result">Press coverage</output>
                             <div id="pressCoverageTag"></div>
+
                         </div>
-                    </div>
+                    </div><!-- modal body -->
 
                     <div class="modal-footer"  style="background-color: #c3bcbc">                      
                         <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                     </div> <!--modal footer -->
                 </div> <!--modal content-->          
             </div> <!--modal dialog-->
@@ -1913,7 +1962,6 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
-
         <!--deleteExpReaderSuccessModal-->
         <div class="modal fade" id="deleteExpReaderSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteExpReaderSuccessModalLabel"  data-modal-index="3">
 
@@ -1945,7 +1993,6 @@
                 </div><!-- modal-content -->
             </div><!-- modal-dialog -->
         </div><!-- modal -->
-
 
         <!--addGenreSuccessModal-->
         <div class="modal fade" id="addGenreSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addGenreSuccessModalLabel"  data-modal-index="3">
@@ -2162,6 +2209,7 @@
             </div> <!-- modal -->
         </form>     
 
+        <!--image-gallery-->
         <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="image-gallery-title" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -2283,114 +2331,147 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
-        <div class="modal fade" id="editEmailTemplatesModal" tabindex="-1" role="dialog" aria-labelledby="editEmailTemplatesModalLabel" aria-hidden="true">
+        <!--editEmailTemplatesModal-->
+        <div class="modal fade" id="editEmailTemplatesModal" tabindex="-1" role="dialog" aria-labelledby="editEmailTemplatesModalLabel" aria-hidden="true"   data-modal-index="4">
             <div class="modal-dialog  modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header"  style="background-color: #d9d1d1;">
+                    <div class="modal-header" style="background-color: #c3bcbc">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <h5 class="modal-title" id="editEmailTemplatesModalLabel">Edit email templates</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
                     <div class="modal-body" style="background-color: #d9d1d1">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="selectTemplate">
-                                    <h2>Select email template</h2>
-                                    <div id="selectTemplate" class="templateSelector"></div>
+                        <form action="templateHandler" method="GET">
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    <div class="selectTemplate">
+                                        <h2>Select email template</h2>
+                                        <div id="selectTemplate" class="templateSelector" ></div>
+                                    </div>
+
+                                    <div class="selectParameter" style="margin-left: 20px">
+                                        <h2>Select email parameter</h2>
+                                        <table width="100%" >
+
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align:left">From:&nbsp;</td>
+                                                    <td>&nbsp;</td>                              
+                                                    <td style="text-align:left">
+                                                        <select id="from" name="from"></select>
+                                                    </td>
+                                                </tr>
+                                                <!--                                                <tr>
+                                                                                                    <td style="text-align:left">Salutation:&nbsp;</td>
+                                                                                                    <td>&nbsp;</td>                                                
+                                                                                                    <td style="text-align:left">
+                                                                                                        <select id="salutation" name="salutation" onchange="onchange_action();">
+                                                                                                            <option value="First_Name" selected>First name</option>
+                                                                                                            <option value="Last_Name">Last name</option>
+                                                                                                            <option value="Full_Name">Full name</option>
+                                                                                                        </select>
+                                                                                                    </td>     -->                                    
+                                                <tr> 
+                                                    <td style="text-align:left">Salutation:&nbsp;</td>
+                                                    <td>&nbsp;</td>                                           
+                                                    <td style="text-align:left"> 
+                                                        <c:set var="selectedRole" value='${requestScope["selectedRole"]}' />
+                                                        <c:set var="grades" value="First_Name,Last_Name,Full_Name" scope="application" />
+                                                        <select class="grade" title="Grade Obtained">
+                                                            <c:forEach items="${fn:split(grades, ',')}" var="grade">
+                                                                <option value="${grade}" ${grade == selectedRole ? 'selected' : ''}>${grade}</option>
+                                                            </c:forEach>
+                                                        </select>
+
+                                                    </td>
+
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
                                 </div>
-                            </div>
-                            <!--                        </div>
-                                                    <div class="row">-->
-                            <div class="col-md-8">
-                                <form action="${pageContext.request.contextPath}/templateHandler" method="GET">
+
+                                <div class="col-md-8">
+
                                     <input type="hidden" id="fileName" name="fileName">
+
                                     <textarea name="editor1" id="editor1" rows="20" cols="70"></textarea>  
-                                </form>
-                            </div>
-                        </div> 
+
+                                </div>
+                            </div> 
+                        </form>
                     </div>
-                    <div class="modal-footer"  style="background-color: #c3bcbc;">   
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>                   
+                    <div class="modal-footer"  style="background-color: #c3bcbc;"> 
+                        <div class="input-group">
+                            <form action="emailWithHTMLTemplate" method="POST">
+                                <input type="hidden" id="emailTemplateSelected" name="emailTemplateSelected">                        
+                                <button class="btn btn-secondary" type="submit" name="SendTest">Send test email</button>  &nbsp; &nbsp; &nbsp;   
+                            </form>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" id="showInstructionsModalBtn" data-toggle="modal" data-target="#showInstructionsModal">Open instructions</button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!--showInstructionsModal-->
+        <div class="modal fade" id="showInstructionsModal" tabindex="-1" role="dialog" aria-labelledby="showInstructionsModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header"   style="background-color: #c3bcbc">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h1 class="modal-title" id="showInstructionsModalLabel">Edit template instructions</h1>
+                    </div>
+                    <div class="modal-body" style="background-color: #d9d1d1">
 
+                        <div class="container-fluid">
+                            <div id="contentarea1">
+                                <div class="textpadding">
+                                    <div class="typography">
+                                        <h4>Select email template</h4>
+                                        <p>Select a template on the left.
+                                            As soon you clicked on the link the template's text is displayed in the editor</p>
+                                        <p>Now you can edit the text. When you're done click on the <img src="assets/js/ckeditor/plugins/save/icons/save.png" width="16" height="16" alt="save icon"/>
+                                            icon to save the edited template</p>
+                                        <p> </p>
+                                        <h4>Change sender of email</h4>
+                                        <p>In order to change the sender select the user on the left 'Select email parameter'.</p>
+                                        <p>Only Literature Ireland Staff that have been registered with the application can be selected </p>
+                                        <p> </p>
+                                        <h4>Change the salutation</h4>
+                                        <p>You can change the salutation on the left.</p>
+                                        <p>Available salutations are: Full Name, First Name, Last Name </p>
+                                        <p> </p>     
+                                        <h4>Testing</h4>
+                                        <p>You can test the changes by sending an email to the user id you're logged in as : ${email}</p>
+                                        <p></p>
+                                        <p> </p>   
+                                        <h4>Limitations</h4>
+                                        <p>Do NOT change links or parameters that are all in upper case (i.e. LOGIN)  </p>  
+                                        <p> </p>  
+                                    </div><!-- end of typography div -->
+                                </div><!-- end of text padding div -->
+                            </div><!-- end of contentarea div -->
+                        </div>
+                    </div><!-- modal body -->
+                    <div class="modal-footer"  style="background-color: #c3bcbc;">                                            
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div><!-- modal-footer -->
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
 
-        <!--loadXMLDocER-->
-        <script type="text/javascript">
-            function loadXMLDocER()
-            {
-                var xmlhttp;
-                var uname = document.getElementById("uname").value;
-                var urls = "checkusername.jsp?uname=" + uname;
-                if (window.XMLHttpRequest)
-                {
-                    xmlhttp = new XMLHttpRequest();
-                } else
-                {
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function ()
-                {
-                    if (xmlhttp.readyState === 4)
-                    {
-                        document.getElementById("error").innerHTML = xmlhttp.responseText;
-                    }
-                };
-                xmlhttp.open("GET", urls, true);
-                xmlhttp.send();
-            }
-            ;
-        </script>
-
-        <!--loadXMLDocStaff-->
-        <script type="text/javascript">
-            function loadXMLDocStaff()
-            {
-                var xmlhttp;
-                var uname = document.getElementById("StaffUname").value;
-                var urls = "checkusername.jsp?uname=" + uname;
-                if (window.XMLHttpRequest)
-                {
-                    xmlhttp = new XMLHttpRequest();
-                } else
-                {
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function ()
-                {
-                    if (xmlhttp.readyState === 4)
-                    {
-                        document.getElementById("error").innerHTML = xmlhttp.responseText;
-                    }
-                };
-                xmlhttp.open("GET", urls, true);
-                xmlhttp.send();
-            }
-            ;
-        </script>
         <script src="js/bootstrap-imageupload.js"></script>
-
         <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
-            function  showInfoModal() {
-                $("#showInfoModal").modal("show");
-            }
-            function  showNotesModal() {
-                $("#showNotesModal").modal("show");
-            }
-            function  contactUsModal() {
-                $("#contactUsModal").modal("show");
-            }
-            function  showLegalNoteModal() {
-                $("#showLegalNoteModal").modal("show");
-            }
-            $(replaceEditor);
-            $(selectTemplate);
+                                    var $imageupload = $('.imageupload');
+                                    $imageupload.imageupload();
+                                    $(replaceEditor);
+                                    $(selectTemplate);
         </script>
     </body>
 </html>

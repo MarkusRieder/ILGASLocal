@@ -34,6 +34,7 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
+           <script src="https://unpkg.com/xregexp/xregexp-all.js"></script>
         <script src="js/register.js"></script>
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>
