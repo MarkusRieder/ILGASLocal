@@ -19,7 +19,7 @@ public class LoginService {
             Class.forName( "com.mysql.jdbc.Driver" );
 
             //creating connection with the database 
-            Connection conn = DriverManager.getConnection( "jdbc:mysql://www.literatureirelandgrantapplication.com:3306/ILGAS", "markus", "ankh573" );
+            Connection conn = DriverManager.getConnection( "jdbc:mysql://www.literatureirelandgrantapplication.com:3306/ILGAS?useSSL=false", "markus", "T6Sv0m3kTAPQZLX4KTIHAw2qgIYLXMMWU2NwYfmNLJr44PDUEJ" );
             PreparedStatement pst = conn.prepareStatement( "Select userID, uname, lastLogon, first_name, last_name,password,email,function,role  FROM ILGAS.users WHERE uname=? AND password=?" );
 
             pst.setString( 1, username );

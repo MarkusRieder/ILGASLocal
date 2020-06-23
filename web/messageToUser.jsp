@@ -6,7 +6,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page session="true"%>
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html style="height: 100%" >
     <head>
@@ -92,7 +92,7 @@
                         <div class="col-sm-8">
                             <p style="margin-bottom: 100px; margin-top: 70px;">
                                 <%
-                                    String message = (String) request.getAttribute(GlobalConstants.MESSAGE);
+                                    String message = ( String ) request.getAttribute( GlobalConstants.MESSAGE );
                                 %>
                                 <%=message%>
                             </p>
@@ -127,14 +127,16 @@
 
                 </div><!-- end of Base div -->
 
+                <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                    &copy; 2017-2020 mgr Software
+                </div>
+
             </div><!-- end of container div -->
+
             <div class="shadowbase"> </div>
+
         </div><!-- end of Shadow container div -->
 
-
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 

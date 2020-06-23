@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page session="true"%>
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html style="height: 100%" >
     <head>
@@ -30,11 +30,12 @@
 
         <script src="js/jquery-1.11.3.min.js"></script>
 
+        <!--<script src="js/index.js"></script>-->
         <script src="js/bootstrap.js"></script>
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
-           <script src="https://unpkg.com/xregexp/xregexp-all.js"></script>
+        <script src="https://unpkg.com/xregexp/xregexp-all.js"></script>
         <script src="js/register.js"></script>
         <script src="js/bootstrap-validator.js"></script>
         <script src="js/jquery.validate.js"></script>
@@ -159,6 +160,7 @@
             }
         </script>
 
+
         <!--clear all checkboxes onload-->
         <script type="text/javascript">
             function deCheckboxValue() {
@@ -211,9 +213,16 @@
                 }
             }
         </script>
+
+        <script>
+            window.onload = deCheckboxValue;
+
+//            document.getElementById("login-username").focus();
+        </script>
+
     </head>
 
-    <body style="height: 100%" onload="deCheckboxValue();"> 
+    <body style="height: 100%"> 
 
         <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -264,19 +273,19 @@
                                       role="form" 
                                       >
 
-                                    <div style="margin-bottom: 25px" class="input-group">
+                                    <div style="margin-bottom: 25px" class="input-group col-sm-9">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                         <input id="login-username" 
                                                type="text" 
                                                class="form-control" 
                                                name="username" 
                                                value="" 
-                                               placeholder="username"
+                                               placeholder="Enter your username"
                                                >   
 
                                     </div>
 
-                                    <div style="margin-bottom: 25px" class="input-group">
+                                    <div style="margin-bottom: 25px" class="input-group col-sm-9">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                                         <input id="lpassword" 
                                                type="password" 
@@ -284,10 +293,10 @@
                                                name="password" 
                                                data-toggle="password"  
                                                data-placement="after" 
-                                               placeholder="password"
+                                               placeholder="Enter your password"
                                                >
 
-                                        <div class="help-block with-errors"></div>
+                                        <!--                                        <div class="help-block with-errors"></div>-->
                                     </div>
 
                                     <div style="margin-top:10px" class="form-group">
@@ -578,6 +587,7 @@
                             } else {
                                 blockUi();
                                 // everything looks good!
+
                                 $.post("RegisterServlet", $("#register-form").serialize(), function (data) {
                                     var jdata = JSON.parse(data);
                                     if (jdata.code === -1) {
@@ -590,6 +600,7 @@
                                         $("#successField").show();
                                         $("#formRegister").hide();
                                     }
+
                                 }).always(function () {
                                     unBlockUi();
                                 });
@@ -653,6 +664,8 @@
                     };
                 </script>
 
+
+
                 <!--footer start-->
 
                 <div id="base">  
@@ -677,16 +690,19 @@
                         <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
                     </div>
 
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
+
                 </div><!-- end of Base div -->
 
+
             </div><!-- end of container div -->
+
             <div class="shadowbase"> </div>
+
         </div><!-- end of Shadowholder container div -->
 
-
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
@@ -795,6 +811,8 @@
             function  showLegalNoteModal() {
                 $("#showLegalNoteModal").modal("show");
             }
+            document.getElementById("login-username").focus();
         </script>
+
     </body>
 </html>

@@ -22,9 +22,9 @@ public class DataSource {
 
     private static DataSource ds = null;
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://literatureirelandgrantapplication.com:3306/ILGAS";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/ILGAS?useSSL=false";
     private static final String USER = "markus";
-    private static final String PASS = "ankh573";
+    private static final String PASS = "T6Sv0m3kTAPQZLX4KTIHAw2qgIYLXMMWU2NwYfmNLJr44PDUEJ";
 
     public DataSource()
     {

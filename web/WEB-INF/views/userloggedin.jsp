@@ -254,7 +254,7 @@
 
                 </div> <!--  End of topbar div -->
 
-                <h1 align="center" style="align-content: center">userloggedin Translation Grant Application System for Literature Ireland</h1>
+                <h1 align="center" style="align-content: center">userloggedin.jsp  Translation Grant Application System for Literature Ireland</h1>
 
                 <div class="container-fluid">
 

@@ -143,7 +143,11 @@
                 <!--container for welcome/logout-->
                 <div class="container-fluid" >
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" value="${username}">
+                        </form>
                     </div>
                 </div> <!--container for welcome/logout-->
 
@@ -213,6 +217,10 @@
                         <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
+
                 </div><!-- end of Base div -->
 
             </div><!-- end of container div -->
@@ -220,9 +228,7 @@
         </div><!-- end of Shadow container div -->
 
 
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
+
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 

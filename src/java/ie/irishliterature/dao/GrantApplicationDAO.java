@@ -28,15 +28,13 @@ public class GrantApplicationDAO {
     static String yearInString = String.valueOf( year );
 
     // selectApplication
-    public static GrantApplication selectApplication( String ReferenceNumber ) throws DBException
-    {
+    public static GrantApplication selectApplication( String ReferenceNumber ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         GrantApplication application = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select ReferenceNumber"
@@ -71,10 +69,8 @@ public class GrantApplicationDAO {
 
             ps.setString( 1, ReferenceNumber );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     application = new GrantApplication();
 
                     application.setReferenceNumber( res.getString( 1 ) );
@@ -109,8 +105,7 @@ public class GrantApplicationDAO {
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             LOGGER.debug( e.getMessage() );
             throw new DBException( "1 Excepion while accessing database" );
@@ -120,31 +115,26 @@ public class GrantApplicationDAO {
     }
 
     // isApplicationNumberExists
-    public static boolean isReferenceNumberExists( int ReferenceNumber ) throws DBException
-    {
+    public static boolean isReferenceNumberExists( int ReferenceNumber ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select 1 from ILGAS.GrantApplication where ReferenceNumber = ?" );
 
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     verified = true;
                 }
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "3 Excepion while accessing database" );
@@ -154,8 +144,7 @@ public class GrantApplicationDAO {
     }
 
     // insertRow
-    public static String insertRow( GrantApplication application ) throws DBException, MessagingException
-    {
+    public static String insertRow( GrantApplication application ) throws DBException, MessagingException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
@@ -173,8 +162,7 @@ public class GrantApplicationDAO {
 
         System.out.println( " DAO  ReferenceNumber: " + ReferenceNumber );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -198,8 +186,6 @@ public class GrantApplicationDAO {
                     + "translatorFee,\n"
                     + "breakDownTranslatorFee,\n"
                     + "Notes,\n"
-                    + "copiesSent,\n"
-                    + "dateCopiesWereSent,\n"
                     + "Original,\n"
                     + "OriginalName,\n"
                     + "copiesTranslationSample,\n"
@@ -229,7 +215,7 @@ public class GrantApplicationDAO {
                     + "award,\n"
                     + "salesFigures,\n"
                     + "amountRequested,\n"
-                    + "created)  values  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
+                    + "created)  values  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" );
             //                                              1                   2                   3                   4                   5                   6
             //                            1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0      
             //  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -253,52 +239,38 @@ public class GrantApplicationDAO {
             ps1.setBigDecimal( 17, application.getTranslatorFee() );
             ps1.setString( 18, application.getBreakDownTranslatorFee() );
             ps1.setString( 19, application.getBookNotes().trim() );
-            ps1.setInt( 20, application.getCopiesSent() );
-            ps1.setDate( 21, sqlDate( application.getDateCopiesWereSent() ) );
-            ps1.setString( 22, application.getOriginal() );
-            ps1.setString( 23, application.getOriginalName() );
-            ps1.setString( 24, application.getCopiesTranslationSample() );
-            ps1.setString( 25, application.getCopiesTranslationSampleDocName() );
-            ps1.setInt( 26, application.getTC_ACCEPTED() );
-            ps1.setInt( 27, application.getGdprACCEPTED() );
-            ps1.setInt( 28, application.getAPPROVED() );
-            ps1.setString( 29, application.getStatus() );
-            ps1.setString( 30, application.getCover() );
-            ps1.setString( 31, application.getCoverName() );
-//            ps1.setDate(31, sqlDate(application.getOriginalDateOfPublication()));
-            ps1.setString( 32, application.getOriginalLanguage() );
-            ps1.setInt( 33, application.getOriginalPageExtent() );
-            ps1.setString( 34, application.getCountryOfPublication() );
-            ps1.setString( 35, application.getForeignPublisher() );
-            ps1.setString( 36, application.getForeignCountry() );
-            ps1.setString( 37, application.getTargetLanguage() );
-            ps1.setString( 38, ( application.getPublicationYear() ) );
-            //    System.out.println("getBoardMeeting:  " + application.getBoardMeeting());
-            //  ps1.setDate(38, sqlDate(application.getBoardMeeting()));
-            //      ps1.setBigDecimal(37, application.getAmountRequested());
-            //      ps1.setBigDecimal(39, application.getAmountApproved());
-            //        System.out.println("getPublisherInformedOfMeeting:  " + application.getPublisherInformedOfMeeting());
-            //        ps1.setDate(41, sqlDate(application.getPublisherInformedOfMeeting()));
-            //     ps1.setString(39, application.getBoardComments_Instructions());
-            //      ps1.setDate(43, sqlDate(application.getContractSentToPublisher()));
-            //      ps1.setDate(44, sqlDate(application.getAcknowledgementApproved()));
-            //      ps1.setDate(45, sqlDate(application.getDatePublishedBooksReceived()));
-            //      ps1.setDate(46, sqlDate(application.getDatePaymentMadeToPublisher()));
-            ps1.setString( 39, application.getPaymentReferenceNumber() );
-            ps1.setString( 40, application.getAddendumRightsAgreement() );
-            ps1.setString( 41, application.getAddendumRightsAgreementName() );
-            ps1.setString( 42, application.getProofOfPaymentToTranslator() );
-            ps1.setString( 43, application.getProofOfPaymentToTranslatorName() );
-            ps1.setString( 44, application.getBankDetailsForm() );
-            ps1.setString( 45, application.getBankDetailsFormName() );
-            ps1.setString( 46, application.getSignedLIContract() );
-            ps1.setString( 47, application.getSignedLIContractName() );
-            // ps1.setString(49, application.getPaymentStatus());
-            // ps1.setString(57, application.getPreviousGrantAid());
-            ps1.setInt( 48, application.getAward() );
-            ps1.setInt( 49, application.getSalesFigures() );
-            ps1.setBigDecimal( 50, application.getAmountRequested() );
-            ps1.setTimestamp( 51, getCurrentTimeStamp() );
+//            ps1.setInt( 20, application.getCopiesSent() );
+//            ps1.setDate( 21, sqlDate( application.getDateCopiesWereSent() ) );
+            ps1.setString( 20, application.getOriginal() );
+            ps1.setString( 21, application.getOriginalName() );
+            ps1.setString( 22, application.getCopiesTranslationSample() );
+            ps1.setString( 23, application.getCopiesTranslationSampleDocName() );
+            ps1.setInt( 24, application.getTC_ACCEPTED() );
+            ps1.setInt( 25, application.getGdprACCEPTED() );
+            ps1.setInt( 26, application.getAPPROVED() );
+            ps1.setString( 27, application.getStatus() );
+            ps1.setString( 28, application.getCover() );
+            ps1.setString( 29, application.getCoverName() );
+            ps1.setString( 30, application.getOriginalLanguage() );
+            ps1.setInt( 31, application.getOriginalPageExtent() );
+            ps1.setString( 32, application.getCountryOfPublication() );
+            ps1.setString( 33, application.getForeignPublisher() );
+            ps1.setString( 34, application.getForeignCountry() );
+            ps1.setString( 35, application.getTargetLanguage() );
+            ps1.setString( 36, ( application.getPublicationYear() ) );
+            ps1.setString( 37, application.getPaymentReferenceNumber() );
+            ps1.setString( 38, application.getAddendumRightsAgreement() );
+            ps1.setString( 39, application.getAddendumRightsAgreementName() );
+            ps1.setString( 40, application.getProofOfPaymentToTranslator() );
+            ps1.setString( 41, application.getProofOfPaymentToTranslatorName() );
+            ps1.setString( 42, application.getBankDetailsForm() );
+            ps1.setString( 43, application.getBankDetailsFormName() );
+            ps1.setString( 44, application.getSignedLIContract() );
+            ps1.setString( 45, application.getSignedLIContractName() );
+            ps1.setInt( 46, application.getAward() );
+            ps1.setInt( 47, application.getSalesFigures() );
+            ps1.setBigDecimal( 48, application.getAmountRequested() );
+            ps1.setTimestamp( 49, getCurrentTimeStamp() );
 
             System.out.println( "ps1:  1: " + ps1 );
             ps1.executeUpdate();
@@ -306,10 +278,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
 //                    System.out.println("GrantApplicationDAO id::   " + id);
@@ -320,8 +290,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -344,8 +313,7 @@ public class GrantApplicationDAO {
         return ReferenceNumber;
     }
 
-    public static int insertAuthors( String ReferenceNumber, String Name, String FirstName, String LastName ) throws DBException
-    {
+    public static int insertAuthors( String ReferenceNumber, String Name, String FirstName, String LastName ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -356,8 +324,7 @@ public class GrantApplicationDAO {
 
         System.out.println( "insertAuthors --------------->>  ReferenceNumber " + ReferenceNumber + " Name " + Name + " FirstName  " + FirstName + " LastName " + LastName );
 
-        try
-        {
+        try {
 
             /*
              * check if Author exists
@@ -367,8 +334,7 @@ public class GrantApplicationDAO {
             /*
              * if not insert the new Author
              */
-            if ( idAuthor == 0 )
-            {
+            if ( idAuthor == 0 ) {
 
                 /*
                  * Name, FirstName, LastName
@@ -401,10 +367,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
 
@@ -415,8 +379,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
@@ -426,8 +389,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertTranslators( String ReferenceNumber, String Name, String Title, String moveFile, String moveFileName, String copiesTranslationSample, String copiesTranslationSampleDocName ) throws DBException
-    {
+    public static int insertTranslators( String ReferenceNumber, String Name, String Title, String moveFile, String moveFileName, String copiesTranslationSample, String copiesTranslationSampleDocName ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -436,17 +398,19 @@ public class GrantApplicationDAO {
         int idTranslator = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "insertTranslators......................:" );
 
-            //check if Translator exists
+            /*
+             * check if Translator exists
+             */
             idTranslator = ifTranslatorExist( Name );
 
-            //if not insert the new Translator
-            if ( idTranslator == 0 )
-            {
+            /*
+             * if not insert the new Translator
+             */
+            if ( idTranslator == 0 ) {
                 // idTranslatorTrack, idTranslator, Author, Title, ReferenceNumber
                 idTranslator = insertNewTranslator( Name );
 
@@ -454,18 +418,23 @@ public class GrantApplicationDAO {
 
             }
 
-            // then:
+            /*
+             * then:
+             */
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
-            // got idTranslator now ...
-            // check if we already have a record
+            /*
+             * got idTranslator now ...
+             * check if we already have a record
+             */
             int translatorTrackRecord = ifTranslatorTrackExist( idTranslator, ReferenceNumber, Title );
             System.out.println( ">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator );
 
-            // if yes update TranslatorTrack      
-            if ( translatorTrackRecord > 0 )
-            {
+            /*
+             * if yes update TranslatorTrack
+             */
+            if ( translatorTrackRecord > 0 ) {
 
                 System.out.println( "insertTranslators UPDATE ......................:" );
 
@@ -482,12 +451,13 @@ public class GrantApplicationDAO {
                 ps1.setInt( 5, translatorTrackRecord );
 
             }
-            else
-            {
+            else {
 
                 System.out.println( "insertTranslators INSERT ......................:" );
 
-                // if no insert into TranslatorTrack  
+                /*
+                 * if no insert into TranslatorTrack
+                 */
                 ps1 = conn.prepareStatement( "INSERT INTO  ILGAS.TranslatorTrack"
                         + "(idTranslator,\n"
                         + "Title,\n"
@@ -505,17 +475,18 @@ public class GrantApplicationDAO {
                 ps1.setString( 6, copiesTranslationSample );
                 ps1.setString( 7, copiesTranslationSampleDocName );
 
-            } // else
+            }
+            /*
+             * else
+             */
 
             ps1.executeUpdate();
 
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -526,8 +497,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -536,8 +506,10 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertAgreement( String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    /*
+     * Agreement with the translation rights holder
+     */
+    public static int insertAgreement( String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -546,68 +518,103 @@ public class GrantApplicationDAO {
         int idTranslator = 0;
         ResultSet res = null;
         System.out.println( "insertAgreement......................:" );
-        try
-        {
 
-            //check if Translator exists
-            idTranslator = ifTranslatorExist( Name );
+        System.out.println( "insertAgreement.....ReferenceNumber: " + ReferenceNumber );
+        System.out.println( "insertAgreement.....Name: " + Name );
+        System.out.println( "insertAgreement.....Title: " + Title );
+        System.out.println( "insertAgreement.....moveFileName: " + moveFileName );
+        System.out.println( "insertAgreement.....moveFileNameReplaced: " + moveFileNameReplaced );
 
-            //if not insert the new Translator
-            if ( idTranslator == 0 )
-            {
-                // idTranslatorTrack, idTranslator, Author, Title, ReferenceNumber
-                idTranslator = insertNewTranslator( Name );
+        try {
 
-                System.out.println( ">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator );
-
-            }
-
-            // then:                        
+            /*
+             * Method updaterightsHolderArrayContent
+             * inserts rightsHolderArrayContent
+             * that is:
+             * ReferenceNumber
+             * TranslationRightsHolderName
+             *
+             * now we need to insert the Agreement
+             *
+             */
+//            
+//           
+//                            
+//            , 
+//
+//            # idTranslationRightsHolder, ReferenceNumber, TranslationRightsHolderName, Agreement, AgreementDocName, AddendumRightsAgreement, AddendumRightsAgreementName
+//            '134', '45/2020',  'SunshineTrans Ltd', NULL, NULL, NULL
+//            , NULL we insert translation rights holder
+//            both translation rights holder will get the same Agreement //if not insert the new Translator
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
-            // got idTranslator now ...
-            // check if we already have a record
-            int translatorTrackRecord = ifTranslatorTrackExist( idTranslator, ReferenceNumber, Title );
-            System.out.println( ">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator );
+            /*
+             * we check if we do have rightsHolderArrayContent in table
+             * TranslationRightsHolder
+             */
+            if ( rightsHolderArrayContent( ReferenceNumber ) ) {
 
-            // if yes update TranslatorTrack      
-            if ( translatorTrackRecord > 0 )
-            {
-
+                /*
+                 * if yes we update the record with the Agreement
+                 */
                 System.out.println( "insertAgreement UPDATE ......................:" );
-                System.out.println( "insertAgreement UPDATE .......translatorTrackRecord...............: " + translatorTrackRecord );
-                System.out.println( "insertAgreement UPDATE .......idTranslator...............: " + idTranslator );
-
-                ps1 = conn.prepareStatement( "UPDATE ILGAS.TranslatorTrack "
+                System.out.println( "insertAgreement UPDATE .......idTranslator...............: " + ReferenceNumber );
+                System.out.println( "insertAgreement UPDATE .......moveFileNameReplaced...............: " + moveFileNameReplaced );
+                System.out.println( "insertAgreement UPDATE .......AgreementDocName...............: " + moveFileName );
+//idTranslationRightsHolder, ReferenceNumber, TranslationRightsHolderName, Agreement, AgreementDocName, 
+//AddendumRightsAgreement, AddendumRightsAgreementName
+//                ps1 = conn.prepareStatement( "UPDATE ILGAS.TranslatorTrack "
+//                        + "SET  "
+//                        + "Agreement = ?, AgreementDocName = ?  "
+//                        + "WHERE idTranslator = ? AND  idTranslatorTrack = ?" );
+                ps1 = conn.prepareStatement( "UPDATE ILGAS.TranslationRightsHolder "
                         + "SET  "
                         + "Agreement = ?, AgreementDocName = ?  "
-                        + "WHERE idTranslator = ? AND  idTranslatorTrack = ?" );
+                        + "WHERE ReferenceNumber = ? " );
 
                 ps1.setString( 1, moveFileNameReplaced );
                 ps1.setString( 2, moveFileName );
-                ps1.setInt( 3, idTranslator );
-                ps1.setInt( 4, translatorTrackRecord );
+                ps1.setString( 3, ReferenceNumber );
+//                ps1.setInt( 4, translatorTrackRecord );
+
+                System.out.println( "insertAgreement UPDATE ps1...............: " + ps1 );
 
             }
-            else
-            {
+            else {
+                /*
+                 * this should not be reched but to make sure we'll insert
+                 * ReferenceNumber
+                 * TranslationRightsHolderName
+                 * if it does not exist
+                 */
+                
 
+                
+               idTranslator = ifTranslatorExist( Name );
+                
+                
                 System.out.println( "insertAgreement INSERT ......................:" );
-
+//idTranslatorTrack, idTranslator, ReferenceNumber, Title, translatorCV, translatorCVDocName, copiesTranslationSample, copiesTranslationSampleDocName, Agreement, AgreementDocName, Contract, ContractDocName, AddendumRightsAgreement, AddendumRightsAgreementName
                 // if no insert into TranslatorTrack      
-                ps1 = conn.prepareStatement( "INSERT INTO  ILGAS.TranslatorTrack"
-                        + "(idTranslator,\n"
-                        + "Title,\n"
+//                ps1 = conn.prepareStatement( "INSERT INTO  ILGAS.TranslatorTrack"
+//                        + "(idTranslator,\n"
+//                        + "Title,\n"
+//                        + "ReferenceNumber,\n"
+//                        + "Agreement,\n"
+//                        + "AgreementDocName) values (?,?,?,?,?)" );
+                ps1 = conn.prepareStatement( "INSERT INTO  ILGAS.TranslationRightsHolder"
+                        + "(TranslationRightsHolderName,\n"
                         + "ReferenceNumber,\n"
                         + "Agreement,\n"
-                        + "AgreementDocName) values (?,?,?,?,?)" );
+                        + "AgreementDocName) values (?,?,?,?)" );
 
-                ps1.setInt( 1, idTranslator );
-                ps1.setString( 2, Title );
-                ps1.setString( 3, ReferenceNumber );
-                ps1.setString( 4, moveFileNameReplaced );
-                ps1.setString( 5, moveFileName );
+                ps1.setString( 1, Name );
+                ps1.setString( 2, ReferenceNumber );
+                ps1.setString( 3, moveFileNameReplaced );
+                ps1.setString( 4, moveFileName );
+
+                System.out.println( "insertAgreement INSERT ps1..............: " + ps1 );
 
             } // else
 
@@ -616,10 +623,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -630,18 +635,16 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
-            throw new DBException( "4 Excepion while accessing database" );
+            throw new DBException( "4 insertAgreement Excepion while accessing database" );
         }
 
         return id;
     }
 
-    public static int insertContract( String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int insertContract( String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -650,67 +653,76 @@ public class GrantApplicationDAO {
         int idTranslator = 0;
         ResultSet res = null;
 
-        try
-        {
+        System.out.println( "insertContract......................:" );
 
-            System.out.println( "insertContract......................:" );
+        System.out.println( "insertContract.....ReferenceNumber: " + ReferenceNumber );
+        System.out.println( "insertContract.....Name: " + Name );
+        System.out.println( "insertContract.....Title: " + Title );
+        System.out.println( "insertContract.....moveFileName: " + moveFileName );
+        System.out.println( "insertContract.....moveFileNameReplaced: " + moveFileNameReplaced );
 
-            //check if Translator exists
-            idTranslator = ifTranslatorExist( Name );
+        try {
 
-            //if not insert the new Translator
-            if ( idTranslator == 0 )
-            {
-                // idTranslatorTrack, idTranslator, Author, Title, ReferenceNumber
-                idTranslator = insertNewTranslator( Name );
-
-                System.out.println( ">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator );
-
-            }
-
-            // then:            
+            /*
+             * Method updaterightsHolderArrayContent
+             * inserts rightsHolderArrayContent
+             * that is:
+             * ReferenceNumber
+             * TranslationRightsHolderName
+             *
+             * now we need to insert the Contract
+             *
+             */
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
-            // got idTranslator now ...
-            // check if we already have a record
-            int translatorTrackRecord = ifTranslatorTrackExist( idTranslator, ReferenceNumber, Title );
-            System.out.println( ">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator );
+            /*
+             * we check if we do have rightsHolderArrayContent in table
+             * TranslationRightsHolder
+             */
+            if ( rightsHolderArrayContent( ReferenceNumber ) ) {
 
-            // if yes update TranslatorTrack      
-            if ( translatorTrackRecord > 0 )
-            {
-
+                /*
+                 * if yes we update the record with the Agreement
+                 */
                 System.out.println( "insertContract UPDATE ......................:" );
+                System.out.println( "insertContract UPDATE .......idTranslator...............: " + ReferenceNumber );
+                System.out.println( "insertContract UPDATE .......moveFileNameReplaced...............: " + moveFileNameReplaced );
+                System.out.println( "insertContract UPDATE .......AgreementDocName...............: " + moveFileName );
 
                 ps1 = conn.prepareStatement( "UPDATE ILGAS.TranslatorTrack "
                         + "SET  "
                         + "Contract = ?, ContractDocName = ?  "
-                        + "WHERE idTranslatorTrack = ?" );
+                        + "WHERE ReferenceNumber = ? " );
 
                 ps1.setString( 1, moveFileNameReplaced );
                 ps1.setString( 2, moveFileName );
-                ps1.setInt( 3, translatorTrackRecord );
+                ps1.setString( 3, ReferenceNumber );
+
+                System.out.println( "insertContract UPDATE ps1...............: " + ps1 );
 
             }
-            else
-            {
-
+            else {
+                /*
+                 * this should not be reched but to make sure we'll insert
+                 * ReferenceNumber
+                 * TranslationRightsHolderName
+                 * if it does not exist
+                 */
                 System.out.println( "insertContract INSERT ......................:" );
 
-                // if no insert into TranslatorTrack  
                 ps1 = conn.prepareStatement( "INSERT INTO  ILGAS.TranslatorTrack"
-                        + "(idTranslator,\n"
-                        + "Title,\n"
+                        + "(TranslationRightsHolderName,\n"
                         + "ReferenceNumber,\n"
                         + "Contract,\n"
-                        + "ContractDocName) values (?,?,?,?,?)" );
+                        + "ContractDocName) values (?,?,?,?)" );
 
-                ps1.setInt( 1, idTranslator );
-                ps1.setString( 2, Title );
-                ps1.setString( 3, ReferenceNumber );
-                ps1.setString( 4, moveFileNameReplaced );
-                ps1.setString( 5, moveFileName );
+                ps1.setString( 1, Name );
+                ps1.setString( 2, ReferenceNumber );
+                ps1.setString( 3, moveFileNameReplaced );
+                ps1.setString( 4, moveFileName );
+
+                System.out.println( "insertContract INSERT ps1..............: " + ps1 );
 
             } // else
 
@@ -719,10 +731,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -733,18 +743,19 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
-            throw new DBException( "4 Excepion while accessing database" );
+            throw new DBException( "4 insertContract Excepion while accessing database" );
         }
 
         return id;
     }
 
-    public static int insertAddendum( String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    /*
+     * Addendum to the Agreement with the translation rights holder
+     */
+    public static int insertAddendum( String ReferenceNumber, String Name, String Title, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -753,67 +764,70 @@ public class GrantApplicationDAO {
         int idTranslator = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
-            System.out.println( "insertAddendum......................:" );
-
-            //check if Translator exists
-            idTranslator = ifTranslatorExist( Name );
-
-            //if not insert the new Translator
-            if ( idTranslator == 0 )
-            {
-                // idTranslatorTrack, idTranslator, Author, Title, ReferenceNumber
-                idTranslator = insertNewTranslator( Name );
-
-                System.out.println( ">>>>>>>>>>>>. Translator: " + Name + " idTranslator: " + idTranslator );
-
-            }
-
-            // then:
+            /*
+             * Method updaterightsHolderArrayContent
+             * inserts rightsHolderArrayContent
+             * that is:
+             * ReferenceNumber
+             * TranslationRightsHolderName
+             *
+             * now we need to insert the Addendum
+             *
+             */
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
-            // got idTranslator now ...
-            // check if we already have a record
-            int translatorTrackRecord = ifTranslatorTrackExist( idTranslator, ReferenceNumber, Title );
-            System.out.println( ">>>>>>>>>>>>. translatorTrackRecord: " + translatorTrackRecord + " idTranslator: " + idTranslator );
+            /*
+             * we check if we do have rightsHolderArrayContent in table
+             * TranslationRightsHolder
+             */
+            if ( rightsHolderArrayContent( ReferenceNumber ) ) {
 
-            // if yes update TranslatorTrack      
-            if ( translatorTrackRecord > 0 )
-            {
-
+                /*
+                 * if yes we update the record with the Addendum
+                 */
                 System.out.println( "insertAddendum UPDATE ......................:" );
 
-                ps1 = conn.prepareStatement( "UPDATE ILGAS.TranslatorTrack "
+                ps1 = conn.prepareStatement( "UPDATE ILGAS.TranslationRightsHolder "
                         + "SET  "
                         + "AddendumRightsAgreement = ?, AddendumRightsAgreementName = ?  "
-                        + "WHERE idTranslatorTrack = ?" );
+                        + "WHERE ReferenceNumber = ?" );
 
                 ps1.setString( 1, moveFileNameReplaced );
                 ps1.setString( 2, moveFileName );
-                ps1.setInt( 3, translatorTrackRecord );
+                ps1.setString( 3, ReferenceNumber );
+
+                System.out.println( "insertAddendum UPDATE ps1...............: " + ps1 );
 
             }
-            else
-            {
 
+            else {
+
+                /*
+                 * this should not be reched but to make sure we'll insert
+                 * ReferenceNumber
+                 * TranslationRightsHolderName
+                 * if it does not exist
+                 */
                 System.out.println( "insertAddendum INSERT ......................:" );
 
                 // if no insert into TranslatorTrack      
-                ps1 = conn.prepareStatement( "INSERT INTO  ILGAS.TranslatorTrack"
-                        + "(idTranslator,\n"
-                        + "Title,\n"
+                ps1 = conn.prepareStatement( "INSERT INTO  ILGAS.TranslationRightsHolder"
+                        + "(TranslationRightsHolderName,\n"
+                        //                        + "Title,\n"
                         + "ReferenceNumber,\n"
                         + "AddendumRightsAgreement,\n"
-                        + "AddendumRightsAgreementName) values (?,?,?,?,?)" );
+                        + "AddendumRightsAgreementName) values (?,?,?,?)" );
 
-                ps1.setInt( 1, idTranslator );
-                ps1.setString( 2, Title );
-                ps1.setString( 3, ReferenceNumber );
-                ps1.setString( 4, moveFileNameReplaced );
-                ps1.setString( 5, moveFileName );
+                ps1.setString( 1, Name );
+//                ps1.setString( 2, Title );
+                ps1.setString( 2, ReferenceNumber );
+                ps1.setString( 3, moveFileNameReplaced );
+                ps1.setString( 4, moveFileName );
+
+                System.out.println( "insertAddendum INSERT ps1...............: " + ps1 );
 
             } // else
 
@@ -822,10 +836,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -836,18 +848,16 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
-            throw new DBException( "4 Excepion while accessing database" );
+            throw new DBException( "4 insertAddendum Excepion while accessing database" );
         }
 
         return id;
     }
 
-    public static int insertOriginal( String ApplicationNumber, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int insertOriginal( String ApplicationNumber, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -856,8 +866,7 @@ public class GrantApplicationDAO {
         int idTranslator = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "insertOriginal......................:" );
 
@@ -876,10 +885,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
 //                    System.out.println("GrantApplicationDAO id::   " + id);
@@ -890,8 +897,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -900,8 +906,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertTranslationSample( String ApplicationNumber, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int insertTranslationSample( String ApplicationNumber, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -909,8 +914,7 @@ public class GrantApplicationDAO {
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "insertTranslationSample......................:" );
 
@@ -939,10 +943,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -953,8 +955,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -963,8 +964,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertProofPayment( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int insertProofPayment( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -972,8 +972,7 @@ public class GrantApplicationDAO {
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "insertProofPayment......................:" );
 
@@ -997,10 +996,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -1011,8 +1008,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database " + e );
@@ -1021,8 +1017,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertBankDetailForm( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int insertBankDetailForm( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -1030,8 +1025,7 @@ public class GrantApplicationDAO {
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "insertBankDetailForm......................:" );
 
@@ -1055,10 +1049,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -1069,8 +1061,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database " + e );
@@ -1079,8 +1070,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertSignedLIcontract( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int insertSignedLIcontract( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -1088,8 +1078,7 @@ public class GrantApplicationDAO {
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "insertSignedLIcontract......................:" );
 
@@ -1112,10 +1101,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -1126,8 +1113,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database " + e );
@@ -1136,8 +1122,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static int insertCoverageCuttings( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int insertCoverageCuttings( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -1145,8 +1130,7 @@ public class GrantApplicationDAO {
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "insertCoverageCuttings......................:" );
 
@@ -1173,10 +1157,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO id::   " + id );
@@ -1187,8 +1169,7 @@ public class GrantApplicationDAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database " + e );
@@ -1198,8 +1179,7 @@ public class GrantApplicationDAO {
     }
 
     //updateCover
-    public static int updateCover( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException
-    {
+    public static int updateCover( String ReferenceNumber, String moveFileName, String moveFileNameReplaced ) throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
@@ -1207,8 +1187,7 @@ public class GrantApplicationDAO {
         int idTranslator = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "updateCover......................:" );
 
@@ -1227,10 +1206,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
 //                    System.out.println("GrantApplicationDAO id::   " + id);
@@ -1242,8 +1219,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -1256,8 +1232,7 @@ public class GrantApplicationDAO {
         idTranslator = 0;
         res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "updateCover......................:" );
 
@@ -1276,10 +1251,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     id = res.getInt( 1 );
 //                    System.out.println("GrantApplicationDAO id::   " + id);
@@ -1291,8 +1264,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -1302,8 +1274,7 @@ public class GrantApplicationDAO {
     }
 
     //updateApplication
-    public static boolean updateApplication( GrantApplication application, int ReferenceNumber ) throws DBException
-    {
+    public static boolean updateApplication( GrantApplication application, int ReferenceNumber ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -1312,8 +1283,7 @@ public class GrantApplicationDAO {
         ResultSet res = null;
         int applicationNumber = ReferenceNumber;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -1445,20 +1415,17 @@ public class GrantApplicationDAO {
 
             conn.commit();
 
-            if ( committed > 0 )
-            {
+            if ( committed > 0 ) {
                 id = true;
             }
-            else
-            {
+            else {
                 id = false;
             }
 
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" );
         }
@@ -1467,8 +1434,7 @@ public class GrantApplicationDAO {
     }
 
     //updateDocuments
-    public static boolean updateDocuments( GrantApplication application, String ReferenceNumber ) throws DBException
-    {
+    public static boolean updateDocuments( GrantApplication application, String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -1481,8 +1447,7 @@ public class GrantApplicationDAO {
 
         System.out.println( "updateDocuments ReferenceNumber:  " + ReferenceNumber );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -1539,20 +1504,17 @@ public class GrantApplicationDAO {
 
             conn.commit();
 
-            if ( committed > 0 )
-            {
+            if ( committed > 0 ) {
                 id = true;
             }
-            else
-            {
+            else {
                 id = false;
             }
 
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" );
         }
@@ -1561,13 +1523,11 @@ public class GrantApplicationDAO {
     }
 
     // deleteRow
-    public static void deleteRow( GrantApplication application )
-    {
+    public static void deleteRow( GrantApplication application ) {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "delete from ILGAS.GrantApplication where ReferenceNumber = ?" );
@@ -1577,21 +1537,18 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( SQLException | ClassNotFoundException e )
-        {
+        catch ( SQLException | ClassNotFoundException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
         }
     }
 
     // updateStatus
-    public static void updateStatus( int ReferenceNumber, String status ) throws DBException
-    {
+    public static void updateStatus( int ReferenceNumber, String status ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "UPDATE ILGAS.GrantApplication set STATUS = ? where ReferenceNumber = ?" );
@@ -1601,8 +1558,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( "5 Excepion while accessing database" );
@@ -1610,24 +1566,21 @@ public class GrantApplicationDAO {
     }
 
     // listAllApplications
-    public static List<GrantApplication> listAllApplications() throws DBException
-    {
+    public static List<GrantApplication> listAllApplications() throws DBException {
         List<GrantApplication> listApplications = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement( "SELECT * FROM ILGAS.GrantApplication" );
             res = ps.executeQuery();
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
                 GrantApplication application = new GrantApplication();
 //                
 //                        >>> Order of fieldnames:
@@ -1767,8 +1720,7 @@ public class GrantApplicationDAO {
             disconnect();
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             throw new DBException( "4 Excepion while accessing database" );
         }
@@ -1777,8 +1729,7 @@ public class GrantApplicationDAO {
     }
 
     // convert Java Date to SQL Date
-    public static java.sql.Date sqlDate( java.util.Date javaDate )
-    {
+    public static java.sql.Date sqlDate( java.util.Date javaDate ) {
         System.out.println( "convert Java Date to SQL Date  " + javaDate );
         java.util.Date utilStartDate = javaDate;
         java.sql.Date convertSqlDate = new java.sql.Date( utilStartDate.getTime() );
@@ -1786,16 +1737,14 @@ public class GrantApplicationDAO {
         return convertSqlDate;
     }
 
-    public static int getLastRecordID() throws DBException
-    {
+    public static int getLastRecordID() throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
 
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -1803,10 +1752,8 @@ public class GrantApplicationDAO {
             ps1 = conn.prepareStatement( "SELECT max(ApplicationNumber) FROM ILGAS.GrantApplication" );
             res = ps1.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     id = res.getInt( 1 );
                 }
             }
@@ -1814,8 +1761,7 @@ public class GrantApplicationDAO {
             conn.commit();
             DBConn.close( conn, ps1, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             e.printStackTrace();
             DBConn.close( conn, ps1, res );
@@ -1825,8 +1771,7 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    public static java.sql.Timestamp getcurrentTimeStamp()
-    {
+    public static java.sql.Timestamp getcurrentTimeStamp() {
 
         Calendar calendar = Calendar.getInstance();
         java.util.Date now = calendar.getTime();
@@ -1836,8 +1781,7 @@ public class GrantApplicationDAO {
 
     }
 
-    public static int getNextApplicationNumber() throws DBException
-    {
+    public static int getNextApplicationNumber() throws DBException {
 
         int nextApplicationNumber = 0;
 
@@ -1845,8 +1789,7 @@ public class GrantApplicationDAO {
         PreparedStatement ps1 = null;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -1854,10 +1797,8 @@ public class GrantApplicationDAO {
             ps1 = conn.prepareStatement( "SELECT * FROM ILGAS.GrantApplication where ApplicationYear = '" + yearInString + "' ORDER BY ApplicationNumber DESC" );
             res = ps1.executeQuery();
 
-            if ( res != null )
-            {
-                if ( res.next() )
-                {
+            if ( res != null ) {
+                if ( res.next() ) {
                     nextApplicationNumber = res.getInt( 1 ) + 1;
                 }
             }
@@ -1865,16 +1806,14 @@ public class GrantApplicationDAO {
             conn.commit();
             DBConn.close( conn, ps1, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             e.printStackTrace();
             DBConn.close( conn, ps1, res );
             throw new DBException( "getNextApplicationNumber :: Exception while accessing database" );
         }
 
-        if ( nextApplicationNumber == 0 )
-        {
+        if ( nextApplicationNumber == 0 ) {
             nextApplicationNumber++;
         }
 
@@ -1882,32 +1821,27 @@ public class GrantApplicationDAO {
         return nextApplicationNumber;
     }
 
-    public static int ifAuthorExist( String authorName ) throws DBException
-    {
+    public static int ifAuthorExist( String authorName ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
 
         int authorId = 0;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "SELECT idAuthor FROM ILGAS.Author WHERE Name = ?" );
             ps.setString( 1, authorName );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     authorId = res.getInt( 1 );
                 }
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "3 Excepion while accessing database" );
@@ -1916,27 +1850,29 @@ public class GrantApplicationDAO {
         return authorId;
     }
 
-    public static int ifTranslatorExist( String translatorName ) throws DBException
-    {
+    public static int ifTranslatorExist( String translatorName ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         System.out.println( ">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: <<<<<<<<<<<<<<<<<" );
         int idTranslator = 0;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
+            
             ps = conn.prepareStatement( "SELECT idTranslator FROM ILGAS.Translator WHERE Name = ?" );
+            
             ps.setString( 1, translatorName );
+            
             res = ps.executeQuery();
+            
             System.out.println( ">>>>>>>>>>>>>  ifTranslatorExist: idTranslator:: ps: " + ps );
-            if ( res != null )
-            {
+            
+            
+            if ( res != null ) {
 
-                while ( res.next() )
-                {
+                while ( res.next() ) {
                     idTranslator = res.getInt( 1 );
                 }
             }
@@ -1944,8 +1880,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -1959,8 +1894,7 @@ public class GrantApplicationDAO {
         return idTranslator;
     }
 
-    public static int ifLanguageExist( String language ) throws DBException
-    {
+    public static int ifLanguageExist( String language ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1969,8 +1903,7 @@ public class GrantApplicationDAO {
 
         language = language.trim();
 
-        try
-        {
+        try {
 
             System.out.println( "ifLanguageExist: language:: " + language );
 
@@ -1982,10 +1915,8 @@ public class GrantApplicationDAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     idLanguage = res.getInt( 1 );
 
                 }
@@ -1994,8 +1925,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -2007,8 +1937,7 @@ public class GrantApplicationDAO {
         return idLanguage;
     }
 
-    public static int insertNewAuthor( String ReferenceNumber, String FullName, String FirstName, String LastName ) throws DBException
-    {
+    public static int insertNewAuthor( String ReferenceNumber, String FullName, String FirstName, String LastName ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -2018,8 +1947,7 @@ public class GrantApplicationDAO {
 
         int authorId = 0;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -2039,10 +1967,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     authorId = res.getInt( 1 );
 
@@ -2054,8 +1980,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -2067,8 +1992,7 @@ public class GrantApplicationDAO {
         return authorId;
     }
 
-    public static int insertNewTranslator( String Name ) throws DBException
-    {
+    public static int insertNewTranslator( String Name ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -2078,8 +2002,7 @@ public class GrantApplicationDAO {
 
         int idTranslator = 0;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -2097,10 +2020,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     idTranslator = res.getInt( 1 );
                 }
@@ -2111,8 +2032,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -2124,8 +2044,7 @@ public class GrantApplicationDAO {
         return idTranslator;
     }
 
-    public static int insertLanguages_Library( int idLanguages, String lang, int bookID, String ReferenceNumber ) throws DBException
-    {
+    public static int insertLanguages_Library( int idLanguages, String lang, int bookID, String ReferenceNumber ) throws DBException {
 
         System.out.println( "GrantApplicationDAO.insertLanguages_Library(  " + idLanguages + " languages " + lang + " bookID " + bookID + " ReferenceNumber " + ReferenceNumber );
         Connection conn = null;
@@ -2136,8 +2055,7 @@ public class GrantApplicationDAO {
 
         int idLanguages_Library = 0;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -2156,10 +2074,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     idLanguages_Library = res.getInt( 1 );
                 }
@@ -2170,8 +2086,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -2183,8 +2098,7 @@ public class GrantApplicationDAO {
         return idLanguages_Library;
     }
 
-    public static int getExpertReaderUserID( String expertReaderName ) throws DBException
-    {
+    public static int getExpertReaderUserID( String expertReaderName ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
@@ -2193,8 +2107,7 @@ public class GrantApplicationDAO {
         System.out.println( "GrantApplicationDAO getExpertReaderUserID " );
         System.out.println( "GrantApplicationDAO expertReaderName " + expertReaderName );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "SELECT userID FROM ILGAS.users WHERE fullName = ?" );
@@ -2203,10 +2116,8 @@ public class GrantApplicationDAO {
             System.out.println( "GrantApplicationDAO ps " + ps.toString() );
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     idExpertReaderUserID = res.getInt( 1 );
                     System.out.println( "GrantApplicationDAO getExpertReaderUserID " + idExpertReaderUserID );
                 }
@@ -2215,8 +2126,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -2228,8 +2138,7 @@ public class GrantApplicationDAO {
         return idExpertReaderUserID;
     }
 
-    public static int updateExpertReader( ExpertReader expertReader, java.sql.Date today ) throws DBException
-    {
+    public static int updateExpertReader( ExpertReader expertReader, java.sql.Date today ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -2239,8 +2148,7 @@ public class GrantApplicationDAO {
 
         int idExpertReader = 0;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -2258,10 +2166,8 @@ public class GrantApplicationDAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     idExpertReader = res.getInt( 1 );
 
@@ -2273,8 +2179,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -2286,16 +2191,14 @@ public class GrantApplicationDAO {
         return idExpertReader;
     }
 
-    public static String getExpertReaderEmail( String expertReaderName ) throws DBException
-    {
+    public static String getExpertReaderEmail( String expertReaderName ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
 
         String expertReaderEmail = "";
         System.out.println( "GrantApplicationDAO getExpertReaderEmail " );
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "SELECT email FROM ILGAS.users WHERE fullName = ?" );
@@ -2304,10 +2207,8 @@ public class GrantApplicationDAO {
 
             System.out.println( "GrantApplicationDAO ps " + ps.toString() );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     expertReaderEmail = res.getString( 1 );
                     System.out.println( "GrantApplicationDAO expertReaderEmail " + expertReaderEmail );
                 }
@@ -2315,8 +2216,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "3 Excepion while accessing database" );
@@ -2325,8 +2225,7 @@ public class GrantApplicationDAO {
         return expertReaderEmail;
     }
 
-    public static List<String[]> getAttachments( String newAssignedReferenceNumber ) throws DBException
-    {
+    public static List<String[]> getAttachments( String newAssignedReferenceNumber ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -2334,8 +2233,7 @@ public class GrantApplicationDAO {
 
         List<String[]> attachments = new ArrayList<>();
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "SELECT Original, OriginalName, copiesTranslationSample, copiesTranslationSampleDocName "
@@ -2348,17 +2246,15 @@ public class GrantApplicationDAO {
             ResultSetMetaData metadata = res.getMetaData();
             int numcols = metadata.getColumnCount();
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
 
                 String[] attachmentDetails = new String[ 6 ];
 
                 int i = 1;
 
-                while ( i <= numcols )
-                {
+                while ( i <= numcols ) {
 
-                    attachmentDetails[ i ] = res.getString( i++ );
+                    attachmentDetails[i] = res.getString( i++ );
 
                 }
 
@@ -2368,8 +2264,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "3 Excepion while accessing database" );
@@ -2378,8 +2273,7 @@ public class GrantApplicationDAO {
         return attachments;
     }
 
-    public static ArrayList<String> getRightsHolderArrayContent( String ReferenceNumber ) throws DBException
-    {
+    public static ArrayList<String> getRightsHolderArrayContent( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -2387,8 +2281,7 @@ public class GrantApplicationDAO {
         rightsHolderArrayContent.clear();
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -2397,10 +2290,8 @@ public class GrantApplicationDAO {
             ps1.setString( 1, ReferenceNumber );
             res = ps1.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     rightsHolderArrayContent.add( res.getString( 1 ) );
                     System.out.println( "getRightsHolderArrayContent  retrieving " + res.getString( 1 ) + "......................:" );
                 }
@@ -2411,8 +2302,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -2422,25 +2312,22 @@ public class GrantApplicationDAO {
 
     }
 
-    public static int updateRightsHolderArrayContent( String ReferenceNumber, String[] rightsHolderArrayContent ) throws DBException
-    {
+    public static int updateRightsHolderArrayContent( String ReferenceNumber, String[] rightsHolderArrayContent ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             System.out.println( "updaterightsHolderArrayContent......................:" );
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
-            for ( int i = 0; i < rightsHolderArrayContent.length; i++ )
-            {
-                String translationRightsHolderName = rightsHolderArrayContent[ i ];
+            for ( int i = 0; i < rightsHolderArrayContent.length; i++ ) {
+                String translationRightsHolderName = rightsHolderArrayContent[i];
                 //     String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName ) VALUES (?,?)";
 
                 String query = "INSERT INTO  ILGAS.TranslationRightsHolder (ReferenceNumber, TranslationRightsHolderName )SELECT * FROM (SELECT ?, ?) AS tmp WHERE NOT EXISTS ( "
@@ -2457,10 +2344,8 @@ public class GrantApplicationDAO {
 
                 ps1.executeUpdate();
 
-                if ( res != null )
-                {
-                    while ( res.next() )
-                    {
+                if ( res != null ) {
+                    while ( res.next() ) {
 
                         id = res.getInt( 1 );
 //                    System.out.println("GrantApplicationDAO id::   " + id);
@@ -2472,8 +2357,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -2482,24 +2366,21 @@ public class GrantApplicationDAO {
         return id;
     }
 
-    private static java.sql.Timestamp getCurrentTimeStamp()
-    {
+    private static java.sql.Timestamp getCurrentTimeStamp() {
 
         java.util.Date today = new java.util.Date();
         return new java.sql.Timestamp( today.getTime() );
 
     }
 
-    public static int ifTranslatorTrackExist( int idTranslator, String ReferenceNumber, String Title ) throws DBException
-    {
+    public static int ifTranslatorTrackExist( int idTranslator, String ReferenceNumber, String Title ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         int idTranslatorTrack = 0;
 
-        try
-        {
+        try {
 
             System.out.println( "ifTranslatorTrackExist: idTranslator:: " + idTranslator + " ReferenceNumber:: " + ReferenceNumber + " Title:: " + Title + "\n" );
 
@@ -2515,10 +2396,8 @@ public class GrantApplicationDAO {
             System.out.println( "ifTranslatorTrackExist: ps:: " + ps );
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     idTranslatorTrack = res.getInt( 1 );
 
                 }
@@ -2527,8 +2406,7 @@ public class GrantApplicationDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
 
             LOGGER.debug( e.getMessage() );
 
@@ -2540,47 +2418,56 @@ public class GrantApplicationDAO {
         return idTranslatorTrack;
     }
 
-    public static boolean rightsHolderArrayContent( String ReferenceNumber ) throws DBException
-    {
+    public static boolean rightsHolderArrayContent( String ReferenceNumber ) throws DBException {
+
+        System.out.println( "rightsHolderArrayContent: ReferenceNumber:: " + ReferenceNumber );
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
 
-        int rightsHolderContent = 0;
-        boolean rightsHolderContentExists = false;
+        String rightsHolderContent = "";
+        boolean rightsHolderContentExists;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "SELECT TranslationRightsHolderName FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?" );
             ps.setString( 1, ReferenceNumber );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
-                    rightsHolderContent = res.getInt( 1 );
+            System.out.println( "rightsHolderArrayContent: ps:: " + ps );
+            if ( res != null ) {
+                while ( res.next() ) {
+                    
+                    rightsHolderContent = res.getString( 1 );
+                   
                 }
             }
+            
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "rightsHolderArrayContent Excepion while accessing database" );
         }
 
-        if ( rightsHolderContent > 0 )
-        {
-            return rightsHolderContentExists = true;
-        }
-        else
-        {
-            return rightsHolderContentExists = false;
-        }
+         System.out.println( "rightsHolderArrayContent: rightsHolderContent:: " + rightsHolderContent );
+         System.out.println( "rightsHolderArrayContent: rightsHolderContent.length():: " + rightsHolderContent.length() );
+         
+                 if ( rightsHolderContent.isEmpty() ) {
 
+             System.out.println( "rightsHolderArrayContent: rightsHolderContent.isEmpty():: " + rightsHolderContent.isEmpty() );
+        }
+         
+        if ( rightsHolderContent.length() > 0 ) {
+
+            rightsHolderContentExists = true;
+        }
+        else {
+            rightsHolderContentExists = false;
+        }
+        
+        return rightsHolderContentExists;
     }
 }

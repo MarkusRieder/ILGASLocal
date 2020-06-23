@@ -21,12 +21,12 @@ public class Database {
 
         // Store the database URL in a string
         //   String url = "jdbc:mysql://localhost:3306/ILGAS";
-        String url = "jdbc:mysql://literatureirelandgrantapplication.com:3306/ILGAS";
+        String url = "jdbc:mysql://localhost:3306/ILGAS?useSSL=false";
 
         Class.forName( "com.mysql.jdbc.Driver" ).newInstance();
 
         // set the url, username and password for the databse 
-        connection = DriverManager.getConnection( url, "markus", "ankh573" );
+        connection = DriverManager.getConnection( url, "markus", "T6Sv0m3kTAPQZLX4KTIHAw2qgIYLXMMWU2NwYfmNLJr44PDUEJ" );
         return connection;
 
     }

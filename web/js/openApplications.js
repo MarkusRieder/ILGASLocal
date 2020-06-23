@@ -12,20 +12,23 @@
 
 var translatorArray = [];
 var translators = [];
+var rightsHolderArray = [];
 var authorArray = [];
 var languageArray = [];
 var pressCuttingArray = [];
-var rightsHolderArray = [];
-var translatorNamesForGenerateTranslatorTab = [];
 var Name = "";
 var Author = "";
 var counter = 0;
-var translationrightsholdercounter = 0;
 var Authorcounter = 0;
+var counterTranslators = 0;
+var counterRightsHolders = 0;
 var pressCuttingCounter = 0;
 var translatorCounter = 0;
-var translatorCounter1 = 0;
+//            var translatorCounter1 = 0;
 var translatorName876 = "";
+var itemValue = "";
+
+
 $.datepicker.setDefaults({
     dateFormat: 'dd/mm/yy',
     showOtherMonths: true,
@@ -52,9 +55,10 @@ for (i = 0; i < sessionStorage.length; i++) {
 }
 
 
-
 var cntr = 0;
-var publisherID = '${publisherID}';
+//var publisherID = '${publisherID}';
+var publisherID = document.getElementById("pid").value;
+
 var newURL = "./openApplicationPublisherDataServlet?publisherID=" + publisherID;
 console.log("13131 publisherID  " + publisherID);
 console.log("13131 newURL  " + newURL);
@@ -161,7 +165,7 @@ $(document).ready(function () {
                     return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                 }}, {"data": "contract",
                 "render": function (data, type, row) {
-
+                    console.log("contract " + data);
                     return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                 }},
             {"data": "proposedDateOfPublication",
@@ -209,15 +213,21 @@ $(document).ready(function () {
             {"data": "Status"},
             {"data": "copiesSent",
                 "render": function (data, type, row) {
-                    // console.log("copiesSent " + data);
-                    if (data === 0) {
-                        document.getElementById("copiesSent").checked = false;
-                        return 'No';
-                    } else {
-                        document.getElementById("copiesSent").checked = true;
-                        return 'Yes';
+                     console.log("copiesSent " + data);
+//                    if (data === 0) {
+//                        document.getElementById("copiesSent").checked = false;
+//                        return 'No';
+//                    } else {
+//                        document.getElementById("copiesSent").checked = true;
+//                        return 'Yes';
+//                    }
+                                        if (typeof (data) === "undefined") {
+                        return "n/a";
+                    } else
+                    {
+
+                        return data;
                     }
-                    ;
                 }},
             {"data": "dateCopiesWereSent",
                 "render": function (data) {
@@ -251,14 +261,32 @@ $(document).ready(function () {
                     }
                     ;
                 }},
-            {"data": "genre"},
+            {"data": "genre",
+                "render": function (data) {
+                    if (typeof (data) === "undefined") {
+                        return "n/a";
+                    } else
+                    {
+
+                        return data;
+                    }
+                }},
             {"data": "TranslatorName",
                 "render": function (data) {
                     console.log("TranslatorName  " + data);
                     return data;
                 }},
             {"data": "expertReaderName"},
-            {"data": "bookTitle"},
+            {"data": "bookTitle",
+                "render": function (data) {
+                    if (typeof (data) === "undefined") {
+                        return "n/a";
+                    } else
+                    {
+
+                        return data;
+                    }
+                }},
             {"data": "TranslatorTrack2",
                 "render": function (data) {
                     console.log("TranslatorTrack  " + data);
@@ -361,7 +389,7 @@ $(document).ready(function () {
                 }},
             {"data": "foreignPublisher",
                 "render": function (data) {
-
+                    console.log("foreignPublisher " + data);
                     if (typeof (data) === "undefined") {
                         return "n/a";
                     } else
@@ -371,7 +399,7 @@ $(document).ready(function () {
                 }},
             {"data": "foreignCountry",
                 "render": function (data) {
-
+                    console.log("foreignCountry " + data);
                     if (typeof (data) === "undefined") {
                         return "n/a";
                     } else
@@ -506,17 +534,44 @@ $(document).ready(function () {
                 "render": function (data, type, row) {
                     return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                 }},
-            {"data": "addendumRightsAgreementName"},
+            {"data": "addendumRightsAgreementName",
+                "render": function (data) {
+                    if (typeof (data) === "undefined") {
+                        return "n/a";
+                    } else
+                    {
+
+                        return data;
+                    }
+                }},
             {"data": "proofOfPaymentToTranslator",
                 "render": function (data, type, row) {
                     return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                 }},
-            {"data": "proofOfPaymentToTranslatorName"},
+            {"data": "proofOfPaymentToTranslatorName",
+                "render": function (data) {
+                    if (typeof (data) === "undefined") {
+                        return "n/a";
+                    } else
+                    {
+
+                        return data;
+                    }
+                }},
             {"data": "bankDetailsForm",
                 "render": function (data, type, row) {
                     return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                 }},
-            {"data": "bankDetailsFormName"},
+            {"data": "bankDetailsFormName",
+                "render": function (data) {
+                    if (typeof (data) === "undefined") {
+                        return "n/a";
+                    } else
+                    {
+
+                        return data;
+                    }
+                }},
             {"data": "SignedLIContract",
                 "render": function (data, type, row) {
                     if (typeof (data) === "undefined") {
@@ -558,7 +613,16 @@ $(document).ready(function () {
                 "render": function (data, type, row) {
                     return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                 }},
-            {"data": "originalName"},
+            {"data": "originalName",
+                "render": function (data) {
+                    if (typeof (data) === "undefined") {
+                        return "n/a";
+                    } else
+                    {
+
+                        return data;
+                    }
+                }},
             {"data": "Author"},
             {"data": "publicationYear"},
             {"data": "Series",
@@ -590,10 +654,27 @@ $(document).ready(function () {
                     return data;
                 }},
             {"data": "rightsHolderArray",
-                "render": function (data, type, row) {
-                    rightsHolderArray = data;
-                    console.log("rightsHolderArray data  " + data + "\n");
-                    return data;
+                "render": function (data) {
+                    if (typeof (data) === "undefined") {
+                        console.log("data: rightsHolderArray Nope  " + data);
+                        return "Nope";
+                    } else
+                    {
+                        console.log("data: rightsHolderArray " + data);
+                        return data;
+                    }
+                }}, 
+            {"data": "companyCountry",
+                "render": function (data) {
+                    console.log("companyCountry " + data);
+                    if (typeof (data) === "undefined") {
+                        console.log("data: companyCountry " + data);
+                        return "Nope";
+                    } else
+                    {
+                        console.log("data: companyCountry " + data);
+                        return data;
+                    }
                 }},
             {"data": "idTranslator"}
 
@@ -657,76 +738,17 @@ $(document).ready(function () {
         var row = table.row(tr);
         var rowdata = (table.row(tr).data());
         var expertReaderName = "";
-//                    var TranslatorDocs = rowdata.transList;
-//                    console.log("1 TranslatorDocs rowdata.transList-> " + rowdata.transList);
 
-//                    var awardValue = rowdata.award;
-//                    console.log("awardValue:  " + awardValue);
-//                    if (awardValue === 1) {
-//                        document.getElementById("award").checked = true;
-//                        console.log("awardValue:  TRUE");
-//                    } else if (awardValue === 0) {
-//                        document.getElementById("award").checked = false;
-//                        console.log("awardValue:  FALSE");
-//                    }
-
-//                    var statii = rowdata.Status;
-//                    if (statii === 'new') {
-//
-//                        document.getElementById("appStatus").style.backgroundColor = '#aefca1';
-//                        document.getElementById("agreement").value = 'new';
-//                    } else if (statii === 'pending') {
-//
-//                        document.getElementById("appStatus").style.backgroundColor = '#a1fcef';
-//                        document.getElementById("agreement").value = 'pending';
-//                    } else {
-//
-//                        document.getElementById("appStatus").style.backgroundColor = '#efa1fc';
-//                        document.getElementById("agreement").value = 'closed';
-//                    }
-//                    ;
         var agreemnt = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.agreement + '';
-//                    $("#appAgreement").val(agreemnt);
-//                    document.getElementById("agreement").href = agreemnt;
 
         var orig = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.original + '';
-//                   $("#appOriginal").val(orig);                                  
-//                    document.getElementById("original").href = orig;
         document.getElementById("originalSample1").href = orig;
+
         var addendumRightsAgreemnt = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.addendumRightsAgreement + '';
         $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
-//                    document.getElementById("addendum").href = addendumRightsAgreemnt;
 
-//                    var proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
-//                    $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
-//                    document.getElementById("proofPayment").href = proofOfPaymentToTrans;
-//                    var bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
-//                    $("#appBankDetailsForm").val(bankDetailsFrm);
-//                    document.getElementById("bankDetailForm").href = bankDetailsFrm;
-//                    var signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
-//                    $("#appSignedLIContract").val(signedLIContr);
-//                    document.getElementById("signedLIcontract").href = signedLIContr;
-        //             console.log("showUploadCover rowdata.cover " + rowdata.cover);
-//
-//                    if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
-//                        var cver = 'images/not-available.jpg';
-//                        $("#showUploadCover").show();
-//                        $("#showCover").hide();
-//                        document.getElementById("cover").src = cver;
-//                    } else {
-//
-//                        $("#showCover").show();
-//                        $("#showUploadCover").hide();
-//                        var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
-//                        $("#cover").val(cver);
-//                        document.getElementById("cover").src = cver;
-//                    }
         var contr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.contract + '';
-//                    document.getElementById("contract").href = contr;
-//
-//                    var trans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.translatorCV + '';
-//                    document.getElementById("translatorCV").href = trans;
-//
+
         var transSamp = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.copiesTranslationSample + '';
         document.getElementById("translationSample1").href = transSamp;
 
@@ -746,13 +768,57 @@ $(document).ready(function () {
         //          console.log("appReferenceNumber " + appReferenceNumber);
         $("#unassignedERRefNo").val(appReferenceNumber);
         var TranslName = rowdata.TranslatorName;
+//        var translators = rowdata.TranslatorName;
         console.log("888 TranslName " + TranslName);
         $("#translatorNames").val(TranslName);
         console.log("888 TranslatorName length ", TranslName.length);
         var bookTitles = rowdata.Titles;
         $("#currentItem").val(bookTitles.join(""));
 
+        $("#appcontract").val(contr);
+//                    $("#proposedDateOfPublication").val($(this).closest('tr').children()[7].textContent);
+//                    $("#appproposedPrintRun").val($(this).closest('tr').children()[8].textContent);
+//                    $("#plannedPageExtent").val($(this).closest('tr').children()[9].textContent);
+        $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
+//                    $("#breakDownTranslatorFee").val($(this).closest('tr').children()[12].textContent);
+//                    $("#translatorFee").val($(this).closest('tr').children()[13].textContent);
+//                    $("#bookNotes").val($(this).closest('tr').children()[14].textContent);
+        $("#appStatus").val($(this).closest('tr').children()[15].textContent);
+           console.log("999 Status  appStatus " + $(this).closest('tr').children()[15].textContent);
+        $("#Status").val( rowdata.Status);
+           console.log("999 Status  Status " +  rowdata.Status);
+//        $("#copiesSent").val($(this).closest('tr').children()[16].textContent);
+        var dateCopiesWereSent = formatDate(rowdata.dateCopiesWereSent);
+        $("#dateCopiesWereSent").val(dateCopiesWereSent);
+//        $("#dateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
+        $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
+        $("#appAPPROVED").val($(this).closest('tr').children()[20].textContent);
+//                    $("#appGenre").val($(this).closest('tr').children()[21].textContent);
+        $("#appExpertReader").val($(this).closest('tr').children()[23].textContent);
+//                    $("#appBookTitle").val($(this).closest('tr').children()[24].textContent);
+        $("#expertReaderName").val($(this).closest('tr').children()[22].textContent);
+        $("#sampleSentOut").val($(this).closest('tr').children()[29].textContent);
+        $("#sampleReturned").val($(this).closest('tr').children()[30].textContent);
+        $("#appReadersReport").val($(this).closest('tr').children()[31].textContent);
+//                  $("#readerReportSummary").val($(this).closest('tr').children()[32].textContent);
 
+//                  $("#appDateOfPublicationOriginal").val($(this).closest('tr').children()[35].textContent);
+//                    $("#publicationYear1").val($(this).closest('tr').children()[35].textContent);
+//                    $("#languages").val($(this).closest('tr').children()[36].textContent);
+//                    $("#appLanguageOriginal").val($(this).closest('tr').children()[36].textContent);
+        $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
+//                    $("#appCountryOfPublication").val($(this).closest('tr').children()[38].textContent);
+//                    $("#appForeignPublisher").val($(this).closest('tr').children()[39].textContent);
+//                    $("#foreignPublisher").val($(this).closest('tr').children()[39].textContent);
+//                    $("#appForeignCountry").val($(this).closest('tr').children()[40].textContent);
+//                    $("#appTargetLanguage").val($(this).closest('tr').children()[41].textContent);
+        $("#amountRequested").val($(this).closest('tr').children()[43].textContent);
+        $("#award").val($(this).closest('tr').children()[62].textContent);
+        $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
+//                    $("#authors").val($(this).closest('tr').children()[66].textContent);
+//                    $("#publicationYear").val($(this).closest('tr').children()[67].textContent);
+////                    $("#series").val($(this).closest('tr').children()[68].textContent);
+////                    $("#translationTitle").val($(this).closest('tr').children()[69].textContent);
 
         console.log("8 xyz bookTitle: " + rowdata.bookTitle);
         document.getElementById("appBookTitle").value = rowdata.bookTitle;
@@ -764,7 +830,9 @@ $(document).ready(function () {
         document.getElementById("proposedDateOfPublication").value = formatDate(rowdata.proposedDateOfPublication);
         document.getElementById("foreignPublisher").value = rowdata.foreignPublisher;
         document.getElementById("plannedPageExtent").value = rowdata.plannedPageExtent;
-        document.getElementById("appForeignCountry").value = rowdata.foreignCountry;
+//        document.getElementById("appForeignCountry").value = rowdata.foreignCountry;
+        $("#appForeignCountry").val(rowdata.companyCountry);
+        console.log("rowdata.companyCountry " + rowdata.companyCountry);
         document.getElementById("appproposedPrintRun").value = rowdata.proposedPrintRun;
         var languageArray = rowdata.targetLanguage;
         document.getElementById("appTargetLanguage").value = languageArray;
@@ -775,27 +843,26 @@ $(document).ready(function () {
         document.getElementById("company").value = rowdata.company;
         document.getElementById("appCompany").value = rowdata.company;
 
-        console.log("123v rightsHolderArray ");
-        console.log("123v rightsHolderArray.length " + rowdata.rightsHolderArray.length);
-        for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
+        console.log("123v rightsHolderArray  ");
+        var rightsHolderArray = rowdata.rightsHolderArray;
+        document.getElementById("rightsHolderArray").value = rowdata.rightsHolderArray;
+        console.log(rightsHolderArray);
 
-            console.log("123v rightsHolderArray " + rowdata.rightsHolderArray[i]);
-        }
         console.log("123v TranslatorName ");
         for (var i = 0; i < rowdata.TranslatorName.length; i++) {
 
             console.log("123v TranslatorName " + rowdata.TranslatorName[i]);
         }
 
-        if (rowdata.rightsHolderArray.length === 0) {
-            $('#addAddRightsHolders').empty();
-            document.getElementById("rightsHoldersName0").style.display = "inline";
-            console.log("123v ist empty ");
-            $("#RightsHolderGeneratedForm").empty();
-            document.getElementById("rightsHoldersName0").value = "";
-            document.getElementById("rightsHoldersName0").disabled = false;
-            document.getElementById("rightsHoldersName0").readOnly = false;
-        }
+//        if (rowdata.rightsHolderArray.length === 0) {
+//            $('#addAddRightsHolders').empty();
+//            document.getElementById("rightsHoldersName0").style.display = "inline";
+//            console.log("123v ist empty ");
+//            $("#RightsHolderGeneratedForm").empty();
+//            document.getElementById("rightsHoldersName0").value = "";
+//            document.getElementById("rightsHoldersName0").disabled = false;
+//            document.getElementById("rightsHoldersName0").readOnly = false;
+//        }
         /*
          * Process rights holders
          * 1) check if there is one in the array - if so fill the input field and disable it
@@ -815,15 +882,26 @@ $(document).ready(function () {
          */
 
 
-
+        
+        console.log("rowdata.rightsHolderArray.length  ", rowdata.rightsHolderArray.length);
+$('#addAddRightsHolders').empty();
         if (rowdata.rightsHolderArray.length > 0) {
+
             /*                         
              * Change Title from "Translation rights holder" to "Translation rights holder(s)"
              */
             document.getElementById("rightsHoldersName0").style.display = "none";
             document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holders';
+            
+            console.log("rowdata.rightsHolderArray.length " + rightsHolderArray.length );
+            
             for (var i = 0; i < rowdata.rightsHolderArray.length; i++) {
-
+                console.log("rowdata.rightsHolderArray[i= " + i + "]  ", rowdata.rightsHolderArray[i]);
+                var rightsHolders = rowdata.rightsHolderArray[i];
+                console.log("rowdata.rightsHolderArray[i= " + i + "]  ", rightsHolders);
+                console.log("rowdata.rightsHolderArray[i= " + i + "]  ", rightsHolders[0]);
+                
+                
                 var additionalTranslatorTag = '';
 
                 additionalTranslatorTag += '<div class="form-group has-feedback">';
@@ -831,15 +909,17 @@ $(document).ready(function () {
                 additionalTranslatorTag += ' type="text"  ';
                 additionalTranslatorTag += ' class="form-control"';
                 additionalTranslatorTag += ' name="rightsHoldersName' + i + '"';
-                additionalTranslatorTag += ' value="' + rowdata.rightsHolderArray[i] + '"';
+                additionalTranslatorTag += ' value="' + rightsHolders + '"';
                 additionalTranslatorTag += ' disabled = ""';
                 additionalTranslatorTag += ' </div>';
 
                 $(additionalTranslatorTag).appendTo('#addAddRightsHolders');
             }
-            ;
+
         } else {
+
             document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holder';
+
         }
 
         var Authors = rowdata.Author;
@@ -905,23 +985,20 @@ $(document).ready(function () {
 //                    header.appendChild(headingRow);
 //                    tble.appendChild(header);
 
+       var translatorNamesForGenerateTranslatorTab = [];
+        translators = [];
+
 
         console.log("8 xyz 000 translators.length: " + translators.length);
         console.log("8 xyz 000 TranslatorDocs[0].length: " + TranslatorDocs[0].length);
         console.log("8 xyz 000 TranslatorDocs.length: " + TranslatorDocs.length);
         console.log(TranslatorDocs[0]); // contais 2 arrays
-        translatorNamesForGenerateTranslatorTab = [];
-        translators = [];
-        //    var loopLength = TranslatorDocs[0].length;
-        //  console.log("8 xyz loopLength " + loopLength);
+
         for (var i = 0; i < TranslatorDocs.length; ++i) {
-            console.log("8 xyz TranslatorDocs.length  first loop [" + i + "]");
+            console.log("8 xyz TranslatorDocs.length " + TranslatorDocs.length);
+
             for (var j = 0; j < TranslatorDocs[i].length; ++j) {
-                console.log("8 xyz TranslatorDocs.length  second loop ", TranslatorDocs[i].length);
-                console.log("8 xyz TranslatorDocs[" + i + "] ");
                 console.log(TranslatorDocs[i]);
-                console.log("8 xyz TranslatorDocs[" + i + "] [" + j + "]");
-                console.log(TranslatorDocs[i][j]);
                 // skip undefined values to preserve sparse array
                 if (TranslatorDocs[i][j] === undefined)
                     continue;
@@ -930,7 +1007,12 @@ $(document).ready(function () {
                     translators[j] = [];
                 // swap the x and y coords for the copy
                 translators[i][j] = TranslatorDocs[i][j];
-                console.log("8 xyz 1 translators[" + i + "][" + j + "] " + translators[i][j]);
+
+                console.log("8 xyz 1 translators[" + j + "][" + i + "] " + translators[j][i]);
+                console.log("8 xyz 2 TranslatorDocs[" + i + "][" + j + "] " + TranslatorDocs[i][j]);
+                console.log("8 xyz 3 translators[i].length: " + translators[i].length);
+                console.log("8 xyz 4 TranslatorDocs[i].length: " + TranslatorDocs[i].length);
+                console.log("8 xyz 5 translators.length: " + translators.length);
             }
         }
 
@@ -1003,34 +1085,27 @@ $(document).ready(function () {
         }
         tble.appendChild(tableBody);
 
-        var expertReaderName = rowdata.expertReaderList;
-
-
-        //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
-        $('#additionalExpertReader').empty(); // empty the div before fetching and adding new data
-
-        //reset the blocks
-        document.getElementById("agreementToggle1").style.display = "block";
-        document.getElementById("agreement_button1").style.display = "none";
-        document.getElementById("addendumToggle1").style.display = "block";
-        document.getElementById("addendum_button1").style.display = "none";
-
-        //Get all Expert Readers that are not assigned at the moment
-        var unassignedExpertReaderList = rowdata.unassignedExpertReaderList;
-
-
         $('#tn').empty(); // empty the div before fetching and adding new data
         $('#tnc').empty(); // empty the div before fetching and adding new data
+        $('#agreementTranslationRightsHolder').empty();
+        $('#addendumAgreementTranslationRightsHolder').empty();
 
-        // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
 
-        // 1: The Nav-Bar
+        /*
+         * Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
+         */
+
+        /*
+         * 1: The Nav-Bar
+         */
+        console.log("555agreement 1 translators.length " + translators.length);
 
         var rightsAgreementContractsNavBar = '';
         rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
         rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
-        for (var i = 0; i < rowdata.rightsAgreement.length; i++) {
-            console.log("translatorNamesForGenerateTranslatorTab[' + i + ' " + translatorNamesForGenerateTranslatorTab[i]);
+
+        for (var i = 0; i < translators.length; i++) {
+
             var j = i + 1;
             if (i === 0) {
 
@@ -1042,54 +1117,86 @@ $(document).ready(function () {
         }
 
         rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
-        rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
 
+        rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
 
         $(rightsAgreementContractsNavBar).appendTo('#tn');
 
-
-
-        // The Tabs themselves
+        /*
+         * 2: The Tabs themselves
+         */
 
         var rightsAgreementContractsNavContent = '';
+        var agreementTranslationRightsHolderContent = '';
+        var addendumAgreementTranslationRightsHolder = "";
+        var agreementTranslationRightsHolderName = "";
 
-        for (var i = 0; i < rowdata.rightsAgreement.length; i++) {
+        for (var i = 0; i < translators.length; i++) {
 
             var j = i + 1;
 
             if (i === 0) {
 
                 rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
+
             } else {
 
                 rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
             }
 
+            /*
+             * Agreement with the translation rights holder
+             */
+            if (j === 1) {
+
+                agreementTranslationRightsHolderContent += '<div class="row" style="margin-bottom: 80px;">';
+                agreementTranslationRightsHolderContent += '<div style=" margin: 0 auto; position: relative;">';
+                agreementTranslationRightsHolderContent += '<div class="col-md-9"  id="agreementToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
+                agreementTranslationRightsHolderContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement' + j + '"></strong></div> ';
+                agreementTranslationRightsHolderContent += '<br/>';
+                agreementTranslationRightsHolderContent += '<div class="col-sm-5">';
+                agreementTranslationRightsHolderContent += '<label id="uploadAgreement" class="control-label pull-left"></label>';
+                agreementTranslationRightsHolderContent += '<label  class="control-label pull-left">No Agreement with the translation rights holder has been uploaded!</label>';
+                agreementTranslationRightsHolderContent += '</div>';
+                agreementTranslationRightsHolderContent += '</div>'; //<div class="input-group agreement" 
+                agreementTranslationRightsHolderContent += '</div>'; //<div class="col-md-9" 
+
+                agreementTranslationRightsHolderContent += '<div class="col-md-4" id="agreement_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+                agreementTranslationRightsHolderContent += '<label  class="control-label pull-left" id="agreement_button_label' + j + '" ></label>';
+                agreementTranslationRightsHolderContent += '<div class="input-group agreement_buttonText pull-left">';
+                agreementTranslationRightsHolderContent += '<a class="btn btn-info btn-file pull-left" role="button" id="agreement_link' + j + '" href=""  target="_blank">';
+                agreementTranslationRightsHolderContent += '<span class="glyphicon glyphicon-file"></span>';
+                agreementTranslationRightsHolderContent += 'Click to open</a>';
+                agreementTranslationRightsHolderContent += '</div>';
+                agreementTranslationRightsHolderContent += '</div>'; // -- col-md-7--
+
+
+                agreementTranslationRightsHolderContent += '</div>'; //-- position:relative;--
+                agreementTranslationRightsHolderContent += '</div>'; // row
+
+                $(agreementTranslationRightsHolderContent).appendTo('#agreementTranslationRightsHolder');
+            }
 
             rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
 
-            //Upload a copy of the CV
+            /*
+             * CV
+             */
 
-            console.log("8 xyz Upload a copy of the CV v " + v + "  w  " + w + "  j  " + j);
             rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
             rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative;">';
 
             rightsAgreementContractsNavContent += '<div class="col-md-9"  id="cvToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
             rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadCV' + j + '"></strong></div>';
             rightsAgreementContractsNavContent += '<br/>';
-            rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-            rightsAgreementContractsNavContent += '<div class="input-group cv"  style="margin-bottom: 40px;">';
-            rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-            rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="CV-' + j + '" id="cv' + j + '">';
-            rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-            rightsAgreementContractsNavContent += '</label>';
-            rightsAgreementContractsNavContent += '<input  type="text" id="label_cv' + j + '" class="pull-left"/>';
-            rightsAgreementContractsNavContent += '<input type="hidden" value="CV" name="destination" id="cv_upload' + j + '"/>';
-            rightsAgreementContractsNavContent += '<span class="help-block"></span> ';
+            rightsAgreementContractsNavContent += '<div class="col-sm-5">';
+            rightsAgreementContractsNavContent += '<label id="uploadCV" class="control-label pull-left"></label>';
+            rightsAgreementContractsNavContent += '<label  class="control-label pull-left">Nothing has been uploaded!</label>';
+
             rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
             rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
 
-            rightsAgreementContractsNavContent += '<div class="col-md-5" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+            rightsAgreementContractsNavContent += '<div class="col-md-3" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
             rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="cv_button_label' + j + '" ></label>';
             rightsAgreementContractsNavContent += '<div class="input-group cv_buttonText pull-left">';
             rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="cv_link' + j + '" href=""  target="_blank">';
@@ -1102,29 +1209,23 @@ $(document).ready(function () {
             rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
             rightsAgreementContractsNavContent += '</div>'; // row
 
-            //Upload a copy of the contract with translator
+            /*
+             * Contract with translator
+             */
 
-            console.log("8 xyz Upload a copy of the contract with translator v " + v + "  w  " + w + "  j  " + j);
             rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
             rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
-
             rightsAgreementContractsNavContent += '<div class="col-md-9"  id="contractToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
             rightsAgreementContractsNavContent += '<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadContract' + j + '"></strong></div>';
             rightsAgreementContractsNavContent += '<br/>';
-            rightsAgreementContractsNavContent += '<div class="margin-bottom: 40px"></div>';
-            rightsAgreementContractsNavContent += '<div class="input-group contract"  style="margin-bottom: 40px;">';
-            rightsAgreementContractsNavContent += '<label class="btn btn-default btn-file pull-left">';
-            rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
-            rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-            rightsAgreementContractsNavContent += '</label>';
-            rightsAgreementContractsNavContent += '<input  type="text" id="label_contract' + j + '" class="pull-left"/>';
-            console.log("8 xyz Upload a copy of the contract with translator id=label_contract" + j);
-            rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
-            rightsAgreementContractsNavContent += '<span class="help-block"></span> ';
+            rightsAgreementContractsNavContent += '<div class="col-sm-5">';
+            rightsAgreementContractsNavContent += '<label id="uploadContract" class="control-label pull-left"></label>';
+            rightsAgreementContractsNavContent += '<label  class="control-label pull-left">Nothing has been uploaded!</label>';
+
             rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
             rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
 
-            rightsAgreementContractsNavContent += '<div class="col-md-5" id="contract_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+            rightsAgreementContractsNavContent += '<div class="col-md-3" id="contract_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
             rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="contract_button_label' + j + '" ></label>';
             rightsAgreementContractsNavContent += '<div class="input-group contract_buttonText pull-left">';
             rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="contract_link' + j + '" href=""  target="_blank">';
@@ -1133,193 +1234,156 @@ $(document).ready(function () {
             rightsAgreementContractsNavContent += '</div>';
             rightsAgreementContractsNavContent += '</div>'; // -- col-md-10--
 
-
             rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
             rightsAgreementContractsNavContent += '</div>'; // row
 
-            rightsAgreementContractsNavContent += '</div>';  //  --container--
-            rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
 
+            /*
+             * Addendum to the rights agreement
+             */
+
+            if (j === 1) {
+
+                addendumAgreementTranslationRightsHolder += '<div class="row" style="margin-bottom: 80px;">';
+                addendumAgreementTranslationRightsHolder += '<div style=" margin: 0 auto; position: relative; ">';
+
+                addendumAgreementTranslationRightsHolder += '<div class="col-md-9"  id="addendumToggle' + j + '"  style="margin-bottom: 40px; position:absolute; z-index:0; ">';
+                addendumAgreementTranslationRightsHolder += '<div  style="margin-bottom: 10px;"><strong class="pull-left" id="uploadAddendum' + j + '" ></strong> </div>';
+                addendumAgreementTranslationRightsHolder += '<br/>';
+                addendumAgreementTranslationRightsHolder += '<div class="margin-bottom: 40px"></div>';
+                addendumAgreementTranslationRightsHolder += '<div class="col-sm-12">';
+                addendumAgreementTranslationRightsHolder += '<label id="uploadAddendum" class="control-label pull-left"></label>';
+                addendumAgreementTranslationRightsHolder += '<label  class="control-label pull-left">No addendum to the rights agreement has been uploaded!</label>';
+
+                addendumAgreementTranslationRightsHolder += '</div>'; //<div class="input-group agreement" 
+                addendumAgreementTranslationRightsHolder += '</div>'; //<div class="col-md-10" 
+
+                addendumAgreementTranslationRightsHolder += '<div class="col-md-3" id="addendum_button' + j + '"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  ';
+                addendumAgreementTranslationRightsHolder += '<label  class="control-label pull-left" id="addendum_button_label' + j + '" ></label>';
+                addendumAgreementTranslationRightsHolder += '<div class="input-group addendum_buttonText pull-left" style="width: 190px; hight: 34px" >';
+                addendumAgreementTranslationRightsHolder += '<a class="btn btn-info btn-file pull-left" role="button" id="addendum_link' + j + '" href=""  target="_blank">';
+                addendumAgreementTranslationRightsHolder += '<span class="glyphicon glyphicon-file"></span>';
+                addendumAgreementTranslationRightsHolder += 'Click to open</a>';
+                addendumAgreementTranslationRightsHolder += '</div>';
+                addendumAgreementTranslationRightsHolder += '</div>'; // -- col-md-8--
+
+                addendumAgreementTranslationRightsHolder += '</div>'; //-- position:relative;--
+                addendumAgreementTranslationRightsHolder += '</div>'; // row
+
+                $(addendumAgreementTranslationRightsHolder).appendTo('#addendumAgreementTranslationRightsHolder');
+
+            }
+
+            rightsAgreementContractsNavContent += '</div>'; //  --container--
+            rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
         }
 
         $(rightsAgreementContractsNavContent).appendTo('#tnc');
 
-        //Fill the tabs
+        for (var d = 0; d < rightsHolderArray.length; d++)
+        {
+            console.log("rightsHolderArray.length  " + rightsHolderArray.length);
+            //  agreementTranslationRightsHolderName += '<div class="container wrapperContainer pull-left">';
+            agreementTranslationRightsHolderName += '<div class="row">';
+            agreementTranslationRightsHolderName += '<div class="col-md-12">';
+            agreementTranslationRightsHolderName += '<label  id="agreementTranslationRightsHolderName' + d + '"  class="control-label pull-left"></label>';
+            agreementTranslationRightsHolderName += '</div>';
+            agreementTranslationRightsHolderName += '</div>';
+
+            $(agreementTranslationRightsHolderName).appendTo('#agreementTranslationRightsHolderName');
+
+            console.log("agreementTranslationRightsHolderName" + d + " created ");
+        }
+
+        /*
+         * 3: Fill the tabs - Translator(s)
+         */
 
         var w = 1;
 
-        console.log("8 xyz Fill the tabs v " + v + "  w  " + w + "  j  " + j);
-        console.log("8 xyz 1: Fill the tabs translators.length " + translators.length);
-        console.log("8 xyz 1: Fill the tabs TranslatorDocs.length " + TranslatorDocs.length);
-        console.log("8 xyz 1: Fill the tabs rightsAgreement.length " + rowdata.rightsAgreement.length);
-        for (var j = 0; j < rowdata.rightsAgreement.length; j++) {
-            var rightsAgreementArray = rowdata.rightsAgreement[j].split(",");
-            for (var v = 0; v < rightsAgreementArray.length; v++) {
-                console.log("8 xyz Fill the tabs v " + v + "  w  " + w + "  j  " + j);
-                console.log("8 xyz 1: Fill the tabs rightsAgreement " + rightsAgreementArray[v].substr(1));
-                switch (v) {
-                    case 0:
-                        // Agreement
-                        console.log("8 xyz Agreement ");
-                        if (w === 1) {
-                            if (rightsAgreementArray[v].substr(1) !== 'null') {
-                                console.log("8 xyz Agreement not null");
-                                console.log("8 xyz case 0  j[" + j + "] w  " + w);
-                                console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
-                                document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
-                            }
-                        }
-                        break;
-                    case 1:
-                        // AgreementDocName
-                        console.log("8 xyz AgreementDocName ");
-                        console.log("8 xyz case 1 [" + j + "]");
-                        console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
-                        console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
-                        if (w === 1) {
-                            if (rightsAgreementArray[v].substr(1) === '') {
-                                console.log("8 xyz AgreementDocName ===  empty");
-                                console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
-                                document.getElementById('uploadAgreement' + w).innerHTML = 'Upload a copy of the agreement with the translation rights holder';
-                                document.getElementById('label_agreement' + w).value = "not entered";
+        console.log("translators.length  " + translators.length);
 
-                            } else {
-                                console.log("8 xyz AgreementDocName toggle");
-                                console.log("8 xyz case 1 toggle ");
-                                $('#agreementToggle' + w).toggle();
-                                $('#agreement_button' + w).toggle();
+        for (var j = 0; j < translators.length; j++) {
 
-                                document.getElementById("agreement_button_label" + w).innerHTML = 'Open copy of the agreement with the translation rights holder';
+            console.log("8 xyz  translators  :");
+            console.log(translators);
 
-                            }
-                        }
-                        break;
-                    case 2:
-                        // Contract
-                        if (rightsAgreementArray[v].substr(1) !== 'null') {
-                            console.log("8 xyz Contract ===  available");
-                            document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
-                        } else {
-                            console.log("8 xyz Contract ===  empty");
-                        }
-                        break;
-                    case 3:
-                        // ContractDocName
-                        console.log("8 xyz ContractDocName");
-                        console.log("81 xyz Process ContractDocName #############################################");
-                        console.log("81 xyz Process ContractDocName for ", translatorNamesForGenerateTranslatorTab[j]);
-                        console.log("8 xyz v " + v + "  w  " + w + "  j  " + j); // 8 xyz v 3  w  1
-                        if (rightsAgreementArray[v].substr(1) === '') {
-                            console.log("8 xyz ContractDocName ===  empty");
-                            console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
-                            console.log("8 xyz rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
-                            document.getElementById('label_contract' + w).value = "not entered";
-                            document.getElementById('uploadContract' + w).innerHTML = 'Upload a copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
-                            console.log("8 xyz label_contract ", document.getElementById('label_contract' + w).value);
-                        } else {
-
-                            $('#contractToggle' + w).toggle();
-                            $('#contract_button' + w).toggle();
-
-                            document.getElementById("contract_button_label" + w).innerHTML = 'Open copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
-
-                        }
-                        break;
-                    case 4:
-                        // AddendumRightsAgreement
-                        if (w === 1) {
-                            if (rightsAgreementArray[v].substr(1) !== 'null') {
-                                console.log("8 xyz AddendumRightsAgreement not null");
-                                console.log("8 xyz case 0  j[" + j + "] w  " + w);
-                                console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
-                                document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
-                            }
-                        }
-                        break;
-                    case 5:
-                        // AddendumRightsAgreementName
-
-                        console.log("8 xyz Process AddendumRightsAgreementName #############################################");
-                        console.log("8 xyz Process AddendumRightsAgreementName for ", translatorNamesForGenerateTranslatorTab[j]);
-                        console.log("8 xyz v " + v + "  w  " + w + "  j  " + j); // 8 xyz v 3  w  1
-                        console.log("8 xyz rightsAgreementArray[v].slice(0, -1)  :" + rightsAgreementArray[v].slice(0, -1) + ":");
-                        if (w === 1) {
-//                            if (rightsAgreementArray[v].substr(1) === '') {
-                            if (rightsAgreementArray[v].slice(0, -1)) {
-//     console.log("8 xyz AddendumRightsAgreementName  toggle");
-//                                $('#addendumToggle1' + w).toggle();
-//                                $('#addendum_button1' + w).toggle();
-//                                document.getElementById("addendum_button_label" + w).innerHTML = "<strong>Open copy of the addendum to the rights agreement </strong>";
-//                                
-//                                
-                                console.log("8 xyz AddendumRightsAgreementName === empty");
-                                console.log("8 xyz   ", translatorNamesForGenerateTranslatorTab[j]);
-                                console.log("8 xyz  rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
-                                document.getElementById('label_addendum' + w).value = "not entered";
-                                var uploadAddendum = "Upload a copy of the addendum to the rights agreement &nbsp";
-                                document.getElementById('uploadAddendum' + w).innerHTML = uploadAddendum;
-
-                            } else {
-                                console.log("8 xyz AddendumRightsAgreementName  toggle");
-                                $('#addendumToggle1' + w).toggle();
-                                $('#addendum_button1' + w).toggle();//
-                                document.getElementById("addendum_button_label" + w).innerHTML = "<strong>Open copy of the addendum to the rights agreement </strong>";
-                                console.log("8 xyz  rightsAgreementArray[" + v + "].substr(1) :" + rightsAgreementArray[v].substr(1) + ":");
-                                console.log("8 xyz AddendumRightsAgreementName === empty");
-
-                                console.log("8 xyz   ", translatorNamesForGenerateTranslatorTab[j]);
-
-//                                document.getElementById('label_addendum' + w).value = "not entered";
-//                                var uploadAddendum = "Upload a copy of the addendum to the rights agreement &nbsp";
-//                                document.getElementById('uploadAddendum' + w).innerHTML = uploadAddendum;
-                            }
-                        }
-                        break;
-                }
-            }
-
-//                        console.log("8 xyz  #################   translatorNamesForGenerateTranslatorTab[" + j + "]", translators[j][0]);
-            console.log("81 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
+            console.log("555transArray  #################   j  " + j + " i " + i);
+            console.log("555transArray  #################   translators", translators);
+//                        console.log("555transArray  #################   translatorNamesForGenerateTranslatorTab[" + j + "]", translators[j][0]);
+            console.log("8 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
 
 
-            // CV
-            console.log("81 xyz  Process CVs #############################################");
-            console.log("81 xyz Process CV for ", translatorNamesForGenerateTranslatorTab[j]);
+            /*
+             * CV
+             */
+
             if (translatorNamesForGenerateTranslatorTab[j] === 'null') {
-                console.log("81 xyz  translatorNamesForGenerateTranslatorTab[j] === 'null' ");
-                console.log("81 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
-                document.getElementById('uploadCV' + j).innerHTML = 'Upload a copy of the CV with ' + translatorNamesForGenerateTranslatorTab[j];
-                document.getElementById('label_translator' + j).value = "not entered";
+
+                console.log("8 xyz  translatorNamesForGenerateTranslatorTab=[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
+                document.getElementById('uploadCV' + j).innerHTML = 'Copy of the CV with ' + translatorNamesForGenerateTranslatorTab[j];
 
             } else {
-                console.log("81 xyz  translatorNamesForGenerateTranslatorTab[j] NOT 'null' ");
-                console.log("81 xyz ON i " + i);
-                console.log("81 xyz ON j " + j);
-                console.log("81 xyz ON w " + w);
 
+                console.log("8 xyz ON i " + i);
+                console.log("8 xyz ON j " + j);
+                console.log("8 xyz ON w " + w);
+
+                console.log("8 xyz Array translatorNamesForGenerateTranslatorTab j ", translatorNamesForGenerateTranslatorTab[j]);
 
                 $('#cvToggle' + w).toggle();
                 $('#cv_button' + w).toggle();
-                for (var g = 0; g < translators.length; g++) {
-                    console.log("81 xyz transArray = translators[0] [" + g + "]", translators[0][g]);
+
+                $('#contractToggle' + w).toggle();
+                $('#contract_button' + w).toggle();
+
+                console.log("8 xyz 1 Array translators ", translators);
+                console.log("8 xyz 1 Array translators.length ", translators.length);
+
+                for (var s = 0; s < translators.length; s++) {
+                    console.log("8 xyz 2 Loop translators s=" + s, translators[0][s]);
                 }
+
+                console.log("8 xyz 2 Array translators j=" + j, translators[0][j]);
+
+
+
                 var transArray = translators[0][j];
+                console.log("8 xyz  transArray 1 transArray ");
+                console.log(transArray);
 
-                console.log("81 xyz translators[j][0]  " + translators[j][0]);
-                console.log("81 xyz translators[0][j]  " + translators[0][j]);
+                var transArray1 = translators[0][j];
+                console.log("8 xyz  transArray 1 transArray1 ");
+                console.log(transArray1);
 
-                transArray = transArray.replace("[", "");
-                transArray = transArray.replace("]", "");
+                console.log("8 xyz 1 ON i " + i);
+                console.log("8 xyz 1 ON j " + j);
+                console.log("8 xyz 1 ON w " + w);
 
-                var linkArray = transArray.split(",");
-                for (var h = 0; h < linkArray.length; h++) {
-                    console.log("81 xyz linkArray[" + h + "]  " + linkArray[h]);
+                var transArray1 = transArray.replace("[", "");
+                var transArray2 = transArray1.replace("]", "");
+
+                var linkArray = transArray2.split(",");
+                for (var s = 0; s < linkArray.length; s++) {
+                    console.log("8 xyz 2 Loop linkArray s=" + s, linkArray[s]);
                 }
 
-                console.log("81 xyz linkArray[2]  " + linkArray[2]);
 
-                document.getElementById("cv_button_label" + w).innerHTML = 'Open copy of the CV for ' + translatorNamesForGenerateTranslatorTab[j];
+
+                console.log("8 xyz linkArray[1]  " + linkArray[1]);
+                console.log("8 xyz linkArray[2]  " + linkArray[2]);
+                console.log("8 xyz linkArray[3]  " + linkArray[3]);
+                console.log("8 xyz linkArray[4]  " + linkArray[4]);
+                console.log("8 xyz 1 ON i " + i);
+                console.log("8 xyz 1 ON j " + j);
+                console.log("8 xyz 1 ON w " + w);
+                document.getElementById("cv_button_label" + w).innerHTML = 'Open copy of the CV';// + translatorNamesForGenerateTranslatorTab[j];
                 document.getElementById('cv_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + linkArray[2].trim() + " ";
+
+                console.log("8 xyz linkArray[3]  " + linkArray[3]);
+
+                document.getElementById("contract_button_label" + w).innerHTML = 'Open copy of the contract';// + translatorNamesForGenerateTranslatorTab[j];
+                document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + linkArray[3].trim() + " ";
 
             }
 
@@ -1327,60 +1391,186 @@ $(document).ready(function () {
 
         }
 
+        /*
+         * 3: Fill the tabs - Rights Agreement
+         */
 
-        $("#appcontract").val(contr);
-//                    $("#proposedDateOfPublication").val($(this).closest('tr').children()[7].textContent);
-//                    $("#appproposedPrintRun").val($(this).closest('tr').children()[8].textContent);
-//                    $("#plannedPageExtent").val($(this).closest('tr').children()[9].textContent);
-        $("#appnumberOfPages").val($(this).closest('tr').children()[11].textContent);
-//                    $("#breakDownTranslatorFee").val($(this).closest('tr').children()[12].textContent);
-//                    $("#translatorFee").val($(this).closest('tr').children()[13].textContent);
-//                    $("#bookNotes").val($(this).closest('tr').children()[14].textContent);
-        $("#appStatus").val($(this).closest('tr').children()[15].textContent);
-        $("#copiesSent").val($(this).closest('tr').children()[16].textContent);
-        $("#dateCopiesWereSent").val($(this).closest('tr').children()[17].textContent);
-        $("#appTC_ACCEPTED").val($(this).closest('tr').children()[19].textContent);
-        $("#appAPPROVED").val($(this).closest('tr').children()[20].textContent);
-//                    $("#appGenre").val($(this).closest('tr').children()[21].textContent);
-        $("#appExpertReader").val($(this).closest('tr').children()[23].textContent);
-//                    $("#appBookTitle").val($(this).closest('tr').children()[24].textContent);
-        $("#expertReaderName").val($(this).closest('tr').children()[22].textContent);
-        $("#sampleSentOut").val($(this).closest('tr').children()[29].textContent);
-        $("#sampleReturned").val($(this).closest('tr').children()[30].textContent);
-        $("#appReadersReport").val($(this).closest('tr').children()[31].textContent);
-//                  $("#readerReportSummary").val($(this).closest('tr').children()[32].textContent);
+        for (var j = 0; j < rowdata.rightsAgreement.length; j++) {
 
-//                  $("#appDateOfPublicationOriginal").val($(this).closest('tr').children()[35].textContent);
-//                    $("#publicationYear1").val($(this).closest('tr').children()[35].textContent);
-//                    $("#languages").val($(this).closest('tr').children()[36].textContent);
-//                    $("#appLanguageOriginal").val($(this).closest('tr').children()[36].textContent);
-        $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
-//                    $("#appCountryOfPublication").val($(this).closest('tr').children()[38].textContent);
-//                    $("#appForeignPublisher").val($(this).closest('tr').children()[39].textContent);
-//                    $("#foreignPublisher").val($(this).closest('tr').children()[39].textContent);
-//                    $("#appForeignCountry").val($(this).closest('tr').children()[40].textContent);
-//                    $("#appTargetLanguage").val($(this).closest('tr').children()[41].textContent);
-        $("#amountRequested").val($(this).closest('tr').children()[43].textContent);
-        $("#award").val($(this).closest('tr').children()[62].textContent);
-        $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
-//                    $("#authors").val($(this).closest('tr').children()[66].textContent);
-//                    $("#publicationYear").val($(this).closest('tr').children()[67].textContent);
-////                    $("#series").val($(this).closest('tr').children()[68].textContent);
-////                    $("#translationTitle").val($(this).closest('tr').children()[69].textContent);
+            var rightsAgreementArray = rowdata.rightsAgreement[j].split(",");
+
+            console.log("8 xyz  rightsAgreementArray for Loop :");
+            console.log(rightsAgreementArray);
+            console.log("8 xyz  rightsHolderArray for Loop :");
+            console.log(rightsHolderArray);
+
+            for (var v = 0; v < rightsAgreementArray.length; v++) {
+
+                console.log("8 xyz  rightsAgreementArray  :" + rightsAgreementArray[v].substr(1) + " w: " + w);
+                console.log("8 xyz ON i " + i);
+                console.log("8 xyz ON j " + j);
+                console.log("8 xyz ON v " + v);
+                console.log("8 xyz ON w " + w);
+                console.log("8 xyz  rightsAgreementArray before switch :", rightsAgreementArray[v].substr(1) + ":");
+                console.log("8 xyz  rightsAgreementArray 1 before switch  :", rightsAgreementArray[v].substr(1) + ":");
+                console.log("8 xyz  rightsAgreementArray 1 before switch  :", rightsHolderArray[0] + ":");
+                console.log("8 xyz  rightsAgreementArray before switch j :", rightsHolderArray[j] + ":");
+                console.log("8 xyz  rightsAgreementArray 1 before switch  :", rightsHolderArray[0][1] + ":");
+
+                switch (v) {
+
+                    case 0:
+//                        if (w === 1) {
+                        console.log("8 xyz  rightsAgreementArray case 0: w :", w + ":");
+                        // Agreement
+                        console.log("8 xyz  rightsAgreementArray case 0: :", rightsAgreementArray[v].substr(1) + ":");
+                        console.log("8 xyz  rightsAgreementArray case 0: w:", w + ":");
+                        if (rightsAgreementArray[v].substr(1) !== 'null') {
+                            console.log("8 xyz case 0  [" + j + "]");
+                            console.log("8 xyz  rightsAgreementArray 1 case 0:  :", rightsAgreementArray[v].substr(1) + ":");
+                            console.log("8 xyz  rightsAgreementArray 1 case 0:  :", rightsHolderArray[0] + ":");
+                            console.log("8 xyz  rightsAgreementArray 1 case 0: j :", rightsHolderArray[j] + ":");
+//                                        document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                            document.getElementById('agreement_link1').href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                        }
+                        break;
+//                        }
+                    case 1:
+//                        if (w === 1) {
+                        console.log("8 xyz  rightsAgreementArray w :", w + ":");
+                        // AgreementDocName
+                        console.log("8 xyz case 1 [" + j + "]");
+                        if (rightsAgreementArray[v].substr(1) === 'null') {
+                            console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
+                            console.log("8 xyz case 1 === null ");
+
+                            document.getElementById('uploadAgreement1').innerHTML = 'Copy of the agreement with ' + translatorNamesForGenerateTranslatorTab[j];
+                        } else {
+                            console.log("8 xyz case 1 toggle ");
+                            $('#agreementToggle1').toggle();
+                            $('#agreement_button1').toggle();
+                            console.log("8 xyz  rightsAgreementArray case 1: j :", rightsHolderArray[j] + ":");
+                            console.log("8 xyz  rightsAgreementArray [0]  case 1:  :", rightsHolderArray[0] + ":");
+                            var rha = rightsHolderArray[0];
+                            console.log("8 xyz  rightsAgreementArray rha[0] case 1:  :", rha[0] + ":");
+
+//                                        document.getElementById("agreement_button_label" + w).innerHTML = 'Open copy agreement with ' + translatorNamesForGenerateTranslatorTab[j] + ' <br/>'; //+ translatorNamesForGenerateTranslatorTab[j];
+                            document.getElementById("agreement_button_label1").innerHTML = 'Open a copy agreement with with the translation rights holder(s) <br/>'; //+ translatorNamesForGenerateTranslatorTab[j];
+
+                        }
+                        break;
+//                        }
+//                    case 2:
+                        // Contract
+
+//                        if (rightsAgreementArray[v].substr(1) !== 'null') {
+//
+//                            document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+//                        }
+//                        break;
+//                    case 3:
+                        // ContractDocName
+
+//                        if (rightsAgreementArray[v].substr(1) === 'null') {
+//                            document.getElementById('uploadContract' + w).innerHTML = 'Copy of the contract with ' + translatorNamesForGenerateTranslatorTab[j];
+//                        } else {
+//
+////                                        $('#contractToggle' + w).toggle();
+////                                        $('#contract_button' + w).toggle();
+//                            document.getElementById("contract_button_label" + w).innerHTML = 'Open copy of the contract '; //with ' + translatorNamesForGenerateTranslatorTab[j];
+//
+//                        }
+//                        break;
+                    case 2:
+                        // AddendumRightsAgreement
+                        console.log("8 xyz  rightsAgreementArray AddendumRightsAgreement: :", rightsAgreementArray[v].substr(1) + ":");
+
+                        if (rightsAgreementArray[v].substr(1) !== 'null') {
+                            console.log("8 xyz case 2  [" + j + "]");
+                            console.log("8 xyz  rightsAgreementArray 1 case 2:  :", rightsAgreementArray[v].substr(1) + ":");
+                            console.log("8 xyz  rightsAgreementArray 1 rightsHolderArray case 2:  :", rightsHolderArray[0] + ":");
+                            console.log("8 xyz  rightsAgreementArray 1 rightsHolderArray case 2: j :", rightsHolderArray[j] + ":");
+//                                        document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                            document.getElementById('addendum_link1').href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+//                            document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                        }
+                        break;
+                    case 3:
+                        // AddendumRightsAgreementName
+                        console.log("8 xyz case 3 [" + j + "]");
+                        console.log("8 xyz  rightsAgreementArray case 3  AddendumRightsAgreementName: :", rightsAgreementArray[v].substr(1) + ":");
+
+                        if (rightsAgreementArray[v].substr(1) === 'null') {
+                            console.log("8 xyz  ", translatorNamesForGenerateTranslatorTab[j]);
+                            console.log("8 xyz case 3 === null ");
+
+//                            document.getElementById('uploadAddendum1').innerHTML = 'Copy of the agreement with ' + translatorNamesForGenerateTranslatorTab[j];
+                        } else {
+                            console.log("8 xyz case 3 toggle AddendumRightsAgreementName");
+                            $('#addendumToggle1').toggle();
+                            $('#addendum_button1').toggle();
+                            document.getElementById("addendum_button_label1").innerHTML = 'Open a copy of the addendum to the rights agreement with the translation rights holder(s) <br/>'; //+ translatorNamesForGenerateTranslatorTab[j];
+                        }
+
+                        break;
+
+                }//switch
+
+            } //for (var v = 0; v < rightsAgreementArray.length; v++) {
+
+            console.log("555transArray  #################   j  " + j + " i " + i);
+            console.log("555transArray  #################   translators", translators);
+//                        console.log("555transArray  #################   translatorNamesForGenerateTranslatorTab[" + j + "]", translators[j][0]);
+            console.log("8 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
 
 
 
+            /*
+             * CV
+             */
+
+            if (translatorNamesForGenerateTranslatorTab[j] === 'null') {
+
+                console.log("8 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
+                document.getElementById('uploadCV' + j).innerHTML = 'Upload a copy of the CV with ' + translatorNamesForGenerateTranslatorTab[j];
+                document.getElementById('label_translator' + j).value = "not entered";
+
+            } else {
+                console.log("8 xyz ON i " + i);
+                console.log("8 xyz ON j " + j);
+                console.log("8 xyz ON w " + w);
+
+                console.log("8 xyz Array translatorNamesForGenerateTranslatorTab[j= " + j + "] ", translatorNamesForGenerateTranslatorTab[j]);
+//                console.log("81 xyz translators[j][0]  " + translators[j][0]);
+                console.log("81 xyz translators[0][j]  " + translators[0][j]);
+
+                $('#cvToggle' + w).toggle();
+                $('#cv_button' + w).toggle();
+                console.log("Toggle 1 " + w);
+                var transArray = translators[0][j];
+
+                transArray = transArray.replace("[", "");
+                transArray = transArray.replace("]", "");
+
+                var linkArray = transArray.split(",");
+
+                console.log("8 xyz linkArray[2]  " + linkArray[2]);
+                console.log("8 xyz ON i " + i);
+                console.log("8 xyz ON j " + j);
+                console.log("8 xyz ON w " + w);
+                console.log("Toggle 2 " + w);
+//                document.getElementById("cv_button_label" + w).innerHTML = 'Open copy of the CV for ' + translatorNamesForGenerateTranslatorTab[j];
+//                document.getElementById('cv_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + linkArray[2].trim() + " ";
+
+            }
+            console.log("8 xyz ON i " + i);
+            console.log("8 xyz ON j " + j);
+            console.log("8 xyz ON w " + w);
+            w++;  // next translator
+
+        }
 
         console.log("generateTranslatorTab translatorArray " + translators.length);
-
-    });
-    $('#applicationEditForm :file').each(function () {
-        var input = $(this); // This is the jquery object of the input, do what you will
-        console.log("88 xyz ", input[0].name);
-        $(this).rules("add",
-                {
-                    validFileName: true
-                });
 
     });
 });
@@ -1603,17 +1793,20 @@ function  copyFirstTranslatorName() {
 }
 
 
-//add more Translators
 
+
+/*
+ * add more Translators
+ */
 $(document).ready(function () {
-    counter = 1;
+    counterTranslators = 1;
     $("#addElement").click(function (event) {
-        counter++;
-        var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counter + ". Translator  </div>");
+        counterTranslators++;
+        var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counterTranslators + ". Translator  </div>");
         var $newInput = $("<input placeholder='Translator Name' type='text'> ");
         $newInput
-                .attr("name", "Name" + counter)
-                .attr("id", "name" + counter)
+                .attr("name", "Name" + counterTranslators)
+                .attr("id", "tname" + counterTranslators)
                 .addClass("text wsp");
         $newInput.appendTo($newDiv);
         $newDiv.appendTo($("#generatedForm"));
@@ -1621,22 +1814,18 @@ $(document).ready(function () {
 });
 
 
-//add more RightsHolders
-
+/*
+ * add more RightsHolders
+ */
 $(document).ready(function () {
+    counterRightsHolders = 1;
     $("#addAdditionalRightsHolders").click(function (event) {
-        console.log("addAdditionalRightsHolders   ", rightsHolderArray);
-        console.log("123v2 addAdditionalRightsHolders   ", rightsHolderArray.length);
-        translationrightsholdercounter = rightsHolderArray.length;
-        translationrightsholdercounterInput = rightsHolderArray.length;
-        translationrightsholdercounter++;
-
-        console.log("123v2 addAdditionalRightsHolders  translationrightsholdercounter ", translationrightsholdercounter);
-        var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + translationrightsholdercounter + ".  Rights holder  </div>");
+        counterRightsHolders++;
+        var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counterRightsHolders + ".  Rights holder  </div>");
         var $newInput = $("<input placeholder='Rights holder name' type='text'> ");
         $newInput
-                .attr("name", "rightsHoldersName" + translationrightsholdercounterInput)
-                .attr("id", "name" + translationrightsholdercounterInput)
+                .attr("name", "Name" + counterRightsHolders)
+                .attr("id", "rhname" + counterRightsHolders)
                 .addClass("text wsp");
         $newInput.appendTo($newDiv);
         $newDiv.appendTo($("#RightsHolderGeneratedForm"));
@@ -1644,75 +1833,62 @@ $(document).ready(function () {
 });
 
 
-//addAdditionalRightsHoldersModalDiv
-
-$(document).ready(function () {
-    translationrightsholdercounter = 1;
-    $("#RightsHolderGeneratedForm").empty();
-    $("#addAdditionalRightsHoldersModalDiv").click(function (event) {
-//                    alert("addAdditionalRightsHoldersModalDiv");
-        console.log("123v addAdditionalRightsHolders   ", rightsHolderArray.length);
-        if (rightsHolderArray.length > 0) {
-            for (var i = 0; i < rightsHolderArray.length; i++) {
-                var counter = i + 1;
-                console.log("123v addAdditionalRightsHolders   ", rightsHolderArray[i]);
-                var name = rightsHolderArray[i];
-
-                var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counter + ".  Rights holder  </div>");
-                var $newInput = $('<input placeholder="Rights holder name" disabled="" type="text" value="' + name + '"  > ');
-                $newInput
-                        .attr("name", "rightsHoldersName" + i)
-                        .attr("id", "name" + i)
-                        .addClass("text wsp");
-                $newInput.appendTo($newDiv);
-                $newDiv.appendTo($("#RightsHolderGeneratedForm"));
-
-            }
-        } else {
-
-        }
-    });
-});
 
 
-
-
-//copyFirstRightsHolderName
+/*
+ * copyFirstRightsHolderName
+ */
 
 function  copyFirstRightsHolderName() {
 
-    console.log("123v copyFirstRightsHolderName addAdditionalRightsHolders length  ", rightsHolderArray.length);
+    rightsHolderArray = [];
+    console.log("copyFirstRightsHolderName rightsHolderArray cleared ", rightsHolderArray);
 
-    if (rightsHolderArray.length === 0) {
-        var fn = document.getElementById("rightsHoldersName0");
-        document.getElementById("firstRightsHolder0").value = fn.value;
-        Name = fn.value;
-        console.log("copyFirstRightsHolderName Name ", Name);
-        rightsHolderArray.push(Name);
-        console.log(" first entry in rightsHolderArray ", fn.value);
-    }
+    var fn = document.getElementById("agreementTranslationRightsHolderName0").textContent;
+    console.log("copyFirstRightsHolderName agreementTranslationRightsHolderName0 ", document.getElementById("agreementTranslationRightsHolderName0").textContent);
+    console.log("copyFirstRightsHolderName fn.value ", fn.value);
+    document.getElementById("firstRightsHolder0").value = document.getElementById("agreementTranslationRightsHolderName0").textContent;
+    rightsHolderName = document.getElementById("agreementTranslationRightsHolderName0").textContent;
+    console.log("copyFirstRightsHolderName rightsHolderName ", rightsHolderName);
+    rightsHolderArray.push(rightsHolderName);
+    console.log(" first entry in rightsHolderArray ", fn.value);
 
+    $("#rightsHolderArray").val(rightsHolderArray);
+    console.log("copyFirstRightsHolderName rightsHolderArray ", rightsHolderArray);
+
+    // Switch on "Add Additional Rights Holders"
+    $('#addAdditionalRightsHoldersModalDiv').toggle();
+
+    // Get Content
+    var rightsAgreementContent = document.getElementById("rightsAgreementContracts").innerHTML;
+
+    // Store Content
     if (!localStorage.rightsAgreementContent === 0) {
         //function retrieve(){
         document.getElementById("rightsAgreementContracts").innerHTML = localStorage.getItem("rightsAgreementContent");
         console.log("copyFirstRightsHolderName localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
-        for (i = 0; i < translatorContent.length; i++) {
+        for (i = 0; i < rightsAgreementContent.length; i++) {
             console.log("restored rightsAgreementContent " + rightsAgreementContent);
         }
     }
 
-
-    // back To Translators tab
+    // back To Rights tab
 //                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
+    $('#bs-example-navbar-collapse-2 a[href="#translatorTabs"]').tab('show');
 }
 
 
-//backToRightsAgreement
+/*
+ * backToRightsAgreement
+ */
 
 function backToRightsAgreement() {
 //                alert("backToRightsAgreement");
 
     $("#addAddRightsHolders").empty();
+//    $("#agreementTranslationRightsHolderName").empty();
+
+    $('#agreementTranslationRightsHolderName0').toggle();
 
     console.log("123v backToRightsAgreement rightsHolderArray  ", rightsHolderArray);
 
@@ -1724,34 +1900,27 @@ function backToRightsAgreement() {
     console.log("backToRightsAgreement localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
     if (!localStorage.rightsAgreementContent === 0) {
         console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent);
-        for (i = 0; i < translatorContent.length; i++) {
+        for (i = 0; i < rightsAgreementContent.length; i++) {
             console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent[i]);
         }
 //                    alert("backToTranslators false");
 //                    return false;
     }
 
-
-
-    console.log("123v2 backToRightsAgreement translationrightsholdercounter  ", translationrightsholdercounter);
-    for (var i = 2; i < translationrightsholdercounter; i++) {
-        console.log("123v2 backToRightsAgreement rightsHolderArray ", rightsHolderArray);
-        var nr = "name" + i;
+    /*
+     * fill rightsHolderArray with rightsAgreementItemValue
+     */
+    for (var i = 2; i <= counterRightsHolders; i++) {
+        var nr = "rhname" + i;
         console.log("backToRightsAgreement nr ", nr);
-        var item = document.getElementById(nr);
-        itemValue = item.value;
-        console.log("123v2  backToRightsAgreement nr " + nr + " itemValue " + itemValue);
-        //only push itemValue with a value and not already in array
-        if (itemValue !== "") {
-            if (rightsHolderArray.includes(itemValue)) {
-                console.log("123v2 backToRightsAgreement excluding  ", itemValue);
-            } else {
-                console.log("123v2 backToRightsAgreement push itemValue ", itemValue);
-                rightsHolderArray.push(itemValue);
-                console.log("123v2 backToRightsAgreement next entry in translatorArray ", itemValue);
-            }
-        }
+        var itemRightsAgreement = document.getElementById(nr);
+        rightsAgreementItemValue = itemRightsAgreement.value;
+        console.log("backToRightsAgreement itemValue ", rightsAgreementItemValue);
+        rightsHolderArray.push(rightsAgreementItemValue);
+        console.log("backToRightsAgreement next entry in translatorArray ", rightsAgreementItemValue);
     }
+
+
 
     // Switch off "Add more translators"
     $('#addAdditionalRightsHoldersModalDiv').toggle();
@@ -1759,45 +1928,88 @@ function backToRightsAgreement() {
     // Change Title from "Translation rights holder" to "Translation rights holder(s)"
     document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holders';
 
-    // Disable first Translation rights holder name input element
-    document.getElementById("rightsHoldersName0").readonly = 'true';
-    document.getElementById("rightsHoldersName0").style.display = "none";
+    /*
+     * remove empty items from array
+     */
+    rightsHolderArray = rightsHolderArray.filter(function (e) {
+        return e;
+    });
 
-    // Display all TranslatorrightsHolder input element each
+    /*
+     * Display all TranslatorrightsHolder input element each
+     */
     for (var i = 0; i < rightsHolderArray.length; i++) {
 
-        var additionalTranslatorTag = '';
-        console.log("LOOP rightsHolderArray " + rightsHolderArray[i]);
+        console.log("backToRightsAgreement rightsHolderArray " + rightsHolderArray[i]);
 
-        additionalTranslatorTag += '<div class="form-group has-feedback">';
-        additionalTranslatorTag += ' <input id="rightsHoldersName' + i;
-        additionalTranslatorTag += ' type="text"  ';
-        additionalTranslatorTag += 'class="form-control"';
-        additionalTranslatorTag += 'name="rightsHoldersName' + i + '"';
-        additionalTranslatorTag += 'value="' + rightsHolderArray[i] + '"';
-        additionalTranslatorTag += 'disabled = ""';
-        additionalTranslatorTag += '</div>';
+        var additionalRightsHoldersTag = '';
 
-        $(additionalTranslatorTag).appendTo('#addAddRightsHolders');
+        additionalRightsHoldersTag += '<div class="row">';
+        additionalRightsHoldersTag += '<div class="form-group pull-left has-feedback">';
+        additionalRightsHoldersTag += '<div class="input-group pull-left">';
+        additionalRightsHoldersTag += ' <input id="rightsHoldersName' + i + '"';
+        additionalRightsHoldersTag += ' type="text"  ';
+        additionalRightsHoldersTag += ' class="form-control addRightsHolder"';
+        additionalRightsHoldersTag += ' name="rightsHoldersName' + i + '"';
+        additionalRightsHoldersTag += ' value="' + rightsHolderArray[i] + '"';
+        additionalRightsHoldersTag += ' required="required">';
+        additionalRightsHoldersTag += '</div>';
+        additionalRightsHoldersTag += '</div>';
+        additionalRightsHoldersTag += '</div>';
+
+        $(additionalRightsHoldersTag).appendTo('#agreementTranslationRightsHolderName');
+
+//        console.log("rightsHolderArray.length  " + rightsHolderArray.length + "   <         ");
+//        //  agreementTranslationRightsHolderName += '<div class="container wrapperContainer pull-left">';
+//        additionalRightsHoldersTag += '<div class="row">';
+//        additionalRightsHoldersTag += '<div class="col-md-12">';
+//        additionalRightsHoldersTag += '<label  id="agreementTranslationRightsHolderName' + i + '"  class="control-label pull-left"></label>';
+//        additionalRightsHoldersTag += '</div>';
+//        additionalRightsHoldersTag += '</div>';
+//
+//        $(additionalRightsHoldersTag).appendTo('#agreementTranslationRightsHolderName');
+//
+//        document.getElementById("agreementTranslationRightsHolderName" + i).textContent = rightsHolderArray[i];
+
+        console.log("agreementTranslationRightsHolderName" + i + " created ");
+        console.log("backToRightsAgreement rightsHolderArray ");
+        console.log(rightsHolderArray);
+
     }
 
+    console.log("additionalRightsHoldersTag).appendTo('#addAddRightsHolders' ");
 
-    console.log("backToRightsAgreement #rightsHolderArray.val(rightsHolderArray) " + rightsHolderArray);
-    console.log(rightsHolderArray);
-    console.log("backToRightsAgreement #rightsHolderArray.length " + rightsHolderArray.length);
+//    $("#applicationForm").validate();
+
+    $('.addRightsHolder').each(function () {
+
+        $(this).rules("add",
+                {
+                    required: true,
+                    validname: true,
+                    minlength: 2
+                });
+
+
+
+        if (!$("#applicationForm").valid()) {
+            console.log(" Not valid ");
+        }
+
+        /*
+         * validate the input element 
+         */
+        $("#applicationForm").validate($(this));
+    });
+
     $("#rightsHolderArray").val(rightsHolderArray);
 
     // back To RightsAgreement tab
-//                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
-// on load of the page: switch to the currently selected tab
-    var hash = window.location.hash;
-    console.log("window.location.hash " + hash);
-    $('#myTab a[href="' + hash + '"]').tab('show');
-
+    $('#myTab a[href="#Rights"]').tab('show');
 
     // if we have a final list of translators (more than one)
     // we need to clear a possible existing tab first
-//                generateTranslatorTab(0);
+//    generateTranslatorTab(0);
 }
 
 
@@ -1819,9 +2031,14 @@ function  generateTranslatorTab(indicator) {
     $('#tn').empty();  // empty the div before fetching and adding new data
 
     console.log("generateTranslatorTab translatorArray " + translatorArray);
-    // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
 
-    // 1: The Nav-Bar
+    /*
+     * Generate Translator Tabs in "Publisher and Translation"-Tab
+     */
+
+    /*
+     * 1: The Nav-Bar
+     */
 
     var rightsAgreementContractsNavBar = '';
 
@@ -1848,7 +2065,9 @@ function  generateTranslatorTab(indicator) {
 
     $(rightsAgreementContractsNavBar).appendTo('#tn');
 
-    // The Tabs themselves
+    /*
+     * 2: The Tabs themselves
+     */
 
     var rightsAgreementContractsNavContent = '';
 
@@ -2229,24 +2448,28 @@ $(document).on("click", "#clear", function () {
 
 
 
-
+$(document).on('hidden.bs.modal', function (event) {
+    if ($('.modal:visible').length) {
+        $('body').addClass('modal-open');
+    }
+});
 
 
 // https://github.com/mgcrea/angular-strap/issues/1343
-var modal_counter = 0;
-$(document).ready(function () {
-    $('.modal').on('shown.bs.modal', function () {
-        modal_counter++;
-    });
-    $('.modal').on('hidden.bs.modal', function () {
-        modal_counter--;
-        if (modal_counter) {
-            $('body').addClass('modal-open');
-        } else {
-            $('body').removeClass('modal-open');
-        }
-    });
-})
+//var modal_counter = 0;
+//$(document).ready(function () {
+//    $('.modal').on('shown.bs.modal', function () {
+//        modal_counter++;
+//    });
+//    $('.modal').on('hidden.bs.modal', function () {
+//        modal_counter--;
+//        if (modal_counter) {
+//            $('body').addClass('modal-open');
+//        } else {
+//            $('body').removeClass('modal-open');
+//        }
+//    });
+//});
 
 
 
@@ -2295,24 +2518,35 @@ function formatDate(unformattedDate) {
     } else {
         var date = new Date(unformattedDate);
         var day = date.getDate();
-        console.log("9 xyz day  " + day);
+//        console.log("9 xyz day  " + day);
         if (day < 10)
             day = "0" + day;
         var month = date.getMonth() + 1;
-        console.log("9 xyz month  " + month);
+//        console.log("9 xyz month  " + month);
         if (month < 10)
             month = "0" + month;
         var year = date.getFullYear();
         var formattedDate = day + "/" + month + "/" + year;
 
-        console.log("9 xyz unformattedDate  " + unformattedDate);
-        console.log("9 xyz day  " + day);
-        console.log("9 xyz month  " + month);
-        console.log("9 xyz year  " + year);
-        console.log("9 xyz formattedDate  " + formattedDate);
+//        console.log("9 xyz unformattedDate  " + unformattedDate);
+//        console.log("9 xyz day  " + day);
+//        console.log("9 xyz month  " + month);
+//        console.log("9 xyz year  " + year);
+//        console.log("9 xyz formattedDate  " + formattedDate);
 
 
         return formattedDate;
     }
 }
-        
+
+$(window).bind("beforeunload", function () {
+    var username = document.getElementById("username").value;
+    alert("username 2 " + username);
+    $.ajax({
+        async: false, //This will make sure the browser waits until request completes
+        url: "./Logout",
+        type: 'post',
+        cache: false,
+        data: {"username": username}
+    });
+});

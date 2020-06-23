@@ -120,6 +120,69 @@ $(function () {
 });
 
 $(function () {
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
+    $("#appTargetLanguage")
+//                  $("#appLanguageOriginal")
+
+            // don't navigate away from the field on tab when selecting an item
+            .on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                        $(this).autocomplete("instance").menu.active) {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                source: function (request, response) {
+                    $.getJSON("ACLanguages", {
+                        term: extractLast(request.term)
+                    }, response);
+                },
+                search: function () {
+                    // custom minLength
+                    var term = extractLast(this.value);
+                    if (term.length < 2) {
+                        return false;
+                    }
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    languageArray.push(ui.item.value);
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push("");
+                    this.value = terms.join(", ");
+                    console.log("this.value:  ", this.value); //List
+                    console.log("terms: ", terms); //Array
+
+                    //languageArray.push(ui.item.value);
+
+                    //Do something
+                    var arrayLength = languageArray.length;
+                    for (var i = 0; i < arrayLength; i++) {
+                        console.log("itemValue   " + i + ":  ", languageArray[i]);
+                    }
+
+                    $("#language_array").val(languageArray);
+                    return false;
+                }
+
+            });
+});
+
+$(function () {
     $("#appLanguageOriginal").autocomplete({
         source: 'ACLanguages', // The source of the AJAX results
         dataType: 'json',
@@ -403,7 +466,6 @@ function del_file(eleId) {
 
 
 //add more Translators
-
 $(document).ready(function () {
     counter = 1;
     $("#addElement").click(function (event) {
@@ -446,6 +508,13 @@ function  copyFirstTranslatorName() {
 
     translatorArray = [];
     console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
+
+    /*
+     * hide the single document upload and
+     * remove 'OR' from 'OR add more translators'
+     */
+    $("#uploadDocuments").hide();
+    $('#addTranslatorModala').text("add more translators");
 
     var fn = document.getElementById("translatorName");
     document.getElementById("first0").value = fn.value;
@@ -641,7 +710,8 @@ function backToRightsAgreement() {
 
     var upload_number = 2;
 
-
+   $('#addAddRightsHolders').empty(); // empty the div before fetching and adding new data
+   //
     // Get Content
     var rightsAgreementContent = document.getElementById("rightsAgreementContracts").innerHTML;
 
@@ -717,8 +787,8 @@ function backToRightsAgreement() {
 
 function backToTranslators() {
 
-//                alert("backToTranslators");
-//                translatorArray = [];
+    $('#addTransl').empty(); // empty the div before fetching and adding new data
+
     console.log("backToTranslators translatorArray  ", translatorArray);
     var upload_number = 2;
 
@@ -778,7 +848,13 @@ function backToTranslators() {
     document.getElementById("translatorNameLabel").innerHTML = 'Translators';
 
     // Disable first Translator input element
-    document.getElementById("translatorName").disabled = 'true';
+//    document.getElementById("translatorName").disabled = 'true';
+
+    /*
+     * remove empty items from array
+     */
+    translatorArray = translatorArray.filter(function(e){return e}); 
+
 
     // Display all Translators in input element each
     for (var i = 1; i < translatorArray.length; i++) {
@@ -791,7 +867,7 @@ function backToTranslators() {
         additionalTranslatorTag += 'class="form-control"';
         additionalTranslatorTag += 'name="translatorName"';
         additionalTranslatorTag += 'value="' + translatorArray[i] + '"';
-        additionalTranslatorTag += 'disabled = ""';
+        additionalTranslatorTag += 'required="required"';
         additionalTranslatorTag += '</div>';
         $(additionalTranslatorTag).appendTo('#addTransl');
     }

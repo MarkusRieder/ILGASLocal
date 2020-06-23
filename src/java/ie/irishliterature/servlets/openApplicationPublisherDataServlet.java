@@ -75,15 +75,22 @@ public class openApplicationPublisherDataServlet extends HttpServlet {
         {
             String key = ( String ) keys.nextElement();
             System.out.println( "key  :" + key + ": " + session.getValue( key ) );
+            
+            if(key.equals( "publisherID" )){
+//                publisherID = (String) session.getValue("publisherID");
+            }
 
         }
+
+          publisherID = request.getParameter( "publisherID" );
+
 
         System.out.println( "###################################################################" );
 
 //        int pID = (Integer) session.getAttribute("publisherID");
 //        String publisherID = (String) Integer.toString(pID);
 //        String publisherID = String.valueOf(request.getSession().getAttribute("publisherID"));
-        publisherID = request.getParameter( "publisherID" );
+//        publisherID = request.getParameter( "publisherID" );
         System.out.println( "openApplicationPublisherDataServlet publisherID: " + publisherID );
 
         response.setContentType( "application/json" );

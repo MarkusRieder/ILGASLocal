@@ -7,7 +7,6 @@ import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.TranslatorTracker;
 import ie.irishliterature.model.User;
 import ie.irishliterature.util.GlobalConstants;
-import ie.irishliterature.util.MailUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,8 +34,7 @@ public class Test1DAO {
     private static ArrayList<String> titleList = new ArrayList<>();
 
     @SuppressWarnings( "unchecked" )
-    public static int getSizeOfApplications() throws DBException
-    {
+    public static int getSizeOfApplications() throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -44,18 +42,15 @@ public class Test1DAO {
 
         int size = 0;
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement( "SELECT COUNT(*) FROM ILGAS.GrantApplication" );
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     size = res.getInt( 1 );
 
@@ -63,8 +58,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -76,11 +70,9 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static List<GrantApplication> getAllApplications() throws ClassNotFoundException, DBException
-    {
+    public static List<GrantApplication> getAllApplications() throws ClassNotFoundException, DBException {
         int counter = 1;
-        if ( GrantApplicationData == null )
-        {
+        if ( GrantApplicationData == null ) {
 
             GrantApplicationData = new LinkedList<GrantApplication>();
             Connection conn = null;
@@ -99,8 +91,7 @@ public class Test1DAO {
 
             String searchQuery = "SELECT * FROM ILGAS.GrantApplication ORDER BY ApplicationYear";
 
-            try
-            {
+            try {
 
                 conn = DBConn.getConnection();
 
@@ -108,8 +99,7 @@ public class Test1DAO {
 
                 res = ps.executeQuery( searchQuery );
 
-                while ( res.next() )
-                {
+                while ( res.next() ) {
 
                     //  System.out.println("\n\n================================= Start: " + counter + "  =================================================\n\n");
                     GrantApplication application = new GrantApplication();
@@ -126,7 +116,7 @@ public class Test1DAO {
                     String[] bookTitle = getBookTitle( ReferenceNumber );
                     //  System.out.println("bookTitle:  " + bookTitle[0]);
 
-                    application.setBookTitle( bookTitle[ 0 ] );
+                    application.setBookTitle( bookTitle[0] );
 
 //                    ArrayList<String[]> documentListing = new ArrayList<>();
 //
@@ -173,7 +163,7 @@ public class Test1DAO {
                     application.setAward( res.getInt( "award" ) );
                     application.setSalesFigures( res.getInt( "salesFigures" ) );
                     application.setPreviousGrantAid( getPreviousGrantAid( ReferenceNumber ) );
-                    application.setGenre( bookTitle[ 1 ] );
+                    application.setGenre( bookTitle[1] );
                     application.setBoardComments_Instructions( res.getString( "boardComments_Instructions" ) );
 
                     String expertReaderName = getExpertReaderName( ReferenceNumber );
@@ -209,8 +199,7 @@ public class Test1DAO {
                     /*
                      * iterate through all translators in translatorTrackId
                      */
-                    for ( int i = 0; i < translatorTrackId.size(); i++ )
-                    {
+                    for ( int i = 0; i < translatorTrackId.size(); i++ ) {
 
                         translatorNameList = new ArrayList<>();
 
@@ -222,7 +211,7 @@ public class Test1DAO {
 
                         translatorNameList.add( translatorNameForList );
 
-                        singleTranslatorTrackList.clear();
+//                        singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker( translatorTrackId.get( i ) );
                         translatorTrackList.add( singleTranslatorTrackList );
 
@@ -239,14 +228,12 @@ public class Test1DAO {
                     application.setExpertReaderList( expertReaderList );
                     //  System.out.println("expertReaderList length:  " + expertReaderList.size());
 
-                    for ( int d = 0; d < expertReaderList.size(); d++ )
-                    {
+                    for ( int d = 0; d < expertReaderList.size(); d++ ) {
                         String[] strings = expertReaderList.get( d );
                         System.out.println( "Array:  " + d );
                         application.setExpertReaderList( expertReaderList );
-                        for ( int j = 0; j < strings.length; j++ )
-                        {
-                            System.out.print( "expertReaderList :  " + strings[ j ] + " j: " + j );
+                        for ( int j = 0; j < strings.length; j++ ) {
+                            System.out.print( "expertReaderList :  " + strings[j] + " j: " + j );
                         }
                         System.out.println();
                     }
@@ -276,8 +263,7 @@ public class Test1DAO {
                 }
 
             }
-            catch ( ClassNotFoundException | SQLException e )
-            {
+            catch ( ClassNotFoundException | SQLException e ) {
                 LOGGER.debug( e.getMessage() );
                 DBConn.close( conn, ps, res );
                 throw new DBException( "12 Excepion while accessing database" );
@@ -290,8 +276,7 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static List<EntryDb> getEntryDb() throws ClassNotFoundException, DBException
-    {
+    public static List<EntryDb> getEntryDb() throws ClassNotFoundException, DBException {
         System.out.println( "getEntryDb" );
 
         List<EntryDb> retList = new ArrayList<>();
@@ -311,8 +296,7 @@ public class Test1DAO {
         searchQuery = "SELECT ReferenceNumber, company, Status  FROM ILGAS.GrantApplication ORDER BY ApplicationYear";
         System.out.println( "Test1DAO  getEntryDb searchQuery  " + searchQuery );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -320,8 +304,7 @@ public class Test1DAO {
 
             res = ps.executeQuery( searchQuery );
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
                 counter++;
                 EntryDb entries = new EntryDb( ReferenceNumber, company, bookTitle, Status, Author );
 
@@ -330,7 +313,7 @@ public class Test1DAO {
                 entries.setCompany( res.getString( "company" ) );
 
                 String[] bookTitles = getBookTitle( ReferenceNumber );
-                entries.setBookTitle( bookTitles[ 0 ] );
+                entries.setBookTitle( bookTitles[0] );
                 authorList = getAuthor( ReferenceNumber );
                 entries.setAuthor( authorList );
                 entries.setStatus( res.getString( "Status" ) );
@@ -338,8 +321,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -351,8 +333,7 @@ public class Test1DAO {
         return retList;
     }
 
-    public static String getAuthor( String appRef )
-    {
+    public static String getAuthor( String appRef ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -364,8 +345,7 @@ public class Test1DAO {
          */
         String authorList = "";
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -378,10 +358,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     authorList = authorList + " " + res.getString( 1 );
 
@@ -389,8 +367,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( Test1DAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -400,8 +377,7 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static List<EntryDb> getEntryDb1( String status ) throws ClassNotFoundException, DBException
-    {
+    public static List<EntryDb> getEntryDb1( String status ) throws ClassNotFoundException, DBException {
         System.out.println( "getEntryDb1" );
 
         List<EntryDb> retList = new ArrayList<>();
@@ -421,8 +397,7 @@ public class Test1DAO {
         searchQuery = "SELECT ReferenceNumber, company, Status  FROM ILGAS.GrantApplication WHERE Status ='" + status + "' ORDER BY ApplicationYear";
         System.out.println( "Test1DAO  getEntryDb searchQuery  " + searchQuery );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -430,8 +405,7 @@ public class Test1DAO {
 
             res = ps.executeQuery( searchQuery );
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
                 counter++;
                 EntryDb entries = new EntryDb( ReferenceNumber, company, bookTitle, Status, Author );
 
@@ -440,7 +414,7 @@ public class Test1DAO {
                 entries.setCompany( res.getString( "company" ) );
 
                 String[] bookTitles = getBookTitle( ReferenceNumber );
-                entries.setBookTitle( bookTitles[ 0 ] );
+                entries.setBookTitle( bookTitles[0] );
                 authorList = getAuthor( ReferenceNumber );
                 entries.setAuthor( authorList );
                 entries.setStatus( res.getString( "Status" ) );
@@ -448,8 +422,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -461,8 +434,7 @@ public class Test1DAO {
         return retList;
     }
 
-    public static boolean updateApplicationOld( GrantApplication app, String ApplicationNumber, String applicationYear ) throws SQLException, DBException
-    {
+    public static boolean updateApplicationOld( GrantApplication app, String ApplicationNumber, String applicationYear ) throws SQLException, DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -471,8 +443,7 @@ public class Test1DAO {
         ResultSet res = null;
 
         Set<String> VALUES = new HashSet<>( Arrays.asList(
-                new String[]
-                {
+                new String[]{
                     "ApplicationNumber", "ApplicationYear", "ReferenceNumber", "company", "publisherID", "userID", "agreement", "agreementDocName", "contract", "contractDocName", "proposedDateOfPublication", "proposedPrintRun", "plannedPageExtent", "translatorCV", "translatorCVDocName", "numberOfPages", "translatorFee", "breakDownTranslatorFee", "Notes", "copiesSent", "dateCopiesWereSent", "Original", "OriginalName",
                     "copiesTranslationSample", "copiesTranslationSampleDocName", "gdpr_ACCEPTED", "TC_ACCEPTED", "APPROVED", "Status", "Cover", "CoverName",
                     "originalDateOfPublication", "publicationYear", "originalLanguage", "originalPageExtent", "countryOfPublication", "foreignPublisher", "foreignCountry",
@@ -490,30 +461,23 @@ public class Test1DAO {
 
         System.out.printf( "xxx  app.getClass().getDeclaredFields().length  " + app.getClass().getDeclaredFields().length );
         int setLength = app.getClass().getDeclaredFields().length;
-        for ( java.lang.reflect.Field field : app.getClass().getDeclaredFields() )
-        {
-            try
-            {
+        for ( java.lang.reflect.Field field : app.getClass().getDeclaredFields() ) {
+            try {
                 field.setAccessible( true );
 
                 String col = field.getName();
                 Object value = field.get( app );
                 System.out.printf( "xxx  " + counter + ":  Field name: %s, Field value: %s%n", col, value );
 
-                if ( VALUES.contains( col ) )
-                {
-                    if ( counter < setLength - 1 )
-                    {
-                        if ( !"ApplicationNumber".equals( col ) && !"ApplicationYear".equals( col ) )
-                        {
-                            if ( value != null )
-                            {
+                if ( VALUES.contains( col ) ) {
+                    if ( counter < setLength - 1 ) {
+                        if ( !"ApplicationNumber".equals( col ) && !"ApplicationYear".equals( col ) ) {
+                            if ( value != null ) {
                                 prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
                             }
                         }
                     }
-                    else
-                    {
+                    else {
 //                        if (value != null) {
                         prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "') ";
                         System.out.printf( "xxx last prepStat " + prepStat );
@@ -524,8 +488,7 @@ public class Test1DAO {
                 counter++;
 
             }
-            catch ( IllegalArgumentException | IllegalAccessException ex )
-            {
+            catch ( IllegalArgumentException | IllegalAccessException ex ) {
                 java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
             }
 
@@ -535,8 +498,7 @@ public class Test1DAO {
         prepStat += " AND ApplicationNumber = " + ApplicationNumber + ";";
 
         System.out.printf( "xxx  prepStat " + prepStat );
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
@@ -551,8 +513,7 @@ public class Test1DAO {
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" + e );
         }
@@ -561,8 +522,7 @@ public class Test1DAO {
 
     }
 
-    public static boolean updateApplication( GrantApplication app, String ApplicationNumber, String applicationYear ) throws SQLException, DBException, MessagingException, ClassNotFoundException
-    {
+    public static boolean updateApplication( GrantApplication app, String ApplicationNumber, String applicationYear ) throws SQLException, DBException, MessagingException, ClassNotFoundException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -570,85 +530,70 @@ public class Test1DAO {
         int committed = 0;
         ResultSet res = null;
         java.sql.Timestamp timestamp = getcurrentTimeStamp();
-        System.out.printf( "we are here  updateApplication   " );
+        System.out.printf( "updateApplication we are here  updateApplication   " );
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
             String updateQuery = "UPDATE  ILGAS.GrantApplication  SET ";
-            if ( null != app.getBoardMeeting() )
-            {
+            if ( null != app.getBoardMeeting() ) {
                 updateQuery += " boardMeeting = '" + app.getBoardMeeting() + "',";
             }
-            if ( null != app.getPublisherInformedOfMeeting() )
-            {
+            if ( null != app.getPublisherInformedOfMeeting() ) {
                 updateQuery += " publisherInformedOfMeeting = '" + app.getPublisherInformedOfMeeting() + "',";
             }
-            if ( null != app.getContractSentToPublisher() )
-            {
+            if ( null != app.getContractSentToPublisher() ) {
                 updateQuery += " contractSentToPublisher = '" + app.getContractSentToPublisher() + "',";
             }
-            if ( null != app.getAcknowledgementApproved() )
-            {
+            if ( null != app.getAcknowledgementApproved() ) {
                 updateQuery += " acknowledgementApproved = '" + app.getAcknowledgementApproved() + "',";
             }
-            if ( null != app.getDatePublishedBooksReceived() )
-            {
+            if ( null != app.getDatePublishedBooksReceived() ) {
                 updateQuery += " datePublishedBooksReceived ='" + app.getDatePublishedBooksReceived() + "',";
             }
-            if ( null != app.getDatePaymentMadeToPublisher() )
-            {
+            if ( null != app.getDatePaymentMadeToPublisher() ) {
                 updateQuery += " datePaymentMadeToPublisher ='" + app.getDatePaymentMadeToPublisher() + "',";
             }
 
-            if ( app.getAmountApproved().signum() > 0.00 )
-            {
+            if ( app.getAmountApproved().signum() > 0.00 ) {
                 updateQuery += " amountApproved ='" + app.getAmountApproved() + "',";
             }
-            if ( !"".equals( app.getBoardComments_Instructions() ) )
-            {
+            if ( !"".equals( app.getBoardComments_Instructions() ) ) {
                 updateQuery += " boardComments_Instructions ='" + app.getBoardComments_Instructions() + "',";
             }
-            if ( !"".equals( app.getPaymentReferenceNumber() ) )
-            {
+            if ( !"".equals( app.getPaymentReferenceNumber() ) ) {
                 updateQuery += " paymentReferenceNumber ='" + app.getPaymentReferenceNumber() + "',";
             }
-            if ( null != app.getPaymentStatus() )
-            {
+            if ( null != app.getPaymentStatus() ) {
                 updateQuery += " paymentStatus ='" + app.getPaymentStatus() + "',";
             }
 
             updateQuery += " award ='" + app.getAward() + "',";
 
-            if ( app.getProposedPrintRun() > 0 )
-            {
+            if ( app.getProposedPrintRun() > 0 ) {
                 updateQuery += " proposedPrintRun ='" + app.getProposedPrintRun() + "',";
             }
-            if ( app.getPlannedPageExtent() > 0 )
-            {
+            if ( app.getPlannedPageExtent() > 0 ) {
                 updateQuery += " plannedPageExtent ='" + app.getPlannedPageExtent() + "',";
             }
 
             updateQuery += " notesAboutApplication ='" + app.getNotesAboutApplication() + "',";
-            System.out.println( "notesAboutApplication :" + " notesAboutApplication ='" + app.getNotesAboutApplication() + "'" );
+            System.out.println( "updateApplication  notesAboutApplication :" + " notesAboutApplication ='" + app.getNotesAboutApplication() + "'" );
 
-            updateQuery += " Status ='" + app.getStatus() + "',";
-
-            if ( null != app.getApproveWithdrawnReject() )
-            {
-                updateQuery += " approveWithdrawnReject ='" + app.getApproveWithdrawnReject() + "',";
+//            updateQuery += " Status ='" + app.getStatus() + "',";
+            if ( null != app.getApproveWithdrawnReject() ) {
+                updateQuery += "updateApplication   approveWithdrawnReject ='" + app.getApproveWithdrawnReject() + "',";
             }
 
             updateQuery += " directorChairDecision ='" + app.getDirectorChairDecision() + "',";
-            System.out.println( "APPROVED :" + " APPROVED = " + app.getAPPROVED() + "," );
+            System.out.println( "updateApplication  APPROVED :" + " APPROVED = " + app.getAPPROVED() + "," );
             updateQuery += " APPROVED = " + app.getAPPROVED() + ",";
             updateQuery += " lastUpdated ='" + timestamp + "'";
 
             updateQuery += "  WHERE ApplicationYear = '" + applicationYear + "'  AND ApplicationNumber = '" + ApplicationNumber + "';";
 
-            System.out.println( "ps1:  1: " + updateQuery );
+            System.out.println( "updateApplication  ps1:  1: " + updateQuery );
 
             ps1 = conn.prepareStatement( updateQuery ); //      .prepareStatement(prepStat);
 
@@ -657,19 +602,29 @@ public class Test1DAO {
             conn.commit();
 
             id = committed > 0;
-
+            System.out.println( "updateApplication  id  1: " + id );
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
             throw new DBException( "Test1DAO updateApplication 4 Excepion while accessing database" + e );
         }
 
         String approveWithdrawnRejectSelected = app.getApproveWithdrawnReject();
-        System.out.println( "updateApplication approveWithdrawnReject " + approveWithdrawnRejectSelected );
-
+        System.out.println( "updateApplication  updateApplication approveWithdrawnReject " + approveWithdrawnRejectSelected );
+//         if ( approveWithdrawnRejectSelected.isEmpty() ) {
+//             System.out.println( "updateApplication approveWithdrawnReject isEmpty");
+//         }
+//                  if ( approveWithdrawnRejectSelected == null) {
+//             System.out.println( "updateApplication approveWithdrawnReject null");
+//         }
+//                           if ( "null".equals( approveWithdrawnRejectSelected )) {
+//             System.out.println( "updateApplication approveWithdrawnReject nullnull");
+//         }
+         
+         
+         
         String referenceNumber = ApplicationNumber + "/" + applicationYear;
         System.out.println( "updateApplication getReferenceNumber " + referenceNumber );
 
@@ -677,32 +632,33 @@ public class Test1DAO {
         System.out.println( "updateApplication amountApproved " + amountApproved );
 
         String[] emailDataArray;
-
+        System.out.println( "updateApplication get emailDataArray " );
         emailDataArray = ACpublisherDAO_test.getpublisherByReferenceNumber( referenceNumber );
 
-        String Full_Name = emailDataArray[ 0 ];
-        String email = emailDataArray[ 1 ];
+        String Full_Name = emailDataArray[0];
+        String email = emailDataArray[1];
+        System.out.println( "updateApplication get Full_Name " + Full_Name );
+        System.out.println( "updateApplication get email " + email );
 
-        if ( approveWithdrawnRejectSelected.equals( "Approved" ) )
-        {
+//        if ( !approveWithdrawnRejectSelected.isEmpty() ) {
+//            if ( approveWithdrawnRejectSelected.equals( "Approved" ) ) {
+//                System.out.println( "updateApplication approveWithdrawnRejectSelected Approved " );
+//                MailUtil.informPublisherAwarded( Full_Name, email, amountApproved, referenceNumber );
+//            }
+//
+//            if ( approveWithdrawnRejectSelected.equals( "Rejected" ) ) {
+//                System.out.println( "updateApplication approveWithdrawnRejectSelected Rejected " );
+//                MailUtil.informPublisherRejected( Full_Name, email, amountApproved, referenceNumber );
+//            }
+//        }
 
-            MailUtil.informPublisherAwarded( Full_Name, email, amountApproved, referenceNumber );
-
-        }
-        else if ( approveWithdrawnRejectSelected.equals( "Rejected" ) )
-        {
-
-            MailUtil.informPublisherRejected( Full_Name, email, amountApproved, referenceNumber );
-
-        }
-
+        System.out.println( "updateApplication id  " + id );
         return id;
 
     }
 
     @SuppressWarnings( "unchecked" )
-    public static String getBookNotes( String appRef ) throws DBException
-    {
+    public static String getBookNotes( String appRef ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -710,8 +666,7 @@ public class Test1DAO {
 
         String bookNotes = "";
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement( "SELECT referenceNumber, Notes FROM ILGAS.library WHERE referenceNumber = ?" );
@@ -720,10 +675,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     bookNotes = res.getString( 2 );
 
@@ -732,8 +685,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -745,8 +697,7 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static ArrayList<String> getPreviousGrantAid( String appRef ) throws DBException
-    {
+    public static ArrayList<String> getPreviousGrantAid( String appRef ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
@@ -759,8 +710,7 @@ public class Test1DAO {
          */
         ArrayList<String> previousGrantAid = new ArrayList<>();
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -792,10 +742,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     previousGrantAid.add( idx + ".  - " + res.getString( 1 ) + ", " + res.getString( 2 ) + ", " + res.getString( 3 ) + ", " + res.getString( 4 ) + "\n" );
                     idx++;
@@ -803,8 +751,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -817,8 +764,7 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static ArrayList getTranslatorTrack( String TranslatorTrackId ) throws DBException
-    {
+    public static ArrayList getTranslatorTrack( String TranslatorTrackId ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -829,8 +775,7 @@ public class Test1DAO {
         ArrayList<String> auth = new ArrayList<>();
         TranslatorTracker translatorTracker;
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
 
             translatorTracker = new TranslatorTracker();
@@ -844,10 +789,8 @@ public class Test1DAO {
 
             int idx = 0;
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
 //                    if (idx == 0) {
 //                        translatorTracker.setTranslatorName(res.getString(1));
@@ -876,8 +819,7 @@ public class Test1DAO {
             //  System.out.println("Test1DAO getTranslatorTrack  translatorTracker: " + translatorTracker + " for TranslatorTrackId " + TranslatorTrackId);
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -889,8 +831,7 @@ public class Test1DAO {
         return testList;
     }
 
-    public static ArrayList<String> getTitles( String appRef )
-    {
+    public static ArrayList<String> getTitles( String appRef ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -902,8 +843,7 @@ public class Test1DAO {
          */
         ArrayList<String> titles = new ArrayList<>();
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -918,10 +858,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     titles.add( res.getString( 1 ) );
 
@@ -929,8 +867,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -939,8 +876,7 @@ public class Test1DAO {
         return titles;
     }
 
-    public static String getTranslatorNames( String translatorTrackId ) throws ClassNotFoundException, SQLException
-    {
+    public static String getTranslatorNames( String translatorTrackId ) throws ClassNotFoundException, SQLException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -952,8 +888,7 @@ public class Test1DAO {
          */
         String aTranslatorName = "";
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -963,10 +898,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                if ( res.next() )
-                {
+            if ( res != null ) {
+                if ( res.next() ) {
 
                     aTranslatorName = res.getString( 1 );
 
@@ -974,8 +907,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( SQLException ex )
-        {
+        catch ( SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -984,8 +916,7 @@ public class Test1DAO {
         return aTranslatorName;
     }
 
-    public static ArrayList<String> getTranslatorTrackId( String appRef )
-    {
+    public static ArrayList<String> getTranslatorTrackId( String appRef ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -997,8 +928,7 @@ public class Test1DAO {
          */
         ArrayList<String> translatorTrackID = new ArrayList<>();
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1011,10 +941,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     translatorTrackID.add( res.getString( 1 ) );
 
@@ -1022,8 +950,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1034,8 +961,7 @@ public class Test1DAO {
         return translatorTrackID;
     }
 
-    public static ArrayList<String> getAuthors( String appRef )
-    {
+    public static ArrayList<String> getAuthors( String appRef ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1047,8 +973,7 @@ public class Test1DAO {
          */
         ArrayList<String> authorList = new ArrayList<>();
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1061,10 +986,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     authorList.add( res.getString( 1 ) );
 
@@ -1072,8 +995,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1083,8 +1005,7 @@ public class Test1DAO {
         return authorList;
     }
 
-    public static String getExpertReaderName( String appRef )
-    {
+    public static String getExpertReaderName( String appRef ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1097,8 +1018,7 @@ public class Test1DAO {
          */
         String expertReaderName = "";
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1110,10 +1030,8 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     expertReaderName = res.getString( 1 );
 
@@ -1121,8 +1039,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1131,8 +1048,7 @@ public class Test1DAO {
         return expertReaderName;
     }
 
-    public static String[] getBookTitle( String appRef )
-    {
+    public static String[] getBookTitle( String appRef ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1144,8 +1060,7 @@ public class Test1DAO {
          */
         String[] bookTitle = new String[ 2 ];
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1156,20 +1071,17 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
-                    bookTitle[ 0 ] = res.getString( 1 );
-                    bookTitle[ 1 ] = res.getString( 2 );
+                    bookTitle[0] = res.getString( 1 );
+                    bookTitle[1] = res.getString( 2 );
 
                 }
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1178,8 +1090,7 @@ public class Test1DAO {
         return bookTitle;
     }
 
-    public static List<String[]> getExpertReader( String appRef )
-    {
+    public static List<String[]> getExpertReader( String appRef ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1192,8 +1103,7 @@ public class Test1DAO {
         List<String[]> expertReaderList = new ArrayList<>();
         String[] indExpertReaderList = new String[ 5 ];
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1209,17 +1119,15 @@ public class Test1DAO {
             ResultSetMetaData metadata = res.getMetaData();
             int numcols = metadata.getColumnCount();
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
 
                 indExpertReaderList = new String[ 7 ];
 
                 int i = 1;
 
-                while ( i <= numcols )
-                {
+                while ( i <= numcols ) {
 
-                    indExpertReaderList[ i ] = res.getString( i++ );
+                    indExpertReaderList[i] = res.getString( i++ );
 
                 }
 
@@ -1228,8 +1136,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1238,8 +1145,7 @@ public class Test1DAO {
         return expertReaderList;
     }
 
-    public static List<String> getUnassignedExpertReader()
-    {
+    public static List<String> getUnassignedExpertReader() {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1254,8 +1160,7 @@ public class Test1DAO {
          */
         List<String> UnassignedExpertReaderList = new ArrayList<>();
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1266,16 +1171,14 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
 
                 UnassignedExpertReaderList.add( res.getString( 1 ) );
 
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1285,8 +1188,7 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static ArrayList<String> getTranslatorTracker( String TranslatorTrackId ) throws DBException
-    {
+    public static ArrayList<String> getTranslatorTracker( String TranslatorTrackId ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1297,8 +1199,7 @@ public class Test1DAO {
 
         TranslatorTracker translatorTracker;
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
 
             translatorTracker = new TranslatorTracker();
@@ -1324,8 +1225,7 @@ public class Test1DAO {
 
             translatorTracker.setTranslatorID( TranslatorTrackId );
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
 
                 testList = new ArrayList<>();
 
@@ -1349,8 +1249,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -1358,30 +1257,25 @@ public class Test1DAO {
 
         DBConn.close( conn, ps, res );
 
-        for ( int u = 0; u < resultList.size(); u++ )
-        {
+        for ( int u = 0; u < resultList.size(); u++ ) {
             System.out.println( "Test1DAO resultList " + u + "  " + resultList.get( u ) );
         }
 
         return resultList;
     }
 
-    public static User selectUSER( String uname ) throws DBException
-    {
+    public static User selectUSER( String uname ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         User pojo = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select uname, EMAIL, FIRST_NAME, LAST_NAME, EMAIL_VERIFICATION_HASH, EMAIL_VERIFICATION_ATTEMPTS, STATUS, CREATED_TIME from ILGAS.users where uname = ?" );
             ps.setString( 1, uname );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     pojo = new User();
                     pojo.setUSERNAME( res.getString( 1 ) );
                     pojo.setEMAIL( res.getString( 2 ) );
@@ -1395,8 +1289,7 @@ public class Test1DAO {
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             LOGGER.debug( e.getMessage() );
             e.printStackTrace();
@@ -1405,31 +1298,26 @@ public class Test1DAO {
         return pojo;
     }
 
-    public static boolean verifyEmailHash( String uname, String hash ) throws DBException
-    {
+    public static boolean verifyEmailHash( String uname, String hash ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select 1 from ILGAS.users where uname = ? and EMAIL_VERIFICATION_HASH = ?" );
             ps.setString( 1, uname );
             //  System.out.println("username dao verifyEmailHash: " + uname);
             ps.setString( 2, hash );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     verified = true;
                 }
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             LOGGER.debug( e.getMessage() );
             throw new DBException( "2 Excepion while accessing database" );
@@ -1437,29 +1325,24 @@ public class Test1DAO {
         return verified;
     }
 
-    public static boolean isEmailExists( String uname ) throws DBException
-    {
+    public static boolean isEmailExists( String uname ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select 1 from ILGAS.users where uname = ?" );
             ps.setString( 1, uname );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     verified = true;
                 }
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "3 Excepion while accessing database" );
@@ -1467,16 +1350,14 @@ public class Test1DAO {
         return verified;
     }
 
-    public static int insertRow( User pojo ) throws DBException
-    {
+    public static int insertRow( User pojo ) throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
         int id = 0;
         ResultSet res = null;
         //  System.out.println("insertRow:: ");
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
             ps1 = conn.prepareStatement( "insert into ILGAS.users (uname,FIRST_NAME,LAST_NAME,PASSWORD,EMAIL,FUNCTION,ROLE,EMAIL_VERIFICATION_HASH) values (?,?,?,?,?,?,?,?)" );
@@ -1504,10 +1385,8 @@ public class Test1DAO {
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();;
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     id = res.getInt( 1 );
                 }
             }
@@ -1516,8 +1395,7 @@ public class Test1DAO {
 
             DBConn.close( conn, ps1, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -1527,12 +1405,10 @@ public class Test1DAO {
         return id;
     }
 
-    public static void deleteRow( User pojo )
-    {
+    public static void deleteRow( User pojo ) {
         Connection conn = null;
         PreparedStatement ps = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "delete from ILGAS.users where uname = ?" );
             ps.setString( 1, pojo.getUSERNAME() );
@@ -1540,20 +1416,17 @@ public class Test1DAO {
             ps.close();
             DBConn.close( conn, ps );
         }
-        catch ( SQLException | ClassNotFoundException e )
-        {
+        catch ( SQLException | ClassNotFoundException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
         }
     }
 
-    public static void updateStatus( String uname, String status ) throws DBException
-    {
+    public static void updateStatus( String uname, String status ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set STATUS = ? where uname = ?" );
             ps.setString( 1, status );
@@ -1562,20 +1435,47 @@ public class Test1DAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( "5 Excepion while accessing database" );
         }
     }
 
-    public static void updateEmailVerificationHash( String uname, String hash ) throws DBException
-    {
+    public static void updateAuthorGender( String[] authorArray, String gender, String referenceNumber ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
-        try
-        {
+        System.out.println( "updateAuthorGender authorArray " + Arrays.toString( authorArray ) + " gender " + gender + " referenceNumber " + referenceNumber );
+
+//     int ifIfAuthorExist =  ifAuthorExist( authorArray[0] );
+//                
+//                if( ifIfAuthorExist > 0 )){
+        for ( String authorArray1 : authorArray ) {
+            try {
+                conn = DBConn.getConnection();
+                ps = conn.prepareStatement( "update ILGAS.Author set gender = ? where Name = ? AND ReferenceNumber = ?" );
+                ps.setString( 1, gender );
+                ps.setString( 2, authorArray1 );
+                ps.setString( 3, referenceNumber );
+
+                ps.executeUpdate();
+
+                DBConn.close( conn, ps );
+
+            }
+            catch ( ClassNotFoundException | SQLException e ) {
+                LOGGER.debug( e.getMessage() );
+                DBConn.close( conn, ps );
+                throw new DBException( "5 updateAuthorGender Excepion while accessing database" );
+            }
+        }
+//    }
+    }
+
+    public static void updateEmailVerificationHash( String uname, String hash ) throws DBException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set EMAIL_VERIFICATION_HASH = ?, EMAIL_VERIFICATION_ATTEMPTS = ? where uname = ?" );
             ps.setString( 1, hash );
@@ -1584,23 +1484,20 @@ public class Test1DAO {
             ps.executeUpdate();
             DBConn.close( conn, ps );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( " 6 Excepion while accessing database" );
         }
     }
 
-    public static int incrementVerificationAttempts( String uname ) throws DBException
-    {
+    public static int incrementVerificationAttempts( String uname ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         PreparedStatement ps2 = null;
         ResultSet res = null;
         int attempts = 0;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set EMAIL_VERIFICATION_ATTEMPTS = EMAIL_VERIFICATION_ATTEMPTS + 1 where uname = ?" );
             ps.setString( 1, uname );
@@ -1609,17 +1506,14 @@ public class Test1DAO {
             ps2 = conn.prepareStatement( "SELECT EMAIL_VERIFICATION_ATTEMPTS from ILGAS.users" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     attempts = res.getInt( 1 );
                 }
             }
             DBConn.close( conn, ps, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, ps2, res );
             throw new DBException( "7 Excepion while accessing database" );
@@ -1627,15 +1521,13 @@ public class Test1DAO {
         return attempts;
     }
 
-    public static User verifyLogin( String inputUsername, String inputPassword ) throws DBException
-    {
+    public static User verifyLogin( String inputUsername, String inputPassword ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         User pojo = null;
         ResultSet res = null;
         //  System.out.println("uname before : " + inputUsername);
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select uname, EMAIL, FIRST_NAME, LAST_NAME, STATUS, CREATED_TIME, ROLE, FUNCTION from ILGAS.users where uname = ? and PASSWORD = ?" );
             ps.setString( 1, inputUsername );
@@ -1645,10 +1537,8 @@ public class Test1DAO {
 //           //  System.out.println("ps: " + ps);
 
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     pojo = new User();
 
                     //  System.out.println("Userdao 2 verifyLogin");
@@ -1664,8 +1554,7 @@ public class Test1DAO {
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "8 Excepion while accessing database" );
@@ -1674,30 +1563,25 @@ public class Test1DAO {
     }
 
     public static boolean verifyUserIdAndPassword( String uname,
-            String inputCurrentPassword ) throws DBException
-    {
+            String inputCurrentPassword ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select 1 from ILGAS.users where uname = ? and PASSWORD = ?" );
             ps.setString( 1, uname );
             ps.setString( 2, inputCurrentPassword );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     verified = true;
                 }
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "9 Excepion while accessing database" );
@@ -1705,12 +1589,10 @@ public class Test1DAO {
         return verified;
     }
 
-    public static void updatePassword( String uname, String inputPassword ) throws DBException
-    {
+    public static void updatePassword( String uname, String inputPassword ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set PASSWORD = ? where uname = ?" );
             ps.setString( 1, inputPassword );
@@ -1718,8 +1600,7 @@ public class Test1DAO {
             ps.executeUpdate();
             DBConn.close( conn, ps );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( "10 Excepion while accessing database" );
@@ -1727,12 +1608,10 @@ public class Test1DAO {
     }
 
     public static void updateEmailVerificationHashForResetPassword( String inputEmail,
-            String hash ) throws DBException
-    {
+            String hash ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set EMAIL_VERIFICATION_HASH = ?, EMAIL_VERIFICATION_ATTEMPTS = ?, STATUS = ? where EMAIL = ?" );
             ps.setString( 1, hash );
@@ -1742,30 +1621,25 @@ public class Test1DAO {
             ps.executeUpdate();
             DBConn.close( conn, ps );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( "11 Excepion while accessing database" );
         }
     }
 
-    public static User selectUSERbyEmail( String inputEmail ) throws DBException
-    {
+    public static User selectUSERbyEmail( String inputEmail ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         User pojo = null;
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select uname, EMAIL, FIRST_NAME, LAST_NAME, EMAIL_VERIFICATION_HASH, EMAIL_VERIFICATION_ATTEMPTS, STATUS, CREATED_TIME from ILGAS.users where EMAIL = ?" );
             ps.setString( 1, inputEmail );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     pojo = new User();
                     pojo.setUSERNAME( res.getString( 1 ) );
                     pojo.setEMAIL( res.getString( 2 ) );
@@ -1779,8 +1653,7 @@ public class Test1DAO {
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -1788,8 +1661,7 @@ public class Test1DAO {
         return pojo;
     }
 
-    public static ArrayList<String[]> getDocuments( String appRef )
-    {
+    public static ArrayList<String[]> getDocuments( String appRef ) {
         //  System.out.println("We are here getDocuments !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  ");
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1802,8 +1674,7 @@ public class Test1DAO {
         ArrayList<String[]> documentList = new ArrayList<>();
         String[] documentArray = new String[ 8 ];
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1824,19 +1695,17 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
-                    documentArray[ 0 ] = res.getString( 1 );
-                    documentArray[ 1 ] = res.getString( 2 );
-                    documentArray[ 2 ] = res.getString( 3 );
-                    documentArray[ 3 ] = res.getString( 4 );
-                    documentArray[ 4 ] = res.getString( 5 );
-                    documentArray[ 5 ] = res.getString( 6 );
-                    documentArray[ 6 ] = res.getString( 7 );
-                    documentArray[ 7 ] = res.getString( 8 );
+                    documentArray[0] = res.getString( 1 );
+                    documentArray[1] = res.getString( 2 );
+                    documentArray[2] = res.getString( 3 );
+                    documentArray[3] = res.getString( 4 );
+                    documentArray[4] = res.getString( 5 );
+                    documentArray[5] = res.getString( 6 );
+                    documentArray[6] = res.getString( 7 );
+                    documentArray[7] = res.getString( 8 );
 
                     documentList.add( documentArray );
                     ;
@@ -1846,8 +1715,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1857,8 +1725,7 @@ public class Test1DAO {
         return documentList;
     }
 
-    public static ArrayList<String> getRightsAgreement( String ReferenceNumber )
-    {
+    public static ArrayList<String> getRightsAgreement( String ReferenceNumber ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1873,8 +1740,7 @@ public class Test1DAO {
          * NOT
          * assigned to any reference number at the moment
          */
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -1892,8 +1758,7 @@ public class Test1DAO {
             final int columnCount = meta.getColumnCount();
 //           //  System.out.println("columnCount .... " + columnCount);
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
 
                 columnList = new String[ 6 ];
 
@@ -1913,17 +1778,17 @@ public class Test1DAO {
 //                      7  ContractDocName, 
 //                      8  AddendumRightsAgreement, 
 //                      9  AddendumRightsAgreementName
-                columnList[ 0 ] = res.getString( 1 );
+                columnList[0] = res.getString( 1 );
 //               //  System.out.println("getRightsAgreement Agreement columnList[0] " + res.getString("Agreement"));
-                columnList[ 1 ] = res.getString( 2 );
+                columnList[1] = res.getString( 2 );
 //               //  System.out.println("getRightsAgreement AgreementDocName columnList[1] " + res.getString("AgreementDocName"));
-                columnList[ 2 ] = res.getString( 3 );
+                columnList[2] = res.getString( 3 );
 //               //  System.out.println("getRightsAgreement Contract columnList[2] " + res.getString("Contract"));
-                columnList[ 3 ] = res.getString( 4 );
+                columnList[3] = res.getString( 4 );
 //               //  System.out.println("getRightsAgreement ContractDocName columnList[3] " + res.getString("ContractDocName"));
-                columnList[ 4 ] = res.getString( 5 );
+                columnList[4] = res.getString( 5 );
 //               //  System.out.println("getRightsAgreement AddendumRightsAgreement columnList[4] " + res.getString("AddendumRightsAgreement"));
-                columnList[ 5 ] = res.getString( 6 );
+                columnList[5] = res.getString( 6 );
 //               //  System.out.println("getRightsAgreement AddendumRightsAgreementName columnList[5] " + res.getString("AddendumRightsAgreementName"));
 
 //                columnList[6] = res.getString(7);
@@ -1955,8 +1820,7 @@ public class Test1DAO {
 //                }
                 rightsAgreementArray.add( Arrays.toString( columnList ) );
 
-                for ( int s = 0; s < columnList.length; s++ )
-                {
+                for ( int s = 0; s < columnList.length; s++ ) {
 //                   //  System.out.println("getRightsAgreement columnList[" + s + "] " + columnList[s]);
 
                 }
@@ -1987,8 +1851,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1998,8 +1861,7 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static ArrayList<String> getTransDocs( String ReferenceNumber ) throws DBException
-    {
+    public static ArrayList<String> getTransDocs( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -2009,8 +1871,7 @@ public class Test1DAO {
         String[] translatorCVLst;// = new String[4];
         ArrayList<String> translatorDocsLst = new ArrayList<>();
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -2027,17 +1888,15 @@ public class Test1DAO {
 
             res = ps.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     translatorCVLst = new String[ 5 ];
-                    translatorCVLst[ 0 ] = res.getString( 1 );
-                    translatorCVLst[ 1 ] = res.getString( 2 );
-                    translatorCVLst[ 2 ] = res.getString( 3 );
-                    translatorCVLst[ 3 ] = "TEST"; //res.getString(3);
-                    translatorCVLst[ 4 ] = "TEST"; //res.getString(4);
+                    translatorCVLst[0] = res.getString( 1 );
+                    translatorCVLst[1] = res.getString( 2 );
+                    translatorCVLst[2] = res.getString( 3 );
+                    translatorCVLst[3] = "TEST"; //res.getString(3);
+                    translatorCVLst[4] = "TEST"; //res.getString(4);
 
 //                   //  System.out.println("getTransDocs translatorCVDoc path " + res.getString(2));
                     translatorDocsLst.add( Arrays.toString( translatorCVLst ) );
@@ -2046,8 +1905,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -2059,8 +1917,7 @@ public class Test1DAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static ArrayList<String> getPressCoverage( String ReferenceNumber ) throws DBException
-    {
+    public static ArrayList<String> getPressCoverage( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -2068,8 +1925,7 @@ public class Test1DAO {
 
         ArrayList<String> pressCoverageLst = new ArrayList<>();
         String[] pressCoverageArray;
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -2082,10 +1938,8 @@ public class Test1DAO {
             res = ps.executeQuery();
             pressCoverageArray = new String[ 4 ];
             int idx = 1;
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
 
                     System.out.println( "idx  " + idx );
                     System.out.println( "getPressCoverage pressCoverageLst Loop res.getString(1)  " + res.getString( 1 ) );
@@ -2096,13 +1950,12 @@ public class Test1DAO {
                     String fullPath = FilenameUtils.getFullPath( fileName );
                     String extension = FilenameUtils.getExtension( fileName );
 
-                    pressCoverageArray[ 0 ] = "http://www.literatureirelandgrantapplication.com:8080" + fileName;
-                    pressCoverageArray[ 1 ] = res.getString( 2 ).trim();
+                    pressCoverageArray[0] = "http://www.literatureirelandgrantapplication.com:8080" + fileName;
+                    pressCoverageArray[1] = res.getString( 2 ).trim();
                     System.out.println( " !Thumbs res.getString(1)   " + res.getString( 1 ) );
                     System.out.println( " !Thumbs  res.getString(2)  " + res.getString( 2 ) );
 
-                    if ( "pdf".equals( extension ) )
-                    {
+                    if ( "pdf".equals( extension ) ) {
                         System.out.println( " IS PDF   " );
 
                         String thumbFilename = basename + ".jpg";
@@ -2111,8 +1964,8 @@ public class Test1DAO {
                         System.out.println( " thumbFilename   " + thumbFilename );
                         System.out.println( " thumbFullPath   " + thumbFullPath );
 
-                        pressCoverageArray[ 2 ] = "http://www.literatureirelandgrantapplication.com:8080" + thumbFullPath;
-                        pressCoverageArray[ 3 ] = thumbFilename;
+                        pressCoverageArray[2] = "http://www.literatureirelandgrantapplication.com:8080" + thumbFullPath;
+                        pressCoverageArray[3] = thumbFilename;
 
                     }
 
@@ -2125,8 +1978,7 @@ public class Test1DAO {
             }
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -2137,16 +1989,14 @@ public class Test1DAO {
         return pressCoverageLst;
     }
 
-    public static java.sql.Timestamp getCurrentTimeStamp()
-    {
+    public static java.sql.Timestamp getCurrentTimeStamp() {
 
         java.util.Date today = new java.util.Date();
         return new java.sql.Timestamp( today.getTime() );
 
     }
 
-    public static java.sql.Timestamp getcurrentTimeStamp()
-    {
+    public static java.sql.Timestamp getcurrentTimeStamp() {
 
         Calendar calendar = Calendar.getInstance();
         java.util.Date now = calendar.getTime();
@@ -2157,12 +2007,41 @@ public class Test1DAO {
     }
 
     // convert Java Date to SQL Date
-    public static java.sql.Date sqlDate( java.util.Date javaDate )
-    {
+    public static java.sql.Date sqlDate( java.util.Date javaDate ) {
         System.out.println( "convert Java Date to SQL Date  " + javaDate );
         java.util.Date utilStartDate = javaDate;
         java.sql.Date convertSqlDate = new java.sql.Date( utilStartDate.getTime() );
 
         return convertSqlDate;
     }
+
+    public static int ifAuthorExist( String authorName ) throws DBException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int authorId = 0;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement( "SELECT idAuthor FROM ILGAS.Author WHERE Name = ?" );
+            ps.setString( 1, authorName );
+            res = ps.executeQuery();
+            if ( res != null ) {
+                while ( res.next() ) {
+                    authorId = res.getInt( 1 );
+                }
+            }
+            DBConn.close( conn, ps, res );
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "3 Excepion while accessing database" );
+        }
+
+        return authorId;
+    }
+
 }

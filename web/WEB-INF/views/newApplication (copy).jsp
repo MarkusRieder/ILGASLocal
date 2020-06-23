@@ -1280,7 +1280,11 @@
 
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" value="${username}">
+                        </form>
                     </div>
                 </div> <!--container for welcome/logout-->
 
@@ -1321,7 +1325,7 @@
                         </div><!-- /.navbar-collapse -->
 
                         <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/GrantApplicationServlet" enctype="multipart/form-data">
-                            <%request.getSession().setAttribute("task", "Start New Application");%>
+                            <%request.getSession().setAttribute( "task", "Start New Application" );%>
                             <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
 

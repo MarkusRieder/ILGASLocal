@@ -18,10 +18,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet( name = "returnToLandingPageServlet", urlPatterns =
-{
-    "/returnToLandingPageServlet"
-} )
+@WebServlet( name = "returnToLandingPageServlet", urlPatterns
+        = {
+            "/returnToLandingPageServlet"
+        } )
 public class returnToLandingPageServlet extends HttpServlet {
 
     /**
@@ -35,8 +35,7 @@ public class returnToLandingPageServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         response.setContentType( "text/html;charset=UTF-8" );
         request.setCharacterEncoding( "UTF-8" );
 
@@ -49,8 +48,7 @@ public class returnToLandingPageServlet extends HttpServlet {
 
         Enumeration en = request.getParameterNames();
 
-        while ( en.hasMoreElements() )
-        {
+        while ( en.hasMoreElements() ) {
             Object objOri = en.nextElement();
 
             String param = ( String ) objOri;
@@ -63,8 +61,7 @@ public class returnToLandingPageServlet extends HttpServlet {
 
         System.out.println( "Enumeration keys   " );
         Enumeration keys = session.getAttributeNames();
-        while ( keys.hasMoreElements() )
-        {
+        while ( keys.hasMoreElements() ) {
             String key = ( String ) keys.nextElement();
             System.out.println( "key  :" + key + ": " + session.getValue( key ) );
 
@@ -81,6 +78,9 @@ public class returnToLandingPageServlet extends HttpServlet {
         System.out.println( "Company:1 " + Company );
         System.out.println( "PublisherID:1 " + publisherID );
 
+//        Clear message
+        session.setAttribute( "message", "" );
+        request.setAttribute( "message", "" );
         session.setAttribute( "name", name );
         session.setAttribute( "publisherID", publisherID );
         request.setAttribute( "name", name );
@@ -91,7 +91,6 @@ public class returnToLandingPageServlet extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -103,8 +102,7 @@ public class returnToLandingPageServlet extends HttpServlet {
      */
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest( request, response );
     }
 
@@ -119,8 +117,7 @@ public class returnToLandingPageServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest( request, response );
     }
 
@@ -130,9 +127,8 @@ public class returnToLandingPageServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

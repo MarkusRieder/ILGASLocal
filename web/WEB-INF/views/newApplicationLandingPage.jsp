@@ -184,11 +184,11 @@
 
         <script>
             $(document).ready(function () {
-                var tcACCEPTED = '${tcACCEPTED}';
+                var tcACCEPTED = '${TCACCEPTED}';
                 var gdprACCEPTED = '${gdprACCEPTED}';
                 document.getElementById("tcACCEPTED").value = tcACCEPTED;
                 document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
-
+      
             });
 
         </script>
@@ -214,7 +214,11 @@
                 <!--container for welcome/logout-->
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" value="${username}">
+                        </form>
                     </div>
                 </div> <!--container for welcome/logout-->
 
@@ -233,6 +237,7 @@
                           method="POST"  
                           role="form" 
                           >
+                        
                         <input type="hidden" name="firstname" value ="${firstname}">
                         <input type="hidden" name="lastname" value ="${lastname}">
                         <input type="hidden" name="name" value ="${name}">
@@ -241,8 +246,11 @@
                         <input type="hidden" name="Company_Number" id="Company_Number" value ="${publisherID}">
                         <input type="hidden" name="publisherName" value ="${publisherName}">
                         <input type="hidden" name="task" value="NewApplicationTCconfirmed"> 
+                        
                         <div class="background">
+                            
                             <div class="transbox">
+                                
                                 <!--<div class="form-group">-->
                                 <!--in Panel-->
                                 <div class = "panel panel-default">
@@ -283,6 +291,7 @@
                                             General Data Protection Regulation
                                         </p>
 
+                                         <!-- gdprACCEPTED: -->
                                         <div class="checkbox">                                                             
                                             <label style="margin-bottom: 10px; margin-left: 20px" for="gdprACCEPTED">
                                                 It is the responsibility of the applicant to ensure that they have obtained the necessary consent 
@@ -307,10 +316,11 @@
                                             </label>   
                                             <input type="hidden" name="gdprACCEPTED" value="gdprACCEPTED"> 
                                             <div style="margin-left: 40px; margin-top: 10px">   
-                                                <a target="_blank" href="http://www.literatureireland.com/privacy-policy/">Read Privacy Policy</a>                                          
+                                                <a target="_blank" href="http://www.literatureireland.com/about/policies">Read Privacy Policy</a>                                          
                                             </div>
                                         </div>
 
+                                         <!-- NOTE FOR USERS: -->
                                         <div>
                                             <!-- NOTE FOR USERS: -->
                                             <p style="margin-bottom: 1px; font-weight: bold">
@@ -324,6 +334,7 @@
 
 
                                         <div class="form-group">
+                                            
                                             <div class="col-xs-4">
                                             </div>
                                             <div class="col-xs-4">
@@ -333,13 +344,20 @@
                                                     <span class="glyphicon glyphicon-thumbs-up"></span> Continue
                                                 </button>
                                             </div>
-                                        </div> <!-- form-group-->    
+                                            
+                                        </div> <!-- form-group-->   
+                                        
                                     </div>  <!-- panel-body-->     
+                                    
                                 </div>  <!-- panel --> 
-                            </div>
-                        </div>
+                                
+                            </div> <!-- transbox-->   
+                            
+                        </div>  <!-- background --> 
+                        
                     </form>
-                </div> 
+                        
+                </div>  <!-- container-fluid --> 
 
                 <!-- eligibilityModal -->
                 <div class="modal fade" id="eligibilityModal" tabindex="-1" role="dialog" aria-labelledby="eligibilityModalLabel">
@@ -356,8 +374,258 @@
                                 <div class="row" style="margin-bottom: 10px">
 
 
+<p align="center" style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.64cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt">Application
+Eligibility</span></font></font><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt">&nbsp;&nbsp;</span></font></font><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt"><br/>
+Requirements
+and Criteria</span></font></font></font></p>
+<p style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
 
-                                    <p  align="center"  style="margin-bottom: 0cm; line-height: 0.64cm"><a name="__DdeLink__127_852613866"></a>
+</p>
+<ol>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">The translation grant
+	programme is designed to support the translation of works of Irish
+	literature<b>. The maximum grant that may be applied for is the
+	total fee being paid to the translator(s).</b>The translation grants
+	are considered a contribution towards the cost of the translation
+	and may not cover the full cost incurred by the publisher. Other
+	costs such as production, printing, publicity, etc., are not
+	covered.&nbsp;</font></p>
+</ol>
+<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
+
+</p>
+<ol start="2">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>The board of Literature
+	Ireland meets three times a year to consider translation grant
+	applications.</b>&nbsp;The meeting will typically take place six to
+	eight weeks&nbsp;<u>after</u>&nbsp;the application
+	deadline.&nbsp;<b>Deadlines</b><b>&nbsp;</b>are advertised on
+	Literature Ireland’s website at
+	http://www.literatureireland.com/grants/translation-grant-programme/.</font></p>
+</ol>
+<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
+
+</p>
+<ol start="3">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>The online</b>&nbsp;<b>application
+	system opens two weeks prior to the deadline</b>. Please note that
+	incomplete applications cannot be submitted by the system – please
+	see point 5 below to make sure you have all the information and
+	documentation required in order to apply.&nbsp;</font></p>
+</ol>
+<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
+
+</p>
+<ol start="4">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">A&nbsp;<b>grace period of
+	one week</b>&nbsp;is given after the deadline to allow for
+	unforeseen delays. After this period, the application system will be
+	closed. Extraordinary appeals for inclusion after this period may be
+	made to&nbsp;<font color="#0000ff"><u><a href="mailto:info@literatureireland.com"><font color="#0f9039">info@literatureireland.com</font></a></u></font>&nbsp;and
+	will be considered at the discretion of the director.&nbsp;</font></p>
+</ol>
+<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
+
+</p>
+<ol start="5">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">The following will be
+	required during the application process:</font></p>
+</ol>
+<ol type="i">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Source Text:</b>&nbsp;Author,
+	title and publication details for the original work; a copy of the
+	original work (e.g. a PDF). One print copy of the original work
+	should also be sent, with the application reference number, by post
+	to Literature Ireland, Trinity Centre for Literary and Cultural
+	Translation, 36 Fenian Street, Trinity College Dublin, Dublin D02
+	CH22, Ireland.&nbsp;<font color="#2e74b5">COVID-19 NOTE: At present,
+	the staff of Literature Ireland does not have access to its offices
+	so until further notice, the requirement to post a print copy of the
+	book is waived. </font></font>
+	</p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Target Text:</b>&nbsp;A
+	translation sample in WORD/RTF format (<u>not</u>&nbsp;PDF)
+	consisting of 10–12 pages of prose or six poems.&nbsp;<u>The
+	translator(s)’s name(s) must not appear anywhere on the document.</u></font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Rights Details:</b>&nbsp;Name
+	of the translation rights holder and a signed copy of the rights
+	agreement, where applicable.&nbsp;</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Translator Details:</b>&nbsp;Name
+	and curriculum vitae of the translator; details of the fee to be
+	paid to the translator (in Euro), including how this fee was
+	calculated (i.e. the rate per word/page/etc.); a signed copy of the
+	agreement between the translator and the publisher.</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Publisher Details:</b>&nbsp;Name
+	and contact details for the applicant and the publishing house.&nbsp;</font></p>
+</ol>
+<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
+
+</p>
+<ol start="6">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Basic eligibility
+	requirements:</b></font></p>
+</ol>
+<ol type="i">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">The author of the work of
+	literature for which funding is sought&nbsp;<b>must be
+	Irish</b><b>&nbsp;</b>(meaning from the Republic of Ireland or
+	Northern Ireland) or have lived and worked in Ireland for a
+	considerable length of time.&nbsp;</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">The genres for which
+	funding is available are:</font></p>
+</ol>
+<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><b>Literary Fiction</b></font></p>
+<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><b>Poetry</b></font></p>
+<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><b>Drama</b>&nbsp;(for
+publication)</font></p>
+<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><b>Children’s literature</b><b>&nbsp;</b></font></p>
+<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><b>Certain works of
+non-fiction</b>&nbsp;that relate to Irish writers/literature (e.g.
+acclaimed biographies, critical works aimed at a general readership).</font></p>
+<ol type="i" start="3">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">Applications for
+	translations to be self-published or published only as e-books or
+	audio books will&nbsp;<u><b>not</b></u>&nbsp;be accepted.</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">Applications will only be
+	accepted from a member of staff at the publishing house planning to
+	publish the translation. The publishing house must be a registered
+	company of established reputation.&nbsp;</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1"><a name="_GoBack"></a>
+	<font face="Times New Roman, sans-serif">Translations which
+	have&nbsp;<b>already been published or which are due to go to
+	print</b>&nbsp;or be published <u>before </u>the meeting of the
+	board of Literature Ireland will be deemed&nbsp;<u><b>ineligible</b></u>.</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">A translation which may be
+	considered an&nbsp;<b>adaptation or abridgement</b>&nbsp;may&nbsp;<u><b>not</b></u>&nbsp;be
+	considered eligible – in such cases, the applicant is requested to
+	contact&nbsp;<font color="#0000ff"><u><a href="mailto:info@literatureireland.com"><font color="#0f9039">info@literatureireland.com</font></a></u></font>&nbsp;for
+	clarification in advance of applying.&nbsp;</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Applications for the
+	publication of a translation for which appropriate translation
+	rights have not been secured</b><b>&nbsp;</b><u><b>will not</b></u><b>&nbsp;</b><b>be
+	accepted</b>.&nbsp;</font></p>
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">Publishers may submit
+	a&nbsp;<u>maximum of two applications per round</u>. A given
+	publishing house may receive a&nbsp;<u>maximum of three translation
+	grants per annum</u>. A given publishing house may receive a maximum
+	of five grants overall for works by the same author in the same
+	genre.&nbsp;</font></p>
+</ol>
+<p style="margin-left: 2.54cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
+
+</p>
+<ol start="7">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif">The translation sample
+	submitted with the application will be sent by Literature Ireland to
+	an independent expert reader for assessment. The reader will submit
+	a report on the quality of the translation which will be made
+	available to the board of directors in its consideration of the
+	application.&nbsp;<b>It is therefore recommended that the sample be
+	from a final or near final version of the translation which has been
+	proofread and/or edited.</b><b>&nbsp;</b></font></p>
+</ol>
+<p style="margin-left: 2.54cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><br/>
+</font><br/>
+<br/>
+
+</p>
+<ol start="8">
+	<li/>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+	<font face="Times New Roman, sans-serif"><b>Applicants will receive
+	an email within 10 working days of the meeting to inform them of the
+	outcome of their application.</b>&nbsp;Successful applicants will
+	also receive a formal grant agreement.&nbsp;</font></p>
+</ol>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif"><font color="#00b050"><b>If
+you are applying for the first time or if you have any questions or
+concerns about your application, you are encouraged to contact a
+member of Literature Ireland staff.</b></font><font color="#00b050"><b>&nbsp;</b></font></font></p>
+<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+<font face="Times New Roman, sans-serif">Contact email addresses are
+available on the website
+at:&nbsp;http://www.literatureireland.com/about/contact/.</font></p>
+<p align="right" style="margin-bottom: 0cm; line-height: 100%; background: #c3bcbc">
+Done</p>
+<h2 class="western" style="margin-top: 0cm; margin-bottom: 0.11cm; background: #ffffff">
+<font color="#0f9039"><font face="Georgia, sans-serif"><font size="4" style="font-size: 13pt"><b>Literature
+Ireland</b></font></font></font></h2>
+<p style="margin-bottom: 0cm; line-height: 0.48cm; background: #ffffff">
+<font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt"><i>Contact
+Details</i></font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;|&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt"><i>Legal
+Note</i></font></font></font></p>
+<p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<!--                                    <p  align="center"  style="margin-bottom: 0cm; line-height: 0.64cm"><a name="__DdeLink__127_852613866"></a>
                                         <font color="#000000"><font size="5" style="font-size: 21pt;"><span style="letter-spacing: 0.3pt">Application
                                             Eligibility  <br/> Requirements and Criteria</span></font></font></p>
                                     <p style="margin-bottom: 0.35cm; line-height: 115%"><br/>
@@ -608,7 +876,7 @@
                                     <p style="margin-bottom: 0.35cm; line-height: 115%">Contact email
                                         addresses are available on the website at:
                                         <a href="http://www.literatureireland.com/contact-us/">http://www.literatureireland.com/contact-us/</a>.
-                                    </p>
+                                    </p>-->
                                 </div>
 
 
@@ -886,14 +1154,19 @@
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
                     </div>
+
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
+
                 </div><!-- end of Base div -->
-            </div>
-            <!-- end of container div -->
+
+            </div><!-- end of container div -->
+
             <div class="shadowbase"> </div>
+
         </div><!-- end of Shadow container div -->
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
+
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 

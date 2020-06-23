@@ -59,7 +59,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
     String tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
     String rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -156,10 +156,11 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
          * get ApplicationNumber from ReferenceNumber
          * get yearInString from ReferenceNumber
          */
+        System.out.println( "ReferenceNumber ---->> " + ReferenceNumber );
         String ApplicationNumber = ReferenceNumber.substring( 0, iend );
         String yearInString = ReferenceNumber.substring( iend, ReferenceNumber.length() );
 
-        System.out.println( "ApplicationNumber ---->> " + ApplicationNumber );
+        
         System.out.println( "company ---->> " + company );
 
         PrintWriter out = response.getWriter();
@@ -361,7 +362,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
     public String getServletInfo()
     {
         return "Short description";
-    }// </editor-fold>
+    }
 
     enum Type {
 

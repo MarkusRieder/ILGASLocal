@@ -17,23 +17,27 @@ import ie.irishliterature.util.MailUtil;
 import ie.irishliterature.util.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author markus
  */
-@WebServlet( name = "RegisterServlet", urlPatterns =
-{
-    "/RegisterServlet"
-} )
+@WebServlet( name = "RegisterServlet", urlPatterns
+        = {
+            "/RegisterServlet"
+        } )
 public class RegisterServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -41,8 +45,7 @@ public class RegisterServlet extends HttpServlet {
     // private LoginService userValidationService = new LoginService();
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
-            throws IOException, ServletException
-    {
+            throws IOException, ServletException {
         request.getRequestDispatcher( "/WEB-INF/views/signUp.jsp" ).forward( request, response );
     }
 
@@ -57,9 +60,9 @@ public class RegisterServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+    @SuppressWarnings( "unchecked" )
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
         response.setContentType( "text/html;charset=UTF-8" );
 
@@ -93,21 +96,17 @@ public class RegisterServlet extends HttpServlet {
 //        
         int userID = 0;
 
-        try
-        {
+        try {
             PublisherID = Integer.parseInt( ACpublisherDAO_test.ifPublisherExists( company ) );
-            if ( PublisherID == 0 )
-            {
+            if ( PublisherID == 0 ) {
                 System.out.println( "Publisher " + company + " not found" );
                 newPublisher = true;
             }
-            else
-            {
+            else {
                 System.out.println( "PublisherID  " + PublisherID );
             }
         }
-        catch ( DBException ex )
-        {
+        catch ( DBException ex ) {
             Logger.getLogger( RegisterServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -122,10 +121,8 @@ public class RegisterServlet extends HttpServlet {
         /*
          * if newPublisher checkbox is checked
          */
-        if ( newPublisher )
-        {
-            try
-            {
+        if ( newPublisher ) {
+            try {
                 System.out.println( "cbnewPublisher  IS here" );
 
                 String cmpny = company;
@@ -137,8 +134,7 @@ public class RegisterServlet extends HttpServlet {
                  */
                 PublisherID = Integer.parseInt( ACpublisherDAO_test.ifPublisherExists( cmpny ) );
 
-                if ( PublisherID == 0 )
-                {
+                if ( PublisherID == 0 ) {
                     System.out.println( "newPublisher does not exist - create new one" );
 
                     /*
@@ -155,8 +151,7 @@ public class RegisterServlet extends HttpServlet {
 
                 }
             }
-            catch ( DBException ex )
-            {
+            catch ( DBException ex ) {
                 Logger.getLogger( RegisterServlet.class.getName() ).log( Level.SEVERE, null, ex );
             }
         }
@@ -171,14 +166,12 @@ public class RegisterServlet extends HttpServlet {
 
         Status sp = new Status();
         String output = "";
-        if ( !validate( username, firstname, lastname, password, email ) )
-        {
+        if ( !validate( username, firstname, lastname, password, email ) ) {
             sp.setCode( -1 );
             sp.setMessage( "Invalid Input" );
             output = Utils.toJson( sp );
         }
-        else
-        {
+        else {
             User user = new User();
             String fullName = firstname + " " + lastname;
             user.setUSERNAME( username );
@@ -204,8 +197,7 @@ public class RegisterServlet extends HttpServlet {
             user.setEMAIL_VERIFICATION_HASH( BCrypt.hashpw( hash, GlobalConstants.SALT ) );
 
             if ( role
-                    == null )
-            {
+                    == null ) {
                 role = "not assigned";
             }
 
@@ -213,14 +205,12 @@ public class RegisterServlet extends HttpServlet {
 
             user.setFUNCTION( function );
 
-            try
-            {
+            try {
 
                 /*
                  * check whether email exists or not
                  */
-                if ( !ApplicationDAO.isEmailExists( email ) )
-                {
+                if ( !ApplicationDAO.isEmailExists( email ) ) {
 
                     System.out.println( "isEmailExists Not:: " );
 
@@ -248,8 +238,7 @@ public class RegisterServlet extends HttpServlet {
                     sp.setMessage( "Registation Link Was Sent To Your Mail Successfully. Please Verify Your Email" );
                     output = Utils.toJson( sp );
                 }
-                else
-                {
+                else {
                     /*
                      * tell user that the email already in use
                      */
@@ -259,8 +248,7 @@ public class RegisterServlet extends HttpServlet {
                 }
 
             }
-            catch ( DBException | MessagingException e )
-            {
+            catch ( DBException | MessagingException e ) {
                 sp.setCode( -1 );
                 sp.setMessage( e.getMessage() );
                 output = Utils.toJson( sp );
@@ -268,6 +256,68 @@ public class RegisterServlet extends HttpServlet {
 
         }
 
+//        username = request.getParameter( "username" );
+        System.out.println( "RegisterServlet usernameDEF  " + username );
+        System.out.println( "\n" + " ############################ RegisterServlet servlet  #######################################" + "\n" );
+        System.out.println( "RegisterServlet called" );
+
+        HttpSession session = request.getSession();
+
+        ServletContext context = request.getSession().getServletContext();
+        System.out.println( "Iterate keys  AAAAAAA " );
+        Enumeration keys = request.getSession().getServletContext().getAttributeNames();
+        while ( keys.hasMoreElements() ) {
+            String key = ( String ) keys.nextElement();
+            System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+//            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+//                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+//            }
+        }
+
+        System.out.println( "RegisterServlet username1  " + username );
+
+        System.out.println( "Iterate Parameters" );
+
+        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "RegisterServlet doGet loggedInUsers: 1 " + loggedInUsers );
+
+        System.out.println( "RegisterServlet loggedInUsers.remove( username )  " + username );
+        loggedInUsers.remove( username );
+//        username = request.getParameter( "username" );
+        System.out.println( "RegisterServlet username  " + username );
+
+//        ServletContext context = request.getSession().getServletContext();
+        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "RegisterServlet doGet loggedInUsers: 2 " + loggedInUsers );
+        System.out.println( "RegisterServlet session.invalidate() 1" );
+        session.invalidate();
+
+//        session.setAttribute( "username", username );
+//        request.setAttribute( "username", username );
+
+        if ( request.isRequestedSessionIdValid() && session != null ) {
+            System.out.println( "RegisterServlet session.invalidate() 2" );
+            session.invalidate();
+
+        }
+        else {
+            System.out.println( "RegisterServlet  NOT session.invalidate()" );
+        }
+
+        System.out.println( "\n" + "Should be empty!!!" + "\n" );
+        System.out.println( "Enumeration keys  A " );
+        keys = request.getSession().getServletContext().getAttributeNames();
+        while ( keys.hasMoreElements() ) {
+            String key = ( String ) keys.nextElement();
+            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+            }
+        }
+
+        System.out.println( "\n" + " ############################ END RegisterServlet  #######################################" + "\n" );
+        System.out.println( "RegisterServlet username END Logout servlet  " + username );
+        request.getSession().setAttribute( GlobalConstants.USER, null );
+//        request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
 //        response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher( "/WEB-INF/views/registrationSuccess.jsp" ).forward( request, response );
 
@@ -275,33 +325,26 @@ public class RegisterServlet extends HttpServlet {
                 /*
                  * send output to user
                  */
-                PrintWriter pw = response.getWriter() )
-        {
+                PrintWriter pw = response.getWriter() ) {
             pw.write( output );
             pw.flush();
         }
     }
 
-    public static boolean validate( String username, String firstName, String lastName, String password, String email )
-    {
-        if ( username == null )
-        {
+    public static boolean validate( String username, String firstName, String lastName, String password, String email ) {
+        if ( username == null ) {
             return false;
         }
-        if ( firstName == null )
-        {
+        if ( firstName == null ) {
             return false;
         }
-        if ( lastName == null )
-        {
+        if ( lastName == null ) {
             return false;
         }
-        if ( password == null )
-        {
+        if ( password == null ) {
             return false;
         }
-        if ( email == null )
-        {
+        if ( email == null ) {
             return false;
         }
         return true;

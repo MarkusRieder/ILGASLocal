@@ -1,8 +1,4 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
+
 /* 
     Created on : 20-Jul-2019, 21:43:59
     Author     : markus
@@ -298,15 +294,15 @@ header h1{
         display: block;
     }
 }
-
+/*
 .zoom {
-    transition: transform .2s; /* Animation */
+    transition: transform .2s;  Animation 
     margin: 0 auto;
 }
 
 .zoom:hover {
-    transform: scale(2.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-}
+    transform: scale(2.5);  (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) 
+}*/
 .mytab .tab-pane{ border:solid 1px blue;  border-top: 0;    }
 .mytab2 .tab-pane{ border:solid 1px blue;  border-top: 0;    }
 #myTab li a { border-color: blue;background-color:#A5C967; }

@@ -1,8 +1,5 @@
-/**
- * 
+/*
  * welcome_Staff_1.js
- * 
- * @type String
  */
 
 var agreemnt = "";
@@ -29,10 +26,9 @@ var rowdata = [];
 var oTable = null;
 var tuttut = [];
 var detailsTableData;
+var translators = [];
 
-
-function loadXMLDocER()
-{
+function loadXMLDocER() {
     var xmlhttp;
     var uname = document.getElementById("uname").value;
     var urls = "checkusername.jsp?uname=" + uname;
@@ -174,7 +170,7 @@ function  gallery() {
                 e.preventDefault(); // prevent the default action (scroll / move caret)
             });
 }
-;
+
 //});
 
 //Validation
@@ -260,7 +256,7 @@ $(document).ready(function () {
     $("#cpassword").change(function () {
         var password = $("#password").val();
         var cpassword = $("#cpassword").val();
-        if (!(password === cpassword)) {
+        if ((password = !cpassword)) {
             $("#errpass").show();
             return false;
         } else {
@@ -821,9 +817,13 @@ $(document).ready(function () {
         $("#Author").val(authors);
         $("#Translator").val(rowdata.Translator);
         if (typeof (rowdata.cover) === "undefined") {
-            var cver = 'ILGAS/images/not-available.jpg';
+//            var cver = 'ILGAS/images/not-available.jpg';
+//        } else {
+//            var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+//        }
+            cver = 'ILGAS/images/not-available.jpg';
         } else {
-            var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+            cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
         }
         var bookCover;
         $("#bookCover").val(cver);
@@ -843,7 +843,8 @@ $(document).ready(function () {
         if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
 
             // no cover - show upload
-            var cver = '..images/not-available.jpg';
+//            var cver = '..images/not-available.jpg';
+            cver = '..images/not-available.jpg';
             $("#showUploadCover1").show();
             $("#showUploadCover2").hide();
             document.getElementById("cover21").src = cver;
@@ -852,7 +853,8 @@ $(document).ready(function () {
             // we have a cover - show cover
             $("#showUploadCover2").show();
             $("#showUploadCover1").hide();
-           var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+//             var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+            cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
             console.log("rowdata.cover cver " + cver);
             hasCover = true;
             $("#cover").val(cver);
@@ -1043,7 +1045,7 @@ $(document).ready(function () {
                     } else {
                         return 'Yes';
                     }
-                    ;
+
                 }},
             {"data": "dateCopiesWereSent",
                 "render": function (data) {
@@ -1066,7 +1068,7 @@ $(document).ready(function () {
                         console.log("TC_ACCEPTED " + 'Yes');
                         return 'Yes';
                     }
-                    ;
+
                 }},
             {"data": "APPROVED",
                 "render": function (data, type, row) {
@@ -1076,7 +1078,7 @@ $(document).ready(function () {
 
                         return 'Yes';
                     }
-                    ;
+
                 }},
             {"data": "genre"},
             {"data": "TranslatorName",
@@ -1316,6 +1318,18 @@ $(document).ready(function () {
                 }
             },
             {"data": "approveWithdrawnReject"},
+                        {"data": "rightsAgreement",
+                "render": function (data, type, row) {
+
+                    console.log("123v4 rightsAgreement data  " + data + "\n");
+                    return data;
+                }},
+            {"data": "rightsHolderArray",
+                "render": function (data, type, row) {
+                    rightsHolderArray = data;
+                    console.log("rightsHolderArray data  " + data + "\n");
+                    return data;
+                }},
             {"data": "idTranslator"}
         ],
         rowCallback: function (row, data) {
@@ -1429,7 +1443,7 @@ $(document).ready(function () {
         var contr = "";
         var transSamp = "";
         var trans = "";
-        var cver = "";
+//        var cver = "";
         var orig = "";
         var addendumRightsAgreemnt = "";
         var proofOfPaymentToTrans = "";
@@ -1442,6 +1456,7 @@ $(document).ready(function () {
         var readerReport = "";
         var expertReaderName = "";
         var awardValue = rowdata.award;
+
 
 
         console.log("awardValue:  " + awardValue);
@@ -1611,6 +1626,8 @@ $(document).ready(function () {
         console.log("444 TranslTitles:  TranslatorTrack2::   " + TranslTitles);
         var TranslTitles = rowdata.TranslatorTrack2;
         console.log("444 TranslTitles:  TranslatorTrack2::   " + TranslTitles);
+        
+        
         //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
         $('#translatorTableDiv').empty(); // empty the div before fetching and adding new data
         var docName = "";
@@ -1641,11 +1658,13 @@ $(document).ready(function () {
         header.appendChild(headingRow);
         tble.appendChild(header);
         var translatorNamesForGenerateTranslatorTab = [];
-        var translators = [];
+//        var translators = [];
+
         for (var i = 0; i < TranslatorDocs.length; ++i) {
             console.log("555 TranslatorDocs.length " + TranslatorDocs.length);
             for (var j = 0; j < TranslatorDocs[i].length; ++j) {
                 console.log("555  translators[" + j + "][" + i + "] " + TranslatorDocs[i][j]);
+//                translators = TranslatorDocs[i][j];   move that down
                 // skip undefined values to preserve sparse array
                 if (TranslatorDocs[i][j] === undefined)
                     continue;
@@ -1655,6 +1674,7 @@ $(document).ready(function () {
                 // swap the x and y coords for the copy
                 translators[i][j] = TranslatorDocs[i][j];
                 console.log("555 0 translators[" + j + "][" + i + "] " + translators[j][i]);
+
             }
         }
 
@@ -2132,6 +2152,7 @@ $(document).ready(function () {
          * 1: The Nav-Bar
          */
         console.log("555agreement 1 translators.length " + translators.length);
+
         var rightsAgreementContractsNavBar = '';
         rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
         rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
@@ -2173,8 +2194,11 @@ $(document).ready(function () {
 
 
 
-            agreementTranslationRightsHolderContent += '<div class="container wrapperContainer">';
-            //Agreement with the translation rights holder
+            agreementTranslationRightsHolderContent += '<div class="container wrapperContainer pull-left">';
+
+            /*
+             * Agreement with the translation rights holder
+             */
             agreementTranslationRightsHolderContent += '<div class="row" style="margin-bottom: 80px;">';
             agreementTranslationRightsHolderContent += '<div style=" margin: 0 auto; position: relative;">';
             agreementTranslationRightsHolderContent += '<div class="col-md-9"  id="agreementToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
@@ -2203,7 +2227,9 @@ $(document).ready(function () {
 
             rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
 
-            //CV
+            /*
+             * CV
+             */
             rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
             rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative;">';
 
@@ -2230,7 +2256,9 @@ $(document).ready(function () {
             rightsAgreementContractsNavContent += '</div>'; //-- position:relative;--
             rightsAgreementContractsNavContent += '</div>'; // row
 
-            //Contract with translator
+            /*
+             * Contract with translator
+             */
             rightsAgreementContractsNavContent += '<div class="row" style="margin-bottom: 80px;">';
             rightsAgreementContractsNavContent += '<div style=" margin: 0 auto; position: relative; ">';
             rightsAgreementContractsNavContent += '<div class="col-md-9"  id="contractToggle' + j + '" style="margin-bottom: 40px; position:absolute; z-index:0;">';
@@ -2256,11 +2284,13 @@ $(document).ready(function () {
             rightsAgreementContractsNavContent += '</div>'; // row
 
 
-            //Addendum to the rights agreement
+            /*
+             * Addendum to the rights agreement
+             */
             addendumAgreementTranslationRightsHolder += '<div class="row" style="margin-bottom: 80px;">';
             addendumAgreementTranslationRightsHolder += '<div style=" margin: 0 auto; position: relative; ">';
 
-            addendumAgreementTranslationRightsHolder += '<div class="col-md-12"  id="addendumToggle' + j + '"  style="margin-bottom: 40px; position:absolute; z-index:0; ">';
+            addendumAgreementTranslationRightsHolder += '<div class="col-md-9"  id="addendumToggle' + j + '"  style="margin-bottom: 40px; position:absolute; z-index:0; ">';
             addendumAgreementTranslationRightsHolder += '<div  style="margin-bottom: 10px;"><strong class="pull-left" id="uploadAddendum' + j + '" ></strong> </div>';
             addendumAgreementTranslationRightsHolder += '<br/>';
             addendumAgreementTranslationRightsHolder += '<div class="margin-bottom: 40px"></div>';
@@ -2271,7 +2301,7 @@ $(document).ready(function () {
             addendumAgreementTranslationRightsHolder += '</div>'; //<div class="input-group agreement" 
             addendumAgreementTranslationRightsHolder += '</div>'; //<div class="col-md-10" 
 
-            addendumAgreementTranslationRightsHolder += '<div class="col-md-7" id="addendum_button' + j + '"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  ';
+            addendumAgreementTranslationRightsHolder += '<div class="col-md-3" id="addendum_button' + j + '"  style="margin-bottom: 40px; position:absolute;z-index:1; display:none;">  ';
             addendumAgreementTranslationRightsHolder += '<label  class="control-label pull-left" id="addendum_button_label' + j + '" ></label>';
             addendumAgreementTranslationRightsHolder += '<div class="input-group addendum_buttonText pull-left" style="width: 190px; hight: 34px" >';
             addendumAgreementTranslationRightsHolder += '<a class="btn btn-info btn-file pull-left" role="button" id="addendum_link' + j + '" href=""  target="_blank">';
@@ -2295,10 +2325,19 @@ $(document).ready(function () {
 
 
         var w = 1;
+        console.log("8 xyz Fill the tabs v " + v + "  w  " + w + "  j  " + j);
+        console.log("8 xyz 1: Fill the tabs translators.length " + translators.length);
+        console.log("8 xyz 1: Fill the tabs TranslatorDocs.length " + TranslatorDocs.length);
+        console.log("8 xyz 1: Fill the tabs rightsAgreement.length " + rowdata.rightsAgreement.length);
         for (var j = 0; j < rowdata.rightsAgreement.length; j++) {
             var rightsAgreementArray = rowdata.rightsAgreement[j].split(",");
-            for (var v = 0; v < rightsAgreementArray.length; v++) {
 
+            console.log("8 xyz  rightsAgreementArray  :");
+            console.log(rightsAgreementArray);
+
+
+            for (var v = 0; v < rightsAgreementArray.length; v++) {
+                console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1));
                 switch (v) {
                     case 0:
                         // Agreement
@@ -2376,7 +2415,9 @@ $(document).ready(function () {
                 }
             }
 
-            console.log("8 xyz  #################   translatorNamesForGenerateTranslatorTab[" + j + "]", translators[j][0]);
+            console.log("555transArray  #################   j  " + j + " i " + i);
+            console.log("555transArray  #################   translators", translators);
+            console.log("555transArray  #################   translatorNamesForGenerateTranslatorTab[" + j + "]", translators[j][0]);
             console.log("8 xyz  translatorNamesForGenerateTranslatorTab[" + j + "]", translatorNamesForGenerateTranslatorTab[j]);
 
 
@@ -2397,12 +2438,18 @@ $(document).ready(function () {
                 $('#cvToggle' + w).toggle();
                 $('#cv_button' + w).toggle();
 
+                console.log("555transArray 1 translators[j][0] " + translators[j][0]);
+
                 var transArray = translators[j][0];
 
-                transArray = transArray.replace("[", "");
-                transArray = transArray.replace("]", "");
+                console.log("555transArray 1 transArray " + transArray);
+                console.log("8 xyz  translators[j][0]  :", translators[j][0]);
 
-                var linkArray = transArray.split(",");
+
+                var transArray1 = transArray.replace("[", "");
+                var transArray2 = transArray1.replace("]", "");
+
+                var linkArray = transArray2.split(",");
 
                 console.log("8 xyz linkArray[2]  " + linkArray[2]);
 

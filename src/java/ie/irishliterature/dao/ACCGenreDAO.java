@@ -22,34 +22,37 @@ import java.util.ArrayList;
 @SuppressWarnings( "unchecked" )
 public class ACCGenreDAO {
 
-    public ArrayList getGenre( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
-    {
+    public ArrayList getGenre( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
         ArrayList genreList = new ArrayList();
         Database db = new Database();
         Connection connection = db.getConnection();
+        
+        System.out.println( "ACCGenreDAO  s  : " + s );
 
-        try
-        {
-            PreparedStatement ps = connection.prepareStatement( "SELECT * from ILGAS.genres WHERE genres  like ?" );
+        try {
+            
+            PreparedStatement ps = connection.prepareStatement( "SELECT * from ILGAS.genres WHERE genres  like ? " );
             ps.setString( 1, "%" + s + "%" );
             ResultSet rs = ps.executeQuery();
 
-            while ( rs.next() )
-            {
+            while ( rs.next() ) {
+                
                 ACgenre genre = new ACgenre();
                 genre.setId( rs.getString( "idgenres" ) );
                 genre.setValue( rs.getString( "genres" ) );
 
-                System.out.println( "genre.setId : " + rs.getString( "idgenres" ) );
-                System.out.println( "genre.setValue : " + rs.getString( "genres" ) );
+                System.out.println( "ACCGenreDAO genre.setId    : " + rs.getString( "idgenres" ) );
+                System.out.println( "ACCGenreDAO genre.setValue : " + rs.getString( "genres" ) );
 
                 genreList.add( genre );
+                
             }
         }
-        catch ( SQLException e )
-        {
+        catch ( SQLException e ) {
         }
+        
+        System.out.println( "ACCGenreDAO genreList : " + genreList );
         return genreList;
     }
 

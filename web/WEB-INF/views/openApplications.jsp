@@ -79,12 +79,14 @@
 
         <script src="js/xregexp-all.js"></script> 
         <script src="js/validateFileName.js"></script>
-        <!--<script src="js/formValidator.js"></script>-->
-        <script src="js/openApplications.js"></script>
+        <script src="js/formValidator.js"></script>
+
 
     </head>
 
     <body style="height: 100%">
+
+        <input type="hidden" name="pid"  id='pid' value="${publisherID}">
 
         <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
             SELECT * FROM GrantApplication
@@ -117,12 +119,16 @@
                 <!--container for welcome/logout-->
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" id="username" value="${username}">
+                        </form>
                     </div>
                 </div> <!--container for welcome/logout-->
 
                 <h1 align="center" style="align-content: center">Translation Grant Application System for Literature Ireland</h1>
-
+                <input type="hidden" name="pid2" value="${publisherID}">
                 <div class="container-fluid" style="margin-bottom: 20px"></div>
 
                 <!-- Main Grid Container -->  
@@ -214,9 +220,12 @@
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
+                                            <th class="never"></th>
                                         </tr>
                                     </thead>
-
+                                    <tbody>
+                                        <!-- Main Grid -->   
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th class="details-control"></th>   
@@ -286,6 +295,7 @@
                                             <th class="never">Original</th>
                                             <th class="never">Original Name</th>
                                             <th class="all">Author(s)</th>
+                                            <th class="never"></th> 
                                             <th class="never"></th>
                                             <th class="never"></th>
                                             <th class="never"></th>
@@ -295,14 +305,12 @@
                                             <th class="never"></th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <!-- Main Grid -->   
-                                    </tbody>
+
                                 </table>
                             </div> <!-- Main Grid -->       
 
                         </div> <!-- container-fluid -->  
-                    </div> <!-- tab-pane "Application" -->     
+                    </div> <!-- tab-pane "Application" -->  
 
                     <c:if test="${not empty error}">Error: ${error}</c:if>
 
@@ -339,7 +347,7 @@
                                                     <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>                                                    
                                                     <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                                     <li><a href="#Translator" data-toggle="tab">Translator's <br/> Details</a></li>
-                                                    <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/> & Contracts </a></li>
+                                                    <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/>&nbsp;</a></li>
                                                     <!--              <li><a href="#Misc" data-toggle="tab">Misc</a></li>  -->
                                                     <li><a href="#Original" data-toggle="tab"><span>Original Work<br/>& Sample Translation</span></a></li>
                                                 </ul>
@@ -352,9 +360,9 @@
                                                 action="${pageContext.request.contextPath}/OpenApplicationServlet" 
                                             enctype="multipart/form-data"
                                             >
-                                            <%request.getSession().setAttribute("task", "openApplications");%>
+                                            <%request.getSession().setAttribute( "task", "openApplications" );%>
                                             <div id="applicationEditForm-tab-content" class="tab-content"  style="background-color: #E8F6FF">
-
+                                                <input type="hidden" name="name" value="${name}">
                                                 <!-- Contact details -->
                                                 <div class="tab-pane active" id="Contact">
 
@@ -555,6 +563,7 @@
                                                         <input type="hidden" id="ReferenceNumber" name="ReferenceNumber" >
                                                         <input type="hidden" id="translatorArray" name="translatorArray" >
                                                         <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
+                                                        <input type="hidden" id="Status" name="Status" >
                                                         <!--keep in one line otherwise placeholder doesn't show-->
                                                         <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
 
@@ -602,7 +611,7 @@
                                                                     <!--Second row-->
                                                                     <div class="row" style="margin-bottom: 15px">
 
-                                                                        <div class="col-sm-5">    
+                                                                        <div class="col-sm-4">    
                                                                             <label for="appBookTitle" class="pull-left">Title<br/> &nbsp;</label> 
                                                                             <input id="appBookTitle"                                
                                                                                    type="text"                                
@@ -624,17 +633,6 @@
                                                                                    >                                                     
                                                                         </div>
 
-                                                                        <!--                                                                        <div class="col-sm-3">    
-                                                                                                                                                    <label for="publicationYear" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
-                                                                        
-                                                                                                                                                    <input id="publicationYear"                                
-                                                                                                                                                           type="text"                                
-                                                                                                                                                           class="form-control"                                
-                                                                                                                                                           name="publicationYear"                                
-                                                                                                                                                           value=""    
-                                                                                                                                                           placeholder="Publication Year"
-                                                                                                                                                           >
-                                                                                                                                                </div>-->
                                                                     </div> <!--row-->
 
 
@@ -759,9 +757,9 @@
 
                                                             <div class="row">
 
-                                                                <div class='col-md-4'  style="margin-bottom: 40px;">                                                
+                                                                <div class='col-md-4'  style="margin-bottom: 20px;">                                                
                                                                     <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation </label>
-                                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                                    <div class="input-group pull-left"  style="margin-bottom: 20px;">
                                                                         <span class="input-group-addon" id="sizing-addon2">  
                                                                             <span class="glyphicon glyphicon-book"></span>                                                            
                                                                         </span>
@@ -783,7 +781,7 @@
                                                             <div class="row">
                                                                 <div class='col-sm-4'>
                                                                     <label for="appproposedPrintRun" class="control-label pull-left">Proposed print run </label>
-                                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                                    <div class="input-group pull-left"  style="margin-bottom: 20px;">
                                                                         <span class="input-group-addon" id="sizing-addon1">  
                                                                             <span class="glyphicon glyphicon-book"></span>                                                            
                                                                         </span>
@@ -803,8 +801,8 @@
 
                                                             <div class="row">
 
-                                                                <div class="col-sm-5" style="margin-bottom: 20px">
-                                                                    <label for="translationTitle" class="pull-left">Translation Title<br/> &nbsp;</label>
+                                                                <div class="col-sm-4" style="margin-bottom: 20px">
+                                                                    <label for="translationTitle" class="pull-left">Translation Title</label>
                                                                     <input id="translationTitle"                                
                                                                            type="text"                                
                                                                            class="form-control"                                
@@ -814,17 +812,15 @@
                                                                            >
                                                                 </div>
 
-                                                                <div class="col-xs-5">
-                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                        <label for="publicationYear1" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
-                                                                        <div class="input-group pull-left">
-                                                                            <input type="text" 
-                                                                                   name="publicationYear1" 
-                                                                                   id="publicationYear1" 
-                                                                                   class="form-control" 
-                                                                                   placeholder="DD/MM/YYYY"
-                                                                                   />    
-                                                                        </div>
+                                                                <div class="col-sm-4 col-md-offset-1"> 
+                                                                    <div class="form-group">                                                                 
+                                                                        <label for="publicationYear1" class="control-label pull-left">Year of Publication (original) </label>                                                                      
+                                                                        <input type="text" 
+                                                                               name="publicationYear1" 
+                                                                               id="publicationYear1" 
+                                                                               class="form-control" 
+                                                                               placeholder="YYYY"
+                                                                               />                                                                                                                                   
                                                                     </div>
                                                                     <script>
                                                                         $("#appDateOfPublicationOriginal").datepicker();
@@ -836,7 +832,7 @@
 
                                                             <div class="row">
 
-                                                                <div class="col-xs-5">
+                                                                <div class="col-xs-4">
                                                                     <div class="mini-box"   style="margin-bottom: 20px">
                                                                         <label for="appCompany" class="pull-left">Translation Publisher</label>
                                                                         <input id="appCompany"                                
@@ -849,7 +845,7 @@
                                                                     </div>
                                                                 </div> <!--col-xs-6-->
 
-                                                                <div class="col-xs-5">
+                                                                <div class="col-sm-4 col-md-offset-1"> 
                                                                     <div class="mini-box">
                                                                         <div class="form-group has-feedback">
                                                                             <label for="languages" class="pull-left" >Languages</label>
@@ -937,7 +933,7 @@
                                                                         </div>
                                                                         <div  id="tn">
                                                                         </div>  <!-- tn -->
-                                                                        <div class="tab-content" id="tnc">
+                                                                        <div class="tab-content pull-left" id="tnc">
                                                                         </div>  <!-- tnc -->
                                                                     </div>  <!-- <div class="container-fluid"  -->
                                                                 </nav>  <!-- <nav class="navbar -->
@@ -949,8 +945,8 @@
 
                                                 <!-- Rights Agreement -->
                                                 <div class="tab-pane fade" id="Rights">
-                                                    <p class="header1" style="margin-bottom: 80px">
-                                                        Rights Agreement & Contracts
+                                                    <p class="header1" style="margin-bottom: 5px">
+                                                        Rights Agreement
                                                     </p>
 
                                                     <div class="container-fluid"  id="rightsAgreementContracts">
@@ -962,32 +958,37 @@
                                                             <div style=" margin: 0 auto; position: relative;">
 
                                                                 <div class="col-md-8"  id="agreementToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
-                                                                    <!--<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement1"></strong></div>--> 
-                                                                    <label  class="control-label pull-left" id="uploadAgreement1" ></label>
-                                                                    <br/>
-                                                                    <div class="margin-bottom: 40px"></div>
-                                                                    <div class="input-group agreement"  style="margin-bottom: 40px;">
-                                                                        <label class="btn btn-default btn-file pull-left">
-                                                                            Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1">
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    <div class="input-group ">
+                                                                        <label  class="control-label pull-left"> <strong class="pull-left"  id="uploadAgreement1"></strong>
+                                                                            <small> Please upload the rights agreement</small>     
                                                                         </label>
-                                                                        <input  type="text" id="label_agreement1" class="pull-left"/>
-                                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
-                                                                        <span class="help-block"></span>
-                                                                    </div> 
+                                                                        <!--<label  class="control-label pull-left" id="uploadAgreement1" ></label>-->
+                                                                        <br/>
+                                                                        <div class="margin-bottom: 40px"></div>
+                                                                        <div class="input-group agreement"  style="margin-bottom: 40px;">
+                                                                            <label class="btn btn-default btn-file pull-left">
+                                                                                Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1">
+                                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                                            </label>
+                                                                            <input  type="text" id="label_agreement1" class="pull-left"/>
+                                                                            <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
+                                                                            <span class="help-block"></span> 
+                                                                        </div> 
+                                                                    </div>   
                                                                 </div> <!-- position:absolute; z-index:0 -->
 
                                                                 <div class="col-md-7" id="agreement_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
-                                                                    <label  class="control-label pull-left" id="agreement_button_label1" ></label>
+                                                                    <div class="input-group ">
+                                                                        <label  class="control-label pull-left" id="agreement_button_label1" ></label>
+                                                                    </div>
                                                                     <div class="input-group agreement_buttonText pull-left">
                                                                         <a class="btn btn-info btn-file pull-left" role="button" id="agreement_link1" href=""  target="_blank">
                                                                             <span class="glyphicon glyphicon-file"></span>
                                                                             Click to open</a>
-                                                                    </div>
+                                                                    </div> 
                                                                 </div> <!-- position:absolute; z-index:1; display:none -->
 
                                                             </div> <!-- position: relative  -->
-
                                                         </div> <!-- row  -->
 
                                                         <!--Name of translation rights holder-->
@@ -1007,6 +1008,7 @@
                                                                 </div>
 
                                                                 <div id="addAddRightsHolders"></div>
+
                                                             </div>
 
                                                             <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addAdditionalRightsHoldersModalDiv">  
@@ -1025,23 +1027,28 @@
                                                             <div style=" margin: 0 auto; position: relative;">
 
                                                                 <div class="col-md-10"  id="addendumToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
-                                                                    <label  class="control-label pull-left"> <strong class="pull-left"  id="uploadAddendum1"></strong>
-                                                                        <small> (where applicable)</small>     
-                                                                    </label>
-                                                                    <br/>                                                               
-                                                                    <div class="input-group addendum  pull-left"  style="margin-bottom: 40px;">
-                                                                        <label class="btn btn-default btn-file pull-left">
-                                                                            Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1">
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    <div class="input-group ">
+                                                                        <label  class="control-label pull-left"> <strong class="pull-left"  id="uploadAddendum1"></strong>
+                                                                            <small> Please upload an addendum to the rights agreement (where applicable)</small>     
                                                                         </label>
-                                                                        <input type="text" id="label_addendum1" class="pull-left"/>
-                                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/>
-                                                                        <span class="help-block"></span>
-                                                                    </div> 
-                                                                </div> <!-- position:absolute; z-index:0 -->
+                                                                        <br/>                                                               
+                                                                        <div class="form-group addendum  pull-left"  style="margin-bottom: 40px;">
 
-                                                                <div class="col-md-6" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
-                                                                    <label class="control-label pull-left" id="addendum_button_label1"></label>
+                                                                            <label class="btn btn-default btn-file pull-left">
+                                                                                Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1">
+                                                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                                            </label> 
+
+                                                                            <input type="text" id="label_addendum1" class="pull-left"/>                                                                        
+                                                                            <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/>
+                                                                            <span class="help-block"></span> 
+                                                                        </div>         
+                                                                    </div>                                                   
+                                                                </div> <!-- position:absolute; z-index:0 -->
+                                                                <div class="col-md-7" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                    <div class="input-group ">
+                                                                        <label class="control-label pull-left" id="addendum_button_label1"></label> <small class='pull-left'> &nbsp;  (where applicable)456</small>'
+                                                                    </div>
                                                                     <div class="input-group addendum_buttonText pull-left">
                                                                         <a class="btn btn-info btn-file pull-left" role="button" id="addendum_link1" href=""  target="_blank">
                                                                             <span class="glyphicon glyphicon-file"></span>
@@ -1051,7 +1058,7 @@
 
                                                             </div> <!-- position: relative  -->
                                                         </div> <!-- row  -->
-                                                        <div class="col-sm-12" style="min-height: 100%;height: 100%;margin-bottom: 60px"></div>
+                                                        <div class="col-sm-12" style="min-height: 100%;height: 100%;margin-bottom: 80px"></div>
 
                                                         <!--</div> tab-content-->
                                                     </div> <!-- container-fluid  -->
@@ -1065,52 +1072,52 @@
 
                                                     <div class="container-fluid">
 
-                                                        <div class="row" >
-
-                                                            <div class="panel panel-default">
-                                                                <div class="panel-body">
-
-                                                                    <!--copies of the original work-->
-                                                                    <div class="col-md-9" >
-                                                                        <div class="checkbox pull-left">                                                             
-                                                                            <label for="copiesSent" class="pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
-                                                                            <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
-                                                                                <input type="checkbox" 
-                                                                                       name="copiesSent" 
-                                                                                       id="copiesSent" 
-                                                                                       checked =""
-                                                                                       value="" 
-                                                                                       class="form-control">
-                                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                                            </label>
-                                                                            <input type="hidden" name="userID" value="${userID}">
-                                                                            <input type="hidden" name="publisherID" value="${publisherID}">
-                                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                                        </div>
-                                                                    </div> <!-- col-md-7 -->
-
-
-
-                                                                    <!--Date copies were sent:-->
-                                                                    <div class="col-md-3" >
-                                                                        <label for="copiesSent" class="pull-left"><strong>Date copies were sent</strong> </label>
-                                                                        <div class="input-group pull-left" >
-                                                                            <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                            <label class="input-group-addon" for="dateCopiesWereSent">
-                                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                                            </label>
-                                                                        </div>  <!-- input-group -->
-                                                                    </div> <!--col-md-3-->
-
-                                                                    <!--datepicker  mail-sent-->
-                                                                    <script>
-                                                                        $("#dateCopiesWereSent").datepicker();
-                                                                    </script>
-
-                                                                </div> <!--panel--body-->
-                                                            </div> <!--panel-default-->
-
-                                                        </div> <!-- row -->
+                                                        <!--                                                        <div class="row" >
+                                                        
+                                                                                                                    <div class="panel panel-default">
+                                                                                                                        <div class="panel-body">
+                                                        
+                                                                                                                            copies of the original work
+                                                                                                                            <div class="col-md-9" >
+                                                                                                                                <div class="checkbox pull-left">                                                             
+                                                                                                                                    <label for="copiesSent" class="pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
+                                                                                                                                    <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
+                                                                                                                                        <input type="checkbox" 
+                                                                                                                                               name="copiesSent" 
+                                                                                                                                               id="copiesSent" 
+                                                                                                                                               checked =""
+                                                                                                                                               value="" 
+                                                                                                                                               class="form-control">
+                                                                                                                                        <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                                                                                                    </label>
+                                                                                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                                                                                    <input type="hidden" name="publisherID" value="${publisherID}">
+                                                                                                                                    <input type="hidden" name="Company" value="${companyDetails.Company}">
+                                                                                                                                </div>
+                                                                                                                            </div>  col-md-9 
+                                                        
+                                                        
+                                                        
+                                                                                                                            Date copies were sent:
+                                                                                                                            <div class="col-md-3" >
+                                                                                                                                <label for="copiesSent" class="pull-left"><strong>Date copies were sent</strong> </label>
+                                                                                                                                <div class="input-group pull-left" >
+                                                                                                                                    <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                                                                                                    <label class="input-group-addon" for="dateCopiesWereSent">
+                                                                                                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                                                                                                    </label>
+                                                                                                                                </div>   input-group 
+                                                                                                                            </div> col-md-3
+                                                        
+                                                                                                                            datepicker  mail-sent
+                                                                                                                            <script>
+                                                                                                                                $("#dateCopiesWereSent").datepicker();
+                                                                                                                            </script>
+                                                        
+                                                                                                                        </div> panel--body
+                                                                                                                    </div> panel-default
+                                                        
+                                                                                                                </div>  row -->
 
                                                         <div class="row" >
 
@@ -1118,9 +1125,9 @@
                                                                 <div class="panel-body">
                                                                     <div class="col-md-12">
 
-                                                                        <div class="row">
+                                                                        <div class="row input-group ">
+                                                                            <label  class="control-label pull-left">Open electronic copy of original work </label>
                                                                             <div class="col-md-6"   style="margin-bottom: 20px">        
-                                                                                <label  class="control-label pull-left">Open electronic copy of original work </label>
                                                                                 <div class="input-group originalSample1 pull-left" >
                                                                                     <a class="btn btn-info btn-file pull-left" role="button" id="originalSample1" href=""  target="_blank">
                                                                                         <span class="glyphicon glyphicon-file"></span>
@@ -1129,10 +1136,9 @@
                                                                             </div>
                                                                         </div> <!--row-->
 
-                                                                        <div class="row">
-
+                                                                        <div class="row input-group">
+                                                                            <label class="control-label pull-left">Open copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
                                                                             <div class="col-md-6"   style="margin-bottom: 20px">        
-                                                                                <label  class="control-label pull-left">Open copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
                                                                                 <div class="input-group translationSample1 pull-left" >
                                                                                     <a class="btn btn-info btn-file pull-left" role="button" id="translationSample1" href=""  target="_blank">
                                                                                         <span class="glyphicon glyphicon-file"></span>
@@ -1169,29 +1175,37 @@
                                                             </div>  <!--panel--default-->     
 
                                                         </div> <!-- row -->
-
+                                                        <input type="hidden" name="userID" value="${userID}">
+                                                        <input type="hidden" name="publisherID" value="${publisherID}">
+                                                        <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                         <hr/>
                                                         <div class="col-md-12">
                                                             <i class="pull-left"><strong> &nbsp; *</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.</i><br/>
                                                             <i class="pull-left">  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
                                                         </div>    
                                                     </div>  <!-- container-fluid -->
-                                                </div> <!-- tab-pane "Original Work & Sample Translation" --> 
+                                                </div>  <!-- tab-pane Original --> 
 
                                             </div> <!-- applicationEditForm-tab-content -->
 
                                         </form>
+
                                     </div> <!-- container-fluid -->  
-                                </nav>    
-                            </div> <!-- /.modal-body -->
+                                </nav>   
+                            </div> <!-- /.modal-body -->    
                             <div class="modal-footer"  style="background-color: #c3bcbc">
                                 &nbsp; &nbsp;
                             </div>
-                        </div> <!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal applicationsModal -->
+                        </div>  <!--/.modal-content--> 
 
-                <div class="modal fade" id="addAdditionalRightsHoldersModal" tabindex="-1" role="dialog" aria-labelledby="addAdditionalRightsHoldersModalLabel"  data-modal-index="2">
+                    </div> <!--/.modal-dialog--> 
+
+                </div>  <!--/.modal applicationsModal-->
+
+                <!--</div>  my-tab-content -->
+
+                <!--addAdditionalRightsHoldersModal-->
+                <div class="modal fade" id="addAdditionalRightsHoldersModal" tabindex="-1" role="dialog" aria-labelledby="addAdditionalRightsHoldersModalLabel">
                     <div class="modal-dialog">
                         <div class="modal-content" style="background-color: #d9d1d1">
                             <div class="modal-header" style="background-color: #c3bcbc">
@@ -1203,14 +1217,17 @@
                             <div class="modal-body" style="background-color: #d9d1d1">
 
                                 <div class="row" style="margin-bottom: 10px">
+
                                     <div class='col-sm-12'>
 
                                         <div  id="RightsHolderGeneratedForm" class="input-group" style='margin-bottom:2px;'>
-                                            <!--1. Rights holder <input  type="text" id="firstRightsHolder0" value="Name" style='margin-bottom:2px'>-->                                                         
+                                            1. Rights holder <input  type="text" id="firstRightsHolder0" value="Name" style='margin-bottom:2px'>                                                         
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+
+                                </div> <!-- row -->
+
+                            </div><!--modal body -->
 
                             <div class="modal-footer"  style="background-color: #c3bcbc">
                                 <button id="addAdditionalRightsHolders" type="button" value="additional rights holders"  class="btn btn-group-sm  button teal pull-left">Add additional rights holders</button>
@@ -1221,11 +1238,8 @@
                         </div> <!--modal content-->          
                     </div> <!--modal dialog-->
                 </div> <!--modal fade-->
-                <div class="scroll-top-wrapper ">
-                    <span class="scroll-top-inner">
-                        <i class="fa fa-3x fa-arrow-circle-up"></i>
-                    </span>
-                </div>
+
+
                 <form class="form-horizontal" 
                       role="form"  
                       autocomplete="on"  
@@ -1271,16 +1285,20 @@
                         <a href="http://www.cultureireland.gov.ie" target="_blank"><span class="hidden">Culture Ireland</span></a>
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
                         <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
+                    </div>              
+
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
                     </div>
 
                 </div><!-- end of Base div -->
-            </div><!-- end of container div -->
-            <div class="shadowbase"> </div>
-        </div><!-- end of Shadowholder container div -->
 
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
+            </div><!-- end of container div -->
+
+            <!--        <div class="shadowbase"> </div>-->
+
+        </div>  <!--  end of Shadowholder container div -->
+
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 
@@ -1381,14 +1399,15 @@
             </div><!-- modal-dialog -->
         </div><!-- modal -->
 
+        <script src="js/openApplications.js"></script>
 
         <script>
-            function  contactUsModal() {
-                $("#contactUsModal").modal("show");
-            }
-            function  showLegalNoteModal() {
-                $("#showLegalNoteModal").modal("show");
-            }
+                                function  contactUsModal() {
+                                    $("#contactUsModal").modal("show");
+                                }
+                                function  showLegalNoteModal() {
+                                    $("#showLegalNoteModal").modal("show");
+                                }
         </script>
     </body>
 </html>

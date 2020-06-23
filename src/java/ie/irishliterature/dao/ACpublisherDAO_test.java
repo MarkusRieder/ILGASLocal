@@ -35,45 +35,36 @@ public class ACpublisherDAO_test {
     private static Connection connection;
     private static final Database db = new Database();
 
-    protected static void connect() throws SQLException
-    {
-        if ( connection == null || connection.isClosed() )
-        {
-            try
-            {
+    protected static void connect() throws SQLException {
+        if ( connection == null || connection.isClosed() ) {
+            try {
                 connection = db.getConnection();
             }
-            catch ( InstantiationException | IllegalAccessException | ClassNotFoundException ex )
-            {
+            catch ( InstantiationException | IllegalAccessException | ClassNotFoundException ex ) {
                 Logger.getLogger( ACpublisherDAO_test.class.getName() ).log( Level.SEVERE, null, ex );
             }
         }
     }
 
-    protected static void disconnect() throws SQLException
-    {
-        if ( connection != null && !connection.isClosed() )
-        {
+    protected static void disconnect() throws SQLException {
+        if ( connection != null && !connection.isClosed() ) {
             connection.close();
         }
     }
 
     //getpublisher by Name
-    public ArrayList getpublisher( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
-    {
+    public ArrayList getpublisher( String s ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
         ArrayList publisherList = new ArrayList();
 
         connect();
 
-        try
-        {
+        try {
             PreparedStatement ps = connection.prepareStatement( "SELECT * FROM ILGAS.international_publishers WHERE Company  like ?" );
             ps.setString( 1, "%" + s + "%" );
             ResultSet rs = ps.executeQuery();
 
-            while ( rs.next() )
-            {
+            while ( rs.next() ) {
                 Publisher publisher = new Publisher();
 
                 publisher.setId( rs.getString( "Company_Number" ) );
@@ -104,29 +95,25 @@ public class ACpublisherDAO_test {
                 disconnect();
             }
         }
-        catch ( SQLException e )
-        {
+        catch ( SQLException e ) {
         }
 
         return publisherList;
     }
 
     //getpublisher by publisherID
-    public static ArrayList getpublisherByID( int publisherID ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException
-    {
+    public static ArrayList getpublisherByID( int publisherID ) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 
         ArrayList publisherList = new ArrayList();
 
         connect();
 
-        try
-        {
+        try {
             PreparedStatement ps = connection.prepareStatement( "SELECT * FROM ILGAS.international_publishers WHERE Company_Number = ?" );
             ps.setInt( 1, publisherID );
             ResultSet rs = ps.executeQuery();
 
-            while ( rs.next() )
-            {
+            while ( rs.next() ) {
                 Publisher publisher = new Publisher();
 
                 publisher.setId( rs.getString( "Company_Number" ) );
@@ -157,15 +144,13 @@ public class ACpublisherDAO_test {
                 disconnect();
             }
         }
-        catch ( SQLException e )
-        {
+        catch ( SQLException e ) {
         }
 
         return publisherList;
     }
 
-    public static String[] getpublisherByReferenceNumber( String ReferenceNumber ) throws SQLException, ClassNotFoundException
-    {
+    public static String[] getpublisherByReferenceNumber( String ReferenceNumber ) throws SQLException, ClassNotFoundException {
         /*
          * getDocuments returns a list with all data needed for emailing
          * Publisher
@@ -178,10 +163,9 @@ public class ACpublisherDAO_test {
         ResultSet res;
 
         String[] emailDataArray = new String[ 8 ];
-        System.out.println( "doing getpublisherByReferenceNumber::  " );
+        System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber doing getpublisherByReferenceNumber::  " + ReferenceNumber );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -193,27 +177,25 @@ public class ACpublisherDAO_test {
 
             ps1.setString( 1, ReferenceNumber );
 
-            System.out.println( "ps1::  " + ps1 );
+            System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber ps1::  " + ps1 );
 
             res = ps1.executeQuery();
 
-            System.out.println( "res::  " + res.toString() );
+            System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber res::  " + res.toString() );
 
-            while ( res.next() )
-            {
+            while ( res.next() ) {
 
-                System.out.println( "FULL_NAME::  " + res.getString( "fullName" ) );
-                System.out.println( "EMAIL::  " + res.getString( "email" ) );
-                emailDataArray[ 0 ] = res.getString( "fullName" ); // FULL_NAME of user who applied for grant
-                emailDataArray[ 1 ] = res.getString( "email" ); // EMAIL of user who applied for grant
+                System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber FULL_NAME::  " + res.getString( "fullName" ) );
+                System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber EMAIL::  " + res.getString( "email" ) );
+                emailDataArray[0] = res.getString( "fullName" ); // FULL_NAME of user who applied for grant
+                emailDataArray[1] = res.getString( "email" ); // EMAIL of user who applied for grant
 
             }
 
 //            conn.commit();
             DBConn.close( conn, ps1, res );
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ACpublisherDAO_test.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -226,16 +208,14 @@ public class ACpublisherDAO_test {
      * @param Company from: RegisterServlet
      * @param returnPublisherID to: RegisterServlet
      */
-    public static String ifPublisherExists( String Company ) throws DBException
-    {
+    public static String ifPublisherExists( String Company ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         // boolean verified = false;
         String returnPublisherID = "0";
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -243,10 +223,8 @@ public class ACpublisherDAO_test {
             ps.setString( 1, Company );
             System.out.println( "ifPublisherExists company: try:: " + ps );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     System.out.println( "ifPublisherExists res:   " + res.getString( 1 ) );
 //                    verified = true;
                     returnPublisherID = res.getString( 1 );
@@ -256,8 +234,7 @@ public class ACpublisherDAO_test {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             throw new DBException( "ifPublisherExists - 3 Excepion while accessing database" );
         }
@@ -267,15 +244,15 @@ public class ACpublisherDAO_test {
     }
 
     //isNewPublisher 
-    public static boolean isNewPublisher( int Company_Number ) throws DBException
-    {
+    public static boolean isNewPublisher( int Company_Number ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         boolean newPublisher = false;
         ResultSet res = null;
 
-        try
-        {
+        System.out.println( "ACpublisherDAO_test.isNewPublisher isPublisherNew res:   " + Company_Number );
+
+        try {
 
             conn = DBConn.getConnection();
 
@@ -285,20 +262,16 @@ public class ACpublisherDAO_test {
             ps.setInt( 1, Company_Number );
 
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
-                    System.out.println( "isPublisherNew res:   " + res.getString( 1 ) );
+            if ( res != null ) {
+                while ( res.next() ) {
+                    System.out.println( "ACpublisherDAO_test.isNewPublisher isPublisherNew res:   " + res.getString( 1 ) );
 
-                    if ( "new".equals( res.getString( 2 ) ) )
-                    {
+                    if ( "new".equals( res.getString( 2 ) ) ) {
 
                         newPublisher = true;
 
                     }
-                    else
-                    {
+                    else {
 
                         newPublisher = false;
 
@@ -311,8 +284,7 @@ public class ACpublisherDAO_test {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             throw new DBException( "isNewPublisher - 3 Excepion while accessing database" );
         }
@@ -322,16 +294,14 @@ public class ACpublisherDAO_test {
     }
 
     //insertPublisher
-    public static int insertPublisher( Publisher pojo ) throws DBException
-    {
+    public static int insertPublisher( Publisher pojo ) throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -374,10 +344,8 @@ public class ACpublisherDAO_test {
 
             System.out.println( " LAST_INSERT_ID(): " + res );
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     id = res.getInt( 1 );
                 }
             }
@@ -386,8 +354,7 @@ public class ACpublisherDAO_test {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, ps2, res );
             e.printStackTrace();
             throw new DBException( "insertPublisher - 4 Excepion while accessing database" );
@@ -398,16 +365,14 @@ public class ACpublisherDAO_test {
     }
 
     // insert rudimentary Publisher via Registration Servlet
-    public static int insertRudimentaryPublisher( Publisher pojo ) throws DBException
-    {
+    public static int insertRudimentaryPublisher( Publisher pojo ) throws DBException {
         Connection conn = null;
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
         int id = 0;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -430,10 +395,8 @@ public class ACpublisherDAO_test {
 
             System.out.println( " LAST_INSERT_ID(): " + res );
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     id = res.getInt( 1 );
                 }
             }
@@ -442,8 +405,7 @@ public class ACpublisherDAO_test {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, ps2, res );
             e.printStackTrace();
             throw new DBException( "insertRudimentaryPublisher - 4 Excepion while accessing database" );
@@ -452,8 +414,7 @@ public class ACpublisherDAO_test {
         return id;
     }
 
-    public static int insertPublisherUserJoined( int userID, int Company_Number ) throws DBException
-    {
+    public static int insertPublisherUserJoined( int userID, int Company_Number ) throws DBException {
 
         Connection conn;
         PreparedStatement ps1;
@@ -461,8 +422,7 @@ public class ACpublisherDAO_test {
         int id = 0;
         ResultSet res;
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
@@ -480,10 +440,8 @@ public class ACpublisherDAO_test {
 
             System.out.println( " LAST_INSERT_ID(): " + res );
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     id = res.getInt( 1 );
                     System.out.println( "while (res.next()) " + res.getInt( 1 ) );
                 }
@@ -493,8 +451,7 @@ public class ACpublisherDAO_test {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException ex )
-        {
+        catch ( ClassNotFoundException | SQLException ex ) {
             Logger.getLogger( ACpublisherDAO_test.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -502,24 +459,21 @@ public class ACpublisherDAO_test {
     }
 
     //listAllPublisher
-    public static List<Publisher> listAllPublisher() throws DBException
-    {
+    public static List<Publisher> listAllPublisher() throws DBException {
         List<Publisher> listPublisher = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement( "SELECT * FROM ILGAS.international_publishers" );
             rs = ps.executeQuery();
 
-            while ( rs.next() )
-            {
+            while ( rs.next() ) {
                 Publisher publisher = new Publisher();
 
                 publisher.setId( rs.getString( "Company_Number" ) );
@@ -553,8 +507,7 @@ public class ACpublisherDAO_test {
             disconnect();
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, rs );
             throw new DBException( "listAllPublisher - 4 Excepion while accessing database" );
         }
@@ -563,16 +516,14 @@ public class ACpublisherDAO_test {
     }
 
     //deletePublisher
-    public static boolean deletePublisher( int Company_Number ) throws SQLException
-    {
+    public static boolean deletePublisher( int Company_Number ) throws SQLException {
 
         Connection conn;
         PreparedStatement ps;
         ResultSet rs = null;
         boolean id = false;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -586,8 +537,7 @@ public class ACpublisherDAO_test {
             disconnect();
 
         }
-        catch ( ClassNotFoundException ex )
-        {
+        catch ( ClassNotFoundException ex ) {
             Logger.getLogger( ACpublisherDAO_test.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -595,8 +545,7 @@ public class ACpublisherDAO_test {
     }
 
     //updatePublisher
-    public static boolean updatePublisher( Publisher publisher, int Company_Number ) throws DBException
-    {
+    public static boolean updatePublisher( Publisher publisher, int Company_Number ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -606,8 +555,7 @@ public class ACpublisherDAO_test {
         int CompanyNumber = Company_Number;
 
         System.out.println( "doing updatePublisher::  " );
-        try
-        {
+        try {
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
 
@@ -669,20 +617,17 @@ public class ACpublisherDAO_test {
 
             conn.commit();
 
-            if ( committed > 0 )
-            {
+            if ( committed > 0 ) {
                 id = true;
             }
-            else
-            {
+            else {
                 id = false;
             }
 
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
             throw new DBException( "updatePublisher - 4 Excepion while accessing database" );
         }

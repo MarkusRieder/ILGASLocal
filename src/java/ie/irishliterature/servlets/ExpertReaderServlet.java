@@ -40,10 +40,10 @@ import org.apache.commons.io.FilenameUtils;
  *
  * @author markus
  */
-@WebServlet( name = "ExpertReaderServlet", urlPatterns =
-{
-    "/ExpertReaderServlet"
-} )
+@WebServlet( name = "ExpertReaderServlet", urlPatterns
+        = {
+            "/ExpertReaderServlet"
+        } )
 public class ExpertReaderServlet extends HttpServlet {
 
     private final static Logger LOGGER
@@ -75,8 +75,7 @@ public class ExpertReaderServlet extends HttpServlet {
     private String upDate = "";
 
     @Override
-    public void init()
-    {
+    public void init() {
 
         // Get the file location where they would be stored.
         // Get the file location where they would be stored.
@@ -99,8 +98,7 @@ public class ExpertReaderServlet extends HttpServlet {
      */
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
     }
 
@@ -115,8 +113,7 @@ public class ExpertReaderServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
         System.out.println( "ExpertReaderServlet :: " );
         String name = request.getParameter( "name" );
@@ -124,8 +121,7 @@ public class ExpertReaderServlet extends HttpServlet {
         System.out.println( "############################### /ExpertReaderServlet ####################################" );
         Enumeration en = request.getParameterNames();
 
-        while ( en.hasMoreElements() )
-        {
+        while ( en.hasMoreElements() ) {
             Object objOri = en.nextElement();
 
             String param = ( String ) objOri;
@@ -138,8 +134,7 @@ public class ExpertReaderServlet extends HttpServlet {
 
         System.out.println( "Enumeration keys   " );
         Enumeration keys = session.getAttributeNames();
-        while ( keys.hasMoreElements() )
-        {
+        while ( keys.hasMoreElements() ) {
             String key = ( String ) keys.nextElement();
             System.out.println( "key  :" + key + ": " + session.getValue( key ) );
 
@@ -166,15 +161,16 @@ public class ExpertReaderServlet extends HttpServlet {
         List<String> longArrayList = new ArrayList<>();
         List<String> shortArrayList = new ArrayList<>();
 
-        try
-        {
+        try {
 
             /*
              * Check that we have a file upload request
              */
             isMultipart = ServletFileUpload.isMultipartContent( request );
             System.out.println( "isMultipart:: " + isMultipart );
+
             response.setContentType( "text/html;charset=UTF-8" );
+            request.setCharacterEncoding( "UTF-8" );
 
             DiskFileItemFactory factory = new DiskFileItemFactory();
 
@@ -202,10 +198,8 @@ public class ExpertReaderServlet extends HttpServlet {
              */
             List<FileItem> items = upload.parseRequest( request );
 
-            for ( FileItem item : items )
-            {
-                if ( item.isFormField() )
-                {
+            for ( FileItem item : items ) {
+                if ( item.isFormField() ) {
 
                     /*
                      * Process regular form field (input
@@ -213,18 +207,18 @@ public class ExpertReaderServlet extends HttpServlet {
                      * collect all data input from input fileds
                      */
                     String fieldname = item.getFieldName();
-                    String fieldvalue = item.getString();
+                    String fieldvalue = item.getString( "UTF-8" ).trim();
 
                     System.out.println( fieldname + " >> " + fieldvalue );
-                    switch ( fieldname )
-                    {
+                    switch ( fieldname ) {
                         case "reportSummary":
-                            ReportSummary = fieldvalue;
+                             ReportSummary = fieldvalue;
+                            System.out.println( "ReportSummary UTF-8  " + ReportSummary );
                             break;
                         case "referenceNumber":
                             ReferenceNumber = fieldvalue;
                             company = findPublisherName( ReferenceNumber );
-                            ApplicationNumber = ReferenceNumber.split( "/" )[ 0 ];
+                            ApplicationNumber = ReferenceNumber.split( "/" )[0];
                             break;
                         case "userID":
                             UserID = fieldvalue;
@@ -245,8 +239,7 @@ public class ExpertReaderServlet extends HttpServlet {
                     } // end switch
 
                 }
-                else
-                {
+                else {
 
                     //////////////////////////////////////////////////////////////
                     //  Process Application Form file field (input type="file") //
@@ -258,37 +251,32 @@ public class ExpertReaderServlet extends HttpServlet {
                     int counter = getCounter( fieldname );
                     String fileName = getFdname( fieldname );
 
-                    switch ( fileName )
-                    {
+                    switch ( fileName ) {
 
                         case "ExpertReaderReport":
-                            if ( filename.isEmpty() )
-                            {
+                            if ( filename.isEmpty() ) {
                                 System.out.println( "Agreement zero  filename " + filename );
                             }
-                            else
-                            {
+                            else {
                                 filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
                                         + "ExpertReader" + File.separator + ExpertReaderName + File.separator + "ExpertReaderReport" + File.separator;
-                                fileNames[ idxFolderNames ] = filePath + filename;
-                                filesToBeMoved.add( fileNames[ idxFolderNames ] );
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
 
-                                System.out.println( "filePath:  " + filePath + "  fileNames[idxFolderNames]:  " + fileNames[ idxFolderNames ] );
+                                System.out.println( "filePath:  " + filePath + "  fileNames[idxFolderNames]:  " + fileNames[idxFolderNames] );
                             }
                             break;
                         case "ExpertReaderInvoice":
-                            if ( filename.isEmpty() )
-                            {
+                            if ( filename.isEmpty() ) {
                                 System.out.println( "Contract zero  filename " + filename );
                             }
-                            else
-                            {
+                            else {
                                 filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
                                         + "ExpertReader" + File.separator + ExpertReaderName + File.separator + "ExpertReaderInvoice" + File.separator;
-                                fileNames[ idxFolderNames ] = filePath + filename;
-                                filesToBeMoved.add( fileNames[ idxFolderNames ] );
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
 
-                                System.out.println( "filePath:  " + filePath + "  fileNames[idxFolderNames]:  " + fileNames[ idxFolderNames ] );
+                                System.out.println( "filePath:  " + filePath + "  fileNames[idxFolderNames]:  " + fileNames[idxFolderNames] );
                             }
                             break;
                     } // end switch
@@ -296,15 +284,12 @@ public class ExpertReaderServlet extends HttpServlet {
                      * create temporary Directory if it does not exist
                      */
                     System.out.println( "fileName.equals 1 zero " + fileName + " filePath " + filePath );
-                    if ( filename.isEmpty() )
-                    {
+                    if ( filename.isEmpty() ) {
                         System.out.println( "fileName.equals 2 zero filename.isEmpty " + fileName + " filePath " + filePath );
                     }
-                    else
-                    {
+                    else {
                         File file = new File( filePath );
-                        if ( !file.exists() )
-                        {
+                        if ( !file.exists() ) {
 
                             file.mkdirs();
                         }
@@ -313,8 +298,7 @@ public class ExpertReaderServlet extends HttpServlet {
                         OutputStream outS = null;
                         InputStream filecontent = null;
 
-                        try
-                        {
+                        try {
                             outS = new FileOutputStream( new File( filePath + filename ) );
 
                             filecontent = item.getInputStream();
@@ -324,15 +308,13 @@ public class ExpertReaderServlet extends HttpServlet {
                             int read;
                             final byte[] bytes = new byte[ 1024 ];
 
-                            while ( ( read = filecontent.read( bytes ) ) != -1 )
-                            {
+                            while ( ( read = filecontent.read( bytes ) ) != -1 ) {
                                 outS.write( bytes, 0, read );
 
                             }
 
                         }
-                        catch ( FileNotFoundException fne )
-                        {
+                        catch ( FileNotFoundException fne ) {
 
                             String errMsg = "<br/><br/>You either did not specify a file to upload or are "
                                     + "trying to upload a file to a protected or nonexistent "
@@ -341,22 +323,18 @@ public class ExpertReaderServlet extends HttpServlet {
                             request.setAttribute( "message", " '<strong>" + filename + "</strong>" + errMsg );
                             request.getRequestDispatcher( "/WEB-INF/views/uploadErrorResponse.jsp" ).forward( request, response );
                             LOGGER.log( Level.SEVERE, "Problems during file upload. Error: {0}",
-                                    new Object[]
-                                    {
+                                    new Object[]{
                                         fne.getMessage()
                                     } );
 
                         }
-                        finally
-                        {
+                        finally {
 
-                            if ( outS != null )
-                            {
+                            if ( outS != null ) {
                                 outS.close();
                             }
 
-                            if ( filecontent != null )
-                            {
+                            if ( filecontent != null ) {
                                 filecontent.close();
                             }
                         }
@@ -373,19 +351,16 @@ public class ExpertReaderServlet extends HttpServlet {
             expertReader.setSummaryReport( ReportSummary );
 
             {
-                try
-                {
+                try {
                     updateExpertReader( expertReader, ReferenceNumber );
                 }
-                catch ( DBException ex )
-                {
+                catch ( DBException ex ) {
                     Logger.getLogger( ExpertReaderServlet.class.getName() ).log( Level.SEVERE, null, ex );
                 }
             }
 
         }
-        catch ( FileUploadException | DBException ex )
-        {
+        catch ( FileUploadException | DBException ex ) {
             Logger.getLogger( ExpertReaderServlet.class
                     .getName() ).log( Level.SEVERE, null, ex );
         }
@@ -401,35 +376,31 @@ public class ExpertReaderServlet extends HttpServlet {
 
         System.out.println( "filesToBeMoved.size()  " + filesToBeMoved.size() );
 
-        for ( int i = 0; i < filesToBeMoved.size(); i++ )
-        {
+        for ( int i = 0; i < filesToBeMoved.size(); i++ ) {
             System.out.println( "ffilesToBeMoved.get(i) " + filesToBeMoved.get( i ) );
         }
 
-        for ( int i = 0; i < filesToBeMoved.size(); i++ )
-        {
+        for ( int i = 0; i < filesToBeMoved.size(); i++ ) {
 
             String moveFile = "";
             String moveFileName = "";
             String destinationDirectory = "";
 
             String[] subDirs = filesToBeMoved.get( i ).split( "(?<!^)/" );
-            for ( int j = 0; j < subDirs.length; j++ )
-            {
-                System.out.println( " Print Loop subDirs [" + j + "]  " + subDirs[ j ] );
+            for ( int j = 0; j < subDirs.length; j++ ) {
+                System.out.println( " Print Loop subDirs [" + j + "]  " + subDirs[j] );
             }
             System.out.println( "ffilesToBeMoved.get(i) " + filesToBeMoved.get( i ) );
-            String decider = subDirs[ 10 ];  //ExpertReaderReport
+            String decider = subDirs[10];  //ExpertReaderReport
 
             System.out.println( "filesToBeMoved before case \"ExpertReader\":     decider --" + decider + "--->>>> " );
 
-            switch ( decider )
-            {
+            switch ( decider ) {
 
                 case "ExpertReaderReport":
-                    String subDirectory = subDirs[ 8 ];  // ExpertReader
-                    String subNameDirectory = subDirs[ 9 ];  // Leo Lion
-                    moveFileName = subDirs[ 11 ];  // contract with the translator 2.docx 
+                    String subDirectory = subDirs[8];  // ExpertReader
+                    String subNameDirectory = subDirs[9];  // Leo Lion
+                    moveFileName = subDirs[11];  // contract with the translator 2.docx 
 
                     destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
                             + ApplicationNumber + File.separator + subDirectory + File.separator + subNameDirectory + File.separator + decider + File.separator;
@@ -442,9 +413,9 @@ public class ExpertReaderServlet extends HttpServlet {
                     break;
 
                 case "ExpertReaderInvoice":
-                    subDirectory = subDirs[ 8 ];  // ExpertReader
-                    subNameDirectory = subDirs[ 9 ];  // Leo Lion
-                    moveFileName = subDirs[ 11 ];  // contract with the translator 2.docx 
+                    subDirectory = subDirs[8];  // ExpertReader
+                    subNameDirectory = subDirs[9];  // Leo Lion
+                    moveFileName = subDirs[11];  // contract with the translator 2.docx 
 
                     destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
                             + ApplicationNumber + File.separator + subDirectory + File.separator + subNameDirectory + File.separator + decider + File.separator;
@@ -462,8 +433,7 @@ public class ExpertReaderServlet extends HttpServlet {
              */
             File directory = new File( destinationDirectory );
             System.out.println( "destinationDirectory --" + destinationDirectory );
-            if ( !directory.exists() )
-            {
+            if ( !directory.exists() ) {
                 directory.mkdirs();
             }
 
@@ -481,22 +451,19 @@ public class ExpertReaderServlet extends HttpServlet {
          * loop through the Translators and insert each into
          * TranslatorTrack
          */
-        for ( int i = 0; i < longArrayList.size(); i++ )
-        {
+        for ( int i = 0; i < longArrayList.size(); i++ ) {
 
-            try
-            {
+            try {
                 System.out.println( "longArrayList---i:[" + i + "]-->>>> " + longArrayList.get( i ) );
 
                 String[] elements = longArrayList.get( i ).split( "(?<!^)/" );
-                for ( int j = 0; j < elements.length; j++ )
-                {
-                    System.out.println( "longArrayList sending files to tables subDirs [" + j + "]  " + elements[ j ] );
+                for ( int j = 0; j < elements.length; j++ ) {
+                    System.out.println( "longArrayList sending files to tables subDirs [" + j + "]  " + elements[j] );
                 }
                 String moveFile = longArrayList.get( i );
-                String decider = elements[ 12 ];   // ExpertReaderInvoice
-                ExpertReaderName = elements[ 11 ]; // Sparky The Black Cat
-                String moveFileName = elements[ 13 ]; // 2434-2016 ST.pdf
+                String decider = elements[12];   // ExpertReaderInvoice
+                ExpertReaderName = elements[11]; // Sparky The Black Cat
+                String moveFileName = elements[13]; // 2434-2016 ST.pdf
 //                        String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
                 String moveFileNameReplaced = moveFile.replace( "/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents" );
 
@@ -518,8 +485,7 @@ public class ExpertReaderServlet extends HttpServlet {
                 /*
                  * insert them into the table TranslatorTrack
                  */
-                switch ( decider )
-                {
+                switch ( decider ) {
 
                     case "ExpertReaderReport":
                         System.out.println( "insertExpertReaderReport:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
@@ -532,8 +498,7 @@ public class ExpertReaderServlet extends HttpServlet {
 
                 } // switch (decider)
             }
-            catch ( DBException | MessagingException ex )
-            {
+            catch ( DBException | MessagingException ex ) {
                 Logger.getLogger( ExpertReaderServlet.class.getName() ).log( Level.SEVERE, null, ex );
             }
 
@@ -544,14 +509,14 @@ public class ExpertReaderServlet extends HttpServlet {
          * Set message to be returned to user
          * reset session
          */
+        session.setAttribute( "name", name );
         request.setAttribute( "name", name );
         request.setAttribute( "message", message );
         request.getRequestDispatcher( "/WEB-INF/views/response.jsp" ).forward( request, response );
 
     }
 
-    public Date convertDate( String datum ) throws ParseException
-    {
+    public Date convertDate( String datum ) throws ParseException {
 
         DateFormat sourceFormat = new SimpleDateFormat( "dd/MM/yyyy" );
         Date date = sourceFormat.parse( datum );
@@ -560,30 +525,26 @@ public class ExpertReaderServlet extends HttpServlet {
 
     }
 
-    public java.sql.Date getTodaySQL()
-    {
+    public java.sql.Date getTodaySQL() {
         java.util.Date today = new java.util.Date();
         return new java.sql.Date( today.getTime() );
 
     }
 
-    public int getCounter( String counterIndicator )
-    {
+    public int getCounter( String counterIndicator ) {
 
         int counter = 0;
 
         System.out.println( "getCounter(String " + counterIndicator );
 
-        if ( counterIndicator.contains( "-" ) )
-        {
+        if ( counterIndicator.contains( "-" ) ) {
 
             String counterIndicatorArray[] = counterIndicator.split( "-" );
-            for ( int u = 0; u < counterIndicatorArray.length; u++ )
-            {
+            for ( int u = 0; u < counterIndicatorArray.length; u++ ) {
                 System.out.println( "counterIndicatorArray[" + u + "]" + Arrays.toString( counterIndicatorArray ) );
             }
 
-            counter = Integer.parseInt( counterIndicatorArray[ counterIndicatorArray.length - 1 ] ) - 1;
+            counter = Integer.parseInt( counterIndicatorArray[counterIndicatorArray.length - 1] ) - 1;
         }
 
         System.out.println( "counter  " + counter );
@@ -591,18 +552,16 @@ public class ExpertReaderServlet extends HttpServlet {
         return counter;
     }
 
-    public String getFdname( String fieldname )
-    {
+    public String getFdname( String fieldname ) {
 
         String fdname;
 
         String fdnameArray[] = fieldname.split( "-" );
 
-        fdname = fdnameArray[ 0 ];
+        fdname = fdnameArray[0];
 
         System.out.println( "getFdname(String " + fieldname );
-        for ( int v = 0; v < fdnameArray.length; v++ )
-        {
+        for ( int v = 0; v < fdnameArray.length; v++ ) {
             System.out.println( "fdnameArray[" + v + "]" + Arrays.toString( fdnameArray ) );
         }
 
@@ -611,8 +570,7 @@ public class ExpertReaderServlet extends HttpServlet {
         return fdname;
     }
 
-    public static String findPublisherName( String ReferenceNumber ) throws DBException
-    {
+    public static String findPublisherName( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -622,8 +580,7 @@ public class ExpertReaderServlet extends HttpServlet {
 
         System.out.println( "findPublisherName: " + ReferenceNumber );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -636,18 +593,15 @@ public class ExpertReaderServlet extends HttpServlet {
 
             ps.setString( 1, ReferenceNumber );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                if ( res.next() )
-                {
+            if ( res != null ) {
+                if ( res.next() ) {
                     publisherName = res.getString( "Publisher" );
                     System.out.println( "findPublisherName: res: " + publisherName );
                 }
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             e.printStackTrace();
             throw new DBException( "2 Excepion while accessing database" );

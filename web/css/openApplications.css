@@ -97,8 +97,13 @@ and open the template in the editor.
     overflow-y:auto;
     text-align: center;
 }
+.modal-body {
+    max-height: 800px;
+}
 
-#addAdditionalRightsHoldersModal{
+#addAdditionalRightsHoldersModal .modal-dialog { width: 600px;height: 400px }
+
+/*#addAdditionalRightsHoldersModal{
     width: 400px;
 
     top: 50%;
@@ -107,7 +112,7 @@ and open the template in the editor.
     margin-left: -200px;
     padding: 20px;               
 
-}
+}*/
 /* Set whitespace between the generated input fields*/
 input.wsp{
 

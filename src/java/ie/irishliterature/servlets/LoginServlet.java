@@ -163,8 +163,8 @@ public class LoginServlet extends HttpServlet {
          * loggedInUsers
          */
         if ( loggedInUsers.contains( username ) ) {
-            request.setAttribute( "errorMessage", "You are already logged in!!" );
-            request.getRequestDispatcher( "/WEB-INF/views/userloggedin.jsp" ).forward( request, response );
+//            request.setAttribute( "errorMessage", "You are already logged in!!" );
+//            request.getRequestDispatcher( "/WEB-INF/views/userloggedin.jsp" ).forward( request, response );
             /**
              * @return "errorMessage", "You are already logged in!!" and forward
              * to userloggedin.jsp
@@ -214,9 +214,9 @@ public class LoginServlet extends HttpServlet {
              */
             if ( status != null && status.equals( "loggedin" ) ) {
 
-                System.out.println( "Only ONE session allowed!! " );
-                request.setAttribute( "errorMessage", "Only ONE session allowed!!" );
-                request.getRequestDispatcher( "/WEB-INF/views/userloggedin.jsp" ).forward( request, response );
+//                System.out.println( "Only ONE session allowed!! " );
+//                request.setAttribute( "errorMessage", "Only ONE session allowed!!" );
+//                request.getRequestDispatcher( "/WEB-INF/views/userloggedin.jsp" ).forward( request, response );
             }
             else {
                 if ( loginStatus ) {
@@ -283,9 +283,6 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute( "email", email );
                     session.setAttribute( "userID", userID );
 
-                    // set full name
-                    request.setAttribute( "name", name );
-
                     System.out.println( "\n" + " ############################ LoginServlet 2 #######################################" + "\n" );
 
                     System.out.println( "Iterate Parameters" );
@@ -309,6 +306,8 @@ public class LoginServlet extends HttpServlet {
                         System.out.println( "key  :" + key + ": " + session.getValue( key ) );
                     }
 
+//                    session.setAttribute( "userData", userData );
+
                     System.out.println( "\n" + " ############################ END LoginServlet 2 #######################################" + "\n" );
 
                     if ( "Literature Ireland Staff".equals( function ) ) {
@@ -323,6 +322,7 @@ public class LoginServlet extends HttpServlet {
                         session.setAttribute( "userID", userID );
                         request.setAttribute( "username", username );
                         request.setAttribute( "name", name );
+
                         request.getRequestDispatcher( "/WEB-INF/views/welcome_Staff_1.jsp" ).forward( request, response );
 
 //                        response.sendRedirect( "welcome_Staff_1.jsp" );
@@ -351,7 +351,9 @@ public class LoginServlet extends HttpServlet {
                                 request.getSession().setAttribute( "publisherName", publisherName );
                                 request.setAttribute( "publisherName", publisherName );
                                 request.setAttribute( "name", name );
-
+ request.setAttribute( "username", username );
+session.setAttribute( "username", username );
+              System.out.println( "username:1 " + username );
                                 /**
                                  * if it is a New Publisher show
                                  * publisherRegistration_1.jsp
@@ -373,12 +375,15 @@ public class LoginServlet extends HttpServlet {
                                     /**
                                      * else redirect to welcome_Publisher.jsp
                                      */
+                                    System.out.println( "User belongs to Publisher: " + publisherID );
                                     session.setAttribute( "publisherID", publisherID );
                                     session.setAttribute( "name", name );
                                     request.setAttribute( "name", name );
                                     request.setAttribute( "publisherName", publisherName );
-                                    request.setAttribute( "name", name );
 
+ request.setAttribute( "username", username );
+session.setAttribute( "username", username );
+System.out.println( "username:2 " + username );
 //                                    response.sendRedirect( "welcome_Publisher" );
                                     request.getRequestDispatcher( "/WEB-INF/views/welcome_Publisher.jsp" ).forward( request, response );
                                 }
@@ -398,7 +403,8 @@ public class LoginServlet extends HttpServlet {
                                 request.setAttribute( "userID", userID );
                                 session.setAttribute( "userID", userID );
                                 request.getSession().setAttribute( "userID", userID );
-
+ request.setAttribute( "username", username );
+session.setAttribute( "username", username );
 //                                response.sendRedirect( "welcome_ExpertReader" );
                                 request.getRequestDispatcher( "/WEB-INF/views/welcome_ExpertReader.jsp" ).forward( request, response );
 
@@ -416,7 +422,7 @@ public class LoginServlet extends HttpServlet {
          */
         else {
 
-            //System.out.println( "Booooooooooooooooooo" );
+            System.out.println( "Booooooooooooooooooo" );
             request.setAttribute( "errorMessage", "Invalid Credentials!!" );
             request.getRequestDispatcher( "/WEB-INF/views/login_error.jsp" ).forward( request, response );
         }

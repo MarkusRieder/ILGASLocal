@@ -607,4 +607,57 @@ public class UserDAO {
 
         return listExpertReaders;
     }
+    
+     @SuppressWarnings( "unchecked" )
+    public static ArrayList getAllStaff() throws ClassNotFoundException, DBException
+    {
+
+        ArrayList listStaff = new ArrayList();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        String searchQuery = "SELECT * FROM ILGAS.users WHERE function = 'Literature Ireland Staff'"
+                + " AND first_name <> 'removed'";
+
+        try
+        {
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement( searchQuery );
+
+            System.out.println( "UserDAO: getAllStaff::  " + conn );
+
+            res = ps.executeQuery( searchQuery );
+
+            if ( res != null )
+            {
+                while ( res.next() )
+                {
+                    User Staff = new User();
+                    Staff.setUSER_ID( res.getString( "userID" ) );
+                    Staff.setFIRST_NAME( res.getString( "first_name" ) );
+                    Staff.setLAST_NAME( res.getString( "last_name" ) );
+                    Staff.setEMAIL( res.getString( "email" ) );
+//                    expertReader.setFUNCTION(res.getString("function"));
+//                    expertReader.setROLE(res.getString("role"));
+
+                    listStaff.add( Staff );
+                }
+            }
+
+            DBConn.close( conn, ps, res );
+
+        }
+        catch ( ClassNotFoundException | SQLException e )
+        {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 Excepion while accessing database" );
+        }
+        System.out.println( listStaff );
+
+        return listStaff;
+    }
 }

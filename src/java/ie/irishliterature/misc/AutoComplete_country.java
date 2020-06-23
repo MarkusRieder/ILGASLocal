@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,8 +62,9 @@ public class AutoComplete_country extends HttpServlet {
             writer.write( searchResult );
 
         }
-        catch ( IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException e )
+        catch ( IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException ex )
         {
+             Logger.getLogger( AutoComplete_country.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
     }

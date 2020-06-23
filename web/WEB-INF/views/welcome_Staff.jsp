@@ -1645,7 +1645,11 @@
 
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" value="${username}">
+                        </form>
                     </div>
                 </div> <!--container for welcome/logout-->
 
@@ -3066,7 +3070,7 @@
                             autocomplete="on"  
                             action="${pageContext.request.contextPath}/GrantApplicationServlet" 
                         >
-                        <%request.getSession().setAttribute("task", "AssignExpertReader");%>
+                        <%request.getSession().setAttribute( "task", "AssignExpertReader" );%>
 
                         <input type="hidden" name="AssignExpertReader"  class="form-control" value="AssignExpertReader">
                         <div class="modal-header" style="background-color: #c3bcbc">

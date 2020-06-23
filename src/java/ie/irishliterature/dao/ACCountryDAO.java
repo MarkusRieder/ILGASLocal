@@ -29,8 +29,7 @@ public class ACCountryDAO {
         Database db = new Database();
         Connection connection = db.getConnection();
 
-        try
-        {
+
             PreparedStatement ps = connection.prepareStatement( "SELECT nicename, iso  from ILGAS.country WHERE nicename  like ?" );
             ps.setString( 1, "%" + s + "%" );
             ResultSet rs = ps.executeQuery();
@@ -41,11 +40,12 @@ public class ACCountryDAO {
                 country.setId( rs.getString( "iso" ) );
                 country.setValue( rs.getString( "nicename" ) );
                 publisherList.add( country );
+                
+                System.out.println( "iso: " + rs.getString( "iso" ) );
+                System.out.println( "nicename: " + rs.getString( "nicename" ) );
             }
-        }
-        catch ( SQLException e )
-        {
-        }
+
+            
         return publisherList;
     }
 

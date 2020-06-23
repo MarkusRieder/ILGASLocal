@@ -58,7 +58,21 @@
                 /* (853 / 1280 * 100) */
             }
         </style>
-
+        
+        <script>
+            $(window).bind("beforeunload", function () {
+                var username = document.getElementById("username").value;
+                alert("username 2 " + username);
+                $.ajax({
+                    async: false, //This will make sure the browser waits until request completes
+                    url: "./Logout",
+                    type: 'post',
+                    cache: false,
+                    data: {"username": username}
+                });
+            });
+        </script>
+        
     </head>
     <body>
         <div id="shadowholder">
@@ -75,10 +89,10 @@
                 <!--container for welcome/logout-->
                 <div class="container-fluid" >
                     <div class="pull-right">
-                   <form action="${pageContext.request.contextPath}/Logout" method="GET">
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
                             <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
                                     <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
-                            <input type="hidden" name="username" value="${username}">
+                            <input type="hidden" id="username" name="username" value="${username}">
                         </form>
                     </div>
                 </div> <!--container for welcome/logout-->
@@ -124,15 +138,15 @@
                                 <input type="hidden" name="publisherID" id="publisherID" value="${publisherID}">
                                 <input type="hidden" name="Company" value="${companyDetails.Company}">
                                 <input type="hidden" name="publisherName" value="${companyDetails.Company}">
+                                <input type="hidden" name="username" value="${username}">
                                 <div class="form-group">
-                                    <!-- Button -->
-                                    <!--                                    <div class="col-sm-12  pull-left">
-                                                                            <input type="submit" class="btn btn-success btn-send" style="margin-bottom: 10px" value="Continue">
-                                                                        </div>  col-md-12 control -->
+
                                     <button type="submit" class="btn btn-success  btn-send" id="nxtBtn">                           
                                         <span class="glyphicon glyphicon-thumbs-up"></span> Continue
                                     </button>
+
                                 </div> <!-- form-group -->
+
                             </form>  
                         </div>
                     </div>
@@ -162,6 +176,10 @@
                         <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
+
                 </div><!-- end of Base div -->
 
             </div> <!--  end of container div -->
@@ -169,9 +187,7 @@
         </div><!-- end of Shadowholder container div -->
 
 
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
+
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 

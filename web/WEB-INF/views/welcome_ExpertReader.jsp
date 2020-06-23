@@ -387,6 +387,20 @@
 
         </script>
 
+        <script>
+            $(window).bind("beforeunload", function () {
+                var username = document.getElementById("username").value;
+                alert("username 2 " + username);
+                $.ajax({
+                    async: false, //This will make sure the browser waits until request completes
+                    url: "./Logout",
+                    type: 'post',
+                    cache: false,
+                    data: {"username": username}
+                });
+            });
+        </script>
+
     </head>
 
     <body style="height: 100%">
@@ -411,10 +425,10 @@
                 <!--container for welcome/logout-->
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
-                        <form action="${pageContext.request.contextPath}/Logout" method="GET">
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
                             <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
                                     <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
-                            <input type="hidden" name="username" value="${username}">
+                            <input type="hidden" id="username" name="username" value="${username}">
                         </form>
                     </div>
                 </div> <!--container for welcome/logout-->
@@ -470,7 +484,12 @@
                                 <h4 class="modal-title" id="readerListModalLabel">Expert Reader Report/Invoice Submit Page</h4>
                             </div>
 
-                            <form  method="POST" id="applicationForm" name="applicationForm" action="${pageContext.request.contextPath}/ExpertReaderServlet" enctype="multipart/form-data">
+                            <form  method="POST" 
+                                   id="applicationForm" 
+                                   name="applicationForm" 
+                                   action="${pageContext.request.contextPath}/ExpertReaderServlet" 
+                                   enctype="multipart/form-data"
+                                   >
 
 
                                 <input type="hidden" value="" name="expertReaderName" id="expertReaderName" /> 
@@ -533,7 +552,7 @@
 
                                                     </div> <!-- position:absolute; z-index:0 -->
 
-                                                    <div class="col-md-5" id="expertReaderReport_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                    <div class="col-md-3" id="expertReaderReport_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
 
                                                         <label  class="control-label pull-left" id="expertReaderReport_button_label" ></label>
                                                         <div class="input-group expertReaderReport_buttonText pull-left">
@@ -590,7 +609,7 @@
 
                                                     </div> <!-- position:absolute; z-index:0 -->
 
-                                                    <div class="col-md-5" id="expertReaderInvoice_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                    <div class="col-md-3" id="expertReaderInvoice_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
 
                                                         <label  class="control-label pull-left" id="expertReaderInvoice_button_label" ></label>
                                                         <div class="input-group expertReaderInvoice_buttonText pull-left">
@@ -617,7 +636,7 @@
                                                 <div class="col-md-6"></div>
 
                                             </div> <!-- row  -->
-
+                                            <input type="hidden" name="username" value="${username}">
                                             <!--  Submit form  -->
                                             <div class="col-md-9"  style="margin-top: 20px;margin-bottom: 30px" >
                                                 <div class="input-group input-group-lg">

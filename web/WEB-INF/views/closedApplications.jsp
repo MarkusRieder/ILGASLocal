@@ -140,7 +140,115 @@
             for (i = 0; i < sessionStorage.length; i++) {
                 console.log(sessionStorage.key(i) + "=[" + sessionStorage.getItem(sessionStorage.key(i)) + "]");
             }
+
+
+            //gallery
+//$(document).ready(function () {
+            function  gallery() {
+                let modalId = $('#image-gallery');
+                loadGallery(true, 'a.thumbnail');
+
+//This function disables buttons when needed
+                function disableButtons(counter_max, counter_current) {
+                    $('#show-previous-image, #show-next-image')
+                            .show();
+                    if (counter_max === counter_current) {
+                        $('#show-next-image')
+                                .hide();
+                    } else if (counter_current === 1) {
+                        $('#show-previous-image')
+                                .hide();
+                    }
+                }
+
+                /**
+                 *
+                 * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+                 * @param setClickAttr  Sets the attribute for the click handler.
+                 */
+
+                function loadGallery(setIDs, setClickAttr) {
+                    let current_image,
+                            selector,
+                            counter = 0;
+
+                    $('#show-next-image, #show-previous-image')
+                            .click(function () {
+                                if ($(this)
+                                        .attr('id') === 'show-previous-image') {
+                                    current_image--;
+                                } else {
+                                    current_image++;
+                                }
+
+                                selector = $('[data-image-id="' + current_image + '"]');
+                                console.log("selector " + selector.name);
+                                updateGallery(selector);
+                            });
+
+                    function updateGallery(selector) {
+                        let $sel = selector;
+                        console.log(" updateGallery selector ");
+                        console.log(selector);
+                        console.log(JSON.stringify(selector));
+                        current_image = $sel.data('image-id');
+                        console.log(" updateGallery current_image " + current_image);
+                        var filename = $sel.data('image').replace(/^.*[\\\/]/, '');
+                        $('#image-gallery-title')
+                                .text(filename);
+                        console.log(" updateGallery current_image " + $sel.data('image'));
+                        console.log(" updateGallery current_image filename " + filename);
+                        $('#image-gallery-image')
+                                .attr('src', $sel.data('image'));
+                        disableButtons(counter, $sel.data('image-id'));
+                    }
+
+                    if (setIDs === true) {
+                        $('[data-image-id]')
+                                .each(function () {
+                                    counter++;
+                                    console.log("counter " + counter);
+                                    $(this).attr('data-image-id', counter);
+                                });
+                    }
+                    $(setClickAttr)
+                            .on('click', function () {
+                                updateGallery($(this));
+                            });
+                }
+
+                // build key actions
+                $(document)
+                        .keydown(function (e) {
+                            switch (e.which) {
+                                case 37: // left
+                                    if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
+                                        $('#show-previous-image')
+                                                .click();
+                                    }
+                                    break;
+
+                                case 39: // right
+                                    if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
+                                        $('#show-next-image')
+                                                .click();
+                                    }
+                                    break;
+
+                                default:
+                                    return; // exit this handler for other keys
+                            }
+                            e.preventDefault(); // prevent the default action (scroll / move caret)
+                        });
+            }
+
+            function pressCuttingsModal() {
+                $("#pressCuttingsModal").modal("show");
+            }
         </script>      
+
+
+
 
         <!--applications-->
         <script type="text/javascript">
@@ -414,6 +522,7 @@
                             }},
                         {"data": "originalPageExtent",
                             "render": function (data) {
+                                console.log("originalPageExtent " + data);
                                 if (typeof (data) === "undefined") {
                                     return "n/a";
                                 } else
@@ -433,7 +542,7 @@
                             }},
                         {"data": "foreignPublisher",
                             "render": function (data) {
-
+                                console.log("foreignPublisher " + data);
                                 if (typeof (data) === "undefined") {
                                     return "n/a";
                                 } else
@@ -475,11 +584,12 @@
                             }},
                         {"data": "amountRequested",
                             "render": function (data, type, row) {
+                                console.log("7771 amountRequested  " + data);
                                 var mValue; // = parseFloat(0.00);
                                 mValue = data; //parseFloat(data);
                                 if (mValue > 0) {
                                     //mValue = Math.round(mValue);                                             
-                                    return mValue; //.toFixed(2);
+                                    return mValue.toFixed(2);
                                 } else
                                     return '-';
                                 return data;
@@ -487,6 +597,7 @@
                         },
                         {"data": "amountApproved",
                             "render": function (data, type, row) {
+                                console.log("7771 amountApproved  " + data);
                                 var mValue = parseFloat(0.00);
                                 mValue = parseFloat(data);
                                 if (mValue > 0) {
@@ -745,6 +856,12 @@
                                     return data;
                                 }
                             }},
+                        {"data": "pressCoverage",
+                            "render": function (data, type, row) {
+                                pressCoverage = data;
+                                console.log("pressCoverage data  " + data + "\n");
+                                return data;
+                            }},
                         {"data": "idTranslator"}
 
 
@@ -923,13 +1040,13 @@
                     var publisherName = rowdata.company;
                     document.getElementById("publisherName1").value = publisherName;
                     console.log("publisherName " + publisherName);
-
+                    document.getElementById("appCompany").value = publisherName;
                     var appReferenceNumber = rowdata.ReferenceNumber;
                     referenzNummer = rowdata.ReferenceNumber;
                     var ReferenceNumber = rowdata.ReferenceNumber;
                     document.getElementById("ReferenceNumber1").value = ReferenceNumber;
                     document.getElementById("appReferenceNumber").innerHTML = appReferenceNumber;
-                    document.getElementById("appReferenceNumber1").innerHTML = appReferenceNumber;
+//                    document.getElementById("appReferenceNumber1").innerHTML = appReferenceNumber;
                     document.getElementById("ReferenceNumber").value = appReferenceNumber;
                     console.log("ReferenceNumber 12 " + $("#ReferenceNumber1").val());
                     console.log("ReferenceNumber 123 appReferenceNumber " + document.getElementById("appReferenceNumber").value);
@@ -1200,6 +1317,70 @@
                     var expertReaderName = rowdata.expertReaderList;
 
 
+                    $('#pressCoverageTag').empty(); // empty the div before fetching and adding new data
+                    // https://bootsnipp.com/snippets/P2gor
+                    var pressCoverage = rowdata.pressCoverage;
+                    console.log("before111 The proposed width is " + leastSquareRoot(pressCoverage.length));
+                    var width = leastSquareRoot(pressCoverage.length);
+                    pressCoverageTag = '';
+                    pressCoverageTag += '<div class="container">';
+                    pressCoverageTag += '<div class="row">';
+                    pressCoverageTag += '<div class="row">';
+                    var width = leastSquareRoot(pressCoverage.length);
+                    for (var i = 0; i < pressCoverage.length; ++i) {
+
+                        if (i % width === 0)
+                        {
+                            pressCoverageTag += '<div class="col-md-12" style="margin-bottom: 20px">';
+                        }
+                        var pressCoverageURL_cleaned = pressCoverage[i].substr(1).slice(0, -1);
+                        console.log("before111 pressCoverageURL_cleaned  " + pressCoverageURL_cleaned);
+                        var pressCoverageURL = pressCoverageURL_cleaned.split(",");
+                        var jpgURL = pressCoverageURL[0];
+                        var jpgURLName = pressCoverageURL[1];
+                        var thumbURL = pressCoverageURL[2];
+                        if (thumbURL.includes(".jpg")) {
+                            var thumbURLName = pressCoverageURL[3];
+                            console.log("before111 thumbURL  " + thumbURL);
+                            console.log("before111 thumbURLName  " + thumbURLName);
+                            pressCoverageTag += ' <div class="col-md-2 thumb">';
+                            pressCoverageTag += '<a class="thumbnail" href="' + jpgURL + '"  target="_blank">';
+                            pressCoverageTag += '<img class="img-thumbnail" src="' + thumbURL + '" alt = "' + jpgURLName + '-image" width="150" height="300"/>';
+                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+                            pressCoverageTag += '</a>';
+                            pressCoverageTag += '</div>';
+
+                        } else {
+
+                            pressCoverageTag += ' <div class="col-md-2 thumb">';
+                            pressCoverageTag += '<a class="thumbnail" href="#"  data-image-id="" data-toggle="modal" data-title="" data-image = "' + jpgURL + '" data-target="#image-gallery" > ';
+                            pressCoverageTag += '<img class="img-thumbnail" src="' + jpgURL + '"  alt = "' + jpgURLName + '-image" >';
+                            pressCoverageTag += '<div>"' + jpgURLName + '" </div>';
+                            pressCoverageTag += '</a>';
+                            pressCoverageTag += '</div>';
+
+                            if (i % width === width - 1 || i === pressCoverage.length - 1)
+                            {
+                                pressCoverageTag += '</div>';
+                            }
+                        }
+                    }
+
+                    pressCoverageTag += '</div>'; //class="row"
+                    pressCoverageTag += '</div>'; //class="row"
+                    pressCoverageTag += '</div>'; // class="container"
+
+                    $(pressCoverageTag).appendTo('#pressCoverageTag');
+
+                    // load gallery
+                    gallery();
+
+
+                    function leastSquareRoot(n)
+                    {
+                        var sr = Math.sqrt(n);
+                        return Math.floor(sr);
+                    }
                     //https://stackoverflow.com/questions/20293680/how-to-empty-div-before-append                    
                     $('#additionalExpertReader').empty(); // empty the div before fetching and adding new data
 
@@ -1283,7 +1464,7 @@
                         rightsAgreementContractsNavContent += '</div>'; //<div class="input-group agreement" 
                         rightsAgreementContractsNavContent += '</div>'; //<div class="col-md-9" 
 
-                        rightsAgreementContractsNavContent += '<div class="col-md-5" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
+                        rightsAgreementContractsNavContent += '<div class="col-md-4" id="cv_button' + j + '" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> ';
                         rightsAgreementContractsNavContent += '<label  class="control-label pull-left" id="cv_button_label' + j + '" ></label>';
                         rightsAgreementContractsNavContent += '<div class="input-group cv_buttonText pull-left">';
                         rightsAgreementContractsNavContent += '<a class="btn btn-info btn-file pull-left" role="button" id="cv_link' + j + '" href="">';
@@ -1521,16 +1702,19 @@
 //                    $("#publicationYear1").val($(this).closest('tr').children()[35].textContent);
 //                    $("#languages").val($(this).closest('tr').children()[36].textContent);
 //                    $("#appLanguageOriginal").val($(this).closest('tr').children()[36].textContent);
-                    $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
+//                    $("#originalPageExtent").val($(this).closest('tr').children()[37].textContent);
 //                    $("#appCountryOfPublication").val($(this).closest('tr').children()[38].textContent);
 //                    $("#appForeignPublisher").val($(this).closest('tr').children()[39].textContent);
 //                    $("#foreignPublisher").val($(this).closest('tr').children()[39].textContent);
 //                    $("#appForeignCountry").val($(this).closest('tr').children()[40].textContent);
 //                    $("#appTargetLanguage").val($(this).closest('tr').children()[41].textContent);
-                    $("#amountRequested").val($(this).closest('tr').children()[43].textContent);
+//                    $("#amountRequested").val($(this).closest('tr').children()[43].textContent);
+
+                    document.getElementById("amountRequested").value = rowdata.amountRequested;
+
                     $("#award").val($(this).closest('tr').children()[62].textContent);
                     $("#salesFigures").val($(this).closest('tr').children()[63].textContent);
-                    $("#authors").val($(this).closest('tr').children()[66].textContent);
+//                    $("#authors").val($(this).closest('tr').children()[66].textContent);
 //                    $("#publicationYear").val($(this).closest('tr').children()[67].textContent);
 ////                    $("#series").val($(this).closest('tr').children()[68].textContent);
 ////                    $("#translationTitle").val($(this).closest('tr').children()[69].textContent);
@@ -2376,6 +2560,69 @@
             }
         </script>
 
+        <script>
+            $(document).ready(function () {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader)
+                {
+                    $('#files').on("change", function (event) {
+                        var files = event.target.files; //FileList object
+                        var output = document.getElementById("result");
+                        for (var i = 0; i < files.length; i++)
+                        {
+                            var file = files[i];
+                            var fileName = files[i].name;
+                            console.log("fileName  " + fileName);
+//                            if (file.type.match('image.*')) {
+                            if (validFileType(files[i])) {
+                                if (this.files[0].size < 2097152) {
+
+                                    var picReader = new FileReader();
+                                    picReader.addEventListener("load", function (event) {
+                                        var picFile = event.target;
+                                        var div = document.createElement("div");
+                                        div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
+                                                "title='preview image'/>";
+                                        output.insertBefore(div, null);
+                                    });
+                                    //Read the image
+                                    $('#clear, #result').show();
+                                    picReader.readAsDataURL(file);
+                                } else {
+                                    alert("Image Size is too big.Minimum size is 2MB.");
+                                    $(this).val("");
+                                }
+                            } else {
+                                alert("You can only upload image file.");
+                                $(this).val("");
+                            }
+                        }
+
+                    });
+                } else
+                {
+                    console.log("Your browser does not support File API");
+                }
+                //Set all filled input fields to readOnly
+                //so only empty ones can be filled in!!!
+
+//                var emptyTextBoxes = $('input:text').filter(function () {
+//                    return (this.value !== "" || this.value.length !== 0);
+//                });
+                 var emptyTextBoxes = $('input:text').filter(function() { return this.value === ""; });
+                var string = "The following input fields have been marked disabled - \n";
+
+                emptyTextBoxes.each(function () {
+                    string += "\n" + this.id;
+//                    document.getElementById(this.id).readonly = true;
+                    document.getElementById(this.id).disabled = true;
+                });
+                console.log("7 xyz ", string);
+
+            });
+        </script>
+
+
         <!--coverageCuttings preview-->
         <script>
             $("#input25").fileinput({'showUpload': false, 'previewFileType': 'any'});
@@ -2676,6 +2923,19 @@
             }
         </script>
 
+        <script type="text/javascript">
+            $(window).bind("beforeunload", function () {
+                var username = document.getElementById("username").value;
+                alert("username 2 " + username);
+                $.ajax({
+                    async: false, //This will make sure the browser waits until request completes
+                    url: "./Logout",
+                    type: 'post',
+                    cache: false,
+                    data: {"username": username}
+                });
+            });
+        </script>
 
     </head>
 
@@ -2712,7 +2972,11 @@
                 <!--container for welcome/logout-->
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="POST">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                                 <input type="hidden" name="username" id="username" value="${username}">
+                        </form>
                     </div>
                 </div> <!--container for welcome/logout-->
 
@@ -2802,7 +3066,7 @@
                                             <th class="never">Sales Figures</th>
                                             <th class="never">Original</th>
                                             <th class="never">Original Name</th>
-
+                                            <th class="never"></th> 
                                             <th class="never"></th> 
                                             <th class="never"></th>
                                             <th class="never"></th>
@@ -2886,7 +3150,7 @@
                                             <th class="never">Sales Figures</th>
                                             <th class="never">Original</th>
                                             <th class="never">Original Name</th>
-
+                                            <th class="never"></th> 
                                             <th class="never"></th> 
                                             <th class="never"></th>
                                             <th class="never"></th>
@@ -2940,222 +3204,232 @@
                                                     <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>                                                    
                                                     <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                                     <li><a href="#Translator" data-toggle="tab">Translator's <br/> Details</a></li>
-                                                    <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/> & Contracts </a></li>
+                                                    <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/>&nbsp;</a></li>
                                                     <li><a href="#Drawdown" data-toggle="tab">Drawdown<br/> Requirements</a></li>  
                                                     <li><a href="#Original" data-toggle="tab"><span>Original Work<br/>& Sample Translation</span></a></li>
                                                 </ul>
                                             </div><!-- /.navbar-collapse -->
 
                                             <form  method="POST" id="applicationEditForm" name="applicationForm" action="${pageContext.request.contextPath}/PendingApplicationServlet" enctype="multipart/form-data">
-                                            <%request.getSession().setAttribute("task", "Closed Applications");%>
-                                            <%request.getSession().setAttribute("publisherID", "publisherID");%>
+                                            <%request.getSession().setAttribute( "task", "Closed Applications" );%>
+                                            <%request.getSession().setAttribute( "publisherID", "publisherID" );%>
 
                                             <input type="hidden" name="ReferenceNumber1" id="ReferenceNumber1"/>
                                             <div id="applicationEditForm-tab-content" class="tab-content"  style="background-color: #E8F6FF">
 
                                                 <!-- Contact details -->
                                                 <div class="tab-pane active" id="Contact">
+                                                    <p class="header1">
+                                                        Contact
+                                                    </p>
+
 
                                                     <!--wrapper for Contact tab pane-->
-                                                    <div class="container">
+                                                    <div class="container-fluid">
+                                                        <div class="row"  style="display: block;
+                                                             margin-right: auto;
+                                                             margin-left: auto;">
 
-                                                        <!--first row-->
-                                                        <!--get Company and Company_Number via autocomplete-->
-                                                        <div class="row" style="margin-bottom: 20px;margin-top: 30px">
-                                                            <div class="col-sm-6">
-                                                                <input  id="company" 
-                                                                        name="company" 
-                                                                        type="text" 
-                                                                        value="${publisherName}"
-                                                                        data-toggle="tooltip"
-                                                                        title="Please Enter your Company's Name - if it does not show up please fill in the form"
-                                                                        class="form-control"
-                                                                        placeholder="Company Name"
-                                                                        readonly
-                                                                        >
-                                                            </div>
+                                                            <!--first row-->
+                                                            <!--get Company and Company_Number via autocomplete-->
+                                                            <div class="row" style="margin-bottom: 20px;margin-top: 30px">
+                                                                <div class="col-sm-6">
+                                                                    <input  id="company" 
+                                                                            name="company" 
+                                                                            type="text" 
+                                                                            value="${publisherName}"
+                                                                            data-toggle="tooltip"
+                                                                            title="Please Enter your Company's Name - if it does not show up please fill in the form"
+                                                                            class="form-control"
+                                                                            placeholder="Company Name"
+                                                                            readonly
+                                                                            >
+                                                                </div>
 
-                                                            <div class="col-sm-4">        
-                                                                <input id="Company_Number"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Company_Number"                                
-                                                                       value="${publisherID}"                                   
-                                                                       placeholder="internal Company Number"
-                                                                       readonly
-                                                                       >
-                                                            </div>
-                                                        </div> <!--row-->
+                                                                <div class="col-sm-4">        
+                                                                    <input id="Company_Number"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Company_Number"                                
+                                                                           value="${publisherID}"                                   
+                                                                           placeholder="internal Company Number"
+                                                                           readonly
+                                                                           >
+                                                                </div>
+                                                            </div> <!--row-->
 
-                                                        <!--second row-->
-                                                        <div class="row" style="margin-bottom: 10px">
-                                                            <div class="col-sm-6">
-                                                                <label class="pull-left">Address1</label>
-                                                                <input id="Address1"
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Address1"                                
-                                                                       value="${companyDetails.Address1}"                                
-                                                                       placeholder="Address1"
-                                                                       >
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <label class="pull-left">Post code</label>
-                                                                <input id="postCode"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="postCode"                                
-                                                                       value="${companyDetails.postCode}"                                
-                                                                       placeholder="Post Code"
-                                                                       >
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <label class="pull-left">City</label>
-                                                                <input id="City"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="City"                                
-                                                                       value="${companyDetails.City}"                                
-                                                                       placeholder="City"
-                                                                       >
-                                                            </div>
-                                                        </div> <!--row-->
+                                                            <!--second row-->
+                                                            <div class="row" style="margin-bottom: 10px">
+                                                                <div class="col-sm-6">
+                                                                    <label class="pull-left">Address1</label>
+                                                                    <input id="Address1"
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Address1"                                
+                                                                           value="${companyDetails.Address1}"                                
+                                                                           placeholder="Address1"
+                                                                           >
+                                                                </div>
+                                                                <div class="col-sm-2">
+                                                                    <label class="pull-left">Post code</label>
+                                                                    <input id="postCode"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="postCode"                                
+                                                                           value="${companyDetails.postCode}"                                
+                                                                           placeholder="Post Code"
+                                                                           >
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label class="pull-left">City</label>
+                                                                    <input id="City"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="City"                                
+                                                                           value="${companyDetails.City}"                                
+                                                                           placeholder="City"
+                                                                           >
+                                                                </div>
+                                                            </div> <!--row-->
 
-                                                        <!--third row-->
-                                                        <div class="row" style="margin-bottom: 10px">
-                                                            <div class="col-sm-6">
-                                                                <label class="pull-left">Address2</label>
-                                                                <input id="Address2"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Address2"                                
-                                                                       value="${companyDetails.Address2}"                                
-                                                                       placeholder="Address2"
-                                                                       >
-                                                            </div>
+                                                            <!--third row-->
+                                                            <div class="row" style="margin-bottom: 10px">
+                                                                <div class="col-sm-6">
+                                                                    <label class="pull-left">Address2</label>
+                                                                    <input id="Address2"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Address2"                                
+                                                                           value="${companyDetails.Address2}"                                
+                                                                           placeholder="Address2"
+                                                                           >
+                                                                </div>
 
-                                                            <div class="col-sm-5">
-                                                                <label class="pull-left">Country</label>
-                                                                <input id="country"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Country"                                
-                                                                       value="${companyDetails.Country}"                                
-                                                                       placeholder="Country"
-                                                                       >
-                                                            </div>
-                                                        </div> <!--row-->
+                                                                <div class="col-sm-5">
+                                                                    <label class="pull-left">Country</label>
+                                                                    <input id="country"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Country"                                
+                                                                           value="${companyDetails.Country}"                                
+                                                                           placeholder="Country"
+                                                                           >
+                                                                </div>
+                                                            </div> <!--row-->
 
-                                                        <!--fourth row-->
-                                                        <div class="row" style="margin-bottom: 10px">
-                                                            <div class="col-sm-6">
-                                                                <label class="pull-left">Address3</label>
-                                                                <input id="Address3"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Address3"                                
-                                                                       value="${companyDetails.Address3}"                                
-                                                                       placeholder="Address3"
-                                                                       >
-                                                            </div>
-                                                            <div class="col-sm-2">   
-                                                                <label class="pull-left">&nbsp;</label>
-                                                                <input id="countryCode"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Country_Code"                                
-                                                                       value="${companyDetails.CountryCode}"                               
-                                                                       readonly
-                                                                       placeholder="Country Code"
-                                                                       >
-                                                            </div>
-                                                        </div> <!--row-->
+                                                            <!--fourth row-->
+                                                            <div class="row" style="margin-bottom: 10px">
+                                                                <div class="col-sm-6">
+                                                                    <label class="pull-left">Address3</label>
+                                                                    <input id="Address3"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Address3"                                
+                                                                           value="${companyDetails.Address3}"                                
+                                                                           placeholder="Address3"
+                                                                           >
+                                                                </div>
+                                                                <div class="col-sm-2">   
+                                                                    <label class="pull-left">&nbsp;</label>
+                                                                    <input id="countryCode"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Country_Code"                                
+                                                                           value="${companyDetails.CountryCode}"                               
+                                                                           readonly
+                                                                           placeholder="Country Code"
+                                                                           >
+                                                                </div>
+                                                            </div> <!--row-->
 
-                                                        <!--fifth row-->
-                                                        <div class="row" style="margin-bottom: 10px">
-                                                            <div class="col-sm-6">      
-                                                                <label class="pull-left">Address4</label>
-                                                                <input id="Address4"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Address4"                                
-                                                                       value="${companyDetails.Address4}"                                
-                                                                       placeholder="Address4"
-                                                                       >
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <label class="pull-left">Telephone</label>
-                                                                <input id="Telephone"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Telephone"                                
-                                                                       value="${companyDetails.Telephone}"                                
-                                                                       >
-                                                            </div>
-                                                        </div> <!--row-->
+                                                            <!--fifth row-->
+                                                            <div class="row" style="margin-bottom: 10px">
+                                                                <div class="col-sm-6">      
+                                                                    <label class="pull-left">Address4</label>
+                                                                    <input id="Address4"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Address4"                                
+                                                                           value="${companyDetails.Address4}"                                
+                                                                           placeholder="Address4"
+                                                                           >
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <label class="pull-left">Telephone</label>
+                                                                    <input id="Telephone"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Telephone"                                
+                                                                           value="${companyDetails.Telephone}"                                
+                                                                           >
+                                                                </div>
+                                                            </div> <!--row-->
 
-                                                        <!--sixth row-->
-                                                        <div class="row" style="margin-bottom: 10px">
-                                                            <div class="col-sm-6"></div>
-                                                            <div class="col-sm-3">
-                                                                <label class="pull-left">Fax number</label>
-                                                                <input id="Fax"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Fax"                                
-                                                                       value="${companyDetails.Fax}"
-                                                                       >
-                                                            </div>
-                                                        </div> <!--row-->
+                                                            <!--sixth row-->
+                                                            <div class="row" style="margin-bottom: 10px">
+                                                                <div class="col-sm-6"></div>
+                                                                <div class="col-sm-3">
+                                                                    <label class="pull-left">Fax number</label>
+                                                                    <input id="Fax"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Fax"                                
+                                                                           value="${companyDetails.Fax}"
+                                                                           >
+                                                                </div>
+                                                            </div> <!--row-->
 
 
-                                                        <!--seventh row-->
-                                                        <div class="row" style="margin-bottom: 10px">
-                                                            <div class="col-sm-6">
-                                                                <label class="pull-left">Email</label>
-                                                                <input id="Email"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="Email"                                
-                                                                       value="${companyDetails.Email}"                                
-                                                                       placeholder="Main Email"
-                                                                       >
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <label class="pull-left">Website</label>
-                                                                <input id="WWW"                                
-                                                                       type="text"                                
-                                                                       class="form-control"                                
-                                                                       name="WWW"                                
-                                                                       value="${companyDetails.WWW}"                                
-                                                                       placeholder="Web Address"
-                                                                       >
-                                                            </div>
-                                                        </div> <!--row-->
+                                                            <!--seventh row-->
+                                                            <div class="row" style="margin-bottom: 10px">
+                                                                <div class="col-sm-6">
+                                                                    <label class="pull-left">Email</label>
+                                                                    <input id="Email"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="Email"                                
+                                                                           value="${companyDetails.Email}"                                
+                                                                           placeholder="Main Email"
+                                                                           >
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <label class="pull-left">Website</label>
+                                                                    <input id="WWW"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="WWW"                                
+                                                                           value="${companyDetails.WWW}"                                
+                                                                           placeholder="Web Address"
+                                                                           >
+                                                                </div>
+                                                            </div> <!--row-->
 
-                                                        <!--eighth row-->
-                                                        <div class="row" style="margin-bottom: 10px;margin-top: 20px">
-                                                            <div class="col-sm-4"> 
-                                                                <div class="well well-sm">
-                                                                    <div class="checkbox">                                                        
-                                                                        <input id="doNotMail" 
-                                                                               type="checkbox" 
-                                                                               name="doNotMail" 
-                                                                               value="${companyDetails.doNotMail}" 
-                                                                               checked =""
-                                                                               >  
-                                                                        <label for="doNotMail">Do not add to newsletter</label>
-                                                                    </div><!--checkbox-->
-                                                                </div> <!--well-->
-                                                            </div> <!--<div class="col-sm-3">-->   
-                                                        </div> <!--row-->
-                                                        <input type="hidden" id="authorArray" name="authorArray" >
+                                                            <!--eighth row-->
+                                                            <div class="row" style="margin-bottom: 30px;margin-top: 20px">
+                                                                <div class="col-sm-4"> 
+                                                                    <div class="well well-sm">
+                                                                        <div class="checkbox">                                                        
+                                                                            <input id="doNotMail" 
+                                                                                   type="checkbox" 
+                                                                                   name="doNotMail" 
+                                                                                   value="${companyDetails.doNotMail}" 
+                                                                                   checked =""
+                                                                                   >  
+                                                                            <label for="doNotMail">Do not add to newsletter</label>
+                                                                        </div><!--checkbox-->
+                                                                    </div> <!--well-->
+                                                                </div> <!--<div class="col-sm-3">-->   
+                                                            </div> <!--row-->
 
-                                                        <input type="hidden" id="translatorArray" name="translatorArray" >
-                                                        <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
-                                                        <!--keep in one line otherwise placeholder doesn't show-->
-                                                        <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
-                                                    </div> <!--container-->
+                                                            <input type="hidden" id="authorArray" name="authorArray" >
+                                                            <input type="hidden" id="translatorArray" name="translatorArray" >
+                                                            <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
+                                                            <!--keep in one line otherwise placeholder doesn't show-->
+                                                            <textarea id="companyNotes"  class="form-control" style="width: 870px; height: 343px;" name="companyNotes" placeholder="enter optional notes"> <c:out value="${companyDetails.Notes}" /></textarea>
+
+
+                                                        </div> <!-- row  -->
+                                                    </div>  <!-- container-fluid  -->
                                                 </div> <!-- tab-pane "Contact" -->
 
                                                 <!-- Book Details -->
@@ -3198,8 +3472,8 @@
                                                                     <!--Second row-->
                                                                     <div class="row" style="margin-bottom: 15px">
 
-                                                                        <div class="col-sm-5">    
-                                                                            <label for="appBookTitle" class="pull-left">Title<br/> &nbsp;</label> 
+                                                                        <div class="col-sm-4">    
+                                                                            <label for="appBookTitle" class="control-label pull-left">Title<br/> &nbsp;</label> 
                                                                             <input id="appBookTitle"                                
                                                                                    type="text"                                
                                                                                    class="form-control"                                
@@ -3210,7 +3484,7 @@
                                                                         </div>
                                                                         <input type="hidden" id="bookTitle" name="bookTitle" >
                                                                         <div class="col-sm-4">          
-                                                                            <label for="appForeignPublisher" class="pull-left">Publisher (of the original)<br/> &nbsp;</label>                                                           
+                                                                            <label for="appForeignPublisher" class="control-label pull-left">Publisher (of the original)<br/> &nbsp;</label>                                                           
                                                                             <input id="appForeignPublisher"                                
                                                                                    type="text"                                
                                                                                    class="form-control"                                
@@ -3218,6 +3492,27 @@
                                                                                    value="${companyDetails.Company}"    
                                                                                    placeholder="Publisher"
                                                                                    >                                                     
+                                                                        </div>
+
+
+                                                                    </div> <!--row-->
+
+
+                                                                    <!--Third row-->
+
+                                                                    <div class="row" style="margin-bottom: 10px">
+
+                                                                        <div class="col-sm-4">    
+                                                                            <div class="form-group has-feedback">
+                                                                                <label for="appGenre" class="control-label pull-left">Genre <br/> &nbsp;</label>
+                                                                                <input id="appGenre"                                
+                                                                                       type="text"                                
+                                                                                       class="form-control"                                
+                                                                                       name="genre"                                
+                                                                                       value=""    
+                                                                                       placeholder="Genre"
+                                                                                       >
+                                                                            </div>
                                                                         </div>
 
                                                                         <div class="col-sm-3">    
@@ -3231,25 +3526,6 @@
                                                                                    placeholder="Publication Year"
                                                                                    >
                                                                         </div>
-                                                                    </div> <!--row-->
-
-
-                                                                    <!--Third row-->
-
-                                                                    <div class="row" style="margin-bottom: 10px">
-
-                                                                        <div class="col-sm-4">    
-                                                                            <div class="form-group has-feedback">
-                                                                                <label for="appGenre" class="pull-left">Genre</label>
-                                                                                <input id="appGenre"                                
-                                                                                       type="text"                                
-                                                                                       class="form-control"                                
-                                                                                       name="genre"                                
-                                                                                       value=""    
-                                                                                       placeholder="Genre"
-                                                                                       >
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
 
                                                                     <!--Fourth row-->
@@ -3262,7 +3538,7 @@
                                                                                 <div class="col-xs-6">
                                                                                     <div class="mini-box">
                                                                                         <div class="form-group has-feedback">
-                                                                                            <label for="appLanguageOriginal" class="pull-left" >Language <br/>(of the original)</label>
+                                                                                            <label for="appLanguageOriginal" class="control-label pull-left" >Language <br/>(of the original)</label>
                                                                                             <input id="appLanguageOriginal"                                
                                                                                                    type="text"                                
                                                                                                    class="form-control"                                
@@ -3310,7 +3586,7 @@
                                                                     <div class="row" style="margin-bottom: 10px">
 
                                                                         <div class="col-sm-4">   
-                                                                            <label for="bookNotes" class="pull-left">Notes</label>
+                                                                            <label for="bookNotes" class="control-label pull-left">Notes</label>
                                                                             <div class="form-group">
                                                                                 <textarea class="form-control" id="bookNotes" name="bookNotes" style="width: 800px; height: 215px" placeholder="Notes"></textarea>
                                                                             </div>
@@ -3321,112 +3597,6 @@
                                                         </div> <!-- row  -->
                                                     </div>  <!-- container-fluid  -->
                                                 </div><!-- tab-pane "Book" -->
-
-                                                <!-- Rights Agreement -->
-                                                <div class="tab-pane fade" id="Rights">
-                                                    <p class="header1" style="margin-bottom: 80px">
-                                                        Rights Agreement & Contracts
-                                                    </p>
-
-                                                    <div class="container-fluid"  id="rightsAgreementContracts">
-                                                        <!--<div class="container-fluid">-->
-                                                        <!--<div class="tab-content">-->
-
-                                                        <!--Upload form for agreement-->
-                                                        <div class="row" style="margin-bottom: 80px;">
-                                                            <div style=" margin: 0 auto; position: relative;">
-
-                                                                <div class="col-md-8"  id="agreementToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
-                                                                    <!--<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement1"></strong></div>--> 
-                                                                    <label  class="control-label pull-left" id="uploadAgreement1" ></label>
-                                                                    <br/>
-                                                                    <div class="margin-bottom: 40px"></div>
-                                                                    <div class="input-group agreement"  style="margin-bottom: 40px;">
-                                                                        <label class="btn btn-default btn-file pull-left">
-                                                                            Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1">
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                                                        </label>
-                                                                        <input  type="text" id="label_agreement1" class="pull-left"/>
-                                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
-                                                                    </div> 
-                                                                </div> <!-- position:absolute; z-index:0 -->
-
-                                                                <div class="col-md-7" id="agreement_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
-                                                                    <label  class="control-label pull-left" id="agreement_button_label1" ></label>
-                                                                    <div class="input-group agreement_buttonText pull-left">
-                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="agreement_link1" href="">
-                                                                            <span class="glyphicon glyphicon-file"></span>
-                                                                            Click to open</a>
-                                                                    </div>
-                                                                </div> <!-- position:absolute; z-index:1; display:none -->
-
-                                                            </div> <!-- position: relative  -->
-                                                        </div> <!-- row  -->
-
-                                                        <!--Name of translation rights holder-->
-                                                        <div class="row" style="margin-bottom: 40px;margin-top: 60px">  
-
-                                                            <div class="col-sm-6">  
-                                                                <div class="input-group has-feedback"  style="margin-bottom: 10px">  
-                                                                    <label for="rightsHoldersName0" class="pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
-                                                                    <input id="rightsHoldersName0"                                
-                                                                           type="text"                                
-                                                                           class="form-control"                                
-                                                                           name="rightsHoldersName"                                
-                                                                           value=""    
-                                                                           placeholder="Translation rights holder"
-                                                                           >
-                                                                </div>
-
-                                                                <div id="addAddRightsHolders"></div>
-                                                            </div>
-
-                                                            <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addAdditionalRightsHoldersModalDiv">  
-                                                                <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                                   data-toggle="modal" 
-                                                                   data-target="#addAdditionalRightsHoldersModal"
-                                                                   onclick="copyFirstRightsHolderName();"
-                                                                   >Add more Translation rights holders</a>
-                                                            </div>
-
-                                                        </div> <!-- row  -->
-
-                                                        <!--Upload form for addendum to the rights agreement-->
-                                                        <div class="row" style="margin-bottom: 80px;">    
-
-                                                            <div style=" margin: 0 auto; position: relative;">
-
-                                                                <div class="col-md-10"  id="addendumToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
-                                                                    <label  class="control-label pull-left"> <strong class="pull-left"  id="uploadAddendum1"></strong>
-                                                                        <small> (where applicable)</small>     
-                                                                    </label>
-                                                                    <br/>                                                               
-                                                                    <div class="input-group addendum  pull-left"  style="margin-bottom: 40px;">
-                                                                        <label class="btn btn-default btn-file pull-left">
-                                                                            Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1">
-                                                                            <span class="glyphicon glyphicon-folder-open"></span>
-                                                                        </label>
-                                                                        <input type="text" id="label_addendum1" class="pull-left"/>
-                                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/>
-                                                                    </div> 
-                                                                </div> <!-- position:absolute; z-index:0 -->
-
-                                                                <div class="col-md-7" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
-                                                                    <label class="control-label pull-left" id="addendum_button_label1"></label> <small class='pull-left'> &nbsp;  (where applicable)</small>'
-                                                                    <div class="input-group addendum_buttonText pull-left">
-                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="addendum_link1" href="">
-                                                                            <span class="glyphicon glyphicon-file"></span>
-                                                                            Click to open</a>
-                                                                    </div>
-                                                                </div> <!-- position:absolute; z-index:1; display:none -->
-
-                                                            </div> <!-- position: relative  -->
-                                                        </div> <!-- row  -->
-                                                        <div class="col-sm-12" style="min-height: 100%;height: 100%;margin-bottom: 60px"></div>
-
-                                                        <!--</div> tab-content-->
-                                                    </div> <!-- container-fluid  -->
-                                                </div> <!-- class="tab-pane" id="Rights" -->
 
                                                 <!-- Publication Details -->
                                                 <div class="tab-pane" id="Publication">
@@ -3468,7 +3638,7 @@
 
                                                                 <div class='col-sm-4'  style="margin-bottom: 40px;">                                                
                                                                     <label for="plannedPageExtent" class="control-label pull-left">Planned page extent of the <br/>  published translation </label>
-                                                                    <div class="input-group pull-left"  style="margin-bottom: 40px;">
+                                                                    <div class="input-group pull-left"  style="margin-bottom: 20px;">
                                                                         <span class="input-group-addon" id="sizing-addon2">  
                                                                             <span class="glyphicon glyphicon-book"></span>                                                            
                                                                         </span>
@@ -3476,7 +3646,7 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-sm-4">
+                                                                <div class="col-sm-4"  style="margin-bottom: 40px;">  
                                                                     <label for="appForeignCountry" class="control-label pull-left">Foreign Country <br/> &nbsp;</label>
                                                                     <input  id="appForeignCountry" 
                                                                             name="appForeignCountry" 
@@ -3510,8 +3680,8 @@
 
                                                             <div class="row">
 
-                                                                <div class="col-sm-4" style="margin-bottom: 20px">
-                                                                    <label for="translationTitle" class="pull-left">Translation Title<br/> &nbsp;</label>
+                                                                <div class="col-sm-4" style="margin-bottom: 40px">
+                                                                    <label for="translationTitle" class="control-label pull-left">Translation Title<br/> &nbsp;</label>
                                                                     <input id="translationTitle"                                
                                                                            type="text"                                
                                                                            class="form-control"                                
@@ -3521,22 +3691,23 @@
                                                                            >
                                                                 </div>
 
-                                                                <div class="col-xs-5">
-                                                                    <div class="mini-box" style="margin-bottom: 20px">
-                                                                        <label for="publicationYear1" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
-                                                                        <div class="input-group pull-left">
-                                                                            <input type="text" 
-                                                                                   name="publicationYear1" 
-                                                                                   id="publicationYear1" 
-                                                                                   class="form-control" 
-                                                                                   placeholder="DD/MM/YYYY"
-                                                                                   />    
-                                                                        </div>
-                                                                    </div>
-                                                                    <script>
-                                                                        $("#appDateOfPublicationOriginal").datepicker();
-                                                                    </script>
-                                                                </div> <!--col-xs-6-->
+                                                                <!--<div class="col-xs-5">-->
+                                                                <div class="col-sm-4" style="margin-bottom: 20px">
+                                                                    <label for="publicationYear1" class="control-label pull-left">Year of Publication<br/> (of the original) </label>
+                                                                    <!--<div class="input-group pull-left">-->
+                                                                    <input type="text" 
+                                                                           name="publicationYear1" 
+                                                                           id="publicationYear1" 
+                                                                           class="form-control" 
+                                                                           placeholder="DD/MM/YYYY"
+                                                                           />    
+                                                                    <!--</div>-->
+                                                                </div>
+                                                                <script>
+                                                                    $("#appDateOfPublicationOriginal").datepicker();
+                                                                </script>
+                                                                <!--</div>--> 
+                                                                <!--col-xs-6-->
 
                                                             </div> <!-- row -->
 
@@ -3644,7 +3815,7 @@
                                                                         </div>
                                                                         <div  id="tn">
                                                                         </div>  <!-- tn -->
-                                                                        <div class="tab-content" id="tnc">
+                                                                        <div class="tab-content pull-left" id="tnc">
                                                                         </div>  <!-- tnc -->
                                                                     </div>  <!-- <div class="container-fluid"  -->
                                                                 </nav>  <!-- <nav class="navbar -->
@@ -3652,7 +3823,113 @@
 
                                                         </div> <!--row-->
                                                     </div> <!-- container-fluid  -->
-                                                </div> <!-- class="tab-pane" id="Translator" -->                            
+                                                </div> <!-- class="tab-pane" id="Translator" -->   
+
+                                                <!-- Rights Agreement -->
+                                                <div class="tab-pane fade" id="Rights">
+                                                    <p class="header1" style="margin-bottom: 80px">
+                                                        Rights Agreement
+                                                    </p>
+
+                                                    <div class="container-fluid"  id="rightsAgreementContracts">
+                                                        <!--<div class="container-fluid">-->
+                                                        <!--<div class="tab-content">-->
+
+                                                        <!--Upload form for agreement-->
+                                                        <div class="row" style="margin-bottom: 80px;">
+                                                            <div style=" margin: 0 auto; position: relative;">
+
+                                                                <div class="col-md-8"  id="agreementToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
+                                                                    <!--<div  style="margin-bottom: 10px;"><strong class="pull-left"  id="uploadAgreement1"></strong></div>--> 
+                                                                    <label  class="control-label pull-left" id="uploadAgreement1" ></label>
+                                                                    <br/>
+                                                                    <div class="margin-bottom: 40px"></div>
+                                                                    <div class="input-group agreement"  style="margin-bottom: 40px;">
+                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                            Select file <input type="file" onchange="generatedLabels()" name="Agreement-1" id="agreement1">
+                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                        </label>
+                                                                        <input  type="text" id="label_agreement1" class="pull-left"/>
+                                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
+                                                                    </div> 
+                                                                </div> <!-- position:absolute; z-index:0 -->
+
+                                                                <div class="col-md-4" id="agreement_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                    <label  class="control-label pull-left" id="agreement_button_label1" ></label>
+                                                                    <div class="input-group agreement_buttonText pull-left">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="agreement_link1" href="">
+                                                                            <span class="glyphicon glyphicon-file"></span>
+                                                                            Click to open</a>
+                                                                    </div>
+                                                                </div> <!-- position:absolute; z-index:1; display:none -->
+
+                                                            </div> <!-- position: relative  -->
+                                                        </div> <!-- row  -->
+
+                                                        <!--Name of translation rights holder-->
+                                                        <div class="row" style="margin-bottom: 40px;margin-top: 60px">  
+
+                                                            <div class="col-sm-6">  
+                                                                <div class="input-group has-feedback"  style="margin-bottom: 10px">  
+                                                                    <label for="rightsHoldersName0" class="pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
+                                                                    <input id="rightsHoldersName0"                                
+                                                                           type="text"                                
+                                                                           class="form-control"                                
+                                                                           name="rightsHoldersName"                                
+                                                                           value=""    
+                                                                           placeholder="Translation rights holder"
+                                                                           >
+                                                                </div>
+
+                                                                <div id="addAddRightsHolders"></div>
+                                                            </div>
+
+                                                            <!--                                                            <div class="col-sm-4" style="margin-top: 30px; visibility: block" id="addAdditionalRightsHoldersModalDiv">  
+                                                                                                                            <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                                                                                               data-toggle="modal" 
+                                                                                                                               data-target="#addAdditionalRightsHoldersModal"
+                                                                                                                               onclick="copyFirstRightsHolderName();"
+                                                                                                                               >Add more Translation rights holders</a>
+                                                                                                                        </div>-->
+
+                                                        </div> <!-- row  -->
+
+                                                        <!--Upload form for addendum to the rights agreement-->
+                                                        <div class="row" style="margin-bottom: 80px;">    
+
+                                                            <div style=" margin: 0 auto; position: relative;">
+
+                                                                <div class="col-md-10"  id="addendumToggle1" style="margin-bottom: 40px; position:absolute; z-index:0;">
+                                                                    <label  class="control-label pull-left"> <strong class="pull-left"  id="uploadAddendum1"></strong>
+                                                                        <small> (where applicable)</small>     
+                                                                    </label>
+                                                                    <br/>                                                               
+                                                                    <div class="input-group addendum  pull-left"  style="margin-bottom: 40px;">
+                                                                        <label class="btn btn-default btn-file pull-left">
+                                                                            Select file <input type="file" onchange="generatedLabels()" name="Addendum-1" id="addendum1">
+                                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                                        </label>
+                                                                        <input type="text" id="label_addendum1" class="pull-left"/>
+                                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1"/>
+                                                                    </div> 
+                                                                </div> <!-- position:absolute; z-index:0 -->
+
+                                                                <div class="col-md-4" id="addendum_button1" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                    <label class="control-label pull-left" id="addendum_button_label1"></label> <small class='pull-left'> &nbsp;  (where applicable)</small>'
+                                                                    <div class="input-group addendum_buttonText pull-left">
+                                                                        <a class="btn btn-info btn-file pull-left" role="button" id="addendum_link1" href="">
+                                                                            <span class="glyphicon glyphicon-file"></span>
+                                                                            Click to open</a>
+                                                                    </div>
+                                                                </div> <!-- position:absolute; z-index:1; display:none -->
+
+                                                            </div> <!-- position: relative  -->
+                                                        </div> <!-- row  -->
+                                                        <div class="col-sm-12" style="min-height: 100%;height: 100%;margin-bottom: 60px"></div>
+
+                                                        <!--</div> tab-content-->
+                                                    </div> <!-- container-fluid  -->
+                                                </div> <!-- class="tab-pane" id="Rights" -->
 
                                                 <!-- Drawdown Requirements -->
                                                 <div class="tab-pane" id="Drawdown">
@@ -3712,7 +3989,8 @@
                                                     <div class="container-fluid">
 
                                                         <div class="row" style="position:static !important;">
-                                                            <div class="col-sm-3">
+
+                                                            <div class="col-sm-3 col-sm-offset-1">
                                                                 <!--<div class="mini-box">-->   
                                                                 <label for="isbn" class="pull-left">ISBN</label>
                                                                 <input id="isbn"                                
@@ -3725,8 +4003,8 @@
 
                                                                 <!--</div>-->
                                                             </div> <!--col-xs-6-->
-                                                            <div class="col-sm-3"></div>
-                                                            <div class="col-sm-3">
+                                                            <!--<div class="col-sm-3"></div>-->
+                                                            <div class="col-sm-3 col-sm-offset-2">
                                                                 <!--<div class="mini-box">-->
                                                                 <label for="isnn" class="pull-left">ISSN</label>
                                                                 <input id="isnn"                                
@@ -3738,11 +4016,12 @@
                                                                        >
                                                                 <!--</div>-->                                                                                    
                                                             </div> <!--col-xs-6-->
+
                                                         </div> <!--row-->
 
                                                         <div class="row">
                                                             <div style=" margin: 0 auto; position: relative; ">
-                                                                <div  id="proofPaymentDiv1"  class="col-md-6"   style="margin-top: 40px; margin-bottom: 40px; position: absolute; z-index:0;">
+                                                                <div  id="proofPaymentDiv1"  class="col-md-6 col-sm-offset-1"   style="margin-top: 40px; margin-bottom: 40px; position: absolute; z-index:0;">
                                                                     <strong class="pull-left">Proof of Payment to the translator</strong> 
                                                                     <div class="input-group proofPayment pull-left"  
                                                                          data-toggle="tooltip"
@@ -3762,8 +4041,8 @@
                                                                         <input type="hidden" name="userID" value="${userID}">
                                                                         <input type="hidden" name="ReferenceNumber" id="ReferenceNumber"/>
                                                                         <input type="hidden" name="name" value="${name}">
-                                                                        <input type="hidden" name="nameson" value=<%=request.getParameter("ReferenceNumber")%> />
-                                                                        <input type="hidden" name="publisherID" value=<%=request.getParameter("publisherID")%> />
+                                                                        <input type="hidden" name="nameson" value=<%=request.getParameter( "ReferenceNumber" )%> />
+                                                                        <input type="hidden" name="publisherID" value=<%=request.getParameter( "publisherID" )%> />
                                                                         <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                                         <input type="hidden" name="publisherName1" id="publisherName1" value="">
                                                                         <!--Destination:-->
@@ -3771,7 +4050,7 @@
                                                                     </div>
                                                                 </div> <!--proofPaymentDiv1-->
 
-                                                                <div class="col-md-5" id="proofPaymentDiv2" style="margin-top: 40px; margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                <div class="col-md-3 col-sm-offset-1" id="proofPaymentDiv2" style="margin-top: 40px; margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
                                                                     <label  class="control-label pull-left" id="proofPayment_button_label" >Open proof of payment to the translator</label>
                                                                     <div class="input-group pull-left">
                                                                         <a class="btn btn-info btn-file pull-left" role="button" id="proofPayment_link" href="">
@@ -3782,8 +4061,9 @@
 
                                                             </div> <!--position: relative-->
 
-                                                            <div class="col-md-6"   style="margin-top: 40px; margin-bottom: 40px; "></div>
-                                                            <div class="col-md-4"   style="margin-top: 40px; margin-bottom: 40px">
+                                                            <!--<div class="col-md-3"   style="margin-top: 40px; margin-bottom: 40px; "></div>-->
+
+                                                            <div class="col-md-3 col-sm-offset-6"   style="margin-top: 40px; margin-bottom: 40px">
                                                                 <strong class="pull-left">Amount Requested</strong> 
                                                                 <div class="input-group pull-left">
                                                                     <label class="input-group-addon" for="amountRequested">
@@ -3794,9 +4074,10 @@
                                                             </div>
                                                         </div> <!--row-->
 
-                                                        <div class="row"  style="margin-bottom: 40px;">
+                                                        <div class="row">
+
                                                             <div style="margin: 0 auto; position: relative;">
-                                                                <div  id="bankDetailForm1"   class="col-md-6"   style="margin-bottom: 40px; position: absolute; z-index:0;">                                                    
+                                                                <div  id="bankDetailForm1"   class="col-md-6 col-sm-offset-1"   style="margin-bottom: 20px; position: absolute; z-index:0;">                                                    
                                                                     <strong class="pull-left">Completed bank details form</strong> <br/>
                                                                     <div class="input-group bankDetailForm pull-left"  
                                                                          data-toggle="tooltip"
@@ -3820,7 +4101,7 @@
                                                                     </div>
                                                                 </div> <!--bankDetailForm1-->
 
-                                                                <div class="col-md-5" id="bankDetailForm2" style="margin-bottom: 40px; position:absolute; z-index:1; display:none;"> 
+                                                                <div class="col-md-3 col-sm-offset-1" id="bankDetailForm2" style="margin-bottom: 20px; position:absolute; z-index:1; display:none;"> 
                                                                     <label  class="control-label pull-left" id="bankDetailForm_button_label" >Open completed bank details form</label>
                                                                     <div class="input-group pull-left">
                                                                         <a class="btn btn-info btn-file pull-left" role="button" id="bankDetailForm_link" href="">
@@ -3831,22 +4112,22 @@
 
                                                             </div> <!--position: relative-->
 
-                                                            <div class="col-md-6"   style="margin-bottom: 40px"></div>
-                                                            <div class="col-md-4"   style="margin-bottom: 40px">
-                                                                <strong class="pull-left">&nbsp;</strong>    
-                                                                <!--<button type="button" data-toggle="modal" data-target="#pressCuttingsModal">Launch modal</button>-->
-                                                                <label class="btn btn-default pull-left form-control callPressCuttingsModal" data-toggle="modal" onclick="loadFileinput();" data-target="#pressCuttingsModal">
-                                                                    <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting.png" /> 
-                                                                    Upload coverage cuttings
-                                                                    <!--<span class="glyphicon glyphicon-upload"></span>-->
-                                                                </label>
+                                                            <!--<div class="col-md-3"   style="margin-bottom: 40px"></div>-->
+                                                            <div class="col-md-5 col-md-offset-6"   style="margin-bottom: 40px">
+                                                                <div class="col-md-5"   style="margin-top: 25px; margin-bottom: 40px">
+                                                                    <strong class="pull-left">&nbsp;</strong>                                                 
+                                                                    <label class="btn btn-default pull-left" onclick = "pressCuttingsModal();">
+                                                                        <img src="images/Press_Cutting.png" width="20" alt="Press_Cutting" /> 
+                                                                        Show press coverage                     
+                                                                    </label>
+                                                                </div>
                                                             </div>
 
                                                         </div> <!--row-->
 
-                                                        <div class="row"  style="margin-bottom: 60px;">
+                                                        <div class="row"  style="margin-bottom: 80px">
                                                             <div style=" margin: 0 auto; position: relative; ">
-                                                                <div  id="signedLIContract1"  class="col-md-6"   style="margin-bottom: 60px;  position: absolute; z-index:0;">
+                                                                <div  id="signedLIContract1"  class="col-md-6 col-sm-offset-1"   style="margin-bottom: 60px;  position: absolute; z-index:0;">
                                                                     <!--<label for="label_signedLIcontract" class="control-label pull-left">Signed Literature Ireland contract</label>-->
                                                                     <strong class="pull-left">Signed Literature Ireland contract</strong> <br/>
                                                                     <div class="input-group signedLIcontract pull-left"  
@@ -3871,7 +4152,7 @@
                                                                     </div>
                                                                 </div>  <!--signedLIContract1-->
 
-                                                                <div class="col-md-5" id="signedLIContract2" style="margin-bottom: 60px; position:absolute; z-index:1; display:none;"> 
+                                                                <div class="col-md-3 col-sm-offset-1" id="signedLIContract2" style="margin-bottom: 60px; position:absolute; z-index:1; display:none;"> 
                                                                     <label  class="control-label pull-left" id="signedLIcontract_button_label" >Open signed Literature Ireland contract</label>
                                                                     <div class="input-group pull-left">
                                                                         <a class="btn btn-info btn-file pull-left" role="button" id="signedLIcontract_link" href="">
@@ -3917,7 +4198,7 @@
                                                                             <input type="hidden" name="publisherID"  id="publisherID" value="${publisherID}">
                                                                             <input type="hidden" name="Company" id="Company"  value="${companyDetails.Company}">
                                                                             <input type="hidden" name="publisherName"  id="publisherName"  value="${companyDetails.Company}">
-                                                                            <input type="hidden" name="ReferenceNumber" value="<%=session.getAttribute("ReferenceNumber")%>"/>
+                                                                            <input type="hidden" name="ReferenceNumber" value="<%=session.getAttribute( "ReferenceNumber" )%>"/>
                                                                             <c:set var="ReferenceNumber" scope="session" value="${ReferenceNumber}"/>
                                                                         </div>
                                                                     </div> <!-- col-md-7 -->
@@ -3963,7 +4244,7 @@
                                                                         </div>
 
                                                                         <div class="row">
-                                                                            <div class="col-md-6"   style="margin-bottom: 20px">        
+                                                                            <div class="col-md-3"   style="margin-bottom: 20px">        
                                                                                 <label  class="control-label pull-left">Open electronic copy of original work </label>
                                                                                 <div class="input-group originalSample1 pull-left" >
                                                                                     <a class="btn btn-info btn-file pull-left" role="button" id="originalSample1" href="">
@@ -3975,7 +4256,7 @@
 
                                                                         <div class="row">
 
-                                                                            <div class="col-md-6"   style="margin-bottom: 20px">        
+                                                                            <div class="col-md-3"   style="margin-bottom: 20px">        
                                                                                 <label  class="control-label pull-left">Open copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
                                                                                 <div class="input-group translationSample1 pull-left" >
                                                                                     <a class="btn btn-info btn-file pull-left" role="button" id="translationSample1" href="">
@@ -4048,33 +4329,33 @@
                 </form>
 
                 <!--pressCuttingsModal-->
-                <div class="modal autoModal coverageCuttings" id="pressCuttingsModal"  tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal"  style="background-color: #c3bcbc" data-modal-index="3">
-                    <div class="modal-dialog coverageCuttings" style="align-content: center">
-
-                        <!-- Modal content-->
-                        <div class="modal-content coverageCuttings" style="background-color: #d9d1d1;">
-
-
+                <div class="modal fade" id="pressCuttingsModal" tabindex="-1" role="dialog" aria-labelledby="pressCuttingsModal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
                             <div class="modal-header" style="background-color: #c3bcbc">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="pressCuttingsModalLabel">Add coverage cuttings for Reference number  <span id="appReferenceNumber1"></span></h4>
+                                <h4 class="modal-title" id="pressCuttingsModalLabel">See press coverage</h4>
                             </div>
-                            <!-- Modal body-->
-                            <div class="modal-body coverageCuttings" style="background-color: #d9d1d1">
-                                <form id="coverageCuttingsForm" name="coverageCuttingsForm" enctype="multipart/form-data">
-                                    <div   style="margin-bottom: 40px">                                      
-                                        <input id="input25" name="input25[]" type="file" multiple onchange="showFile()">
-                                    </div>
-                                </form>
-                            </div> <!-- modal-body -->
 
-                            <div class="modal-footer"  style="background-color: #c3bcbc">
-                                <button type="button" class="btn btn-default" onclick="clearURL();" data-dismiss="modal">Close</button>
-                            </div><!--modal footer -->
 
+                            <div class="modal-body" style="background-color: #d9d1d1">
+                                <div class="row" style="margin-bottom: 10px">
+
+                                    <output id="result">Press coverage</output>
+                                    <div id="pressCoverageTag"></div>
+
+                                </div>
+                            </div><!-- modal body -->
+
+                            <div class="modal-footer"  style="background-color: #c3bcbc">                      
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+                                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                            </div> <!--modal footer -->
                         </div> <!--modal content-->          
                     </div> <!--modal dialog-->
                 </div> <!--modal fade-->
+                <!--pressCuttingsModal-->
+                <input type="hidden" value="pressCuttings" name="image-file" id="label_pressCuttings"/>
 
 
                 <!-- footer start -->
@@ -4094,26 +4375,26 @@
                         <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
                     </div>
 
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
                 </div><!-- end of Base div -->
             </div><!-- end of container div -->
             <div class="shadowbase"> </div>
         </div><!-- end of Shadowholder container div -->
 
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
-
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-                                    var $imageupload = $('.imageupload');
-                                    $imageupload.imageupload();
-                                    function  showInfoModal() {
-                                        $("#showInfoModal").modal("show");
-                                    }
-                                    function  showNotesModal() {
-                                        $("#showNotesModal").modal("show");
-                                    }
+                                                                        var $imageupload = $('.imageupload');
+                                                                        $imageupload.imageupload();
+                                                                        function  showInfoModal() {
+                                                                            $("#showInfoModal").modal("show");
+                                                                        }
+                                                                        function  showNotesModal() {
+                                                                            $("#showNotesModal").modal("show");
+                                                                        }
+                                                                        ;
         </script>
     </body>
 </html>

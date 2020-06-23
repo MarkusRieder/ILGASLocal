@@ -76,11 +76,46 @@ textarea {
 }
 
 /*https://stackoverflow.com/questions/10476632/how-to-scroll-the-page-when-a-modal-dialog-is-longer-than-the-screen*/
-.modal-body {
+/*.modal-body {
     max-height: calc(100vh - 210px);
     overflow-y: auto;
+}*/
+.modal {
+    overflow-y:auto;
+    text-align: center;
+}
+.modal-footer {  
+    background: #81ccfb;
+    padding: 1em;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+body {
+    margin: 5px;
+    background: #d9d1d1
+}
+.modal-body {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 50px);
+    overflow-y: scroll;
+}
+.modal-dialog,
+.modal-content {
+    /* 80% of window height */
+    height: 100%;
 }
 
+#addAdditionalRightsHoldersModal{
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    margin-top: -90px;
+    margin-left: -200px;
+    padding: 20px;               
+
+}
 /*increase size of "Show entries" */
 select.input-sm {
     height: 33px;
@@ -205,9 +240,9 @@ a, u {
 /*Styles for the approved/withdrawn/rejected buttons*/
 
 /*
-            .active {
-                background-color: #F7F5F5 !important;
-            }*/
+    .active {
+        background-color: #F7F5F5 !important;
+}*/
 .approved {
 
     display:inline;
@@ -242,6 +277,11 @@ a, u {
 #myTab2 li a { border-color: blue;background-color:#A5C967; }
 #myTab2 li.active a {border-bottom-color: transparent;background-color:Yellow; }
 .my-tab .tab-pane{ border:solid 1px blue;  border-top: 0; background-color:#F7EFC6;}
+
+.applicationsModalTab .tab-pane{ border:solid 1px blue;  border-top: 0;    }
+#applicationsModalTab li a { border-color: blue;background-color:#A5C967; }
+#applicationsModalTab li.active a {border-bottom-color: transparent;background-color:Yellow; }
+
 
 body .modal-admin {
     /* new custom width */

@@ -29,6 +29,8 @@ public class DBConn {
         Connection connection = null;
         connection = DriverManager.getConnection(
                 Setup.DB_URL, Setup.DB_USERNAME, Setup.DB_PASSWORD );
+//         System.out.println("Your JDBC URL is as follows:" + Setup.DB_URL);
+         
         return connection;
     }
 

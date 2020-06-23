@@ -35,8 +35,17 @@ $("document").ready(function () {
     var validName = new XRegExp("^[\\p{L}\\p{Nd} .'_-]+$");
     $.validator.addMethod("validname", function (value, element) {
         return this.optional(element) || validName.test(value);
-    }, "Incorect word - please use only letters, numbers, '.',''', '-', '_' and space");
-
+    }, "Please use only letters, numbers, '.',''', '-',', '_' and space");
+        /*
+     * validNamEuro 
+     * checking for UTF-8 string plus €
+     * 
+     * @type XRegExp
+     */
+    var validNamEuro = new XRegExp("^[\\p{L}\\p{Nd} .'_-€]+$");
+    $.validator.addMethod("validNamEuro", function (value, element) {
+        return this.optional(element) || validNamEuro.test(value);
+    }, "Incorect word - please use only letters, numbers, '.',''', '-','€', '_' and space");
     /**
      * validLanguage
      * checking for letters, numbers, '.',''',',' '-', '_' and space
@@ -319,7 +328,7 @@ $("document").ready(function () {
                     },
                     BreakDownOfTranslatorFee: {
                         required: true,
-                        validname: true,
+                        validNamEuro: true,
                         minlength: 2
                     },
                     copiesSent: {
@@ -365,7 +374,12 @@ $("document").ready(function () {
                         validname: true,
                         minlength: 2
                     },
-                    translatorName: {
+                    "translatorName": {
+                        required: true,
+                        validname: true,
+                        minlength: 2
+                    },
+                    "translatorrightsHolderName":{
                         required: true,
                         validname: true,
                         minlength: 2

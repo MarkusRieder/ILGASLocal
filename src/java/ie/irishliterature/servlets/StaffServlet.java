@@ -20,10 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet( name = "StaffServlet", urlPatterns =
-{
-    "/StaffServlet"
-} )
+@WebServlet( name = "StaffServlet", urlPatterns
+        = {
+            "/StaffServlet"
+        } )
 public class StaffServlet extends HttpServlet {
 
     private final static Logger LOGGER
@@ -41,7 +41,7 @@ public class StaffServlet extends HttpServlet {
     private String notesAboutApplication;                   // path to file
     private String dateOfBoardMeeting; //  Date
     private String ApproveWithdrawnReject; //  Date
-    private int approveWithdrawnReject = 0;
+    private String approveWithdrawnReject = "";
     private int directorChairDecision = 0;
     private String DirectorChairDecision = "";
     private String amountApproved; //  Date
@@ -59,7 +59,7 @@ public class StaffServlet extends HttpServlet {
     private String Award;
     private int award = 0; //    boolean
     private String Bilingual;
-    private int bilingual = 0; //    boolean        
+    private int bilingual; //    boolean        
     private String Amount_Requested;
     private String Amount_Approved;
     private String Comments_about_Meeting;
@@ -72,20 +72,19 @@ public class StaffServlet extends HttpServlet {
     private String Date_Contract_Sent_to_Publisher;
     private String message = "";
     private String PaymentStatus;
+    private String gender = "";
+    private String[] authorArray;  //Array of Author/Title
 
     @Override
-    public void init()
-    {
+    public void init() {
 
     }
 
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
-        try
-        {
+        try {
 
             HttpSession session = request.getSession();
 
@@ -117,190 +116,216 @@ public class StaffServlet extends HttpServlet {
             String name = request.getParameter( "name" );
             System.out.println( "Here we are >>>>>>>>>.   StaffServlet ::  name " + name );
 
+            System.out.println( "StaffServlet Enumeration Parameter   " );
+            Enumeration en = request.getParameterNames();
+
+            while ( en.hasMoreElements() ) {
+                Object objOri = en.nextElement();
+
+                String param = ( String ) objOri;
+
+                String value = request.getParameter( param );
+
+                System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
+
+            }
+
+            System.out.println( "StaffServlet Enumeration keys   " );
+            Enumeration keys = session.getAttributeNames();
+            while ( keys.hasMoreElements() ) {
+                String key = ( String ) keys.nextElement();
+                System.out.println( "key  :" + key + ": " + session.getValue( key ) );
+
+            }
             java.sql.Timestamp timestamp = getcurrentTimeStamp();
 //            Status = "open";
 
             GrantApplication application = new GrantApplication();
 
-            Enumeration en = request.getParameterNames();
+            en = request.getParameterNames();
 
             /*
              * loop through fieldnames and assign their values to variables if
              * not empty
              */
-            while ( en.hasMoreElements() )
-            {
+            while ( en.hasMoreElements() ) {
                 Object objOri = en.nextElement();
 
                 String fieldname = ( String ) objOri;
 
-                switch ( fieldname )
-                {
+                switch ( fieldname ) {
                     case "appReferenceNumber":
                         referenceNumber = request.getParameter( fieldname );
-                        applicationNumber = referenceNumber.split( "/" )[ 0 ];
-                        applicationYear = referenceNumber.split( "/" )[ 1 ];
+                        applicationNumber = referenceNumber.split( "/" )[0];
+                        applicationYear = referenceNumber.split( "/" )[1];
                         break;
                     case "appNotesAboutApplication":
                         notesAboutApplication = request.getParameter( fieldname );
                         application.setNotesAboutApplication( notesAboutApplication );
                         break;
                     case "appDateOfBoardMeeting":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             dateOfBoardMeeting = request.getParameter( fieldname );
                             application.setBoardMeeting( convertStringDate( dateOfBoardMeeting ) );
                         }
                         break;
                     case "ApproveWithdrawnReject":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+
+                        String awr = request.getParameter( fieldname );
+
+//                        if ( awr == null ) {
+//System.out.println( "param001 ApproveWithdrawnReject null" );
+//                        }
+//                        if ( "null".equals( awr ) ) {
+//System.out.println( "param001 ApproveWithdrawnReject 'null'" );
+//                        }
+//                                                if ( "undefined".equals( awr ) ) {
+//System.out.println( "param001 ApproveWithdrawnReject 'undefined'" );
+//                        }
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             ApproveWithdrawnReject = request.getParameter( fieldname );
                             System.out.println( "param00 ApproveWithdrawnReject " + ApproveWithdrawnReject );
-                            if ( "ticked".equals( ApproveWithdrawnReject ) )
-                            {
-                                approveWithdrawnReject = 1;
+                            if ( "ticked".equals( ApproveWithdrawnReject ) ) {
+                                approveWithdrawnReject = "1";
                             }
-                            else
-                            {
-                                approveWithdrawnReject = 0;
+                            else {
+                                approveWithdrawnReject = "0";
                             }
-                            if ( ApproveWithdrawnReject.equals( "Approved" ) )
-                            {
-                                Status = "pending";
+//                            if ( ApproveWithdrawnReject.equals( "Approved" ) ) {
+//                                Status = "pending";
+//                            }
+                            System.out.println( "param001 ApproveWithdrawnReject " + awr );
+                            if ( !awr.isEmpty() ) {
+                                application.setApproveWithdrawnReject( approveWithdrawnReject );
                             }
-                            application.setApproveWithdrawnReject( ApproveWithdrawnReject );
+
                         }
                         break;
                     case "directorChairDecision":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             DirectorChairDecision = request.getParameter( fieldname );
-                            if ( "ticked".equals( DirectorChairDecision ) )
-                            {
+                            if ( "ticked".equals( DirectorChairDecision ) ) {
                                 directorChairDecision = 1;
                             }
-                            else
-                            {
+                            else {
                                 directorChairDecision = 0;
                             }
                             application.setDirectorChairDecision( directorChairDecision );
                         }
                         break;
                     case "commentsAboutMeeting":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Comments_about_Meeting = request.getParameter( fieldname );
                             application.setBoardComments_Instructions( Comments_about_Meeting );
                         }
                         break;
                     case "appplannedPageExtent":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             plannedPageExtent = request.getParameter( fieldname );
                             application.setPlannedPageExtent( Integer.parseInt( plannedPageExtent ) );
                         }
                         break;
                     case "appproposedPrintRun":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             proposedPrintRun = request.getParameter( fieldname );
                             application.setProposedPrintRun( Integer.parseInt( proposedPrintRun ) );
                         }
                         break;
                     case "award":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Award = request.getParameter( fieldname );
-                            if ( "ticked".equals( Award ) )
-                            {
+                            if ( "ticked".equals( Award ) ) {
                                 award = 1;
                             }
-                            else
-                            {
+                            else {
                                 award = 0;
                             }
                             application.setAward( award );
                         }
                         break;
                     case "amountApproved":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             amountApproved = request.getParameter( fieldname );
                             BigDecimal aa = new BigDecimal( amountApproved.replaceAll( ",", "" ) );
                             application.setAmountApproved( aa );
                         }
                         break;
                     case "dateContractSenttoPublisher":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Date_Contract_Sent_to_Publisher = request.getParameter( fieldname );
                             application.setContractSentToPublisher( convertStringDate( Date_Contract_Sent_to_Publisher ) );
                         }
                         break;
                     case "dateILEAcknowledgementApproved":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Date_ILE_Acknowlegement_Approved = request.getParameter( fieldname );
                             application.setAcknowledgementApproved( convertStringDate( Date_ILE_Acknowlegement_Approved ) );
                         }
                         break;
                     case "datePublisherInformedOfMeeting":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Date_publisher_informed_of_meeting = request.getParameter( fieldname );
                             application.setPublisherInformedOfMeeting( convertStringDate( Date_publisher_informed_of_meeting ) );
                         }
                         break;
                     case "datePublishedBooksReceived":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Date_Published_Books_Received = request.getParameter( fieldname );
                             application.setDatePublishedBooksReceived( convertStringDate( Date_Published_Books_Received ) );
                         }
                         break;
                     case "datePaymentMadeToPublisher":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Date_Payment_Made_to_Publisher = request.getParameter( fieldname );
                             application.setDatePaymentMadeToPublisher( convertStringDate( Date_Payment_Made_to_Publisher ) );
                         }
                         break;
                     case "paymentReferenceNumber":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             Payment_Reference_Number = request.getParameter( fieldname );
                             application.setPaymentReferenceNumber( Payment_Reference_Number );
                         }
                         break;
                     case "paymentStatus":
-                        if ( !"".equals( request.getParameter( fieldname ) ) )
-                        {
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
                             PaymentStatus = request.getParameter( fieldname );
-                            if ( PaymentStatus.equals( "Paid" ) )
-                            {
+                            if ( PaymentStatus.equals( "Paid" ) ) {
                                 Status = "closed";
 
                             }
                             application.setPaymentStatus( PaymentStatus );
                         }
                         break;
+                    case "gender":
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
+                            gender = request.getParameter( fieldname );
+                            System.out.println( "gender  :" + gender );
+                        }
+                        break;
+                    case "authorList":
+                        if ( !"".equals( request.getParameter( fieldname ) ) ) {
+                            authorArray = request.getParameter( fieldname ).split( "," ); //split string by ,
+                            System.out.println( "authorArraylength  GrantApplicationServlet:: " + authorArray.length );
+                            for ( String individualValue : authorArray ) {
+                                System.out.println( "authorArray  GrantApplicationServlet:: " + individualValue );
+                            }
+                            gender = request.getParameter( fieldname );
+                        }
+                        break;
 
                 } // end switch
 
-                application.setStatus( Status );
+//                application.setStatus( Status );
                 application.setLASTUPDATED( timestamp );
 
             }
 
             System.out.println( "Enumeration keys   " );
-            Enumeration keys = session.getAttributeNames();
-            while ( keys.hasMoreElements() )
-            {
+            keys = session.getAttributeNames();
+            while ( keys.hasMoreElements() ) {
                 String key = ( String ) keys.nextElement();
                 System.out.println( "key  :" + key + ": " + session.getValue( key ) );
-                if ( "name".equals( key ) )
-                {
+                if ( "name".equals( key ) ) {
                     name = ( String ) session.getValue( key );
                 }
             }
@@ -329,19 +354,24 @@ public class StaffServlet extends HttpServlet {
 
             Test1DAO.updateApplication( application, applicationNumber, applicationYear );
 
+//            System.out.println( "updateAuthorGender " + gender );
+//            if ( !"".equals( gender ) ) {
+//                Test1DAO.updateAuthorGender( authorArray, gender, referenceNumber );
+//            }
+
             /*
              * reset session
              */
             session.removeAttribute( "task" );
 
             message = "The application with reference number: " + referenceNumber + " has been updated ";
+            System.out.println( "The application with reference number: " + referenceNumber + " has been updated " );
             request.setAttribute( "message", message );
             request.setAttribute( "name", name );
             request.getRequestDispatcher( "/WEB-INF/views/response.jsp" ).forward( request, response );
 
         }
-        catch ( ParseException | SQLException | DBException | MessagingException | ClassNotFoundException ex )
-        {
+        catch ( ParseException | SQLException | DBException | MessagingException | ClassNotFoundException ex ) {
             Logger.getLogger( StaffServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
     }
@@ -349,15 +379,13 @@ public class StaffServlet extends HttpServlet {
     @Override
     public void doGet( HttpServletRequest request,
             HttpServletResponse response )
-            throws ServletException, java.io.IOException
-    {
+            throws ServletException, java.io.IOException {
 
         throw new ServletException( "GET method used with "
                 + getClass().getName() + ": POST method required." );
     }
 
-    public Date convertDate( String datum ) throws ParseException
-    {
+    public Date convertDate( String datum ) throws ParseException {
 
         DateFormat sourceFormat = new SimpleDateFormat( "dd/MM/yyyy" );
         Date date = sourceFormat.parse( datum );
@@ -366,8 +394,7 @@ public class StaffServlet extends HttpServlet {
 
     }
 
-    public java.sql.Date convertStringDate( String datum ) throws ParseException
-    {
+    public java.sql.Date convertStringDate( String datum ) throws ParseException {
 
         System.out.println( "convertStringDate datum  " + datum );
         SimpleDateFormat sdf1 = new SimpleDateFormat( "dd/MM/yyyy" );
@@ -380,31 +407,27 @@ public class StaffServlet extends HttpServlet {
         return sqlStartDate;
     }
 
-    public java.sql.Date getTodaySQL()
-    {
+    public java.sql.Date getTodaySQL() {
         java.util.Date today = new java.util.Date();
         return new java.sql.Date( today.getTime() );
 
     }
 
-    public int getCounter( String counterIndicator )
-    {
+    public int getCounter( String counterIndicator ) {
 
         int counter = 0;
 
         System.out.println( "getCounter(String " + counterIndicator );
 
-        if ( ( counterIndicator.contains( "-" ) ) && ( !counterIndicator.contains( "image-file" ) ) )
-        {
+        if ( ( counterIndicator.contains( "-" ) ) && ( !counterIndicator.contains( "image-file" ) ) ) {
 
             String counterIndicatorArray[] = counterIndicator.split( "-" );
-            for ( int u = 0; u < counterIndicatorArray.length; u++ )
-            {
+            for ( int u = 0; u < counterIndicatorArray.length; u++ ) {
                 System.out.println( "counterIndicatorArray[" + u + "]" + Arrays.toString( counterIndicatorArray ) );
             }
             System.out.println( "getCounter(counterIndicatorArray.length " + counterIndicatorArray.length );
-            System.out.println( "getCounter(counterIndicatorArray[counterIndicatorArray.length - 1] " + counterIndicatorArray[ counterIndicatorArray.length - 1 ] );
-            counter = Integer.parseInt( counterIndicatorArray[ counterIndicatorArray.length - 1 ] ) - 1;
+            System.out.println( "getCounter(counterIndicatorArray[counterIndicatorArray.length - 1] " + counterIndicatorArray[counterIndicatorArray.length - 1] );
+            counter = Integer.parseInt( counterIndicatorArray[counterIndicatorArray.length - 1] ) - 1;
 
             System.out.println( "Integer.parseInt(counterIndicatorArray counter  " + counter );
         }
@@ -414,26 +437,23 @@ public class StaffServlet extends HttpServlet {
         return counter;
     }
 
-    private java.sql.Timestamp getcurrentTimeStamp()
-    {
+    private java.sql.Timestamp getcurrentTimeStamp() {
 
         java.util.Date today = new java.util.Date();
         return new java.sql.Timestamp( today.getTime() );
 
     }
 
-    public String getFdname( String fieldname )
-    {
+    public String getFdname( String fieldname ) {
 
         String fdname;
 
         String fdnameArray[] = fieldname.split( "-" );
 
-        fdname = fdnameArray[ 0 ];
+        fdname = fdnameArray[0];
 
         System.out.println( "getFdname(String " + fieldname );
-        for ( int v = 0; v < fdnameArray.length; v++ )
-        {
+        for ( int v = 0; v < fdnameArray.length; v++ ) {
             System.out.println( "fdnameArray[" + v + "]" + Arrays.toString( fdnameArray ) );
         }
 

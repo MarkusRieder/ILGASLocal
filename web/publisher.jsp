@@ -123,7 +123,7 @@
 
                                     </div>
                                     <!--https://www.javaworld.com/article/2072937/java-web-development/solving-the-logout-problem-properly-and-elegantly.html?page=2-->
-                                    <input name="lastLogon" type="hidden" value="<%= new java.lang.Long(System.currentTimeMillis()).toString()%>"/>
+                                    <input name="lastLogon" type="hidden" value="<%= new java.lang.Long( System.currentTimeMillis() ).toString()%>"/>
                                     <div class="help-block with-errors"></div>
 
                                     <div style="margin-top:10px" class="form-group">
@@ -385,17 +385,17 @@
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
                         <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
                     </div>
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
 
                 </div><!-- end of Base div -->
 
             </div><!-- end of container div -->
+
             <div class="shadowbase"> </div>
+
         </div><!-- end of Shadowholder container div -->
-
-
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2019 mgr Software
-        </div>
 
     </body>
 </html>

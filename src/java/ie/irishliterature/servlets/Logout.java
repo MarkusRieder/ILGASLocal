@@ -4,7 +4,6 @@ import ie.irishliterature.util.GlobalConstants;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Set;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,10 +23,14 @@ import javax.servlet.http.HttpSession;
  *
  * @author Markus Rieder
  */
-@WebServlet( "/Logout" )
+@WebServlet( name = "Logout", urlPatterns
+        = {
+            "/Logout"
+        } )
 public class Logout extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    String username = "";
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -48,23 +51,235 @@ public class Logout extends HttpServlet {
      */
     @Override
     @SuppressWarnings( "unchecked" )
-    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+    public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+
         System.out.println( "\n" + " ############################ Logout servlet  #######################################" + "\n" );
-        System.out.println( "Logout servlet called" );
+        System.out.println( "Logout servlet called  doGet method" );
+
         HttpSession session = request.getSession();
 
-        String username1 = request.getParameter( "name" );
-        System.out.println( "Logout servlet username1  " + username1 );
+        username = request.getParameter( "username" );
+        System.out.println( "Logout servlet doGet usernameABC  " + username );
 
-        String username = request.getParameter( "username" );
-        System.out.println( "Logout servlet username2  " + username );
+        Enumeration en = request.getParameterNames();
 
-        System.out.println( "Logout servlet username !!!!!!!!!!!!! " + request.getSession().getServletContext().getAttribute( "username" ) );
-        System.out.println( "Logout servlet name !!!!!!!!!!!!! " + request.getSession().getServletContext().getAttribute( "name" ) );
+        while ( en.hasMoreElements() ) {
+            Object objOri = en.nextElement();
 
-             System.out.println( "Logout servlet username getAttribute!!!!!!!!!!!!! " + request.getAttribute( "username" ) );
-             
-//        String username = ( String ) request.getSession().getServletContext().getAttribute( "username" );
+            String param = ( String ) objOri;
+
+            String value = request.getParameter( param );
+
+            System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
+
+        }
+
+        System.out.println( "Enumeration keys   " );
+        Enumeration keys = session.getAttributeNames();
+        while ( keys.hasMoreElements() ) {
+            String key = ( String ) keys.nextElement();
+            System.out.println( "key  :" + key + ": " + session.getValue( key ) );
+
+        }
+
+//        ServletContext context = request.getSession().getServletContext();
+//        System.out.println( "Enumeration keys  AAAAAAA " );
+//        Enumeration keys = request.getSession().getServletContext().getAttributeNames();
+//        while ( keys.hasMoreElements() ) {
+//            String key = ( String ) keys.nextElement();
+//            System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+////            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+////                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+////            }
+//        }
+//        username = request.getParameter( "username" );
+        System.out.println( "Logout servlet username1  " + username );
+//        String username2 = ( String ) request.getSession().getServletContext().getAttribute( "username" );
+//        System.out.println( "Logout servlet username2  " + username2 );
+
+        System.out.println( "Iterate Parameters" );
+
+        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "LogoutServlet doGet loggedInUsers: 1 " + loggedInUsers );
+
+        System.out.println( "Logout servlet loggedInUsers.remove( username )  " + username );
+        loggedInUsers.remove( username );
+
+        System.out.println( "1 Logout servlet session.invalidate()" );
+        session.invalidate();
+
+//        username = request.getParameter( "username" );
+//        System.out.println( "Logout servlet username  " + username );
+//        ServletContext context = request.getSession().getServletContext();
+//        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "LogoutServlet doGet loggedInUsers: 2 " + loggedInUsers );
+
+//        if ( request.isRequestedSessionIdValid() && session != null ) {
+//            System.out.println( "2 Logout servlet session.invalidate()" );
+//            session.invalidate();
+//
+//        }
+//        else {
+//            System.out.println( "Logout servlet NOT session.invalidate()" );
+//        }
+//        System.out.println( "\n" + "Should be empty!!!" + "\n" );
+//        System.out.println( "Enumeration keys  A " );
+//        keys = request.getSession().getServletContext().getAttributeNames();
+//        while ( keys.hasMoreElements() ) {
+//            String key = ( String ) keys.nextElement();
+//            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+//                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+//            }
+//        }
+        System.out.println( "Logout servlet doGet username END Logout servlet  " + username );
+
+        System.out.println( "\n" + " ############################ END Logout servlet  #######################################" + "\n" );
+
+        request.getSession().setAttribute( GlobalConstants.USER, null );
+        request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
+//        response.sendRedirect("login.jsp");
+    }
+
+    /**
+     * @param request  HttpServletRequest
+     * @param response HttpServletResponse
+     *
+     * @throws javax.servlet.ServletException ServletException
+     * @throws java.io.IOException IOException
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     * response)
+     */
+    @Override
+    @SuppressWarnings( "unchecked" )
+    public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+//        username = request.getParameter( "username" );
+//        System.out.println( "Logout servlet usernameDEF  " + username );
+//        System.out.println( "\n" + " ############################ Logout servlet  #######################################" + "\n" );
+//        System.out.println( "Logout servlet called" );
+//
+//        HttpSession session = request.getSession();
+//
+//        ServletContext context = request.getSession().getServletContext();
+//        System.out.println( "Enumeration keys  AAAAAAA " );
+//        Enumeration keys = request.getSession().getServletContext().getAttributeNames();
+//        while ( keys.hasMoreElements() ) {
+//            String key = ( String ) keys.nextElement();
+//            System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+////            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+////                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+////            }
+//        }
+//
+//        username = request.getParameter( "username" );
+//        System.out.println( "Logout servlet username1  " + username );
+//        String username2 = ( String ) request.getSession().getServletContext().getAttribute( "username" );
+//        System.out.println( "Logout servlet username2  " + username2 );
+//
+//        System.out.println( "Iterate Parameters" );
+//
+//        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+//        System.out.println( "LogoutServlet doGet loggedInUsers: 1 " + loggedInUsers );
+//
+//        System.out.println( "Logout servlet loggedInUsers.remove( username )  " + username );
+//        loggedInUsers.remove( username );
+//        System.out.println( "1 Logout servlet session.invalidate()" );
+//        session.invalidate();
+//        username = request.getParameter( "username" );
+//        System.out.println( "Logout servlet username  " + username );
+//
+////        ServletContext context = request.getSession().getServletContext();
+//        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+//        System.out.println( "LogoutServlet doGet loggedInUsers: 2 " + loggedInUsers );
+//
+//        if ( request.isRequestedSessionIdValid() && session != null ) {
+//            System.out.println( "2 Logout servlet session.invalidate()" );
+//            session.invalidate();
+//
+//        }
+//        else {
+//            System.out.println( "Logout servlet NOT session.invalidate()" );
+//        }
+//
+//        System.out.println( "\n" + "Should be empty!!!" + "\n" );
+//        System.out.println( "Enumeration keys  A " );
+//        keys = request.getSession().getServletContext().getAttributeNames();
+//        while ( keys.hasMoreElements() ) {
+//            String key = ( String ) keys.nextElement();
+//            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+//                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+//            }
+//        }
+//
+//        System.out.println( "\n" + " ############################ END Logout servlet  #######################################" + "\n" );
+//        System.out.println( "Logout servlet username END Logout servlet  " + username );
+//        request.getSession().setAttribute( GlobalConstants.USER, null );
+//        request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
+//    }
+//
+//    @SuppressWarnings( "unchecked" )
+//    private void processLogout( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+//        System.out.println( "\n" + " ############################ Logout servlet  #######################################" + "\n" );
+//        System.out.println( "Logout servlet called" );
+//
+//        HttpSession session = request.getSession();
+//
+//        ServletContext context = request.getSession().getServletContext();
+//        System.out.println( "Enumeration keys  AAAAAAA " );
+//        Enumeration keys = request.getSession().getServletContext().getAttributeNames();
+//        while ( keys.hasMoreElements() ) {
+//            String key = ( String ) keys.nextElement();
+//            System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+////            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+////                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+////            }
+//        }
+//
+//        username = request.getParameter( "username" );
+//        System.out.println( "Logout servlet username1  " + username );
+//        String username2 = ( String ) request.getSession().getServletContext().getAttribute( "username" );
+//        System.out.println( "Logout servlet username2  " + username2 );
+//
+//        System.out.println( "Iterate Parameters" );
+//
+//        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+//        System.out.println( "LogoutServlet doGet loggedInUsers: 1 " + loggedInUsers );
+//
+//        System.out.println( "Logout servlet loggedInUsers.remove( username )  " + username );
+//        loggedInUsers.remove( username );
+//        username = request.getParameter( "username" );
+//        System.out.println( "Logout servlet username  " + username );
+//
+////        ServletContext context = request.getSession().getServletContext();
+//        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+//        System.out.println( "LogoutServlet doGet loggedInUsers: 2 " + loggedInUsers );
+//
+//        if ( request.isRequestedSessionIdValid() && session != null ) {
+//            System.out.println( "Logout servlet session.invalidate()" );
+//            session.invalidate();
+//
+//        }
+//        else {
+//            System.out.println( "Logout servlet NOT session.invalidate()" );
+//        }
+//
+//        System.out.println( "\n" + "Should be empty!!!" + "\n" );
+//        System.out.println( "Enumeration keys  A " );
+//        keys = request.getSession().getServletContext().getAttributeNames();
+//        while ( keys.hasMoreElements() ) {
+//            String key = ( String ) keys.nextElement();
+//            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+//                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+//            }
+//        }
+
+//Does not get username
+        System.out.println( "\n" + " ############################ Logout servlet  #######################################" + "\n" );
+        System.out.println( "Logout servlet called  doPost method" );
+
+        HttpSession session = request.getSession();
+        username = request.getParameter( "username" );
+        System.out.println( "Logout servlet doPost usernameDEF  " + username );
 
         System.out.println( "Iterate Parameters" );
 
@@ -80,99 +295,73 @@ public class Logout extends HttpServlet {
             System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
 
         }
-        
- String name=(String)session.getAttribute("username");  
-                    System.out.println( "session.removeAttribute  " + name );
-//        if (session != null) {
-//            String name=(String)session.getAttribute("username");  
-//                    System.out.println( "session.removeAttribute  " + name );
-////            session.removeAttribute("username");
-//             
-////            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-////            dispatcher.forward(request, response);
-//        }
-        System.out.println( "Enumeration keys" );
-        Enumeration keys = request.getSession().getServletContext().getAttributeNames();
+
+        System.out.println( "Enumeration keys   " );
+        Enumeration keys = session.getAttributeNames();
         while ( keys.hasMoreElements() ) {
             String key = ( String ) keys.nextElement();
-            if ( key == "loggedInUsers" || key == "userData" || key == "logins" || key == "username" || key == "name" ) {
-                System.out.println( "key  :" + key + ": " + request.getSession().getServletContext().getAttribute( key ) );
-            }
-        }
+            System.out.println( "key  :" + key + ": " + session.getValue( key ) );
 
-//        System.out.println( "12345 Enumeration keys" );
+        }
+        System.out.println( "\n" + " ############################ Logout servlet  #######################################" + "\n" );
+        username = request.getParameter( "username" );
+        System.out.println( "Logout servlet doPost usernameABC  " + username );
+
+//        ServletContext context = request.getSession().getServletContext();
+//        System.out.println( "Enumeration keys  AAAAAAA " );
+//        Enumeration keys = request.getSession().getServletContext().getAttributeNames();
+//        while ( keys.hasMoreElements() ) {
+//            String key = ( String ) keys.nextElement();
+//            System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+//            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+//                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
+//            }
+//        }
+//        username = request.getParameter( "username" );
+        System.out.println( "Logout servlet username1  " + username );
+//        String username2 = ( String ) request.getSession().getServletContext().getAttribute( "username" );
+//        System.out.println( "Logout servlet username2  " + username2 );
+
+        System.out.println( "Iterate Parameters" );
+
+        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "LogoutServlet doPost loggedInUsers: 1 " + loggedInUsers );
+
+        System.out.println( "Logout servlet loggedInUsers.remove( username )  " + username );
+        loggedInUsers.remove( username );
+        System.out.println( "1 Logout servlet request.isRequestedSessionIdValid() " + request.isRequestedSessionIdValid() );
+        System.out.println( "1 Logout servlet session " + session );
+        System.out.println( "1 Logout servlet session.invalidate()" );
+        session.invalidate();
+
+//        username = request.getParameter( "username" );
+//        System.out.println( "Logout servlet username  " + username );
+//        ServletContext context = request.getSession().getServletContext();
+//        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "LogoutServlet doPost loggedInUsers: 2 " + loggedInUsers );
+
+//        if ( request.isRequestedSessionIdValid() && session != null ) {
+//            System.out.println( "2 Logout servlet session.invalidate()" );
+//            session.invalidate();
+//
+//        }
+//        else {
+//            System.out.println( "Logout servlet NOT session.invalidate()" );
+//        }
+//        System.out.println( "\n" + "Should be empty!!!" + "\n" );
+//        System.out.println( "Enumeration keys  A " );
 //        keys = request.getSession().getServletContext().getAttributeNames();
 //        while ( keys.hasMoreElements() ) {
 //            String key = ( String ) keys.nextElement();
-//            if ( key == "loggedInUsers" && key == "userData" && key == "logins" ) {
-//                System.out.println( "12345 key  :" + key + ": " + request.getSession().getServletContext().getAttribute( key ) );
+//            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
+//                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
 //            }
 //        }
-        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
-        System.out.println( "LogoutServlet doGet loggedInUsers: 1 " + loggedInUsers );
-        /*
-         * Getting session and then invalidating it
-         */
-//        HttpSession session = request.getSession( false );
-//        if ( session != null && session.getAttribute( "userData" ) != null )
-//        {
-//            System.out.println( "-- removing userData attribute from session --" );
-//            session.removeAttribute( "userData" );
-//        }
-//        if ( session != null && session.getAttribute( "logins" ) != null )
-//        {
-//            System.out.println( "-- removing logins attribute from session --" );
-//            session.removeAttribute( "loggedInUsers" );
-//        }
-
-        if ( session != null ) {
-            System.out.println( " session != null" );
-        }
-        else {
-            System.out.println( "session == null" );
-        }
-        if ( session.getAttribute( "loggedInUsers" ) != null ) {
-            System.out.println( "session.getAttribute( \"loggedInUsers\" ) != null" );
-        }
-        else {
-            System.out.println( "session.getAttribute( \"loggedInUsers\" ) == null" );
-        }
-
-//        if ( session != null && session.getAttribute( "loggedInUsers" ) != null )
-//        {
-        System.out.println( "Logout servlet loggedInUsers.remove( username )  " + username );
-        loggedInUsers.remove( username );
-        username = request.getParameter( "username" );
-        System.out.println( "Logout servlet username  " + username );
-//        }
-
-        ServletContext context = request.getSession().getServletContext();
-        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
-        System.out.println( "LogoutServlet doGet loggedInUsers: 2 " + loggedInUsers );
-
-        if ( request.isRequestedSessionIdValid() && session != null ) {
-            System.out.println( "Logout servlet session.invalidate()" );
-            session.invalidate();
-
-        }
-        else {
-            System.out.println( "Logout servlet NOT session.invalidate()" );
-        }
-
-        System.out.println( "\n" + "Should be empty!!!" + "\n" );
-        System.out.println( "Enumeration keys  A " );
-        keys = request.getSession().getServletContext().getAttributeNames();
-        while ( keys.hasMoreElements() ) {
-            String key = ( String ) keys.nextElement();
-            if ( key == "loggedInUsers" || key == "userData" || key == "logins" ) {
-                System.out.println( "key  :" + key + ": " + context.getAttribute( key ) );
-            }
-        }
-
         System.out.println( "\n" + " ############################ END Logout servlet  #######################################" + "\n" );
-
+        System.out.println( "Logout servlet doPost username END Logout servlet  " + username );
         request.getSession().setAttribute( GlobalConstants.USER, null );
         request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
-
+//        response.sendRedirect("login.jsp");
     }
 }

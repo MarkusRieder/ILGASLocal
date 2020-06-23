@@ -22,10 +22,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author markus
  */
-@WebServlet( name = "Application", urlPatterns =
-{
-    "/Application"
-} )
+@WebServlet( name = "Application", urlPatterns
+        = {
+            "/Application"
+        } )
 public class ApplicationServlet extends HttpServlet {
 
     /**
@@ -39,14 +39,12 @@ public class ApplicationServlet extends HttpServlet {
      */
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
     }
 
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
         HttpSession session = request.getSession();
 
@@ -56,10 +54,12 @@ public class ApplicationServlet extends HttpServlet {
         String lastname = request.getParameter( "lastname" );
         String name = request.getParameter( "name" );
         String userID = request.getParameter( "userID" );
+        String username = request.getParameter( "username" );
+
         System.out.println( "/Application  --->  name getParameter  " + request.getParameter( "name" ) );
 
         System.out.println( "/Application  --->  name " + name );
-
+        System.out.println( "/Application  --->  username " + username );
         System.out.println( "/Application  --->  publisherName " + publisherName );  // OK  request.getParameter publisherName1 Rotten Luck              
         System.out.println( "/Application  --->  publisherID   " + publisherID );  // OK  request.getParameter publisherID1 2790
 
@@ -67,11 +67,10 @@ public class ApplicationServlet extends HttpServlet {
         session.setAttribute( "publisherID", publisherID );
 
         System.out.println( "############################### /Application ####################################" );
-
+   System.out.println( "Iterate Parameters" );
         Enumeration en = request.getParameterNames();
 
-        while ( en.hasMoreElements() )
-        {
+        while ( en.hasMoreElements() ) {
             Object objOri = en.nextElement();
 
             String param = ( String ) objOri;
@@ -84,8 +83,7 @@ public class ApplicationServlet extends HttpServlet {
 
         System.out.println( "Enumeration keys   " );
         Enumeration keys = session.getAttributeNames();
-        while ( keys.hasMoreElements() )
-        {
+        while ( keys.hasMoreElements() ) {
             String key = ( String ) keys.nextElement();
             System.out.println( "key  :" + key + ": " + session.getValue( key ) );
 
@@ -100,7 +98,8 @@ public class ApplicationServlet extends HttpServlet {
         request.setAttribute( "task", task );
         request.setAttribute( "publisherID", publisherID );
         request.setAttribute( "name", name );
-
+        request.setAttribute( "username", username );
+        session.setAttribute( "username", username );
         String tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
         String rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
 
@@ -112,24 +111,20 @@ public class ApplicationServlet extends HttpServlet {
         int tc_ACCEPTED = 0;
         int gdpr_ACCEPTED = 0;
 
-        if ( request.getParameter( "tcACCEPTED" ) == null )
-        {
+        if ( request.getParameter( "tcACCEPTED" ) == null ) {
             System.out.println( "doPost getParameter - tcACCEPTED not checked " );
             tc_ACCEPTED = 0;
         }
-        else
-        {
+        else {
             System.out.println( "doPost getParameter - tcACCEPTED IS checked " );
             tc_ACCEPTED = 1;
         }
 
-        if ( request.getParameter( "gdprACCEPTED" ) == null )
-        {
+        if ( request.getParameter( "gdprACCEPTED" ) == null ) {
             System.out.println( "doPost getParameter - gdprACCEPTED not checked " );
             gdpr_ACCEPTED = 0;
         }
-        else
-        {
+        else {
             System.out.println( "doPost getParameter - gdprACCEPTED IS checked " );
             gdpr_ACCEPTED = 1;
         }
@@ -137,8 +132,7 @@ public class ApplicationServlet extends HttpServlet {
         System.out.println( "doPost- TCACCEPTED   " + tc_ACCEPTED );
         System.out.println( "doPost - gdprACCEPTED " + gdpr_ACCEPTED );
 
-        if ( request.getParameter( "New Application" ) != null )
-        {
+        if ( request.getParameter( "New Application" ) != null ) {
             task = "Start New Application";
             request.getSession().setAttribute( "task", "Start New Application" );
 
@@ -146,30 +140,25 @@ public class ApplicationServlet extends HttpServlet {
 //            task = "List New Applications";
 //            request.getSession().setAttribute("task", "List New Applications");
         }
-        else if ( request.getParameter( "List Open Applications" ) != null )
-        {
+        else if ( request.getParameter( "List Open Applications" ) != null ) {
             task = "List Open Applications";
+            request.getSession().setAttribute( "task", "List Open Applications" );
+        }
+        else if ( request.getParameter( "List Pending Applications" ) != null ) {
+            task = "List Pending Applications";
             request.getSession().setAttribute( "task", "List Pending Applications" );
         }
-        else if ( request.getParameter( "List Pending Applications" ) != null )
-        {
-            task = "List Pending Applications";
-            request.getSession().setAttribute( "task", "List Closed Applications" );
-        }
-        else if ( request.getParameter( "List Closed Applications" ) != null )
-        {
+        else if ( request.getParameter( "List Closed Applications" ) != null ) {
             task = "List Closed Applications";
             request.getSession().setAttribute( "task", "List Closed Applications" );
         }
-        else
-        {
+        else {
             //  task = task;
         }
 
         System.out.println( "task: Application:: " + task );
 
-        switch ( task )
-        {
+        switch ( task ) {
 
             case "List New Applications":
                 request.setAttribute( "task", task );
@@ -177,10 +166,8 @@ public class ApplicationServlet extends HttpServlet {
                 request.getRequestDispatcher( "/WEB-INF/views/newApplications.jsp" ).forward( request, response );
                 break;
 
-            case "Start New Application":
-            {
-                try
-                {
+            case "Start New Application": {
+                try {
 
                     int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
                     System.out.println( "Start New Application - TCACCEPTED " + tc_ACCEPTED + " gdprACCEPTED " + gdpr_ACCEPTED );
@@ -199,8 +186,7 @@ public class ApplicationServlet extends HttpServlet {
                     session.setAttribute( "publisherID", publisherID );
 
                 }
-                catch ( DBException ex )
-                {
+                catch ( DBException ex ) {
                     Logger.getLogger( ApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
                 }
             }
@@ -208,10 +194,8 @@ public class ApplicationServlet extends HttpServlet {
 
             break;
 
-            case "NewApplicationTCconfirmed":
-            {
-                try
-                {
+            case "NewApplicationTCconfirmed": {
+                try {
                     System.out.println( "NewApplicationTCconfirmed - session.getAttribute" + session.getAttribute( "publisherID" ) );
                     int ApplicationNumber = GrantApplicationDAO.getLastRecordID() + 1;
                     System.out.println( "TCACCEPTED " + tc_ACCEPTED + " gdprACCEPTED " + gdpr_ACCEPTED );
@@ -230,8 +214,7 @@ public class ApplicationServlet extends HttpServlet {
                     session.setAttribute( "publisherID", publisherID );
 
                 }
-                catch ( DBException ex )
-                {
+                catch ( DBException ex ) {
                     Logger.getLogger( ApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
                 }
             }
@@ -251,6 +234,9 @@ public class ApplicationServlet extends HttpServlet {
                 request.setAttribute( "lastname", lastname );
                 request.setAttribute( "name", name );
                 request.setAttribute( "userID", userID );
+                 request.setAttribute( "username", username );
+session.setAttribute( "username", username );
+              System.out.println( "username:1 " + username );
                 request.getRequestDispatcher( "/WEB-INF/views/openApplications.jsp" ).forward( request, response );
                 break;
 
@@ -294,8 +280,7 @@ public class ApplicationServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }
 }

@@ -31,8 +31,8 @@
         steady-pool-size="8" 
         validate-atmost-once-period-in-seconds="0" 
         wrap-jdbc-objects="false">
-        <property name="URL" value="jdbc:mysql://localhost:3306/ILGAS?zeroDateTimeBehavior=convertToNull"/>
+        <property name="URL" value="jdbc:mysql://localhost:3306/ILGAS"/>
         <property name="User" value="markus"/>
-        <property name="Password" value="ankh573"/>
+        <property name="Password" value="T6Sv0m3kTAPQZLX4KTIHAw2qgIYLXMMWU2NwYfmNLJr44PDUEJ"/>
     </jdbc-connection-pool>
 </resources>

@@ -1,10 +1,8 @@
 package ie.irishliterature.dao;
 
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
-import static ie.irishliterature.dao.Test1DAO.getPressCoverage;
 import static ie.irishliterature.dao.Test1DAO.getPreviousGrantAid;
 import static ie.irishliterature.dao.Test1DAO.getTitles;
-import static ie.irishliterature.dao.Test1DAO.getTranslatorTracker;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
@@ -23,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
 public class pendingApplicationDAO {
@@ -219,7 +218,7 @@ public class pendingApplicationDAO {
             Connection conn = null;
             PreparedStatement ps = null;
             ResultSet res = null;
-            System.out.println( "getAllApplicationsPublisher Local pendingApplicationDAO  here " );
+            System.out.println( "getAllApplicationsPublisher Remote pendingApplicationDAO  here " );
             ArrayList<String> translatorTrackId; // contains array with translator id's
             ArrayList<String> authorList = new ArrayList<>();
             ArrayList<String> translatorNamesList = new ArrayList<>();
@@ -231,7 +230,7 @@ public class pendingApplicationDAO {
             ArrayList<String> translatorNameList = new ArrayList<>();
 
             String searchQuery = "SELECT * FROM ILGAS.GrantApplication WHERE  publisherID = '" + publisherID + "' AND Status = 'pending' ORDER BY ApplicationYear, ApplicationNumber";
-            System.out.println( "getAllApplicationsPublisher Local pendingApplicationDAO searchQuery  " + searchQuery );
+            System.out.println( "getAllApplicationsPublisher Remote pendingApplicationDAO searchQuery  " + searchQuery );
             try {
 
                 conn = DBConn.getConnection();
@@ -250,6 +249,11 @@ public class pendingApplicationDAO {
                     application.setApplicationYear( res.getString( "ApplicationYear" ) );
                     application.setReferenceNumber( ReferenceNumber );
                     application.setCompany( res.getString( "company" ) );
+                    String company = res.getString( "company" );
+                    System.out.println( "openApplicationDAO  company " + company );
+                    String companyCountry = getCompanyCountry( company );
+                    System.out.println( "openApplicationDAO  companyCountry " + companyCountry );
+                    application.setCompanyCountry( companyCountry );
                     application.setPublisherID( res.getInt( "publisherID" ) );
                     application.setUserID( res.getString( "userID" ) );
 
@@ -269,9 +273,6 @@ public class pendingApplicationDAO {
 
                     application.setBookTitle( bookTitle[0] );
 
-//                    ArrayList<String[]> documentListing = new ArrayList<>();
-//
-//                    documentListing = getDocuments(ReferenceNumber);
                     application.setAgreement( res.getString( "agreement" ) );
                     application.setAgreementDocName( res.getString( "agreementDocName" ) );
                     application.setContract( res.getString( "contract" ) );
@@ -383,7 +384,7 @@ public class pendingApplicationDAO {
 
                         translatorNameList.add( translatorNameForList );
 
-                        singleTranslatorTrackList.clear();
+//                        singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker( translatorTrackId.get( i ) );
                         translatorTrackList.add( singleTranslatorTrackList );
 
@@ -483,6 +484,7 @@ public class pendingApplicationDAO {
         return languages.trim();
     }
 
+
     @SuppressWarnings( "unchecked" )
     public static ArrayList<String> getTransDocs( String ReferenceNumber ) throws DBException {
 
@@ -490,7 +492,9 @@ public class pendingApplicationDAO {
         PreparedStatement ps = null;
         ResultSet res = null;
 
-//        String trans = "";
+        String trans = "";
+
+        // ArrayList<String> translatorCVLst = new ArrayList<>();
         String[] translatorCVLst;// = new String[4];
         ArrayList<String> translatorDocsLst = new ArrayList<String>();
 
@@ -498,13 +502,16 @@ public class pendingApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement( "SELECT Translator.Name, TranslatorTrack.translatorCVDocName, TranslatorTrack.translatorCV, TranslatorTrack.copiesTranslationSample, TranslatorTrack.copiesTranslationSampleDocName \n"
+            ps = conn.prepareStatement( "SELECT Translator.Name, TranslatorTrack.translatorCVDocName, TranslatorTrack.translatorCV, "
+                    + " TranslatorTrack.Contract , TranslatorTrack.ContractDocName \n"
                     + "FROM ILGAS.TranslatorTrack\n"
                     + "INNER JOIN ILGAS.Translator ON TranslatorTrack.idTranslator = Translator.idTranslator\n"
                     + "WHERE TranslatorTrack.translatorCVDocName IS NOT NULL  \n"
                     + "AND  TranslatorTrack.ReferenceNumber = ? \n"
                     + "order by TranslatorTrack.idTranslator" );
 
+//            ps = conn.prepareStatement("SELECT translatorCVDocName, translatorCV, copiesTranslationSample, copiesTranslationSampleDocName FROM TranslatorTrack "
+//                    + "WHERE ReferenceNumber = ?");
             ps.setString( 1, ReferenceNumber );
 
             res = ps.executeQuery();
@@ -516,8 +523,14 @@ public class pendingApplicationDAO {
                     translatorCVLst[0] = res.getString( 1 );
                     translatorCVLst[1] = res.getString( 2 );
                     translatorCVLst[2] = res.getString( 3 );
-                    translatorCVLst[3] = "TEST"; //res.getString(3);
-                    translatorCVLst[4] = "TEST"; //res.getString(4);
+                    translatorCVLst[3] = res.getString( 4 );
+                    translatorCVLst[4] = res.getString( 5 );
+
+                    System.out.println( "getTransDocs translatorCVLst " + res.getString( 1 ) + " Name" );
+                    System.out.println( "getTransDocs translatorCVLst " + res.getString( 2 ) + " translatorCVDocName" );
+                    System.out.println( "getTransDocs translatorCVLst " + res.getString( 3 ) + " translatorCV" );
+                    System.out.println( "getTransDocs translatorCVLst " + res.getString( 4 ) + " Contract" );
+                    System.out.println( "getTransDocs translatorCVLst " + res.getString( 5 ) + " ContractDocName" );
 
                     translatorDocsLst.add( Arrays.toString( translatorCVLst ) );
                 }
@@ -752,9 +765,8 @@ public class pendingApplicationDAO {
 
             ps = conn.prepareStatement( "SELECT "
                     + "Agreement, AgreementDocName, "
-                    + "Contract, ContractDocName, "
                     + "AddendumRightsAgreement, AddendumRightsAgreementName"
-                    + " FROM ILGAS.TranslatorTrack WHERE referenceNumber = ?" );
+                    + " FROM ILGAS.TranslationRightsHolder WHERE ReferenceNumber = ?" );
 
             ps.setString( 1, ReferenceNumber );
 
@@ -792,9 +804,9 @@ public class pendingApplicationDAO {
 //                System.out.println("getRightsAgreement Contract columnList[2] " + res.getString("Contract"));
                 columnList[3] = res.getString( 4 );
 //                System.out.println("getRightsAgreement ContractDocName columnList[3] " + res.getString("ContractDocName"));
-                columnList[4] = res.getString( 5 );
+//                columnList[4] = res.getString( 5 );
 //                System.out.println("getRightsAgreement AddendumRightsAgreement columnList[4] " + res.getString("AddendumRightsAgreement"));
-                columnList[5] = res.getString( 6 );
+//                columnList[5] = res.getString( 6 );
 //                System.out.println("getRightsAgreement AddendumRightsAgreementName columnList[5] " + res.getString("AddendumRightsAgreementName"));
 
 //                columnList[6] = res.getString(7);
@@ -1187,6 +1199,47 @@ public class pendingApplicationDAO {
         DBConn.close( conn, ps, res );
         System.out.println( "getBookNotes(String appRef)  " + bookNotes + " referenceNumber " + appRef );
         return bookNotes;
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public static String getCompanyCountry( String company ) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        String companyCountry = "";
+
+        try {
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement( "SELECT Country FROM ILGAS.international_publishers WHERE Company = ?" );
+
+            ps.setString( 1, company );
+
+            res = ps.executeQuery();
+
+            if ( res != null ) {
+                while ( res.next() ) {
+
+                    companyCountry = res.getString( 1 );
+
+                }
+
+            }
+
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 getCompanyCountry Excepion while accessing database" );
+        }
+
+        DBConn.close( conn, ps, res );
+
+        System.out.println( "getCompanyCountry(String company)  " + company + " companyCountry " + companyCountry );
+
+        return companyCountry;
     }
 
     @SuppressWarnings( "unchecked" )
@@ -1785,6 +1838,157 @@ public class pendingApplicationDAO {
         }
 
         return id;
+    }
+
+    
+      @SuppressWarnings( "unchecked" )
+    public static ArrayList<String> getTranslatorTracker( String TranslatorTrackId ) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        ArrayList resultList = new ArrayList<>();
+        ArrayList testList = new ArrayList<>();
+
+        TranslatorTracker translatorTracker;
+
+        try {
+            conn = DBConn.getConnection();
+
+            translatorTracker = new TranslatorTracker();
+
+            ps = conn.prepareStatement( "SELECT DISTINCT\n"
+                    + "	ILGAS.Translator.Name,\n"
+                    + "	ILGAS.TranslatorTrack.Title,\n"
+                    + "	ILGAS.Author.Name,\n"
+                    + "	ILGAS.TranslatorTrack.ReferenceNumber\n"
+                    + "FROM\n"
+                    + "	ILGAS.Author\n"
+                    + "	INNER JOIN ILGAS.Application_Author\n"
+                    + "	 ON ILGAS.Author.idAuthor = ILGAS.Application_Author.idAuthor\n"
+                    + "	INNER JOIN ILGAS.TranslatorTrack\n"
+                    + "	 ON ILGAS.Application_Author.ReferenceNumber = ILGAS.TranslatorTrack.ReferenceNumber\n"
+                    + "	INNER JOIN ILGAS.Translator\n"
+                    + "	 ON ILGAS.TranslatorTrack.idTranslator = ILGAS.Translator.idTranslator\n"
+                    + "WHERE\n"
+                    + "	ILGAS.Translator.idTranslator =  ?" );
+            ps.setString( 1, TranslatorTrackId );
+
+            res = ps.executeQuery();
+
+            translatorTracker.setTranslatorID( TranslatorTrackId );
+
+            while ( res.next() ) {
+
+                testList = new ArrayList<>();
+
+                //add translator
+                testList.add( res.getString( 1 ) );
+
+                //add author
+                testList.add( res.getString( 3 ) );
+
+                //add book title
+                testList.add( res.getString( 2 ) );
+
+                //add ReferenceNumber
+                testList.add( res.getString( 4 ) );
+
+                //add record to resultList
+                resultList.add( testList );
+
+                System.out.println( "pendingApplicationDAO getTranslatorTracker  translator: " + res.getString( 1 ) + " author: " + res.getString( 2 ) + " title: " + res.getString( 3 ) + " ReferenceNumber: " + res.getString( 4 ) );
+
+            }
+
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 pendingApplicationDAO Excepion while accessing database" );
+        }
+
+        DBConn.close( conn, ps, res );
+
+        for ( int u = 0; u < resultList.size(); u++ ) {
+            System.out.println( "pendingApplicationDAO resultList " + u + "  " + resultList.get( u ) );
+        }
+
+        return resultList;
+    }
+    
+        @SuppressWarnings( "unchecked" )
+    public static ArrayList<String> getPressCoverage( String ReferenceNumber ) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        ArrayList<String> pressCoverageLst = new ArrayList<>();
+        String[] pressCoverageArray;
+        try {
+
+            conn = DBConn.getConnection();
+
+            ps = conn.prepareStatement( "SELECT PressCuttings, PressCuttingsName \n"
+                    + "FROM ILGAS.PressCuttings\n"
+                    + "WHERE ReferenceNumber = ?" );
+
+            ps.setString( 1, ReferenceNumber );
+
+            res = ps.executeQuery();
+            pressCoverageArray = new String[ 4 ];
+            int idx = 1;
+            if ( res != null ) {
+                while ( res.next() ) {
+
+                    System.out.println( "idx  " + idx );
+                    System.out.println( "getPressCoverage pressCoverageLst Loop res.getString(1)  " + res.getString( 1 ) );
+                    System.out.println( "getPressCoverage pressCoverageLst Loop res.getString(2)  " + res.getString( 2 ) );
+
+                    String fileName = res.getString( 1 ).trim();
+                    String basename = FilenameUtils.getBaseName( fileName );
+                    String fullPath = FilenameUtils.getFullPath( fileName );
+                    String extension = FilenameUtils.getExtension( fileName );
+
+                    pressCoverageArray[0] = "http://www.literatureirelandgrantapplication.com:8080" + fileName;
+                    pressCoverageArray[1] = res.getString( 2 ).trim();
+                    System.out.println( " !Thumbs res.getString(1)   " + res.getString( 1 ) );
+                    System.out.println( " !Thumbs  res.getString(2)  " + res.getString( 2 ) );
+
+                    if ( "pdf".equals( extension ) ) {
+                        System.out.println( " IS PDF   " );
+
+                        String thumbFilename = basename + ".jpg";
+                        String thumbFullPath = fullPath + "Thumbs/" + thumbFilename;
+
+                        System.out.println( " thumbFilename   " + thumbFilename );
+                        System.out.println( " thumbFullPath   " + thumbFullPath );
+
+                        pressCoverageArray[2] = "http://www.literatureirelandgrantapplication.com:8080" + thumbFullPath;
+                        pressCoverageArray[3] = thumbFilename;
+
+                    }
+
+                    pressCoverageLst.add( Arrays.toString( pressCoverageArray ) );
+                    pressCoverageArray = new String[ 4 ];
+                    idx++;
+
+                }
+
+            }
+
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 Excepion while accessing database" );
+        }
+
+        DBConn.close( conn, ps, res );
+        System.out.println( "getPressCoverage pressCoverageLst  " + pressCoverageLst.toString() );
+        return pressCoverageLst;
     }
 
 }

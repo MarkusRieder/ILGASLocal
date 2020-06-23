@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="robots" content="noindex, nofollow">
+        <meta name="robots" content="noindex, nofollow">
 
         <title>Translation Grant Application System</title>
 
@@ -23,42 +23,1353 @@
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>-->
         <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-        <!--        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-                <script src="https://code.jquery.com/jquery-migrate-3.0.1.js"></script>-->
-
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/datepicker.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-        <link type="text/css" rel="stylesheet" href="jquery.inputfile.css" />
-
+        <link rel="stylesheet" type="text/css" href="css/jquery.inputfile.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.boot/strapvalidator/0.5.3/css/bootstrapValidator.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" />
         <link rel="stylesheet" type="text/css" href="css/newApplication.css">
-
+        
+        
+        <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script>
         <script type="text/javascript"  src="js/moment.js"></script>
-        <!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>-->
+        <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
         <script type="text/javascript"  src="js/bootstrap-datepicker.js"></script>
         <script type="text/javascript"  src="js/jquery-ui.js"></script>
-
         <script type="text/javascript"  src="js/pdf.js"></script>
         <script type="text/javascript"  src="js/pdf.worker.js"></script>
-
         <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-        <script type="text/javascript" src="js/xregexp-all.js"></script> 
-        <!--<script src="js/validateFileName.js"></script>-->
-        <!--          <script src="js/formValidator.js"></script>-->
-        <script  type="text/javascript"  src="js/newApplicationFormValidator.js"></script>
-        <script src="js/newApplication.js"></script>
+        <script type="text/javascript"  src="js/xregexp-all.js"></script> 
+        <script type="text/javascript"  src="js/newApplicationFormValidator.js"></script>
 
+
+
+        <script>
+
+            var translatorArray = [];
+            var rightsHolderArray = [];
+            var authorArray = [];
+            var languageArray = [];
+            var pressCuttingArray = [];
+            var Name = "";
+            var Author = "";
+            var counter = 0;
+            var Authorcounter = 0;
+            var counterTranslators = 0;
+            var counterRightsHolders = 0;
+            var pressCuttingCounter = 0;
+            var translatorCounter = 0;
+            var translatorName876 = "";
+            var itemValue = "";
+
+
+
+            //    localStorage.clear();
+
+            PDFJS.workerSrc = 'js/pdf.worker.js';
+
+//            $(document).ready(function () {
+            $("#genre").removeAttr("autocomplete").attr("autocomplete", "On");
+            $("#countryOfPublication").removeAttr("autocomplete").attr("autocomplete", "On");
+            $("#appTargetLanguage").removeAttr("autocomplete").attr("autocomplete", "On");
+            $("#appLanguageOriginal").removeAttr("autocomplete").attr("autocomplete", "On");
+
+            $.datepicker.setDefaults({
+                dateFormat: 'dd/mm/yy',
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                autoclose: true,
+                changeMonth: true,
+                changeYear: true,
+                gotoCurrent: true,
+                orientation: "bottom" // <-- and add this
+            });
+//            });
+
+            /*
+             * Section AutoComplete
+             */
+
+            /*
+             * AutoComplete_Genres
+             */
+
+            $(function () {
+                $("#genre").autocomplete({
+                    source: 'ACGenre', // The source of the AJAX results
+                    dataType: 'json',
+                    contentType: "application/json",
+                    data: '',
+                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                        $("#genre").val(ui.item.name);
+                        return false;
+                    },
+                    select: function (event, ui) { // What happens when an autocomplete result is selected
+                        $("#genre").val(ui.item.name);
+                        $('#idgenres').val(ui.item.id);
+                    }
+                });
+            });
+
+
+            //AutoComplete_country
+
+            $(function () {
+                $("#countryOfPublication").autocomplete({
+                    source: 'AutoComplete_country', // The source of the AJAX results
+                    dataType: 'json',
+                    data: '',
+                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                        $("#countryOfPublication").val(ui.item.name);
+                        return false;
+                    },
+                    select: function (event, ui) { // What happens when an autocomplete result is selected
+                        $("#countryOfPublication").val(ui.item.name);
+//                        $('#countryCode').val(ui.item.id);
+                    }
+                });
+            });
+
+            $(function () {
+                function split(val) {
+                    return val.split(/,\s*/);
+                }
+                function extractLast(term) {
+                    return split(term).pop();
+                }
+
+                $("#appTargetLanguage")
+                        // don't navigate away from the field on tab when selecting an item
+                        .on("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                    $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            source: function (request, response) {
+                                $.getJSON("ACLanguages", {
+                                    term: extractLast(request.term)
+                                }, response);
+                            },
+                            search: function () {
+                                // custom minLength
+                                var term = extractLast(this.value);
+                                if (term.length < 2) {
+                                    return false;
+                                }
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                languageArray.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                console.log("this.value:  ", this.value); //List
+                                console.log("terms: ", terms); //Array
+
+                                //languageArray.push(ui.item.value);
+
+                                //Do something
+                                var arrayLength = languageArray.length;
+                                for (var i = 0; i < arrayLength; i++) {
+                                    console.log("itemValue   " + i + ":  ", languageArray[i]);
+                                }
+
+                                $("#language_array").val(languageArray);
+                                return false;
+                            }
+                        });
+
+            });
+
+            $(function () {
+                $("#appLanguageOriginal").autocomplete({
+                    source: 'ACLanguages', // The source of the AJAX results
+                    dataType: 'json',
+                    data: '',
+                    minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+                    focus: function (event, ui) { // What happens when an autocomplete result is focused on
+                        $("#appLanguageOriginal").val(ui.item.name);
+                        return false;
+                    },
+                    select: function (event, ui) { // What happens when an autocomplete result is selected
+                        $("#appLanguageOriginal").val(ui.item.name);
+                    }
+                });
+            });
+
+
+            //get selectpicker selection 
+
+            $(document).ready(function () {
+                $('.selectpicker').on('change', function () {
+                    var selected = $(this).find("option:selected").val();
+                });
+
+                $("#whichkey").on("mousedown", function (event) {
+                    $("#log").html(event.type + ": " + event.which);
+                });
+
+            });
+
+            //http://stackoverflow.com/questions/18999501/bootstrap-3-keep-selected-tab-on-page-refresh
+            $(document).ready(function () {
+                if (location.hash) {
+                    $("a[href='" + location.hash + "']").tab("show");
+                }
+                $(document.body).on("click", "a[data-toggle]", function (event) {
+                    location.hash = this.getAttribute("href");
+                });
+            });
+            $(window).on("popstate", function () {
+                var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+                $("a[href='" + anchor + "']").tab("show");
+            });
+
+
+            //https://www.experts-exchange.com/questions/28687200/how-to-load-extrenal-url-in-bootstrap-tabs.html
+            $(function () {
+                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                    var tab = $(e.target.attributes.href.value);
+                    $(tab).load(tab.data('url'));
+                });
+                $('.nav-tabs a:first').each(function () {
+                    $(this.attributes.href.value).load($(this.attributes.href.value).data('url'));
+                });
+            });
+
+
+
+            //Triggering the Tooltips
+            $(document).ready(function () {
+
+                $('[data-toggle="tooltip"]').tooltip();
+                $(".tip-top").tooltip({placement: 'top'});
+            });
+
+
+
+
+            /*
+             * the following functions will copy 
+             * the selected file name (for upload) to the label input
+             */
+
+//            $(function () {
+//                $('div.translator_cv').on('change', ':file', function () {
+//                    //                    alert("translator_cv");
+//                    var input = $(this),
+//                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+//                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+//                    input.trigger('fileselect', [numFiles, label]);
+//                    //                  var label_translatorid2 = "label_translator" + id2;
+//                    console.log("div.translator_cv Name ", label);
+//                    document.getElementById("label_translator0").value = label;
+//                });
+//            });
+            $(function () {
+                $('div.agreement').on('change', ':file', function () {
+                    alert("div.agreement");
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    //                  var label_translatorid2 = "label_translator" + id2;
+                    console.log("label_agreement1 Name ", label);
+                    document.getElementById("label_agreement1").value = label;
+                });
+            });
+            $(function () {
+                $('div.addendum').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    //                  var label_translatorid2 = "label_translator" + id2;
+                    document.getElementById("label_addendum1").value = label;
+                });
+            });
+//            $(function () {
+//                $(document).on('change', 'div.translatorcv :file', function () {
+//                    //                    alert("translatorcv");
+//                    var id = parseInt(this.id.replace("translator_cv", ""));
+//                    var input = $(this),
+//                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+//                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+//                    input.trigger('fileselect', [numFiles, label]);
+//                    var label_translatorid = "label_translator_cv" + id;
+//                    console.log("label_translatorid Name ", label_translatorid);
+//                    document.getElementById(label_translatorid).value = label;
+//                });
+//            });
+            $(function () {
+                $('div.originalSample').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_originalSample").value = label;
+                });
+            });
+            $(function () {
+                $('div.translationSample').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_translationSample").value = label;
+                });
+            });
+            $(function () {
+                $('div.cover').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_cover").value = label;
+                });
+            });
+            $(function () {
+                $('div.proofPayment').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_proofPayment").value = label;
+                });
+            });
+            $(function () {
+                $('div.bankDetailForm').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_BankDetailForm").value = label;
+                });
+            });
+            $(function () {
+                $('div.signedLIcontract').on('change', ':file', function () {
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    document.getElementById("label_signedLIcontract").value = label;
+                });
+            });
+
+
+            function generatedLabels() {
+                $(document).on('change', ':file', function () {
+                    console.log("generatedLabels this ", $(this));
+
+                    var input = $(this),
+                            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                    console.log("generatedLabels numFiles ", numFiles);
+                    console.log("generatedLabels label ", label);
+                    var id = input[0].id;
+                    var label_id = "label_" + id;
+                    console.log("generatedLabels input ", input);
+                    console.log("label_id              ", label_id);
+                    document.getElementById(label_id).value = label;
+                    console.log("generatedLabels document.getElementById(" + label_id + " = ", label);
+
+//                                    $('#' + label_id).each(function () {
+//
+//                    $(this).rules("add",
+//                            {
+//                                required: true,
+//                                validFileName: true,
+//                                minlength: 2
+//                            });
+//
+//
+//
+//                    if (!$("#applicationForm").valid()) {
+//                        console.log(" Not valid ");
+//                    }
+//
+//                    /*
+//                     * validate the input element 
+//                     */
+//                    $("#applicationForm").validate($(this));
+//                });
+                });
+            }
+
+
+
+
+            function del_file(eleId) {
+                var ele = document.getElementById("delete_file" + eleId);
+                ele.parentNode.removeChild(ele);
+            }
+
+
+            /*
+             * add more Translators
+             */
+            $(document).ready(function () {
+                counterTranslators = 1;
+                $("#addElement").click(function (event) {
+                    counterTranslators++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counterTranslators + ". Translator  </div>");
+                    var $newInput = $("<input placeholder='Translator Name' type='text'> ");
+                    $newInput
+                            .attr("name", "Name" + counterTranslators)
+                            .attr("id", "tname" + counterTranslators)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#generatedForm"));
+                });
+            });
+
+
+            /*
+             * add more RightsHolders
+             */
+            $(document).ready(function () {
+                counterRightsHolders = 1;
+                $("#addAdditionalRightsHolders").click(function (event) {
+                    counterRightsHolders++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + counterRightsHolders + ".  Rights holder  </div>");
+                    var $newInput = $("<input placeholder='Rights holder name' type='text'> ");
+                    $newInput
+                            .attr("name", "Name" + counterRightsHolders)
+                            .attr("id", "rhname" + counterRightsHolders)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#RightsHolderGeneratedForm"));
+                });
+            });
+
+
+
+
+            /*
+             * Copy the first translator name to the pop up modal
+             */
+            function  copyFirstTranslatorName() {
+
+                translatorArray = [];
+                console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
+
+                /*
+                 * hide the single document upload and
+                 * remove 'OR' from 'OR add more translators'
+                 */
+                $("#uploadDocuments").hide();
+                $('#addTranslatorModala').text("add more translators");
+
+                var fn = document.getElementById("translatorName");
+                document.getElementById("first0").value = fn.value;
+                translatorName = fn.value;
+                console.log("copyFirstTranslatorName translatorName ", translatorName);
+                translatorArray.push(translatorName);
+                console.log(" first entry in translatorArray ", fn.value);
+
+                if (!localStorage.translatorContent === 0) {
+                    //function retrieve(){
+                    document.getElementById("torget").innerHTML = localStorage.getItem("translatorContent");
+                    console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("restored translatorContent " + translatorContent);
+                    }
+                }
+
+
+                /*
+                 * back To Translators tab
+                 */
+                $('#bs-example-navbar-collapse-2 a[href="#Translator"]').tab('show');
+            }
+
+
+            /*
+             * Copy the first translator name to the pop up modal
+             */
+            function  copyFirstRightsHolderName() {
+
+                rightsHolderArray = [];
+                console.log("copyFirstRightsHolderName rightsHolderArray cleared ", rightsHolderArray);
+
+                var fn = document.getElementById("rightsHoldersName0");
+                document.getElementById("firstRightsHolder0").value = fn.value;
+                rightsHolderName = fn.value;
+                console.log("copyFirstRightsHolderName rightsHolderName ", rightsHolderName);
+                rightsHolderArray.push(rightsHolderName);
+                console.log(" first entry in rightsHolderArray ", fn.value);
+
+                $("#rightsHolderArray").val(rightsHolderArray);
+                console.log("copyFirstRightsHolderName rightsHolderArray ", rightsHolderArray);
+
+                // Switch on "Add Additional Rights Holders"
+                $('#addAdditionalRightsHoldersModalDiv').toggle();
+
+                if (!localStorage.translatorContent === 0) {
+                    //function retrieve(){
+                    document.getElementById("torget").innerHTML = localStorage.getItem("translatorContent");
+                    console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("restored translatorContent " + translatorContent);
+                    }
+                }
+
+
+                // back To Rights tab
+                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
+//                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
+            }
+
+
+
+            /*
+             * generateTranslatorTab
+             */
+            function  generateTranslatorTab(indicator) {
+
+                if (indicator === 0) {
+
+                    // if we have a final list of translators (more than one)
+                    // we need to clear a possible existing tab
+
+                    $('#tnc').empty(); // empty the div before fetching and adding new data
+                    $('#tn').empty();  // empty the div before fetching and adding new data
+
+                }
+
+                $('#tnc').empty(); // empty the div before fetching and adding new data
+                $('#tn').empty();  // empty the div before fetching and adding new data
+
+                console.log("generateTranslatorTab translatorArray " + translatorArray);
+                // Generate Translator Tabs in "Rights Agreement & Contracts"-Tab
+
+                // 1: The Nav-Bar
+
+                var rightsAgreementContractsNavBar = '';
+
+                rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
+                rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
+
+                for (var i = 0; i < translatorArray.length; i++) {
+
+                    var j = i + 1;
+
+
+                    if (i === 0) {
+
+                        rightsAgreementContractsNavBar += '<li class="active"><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
+
+                    } else {
+
+                        rightsAgreementContractsNavBar += '<li><a href="#tn' + j + '" data-toggle="tab">' + translatorArray[i] + '</a></li>';
+                    }
+                }
+
+                rightsAgreementContractsNavBar += '</ul>'; // ul class="nav navbar-nav nav-tabs"
+                rightsAgreementContractsNavBar += '</div>'; // navbar-collapse
+
+                $(rightsAgreementContractsNavBar).appendTo('#tn');
+
+                // The Tabs themselves
+
+                var rightsAgreementContractsNavContent = '';
+
+                for (var i = 0; i < translatorArray.length; i++) {
+
+                    var j = i + 1;
+
+                    if (i === 0) {
+
+                        rightsAgreementContractsNavContent += '<div class="tab-pane fade in active" id="tn' + j + '">';
+
+                    } else {
+
+                        rightsAgreementContractsNavContent += '<div class="tab-pane fade" id="tn' + j + '">';
+
+                    }
+
+                    rightsAgreementContractsNavContent += '<div class="container wrapperContainer">';
+
+
+                    console.log("processFirstTranslator generateTranslatorTab Upload a copy of the CV i " + i + " j " + j + " :: " + translatorArray[i]);
+
+                    /*
+                     * Upload a copy of the CV
+                     */
+                    rightsAgreementContractsNavContent += '<div class="col-md-8" style="margin-bottom: 40px">';
+                    rightsAgreementContractsNavContent += '<div class="form-group has-feedback"> ';
+                    rightsAgreementContractsNavContent += '<label for="translator_cv' + j + '" class="control-label pull-left" >Upload a copy of ' + translatorArray[i] + '\'s CV:</label>';
+                    rightsAgreementContractsNavContent += ' <small class="pull-left" style="margin-bottom: 10px">  this should include a list of previous published literary translations</small>';
+                    rightsAgreementContractsNavContent += '<div class="input-group translatorcv pull-left">';
+                    rightsAgreementContractsNavContent += '<label class="input-group-addon btn btn-default btn-file">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Translator_CV-' + j + '" id="translator_cv' + j + '">';
+
+                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    rightsAgreementContractsNavContent += '</label>';
+                    rightsAgreementContractsNavContent += '<input id="label_translator_cv' + j + '" class="pull-left">';
+                    rightsAgreementContractsNavContent += '</div>';
+                    rightsAgreementContractsNavContent += '<input type="hidden" id="translator_cv_upload' + j + '" value="Translator_CV" name="destination">';
+                    rightsAgreementContractsNavContent += '</div>';
+                    rightsAgreementContractsNavContent += '<label for="Translator_CV' + j + '" class="validation_error_message help-block"></label> ';
+                    rightsAgreementContractsNavContent += '</div>';
+
+
+                    /*
+                     * Upload a copy of the contract with
+                     */
+                    rightsAgreementContractsNavContent += '<div class="col-md-8">';
+                    rightsAgreementContractsNavContent += '<div class="form-group has-feedback"> ';
+                    rightsAgreementContractsNavContent += '<label for="label_contract' + j + '" class="control-label pull-left" >Upload a copy of the contract with ' + translatorArray[i] + '</label>';
+                    rightsAgreementContractsNavContent += '<div class="input-group contract pull-left">';
+                    rightsAgreementContractsNavContent += '<label class="input-group-addon btn btn-default btn-file">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
+                    rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
+                    rightsAgreementContractsNavContent += '</label>';
+                    rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
+                    rightsAgreementContractsNavContent += '</div>';
+                    rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
+                    rightsAgreementContractsNavContent += '</div>';
+                    rightsAgreementContractsNavContent += '<label for="Contract" class="validation_error_message help-block"></label> ';
+                    rightsAgreementContractsNavContent += '</div>';
+
+
+                    rightsAgreementContractsNavContent += '</div  class="container EndwrapperContainer">'; // //container
+                    rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+
+                }
+
+                //show translatorTabs if hidden
+                if ($('#translatorTabs').css('display') === 'none' || $('#translatorTabs').css("visibility") === "hidden") {
+                    $('#translatorTabs').show();
+                }
+
+                $(rightsAgreementContractsNavContent).appendTo('#tnc');
+
+            }
+
+
+            //backToRightsAgreement
+            function backToRightsAgreement() {
+
+                $('#addAddRightsHolders').empty(); // empty the div before fetching and adding new data
+
+                console.log("backToRightsAgreement rightsHolderArray  ", rightsHolderArray);
+
+                var upload_number = 2;
+
+                // Get Content
+                var rightsAgreementContent = document.getElementById("rightsAgreementContracts").innerHTML;
+
+                // Store Content
+                localStorage.setItem("rightsAgreementContent", rightsAgreementContent);
+                console.log("backToRightsAgreement localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
+                if (!localStorage.rightsAgreementContent === 0) {
+                    console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent);
+                    for (i = 0; i < rightsAgreementContent.length; i++) {
+                        console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent[i]);
+                    }
+                }
+
+                /*
+                 * fill rightsHolderArray with rightsAgreementItemValue
+                 */
+                for (var i = 2; i <= counterRightsHolders; i++) {
+                    var nr = "rhname" + i;
+                    console.log("backToRightsAgreement nr ", nr);
+                    var itemRightsAgreement = document.getElementById(nr);
+                    rightsAgreementItemValue = itemRightsAgreement.value;
+                    console.log("backToRightsAgreement itemValue ", rightsAgreementItemValue);
+                    rightsHolderArray.push(rightsAgreementItemValue);
+                    console.log("backToRightsAgreement next entry in translatorArray ", rightsAgreementItemValue);
+                }
+
+
+                // Switch off "Add more translators"
+                $('#addAdditionalRightsHoldersModalDiv').toggle();
+
+                // Change Title from "Translation rights holder" to "Translation rights holder(s)"
+                document.getElementById("rightsHoldersNameLabel").innerHTML = 'Translation rights holder(s)';
+
+                // Disable first Translation rights holder name input element
+                document.getElementById("rightsHoldersName0").disabled = 'true';
+
+                /*
+                 * remove empty items from array
+                 */
+                rightsHolderArray = rightsHolderArray.filter(function (e) {
+                    return e;
+                });
+
+                /*
+                 * Display all TranslatorrightsHolder input element each
+                 */
+                for (var i = 1; i < rightsHolderArray.length; i++) {
+
+                    console.log("backToRightsAgreement rightsHolderArray " + rightsHolderArray[i]);
+
+                    var additionalRightsHoldersTag = '';
+
+                    additionalRightsHoldersTag += '<div class="form-group pull-left has-feedback">';
+                    additionalRightsHoldersTag += '<div class="input-group pull-left">';
+                    additionalRightsHoldersTag += ' <input id="rightsHoldersName' + i + '"';
+                    additionalRightsHoldersTag += ' type="text"  ';
+                    additionalRightsHoldersTag += ' class="form-control addRightsHolder"';
+                    additionalRightsHoldersTag += ' name="rightsHoldersName' + i + '"';
+                    additionalRightsHoldersTag += ' value="' + rightsHolderArray[i] + '"';
+                    additionalRightsHoldersTag += ' required="required">';
+                    additionalRightsHoldersTag += '</div>';
+                    additionalRightsHoldersTag += '</div>';
+
+                    $(additionalRightsHoldersTag).appendTo('#addAddRightsHolders');
+
+                }
+
+                console.log("additionalRightsHoldersTag).appendTo('#addAddRightsHolders' ");
+
+//    $("#applicationForm").validate();
+
+                $('.addRightsHolder').each(function () {
+
+                    $(this).rules("add",
+                            {
+                                required: true,
+                                validname: true,
+                                minlength: 2
+                            });
+
+
+
+                    if (!$("#applicationForm").valid()) {
+                        console.log(" Not valid ");
+                    }
+
+                    /*
+                     * validate the input element 
+                     */
+                    $("#applicationForm").validate($(this));
+                });
+
+                $("#rightsHolderArray").val(rightsHolderArray);
+
+                // back To RightsAgreement tab
+//                $('#bs-example-navbar-collapse-2 a[href="#Rights"]').tab('show');
+                // back To Translators tab
+                $('#bs-example-navbar-collapse-1 a[href="#Translator"]').tab('show');
+
+                // if we have a final list of translators (more than one)
+                // we need to clear a possible existing tab first
+                generateTranslatorTab(0);
+            }
+
+
+            //backToTranslators
+            function backToTranslators() {
+
+                $('#addTransl').empty(); // empty the div before fetching and adding new data
+
+                console.log("backToTranslators translatorArray  ", translatorArray);
+
+                var upload_number = 2;
+
+                // Get Content
+                var translatorContent = document.getElementById("torget").innerHTML;
+
+                // Store Content
+                if (!localStorage.translatorContent === 0) {
+                    //function retrieve(){
+                    document.getElementById("torget").innerHTML = localStorage.getItem("translatorContent");
+                    console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
+                    for (i = 0; i < translatorContent.length; i++) {
+                        console.log("restored translatorContent " + translatorContent);
+                    }
+                }
+
+
+
+                for (var i = 2; i <= counterTranslators; i++) {
+
+                    var nr = "tname" + i;
+                    console.log("backToTranslators nr ", nr);
+                    var translatorItem = document.getElementById(nr);
+                    translatorItemValue = translatorItem.value;
+                    console.log("backToTranslators itemValue ", translatorItemValue);
+                    translatorArray.push(translatorItemValue);
+                    console.log("backToTranslators next entry in translatorArray ", translatorItemValue);
+                }
+
+                // Switch off "Add more translators"
+                $('#addTranslatorModalDiv').toggle();
+
+                // Change Title from "Translator" to "Translators"
+                document.getElementById("translatorNameLabel").innerHTML = 'Translators';
+
+                // Disable first Translator input element
+//                document.getElementById("translatorName").disabled = 'true';
+
+                /*
+                 * remove empty items from array
+                 */
+                translatorArray = translatorArray.filter(function (e) {
+                    return e;
+                });
+
+                /*
+                 * Display all Translators in input element each
+                 */
+                for (var i = 1; i < translatorArray.length; i++) {
+
+                    console.log("backToTranslators translatorArray " + translatorArray[i]);
+
+                    var additionalTranslatorTag = '';
+
+                    additionalTranslatorTag += '<div class="form-group pull-left has-feedback">';
+                    additionalTranslatorTag += '<div class="input-group pull-left">';
+                    additionalTranslatorTag += ' <input id="translatorName' + i + '" ';
+                    additionalTranslatorTag += ' type="text"  ';
+                    additionalTranslatorTag += ' class="form-control"';
+                    additionalTranslatorTag += ' name="translatorName" ';
+                    additionalTranslatorTag += ' value="' + translatorArray[i] + '"';
+                    additionalTranslatorTag += ' required="required">';
+                    additionalTranslatorTag += '</div>';
+                    additionalTranslatorTag += '</div>';
+
+                    $(additionalTranslatorTag).appendTo('#addTransl');
+
+                    $("#remove_field").click(function () {
+                        alert("remove_field");
+                        $("#translatorName" + i).remove();
+
+                    });
+                }
+
+                console.log("additionalTranslatorTag).appendTo('#addTransl' ");
+
+//    $("#applicationForm").validate();
+
+                /*
+                 * loop through .addTranslators (class in additionalTranslatorTag)
+                 */
+                $('.addTranslators').each(function () {
+
+                    /*
+                     * add the rule to each input element
+                     */
+                    $(this).rules("add",
+                            {
+                                required: true,
+                                validname: true,
+                                minlength: 2
+                            });
+
+                    if (!$("#applicationForm").valid()) {
+                        console.log(" Not valid ");
+                    }
+
+                    /*
+                     * validate the input element 
+                     */
+                    $("#applicationForm").validate($(this));
+                });
+
+                console.log("backToTranslators #translatorArray.val(translatorArray) " + translatorArray);
+                console.log(translatorArray);
+                console.log("backToTranslators #translatorArray.length " + translatorArray.length);
+                $("#translatorArray").val(translatorArray);
+
+                // back To Translators tab
+                $('#bs-example-navbar-collapse-2 a[href="#Translator"]').tab('show');
+
+                // if we have a final list of translators (more than one)
+                // we need to clear a possible existing tab first
+                generateTranslatorTab(0);
+
+            }
+
+
+            //Add another Press Cutting
+
+            $(document).ready(function () {
+                pressCuttingCounter = 1;
+                $("#pressCutting").click(function (event) {
+                    console.log("pressCuttingCounter   ", pressCuttingCounter);
+                    pressCuttingCounter++;
+                    var $newDiv = $("<div class='input-group' style='margin-bottom :2px'>" + pressCuttingCounter + ". Press Cutting  </div>");
+                    var $newInput = $("<input placeholder='Press Cutting' type='text'> ");
+                    $newInput
+                            .attr("name", "pressCutting" + pressCuttingCounter)
+                            .attr("id", "pressCutting" + pressCuttingCounter)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#addPressCuttingForm"));
+                });
+            });
+
+
+
+            function backToMisc() {
+                var upload_number = 2;
+                for (var i = 2; i <= pressCuttingCounter; i++) {
+                    console.log("backToMisc()   ");
+                    var nr = "name" + i;
+                    var item = document.getElementById(nr);
+                    var itemValue = item.value;
+
+                    pressCuttingArray.push(itemValue);
+
+//                    var moreUploadTag = '';
+//
+//                    moreUploadTag += '<h1> backToMisc moreUploadTag </h1>';
+//                    moreUploadTag += '<div class="col-md-8" style="margin-bottom: 20px">';
+//                    moreUploadTag += '<label for="label_translator' + upload_number + '" class="control-label pull-left" id="123">Upload a copy of ' + itemValue + '\'s CV: </label>';
+//                    moreUploadTag += '<br>';
+//                    moreUploadTag += ' <small class="pull-left" style="margin-bottom: 10px">this should include a list of previous published literary translations</small>';
+//                    moreUploadTag += '<div class="input-group translatorcv pull-left" style="margin-bottom: 40px;">';
+//                    moreUploadTag += '<label class="btn btn-default btn-file pull-left">';
+//                    moreUploadTag += 'Select file ';
+//                    moreUploadTag += '<input multiple="" name="file" id="translator_cv' + upload_number + '" type="file">';
+//                    moreUploadTag += '<span class="glyphicon glyphicon-folder-open"></span>';
+//                    moreUploadTag += '</label>';
+//                    moreUploadTag += '<input id="label_translator' + upload_number + '" class="pull-left">';
+//                    moreUploadTag += '<br>';
+//                    moreUploadTag += '<br>';
+//                    moreUploadTag += '<input id="translator_cv_upload' + upload_number + '" value="Translator_CV" name="destination" type="hidden">';
+//                    moreUploadTag += '</div>';
+//                    moreUploadTag += '</div>';
+//
+//                    $(moreUploadTag).appendTo('#additionalTranslator');
+
+//                    upload_number++;
+                }
+
+                $('#bs-example-navbar-collapse-1 a[href="#Misc"]').tab('show');
+                var arrayLength = pressCuttingArray.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    console.log("pressCuttingArray   ", pressCuttingArray[i]);
+                }
+                $("#pressCuttingArray").val(pressCuttingArray);
+            }
+
+
+
+            //add more Authors
+            $(document).ready(function () {
+                Authorcounter = 1;
+                $("#addAuthor").click(function (event) {
+
+                    Authorcounter++;
+                    var $newDiv = $("<div class='col-sm-12' style='margin-bottom:2px'>" + Authorcounter + ". Author  </div>");
+                    var $newInput = $("<input placeholder='First Name'  type='text' autofocus>");
+                    $newInput
+                            .attr("name", "FirstName")
+                            .attr("id", "authorFirstName" + Authorcounter)
+                            .addClass("text wsp");
+                    $newInput.appendTo($newDiv);
+                    var $newInput = $("<input placeholder='Last Name' type='text'> ");
+                    $newInput
+                            .attr("name", "LastName")
+                            .attr("id", "authorLastName" + Authorcounter)
+                            .addClass("text");
+                    $newInput.appendTo($newDiv);
+                    $newDiv.appendTo($("#generatedFormAuthors"));
+                });
+            });
+
+
+
+            function  copyFirstRow2() {
+                authorArray = [];
+                console.log("document.getElementById(aFirstName)   ", document.getElementById("aFirstName").value);
+                var aFirstName = document.getElementById("aFirstName");
+                console.log("aFirstName.value   ", aFirstName.value);
+                document.getElementById("firstAuthor0").value = aFirstName.value;
+                var aLastName = document.getElementById("aLastName");
+                document.getElementById("lastAuthor0").value = aLastName.value;
+                var fulln = aFirstName.value + " " + aLastName.value;
+                authorArray.push(fulln, aFirstName.value, aLastName.value);
+            }
+            ;
+
+
+
+            function backToBooks2() {
+
+                for (var i = 2; i <= Authorcounter; i++) {
+
+                    var nr = "authorFirstName" + i;
+                    var nrL = "authorLastName" + i;
+                    var first = document.getElementById(nr);
+                    var last = document.getElementById(nrL);
+                    var firstValue = first.value;
+                    var lastValue = last.value;
+                    var fullName = firstValue + " " + lastValue;
+
+                    authorArray.push(fullName, firstValue, lastValue);
+                }
+                ;
+
+                $('#bs-example-navbar-collapse-1 a[href="#books"]').tab('show');
+                var arrayLength = authorArray.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    console.log("authorArray   " + i + ":  ", authorArray[i]);
+                }
+                $("#author_array").val(authorArray);
+            }
+
+
+
+
+            function myFunction() {
+                //                alert("myfunction");
+                translatorName876 = "";
+                var x = document.getElementById("translatorName");
+                console.log("document.getElementById(translatorName) ", x);
+                translatorName876 = x.value;
+                var tester = "Upload a copy of " + translatorName876 + "'s CV:";
+                localStorage.setItem('translatorName876', tester);
+                localStorage.setItem('translatorName8', translatorName876);
+                var tripper = localStorage.getItem("translatorName876");
+                //                document.getElementById("123").innerHTML = tripper;
+                //                document.getElementById("translatorName123").value = localStorage.getItem("translatorName8");
+                ////                console.log("translatorName876   ", localStorage.getItem("translatorName876"));
+                ////                console.log("translatorName8   ", localStorage.getItem("translatorName8"));
+                ////                console.log("tester   ", tester);
+                ////                console.log("tripper   ", tripper);
+
+                $("#translatorArray").val(translatorName876);
+
+
+                translatorArray = [];
+                console.log("copyFirstTranslatorName translatorArray cleared ", translatorArray);
+
+                var fn = document.getElementById("translatorName");
+                document.getElementById("first0").value = fn.value;
+                Name = fn.value;
+                console.log("copyFirstTranslatorName Name ", Name);
+                translatorArray.push(Name);
+                console.log(" first entry in translatorArray ", fn.value);
+
+                //                copyFirstTranslatorName();
+                generateTranslatorTab(1);
+            }
+            ;
+
+
+            //https://stackoverflow.com/questions/3392493/adjust-width-of-input-field-to-its-input
+
+            $(document).ready(function () {
+                var input = document.querySelector('input'); // get the input element
+                //                alert(input);
+                input.addEventListener('input', resizeInput); // bind the "resizeInput" callback on "input" event
+                resizeInput.call(input); // immediately call the function
+
+                function resizeInput() {
+                    this.style.width = this.value.length + "ch";
+                }
+            });
+
+
+            //Translatorform
+
+            //check if Translator name has been deleted
+            $(document).ready(function () {
+                $("#translatorName").change(function () {
+                    if ($('#translatorName').val() === '') {
+                        $(uploadDocuments).hide();
+                        translatorArray = []; // clear translatorArray
+                        $('#tnc').empty(); // empty the div 
+                        $('#tn').empty();  // empty the div 
+                        $(translatorTabs).hide(); // close div
+                        $('#translatorName').trigger('click');
+                        console.log(translatorArray);
+                    }
+
+                });
+            });
+
+            // When typing Translator name change text for uploadDocuments 
+            $(document).ready(function () {
+                $("#translatorName").keyup(function () {
+                    //show translatorTabs if hidden
+                    if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
+                        $(uploadDocuments).show();
+                    }
+                    var dInput = $(this).val();
+                    console.log(dInput);
+                    $('#uploadDocuments').html("upload documents for <br/>" + $(this).val() + " ");
+                    $("#uploadDocuments").append($('<span class="glyphicon glyphicon-import"></span>'));
+                    $('#addTranslatorModala').text("OR add more translators");
+                    //$(".dDimension:contains('" + dInput + "')").css("display","block");
+                });
+            });
+
+            //check if Translator name has been pasted in
+            $(document).ready(function () {
+                $("#translatorName").on("paste", function () {
+                    //show translatorTabs if hidden
+                    if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
+                        $(uploadDocuments).show();
+                    }
+                    var dInput = $(this).val();
+                    console.log(dInput);
+                    $('#uploadDocuments').html("upload documents for <br/>" + $(this).val() + " ");
+                    $("#uploadDocuments").append($('<span class="glyphicon glyphicon-import"></span>'));
+                    $('#addTranslatorModala').text("OR add more translators");
+                    $('#translatorName').trigger('click');
+                    //$(".dDimension:contains('" + dInput + "')").css("display","block");
+                });
+            });
+
+            // check if Translator name is been filled from cache
+            $(document).ready(function () {
+                $("#translatorName").mouseup(function () {
+                    if ($('#translatorName').val() !== '') {
+                        //show translatorTabs if hidden
+                        if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
+                            $(uploadDocuments).show();
+                        }
+                        var dInput = $(this).val();
+                        console.log(dInput);
+                        $('#uploadDocuments').html("upload documents for <br/>" + $(this).val() + " ");
+                        $("#uploadDocuments").append($('<span class="glyphicon glyphicon-import"></span>'));
+                        $('#addTranslatorModala').text("OR add more translators");
+                        $('#translatorName').trigger('click');
+                    }
+                });
+            });
+
+            //https://www.thewebflash.com/clear-button-in-bootstrap-input-group-component/
+            $(document).ready(function () {
+                $('.has-clear input[type="text"]').on('input propertychange', function () {
+                    var $this = $(this);
+                    var visible = Boolean($this.val());
+                    $this.siblings('.form-control-clear').toggleClass('hidden', !visible);
+                }).trigger('propertychange');
+
+                $('.form-control-clear').click(function () {
+                    $(this).siblings('input[type="text"]').val('')
+                            .trigger('propertychange').focus();
+                    if ($('#translatorName').val() === '') {
+                        $(uploadDocuments).hide();
+                        translatorArray = []; // clear translatorArray
+                        $('#tnc').empty(); // empty the div 
+                        $('#tn').empty();  // empty the div 
+                        $(translatorTabs).hide(); // close div
+                        $('#addTranslatorModala').text("Add more translators"); // reset text
+                        $('#translatorName').trigger('click');
+                        console.log(translatorArray);
+                    }
+                });
+            });
+
+            var fileTypes = [
+                'image/jpeg',
+                'image/pjpeg',
+                'image/png',
+                'image/*',
+                'application/pdf',
+                '.doc,.docx,.xml,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+            ];
+
+            function validFileType(file) {
+                for (var i = 0; i < fileTypes.length; i++) {
+                    if (file.type === fileTypes[i]) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+
+            $(document).ready(function () {
+                //Check File API support
+                if (window.File && window.FileList && window.FileReader)
+                {
+                    $('#files').on("change", function (event) {
+                        var files = event.target.files; //FileList object
+                        var output = document.getElementById("result");
+                        for (var i = 0; i < files.length; i++)
+                        {
+                            var file = files[i];
+                            var fileName = files[i].name;
+                            console.log("fileName  " + fileName);
+
+                            //                            if (file.type.match('image.*')) {
+                            if (validFileType(files[i])) {
+                                if (this.files[0].size < 2097152) {
+
+                                    var picReader = new FileReader();
+                                    picReader.addEventListener("load", function (event) {
+                                        var picFile = event.target;
+                                        var div = document.createElement("div");
+                                        div.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
+                                                "title='preview image'/>";
+                                        output.insertBefore(div, null);
+                                    });
+                                    //Read the image
+                                    $('#clear, #result').show();
+                                    picReader.readAsDataURL(file);
+
+                                } else {
+                                    alert("Image Size is too big.Minimum size is 2MB.");
+                                    $(this).val("");
+                                }
+                            } else {
+                                alert("You can only upload image file.");
+                                $(this).val("");
+                            }
+                        }
+
+                    });
+                } else
+                {
+                    console.log("Your browser does not support File API");
+                }
+            });
+
+            $(document).on("click", "#files", function () {
+                $('.thumbnail').parent().remove();
+                $('result').hide();
+                $(this).val("");
+            });
+
+            $(document).on("click", "#clear", function () {
+                $('.thumbnail').parent().remove();
+                $('#result').hide();
+                $('#files').val("");
+                $(this).hide();
+            });
+
+
+
+            $(document).ready(function () {
+                var validator = $("#applicationForm").validate();
+                validator.form();
+            });
+
+            $(document).ready(function () {
+                var tcACCEPTED = '${TCACCEPTED}';
+                var gdprACCEPTED = '${gdprACCEPTED}';
+                document.getElementById("tcACCEPTED").value = tcACCEPTED;
+                document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
+
+            });
+
+            $(document).ready(function () {
+                function validateURL() {
+                    var url = document.getElementById("url").value;
+                    // var  pattern="(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)";
+                    var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+                    if (pattern.test(url)) {
+                        alert("Url is valid");
+                        return true;
+                    }
+                    alert("Url is not valid!");
+                    return false;
+
+                }
+            });
+
+
+            $(document).ready(function () {
+                $('input[type="file"]').change(function (e) {
+                    // $('input[type="file"]').valid();
+                    console.log("$(this)  " + $(this).val());
+                    console.log("e   " + e.target.files[0].name);
+                    if ($(this).valid()) {
+                        //            alert("Url is valid  --  " + $(this).val());
+                        //            $($(this)).closest('.form-group').addClass('has-success');
+                    } else {
+                        //            alert("Url is not valid!");
+                        //            $($(this)).closest('.form-group').addClass('has-error');
+                    }
+                });
+            });
+
+
+
+
+            //window.onscroll = function () {
+            //    scrollFunction();
+            //};
+            //function scrollFunction() {
+            //    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            //        document.getElementById("totopBtn").style.display = "block";
+            //    } else {
+            //        document.getElementById("totopBtn").style.display = "none";
+            //    }
+            //}
+            //function topFunction() {
+            //    document.body.scrollTop = 0;
+            //    document.documentElement.scrollTop = 0;
+            //}
+
+
+            $(function () {
+                $(document).on('scroll', function () {
+                    if ($(window).scrollTop() > 100) {
+                        $('.scroll-top-wrapper').addClass('show');
+                    } else {
+                        $('.scroll-top-wrapper').removeClass('show');
+                    }
+                });
+            });
+
+
+            $(function () {
+                $(document).on('scroll', function () {
+                    if ($(window).scrollTop() > 100) {
+                        $('.scroll-top-wrapper').addClass('show');
+                    } else {
+                        $('.scroll-top-wrapper').removeClass('show');
+                    }
+                });
+
+                $('.scroll-top-wrapper').on('click', scrollToTop);
+            });
+
+            function scrollToTop() {
+                verticalOffset = typeof (verticalOffset) !== 'undefined' ? verticalOffset : 0;
+                element = $('body');
+                offset = element.offset();
+                offsetTop = offset.top;
+                $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+            }
+
+            $(window).bind("beforeunload", function () {
+                var username = document.getElementById("username").value;
+                alert("username 2 " + username);
+                $.ajax({
+                    async: false, //This will make sure the browser waits until request completes
+                    url: "./Logout",
+                    type: 'post',
+                    cache: false,
+                    data: {"username": username}
+                });
+            });
+
+        </script>
 
 
     </head>
@@ -91,7 +1402,11 @@
 
                 <div class="container-fluid" style="margin-bottom: 20px; width: 100%">
                     <div class="pull-right">
-                        <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? <a href="${pageContext.request.contextPath}/Logout">Click here to log out </a></small></h6>
+                        <form action="${pageContext.request.contextPath}/Logout" method="GET">
+                            <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
+                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" value="${username}">
+                        </form>
                     </div>
                 </div> <!--container for welcome/logout-->
 
@@ -120,7 +1435,7 @@
                                 <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>
                                 <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                 <li><a href="#Translator" data-toggle="tab">Translator <br/> Details</a></li>
-                                <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/> & Contracts</a></li>
+                                <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/>&nbsp;</a></li>
                                 <!--         <li><a href="#Misc" data-toggle="tab">Misc</a></li>    -->
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
@@ -467,11 +1782,11 @@
                                             <div class="col-sm-4">  
                                                 <div class="form-group has-feedback"> 
                                                     <div class="input-group pull-left">
-                                                        <label for="appBookTitle" class="control-label pull-left">Title</label> 
-                                                        <input id="appBookTitle"                                
+                                                        <label for="title" class="control-label pull-left">Title</label> 
+                                                        <input id="title"                                
                                                                type="text"                                
                                                                class="form-control"                                
-                                                               name="appBookTitle"                                
+                                                               name="title"                                
                                                                value=""    
                                                                placeholder="Title"
                                                                >
@@ -519,30 +1834,15 @@
                                             <div class="col-sm-4">    
                                                 <div class="form-group has-feedback">
                                                     <div class="input-group pull-left">
-                                                        <label for="appGenre" class="control-label pull-left">Genre</label>
-                                                        <input id="appGenre"                                
+                                                        <label for="genre" class="control-label pull-left">Genre</label>
+                                                        <input id="genre"                                
                                                                type="text"                                
                                                                class="form-control"                                
-                                                               name="appGenre"                                
+                                                               name="genre"                                
                                                                value=""    
                                                                placeholder="Genre"
                                                                >
                                                         <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 20px"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">    
-                                                <div class="form-group has-feedback">
-                                                    <div class="input-group pull-left">
-                                                        <label for="translationTitle" class="control-label pull-left">Translation title</label>
-                                                        <input id="translationTitle"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="translationTitle"                                
-                                                               value=""    
-                                                               placeholder="Translation Title"
-                                                               >
                                                     </div>
                                                 </div>
                                             </div>
@@ -558,7 +1858,7 @@
                                                         <label for="appLanguageOriginal" class="control-label ">Language (of the original)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                         <div class="input-group pull-left">
                                                             <span class="input-group-addon">  
-                                                                <span class="fa fa-language  fa-2x"></span>                                                            
+                                                                <span class="fa fa-language  fa-1x"></span>                                                            
                                                             </span>
                                                             <input id="appLanguageOriginal"                                
                                                                    type="text"                                
@@ -575,19 +1875,21 @@
 
                                             <div class="col-xs-4">
                                                 <div class="form-group has-feedback">
-                                                    <label for="countryOfPublication" class="control-label" > Country of publication</label>
                                                     <div class="input-group pull-left">
-                                                        <span class="input-group-addon">  
-                                                            <span class="glyphicon glyphicon-globe fa-1x"></span>                                                            
-                                                        </span>
-                                                        <input id="countryOfPublication"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="countryOfPublication"                                
-                                                               value=""    
-                                                               placeholder="Country of Publication"
-                                                               >
-                                                        <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 15px"></i>
+                                                        <label for="countryOfPublication" class="control-label pull-left" >Country of publication&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                        <div class="input-group pull-left">
+                                                            <span class="input-group-addon">  
+                                                                <span class="glyphicon glyphicon-globe fa-1x"></span>                                                            
+                                                            </span>
+                                                            <input id="countryOfPublication"                                
+                                                                   type="text"                                
+                                                                   class="form-control"                                
+                                                                   name="countryOfPublication"                                
+                                                                   value=""    
+                                                                   placeholder="Country of Publication"
+                                                                   >
+                                                            <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 15px"></i>
+                                                        </div>   
                                                     </div>   
                                                 </div>   
                                             </div> <!--col-xs-4-->   
@@ -636,20 +1938,19 @@
                                         <div class="row" style="margin-bottom: 10px">
 
                                             <div class="col-sm-4">   
+
                                                 <label for="bookNotes" class="control-label pull-left">Notes</label>
                                                 <div class="form-group">
                                                     <!--keep in one line otherwise placeholder doesn't show-->
                                                     <textarea class="form-control" id="bookNotes" name="bookNotes" style="width: 800px; height: 215px" placeholder="Notes"></textarea>
                                                 </div>
-                                                <!--</div>-->                                                    
-                                            </div> <!-- row  -->
-                                            <!--                                                </div>   panel-body     
-                                                                                        </div>   panel  -->
+
+                                            </div> <!-- col-sm-4  -->
+
                                         </div> <!-- row  -->
+
                                     </div>  <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="books" -->
-
-
 
                                 <!-- Publication Details -->
                                 <div class="tab-pane" id="Publication">
@@ -690,7 +1991,7 @@
 
                                         <div class="row" style="margin-bottom: 40px;">
 
-                                            <div class='col-sm-4'>        
+                                            <div class='col-sm-5 form-inline'>        
                                                 <div class="form-group has-feedback">
                                                     <label for="plannedPageExtent" class="control-label pull-left">Planned page extent (published translation) </label>
                                                     <div class="input-group pull-left">
@@ -713,13 +2014,9 @@
                                                 });
                                             </script>
 
-                                        </div> <!-- row  -->
-
-                                        <div class="row" style="margin-bottom: 40px;">
-
-                                            <div class='col-sm-4'>        
+                                            <div class='col-sm-4 form-inline'>        
                                                 <div class="form-group has-feedback">
-                                                    <label for="appproposedPrintRun" class="control-label">Proposed print run 
+                                                    <label for="appproposedPrintRun" class="control-label pull-left">Proposed print run
                                                     </label>
                                                     <div class="input-group pull-left">
                                                         <span class="input-group-addon">  
@@ -730,6 +2027,25 @@
                                                                id="appproposedPrintRun" 
                                                                class="form-control" 
                                                                placeholder="number of pages" 
+                                                               >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- row  -->
+
+
+                                        <div class="row" style="margin-bottom: 40px;">
+                                            <div class="col-sm-5">    
+                                                <div class="form-group has-feedback">
+                                                    <div class="input-group pull-left">
+                                                        <label for="translationTitle" class="control-label pull-left">Translation title</label>
+                                                        <input id="translationTitle"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="translationTitle"                                
+                                                               value=""    
+                                                               placeholder="Translation Title"
                                                                >
                                                     </div>
                                                 </div>
@@ -826,10 +2142,10 @@
                                                                    value=""    
                                                                    placeholder="Translator Name"
                                                                    >
-
-
                                                         </div>
+
                                                         <div id="addTransl"></div>
+
                                                     </div>
 
                                                     <div class="col-sm-4"> 
@@ -888,99 +2204,102 @@
                                             </div> <!-- container-fluid  -->
 
                                         </div> <!--row-->
+
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Translator" -->
 
                                 <!-- Rights Agreement -->
                                 <div class="tab-pane" id="Rights">
                                     <p class="header1" style="margin-bottom: 40px">
-                                        Rights Agreement & Contracts
+                                        Rights Agreement
                                     </p>
 
                                     <div class="container-fluid"  id="rightsAgreementContracts">
 
-                                        <div class="tab-content">
+                                        <!--<div class="tab-content">-->
 
-                                            <div class="row" style="margin-bottom: 10px;">
+                                        <div class="row" style="margin-bottom: 10px;">
 
-                                                <div class="col-md-10">
-                                                    <div class="form-group has-feedback">
-                                                        <label for="agreement1" class="control-label pull-left">Upload a copy of the agreement with the translation rights holder</label>
-                                                        <div class="input-group pull-left">
-                                                            <label class="input-group-addon btn btn-default btn-file">
-                                                                <input type="file"  
-                                                                       id="agreement1" 
-                                                                       name="Agreement-1"                                                                       
-                                                                       onchange="generatedLabels();"
-                                                                       >
-                                                                Select file 
-                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                            </label> 
-                                                            <input id="label_agreement1" class="pull-left" value=""/>  
-                                                        </div>  
-                                                        <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
-                                                    </div>                                                                
-                                                    <label for="Agreement-1" class="validation_error_message help-block"></label>                                                         
-                                                </div> 
-
-                                            </div> <!-- row  -->
-
-                                            <!--Name of translation rights holder-->
-                                            <div class="row" style="margin-bottom: 10px;"> 
-
-                                                <div class="col-sm-6">      
-                                                    <div class="form-group has-feedback">
-                                                        <label for="rightsHoldersName0" class="control-label pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
-                                                        <input id="rightsHoldersName0"                                
-                                                               type="text"                                
-                                                               class="form-control"                                
-                                                               name="rightsHoldersName0"                                
-                                                               value=""  
-                                                               onblur="copyFirstRightsHolderName();"
-                                                               placeholder="Translation rights holder"
-                                                               >
-                                                    </div>
-                                                    <div id="addAddRightsHolders"></div>
-                                                </div>
-
-
-                                                <div class="col-sm-4" style="margin-top: 30px; visibility: block;display:none" id="addAdditionalRightsHoldersModalDiv">  
-                                                    <a href="#" class="btn btn-group-sm btn-default pull-left" 
-                                                       data-toggle="modal" 
-                                                       data-target="#addAdditionalRightsHoldersModal"
-                                                       onclick="copyFirstRightsHolderName();"
-                                                       >Add more Translation rights holders</a>
-                                                </div>
-
-                                            </div> <!-- row  -->
-
-                                            <div class="row" style="margin-bottom: 10px;">
-
-                                                <!--Upload form for addendum to the rights agreement-->
-                                                <div class="col-md-10">
-                                                    <div class="form-group has-feedback">
-                                                        <label for="addendum1" class="control-label pull-left">Upload a copy of the addendum to the rights agreement</label>
-                                                        <div class="input-group pull-left">
-                                                            <label class="input-group-addon btn btn-default btn-file">
-                                                                <input type="file"  
-                                                                       id="addendum1" 
-                                                                       name="Addendum-1"      
-                                                                       class="form-control"
-                                                                       onchange="generatedLabels();"
-                                                                       >
-                                                                Select file 
-                                                                <span class="glyphicon glyphicon-folder-open"></span>
-                                                            </label> 
-                                                            <input id="label_addendum1" class="pull-left" value=""/>      
-                                                        </div> 
-                                                        <input type="hidden" value="Addendum" name="destination" id="addendum_upload1" class="destination"/>
+                                            <div class="col-md-10">
+                                                <div class="form-group has-feedback">
+                                                    <!--<i class="glyphicon glyphicon-info-sign my-tooltip" title="'For multiple rights contracts, please upload all contracts as one file"></i>--> 
+                                                    <!--<label for="agreement1" class="control-label pull-left">Upload a copy of the agreement with the translation rights holder</label>-->
+                                                    <label for="agreement1" class="control-label pull-left">Upload a copy of the agreement with the translation rights holder(s) <i class="glyphicon glyphicon-info-sign my-tooltip" title="'For multiple rights contracts, please upload all contracts as one file"></i></label>
+                                                    <div class="input-group pull-left">
+                                                        <label class="input-group-addon btn btn-default btn-file">
+                                                            <input type="file"  
+                                                                   id="agreement1" 
+                                                                   name="Agreement-1"                                                                       
+                                                                   onchange="generatedLabels();"
+                                                                   >
+                                                            Select file 
+                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                        </label> 
+                                                        <input id="label_agreement1" class="pull-left" value=""/>  
                                                     </div>  
-                                                    <label for="Addendum-1" class="validation_error_message help-block"></label>                                         
-                                                </div> 
+                                                    <input type="hidden" value="Agreement" name="destination" id="agreement_upload1"/>
+                                                </div>                                                                
+                                                <label for="Agreement-1" class="validation_error_message help-block"></label>                                                         
+                                            </div> 
 
-                                            </div> <!-- row  -->
+                                        </div> <!-- row  -->
 
-                                        </div> <!--tab-content-->
+                                        <!--Name of translation rights holder-->
+                                        <div class="row" style="margin-bottom: 10px;"> 
+
+                                            <div class="col-sm-4">      
+                                                <div class="form-group has-feedback">
+                                                    <label for="rightsHoldersName0" class="control-label pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
+                                                    <input id="rightsHoldersName0"                                
+                                                           type="text"                                
+                                                           class="form-control"                                
+                                                           name="rightsHoldersName0"                                
+                                                           value=""  
+                                                           onblur="copyFirstRightsHolderName();"
+                                                           placeholder="Translation rights holder"
+                                                           >
+                                                </div>
+                                                <div id="addAddRightsHolders"></div>
+                                            </div>
+
+
+                                            <div class="col-sm-4" style="margin-top: 30px; visibility: block;display:none" id="addAdditionalRightsHoldersModalDiv">  
+                                                <a href="#" class="btn btn-group-sm btn-default pull-left" 
+                                                   data-toggle="modal" 
+                                                   data-target="#addAdditionalRightsHoldersModal"
+                                                   onclick="copyFirstRightsHolderName();"
+                                                   >Add more Translation rights holders</a>
+                                            </div>
+
+                                        </div> <!-- row  -->
+
+                                        <div class="row" style="margin-bottom: 10px;">
+
+                                            <!--Upload form for addendum to the rights agreement-->
+                                            <div class="col-md-10">
+                                                <div class="form-group has-feedback">
+                                                    <label for="addendum1" class="control-label pull-left">Upload a copy of the addendum to the rights agreement</label>
+                                                    <div class="input-group pull-left">
+                                                        <label class="input-group-addon btn btn-default btn-file">
+                                                            <input type="file"  
+                                                                   id="addendum1" 
+                                                                   name="Addendum-1"      
+                                                                   class="form-control"
+                                                                   onchange="generatedLabels();"
+                                                                   >
+                                                            Select file 
+                                                            <span class="glyphicon glyphicon-folder-open"></span>
+                                                        </label> 
+                                                        <input id="label_addendum1" class="pull-left" value=""/>      
+                                                    </div> 
+                                                    <input type="hidden" value="Addendum" name="destination" id="addendum_upload1" class="destination"/>
+                                                </div>  
+                                                <label for="Addendum-1" class="validation_error_message help-block"></label>                                         
+                                            </div> 
+
+                                        </div> <!-- row  -->
+
+                                        <!--                                        </div> tab-content-->
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Rights" -->             
 
@@ -990,68 +2309,53 @@
                                         Original Work & Sample Translation
                                     </p>
                                     <div class="container-fluid">
-                                        <div class="row" >
+<!--                                        <div class="row" >
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
 
-                                                    <!--copies of the original work-->
+                                                    copies of the original work
                                                     <div class="col-md-9" >
-                                                        <div class="checkbox">                                                             
-                                                            <label for="copiesSent" class=" pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
+                                                        <div class="checkbox pull-left">                                                             
+                                                            <label for="copiesSent" class="pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
                                                             <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
                                                                 <input type="checkbox" 
                                                                        name="copiesSent" 
-                                                                       id="copiesSent"                   
-                                                                       value="ticked" 
+                                                                       id="copiesSent" 
+                                                                       value="" 
                                                                        class="form-control">
                                                                 <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                                             </label>
-                                                            <!--<input type="text" name="ApplicationNumber" value="${ApplicationNumber}">-->
                                                             <input type="hidden" name="userID" value="${userID}">
                                                             <input type="hidden" name="publisherID" value="${publisherID}">
                                                             <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                         </div>
-                                                    </div> <!-- col-md-9 -->
+                                                    </div>  col-md-9 
 
-                                                    <!--Date copies were sent:-->
-                                                    <div class="col-md-3" id="dateCopiesWereSentVisibility">
-                                                        <div class="form-group has-feedback">
-                                                            <label for="dateCopiesWereSent" class=" pull-left">Date copy was sent:</label> 
-                                                            <div class="input-group">
-                                                                <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                <label class="input-group-addon" for="dateCopiesWereSent">
-                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                </label>
-                                                            </div>
-                                                        </div>  <!-- input-group -->
-                                                    </div> <!--col-md-3-->
+                                                    Date copies were sent:
+                                                    <div class="col-md-3" >
+                                                        <label for="dateCopiesWereSent" class="pull-left"><strong>Date copy was sent</strong> </label>
+                                                        <div class="input-group pull-left" >
+                                                            <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                            <label class="input-group-addon" for="dateCopiesWereSent">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </label>
+                                                        </div>   input-group 
+                                                    </div> col-md-3
 
-                                                    <!--datepicker  mail-sent-->
+                                                    datepicker  mail-sent
                                                     <script>
                                                         $("#dateCopiesWereSent").datepicker().on('change', function () {
                                                             $(this).valid();  // triggers the validation test
                                                             // '$(this)' refers to '$("#datepicker")'
                                                         });
                                                     </script>
-                                                </div> <!--panel--body-->
-                                            </div> <!--panel-default-->
-                                        </div> <!-- row -->
+                                                </div> panel--body
+                                            </div> panel-default
+                                        </div>  row -->
 
                                         <div class="row" >
                                             <div class="panel panel-default">        
                                                 <div class="panel-body">
-                                                    <!--<div class="col-md-12">-->
-
-                                                    <!--                                                        <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
-                                                                                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                                                                                <span class="sr-only">Error:</span>
-                                                                                                                <span class="message"></span>
-                                                                                                            </div>
-                                                                                                            <div class="alert alert-success" role="alert" id="successField" style="display:none">
-                                                                                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                                                                                <span class="sr-only">Success:</span>
-                                                                                                                <span class="message"></span>
-                                                                                                            </div>-->
 
                                                     <div class="row" style="margin-bottom: 10px">
 
@@ -1502,21 +2806,14 @@
                     </div>  <!-- container-fluid -->
                 </nav>
 
-
-                <div class="scroll-top-wrapper ">
-                    <span class="scroll-top-inner">
-                        <i class="fa fa-3x fa-arrow-circle-up"></i>
-                    </span>
-                </div>
-
                 <form class="form-horizontal" 
-                      role="form"  
-                      autocomplete="on"  
+                      role="form"   
                       action="${pageContext.request.contextPath}/Application" 
                       method="POST" 
                       name="regF"
                       >
                     <input type="hidden" name="userID" value="${userID}">
+                    <input type="hidden" name="name" value="${name}">
                     <input type="hidden" name="publisherID" value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                     <input type="hidden" name="publisherName" value="${companyDetails.Company}">
@@ -1526,6 +2823,13 @@
                         <input type="submit" id="ListOpenApplications" name="List Open Applications"  class = "btn btn-default btn-sm" value="List Open Applications" />
                         <input type="submit" id="ListPendingApplications" name="List Pending Applications"  class = "btn btn-default btn-sm" value="List Pending Applications" />
                         <input type="submit" id="ListClosedApplications" name="List Closed Applications"  class = "btn btn-default btn-sm" value="List Closed Applications" />
+
+
+                        <div class="scroll-top-wrapper ">
+                            <span class="scroll-top-inner">
+                                <i class="fa fa-3x fa-arrow-circle-up"></i>
+                            </span>
+                        </div>
                     </div>
                 </form>
 
@@ -1548,34 +2852,39 @@
                         <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
                     </div>
 
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
+
                 </div><!-- end of Base div -->
 
             </div><!-- end of container div -->
+
             <div class="shadowbase"> </div>
+
         </div><!-- end of Shadowholder container div -->
 
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2019 mgr Software
-        </div>
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-            var $imageupload = $('.imageupload');
-            $imageupload.imageupload();
 
-            function pressCuttingsModal() {
-                $("#pressCuttingsModal").modal("show");
-            }
+                                                var $imageupload = $('.imageupload');
+                                                $imageupload.imageupload();
 
-            var pressCuttingsUpload = $('.pressCuttingsUpload');
-            pressCuttingsUpload.imageupload();
+                                                function pressCuttingsModal() {
+                                                    $("#pressCuttingsModal").modal("show");
+                                                }
 
-            function  showInfoModal() {
-                $("#showInfoModal").modal("show");
-            }
-            function  showNotesModal() {
-                $("#showNotesModal").modal("show");
-            };
+                                                var pressCuttingsUpload = $('.pressCuttingsUpload');
+                                                pressCuttingsUpload.imageupload();
+
+                                                function  showInfoModal() {
+                                                    $("#showInfoModal").modal("show");
+                                                }
+                                                function  showNotesModal() {
+                                                    $("#showNotesModal").modal("show");
+                                                }
+
         </script>
     </body>
 </html>

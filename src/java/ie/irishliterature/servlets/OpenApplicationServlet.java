@@ -2,21 +2,14 @@ package ie.irishliterature.servlets;
 
 import static ie.irishliterature.dao.ACpublisherDAO_test.updatePublisher;
 import ie.irishliterature.dao.GrantApplicationDAO;
-import static ie.irishliterature.dao.GrantApplicationDAO.getAttachments;
-import static ie.irishliterature.dao.GrantApplicationDAO.getExpertReaderEmail;
-import static ie.irishliterature.dao.GrantApplicationDAO.getExpertReaderUserID;
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
 import static ie.irishliterature.dao.GrantApplicationDAO.ifTranslatorExist;
-import static ie.irishliterature.dao.GrantApplicationDAO.updateExpertReader;
 import ie.irishliterature.dao.openApplicationDAO;
-import static ie.irishliterature.dao.openApplicationDAO.updateApplication;
 import static ie.irishliterature.dao.pendingApplicationDAO.updateLibrary;
 import ie.irishliterature.db.DBException;
-import ie.irishliterature.model.ExpertReader;
 import ie.irishliterature.model.GrantApplication;
 import ie.irishliterature.model.Library;
 import ie.irishliterature.model.Publisher;
-import ie.irishliterature.util.MailUtil;
 import java.io.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -26,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -209,6 +201,8 @@ public class OpenApplicationServlet extends HttpServlet {
 
     private String countryOfPublication;
 
+    private String foreignCountry;
+
     private String originalDateOfPublication;
 
     private String ISBN;
@@ -253,17 +247,46 @@ public class OpenApplicationServlet extends HttpServlet {
     public void init() {
 
         // Get the file location where they would be stored.
-        tempPath = "/home/markus/test/tempDir";
-        rootPath = "/home/markus/public_html/test";
+        tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
+        rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
 
+        System.out.println( "file location :tempPath: " + tempPath );
+        System.out.println( "file location :rootPath: " + rootPath );
+        System.out.println( "OpenApplicationServlet :: " );
     }
 
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException {
 
+        String name = "";
         HttpSession session = request.getSession();
 
+        System.out.println( "############################### /OpenApplicationServlet ####################################" );
+
+        System.out.println( "Iterate Parameters" );
+        Enumeration en = request.getParameterNames();
+
+        while ( en.hasMoreElements() ) {
+            Object objOri = en.nextElement();
+
+            String param = ( String ) objOri;
+
+            String value = request.getParameter( param );
+
+            System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
+
+        }
+
+        System.out.println( "Enumeration keys   " );
+        Enumeration keys = session.getAttributeNames();
+        while ( keys.hasMoreElements() ) {
+            String key = ( String ) keys.nextElement();
+            System.out.println( "key  :" + key + ": " + session.getValue( key ) );
+
+        }
+
+        System.out.println( "###################################################################" );
         //  String task = "Start New Application";
         //  String[] authorArray;
         //  String task = request.getParameter("AssignExpertReader");
@@ -272,36 +295,40 @@ public class OpenApplicationServlet extends HttpServlet {
         //  String value = request.getParameter("value");
         String task = String.valueOf( request.getSession().getAttribute( "task" ) );
 
-        System.out.println( "OpenApplicationServlet :: " );
         System.out.println( "HttpSession session :: sess: " + task );
         System.out.println( "Here we are >>>>>>>>>.   Open Applications :: OpenApplicationServlet" );
-        switch ( task ) {
-            case "openApplications":
-                System.out.println( "openApplicationsn :: " );
+//        switch ( task ) {
+//            case "openApplications":
+        System.out.println( "openApplicationsn :: " );
+        Status = request.getParameter( "Status" );
 
-                //set Status
-                Status = "pending";
-                int translatorArrayLength = 0;
-                int rightsHolderArrayLength = 0;
-                int languageArrayLength = 0;
-                //set Timestamp and format
-                String timeStamp = new SimpleDateFormat( "yyyy.MM.dd.HH.mm.ss" ).format( new Date() );
-                Calendar now = Calendar.getInstance();
+        System.out.println( "OpenApplicationServlet :: Status: " + Status );
+        /*
+         * set Status
+         * removed as it's now handled by staff
+         */
+//        Status = "pending";
+        int translatorArrayLength = 0;
+        int rightsHolderArrayLength = 0;
+        int languageArrayLength = 0;
+        //set Timestamp and format
+        String timeStamp = new SimpleDateFormat( "yyyy.MM.dd.HH.mm.ss" ).format( new Date() );
+        Calendar now = Calendar.getInstance();
 
-                //set Year used in filePath
-                int year = now.get( Calendar.YEAR );
-                String yearInString = String.valueOf( year );
+        //set Year used in filePath
+        int year = now.get( Calendar.YEAR );
+        String yearInString = String.valueOf( year );
 //                String fn;
 
-                int idxFolderNames = 0;
-                java.sql.Timestamp timestamp = getcurrentTimeStamp();
-
-                String[] fileNames = new String[ 6 ];
-                //   String[] justFiles = new String[6];
-                List<String> filesToBeMoved = new ArrayList<>();
+        int idxFolderNames = 0;
+        java.sql.Timestamp timestamp = getcurrentTimeStamp();
+        int idxFlag = 0;
+        String[] fileNames = new String[ 6 ];
+        //   String[] justFiles = new String[6];
+        List<String> filesToBeMoved = new ArrayList<>();
 //                List<String> fileDir = new ArrayList<>();
-                List<String> longArrayList = new ArrayList<>();
-                List<String> shortArrayList = new ArrayList<>();
+        List<String> longArrayList = new ArrayList<>();
+        List<String> shortArrayList = new ArrayList<>();
 
 //                String[] folderNames = {
 //                    "Agreement",
@@ -311,1537 +338,1014 @@ public class OpenApplicationServlet extends HttpServlet {
 //                    "Original",
 //                    "TranslationSample"
 //                };
-                try {
+        try {
+
+            /*
+             * Check that we have a file upload request
+             */
+            isMultipart = ServletFileUpload.isMultipartContent( request );
+            System.out.println( "isMultipart:: " + isMultipart );
+            response.setContentType( "text/html;charset=UTF-8" );
+
+            DiskFileItemFactory factory = new DiskFileItemFactory();
+
+            /*
+             * maximum size that will be stored in memory
+             */
+            factory.setSizeThreshold( maxMemSize );
+
+            /*
+             * Location to save data that is larger than maxMemSize.
+             */
+            factory.setRepository( new File( tempPath ) );
+
+            /*
+             * Create a new file upload handler
+             */
+            ServletFileUpload upload = new ServletFileUpload( factory );
+            /*
+             * maximum file size to be uploaded.
+             */
+            //  upload.setSizeMax(maxFileSize);
+
+            /*
+             * Parse the request to get file items.
+             */
+            List<FileItem> items = upload.parseRequest( request );
+
+            for ( FileItem item : items ) {
+                if ( item.isFormField() ) {
 
                     /*
-                     * Check that we have a file upload request
+                     * Process regular form field (input
+                     * type="text|radio|checkbox|etc", select, etc).
+                     * collect all data input from input fileds
                      */
-                    isMultipart = ServletFileUpload.isMultipartContent( request );
-                    System.out.println( "isMultipart:: " + isMultipart );
-                    response.setContentType( "text/html;charset=UTF-8" );
+                    String fieldname = item.getFieldName();
+//                            String fieldvalue = item.getString();
+                    String fieldvalue = item.getString( "UTF-8" ).trim();
 
-                    DiskFileItemFactory factory = new DiskFileItemFactory();
-
-                    /*
-                     * maximum size that will be stored in memory
-                     */
-                    factory.setSizeThreshold( maxMemSize );
-
-                    /*
-                     * Location to save data that is larger than maxMemSize.
-                     */
-                    factory.setRepository( new File( tempPath ) );
-
-                    /*
-                     * Create a new file upload handler
-                     */
-                    ServletFileUpload upload = new ServletFileUpload( factory );
-                    /*
-                     * maximum file size to be uploaded.
-                     */
-                    //  upload.setSizeMax(maxFileSize);
-
-                    /*
-                     * Parse the request to get file items.
-                     */
-                    List<FileItem> items = upload.parseRequest( request );
-
-                    for ( FileItem item : items ) {
-                        if ( item.isFormField() ) {
-
-                            /*
-                             * Process regular form field (input
-                             * type="text|radio|checkbox|etc", select, etc).
-                             * collect all data input from input fileds
-                             */
-                            String fieldname = item.getFieldName();
-                            String fieldvalue = item.getString();
-
-                            System.out.println( fieldname + " >> " + fieldvalue );
-
-                            switch ( fieldname ) {
-                                case "company":
-                                    company = fieldvalue;
-                                    break;
-                                case "Company_Number":
-                                    publisherID = Integer.parseInt( fieldvalue );
-                                    break;
-                                case "firstname":
-                                    firstname = fieldvalue;
-                                    break;
-                                case "lastname":
-                                    lastname = fieldvalue;
-                                    break;
-                                case "Address1":
-                                    Address1 = fieldvalue;
-                                    break;
-                                case "Address2":
-                                    Address2 = fieldvalue;
-                                    break;
-                                case "Address3":
-                                    Address3 = fieldvalue;
-                                    break;
-                                case "Address4":
-                                    Address4 = fieldvalue;
-                                    break;
-                                case "City":
-                                    City = fieldvalue;
-                                    break;
-                                case "postCode":
-                                    postCode = fieldvalue;
-                                    break;
-                                case "Country":
-                                    country = fieldvalue;
-                                    break;
-                                case "Country_Code":
-                                    countryCode = fieldvalue;
-                                    break;
-                                case "Email":
-                                    Email = fieldvalue;
-                                    break;
-                                case "Telephone":
-                                    Telephone = fieldvalue;
-                                    break;
-                                case "Fax":
-                                    Fax = fieldvalue;
-                                    break;
-                                case "WWW":
-                                    WWW = fieldvalue;
-                                    break;
-                                case "doNotMail":
-                                    DoNotMail = fieldvalue;
-                                    break;
-                                case "Bursaries":
-                                    Bursaries = fieldvalue;
-                                    break;
-                                case "Founded":
-                                    Founded = fieldvalue;
-                                    break;
-                                case "NumberOfTitles":
-                                    NumberOfTitles = fieldvalue;
-                                    break;
-                                case "companyNotes":
-                                    companyNotes = fieldvalue;
-                                    break;
-                                case "destination":
-                                    Type = fieldvalue;
-                                    break;
-                                case "userID":
-                                    userID = fieldvalue;
-                                    break;
-                                case "publisherID":
-                                    publisherID = Integer.parseInt( fieldvalue );
-                                    break;
-                                case "proposedDateOfPublication":
-                                    proposedDateOfPublication = fieldvalue;
-                                    break;
-                                case "proposedPrintRun":
-                                    String propPrintRun = fieldvalue.replaceAll( "[^0-9]", "" );
-                                    proposedPrintRun = Integer.parseInt( propPrintRun );
-                                    break;
-                                case "plannedPageExtent":
-                                    plannedPageExtent = fieldvalue;
-                                    break;
-                                case "BreakDownOfTranslatorFee":
-                                    breakDownTranslatorFee = fieldvalue;
-                                    break;
-                                case "translatorName":
-                                    translatorName = fieldvalue;
-                                    //                 System.out.println("translatorName:: " + translatorName);
-                                    break;
-                                case "ReferenceNumber":
-                                    ReferenceNumber = fieldvalue;
-                                    System.out.println( "ReferenceNumber:: " + ReferenceNumber );
-                                    break;
-                                case "translatorFee":
-                                    translatorFee = fieldvalue;
-                                    break;
-                                case "translatorNotes":
-                                    translatorNotes = fieldvalue;
-                                    break;
-                                case "copiesSent":
-                                    copySent = fieldvalue;
-                                    if ( "ticked".equals( copySent ) ) {
-                                        copiesSent = 1;
-                                    }
-                                    else {
-                                        copiesSent = 0;
-                                    }
-                                    break;
-                                case "dateCopiesWereSent":
-                                    dateCopiesWereSent = fieldvalue;
-                                    System.out.println( "dateCopiesWereSent::" + dateCopiesWereSent + ";" );
-                                    break;
-                                case "TCACCEPTED":
-                                    TCACCEPTED = fieldvalue;
-                                    if ( "ticked".equals( TCACCEPTED ) ) {
-                                        TC_ACCEPTED = 1;
-                                    }
-                                    else {
-                                        TC_ACCEPTED = 0;
-                                    }
-                                    break;
-                                case "gdprACCEPTED":
-                                    gdprACCEPTED = fieldvalue;
-                                    //          System.out.println(" gdprACCEPTED  " + gdprACCEPTED);
-                                    if ( "ticked".equals( gdprACCEPTED ) ) {
-                                        gdpr_ACCEPTED = 1;
-                                    }
-                                    else {
-                                        gdpr_ACCEPTED = 0;
-                                    }
-                                    break;
-                                case "Award":
-                                    Award = fieldvalue;
-                                    if ( "ticked".equals( Award ) ) {
-                                        award = 1;
-                                    }
-                                    else {
-                                        award = 0;
-                                    }
-                                    break;
-                                case "bilingual":
-                                    Bilingual = fieldvalue;
-                                    if ( "ticked".equals( Bilingual ) ) {
-                                        bilingual = 1;
-                                    }
-                                    else {
-                                        bilingual = 0;
-                                    }
-                                    break;
-                                case "APPROVED":
-                                    ieAPPROVED = fieldvalue;
-                                    if ( "ticked".equals( ieAPPROVED ) ) {
-                                        APPROVED = 1;
-                                    }
-                                    else {
-                                        APPROVED = 0;
-                                    }
-                                    break;
-                                case "authorArray":
-                                    authorArray = fieldvalue.split( "," ); //split string by ,
-                                    //                System.out.println("authorArraylength  OpenApplicationServlet:: " + authorArray.length);
-                                    for ( String individualValue : authorArray ) {
-                                        //                    System.out.println("authorArray  OpenApplicationServlet:: " + individualValue);
-                                    }
-                                    break;
-                                case "AuthorFirstName":
-                                    AuthorFirstName = fieldvalue;
-                                    //                 System.out.println("AuthorFirstName OpenApplicationServlet:: " + AuthorFirstName);
-                                    break;
-                                case "AuthorLastName":
-                                    AuthorLastName = fieldvalue;
-                                    //              System.out.println("AuthorLastName OpenApplicationServlet:: " + AuthorLastName);
-                                    break;
-                                case "bookTitle":
-                                    Title = fieldvalue;
-                                    System.out.println( "Process library Title " + Title );
-                                    break;
-                                case "copies":
-                                    Copies = fieldvalue;
-                                    break;
-                                case "publicationYear":
-                                    publicationYear = fieldvalue;
-                                    break;
-                                case "genre":
-                                    Genre = fieldvalue;
-                                    break;
-                                case "addendum":
-                                    Addendum = fieldvalue;
-                                    break;
-                                case "proofPayment":
-                                    ProofPayment = fieldvalue;
-                                    break;
-                                case "bankDetailForm":
-                                    BankDetails = fieldvalue;
-                                    break;
-                                case "signedLIcontract":
-                                    SignedLIContract = fieldvalue;
-                                    break;
-                                case "originalSample":
-                                    Original = fieldvalue;
-                                    break;
-                                case "translationTitle":
-                                    translationTitle = fieldvalue;
-                                    break;
-                                case "translationPublicationYear":
-                                    translationPublisherYear = fieldvalue;
-                                    break;
-                                case "translatorArray":
-                                    System.out.println( "translatorArray >>>> HERE " );
-                                    translatorArrayContent = fieldvalue.split( "," ); //split string by ","
-                                    translatorArrayLength = translatorArrayContent.length;
-                                    System.out.println( "translatorArray >>>> translatorArray.length " + translatorArrayContent.length );
-                                    for ( String individualValue : translatorArrayContent ) {
-                                        System.out.println( "translatorArray  OpenApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength );
-                                    }
-                                    break;
-                                case "rightsHolderArray":
-                                    System.out.println( "rightsHolderArray >>>> HERE " );
-                                    rightsHolderArrayContent = fieldvalue.split( "," ); //split string by ","
-                                    rightsHolderArrayLength = rightsHolderArrayContent.length;
-                                    System.out.println( "rightsHolderArray >>>> rightsHolderArray.length " + rightsHolderArrayContent.length );
-                                    for ( String individualValue : rightsHolderArrayContent ) {
-                                        System.out.println( "rightsHolderArray  OpenApplicationServlet:: " + individualValue + " ----------> rightsHolderArrayLength::  " + rightsHolderArrayLength );
-                                    }
-                                    break;
-
-                                case "languages":
-                                    languageArray = fieldvalue.split( "," ); //split string by ,
-                                    for ( String individualValue : languageArray ) {
-                                        //                  System.out.println("languageArray  OpenApplicationServlet:: " + individualValue);
-                                    }
-                                    break;
-                                case "physicalDescription":
-                                    physicalDescription = fieldvalue;
-                                    break;
-                                case "duplicates":
-                                    if ( "".equals( fieldvalue ) ) {
-                                        fieldvalue = "0";
-                                    }
-                                    Duplicates = Integer.parseInt( fieldvalue );
-                                    break;
-                                case "translationPublisher":
-                                    translationPublisher = fieldvalue;
-                                    break;
-                                case "bookNotes":
-                                    bookNotes = fieldvalue;
-                                    break;
-                                case "series":
-                                    Series = fieldvalue;
-                                    break;
-                                case "isbn":
-                                    ISBN = fieldvalue;
-                                    break;
-                                case "issn":
-                                    ISSN = fieldvalue;
-                                    break;
-                                case "languageOfTheOriginal":
-                                    originalLanguage = fieldvalue;
-                                    break;
-                                case "originalPageExtent":
-                                    originalPageExtent = fieldvalue;
-                                    break;
-                                case "countryOfPublication":
-                                    countryOfPublication = fieldvalue;
-                                    break;
-                                case "amountRequested":
-                                    amountRequested = fieldvalue;
-                                    break;
-                                case "appTargetLanguage":
-                                    targetLanguage = fieldvalue;
-                                    languageArray = fieldvalue.split( "," ); //split string by ,
-                                    languageArrayLength = languageArray.length;
-                                    for ( String individualValue : languageArray ) {
-                                        System.out.println( "languageArray  OpenApplicationServlet:: " + individualValue );
-                                    }
-                                    break;
-                                case "appForeignCountry":
-                                    countryOfPublication = fieldvalue;
-                                    break;
-                                case "appForeignPublisher":
-                                    foreignPublisher = fieldvalue;
-                                    break;
-                                case "DateOfPublicationOriginal":
-                                    originalDateOfPublication = fieldvalue;
-                                    break;
-
-                            } // end switch
-
-                        }
-                        else {
-
-                            //////////////////////////////////////////////////////////////
-                            //  Process Application Form file field (input type="file") //
-                            //////////////////////////////////////////////////////////////
-                            String fieldname = item.getFieldName();
-                            String filename = FilenameUtils.getName( item.getName() );
-                            System.out.println( "filename zero   " + filename );
-
-                            int counter = getCounter( fieldname );
-                            String fileName = getFdname( fieldname );
-                            System.out.println( "translatorArrayContent.length " + translatorArrayContent.length );
-
-                            System.out.println( "translatorArrayContent 0  " + translatorArrayContent[0] );
-
-                            for ( int g = 0; g < translatorArrayContent.length; g++ ) {
-                                System.out.println( "translatorArrayContent before replace  " + translatorArrayContent[g] );
-                                translatorArrayContent[g] = translatorArrayContent[g].replaceAll( "\\[", "" ).replaceAll( "\\]", "" );
-                                System.out.println( "translatorArrayContent after replace   " + translatorArrayContent[g] );
-                            }
-
-                            System.out.println( "translatorArrayContent company " + company );
-
-                            switch ( fileName ) {
-
-                                case "Agreement":
-                                    if ( filename.isEmpty() ) {
-                                        System.out.println( "Agreement zero  filename " + filename );
-                                    }
-                                    else {
-                                        filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                                + "Agreement" + File.separator + translatorArrayContent[counter] + File.separator;
-                                        fileNames[idxFolderNames] = filePath + filename;
-                                        filesToBeMoved.add( fileNames[idxFolderNames] );
-                                    }
-                                    break;
-
-                                case "Contract":
-                                    if ( filename.isEmpty() ) {
-                                        System.out.println( "Contract zero  filename " + filename );
-                                    }
-                                    else {
-                                        filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                                + "Contract" + File.separator + translatorArrayContent[counter] + File.separator;
-                                        fileNames[idxFolderNames] = filePath + filename;
-                                        filesToBeMoved.add( fileNames[idxFolderNames] );
-                                    }
-                                    break;
-
-                                case "Addendum":
-                                    if ( filename.isEmpty() ) {
-                                        System.out.println( "Addendum zero  filename " + filename );
-                                    }
-                                    else {
-                                        filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                                + "Addendum" + File.separator + translatorArrayContent[counter] + File.separator;
-                                        fileNames[idxFolderNames] = filePath + filename;
-                                        filesToBeMoved.add( fileNames[idxFolderNames] );
-                                    }
-                                    break;
-
-                                case "Original":
-                                    if ( filename.isEmpty() ) {
-                                        System.out.println( "Original zero  filename " + filename );
-                                    }
-                                    else {
-                                        filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                                + "Original" + File.separator;
-                                        fileNames[idxFolderNames] = filePath + filename;
-                                        filesToBeMoved.add( fileNames[idxFolderNames] );
-                                    }
-                                    break;
-
-                                case "TranslationSample":
-                                    if ( filename.isEmpty() ) {
-                                        System.out.println( "TranslationSample zero  filename " + filename );
-                                    }
-                                    else {
-                                        filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                                + "TranslationSample" + File.separator;
-                                        fileNames[idxFolderNames] = filePath + filename;
-                                        filesToBeMoved.add( fileNames[idxFolderNames] );
-                                    }
-                                    break;
-
-                                case "Translator_CV":
-                                    if ( filename.isEmpty() ) {
-                                        System.out.println( "Translator_CV zero  filename " + filename );
-                                    }
-                                    else {
-                                        filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
-                                                + "Translator_CV" + File.separator + translatorArrayContent[counter] + File.separator;
-                                        fileNames[idxFolderNames] = filePath + filename;
-                                        filesToBeMoved.add( fileNames[idxFolderNames] );
-                                    }
-                                    break;
-
-                            } // end switch
-
-                            /*
-                             * create temporary Directory if it does not exist
-                             */
-                            System.out.println( "fileName.equals 1 zero " + fileName + " filePath " + filePath );
-                            if ( filename.isEmpty() ) {
-                                System.out.println( "fileName.equals 2 zero filename.isEmpty " + fileName + " filePath " + filePath );
+                    System.out.println( "fieldname: " + fieldname + " >> fieldvalue: " + fieldvalue );
+                    switch ( fieldname ) {
+                        case "name":
+                            name = fieldvalue;
+                            System.out.println( "name = fieldvalue" + name );
+                            break;
+                        case "Company":
+                            company = fieldvalue;
+                            break;
+                        case "Company_Number":
+                            publisherID = Integer.parseInt( fieldvalue );
+                            break;
+                        case "firstname":
+                            firstname = fieldvalue;
+                            break;
+                        case "lastname":
+                            lastname = fieldvalue;
+                            break;
+                        case "Address1":
+                            Address1 = fieldvalue;
+                            break;
+                        case "Address2":
+                            Address2 = fieldvalue;
+                            break;
+                        case "Address3":
+                            Address3 = fieldvalue;
+                            break;
+                        case "Address4":
+                            Address4 = fieldvalue;
+                            break;
+                        case "City":
+                            City = fieldvalue;
+                            break;
+                        case "postCode":
+                            postCode = fieldvalue;
+                            break;
+                        case "Country":
+                            country = fieldvalue;
+                            break;
+                        case "Country_Code":
+                            countryCode = fieldvalue;
+                            System.out.println( " Country_Code  " + countryCode );
+                            break;
+                        case "Email":
+                            Email = fieldvalue;
+                            break;
+                        case "Telephone":
+                            Telephone = fieldvalue;
+                            break;
+                        case "Fax":
+                            Fax = fieldvalue;
+                            break;
+                        case "WWW":
+                            WWW = fieldvalue;
+                            break;
+                        case "doNotMail":
+                            DoNotMail = fieldvalue;
+                            break;
+                        case "Bursaries":
+                            Bursaries = fieldvalue;
+                            break;
+                        case "Founded":
+                            Founded = fieldvalue;
+                            break;
+                        case "NumberOfTitles":
+                            NumberOfTitles = fieldvalue;
+                            break;
+                        case "companyNotes":
+                            companyNotes = fieldvalue;
+                            break;
+                        case "destination":
+                            Type = fieldvalue;
+                            break;
+                        case "userID":
+                            userID = fieldvalue;
+                            break;
+                        case "publisherID":
+                            publisherID = Integer.parseInt( fieldvalue );
+                            break;
+                        case "proposedDateOfPublication":
+                            proposedDateOfPublication = fieldvalue;
+                            break;
+                        case "appproposedPrintRun":
+                            String propPrintRun = fieldvalue.replaceAll( "[^0-9]", "" );
+                            proposedPrintRun = Integer.parseInt( propPrintRun );
+                            break;
+                        case "plannedPageExtent":
+                            plannedPageExtent = fieldvalue;
+                            break;
+                        case "BreakDownOfTranslatorFee":
+                            breakDownTranslatorFee = fieldvalue;
+                            break;
+                        case "translatorName":
+                            translatorName = fieldvalue;
+                            //                 System.out.println("translatorName:: " + translatorName);
+                            break;
+                        case "ReferenceNumber":
+                            ReferenceNumber = fieldvalue;
+                            System.out.println( "ReferenceNumber:: " + ReferenceNumber );
+                            break;
+                        case "translatorFee":
+                            translatorFee = fieldvalue;
+                            break;
+                        case "translatorNotes":
+                            translatorNotes = fieldvalue;
+                            break;
+                        case "copiesSent":
+                            copySent = fieldvalue;
+                            System.out.println( "copiesSent:: " + copySent );
+                            if ( "ticked".equals( copySent ) ) {
+                                copiesSent = 1;
                             }
                             else {
-                                File file = new File( filePath );
-                                if ( !file.exists() ) {
-
-                                    file.mkdirs();
-                                }
-                                System.out.println( "createTemporaryDirectory" );
-                                System.out.println( "filePath: " + filePath + " filename: " + filename );
-                                OutputStream outS = null;
-                                InputStream filecontent = null;
-
-                                try {
-                                    outS = new FileOutputStream( new File( filePath + filename ) );
-
-                                    filecontent = item.getInputStream();
-
-                                    message = message + " '" + filename + "' has been uploaded <br/>";
-
-                                    int read;
-                                    final byte[] bytes = new byte[ 1024 ];
-
-                                    while ( ( read = filecontent.read( bytes ) ) != -1 ) {
-                                        outS.write( bytes, 0, read );
-
-                                    }
-
-                                }
-                                catch ( FileNotFoundException fne ) {
-
-                                    String errMsg = "<br/><br/>You either did not specify a file to upload or are "
-                                            + "trying to upload a file to a protected or nonexistent "
-                                            + "location.<br/> <br/><strong> ERROR:<strong> '" + fne.getMessage() + "' ";
-
-                                    request.setAttribute( "message", " '<strong>" + filename + "</strong>" + errMsg );
-                                    request.getRequestDispatcher( "/WEB-INF/views/uploadErrorResponse.jsp" ).forward( request, response );
-                                    LOGGER.log( Level.SEVERE, "Problems during file upload. Error: {0}",
-                                            new Object[]{
-                                                fne.getMessage()
-                                            } );
-
-                                }
-                                finally {
-
-                                    if ( outS != null ) {
-                                        outS.close();
-                                    }
-
-                                    if ( filecontent != null ) {
-                                        filecontent.close();
-                                    }
-                                }
+                                copiesSent = 0;
                             }
-                        } // else
+                            break;
+                        case "dateCopiesWereSent":
+                            dateCopiesWereSent = fieldvalue;
+                            break;
+                        case "tcACCEPTED":
+                            TCACCEPTED = fieldvalue;
+                            System.out.println( "TCACCEPTED  OpenApplicationServlet:: " + TCACCEPTED );
+                            System.out.println( " TCACCEPTED  " + TCACCEPTED );
+                            if ( "ticked".equals( TCACCEPTED ) ) {
+                                TC_ACCEPTED = 1;
+                                System.out.println( "TC_ACCEPTED  OpenApplicationServlet:: " + TC_ACCEPTED );
+                            }
+                            else {
+                                TC_ACCEPTED = 0;
+                                System.out.println( "TC_ACCEPTED  OpenApplicationServlet:: " + TC_ACCEPTED );
+                            }
+                            break;
+                        case "gdprACCEPTED":
+                            gdprACCEPTED = fieldvalue;
+                            System.out.println( " gdprACCEPTED  " + gdprACCEPTED );
+                            if ( "ticked".equals( gdprACCEPTED ) ) {
+                                gdpr_ACCEPTED = 1;
+                            }
+                            else {
+                                gdpr_ACCEPTED = 0;
+                            }
+                            break;
+                        case "Award":
+                            Award = fieldvalue;
+                            if ( "ticked".equals( Award ) ) {
+                                award = 1;
+                            }
+                            else {
+                                award = 0;
+                            }
+                            break;
+                        case "bilingual":
+                            Bilingual = fieldvalue;
+                            if ( "ticked".equals( Bilingual ) ) {
+                                bilingual = 1;
+                            }
+                            else {
+                                bilingual = 0;
+                            }
+                            break;
+                        case "APPROVED":
+                            ieAPPROVED = fieldvalue;
+                            if ( "ticked".equals( ieAPPROVED ) ) {
+                                APPROVED = 1;
+                            }
+                            else {
+                                APPROVED = 0;
+                            }
+                            break;
+                        case "authorArray":
+                            authorArray = fieldvalue.split( "," ); //split string by ,
+                            System.out.println( "authorArraylength  OpenApplicationServlet:: " + authorArray.length );
+                            for ( String individualValue : authorArray ) {
+                                System.out.println( "authorArray  OpenApplicationServlet:: " + individualValue );
+                            }
+                            break;
+                        case "AuthorFirstName":
+                            AuthorFirstName = fieldvalue;
+                            //                 System.out.println("AuthorFirstName OpenApplicationServlet:: " + AuthorFirstName);
+                            break;
+                        case "AuthorLastName":
+                            AuthorLastName = fieldvalue;
+                            //              System.out.println("AuthorLastName OpenApplicationServlet:: " + AuthorLastName);
+                            break;
+                        case "title":
+                            Title = fieldvalue;
+                            break;
+                        case "copies":
+                            Copies = fieldvalue;
+                            break;
+                        case "publicationYear":
+                            publicationYear = fieldvalue;
+                            break;
+                        case "genre":
+                            Genre = fieldvalue;
+                            break;
+                        case "addendum":
+                            Addendum = fieldvalue;
+                            break;
+                        case "proofPayment":
+                            ProofPayment = fieldvalue;
+                            break;
+                        case "bankDetailForm":
+                            BankDetails = fieldvalue;
+                            break;
+                        case "signedLIcontract":
+                            SignedLIContract = fieldvalue;
+                            break;
+                        case "originalSample":
+                            Original = fieldvalue;
+                            break;
+                        case "translationTitle":
+                            translationTitle = fieldvalue;
+                            break;
+                        case "translationPublicationYear":
+                            translationPublisherYear = fieldvalue;
+                            break;
+                        case "translatorArray":
+                            System.out.println( "translatorArray >>>> HERE " );
+                            translatorArrayContent = fieldvalue.split( "," ); //split string by ","
+                            translatorArrayLength = translatorArrayContent.length;
+                            System.out.println( "translatorArray >>>> translatorArray.length " + translatorArrayContent.length );
+                            for ( String individualValue : translatorArrayContent ) {
+                                System.out.println( "translatorArray  OpenApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength );
+                            }
+                            break;
+                        case "rightsHolderArray":
+                            System.out.println( "rightsHolderArray >>>> HERE " );
+                            rightsHolderArrayContent = fieldvalue.split( "," ); //split string by ","
+                            rightsHolderArrayLength = rightsHolderArrayContent.length;
+                            System.out.println( "rightsHolderArray >>>> rightsHolderArray.length " + rightsHolderArrayContent.length );
+                            for ( String individualValue : rightsHolderArrayContent ) {
+                                System.out.println( "rightsHolderArray  OpenApplicationServlet:: " + individualValue + " ----------> rightsHolderArrayLength::  " + rightsHolderArrayLength );
+                            }
+                            break;
+                        case "languages":
+                            languageArray = fieldvalue.split( "," ); //split string by ,
+                            for ( String individualValue : languageArray ) {
+                                //                  System.out.println("languageArray  OpenApplicationServlet:: " + individualValue);
+                            }
+                            break;
+                        case "physicalDescription":
+                            physicalDescription = fieldvalue;
+                            break;
+                        case "duplicates":
+                            if ( "".equals( fieldvalue ) ) {
+                                fieldvalue = "0";
+                            }
+                            Duplicates = Integer.parseInt( fieldvalue );
+                            break;
+                        case "translationPublisher":
+                            translationPublisher = fieldvalue;
+                            break;
+                        case "Status":
+                            Status = fieldvalue;
+                            System.out.println( "Status  OpenApplicationServlet:: " + Status );
+                            break;
+                        case "bookNotes":
+                            bookNotes = fieldvalue;
+                            break;
+                        case "series":
+                            Series = fieldvalue;
+                            break;
+                        case "isbn":
+                            ISBN = fieldvalue;
+                            break;
+                        case "issn":
+                            ISSN = fieldvalue;
+                            break;
+                        case "appLanguageOriginal":
+                            originalLanguage = fieldvalue;
+                            System.out.println( "originalLanguage  OpenApplicationServlet:: " + originalLanguage );
+                            break;
+                        case "originalPageExtent":
+                            originalPageExtent = fieldvalue;
+                            System.out.println( "originalPageExtent  OpenApplicationServlet:: " + originalPageExtent );
+                            break;
+                        case "countryOfPublication":
+                            countryOfPublication = fieldvalue;
+                            break;
+                        case "amountRequested":
+                            amountRequested = fieldvalue;
+                            break;
+                        case "appTargetLanguage":
+                            targetLanguage = fieldvalue;
+                            System.out.println( "targetLanguage  OpenApplicationServlet:: " + targetLanguage );
+                            languageArray = fieldvalue.split( "," ); //split string by ,
+                            languageArrayLength = languageArray.length;
+                            for ( String individualValue : languageArray ) {
+                                System.out.println( "languageArray  OpenApplicationServlet:: " + individualValue );
+                            }
+                            break;
+                        case "appForeignCountry":
+                            foreignCountry = fieldvalue;
+                            break;
+                        case "appForeignPublisher":
+                            foreignPublisher = fieldvalue;
+                            break;
+                        case "DateOfPublicationOriginal":
+                            originalDateOfPublication = fieldvalue;
+                            break;
 
-                    }  // for (FileItem item : items)
+                    } // end switch
 
-                    ////////////////////////////////////////////////////////////
-                    //  Process Application
-                    ////////////////////////////////////////////////////////////
-                    GrantApplication application = new GrantApplication();
-
-                    application.setReferenceNumber( ReferenceNumber );
-                    application.setApplicationYear( yearInString );
-                    application.setCompany( company );
-                    application.setPublisherID( publisherID );
-                    application.setUserID( userID );
-
-                    /*
-                     * Book Details
-                     */
-                    application.setOriginalLanguage( originalLanguage );
-                    application.setCountryOfPublication( countryOfPublication );
-                    application.setOriginalPageExtent( Integer.parseInt( originalPageExtent ) );
-
-                    application.setPublicationYear( publicationYear );
-                    application.setForeignCountry( countryOfPublication );
-                    application.setForeignPublisher( foreignPublisher );
-
-                    /*
-                     * Rights Agreement & Contracts
-                     */
- /*
-                     * Publication Details
-                     */
-                    application.setProposedDateOfPublication( convertDate( proposedDateOfPublication ) );
-                    application.setProposedPrintRun( proposedPrintRun );
-                    application.setPlannedPageExtent( Integer.parseInt( plannedPageExtent ) );
-                    application.setTargetLanguage( targetLanguage ); // we get that from the Languages_Library table
-                    application.setBilingual_edition( bilingual );
-                    /*
-                     * Translator Details
-                     */
-
-                    application.setBreakDownTranslatorFee( breakDownTranslatorFee );
-                    BigDecimal tf = new BigDecimal( translatorFee.replaceAll( ",", "" ) );
-                    application.setTranslatorFee( tf );
-
-                    /*
-                     * Original Work & Sample Translation
-                     */
-                    application.setCopiesSent( copiesSent );
-                    if ( !"".equals( dateCopiesWereSent ) ) {
-                        System.out.println( "!\"\".equals(dateCopiesWereSent)" );
-                        application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
-                    }
-                    if ( dateCopiesWereSent != null ) {
-                        System.out.println( "!= null" );
-                        application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
-                    }
-                    application.setTranslatorNotes( translatorNotes );
-                    application.setBookNotes( bookNotes );
-                    application.setTC_ACCEPTED( TC_ACCEPTED );
-                    application.setGdprACCEPTED( gdpr_ACCEPTED );
-                    application.setAPPROVED( APPROVED );
-                    application.setStatus( Status );
-
-                    System.out.println( "send to updateApplication" );
-
-                    openApplicationDAO.updateApplication( application, ReferenceNumber );
-
-                    /*
-                     * ReferenceNumber contains ApplicationNumber seperated
-                     * by a "/"
-                     * find the first occurrence of "/"
-                     */
-                    int iend = ReferenceNumber.indexOf( "/" );
-
-                    /*
-                     * get ApplicationNumber from ReferenceNumber
-                     */
-                    if ( iend != -1 ) {
-                        ApplicationNumber = Integer.parseInt( ReferenceNumber.substring( 0, iend ) );
-                        System.out.println( "ApplicationNumber ---->> " + ApplicationNumber );
-                    }
-
-                }
-                catch ( ParseException | FileUploadException | SQLException | DBException ex ) {
-                    Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                }
-
-                ////////////////////////////////////////////////////////////
-                //  Process Publisher
-                ////////////////////////////////////////////////////////////
-                Publisher publisher = new Publisher();
-
-                publisher.setCompany( company );
-                publisher.setCompany_Number( publisherID );
-                publisher.setAddress1( Address1 );
-                publisher.setAddress2( Address2 );
-                publisher.setAddress3( Address3 );
-                publisher.setAddress4( Address4 );
-                publisher.setPostCode( postCode );
-                publisher.setCity( City );
-                publisher.setCountry( country );
-                publisher.setCountryCode( countryCode );
-                publisher.setTelephone( Telephone );
-                publisher.setEmail( Email );
-                publisher.setFax( Fax );
-                publisher.setWWW( WWW );
-
-                String doNotMail;
-
-                if ( "true".equals( DoNotMail ) ) {
-                    doNotMail = "1";
                 }
                 else {
-                    doNotMail = "0";
-                }
 
-                publisher.setDoNotMail( doNotMail );
+                    //////////////////////////////////////////////////////////////
+                    //  Process Application Form file field (input type="file") //
+                    //////////////////////////////////////////////////////////////
+                    String fieldname = item.getFieldName();
+                    String filename = FilenameUtils.getName( item.getName() );
+                    System.out.println( "FilenameUtils.getName filename  " + filename );
+//                            Change TranslatorTrack table to accomodate fieldnme etc
+//                                    Store files there
 
-                String bursaries;
+                    int counter = getCounter( fieldname );
+                    String fileName = getFdname( fieldname );
 
-                if ( "true".equals( Bursaries ) ) {
-                    bursaries = "1";
-                }
-                else {
-                    bursaries = "0";
-                }
+                    String fdnameArray[] = fieldname.split( "-" );
 
-                publisher.setBursaries( bursaries );
-                publisher.setFounded( Founded );
-                publisher.setNumberOfTitles( NumberOfTitles );
+                    String fdname = fdnameArray[0];
 
-                publisher.setDateModified( timeStamp );
-                publisher.setNotes( companyNotes );
-                publisher.setStatus( Status );
+                    System.out.println( "FilenameUtils.getName counter    " + counter );
 
-                 {
-                    try {
-                        updatePublisher( publisher, publisherID );
+                    System.out.println( "FilenameUtils.getName fieldname  " + fieldname );
+
+                    System.out.println( "FilenameUtils.getName fdname  " + fdname );
+
+                    System.out.println( "getCounter( fieldname ) counter :" + counter + ": fieldname :" + fieldname + ": filename :" + filename );
+
+                    System.out.println( "translatorArrayContent.length " + translatorArrayContent.length );
+
+                    System.out.println( "translatorArrayContent counter  " + translatorArrayContent[counter] );
+
+                    if ( idxFlag == 0 ) {
+
+                        for ( String translatorArrayContent1 : translatorArrayContent ) {
+                            System.out.println( "translatorArrayContent LOOP  " + translatorArrayContent1 );
+                        }
+                        idxFlag++;
                     }
-                    catch ( DBException ex ) {
-                        Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                    }
-                }
 
-                /*
-                 * Process translation rights holder
-                 */
-                System.out.println( "Process rightsHolderArrayContent " );
+                    System.out.println( "switch ( " + fieldname + ")" );
 
-                if ( rightsHolderArrayContent.length > 0 ) {
-                    System.out.println( "rightsHolderArrayContent " + rightsHolderArrayContent.length );
-                    try {
-                        openApplicationDAO.updateRightsHolderArrayContent( ReferenceNumber, rightsHolderArrayContent );
-                    }
-                    catch ( DBException ex ) {
-                        Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                    }
-                }
-
-                /*
-                 * Update GrantApplication to contain the filePaths
-                 * =================================================
-                 * path = path + File.separator + yearInString + File.separator
-                 * + Company + File.separator + Type + ApplicationNumber;
-                 * upload to temp dir then move to final directory
-                 */
-                List<String> translatorFileDetails = new ArrayList<>();
-
-//                der looped sich nen Wolf when inserting into table see filesToBeMoved 4.txt and  TranslatorTrack.csv
-//                Run and see System.out.println(" ");
-                System.out.println( "####################### creating the lists ##################################################" );
-
-                System.out.println( "filesToBeMoved.size()  " + filesToBeMoved.size() );
-
-                for ( int i = 0; i < filesToBeMoved.size(); i++ ) {
-                    System.out.println( "ffilesToBeMoved.get(i) " + filesToBeMoved.get( i ) );
-                }
-
-                for ( int i = 0; i < filesToBeMoved.size(); i++ ) {
-
-                    String moveFile = "";
-                    String moveFileName = "";
-                    String destinationDirectory = "";
-
-                    String[] subDirs = filesToBeMoved.get( i ).split( "(?<!^)/" );
-                    System.out.println( "ffilesToBeMoved.get(i) " + filesToBeMoved.get( i ) );
-                    String decider = subDirs[6];
-
-                    switch ( decider ) {
+                    switch ( fdname ) {
 
                         case "Agreement":
+                            if ( filename.isEmpty() ) {
+                                System.out.println( "Agreement filename.isEmpty()  filename " + filename );
+                            }
+                            else {
+                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                        + "Agreement" + File.separator + rightsHolderArrayContent[counter] + File.separator;
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
+                                System.out.println( "Agreement  rightsHolderArrayContent[" + counter + "] =  " + rightsHolderArrayContent[counter] );
+                                System.out.println( "Agreement filename " + fileNames[idxFolderNames] );
+                            }
+                            break;
+
                         case "Contract":
+                            if ( filename.isEmpty() ) {
+                                System.out.println( "Contract filename.isEmpty()  filename " + filename );
+                            }
+                            else {
+                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                        + "Contract" + File.separator + translatorArrayContent[counter] + File.separator;
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
+                                System.out.println( "Contract  translatorArrayContent[" + counter + "] =  " + translatorArrayContent[counter] );
+                                System.out.println( "Contract  filename " + fileNames[idxFolderNames] );
+
+                            }
+                            break;
+
                         case "Addendum":
-                        case "Translator_CV":
-                            String subDirectory = subDirs[6];  // Addendum
-                            String subNameDirectory = subDirs[7];  // Translator Name2
-                            moveFileName = subDirs[8];  // addendum to the rights agreement 2.docx 
-
-                            destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
-                                    + ApplicationNumber + File.separator + subDirectory + File.separator + subNameDirectory + File.separator;
-
-                            moveFile = destinationDirectory + moveFileName;
-                            translatorFileDetails.add( moveFile );
-                            translatorFileDetails.add( moveFileName );
-
-                            System.out.println( "filesToBeMoved--" + decider + "--->>>> " + moveFile );
-
-                            longArrayList.add( moveFile );
+                            if ( filename.isEmpty() ) {
+                                System.out.println( "Addendum filename.isEmpty()  filename " + filename );
+                            }
+                            else {
+                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                        + "Addendum" + File.separator + rightsHolderArrayContent[counter] + File.separator;
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
+                                System.out.println( "Addendum  rightsHolderArrayContent[" + counter + "] =  " + rightsHolderArrayContent[counter] );
+                                System.out.println( "Addendum  filename " + fileNames[idxFolderNames] );
+                            }
                             break;
 
                         case "Original":
+                            if ( filename.isEmpty() ) {
+                                System.out.println( "Original filename.isEmpty()  filename " + filename );
+                            }
+                            else {
+                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                        + "Original" + File.separator;
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
+                                System.out.println( "Original  rightsHolderArrayContent[" + counter + "] =  " + rightsHolderArrayContent[counter] );
+                                System.out.println( "Original  filename " + fileNames[idxFolderNames] );
+                            }
+                            break;
+
                         case "TranslationSample":
-                            String Directory = subDirs[6];      // TranslationSample
-                            moveFileName = subDirs[7];      // translation sample.docx
-                            destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
-                                    + ApplicationNumber + File.separator + Directory + File.separator;
-                            System.out.println( "filesToBeMoved--Directory--->>>> " + Directory );
-                            System.out.println( "filesToBeMoved--moveFileName--->>>> " + moveFileName );
-                            moveFile = destinationDirectory + moveFileName;
-                            shortArrayList.add( moveFile );
-                            System.out.println( "filesToBeMoved--" + decider + "--->>>> " + moveFile );
+                            if ( filename.isEmpty() ) {
+                                System.out.println( "TranslationSample filename.isEmpty()  filename " + filename );
+                            }
+                            else {
+                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                        + "TranslationSample" + File.separator;
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
+
+                                System.out.println( "TranslationSample  filename " + fileNames[idxFolderNames] );
+                            }
+                            break;
+
+                        case "Translator_CV":
+                            if ( filename.isEmpty() ) {
+                                System.out.println( "Translator_CV filename.isEmpty()  filename " + filename );
+                            }
+                            else {
+                                filePath = tempPath + File.separator + yearInString + File.separator + company + File.separator
+                                        + "Translator_CV" + File.separator + translatorArrayContent[counter] + File.separator;
+                                fileNames[idxFolderNames] = filePath + filename;
+                                filesToBeMoved.add( fileNames[idxFolderNames] );
+                                System.out.println( "Translator_CV  translatorArrayContent[" + counter + "] =  " + translatorArrayContent[counter] );
+                                System.out.println( "Translator_CV  filename " + fileNames[idxFolderNames] );
+                            }
+                            break;
+
+                    } // end switch
+
+                    /*
+                     * create temporary Directory if it does not exist
+                     */
+                    System.out.println( "fileName.equals 1  " + fileName + " filePath " + filePath );
+                    if ( filename.isEmpty() ) {
+                        System.out.println( "fileName.equals 2 filename.isEmpty() filename.isEmpty " + fileName + " filePath " + filePath );
+                    }
+                    else {
+                        File file = new File( filePath );
+                        if ( !file.exists() ) {
+
+                            file.mkdirs();
+                        }
+                        System.out.println( "createTemporaryDirectory" );
+                        System.out.println( "filePath: " + filePath + " filename: " + filename );
+                        OutputStream outS = null;
+                        InputStream filecontent = null;
+
+                        try {
+                            outS = new FileOutputStream( new File( filePath + filename ) );
+
+                            filecontent = item.getInputStream();
+
+                            message = message + " '" + filename + "'<br/>";
+
+                            int read;
+                            final byte[] bytes = new byte[ 1024 ];
+
+                            while ( ( read = filecontent.read( bytes ) ) != -1 ) {
+                                outS.write( bytes, 0, read );
+
+                            }
+
+                        }
+                        catch ( FileNotFoundException fne ) {
+
+                            String errMsg = "<br/><br/>You either did not specify a file to upload or are "
+                                    + "trying to upload a file to a protected or nonexistent "
+                                    + "location.<br/> <br/><strong> ERROR:<strong> '" + fne.getMessage() + "' ";
+
+                            request.setAttribute( "message", " '<strong>" + filename + "</strong>" + errMsg );
+                            request.getRequestDispatcher( "/WEB-INF/views/uploadErrorResponse.jsp" ).forward( request, response );
+                            LOGGER.log( Level.SEVERE, "Problems during file upload. Error: {0}",
+                                    new Object[]{
+                                        fne.getMessage()
+                                    } );
+
+                        }
+                        finally {
+
+                            if ( outS != null ) {
+                                outS.close();
+                            }
+
+                            if ( filecontent != null ) {
+                                filecontent.close();
+                            }
+                        }
+                    }
+                } // else
+
+            }  // for (FileItem item : items)
+
+            ////////////////////////////////////////////////////////////
+            //  Process Application
+            ////////////////////////////////////////////////////////////
+            GrantApplication application = new GrantApplication();
+
+            application.setReferenceNumber( ReferenceNumber );
+            application.setApplicationYear( yearInString );
+            application.setCompany( company );
+            application.setPublisherID( publisherID );
+            application.setUserID( userID );
+
+            /*
+             * Book Details
+             */
+            application.setOriginalLanguage( originalLanguage );
+            application.setCountryOfPublication( countryOfPublication );
+            application.setOriginalPageExtent( Integer.parseInt( originalPageExtent ) );
+            application.setPublicationYear( publicationYear );
+            application.setForeignCountry( foreignCountry );
+            application.setForeignPublisher( foreignPublisher );
+
+//        Find out why page refresh logs me out
+            /*
+             * Rights Agreement & Contracts
+             */
+ /*
+             * Publication Details
+             */
+            application.setProposedDateOfPublication( convertDate( proposedDateOfPublication ) );
+            application.setProposedPrintRun( proposedPrintRun );
+            application.setPlannedPageExtent( Integer.parseInt( plannedPageExtent ) );
+            application.setTargetLanguage( targetLanguage ); // we get that from the Languages_Library table
+            application.setBilingual_edition( bilingual );
+            /*
+             * Translator Details
+             */
+
+            application.setBreakDownTranslatorFee( breakDownTranslatorFee );
+            BigDecimal tf = new BigDecimal( translatorFee.replaceAll( ",", "" ) );
+            application.setTranslatorFee( tf );
+
+            /*
+             * Original Work & Sample Translation
+             */
+            application.setCopiesSent( copiesSent );
+            if ( !"".equals( dateCopiesWereSent ) ) {
+                System.out.println( "!\"\".equals(dateCopiesWereSent)" );
+                application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
+            }
+            if ( dateCopiesWereSent != null ) {
+                System.out.println( "!= null" );
+                application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
+            }
+            application.setTranslatorNotes( translatorNotes );
+            application.setBookNotes( bookNotes );
+            application.setTC_ACCEPTED( TC_ACCEPTED );
+            application.setGdprACCEPTED( gdpr_ACCEPTED );
+            application.setAPPROVED( APPROVED );
+            application.setStatus( Status );
+
+            System.out.println( "send to updateApplication" );
+
+            openApplicationDAO.updateApplication( application, ReferenceNumber );
+
+            /*
+             * ReferenceNumber contains ApplicationNumber seperated
+             * by a "/"
+             * find the first occurrence of "/"
+             */
+            int iend = ReferenceNumber.indexOf( "/" );
+
+            /*
+             * get ApplicationNumber from ReferenceNumber
+             */
+            if ( iend != -1 ) {
+                ApplicationNumber = Integer.parseInt( ReferenceNumber.substring( 0, iend ) );
+                System.out.println( "ApplicationNumber ---->> " + ApplicationNumber );
+            }
+
+        }
+        catch ( ParseException | FileUploadException | DBException | SQLException ex ) {
+            Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+
+        ////////////////////////////////////////////////////////////
+        //  Process Publisher
+        ////////////////////////////////////////////////////////////
+        Publisher publisher = new Publisher();
+
+        publisher.setCompany( company );
+        publisher.setCompany_Number( publisherID );
+        publisher.setAddress1( Address1 );
+        publisher.setAddress2( Address2 );
+        publisher.setAddress3( Address3 );
+        publisher.setAddress4( Address4 );
+        publisher.setPostCode( postCode );
+        publisher.setCity( City );
+        publisher.setCountry( country );
+        publisher.setCountryCode( countryCode );
+        publisher.setTelephone( Telephone );
+        publisher.setEmail( Email );
+        publisher.setFax( Fax );
+        publisher.setWWW( WWW );
+
+        String doNotMail;
+
+        if ( "true".equals( DoNotMail ) ) {
+            doNotMail = "1";
+        }
+        else {
+            doNotMail = "0";
+        }
+
+        publisher.setDoNotMail( doNotMail );
+
+        String bursaries;
+
+        if ( "true".equals( Bursaries ) ) {
+            bursaries = "1";
+        }
+        else {
+            bursaries = "0";
+        }
+
+        publisher.setBursaries( bursaries );
+        publisher.setFounded( Founded );
+        publisher.setNumberOfTitles( NumberOfTitles );
+
+        publisher.setDateModified( timeStamp );
+        publisher.setNotes( companyNotes );
+        publisher.setStatus( "" );
+
+        {
+            try {
+                updatePublisher( publisher, publisherID );
+            }
+            catch ( DBException ex ) {
+                Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
+            }
+        }
+
+        /*
+         * Process translation rights holder
+         */
+        System.out.println( "Process rightsHolderArrayContent " );
+        System.out.println( "rightsHolderArrayContent.length " + rightsHolderArrayContent.length );
+
+        if ( rightsHolderArrayContent.length > 0 ) {
+            System.out.println( "rightsHolderArrayContent.length " + rightsHolderArrayContent.length );
+            System.out.println( "rightsHolderArrayContent " );
+            System.out.println( Arrays.toString( rightsHolderArrayContent ) );
+            try {
+                GrantApplicationDAO.updateRightsHolderArrayContent( ReferenceNumber, rightsHolderArrayContent );
+            }
+            catch ( DBException ex ) {
+                Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
+            }
+        }
+        /*
+         * Update GrantApplication to contain the filePaths
+         * =================================================
+         * path = path + File.separator + yearInString + File.separator
+         * + Company + File.separator + Type + ApplicationNumber;
+         * upload to temp dir then move to final directory
+         */
+        List<String> translatorFileDetails = new ArrayList<>();
+
+        System.out.println( "####################### creating the lists ##################################################" );
+
+        System.out.println( "filesToBeMoved.size()  " + filesToBeMoved.size() );
+
+        for ( int i = 0; i < filesToBeMoved.size(); i++ ) {
+            System.out.println( "ffilesToBeMoved.get(i) " + filesToBeMoved.get( i ) );
+        }
+
+        for ( int i = 0; i < filesToBeMoved.size(); i++ ) {
+
+            String moveFile = "";
+            String moveFileName = "";
+            String destinationDirectory = "";
+
+            String[] subDirs = filesToBeMoved.get( i ).split( "(?<!^)/" );
+            for ( int j = 0; j < subDirs.length; j++ ) {
+                System.out.println( " Print Loop subDirs [" + j + "]  " + subDirs[j] );
+            }
+            System.out.println( "ffilesToBeMoved.get(i) " + filesToBeMoved.get( i ) );
+            String decider = subDirs[8];
+
+            System.out.println( "filesToBeMoved  decider --" + decider + "--->>>> " );
+
+            switch ( decider ) {
+
+                case "Addendum":
+                case "Agreement":
+                    String subDirectory = subDirs[8];  // Addendum
+                    String subNameDirectory = subDirs[9];  // Translator Name2
+                    moveFileName = subDirs[10];  // addendum to the rights agreement 2.docx 
+
+                    destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
+                            + ApplicationNumber + File.separator + subDirectory + File.separator + subNameDirectory + File.separator;
+
+                    moveFile = destinationDirectory + moveFileName;
+                    translatorFileDetails.add( moveFile );
+                    translatorFileDetails.add( moveFileName );
+
+                    System.out.println( "filesToBeMoved--" + decider + "--->>>> " + moveFile );
+                    System.out.println( "filesToBeMoved--destinationDirectory  " + decider + "--->>>> " + destinationDirectory );
+                    longArrayList.add( moveFile );
+                    break;
+                /*
+                 * Contract with Translator
+                 * Translator CV
+                 */
+                case "Contract":
+                case "Translator_CV":
+                    subDirectory = subDirs[8];  // Addendum
+                    subNameDirectory = subDirs[9];  // Translator Name2
+                    moveFileName = subDirs[10];  // addendum to the rights agreement 2.docx 
+
+                    destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
+                            + ApplicationNumber + File.separator + subDirectory + File.separator + subNameDirectory + File.separator;
+
+                    moveFile = destinationDirectory + moveFileName;
+                    translatorFileDetails.add( moveFile );
+                    translatorFileDetails.add( moveFileName );
+
+                    System.out.println( "filesToBeMoved--" + decider + "--->>>> " + moveFile );
+                    System.out.println( "filesToBeMoved--destinationDirectory  " + decider + "--->>>> " + destinationDirectory );
+                    longArrayList.add( moveFile );
+                    break;
+
+                case "Original":
+                case "TranslationSample":
+                    String Directory = subDirs[8];      // TranslationSample
+                    moveFileName = subDirs[9];      // translation sample.docx
+                    destinationDirectory = rootPath + File.separator + yearInString + File.separator + company + File.separator
+                            + ApplicationNumber + File.separator + Directory + File.separator;
+                    System.out.println( "filesToBeMoved--Directory--->>>> " + Directory );
+                    System.out.println( "filesToBeMoved--moveFileName--->>>> " + moveFileName );
+                    moveFile = destinationDirectory + moveFileName;
+                    shortArrayList.add( moveFile );
+                    System.out.println( "filesToBeMoved--" + decider + "--->>>> " + moveFile );
+                    break;
+
+            } // switch (decider)
+
+
+            /*
+             * create directory if it does not exist
+             */
+            File directory = new File( destinationDirectory );
+            System.out.println( "destinationDirectory --" + destinationDirectory );
+            if ( !directory.exists() ) {
+                directory.mkdirs();
+            }
+
+            File sFile = new File( filesToBeMoved.get( i ) );
+            File destDir = new File( destinationDirectory );
+//                    fileDir.add(moveFile);
+            FileUtils.moveFileToDirectory( sFile, destDir, true );
+        }
+        System.out.println( "####################### End creating the lists ##################################################" );
+        ////////////////////////////////////////////////////////////
+        //  Process Application Translators
+        ////////////////////////////////////////////////////////////
+        System.out.println( "translatorArray.length: -------------------------->>>> " + translatorArrayContent.length );
+        // if we have an array
+        if ( translatorArrayContent.length > 0 ) {
+
+            /*
+             * convert translatorArray to ArrayList Translator
+             */
+            System.out.println( "####################### sending files to tables ##################################################" );
+
+            /*
+             * loop through the Translators and insert each into
+             * TranslatorTrack
+             */
+            System.out.println( "longArrayList.size() " + longArrayList.size() );
+            for ( int i = 0; i < longArrayList.size(); i++ ) {
+
+                System.out.println( "longArrayList---i:[" + i + "]-->>>> " + longArrayList.get( i ) );
+
+                String[] elements = longArrayList.get( i ).split( "(?<!^)/" );
+                for ( int j = 0; j < elements.length; j++ ) {
+                    System.out.println( "longArrayList sending files to tables subDirs [" + j + "]  " + elements[j] );
+                }
+                String moveFile = longArrayList.get( i );
+                String decider = elements[10];
+                translatorName = elements[11];
+                String moveFileName = elements[12];
+//                        String moveFileNameReplaced = moveFile.replace("/home/markus/public_html", "/~markus");
+                String moveFileNameReplaced = moveFile.replace( "/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents" );
+                /*
+                 * moveFile = the whole path including the file name
+                 * = longArrayList.get(i)
+                 * moveFileName = fille name = fileName
+                 * moveTheFileName = moveFile but with
+                 * replace("/home/markus/public_html", "/~markus") =
+                 * String moveTheFileName =
+                 * moveFile.replace("/home/markus/public_html",
+                 * "/~markus");
+                 */
+                try {
+
+                    /*
+                     * set the variables and
+                     * translatorName =
+                     * processingTranslatorArray[0];
+                     */
+                    int idTranslator = ifTranslatorExist( translatorName );
+                    System.out.println( "ReferenceNumber  " + ReferenceNumber );
+                    /*
+                     * insert them into the table TranslatorTrack
+                     */
+
+                    System.out.println( "OpenApplicationServlet  decider  " + decider );
+
+                    switch ( decider ) {
+                        /*
+                         * Agreement with Translation Rights Holder
+                         */
+                        case "Agreement":
+                            System.out.println( "insertAgreement:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
+                            System.out.println( "insertAgreement:: ReferenceNumber  \n" + ReferenceNumber );
+                            System.out.println( "insertAgreement:: rightsHolderArrayContent[0]  \n" + rightsHolderArrayContent[0] + " moveFileName " + moveFileName + " moveFileNameReplaced " + moveFileNameReplaced );
+                            GrantApplicationDAO.insertAgreement( ReferenceNumber, rightsHolderArrayContent[0], Title, moveFileName, moveFileNameReplaced );
+                            break;
+                        /*
+                         * Contract with Translator
+                         */
+                        case "Contract":
+                            System.out.println( "insertContract:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
+                            GrantApplicationDAO.insertContract( ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced );
+                            break;
+                        /*
+                         * Addendum with Translation Rights Holder
+                         */
+                        case "Addendum":
+                            System.out.println( "insertAddendum:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
+                            GrantApplicationDAO.insertAddendum( ReferenceNumber, rightsHolderArrayContent[0], Title, moveFileName, moveFileNameReplaced );
+                            break;
+                        /*
+                         * Translator CV
+                         */
+                        case "Translator_CV":
+                            // String Translator_CV , String Translator_CV_DocName , fn copiesTranslationSample, fname copiesTranslationSampleDocName
+                            // fn copiesTranslationSample, fname copiesTranslationSampleDocName
+                            // fn and fname are empty at the moment!!!
+                            String fname = "";
+                            String fn = "";
+                            System.out.println( "insertTranslators:: translatorName " + translatorName + " longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
+                            GrantApplicationDAO.insertTranslators( ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced, fn, fname );
                             break;
 
                     } // switch (decider)
-
-
-                    /*
-                     * create directory if it does not exist
-                     */
-                    File directory = new File( destinationDirectory );
-                    if ( !directory.exists() ) {
-                        directory.mkdirs();
-                    }
-
-                    File sFile = new File( filesToBeMoved.get( i ) );
-                    File destDir = new File( destinationDirectory );
-//                    fileDir.add(moveFile);
-                    FileUtils.moveFileToDirectory( sFile, destDir, true );
-                }
-                System.out.println( "####################### End creating the lists ##################################################" );
-                ////////////////////////////////////////////////////////////
-                //  Process Application Translators
-                ////////////////////////////////////////////////////////////
-                System.out.println( "translatorArray.length: -------------------------->>>> " + translatorArrayContent.length );
-                // if we have an array
-                if ( translatorArrayContent.length > 0 ) {
-
-                    /*
-                     * convert translatorArray to ArrayList Translator
-                     */
-                    System.out.println( "####################### sending files to tables ##################################################" );
-
-
-                    /*
-                     * loop through the Translators and insert each into
-                     * TranslatorTrack
-                     */
-                    for ( int i = 0; i < longArrayList.size(); i++ ) {
-
-                        System.out.println( "longArrayList---i:[" + i + "]-->>>> " + longArrayList.get( i ) );
-
-                        String[] elements = longArrayList.get( i ).split( "(?<!^)/" );
-
-                        String moveFile = longArrayList.get( i );
-                        String decider = elements[7];
-                        translatorName = elements[8];
-                        String moveFileName = elements[9];
-                        String moveFileNameReplaced = moveFile.replace( "/home/markus/public_html", "/~markus" );
-
-                        /*
-                         * moveFile = the whole path including the file name
-                         * = longArrayList.get(i)
-                         * moveFileName = fille name = fileName
-                         * moveTheFileName = moveFile but with
-                         * replace("/home/markus/public_html", "/~markus") =
-                         * String moveTheFileName =
-                         * moveFile.replace("/home/markus/public_html",
-                         * "/~markus");
-                         */
-                        try {
-
-                            /*
-                             * set the variables and
-                             * translatorName =
-                             * processingTranslatorArray[0];
-                             */
-                            int idTranslator = ifTranslatorExist( translatorName );
-
-                            /*
-                             * insert them into the table TranslatorTrack
-                             */
-                            switch ( decider ) {
-
-                                case "Agreement":
-                                    System.out.println( "insertAgreement:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
-                                    GrantApplicationDAO.insertAgreement( ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced );
-                                    break;
-                                case "Contract":
-                                    System.out.println( "insertContract:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
-                                    GrantApplicationDAO.insertContract( ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced );
-                                    break;
-                                case "Addendum":
-                                    System.out.println( "insertAddendum:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
-                                    GrantApplicationDAO.insertAddendum( ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced );
-                                    break;
-                                case "Translator_CV":
-                                    // String Translator_CV , String Translator_CV_DocName , fn copiesTranslationSample, fname copiesTranslationSampleDocName
-                                    // fn copiesTranslationSample, fname copiesTranslationSampleDocName
-                                    // fn and fname are empty at the moment!!!
-                                    String fname = "";
-                                    String fn = "";
-                                    System.out.println( "insertTranslators:: translatorName " + translatorName + " longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
-                                    GrantApplicationDAO.insertTranslators( ReferenceNumber, translatorName, Title, moveFileName, moveFileNameReplaced, fn, fname );
-                                    break;
-
-                            } // switch (decider)
-
-                        }
-                        catch ( DBException ex ) {
-                            Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                        }
-
-                    }
-
-                }
-                else {  // no array - single Translator
-                    System.out.println( "===================  no array - single Translator ======================== " );
-//                    System.out.println("insertTranslators:: translatorName " + translatorName + " ReferenceNumber " + ReferenceNumber + "Title" + Title + 
-//                            "moveFileName " + moveFileName + "moveFileNameReplaced " + moveFileNameReplaced);
-                }  // end else
-
-                /*
-                 * Process Original TranslationSample
-                 */
-                for ( int i = 0; i < shortArrayList.size(); i++ ) {
-                    System.out.println( "shortArrayList---i:[" + i + "]-->>>> " + shortArrayList.get( i ) );
-
-                    String[] elements = shortArrayList.get( i ).split( "(?<!^)/" );
-
-                    String AppNumber = Integer.toString( ApplicationNumber );   // '195/2018' ---> 195
-
-//                    for (int l = 0; l < elements.length; l++) {
-                    try {
-//                            System.out.println("elements---i:[" + l + "]-->>>> " + elements[l]);
-
-                        String moveFile = shortArrayList.get( i );
-                        String decider = elements[7];      // Original
-                        String moveFileName = elements[8]; // copy of original work.docx
-                        String moveFileNameReplaced = moveFile.replace( "/home/markus/public_html", "/~markus" );
-
-                        switch ( decider ) {
-
-                            case "Original":
-                                System.out.println( "insertOriginal:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
-                                GrantApplicationDAO.insertOriginal( AppNumber, moveFileName, moveFileNameReplaced );
-
-                                break;
-                            case "TranslationSample":
-                                System.out.println( "insertTranslationSample:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
-                                GrantApplicationDAO.insertTranslationSample( AppNumber, moveFileName, moveFileNameReplaced );
-                                break;
-
-                        } // switch (decider)
-                    }
-                    catch ( DBException ex ) {
-                        Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                    }
-//                    }
-                }
-                System.out.println( "####################### End sending files to tables ##################################################" );
-                ////////////////////////////////////////////////////////////
-                //  Process Library
-                ////////////////////////////////////////////////////////////
-                Library library = new Library();
-                System.out.println( "Process library" );
-
-                library.setTitle( Title );
-                library.setPublisher( company );
-                library.setPublisheryear( publicationYear );
-                library.setGenre( Genre );
-                library.setSeries( Series );
-                library.setTranslationPublisher( translationPublisher );
-                library.setTranslationTitle( translationTitle );
-                library.setTranslationPublisherYear( translationPublisherYear );
-                library.setPhysicalDescription( physicalDescription );
-                library.setDuplicates( Duplicates );
-                library.setCopies( Copies );
-                library.setNotes( bookNotes );
-                library.setISBN( ISBN );
-                library.setISSN( ISSN );
-
-                 {
-                    try {
-                        boolean succ = updateLibrary( library, referenceNumber );
-                    }
-                    catch ( DBException ex ) {
-                        Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                    }
-                }
-
-                /*
-                 * reset session
-                 */
-                session.removeAttribute( "task" );
-
-                request.setAttribute( "message", message );
-                request.getRequestDispatcher( "/WEB-INF/views/response.jsp" ).forward( request, response );
-                break;
-
-            case "New Applications":
-                System.out.println( "New Applications :: " );
-                System.out.println( "task: OpenApplicationServlet:: 1 " + task );
-                request.getRequestDispatcher( "/WEB-INF/views/newApplications.jsp" ).forward( request, response );
-                break;
-
-            case "Open Applications":
-                System.out.println( "Open Applications :: " );
-                System.out.println( "task: OpenApplicationServlet:: 2 " + task );
-                request.getRequestDispatcher( "/WEB-INF/views/openApplications.jsp" ).forward( request, response );
-                break;
-
-            case "Pending Applications":
-                System.out.println( "Pending Applications :: " );
-                System.out.println( "task: OpenApplicationServlet:: 3 " + task );
-                request.getRequestDispatcher( "/WEB-INF/views/pendingApplications.jsp" ).forward( request, response );
-                break;
-
-            case "Closed Applications":
-                System.out.println( "Closed Applications :: " );
-                System.out.println( "task: OpenApplicationServlet:: 4 " + task );
-                request.getRequestDispatcher( "/WEB-INF/views/closedApplications.jsp" ).forward( request, response );
-                break;
-
-            case "AssignExpertReader":
-                String expertReaderEmail = "";
-                List<String[]> fileAttachment = new ArrayList<>();
-
-                String expertReaderName = request.getParameter( "selectedUnassignedER" );
-                String expectedReturnDate = request.getParameter( "expectedReturnDate" );
-
-                String newAssignedReferenceNumber = request.getParameter( "NewAssignedERRefNo" );
-
-                int expertReaderUserID = 0;
-                try {
-
-                    expertReaderUserID = getExpertReaderUserID( expertReaderName );
-                    expertReaderEmail = getExpertReaderEmail( expertReaderName );
-                    fileAttachment = getAttachments( newAssignedReferenceNumber );
 
                 }
                 catch ( DBException ex ) {
                     Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
                 }
 
-                String originalPath;
-                String originalName = "";
-                String translationPath;
-                String translationName = "";
-
-                ////////////////////////////////////////////////////////////
-                //  Process Application - INSERT new ExpertReader
-                ////////////////////////////////////////////////////////////
-                ExpertReader expertReader = new ExpertReader();
-
-                expertReader.setExpertReaderUserID( expertReaderUserID );
-                expertReader.setExpertReaderName( expertReaderName );
-                expertReader.setReferenceNumber( newAssignedReferenceNumber );
-
-                 {
-                    try {
-                        String[] attachFiles = new String[ 2 ];
-
-                        for ( String[] filePath : fileAttachment ) {
-
-                            originalPath = filePath[1].replace( "/~markus", "/home/markus/public_html" );
-                            originalName = filePath[2];
-
-                            translationPath = filePath[3].replace( "/~markus", "/home/markus/public_html" );
-                            translationName = filePath[4];
-
-                            attachFiles[0] = originalPath;
-                            attachFiles[1] = translationPath;
-
-                        }
-
-                        java.sql.Date today = getTodaySQL();
-                        int result = updateExpertReader( expertReader, today );
-
-                        if ( result > 0 ) {
-
-                            try {
-
-                                /*
-                                 * send email with attachment
-                                 */
-                                MailUtil.sendEmailWithAttachmentExpertReader( expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate );
-
-                            }
-                            catch ( MessagingException ex ) {
-                                Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                            }
-                        }
-
-                    }
-                    catch ( DBException ex ) {
-                        Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                    }
-                }
-
-                message = "The email to '" + expertReaderName + "' has been sent/ <br/>"
-                        + "electronic copies of " + originalName + " and " + translationName + "have been attached";
-                request.setAttribute( "message", message );
-                request.getRequestDispatcher( "/WEB-INF/views/response.jsp" ).forward( request, response );
-
-                break;
-
-            ////////////////////////////////////////////////////////////
-            //  Process openApplications
-            ////////////////////////////////////////////////////////////
-            case "openApplications213":
-
-                System.out.println( "case openApplications: 123" );
-                Status = "open";
-                timeStamp = new SimpleDateFormat( "yyyy.MM.dd.HH.mm.ss" ).format( new Date() );
-                now = Calendar.getInstance();
-                year = now.get( Calendar.YEAR );
-                yearInString = String.valueOf( year );
-
-                timestamp = getcurrentTimeStamp();
-
-                fileNames = new String[ 10 ];
-                // = new String[10];
-                //folderNames = {"Cover", "Agreement", "Contract", "Addendum", "ProofPayment", "BankDetails", "SignedLIContract", "Translator_CV", "Original", "TranslationSample"};
-                message = "";
-
-                idxFolderNames = 0;
-
-                try {
-                    /*
-                     * Check that we have a file upload request
-                     */
-                    isMultipart = ServletFileUpload.isMultipartContent( request );
-                    System.out.println( "isMultipart:: " + isMultipart );
-                    response.setContentType( "text/html;charset=UTF-8" );
-
-                    DiskFileItemFactory factory = new DiskFileItemFactory();
-
-                    /*
-                     * maximum size that will be stored in memory
-                     */
-                    factory.setSizeThreshold( maxMemSize );
-
-                    /*
-                     * Location to save data that is larger than maxMemSize.
-                     */
-                    factory.setRepository( new File( tempPath ) );
-
-                    /*
-                     * Create a new file upload handler
-                     */
-                    ServletFileUpload upload = new ServletFileUpload( factory );
-
-                    /*
-                     * maximum file size to be uploaded.
-                     */
-                    //  upload.setSizeMax(maxFileSize);
-
-                    /*
-                     * Parse the request to get file items.
-                     */
-                    List<FileItem> items = null;
-                    try {
-                        items = upload.parseRequest( request );
-                    }
-                    catch ( FileUploadException ex ) {
-                        Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                    }
-
-                    for ( FileItem item : items ) {
-                        if ( item.isFormField() ) {
-                            /*
-                             * Process regular form field (input
-                             * type="text|radio|checkbox|etc", select, etc).
-                             * collect all data input from input fileds
-                             */
-                            String fieldname = item.getFieldName();
-                            String fieldvalue = item.getString();
-
-                            System.out.println( "fieldname " + fieldname + " fieldvalue >> " + fieldvalue );
-                            switch ( fieldname ) {
-                                case "Company":
-                                    company = fieldvalue;
-                                    break;
-                                case "Company_Number":
-                                    publisherID = Integer.parseInt( fieldvalue );
-                                    break;
-                                case "firstname":
-                                    firstname = fieldvalue;
-                                    break;
-                                case "lastname":
-                                    lastname = fieldvalue;
-                                    break;
-                                case "Address1":
-                                    Address1 = fieldvalue;
-                                    break;
-                                case "Address2":
-                                    Address2 = fieldvalue;
-                                    break;
-                                case "Address3":
-                                    Address3 = fieldvalue;
-                                    break;
-                                case "Address4":
-                                    Address4 = fieldvalue;
-                                    break;
-                                case "City":
-                                    City = fieldvalue;
-                                    break;
-                                case "postCode":
-                                    postCode = fieldvalue;
-                                    break;
-                                case "Country":
-                                    country = fieldvalue;
-                                    break;
-                                case "Country_Code":
-                                    countryCode = fieldvalue;
-                                    break;
-                                case "Email":
-                                    Email = fieldvalue;
-                                    break;
-                                case "Telephone":
-                                    Telephone = fieldvalue;
-                                    break;
-                                case "Fax":
-                                    Fax = fieldvalue;
-                                    break;
-                                case "WWW":
-                                    WWW = fieldvalue;
-                                    break;
-                                case "doNotMail":
-                                    DoNotMail = fieldvalue;
-                                    break;
-                                case "Bursaries":
-                                    Bursaries = fieldvalue;
-                                    break;
-                                case "Founded":
-                                    Founded = fieldvalue;
-                                    break;
-                                case "NumberOfTitles":
-                                    NumberOfTitles = fieldvalue;
-                                    break;
-                                case "companyNotes":
-                                    companyNotes = fieldvalue;
-                                    break;
-                                case "destination":
-                                    Type = fieldvalue;
-                                    break;
-                                case "userID":
-                                    userID = fieldvalue;
-                                    break;
-                                case "publisherID":
-                                    publisherID = Integer.parseInt( fieldvalue );
-                                    break;
-                                case "proposedDateOfPublication":
-                                    proposedDateOfPublication = fieldvalue;
-                                    break;
-                                case "proposedPrintRun":
-                                    String propPrintRun = fieldvalue.replaceAll( "[^0-9]", "" );
-                                    proposedPrintRun = Integer.parseInt( propPrintRun );
-                                    break;
-                                case "plannedPageExtent":
-                                    plannedPageExtent = fieldvalue;
-                                    break;
-                                case "BreakDownOfTranslatorFee":
-                                    breakDownTranslatorFee = fieldvalue;
-                                    break;
-                                case "translatorName":
-                                    translatorName = fieldvalue;
-                                    System.out.println( "translatorName:: " + translatorName );
-                                    break;
-                                case "translatorFee":
-                                    translatorFee = fieldvalue;
-                                    break;
-                                case "translatorNotes":
-                                    translatorNotes = fieldvalue;
-                                    break;
-                                case "copiesSent":
-                                    copySent = fieldvalue;
-                                    if ( "ticked".equals( copySent ) ) {
-                                        copiesSent = 1;
-                                    }
-                                    else {
-                                        copiesSent = 0;
-                                    }
-                                    break;
-                                case "dateCopiesWereSent":
-                                    dateCopiesWereSent = fieldvalue;
-                                    break;
-                                case "TCACCEPTED":
-                                    TCACCEPTED = fieldvalue;
-                                    if ( "ticked".equals( TCACCEPTED ) ) {
-                                        TC_ACCEPTED = 1;
-                                    }
-                                    else {
-                                        TC_ACCEPTED = 0;
-                                    }
-                                    break;
-                                case "gdprACCEPTED":
-                                    gdprACCEPTED = fieldvalue;
-                                    //          System.out.println(" gdprACCEPTED  " + gdprACCEPTED);
-                                    if ( "ticked".equals( gdprACCEPTED ) ) {
-                                        gdpr_ACCEPTED = 1;
-                                    }
-                                    else {
-                                        gdpr_ACCEPTED = 0;
-                                    }
-                                    break;
-                                case "Award":
-                                    Award = fieldvalue;
-                                    if ( "ticked".equals( Award ) ) {
-                                        award = 1;
-                                    }
-                                    else {
-                                        award = 0;
-                                    }
-                                    break;
-                                case "bilingual":
-                                    Bilingual = fieldvalue;
-                                    if ( "ticked".equals( Bilingual ) ) {
-                                        bilingual = 1;
-                                    }
-                                    else {
-                                        bilingual = 0;
-                                    }
-                                    break;
-                                case "APPROVED":
-                                    ieAPPROVED = fieldvalue;
-                                    if ( "ticked".equals( ieAPPROVED ) ) {
-                                        APPROVED = 1;
-                                    }
-                                    else {
-                                        APPROVED = 0;
-                                    }
-                                    break;
-                                case "authorArray":
-                                    authorArray = fieldvalue.split( "," ); //split string by ,
-                                    System.out.println( "authorArraylength  OpenApplicationServlet:: " + authorArray.length );
-                                    for ( String individualValue : authorArray ) {
-                                        System.out.println( "authorArray  OpenApplicationServlet:: " + individualValue );
-                                    }
-                                    break;
-                                case "AuthorFirstName":
-                                    AuthorFirstName = fieldvalue;
-                                    System.out.println( "AuthorFirstName OpenApplicationServlet:: " + AuthorFirstName );
-                                    break;
-                                case "AuthorLastName":
-                                    AuthorLastName = fieldvalue;
-                                    System.out.println( "AuthorLastName OpenApplicationServlet:: " + AuthorLastName );
-                                    break;
-                                case "title":
-                                    Title = fieldvalue;
-                                    break;
-                                case "copies":
-                                    Copies = fieldvalue;
-                                    break;
-                                case "publicationYear":
-                                    publicationYear = fieldvalue;
-                                    break;
-                                case "genre":
-                                    Genre = fieldvalue;
-                                    break;
-                                case "addendum":
-                                    Addendum = fieldvalue;
-                                    break;
-                                case "proofPayment":
-                                    ProofPayment = fieldvalue;
-                                    break;
-                                case "bankDetailForm":
-                                    BankDetails = fieldvalue;
-                                    break;
-                                case "signedLIcontract":
-                                    SignedLIContract = fieldvalue;
-                                    break;
-                                case "originalSample":
-                                    Original = fieldvalue;
-                                    break;
-                                case "translationTitle":
-                                    translationTitle = fieldvalue;
-                                    break;
-                                case "translationPublicationYear":
-                                    translationPublisherYear = fieldvalue;
-                                    break;
-                                case "translatorArray":
-                                    System.out.println( "translatorArray >>>> HERE " );
-                                    translatorArrayContent = fieldvalue.split( "," ); //split string by ","
-                                    translatorArrayLength = translatorArrayContent.length;
-                                    System.out.println( "translatorArray >>>> translatorArray.length " + translatorArrayContent.length );
-                                    for ( String individualValue : translatorArrayContent ) {
-                                        System.out.println( "translatorArray  OpenApplicationServlet:: " + individualValue + " ----------> translatorArrayLength::  " + translatorArrayLength );
-                                    }
-                                    break;
-                                case "languages":
-                                    languageArray = fieldvalue.split( "," ); //split string by ,
-                                    for ( String individualValue : languageArray ) {
-                                        System.out.println( "languageArray  OpenApplicationServlet:: " + individualValue );
-                                    }
-                                    break;
-                                case "physicalDescription":
-                                    physicalDescription = fieldvalue;
-                                    break;
-                                case "duplicates":
-                                    if ( "".equals( fieldvalue ) ) {
-                                        fieldvalue = "0";
-                                    }
-                                    Duplicates = Integer.parseInt( fieldvalue );
-                                    break;
-                                case "translationPublisher":
-                                    translationPublisher = fieldvalue;
-                                    break;
-                                case "bookNotes":
-                                    bookNotes = fieldvalue;
-                                    break;
-                                case "series":
-                                    Series = fieldvalue;
-                                    break;
-                                case "isbn":
-                                    ISBN = fieldvalue;
-                                    break;
-                                case "issn":
-                                    ISSN = fieldvalue;
-                                    break;
-                                case "languageOfTheOriginal":
-                                    originalLanguage = fieldvalue;
-                                    break;
-                                case "pageExtentOfTheOriginal":
-//                                    originalPageExtent = fieldvalue;
-                                    originalPageExtent = "0";
-                                    break;
-                                case "countryOfPublication":
-                                    countryOfPublication = fieldvalue;
-                                    break;
-                                case "amountRequested":
-                                    amountRequested = fieldvalue;
-                                    break;
-                                case "appTargetLanguage":
-                                    targetLanguage = fieldvalue;
-                                    languageArray = fieldvalue.split( "," ); //split string by ,
-                                    languageArrayLength = languageArray.length;
-                                    for ( String individualValue : languageArray ) {
-                                        System.out.println( "languageArray  OpenApplicationServlet:: " + individualValue );
-                                    }
-                                    break;
-                                case "appForeignCountry":
-                                    countryOfPublication = fieldvalue;
-                                    break;
-                                case "appForeignPublisher":
-                                    foreignPublisher = fieldvalue;
-                                    break;
-                                case "DateOfPublicationOriginal":
-                                    originalDateOfPublication = fieldvalue;
-                                    break;
-
-                            } // end switch
-                        }
-                        else {
-                            //////////////////////////////////////////////////////////////
-                            //  Process Application Form file field (input type="file") //
-                            //////////////////////////////////////////////////////////////
-                            String fieldname = item.getFieldName();
-                            String filename = FilenameUtils.getName( item.getName() );
-                            System.out.println( "fieldname  " + fieldname + " filename >> " + filename );
-
-//                    collect and use openApplicationDAO to UPDATE tables
-//
-//                            Set STATUS
-                        } // else
-                    } // for (FileItem item : items)
-
-                    GrantApplication application = new GrantApplication();
-
-                    application.setApplicationYear( yearInString );
-                    application.setCompany( company );
-                    application.setPublisherID( publisherID );
-                    application.setUserID( userID );
-
-                    /*
-                     * Book Details
-                     */
-                    application.setOriginalLanguage( originalLanguage );
-                    application.setCountryOfPublication( countryOfPublication );
-//                    application.setOriginalPageExtent(Integer.parseInt(originalPageExtent));
-//                    application.setOriginalDateOfPublication(convertDate(originalDateOfPublication));
-                    application.setPublicationYear( publicationYear );
-                    application.setForeignCountry( countryOfPublication );
-                    application.setForeignPublisher( foreignPublisher );
-
-                    /*
-                     * Rights Agreement & Contracts
-                     */
- /*
-                     * Publication Details
-                     */
-                    application.setProposedDateOfPublication( convertDate( proposedDateOfPublication ) );
-                    application.setProposedPrintRun( proposedPrintRun );
-//                    application.setPlannedPageExtent(Integer.parseInt(plannedPageExtent));
-//                    application.setTargetLanguage(targetLanguage); // we get that from the Languages_Library table
-                    application.setBilingual_edition( bilingual );
-                    /*
-                     * Translator Details
-                     */
-
-                    application.setBreakDownTranslatorFee( breakDownTranslatorFee );
-                    BigDecimal tf = new BigDecimal( translatorFee.replaceAll( ",", "" ) );
-                    application.setTranslatorFee( tf );
-
-                    /*
-                     * Original Work & Sample Translation
-                     */
-                    application.setCopiesSent( copiesSent );
-                    if ( !"".equals( dateCopiesWereSent ) ) {
-                        System.out.println( "openApplications213  !\"\".equals(dateCopiesWereSent)" );
-                        application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
-                    }
-                    if ( dateCopiesWereSent != null ) {
-                        System.out.println( "openApplications213  != null" );
-                        application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
-                    }
-                    application.setTranslatorNotes( translatorNotes );
-                    application.setBookNotes( bookNotes );
-                    application.setTC_ACCEPTED( TC_ACCEPTED );
-                    application.setGdprACCEPTED( gdpr_ACCEPTED );
-                    application.setAPPROVED( APPROVED );
-                    application.setStatus( Status );
-
-                    try {
-
-                        /*
-                         * ReferenceNumber = ApplicationNumber + "/" +
-                         * yearInString;
-                         */
-//                        ReferenceNumber = GrantApplicationDAO.insertRow(application);
-
-                        /*
-                         * ReferenceNumber contains ApplicationNumber seperated
-                         * by a "/"
-                         * find the first occurrence of "/"
-                         */
-                        int iend = ReferenceNumber.indexOf( "/" );
-
-                        /*
-                         * get ApplicationNumber from ReferenceNumber
-                         */
-                        if ( iend != -1 ) {
-                            ApplicationNumber = Integer.parseInt( ReferenceNumber.substring( 0, iend ) );
-                            System.out.println( "ApplicationNumber ---->> " + ApplicationNumber );
-                        }
-
-                        /*
-                         * Process Authors
-                         * String[3] => Name, FirstName, LastName
-                         */
-                        String[] processingAuthorArray = new String[ 3 ];
-
-                        /*
-                         * convert processingArray to ArrayList Author
-                         */
-                        Author = new ArrayList<>( Arrays.asList( processingAuthorArray ) );
-
-                        if ( authorArray.length > 1 ) {
-
-                            int idx = 0;
-
-                            /*
-                             * loop through the Authors and insert each into
-                             * Author table
-                             */
-                            for ( String individualValue : authorArray ) {
-
-                                String AuthorName = individualValue;
-                                processingAuthorArray[idx] = AuthorName;
-
-                                System.out.println( "AuthorName ---->> " + AuthorName );
-
-                                /*
-                                 * when we have a complete set (FullName,
-                                 * FirstName, LastName)
-                                 */
-                                if ( idx == processingAuthorArray.length - 1 ) {
-
-                                    /*
-                                     * set the variables and
-                                     */
-                                    String Name = processingAuthorArray[0];
-                                    String FirstName = processingAuthorArray[1];
-                                    String LastName = processingAuthorArray[2];
-
-                                    authorName = Name;
-
-                                    /*
-                                     * insert them into the tables
-                                     * Application_Author
-                                     */
-//                                    GrantApplicationDAO.insertAuthors(ReferenceNumber, Name, FirstName, LastName);
-
-                                    /*
-                                     * reset index
-                                     */
-                                    idx = -1;
-                                }
-
-                                idx++;
-                            }
-                        }
-                        else {
-                            authorName = AuthorFirstName + " " + AuthorLastName;
-                            System.out.println( "authorName ---->> :::: " + authorName );
-                            /*
-                             * insert them into the tables Application_Author
-                             */
-
-//                            GrantApplicationDAO.insertAuthors(ReferenceNumber, authorName, AuthorFirstName, AuthorLastName);
-                        }
-
-                    }
-                    catch ( NumberFormatException ex ) {
-                        Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                    }
-                    updateApplication( application, ReferenceNumber );
-                }
-                catch ( ParseException | DBException | NumberFormatException | SQLException ex ) {
-                    Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                }
+            }
 
         }
+        else {  // no array - single Translator
+            System.out.println( "===================  no array - single Translator ======================== " );
+//                    System.out.println("insertTranslators:: translatorName " + translatorName + " ReferenceNumber " + ReferenceNumber + "Title" + Title + 
+//                            "moveFileName " + moveFileName + "moveFileNameReplaced " + moveFileNameReplaced);
+        }  // end else
 
+        // Process Original TranslationSample
+        for ( int i = 0; i < shortArrayList.size(); i++ ) {
+            System.out.println( "shortArrayList---i:[" + i + "]-->>>> " + shortArrayList.get( i ) );
+
+            String[] elements = shortArrayList.get( i ).split( "(?<!^)/" );
+            for ( int j = 0; j < elements.length; j++ ) {
+                System.out.println( "shortArrayList subDirs [" + j + "]  " + elements[j] );
+            }
+            String AppNumber = Integer.toString( ApplicationNumber );   // '195/2018' ---> 195
+            System.out.println( "AppNumber  " + AppNumber );
+//                    for (int l = 0; l < elements.length; l++) {
+            try {
+//                            System.out.println("elements---i:[" + l + "]-->>>> " + elements[l]);
+
+                String moveFile = shortArrayList.get( i );
+                String decider = elements[10];      // Original
+                String moveFileName = elements[11]; // copy of original work.docx
+//                        String moveFileNameReplaced = moveFile.replace("/home/glassfish/glassfish/domains/domain1", "/documents");
+                String moveFileNameReplaced = moveFile.replace( "/home/glassfish/glassfish/domains/domain1/docroot/documents", "/documents" );
+                System.out.println( "Process Original TranslationSample  decider  " + decider );
+                switch ( decider ) {
+
+                    case "Original":
+                        System.out.println( "insertOriginal:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
+                        GrantApplicationDAO.insertOriginal( AppNumber, moveFileName, moveFileNameReplaced );
+
+                        break;
+                    case "TranslationSample":
+                        System.out.println( "insertTranslationSample:: longArrayList i[" + i + "]  \n" + decider + "--->>>> " + moveFile );
+                        GrantApplicationDAO.insertTranslationSample( AppNumber, moveFileName, moveFileNameReplaced );
+                        break;
+
+                } // switch (decider)
+            }
+            catch ( DBException ex ) {
+                Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
+            }
+        }
+        System.out.println( "####################### End sending files to tables ##################################################" );
+        ////////////////////////////////////////////////////////////
+        //  Process Library
+        ////////////////////////////////////////////////////////////
+        Library library = new Library();
+        System.out.println( "Process library" );
+        library.setReferenceNumber( ReferenceNumber );
+
+        // String fn = fileNames[0].replace("/home/markus/public_html", "/~markus");//replaces all occurrences of "/home/markus","/~markus"
+        // cover will not set at this time
+        // library.setCover(fn);
+        // library.setCoverName(justFiles[0]);
+        library.setTitle( Title );
+        library.setPublisher( company );
+        library.setPublisheryear( publicationYear );
+        library.setGenre( Genre );
+        library.setSeries( Series );
+//                library.setTranslationPublisher(translationPublisher);
+        library.setTranslationPublisher( foreignPublisher );
+        library.setTranslationTitle( translationTitle );
+        library.setTranslationPublisherYear( translationPublisherYear );
+        library.setPhysicalDescription( physicalDescription );
+        library.setDuplicates( Duplicates );
+        library.setCopies( Copies );
+        library.setNotes( bookNotes );
+        library.setISBN( ISBN );
+        library.setISSN( ISSN );
+        library.setLASTUPDATED( timestamp );
+
+        {
+            try {
+                boolean succ = updateLibrary( library, referenceNumber );
+            }
+            catch ( DBException ex ) {
+                Logger.getLogger( OpenApplicationServlet.class.getName() ).log( Level.SEVERE, null, ex );
+            }
+        }
+
+
+        /*
+         * reset session
+         */
+        session.removeAttribute( "task" );
+        session.setAttribute( "name", name );
+        session.setAttribute( "publisherID", publisherID );
+        request.setAttribute( "publisherID", publisherID );
+        request.setAttribute( "firstname", firstname );
+        request.setAttribute( "lastname", lastname );
+        request.setAttribute( "name", name );
+        request.setAttribute( "userID", userID );
+        System.out.println( " request.setAttribute(name)" + name );
+        request.setAttribute( "name", name );
+        request.setAttribute( "message", message );
+        request.getRequestDispatcher( "/WEB-INF/views/uploadResponse.jsp" ).forward( request, response );
+//                break;
     }
 
     public void doGet( HttpServletRequest request,
@@ -1854,7 +1358,6 @@ public class OpenApplicationServlet extends HttpServlet {
 
     public Date convertDate( String datum ) throws ParseException {
 
-        System.out.println( "convertDate " + datum );
         DateFormat sourceFormat = new SimpleDateFormat( "dd/MM/yyyy" );
         Date date = sourceFormat.parse( datum );
 
@@ -1899,7 +1402,7 @@ public class OpenApplicationServlet extends HttpServlet {
 
         System.out.println( "getFdname(String " + fieldname );
         for ( int v = 0; v < fdnameArray.length; v++ ) {
-            System.out.println( "fdnameArray[" + v + "]" + Arrays.toString( fdnameArray ) );
+            System.out.println( "fdnameArray[" + v + "]" + fdnameArray[v] );
         }
 
         System.out.println( "fdname  " + fdname );

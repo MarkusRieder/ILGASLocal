@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,13 +39,16 @@ public class NewPublisherServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
+    @SuppressWarnings( "unchecked" )
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         response.setContentType( "text/html;charset=UTF-8" );
 
         // collect all input values
         HttpSession session = request.getSession();
+
+        String username = request.getParameter( "username" );
 
         String PublisherID = request.getParameter( "Company_Number" );
         String Company = request.getParameter( "Company" );
@@ -74,16 +78,18 @@ public class NewPublisherServlet extends HttpServlet {
         System.out.println( "############################### /newPublisher ####################################" );
         System.out.println( "Enumeration keys   " );
         Enumeration keys = session.getAttributeNames();
-        while ( keys.hasMoreElements() )
-        {
+        while ( keys.hasMoreElements() ) {
             String key = ( String ) keys.nextElement();
             System.out.println( "key  :" + key + ": " + session.getValue( key ) );
 
+//            if ( key.equals( "username" ) ) {
+//                username = ( String ) session.getValue( key );
+//            }
+//  key  :username: rita@literatureireland.com]]
         }
         Enumeration en = request.getParameterNames();
 
-        while ( en.hasMoreElements() )
-        {
+        while ( en.hasMoreElements() ) {
             Object objOri = en.nextElement();
 
             String param = ( String ) objOri;
@@ -101,27 +107,23 @@ public class NewPublisherServlet extends HttpServlet {
         int doNotMail;
         int Bursaries;
 
-        if ( "ticked".equals( doNtMail ) )
-        {
+        if ( "ticked".equals( doNtMail ) ) {
 
             doNotMail = 1;
 
         }
-        else
-        {
+        else {
 
             doNotMail = 0;
 
         }
 
-        if ( "ticked".equals( Bursary ) )
-        {
+        if ( "ticked".equals( Bursary ) ) {
 
             Bursaries = 1;
 
         }
-        else
-        {
+        else {
 
             Bursaries = 0;
 
@@ -139,8 +141,7 @@ public class NewPublisherServlet extends HttpServlet {
         PreparedStatement ps1 = null;
         ResultSet res = null;
 
-        try
-        {
+        try {
             System.out.println( "PublisherID:2:   " + PublisherID );
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -176,13 +177,68 @@ public class NewPublisherServlet extends HttpServlet {
             DBConn.close( conn, ps1, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
             e.printStackTrace();
         }
 
-        request.setAttribute( "PublisherID", PublisherID );
+        System.out.println( "############################### /newPublisher 2 ####################################" );
+        System.out.println( "Enumeration keys   " );
+        keys = session.getAttributeNames();
+        while ( keys.hasMoreElements() ) {
+            String key = ( String ) keys.nextElement();
+            System.out.println( "key  :" + key + ": " + session.getValue( key ) );
+
+//            if ( key.equals( "username" ) ) {
+//                username = ( String ) session.getValue( key );
+//                System.out.println( "############################### /newPublisher 2 username ####################################  " + username );
+//            }
+        }
+        en = request.getParameterNames();
+
+        while ( en.hasMoreElements() ) {
+            Object objOri = en.nextElement();
+
+            String param = ( String ) objOri;
+
+            String value = request.getParameter( param );
+
+            System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
+
+        }
+
+        System.out.println( "############################### /newPublisher 2 username ####################################  " + username );
+
+        System.out.println( "#############################  END  2  ######################################" );
+
+        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "/newPublisher doGet loggedInUsers: 1 " + loggedInUsers );
+
+        System.out.println( "/newPublisher loggedInUsers.remove( username )  " + username );
+        loggedInUsers.remove( username );
+//        username = request.getParameter( "username" );
+        System.out.println( "/newPublisher  username  " + username );
+
+//        ServletContext context = request.getSession().getServletContext();
+        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "/newPublisher doGet loggedInUsers: 2 " + loggedInUsers );
+
+        System.out.println( "############ /newPublisher session.invalidate();  #################" );
+        session.invalidate();
+
+        System.out.println( "############ /newPublisher session.invalidate();   #################" );
+        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
+        System.out.println( "/newPublisher doGet loggedInUsers: 3 " + loggedInUsers );
+
+//        request.setAttribute( "PublisherID", PublisherID );
         request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
+//         System.out.println( "/newPublisher username ::   " + username );
+//               
+//           session.setAttribute( "username", username );
+//        
+//        
+//        request.setAttribute( "username", username );
+////        request.getRequestDispatcher( "/Logout?username=" + username ).forward( request, response );
+//        request.getRequestDispatcher( "Logout" ).forward( request, response );
     }
 }
