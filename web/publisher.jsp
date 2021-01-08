@@ -242,44 +242,59 @@
 
                                         <div class="row">
 
+                                            <div class="col-xs-6 col-sm-6 col-md-6" style="margin-bottom:  15px">
+
+                                                <div class="form-group">
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                                        <input type="password" 
+                                                               class="form-control" 
+                                                               id="password"
+                                                               name="password" 
+                                                               data-toggle="password"  
+                                                               data-placement="after"
+                                                               placeholder="Enter Password"    
+
+                                                               >       
+
+                                                    </div> <!--input-group cpassword--> 
+
+                                                    <span class="help-block"></span> 
+
+                                                </div> <!--form-group cpassword-->
+
+                                            </div><!--class="col-xs-6 col-sm-6 col-md-6"--> 
+
+
+
+
                                             <div class="col-xs-6 col-sm-6 col-md-6">
 
                                                 <div class="form-group">
 
-                                                    <input type="password" 
-                                                           class="form-control" 
-                                                           id="password"
-                                                           name="password" 
-                                                           placeholder="Enter Password"    
-                                                           pattern="[A-Za-z0-9@#$%!^&*]{6,30}" 
-                                                           data-error="Password should not be null. It should be greater than 6 and less than 30 characters . 
-                                                           Use only A-Z, a-z, 0-9, @ # $ % ! ^ & * charecters" 
-                                                           required                                                                                     
-                                                           >       
+                                                    <div class="input-group">
+
+                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+
+                                                        <input type="password" 
+                                                               class="form-control"  
+                                                               id="cpassword" 
+                                                               name="cpassword" 
+
+                                                               data-placement="after"
+                                                               placeholder="Confirm Password"                                           
+                                                               data-rule-equalTo="#password"                                                                      
+
+                                                               >     
+
+                                                    </div> <!--input-group cpassword--> 
+
                                                     <span class="help-block"></span> 
 
-                                                </div> <!--form-group password--> 
+                                                </div> <!--form-group cpassword-->
 
-                                            </div>
-
-
-                                            <div class="col-xs-6 col-sm-6 col-md-6">
-
-                                                <div class="form-group">
-
-                                                    <input type="password" 
-                                                           class="form-control"  
-                                                           id="cpassword" 
-                                                           name="cpassword" 
-                                                           placeholder="Confirm Password"                                           
-                                                           data-match="#password"                                                                      
-                                                           required
-                                                           >     
-                                                    <span class="help-block"></span> 
-
-                                                </div> <!--form-group cpassword--> 
-
-                                            </div>
+                                            </div><!--class="col-xs-6 col-sm-6 col-md-6"--> 
 
                                             <div class="col-xs-6 col-sm-6 col-md-6">
 
@@ -293,6 +308,7 @@
                                                            style=" background-color:#00c0ef"
 
                                                            >    
+                                                    
                                                 </div> <!--form-group function--> 
 
                                             </div>

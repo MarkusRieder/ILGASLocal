@@ -37,18 +37,17 @@ import org.apache.log4j.Logger;
  *
  * @author markus
  */
-@WebServlet( name = "coverageCuttingsUploadServlet", urlPatterns =
-{
-    "/coverageCuttingsUploadServlet"
-} )
+@WebServlet(name = "coverageCuttingsUploadServlet", urlPatterns
+        = {
+            "/coverageCuttingsUploadServlet"
+        })
 public class coverageCuttingsUploadServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private final static Logger LOGGER
             = Logger.getLogger( coverageCuttingsUploadServlet.class.getCanonicalName() );
 
-    public coverageCuttingsUploadServlet()
-    {
+    public coverageCuttingsUploadServlet() {
 
         super();
     }
@@ -56,14 +55,13 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
     String ReferenceNumber = null;
     String company = "";
 
-    String tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
-    String rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
+    String tempPath  = "/home/markus/test/tempDir";
+    String rootPath  = "/home/markus/public_html/test";
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      *
      * @throws ServletException if a servlet-specific error occurs
@@ -71,8 +69,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
      */
     @Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
         System.out.println( "#########################  doGet  #########################" );
     }
@@ -80,7 +77,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      *
      * @throws ServletException if a servlet-specific error occurs
@@ -88,8 +85,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
      */
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
         response.setContentType( "application/json" );
         response.setCharacterEncoding( "UTF-8" );
@@ -119,19 +115,16 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
 //  coverageCuttingsUploadServlet Parameter Name is 'publisherName' and Parameter Value is 'Discworld Publishing']]
         Enumeration en = request.getParameterNames();
 
-        while ( en.hasMoreElements() )
-        {
+        while ( en.hasMoreElements() ) {
             Object objOri = en.nextElement();
 
-            String param = ( String ) objOri;
+            String param = (String) objOri;
 
             String value = request.getParameter( param );
-            if ( "publisherName".equals( param ) )
-            {
+            if ( "publisherName".equals( param ) ) {
                 company = request.getParameter( param );
             }
-            if ( "ReferenceNumber".equals( param ) )
-            {
+            if ( "ReferenceNumber".equals( param ) ) {
                 ReferenceNumber = request.getParameter( param );
             }
             System.out.println( "coverageCuttingsUploadServlet Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
@@ -139,8 +132,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
         }
 
         Enumeration<String> attributes = request.getSession().getAttributeNames();
-        while ( attributes.hasMoreElements() )
-        {
+        while ( attributes.hasMoreElements() ) {
             String attribute = attributes.nextElement();
             System.out.println( "coverageCuttingsUploadServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute( attribute ) );
         }
@@ -160,7 +152,6 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
         String ApplicationNumber = ReferenceNumber.substring( 0, iend );
         String yearInString = ReferenceNumber.substring( iend, ReferenceNumber.length() );
 
-        
         System.out.println( "company ---->> " + company );
 
         PrintWriter out = response.getWriter();
@@ -172,42 +163,35 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
         String moveFileName = null;
         String fn = null;
 
-        ServletContext context = request.getSession().getServletContext();
-        if ( ServletFileUpload.isMultipartContent( request ) )
-        {
-            try
-            {
+//        ServletContext context = request.getSession().getServletContext();
+        if ( ServletFileUpload.isMultipartContent( request ) ) {
+            try {
                 String fileName = null;
                 String filePath;
                 Type type = null;
                 List<FileItem> multiparts = new ServletFileUpload(
                         new DiskFileItemFactory() ).parseRequest( request );
                 System.out.println( "Multipart size: " + multiparts.size() );
-                for ( FileItem item : multiparts )
-                {
-                    if ( item.getName() == null || "".equals( item.getName() ) )
-                    {
+                for ( FileItem item : multiparts ) {
+                    if ( item.getName() == null || "".equals( item.getName() ) ) {
                         System.out.println( "item.getName() == null " );
                         continue;
                     }
                     System.out.println( "Part : " + item.getName() );
-                    if ( !item.isFormField() )
-                    {
+                    if ( !item.isFormField() ) {
                         fileName = new File( item.getName() ).getName();
                         System.out.println( "fileName " + fileName );
                         type = getType( fileName );
                         System.out.println( "type " + type );
                         filePath = destinationDirectory;
                         System.out.println( "filePath " + filePath );
-                        if ( type != null )
-                        {
+                        if ( type != null ) {
                             System.out.println( "File item.write " + filePath + fileName );
                             /*
                              * create directory if it does not exist
                              */
                             File directory = new File( filePath );
-                            if ( !directory.exists() )
-                            {
+                            if ( !directory.exists() ) {
 
                                 System.out.println( "destinationDirectory :" + filePath + " does not exist" );
                                 System.out.println( "destinationDirectory :" + filePath );
@@ -218,13 +202,9 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
                             item.write( new File( filePath + fileName ) );
                             System.out.println( "File uploaded successfully" );
                             String ext = FilenameUtils.getExtension( fileName );
-                            if ( "pdf".equals( ext ) )
-                            {
+                            if ( "pdf".equals( ext ) ) {
                                 /*
-                                 * if we have a pfd-file we need thumbfiles
-                                 * (jpg)
-                                 *
-                                 *
+                                 * if we have pfd-file we need thumbfiles (jpg)
                                  */
 
                                 String thumbDestinationDirectory = rootPath + yearInString + File.separator + company + File.separator
@@ -244,8 +224,8 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
                                 PDFPage page = pdf.getPage( 0 );
 
                                 // create the image
-                                Rectangle rect = new Rectangle( 0, 0, ( int ) page.getBBox().getWidth(),
-                                        ( int ) page.getBBox().getHeight() );
+                                Rectangle rect = new Rectangle( 0, 0, (int) page.getBBox().getWidth(),
+                                        (int) page.getBBox().getHeight() );
                                 BufferedImage bufferedImage = new BufferedImage( rect.width, rect.height,
                                         BufferedImage.TYPE_INT_RGB );
 
@@ -272,8 +252,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
                                 //     shortArrayList.add(moveFile);
                                 directory = new File( thumbDestinationDirectory );
 
-                                if ( !directory.exists() )
-                                {
+                                if ( !directory.exists() ) {
 
                                     System.out.println( "jpgFile destinationDirectory :" + thumbDestinationDirectory );
 
@@ -296,9 +275,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
 
                                 System.out.println( "BufferedImage jpgFile moveFile :" + moveFile );
                             }
-                        }
-                        else
-                        {
+                        } else {
                             throw new IllegalStateException( "Wrong file format!" );
                         }
 
@@ -326,21 +303,15 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
                         System.out.println( ">>>  CoverageCuttings::  fileName " + fileName );
 
                         GrantApplicationDAO.insertCoverageCuttings( ReferenceNumber, fileName, moveFileNameReplaced );
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println( "item.isFormField() " );
                     }
                 }
                 // response.getWriter().print(json.toString());
-            }
-            catch ( Exception e )
-            {
+            } catch ( Exception e ) {
                 e.printStackTrace();
             }
-        }
-        else
-        {
+        } else {
             System.out.println( "Sorry this Servlet only handles file upload request" );
         }
 
@@ -359,8 +330,7 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }
 
@@ -373,50 +343,38 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
         private String path;
         private String[] formats;
 
-        Type( String path, String... format )
-        {
+        Type( String path, String... format ) {
             this.path = path;
             this.formats = format;
         }
 
-        public String[] getFormats()
-        {
+        public String[] getFormats() {
             return formats;
         }
 
-        public String getPath()
-        {
+        public String getPath() {
             return path;
         }
     }
 
-    private static String parseFileFormat( String fileName )
-    {
+    private static String parseFileFormat( String fileName ) {
         fileName = fileName.toLowerCase();
         int dotPosition = fileName.lastIndexOf( "." );
         String format = fileName.substring( dotPosition, fileName.length() );
         return format;
     }
 
-    private Type getType( String fileName )
-    {
+    private Type getType( String fileName ) {
         String format = parseFileFormat( fileName );
         Type[] values = Type.values();
-        for ( int i = 0; i < values.length; i++ )
-        {
-            for ( int j = 0; j < values[ i ].getFormats().length; j++ )
-            {
-                if ( values[ i ] == Type.IMAGES && values[ i ].getFormats()[ j ].equals( format ) )
-                {
+        for ( int i = 0; i < values.length; i++ ) {
+            for ( int j = 0; j < values[ i ].getFormats().length; j++ ) {
+                if ( values[ i ] == Type.IMAGES && values[ i ].getFormats()[ j ].equals( format ) ) {
                     System.out.println( "Type.IMAGES " + Type.IMAGES );
                     return Type.IMAGES;
-                }
-                else if ( values[ i ] == Type.VIDEOS && values[ i ].getFormats()[ j ].equals( format ) )
-                {
+                } else if ( values[ i ] == Type.VIDEOS && values[ i ].getFormats()[ j ].equals( format ) ) {
                     return Type.VIDEOS;
-                }
-                else if ( values[ i ] == Type.MUSICS && values[ i ].getFormats()[ j ].equals( format ) )
-                {
+                } else if ( values[ i ] == Type.MUSICS && values[ i ].getFormats()[ j ].equals( format ) ) {
                     return Type.MUSICS;
                 }
             }
@@ -424,45 +382,31 @@ public class coverageCuttingsUploadServlet extends HttpServlet {
         return null;
     }
 
-    public static String getBody( HttpServletRequest request ) throws IOException
-    {
+    public static String getBody( HttpServletRequest request ) throws IOException {
 
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
 
-        try
-        {
+        try {
             InputStream inputStream = request.getInputStream();
-            if ( inputStream != null )
-            {
+            if ( inputStream != null ) {
                 bufferedReader = new BufferedReader( new InputStreamReader( inputStream ) );
                 char[] charBuffer = new char[ 128 ];
                 int bytesRead = -1;
-                while ( ( bytesRead = bufferedReader.read( charBuffer ) ) > 0 )
-                {
+                while ( ( bytesRead = bufferedReader.read( charBuffer ) ) > 0 ) {
                     stringBuilder.append( charBuffer, 0, bytesRead );
                 }
-            }
-            else
-            {
+            } else {
                 stringBuilder.append( "" );
             }
-        }
-        catch ( IOException ex )
-        {
+        } catch ( IOException ex ) {
             throw ex;
-        }
-        finally
-        {
-            if ( bufferedReader != null )
-            {
-                try
-                {
+        } finally {
+            if ( bufferedReader != null ) {
+                try {
                     bufferedReader.close();
-                }
-                catch ( IOException ex )
-                {
+                } catch ( IOException ex ) {
                     throw ex;
                 }
             }

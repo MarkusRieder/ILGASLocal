@@ -107,7 +107,9 @@
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
                         <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
-
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
                 </div><!-- end of Base div -->
 
             </div><!-- end of container div -->
@@ -115,9 +117,7 @@
         </div><!-- end of Shadow container div -->
 
 
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
+
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 

@@ -326,7 +326,12 @@ public class Logout extends HttpServlet {
 
         Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
         System.out.println( "LogoutServlet doPost loggedInUsers: 1 " + loggedInUsers );
-
+        for (Enumeration e = session.getAttributeNames(); e.hasMoreElements();) {
+            String attribName = (String) e.nextElement();
+            if (attribName.startsWith("org.apache.shiro")) {
+                session.removeAttribute(attribName);
+            }
+        }
         System.out.println( "Logout servlet loggedInUsers.remove( username )  " + username );
         loggedInUsers.remove( username );
         System.out.println( "1 Logout servlet request.isRequestedSessionIdValid() " + request.isRequestedSessionIdValid() );

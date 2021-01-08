@@ -55,6 +55,24 @@ public class LibraryDAO {
 
         java.sql.Timestamp timestamp = getcurrentTimeStamp();
 
+            System.out.println( "LibraryDAO  insertBook getReferenceNumber " +  library.getReferenceNumber() );
+            System.out.println( "LibraryDAO  insertBook getTitle " +  library.getTitle() );
+            System.out.println( "LibraryDAO  insertBook getPublisher " +  library.getPublisher() );
+            System.out.println( "LibraryDAO  insertBook getPublisheryear " +  library.getPublisheryear() );
+            System.out.println( "LibraryDAO  insertBook getGenre " +  library.getGenre() );
+            System.out.println( "LibraryDAO  insertBook getTranslationTitle " +  library.getTranslationTitle() );
+            System.out.println( "LibraryDAO  insertBook getTranslationPublisher " +  library.getTranslationPublisher() );
+            System.out.println( "LibraryDAO  insertBook getTranslationPublisherYear " +  library.getTranslationPublisherYear() );
+            System.out.println( "LibraryDAO  insertBook getCover " +  library.getCover() );
+            System.out.println( "LibraryDAO  insertBook getCoverName " +  library.getCoverName() );
+            System.out.println( "LibraryDAO  insertBook getPhysicalDescription " +  library.getPhysicalDescription() );
+            System.out.println( "LibraryDAO  insertBook getDuplicates " +  library.getDuplicates() );
+            System.out.println( "LibraryDAO  insertBook getCopies " +  library.getCopies() );
+            System.out.println( "LibraryDAO  insertBook getNotes " +  library.getNotes() );
+            System.out.println( "LibraryDAO  insertBook getISBN " +  library.getISBN() );
+            System.out.println( "LibraryDAO  insertBook getISSN " +  library.getISSN() );
+            System.out.println( "LibraryDAO  insertBook getSeries " +  library.getSeries() );
+
         try
         {
 
@@ -89,6 +107,7 @@ public class LibraryDAO {
             ps1.executeUpdate();
 
             System.out.println( "LibraryDAO  insertBook  " + ps1.toString() );
+                                   
 
             ps2 = conn.prepareStatement( "SELECT LAST_INSERT_ID()" );
             res = ps2.executeQuery();
@@ -332,11 +351,15 @@ public class LibraryDAO {
             ps.setString( 1, referenceNumber );
 
             res = ps.executeQuery();
+            
+//             System.out.println( "getAuthorList: ps: " + ps );
+             
             if ( res != null )
             {
                 while ( res.next() )
                 {
                     authorList.add( res.getString( 2 ) );
+//                    System.out.println( "getAuthorList: authorList: " + res.getString( 2 )  );
                 }
             }
 

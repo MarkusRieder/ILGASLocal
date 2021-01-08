@@ -1,6 +1,15 @@
 package ie.irishliterature.model;
 
-public class User {
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+
+public class User implements HttpSessionBindingListener, Serializable {
 
     private String USER_ID;
 
@@ -29,6 +38,63 @@ public class User {
     private String STATUS;
 
     private String ReferenceNumber;
+    
+     private String initJSessionID;
+    
+    private boolean alreadyLoggedIn;
+    
+      private static Map<User, HttpSession> logins = new HashMap<User, HttpSession>();
+
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof User) && (getUSERNAME() != null)
+                ? getUSERNAME().equals(((User) other).getUSERNAME()) : (other == this);
+    }
+
+    @Override
+    public int hashCode() {
+        return (getUSERNAME() != null)
+                ? (this.getClass().hashCode() + getUSERNAME().hashCode()) : super.hashCode();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void valueBound(HttpSessionBindingEvent event) {
+        System.out.println("\n" + " ############################ User valueBound #######################################" + "\n");
+        Calendar calendar = Calendar.getInstance(); // Returns instance with current date and time set
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        System.out.println(formatter.format(calendar.getTime()));
+
+        HttpSession oldSession = logins.get(this);
+         System.out.println("User valueBound oldSession this " + this);
+          System.out.println("User valueBound oldSession logins.get(this) " + logins.get(this));
+        System.out.println("User valueBound oldSession " + oldSession);
+        
+        if (oldSession != null) {
+            alreadyLoggedIn = true;
+            System.out.println("User valueBound Called alreadyLoggedIn " + alreadyLoggedIn);
+        } else {
+
+            logins.put(this, event.getSession());
+            System.out.println("User valueBound Called logins " + logins);
+            System.out.println("User valueBound Called event.getSession() " + event.getSession());
+
+        }
+
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        System.out.println("\n" + " ############################ User valueUnbound #######################################" + "\n");
+        Calendar calendar = Calendar.getInstance(); // Returns instance with current date and time set
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        System.out.println(formatter.format(calendar.getTime()));
+
+        logins.remove(this);
+
+        System.out.println("User valueUnbound Called, " + event.getValue() + " Name: " + event.getName());
+    }
 
     /**
      * @return the USER_ID
@@ -188,10 +254,38 @@ public class User {
         this.ReferenceNumber = ReferenceNumber;
     }
 
+    /**
+     * @return the initJSessionID
+     */
+    public String getInitJSessionID() {
+        return initJSessionID;
+    }
+
+    /**
+     * @param initJSessionID the initJSessionID to set
+     */
+    public void setInitJSessionID(String initJSessionID) {
+        this.initJSessionID = initJSessionID;
+    }
+    
+    /**
+     * @return the alreadyLoggedIn
+     */
+    public boolean isAlreadyLoggedIn() {
+        return alreadyLoggedIn;
+    }
+
+    /**
+     * @param alreadyLoggedIn the alreadyLoggedIn to set
+     */
+    public void setAlreadyLoggedIn(boolean alreadyLoggedIn) {
+        this.alreadyLoggedIn = alreadyLoggedIn;
+    }
+
+
     @Override
-    public String toString()
-    {
-        return "[USERNAME = " + USERNAME + ", EMAIL = " + EMAIL + ", FULL_NAME = " + Full_NAME + ", FIRST_NAME = " + FIRST_NAME + ", LAST_NAME = " + LAST_NAME + ", EMAIL_VERIFICATION_HASH = " + EMAIL_VERIFICATION_HASH + ", EMAIL_VERIFICATION_ATTEMPTS = " + EMAIL_VERIFICATION_ATTEMPTS + ", PASSWORD = " + PASSWORD + ", STATUS = " + STATUS + ", CREATED_TIME = " + CREATED_TIME + "]";
+    public String toString() {
+        return "[USER_ID = " + getUSER_ID() + ", USERNAME = " + getUSERNAME() + ", EMAIL = " + getEMAIL() + ", FULL_NAME = " + getFull_NAME() + ", FIRST_NAME = " + getFIRST_NAME() + ", LAST_NAME = " + getLAST_NAME() + ", EMAIL_VERIFICATION_HASH = " + getEMAIL_VERIFICATION_HASH() + ", FUNCTION = " + getFUNCTION() + ", PASSWORD = " + getPASSWORD() + ", STATUS = " + getSTATUS() + " , InitJSessionID = " + getInitJSessionID() + " , CREATED_TIME = " + getCREATED_TIME() + "]";
     }
 
 }

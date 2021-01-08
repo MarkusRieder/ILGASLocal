@@ -62,9 +62,11 @@ public class AssignExpertReader extends HttpServlet {
     {
 
         // Get the file location where they would be stored.
-        tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
-        rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
-
+//        tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
+//        rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
+        String tempPath = "/home/markus/test/tempDir";
+        String rootPath = "/home/markus/public_html/test";
+        
         System.out.println( "file location :tempPath: " + tempPath );
         System.out.println( "file location :rootPath: " + rootPath );
     }
@@ -88,6 +90,7 @@ public class AssignExpertReader extends HttpServlet {
 
         String expertReaderName = request.getParameter( "selectedUnassignedER" );
         String expectedReturnDate = request.getParameter( "expectedReturnDate" );
+ String name = request.getParameter("name");
 
         System.out.println( ">>>>>>>>>>>>>>>>>>>>>>>>>>>>  AssignExpertReader GrantApplicationServlet<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" );
 
@@ -153,10 +156,10 @@ public class AssignExpertReader extends HttpServlet {
                     System.out.println( " filePath 1 AssignExpertReader " + filePath[ 1 ] );
                     System.out.println( " filePath 3 AssignExpertReader " + filePath[ 3 ] );
 
-                    originalPath = filePath[ 1 ].replace( "/documents", "/home/glassfish/glassfish/domains/domain1/docroot/documents" );
+                    originalPath = filePath[ 1 ].replace( "/~markus", "/home/markus/public_html" );
                     originalName = filePath[ 2 ];
 
-                    translationPath = filePath[ 3 ].replace( "/documents", "/home/glassfish/glassfish/domains/domain1/docroot/documents" );
+                    translationPath = filePath[ 3 ].replace( "/~markus", "/home/markus/public_html" );
                     translationName = filePath[ 4 ];
 
                     attachFiles[ 0 ] = originalPath;
@@ -176,7 +179,7 @@ public class AssignExpertReader extends HttpServlet {
                         /*
                          * send email with attachment
                          */
-                        MailUtil.sendEmailWithAttachmentExpertReader( expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate );
+                        MailUtil.sendEmailWithAttachmentExpertReader( newAssignedReferenceNumber,expertReaderName, expertReaderEmail, attachFiles, expectedReturnDate );
 
                     }
                     catch ( MessagingException ex )
@@ -194,6 +197,8 @@ public class AssignExpertReader extends HttpServlet {
 
         message = "The email to '" + expertReaderName + "' has been sent <br/>"
                 + "electronic copies of '" + originalName + "' and '" + translationName + "' have been attached";
+
+      request.setAttribute("name", name);
         request.setAttribute( "message", message );
         request.getRequestDispatcher( "/WEB-INF/views/response.jsp" ).forward( request, response );
 

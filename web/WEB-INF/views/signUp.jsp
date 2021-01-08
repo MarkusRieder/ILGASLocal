@@ -45,6 +45,7 @@
         <script src="js/blockui.js"></script>
         <script src="js/my-block-ui.js"></script>
         <script src="js/bootstrap-select.min.js"></script>
+        <script src="js/xregexp-all.js"></script> 
         <script src="js/register.js"></script>
         <script src="js/validator.js"></script>
         <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
@@ -88,7 +89,7 @@
 
                         return false;
                     } else if (!(username.match(letters))) {
-                        alert("Pleas Enter only Characters for Username");
+                        alert("Please Enter only Characters for Username");
                         return false;
                     } else {
                         $("#alertSuccess").show();
@@ -107,13 +108,10 @@
                         return false;
                     } else {
                         $("#errid").hide();
-
-
                         return true;
                     }
-
-
                 });
+
                 $("#username").change(function () {
                     var username = $("#username").val();
                     var letters = /^[A-Za-z]+$/;
@@ -126,24 +124,18 @@
                         $("#errname").hide();
                         return true;
                     }
-
                 });
+
                 $("#email").change(function () {
                     var email = $("#email").val();
-
                     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     if (!(email.match(mailformat))) {
                         $("#erremail").show();
-
-
                         return false;
                     } else {
                         $("#erremail").hide();
                         return true;
-
-
                     }
-
                 });
 
                 $("#cpassword").change(function () {
@@ -152,7 +144,6 @@
                     if (!(password === cpassword)) {
                         $("#errpass").show();
                         return false;
-
                     } else {
                         $("#errpass").hide();
 
@@ -405,17 +396,14 @@
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
                         <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
-
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2019 mgr Software
+                    </div>
                 </div><!-- end of Base div -->
 
             </div><!-- end of container div -->
             <div class="shadowbase"> </div>
         </div><!-- end of Shadow container div -->
-
-
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
 
         <script type="text/javascript">
             function loadXMLDoc()

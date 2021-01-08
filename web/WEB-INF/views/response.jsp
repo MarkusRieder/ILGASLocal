@@ -20,114 +20,11 @@
 
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/layout.css">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="css/datepicker.css">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
-        <!--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-        <script src="js/bootstrap-datepicker.js"></script>
 
-
-        <!--icon exclamation-->
-        <style>
-            .icon-exclamation {
-                color: #ff0000;
-
-                ul {
-                    margin: 0;
-                }
-                ul.dashed {
-                    list-style-type: none;
-                }
-                ul.dashed > li {
-                    text-indent: -5px;
-                }
-                ul.dashed > li:before {
-                    content: "-";
-                    text-indent: -5px;
-                }
-            }
-        </style>
-
-        <!--Checkboxes with tick mark-->
-        <style>
-            .checkbox label:after, 
-            .radio label:after {
-                content: '';
-                display: table;
-                clear: both;
-            }
-
-            .checkbox .cr,
-            .radio .cr {
-                position: relative;
-                display: inline-block;
-                border: 1px solid #a9a9a9;
-                border-radius: .25em;
-                width: 1.3em;
-                height: 1.3em;
-                float: left;
-                margin-right: .5em;
-            }
-
-            .radio .cr {
-                border-radius: 50%;
-            }
-
-            .checkbox .cr .cr-icon,
-            .radio .cr .cr-icon {
-                position: absolute;
-                font-size: .8em;
-                line-height: 0;
-                top: 50%;
-                left: 20%;
-            }
-
-            .radio .cr .cr-icon {
-                margin-left: 0.04em;
-            }
-
-            .checkbox label input[type="checkbox"],
-            .radio label input[type="radio"] {
-                display: none;
-            }
-
-            .checkbox label input[type="checkbox"] + .cr > .cr-icon,
-            .radio label input[type="radio"] + .cr > .cr-icon {
-                transform: scale(3) rotateZ(-20deg);
-                opacity: 0;
-                transition: all .3s ease-in;
-            }
-
-            .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
-            .radio label input[type="radio"]:checked + .cr > .cr-icon {
-                transform: scale(1) rotateZ(0deg);
-                opacity: 1;
-            }
-
-            .checkbox label input[type="checkbox"]:disabled + .cr,
-            .radio label input[type="radio"]:disabled + .cr {
-                opacity: .5;
-            }
-
-        </style>
-
-        <script type="text/javascript">
-            $(function () {
-                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-                    var tab = $(e.target.attributes.href.nodeValue);
-                    $(tab).load(tab.data('url'));
-                });
-
-                $('.nav-tabs a:first').each(function () {
-                    $(this.attributes.href.nodeValue).load($(this.attributes.href.nodeValue).data('url'));
-                });
-            });
-        </script> 
 
     </head>
     <body style="height: 100%">
@@ -167,6 +64,7 @@
                 <input type="hidden" name="userID" value="${userID}">
                 <input type="hidden" name="publisherID" value="${publisherID}">
                 <input type="hidden" name="Company" value="${companyDetails.Company}">
+                <input type="hidden" name="username" value="${username}">
                 <div class="col-md-3">
                     <button type="button" class="btn btn-default" value="Back" onclick="history.go(-1);" style="margin-bottom: 50px">Return to previous page</button>
                 </div>

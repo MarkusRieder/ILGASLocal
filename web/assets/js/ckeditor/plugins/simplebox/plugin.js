@@ -33,7 +33,7 @@ CKEDITOR.plugins.add('simplebox', {
 
                     '<p class="simplebox-content">This email is being sent to you to validate your Literature Ireland translation grant application system login. To ensure the security of the account information associated with your login, please take a moment to click through the link below and verify that we have assigned the correct email address:</p>' +
 
-                    '<p><u><a href="http://literatureirelandgrantapplication.com:8080/ILGAS/publisher.jsp" target="_blank">http://literatureirelandgrantapplication.com:8080/ILGAS/publisher.jsp</a></u></p>' +
+                    '<p><u><a href="https://www.literatureirelandgrantapplication.com/publisher.jsp" target="_blank">https://www.literatureirelandgrantapplication.com/publisher.jsp</a></u></p>' +
 
                     '<div class="simplebox-content2">' +
 

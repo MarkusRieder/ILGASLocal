@@ -35,8 +35,8 @@
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" />
         <link rel="stylesheet" type="text/css" href="css/newApplication.css">
-        
-        
+
+
         <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.min.js"></script>
         <script type="text/javascript"  src="js/moment.js"></script>
         <script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js" ></script>
@@ -114,6 +114,14 @@
                     select: function (event, ui) { // What happens when an autocomplete result is selected
                         $("#genre").val(ui.item.name);
                         $('#idgenres').val(ui.item.id);
+                    },
+                    change: function (event, ui) {
+                        if (ui.item === null) {
+                            event.currentTarget.value = '';
+                            event.currentTarget.focus();
+                            console.log("brim $(this) ", $(this));
+                            $(this).valid();  // trigger validation test
+                        }
                     }
                 });
             });
@@ -127,6 +135,7 @@
                     dataType: 'json',
                     data: '',
                     minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
+
                     focus: function (event, ui) { // What happens when an autocomplete result is focused on
                         $("#countryOfPublication").val(ui.item.name);
                         return false;
@@ -134,6 +143,14 @@
                     select: function (event, ui) { // What happens when an autocomplete result is selected
                         $("#countryOfPublication").val(ui.item.name);
 //                        $('#countryCode').val(ui.item.id);
+                    },
+                    change: function (event, ui) {
+                        if (ui.item === null) {
+                            event.currentTarget.value = '';
+                            event.currentTarget.focus();
+                            console.log("brim $(this) ", $(this));
+                            $(this).valid();  // trigger validation test
+                        }
                     }
                 });
             });
@@ -194,10 +211,18 @@
 
                                 $("#language_array").val(languageArray);
                                 return false;
+                            },
+                            change: function (event, ui) {
+                                if (ui.item === null) {
+                                    event.currentTarget.value = '';
+                                    event.currentTarget.focus();
+                                    console.log("brim $(this) ", $(this));
+                                    $(this).valid();  // trigger validation test
+                                }
                             }
                         });
-
             });
+
 
             $(function () {
                 $("#appLanguageOriginal").autocomplete({
@@ -211,6 +236,14 @@
                     },
                     select: function (event, ui) { // What happens when an autocomplete result is selected
                         $("#appLanguageOriginal").val(ui.item.name);
+                    },
+                    change: function (event, ui) {
+                        if (ui.item === null) {
+                            event.currentTarget.value = '';
+                            event.currentTarget.focus();
+                            console.log("brim $(this) ", $(this));
+                            $(this).valid();  // trigger validation test
+                        }
                     }
                 });
             });
@@ -389,30 +422,17 @@
                     var id = input[0].id;
                     var label_id = "label_" + id;
                     console.log("generatedLabels input ", input);
+                    console.log("generatedLabels id ", id);
                     console.log("label_id              ", label_id);
                     document.getElementById(label_id).value = label;
                     console.log("generatedLabels document.getElementById(" + label_id + " = ", label);
+                    console.log("The rulez:  ");
+                    console.log($("#applicationForm").validate().settings.rules);
+                    /*
+                     * validate the input element 
+                     */
+                    $("#applicationForm").validate(label);
 
-//                                    $('#' + label_id).each(function () {
-//
-//                    $(this).rules("add",
-//                            {
-//                                required: true,
-//                                validFileName: true,
-//                                minlength: 2
-//                            });
-//
-//
-//
-//                    if (!$("#applicationForm").valid()) {
-//                        console.log(" Not valid ");
-//                    }
-//
-//                    /*
-//                     * validate the input element 
-//                     */
-//                    $("#applicationForm").validate($(this));
-//                });
                 });
             }
 
@@ -567,8 +587,8 @@
 
                 var rightsAgreementContractsNavBar = '';
 
-                rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" style="background-color: #d9d1d1">';
-                rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs">';
+                rightsAgreementContractsNavBar += '<div class="collapse navbar-collapse"  style="background-color: #d9d1d1">';
+                rightsAgreementContractsNavBar += '<ul class="nav navbar-nav nav-tabs two-lines">';
 
                 for (var i = 0; i < translatorArray.length; i++) {
 
@@ -616,45 +636,45 @@
                     /*
                      * Upload a copy of the CV
                      */
+
                     rightsAgreementContractsNavContent += '<div class="col-md-8" style="margin-bottom: 40px">';
-                    rightsAgreementContractsNavContent += '<div class="form-group has-feedback"> ';
-                    rightsAgreementContractsNavContent += '<label for="translator_cv' + j + '" class="control-label pull-left" >Upload a copy of ' + translatorArray[i] + '\'s CV:</label>';
-                    rightsAgreementContractsNavContent += ' <small class="pull-left" style="margin-bottom: 10px">  this should include a list of previous published literary translations</small>';
+                    rightsAgreementContractsNavContent += '<div class="form-group has-feedback">';
+
+                    rightsAgreementContractsNavContent += '<label for="translator_cv' + j + '"  class="control-label pull-left required-field">Upload a copy of ' + translatorArray[i] + '\'s CV:</label>';
+                    rightsAgreementContractsNavContent += ' <small class="pull-left" style="margin-bottom: 10px"> &nbsp; &nbsp;   this should include a list of previous published literary translations</small>';
+
                     rightsAgreementContractsNavContent += '<div class="input-group translatorcv pull-left">';
                     rightsAgreementContractsNavContent += '<label class="input-group-addon btn btn-default btn-file">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Translator_CV-' + j + '" id="translator_cv' + j + '">';
-
+                    rightsAgreementContractsNavContent += ' Select file <input type="file" required  onchange="generatedLabels();" class="form-input Translator_CV file-upload" name="Translator_CV-' + j + '" id="translator_cv' + j + '">';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
-                    rightsAgreementContractsNavContent += '</label>';
-                    rightsAgreementContractsNavContent += '<input id="label_translator_cv' + j + '" class="pull-left">';
+                    rightsAgreementContractsNavContent += '</label> ';
+                    rightsAgreementContractsNavContent += '<input id="label_translator_cv' + j + '" class="pull-left" value=""/>  ';
+                    rightsAgreementContractsNavContent += '</div>  ';
+                    rightsAgreementContractsNavContent += '<input type="hidden" value="Translator_CV" name="destination" id="translator_cv_upload' + j + '"/>';
                     rightsAgreementContractsNavContent += '</div>';
-                    rightsAgreementContractsNavContent += '<input type="hidden" id="translator_cv_upload' + j + '" value="Translator_CV" name="destination">';
-                    rightsAgreementContractsNavContent += '</div>';
-                    rightsAgreementContractsNavContent += '<label for="Translator_CV' + j + '" class="validation_error_message help-block"></label> ';
-                    rightsAgreementContractsNavContent += '</div>';
-
-
+                    rightsAgreementContractsNavContent += '<label for="Translator_CV' + j + '" class="validation_error_message help-block"></label>';
+                    rightsAgreementContractsNavContent += '</div> ';
                     /*
                      * Upload a copy of the contract with
                      */
                     rightsAgreementContractsNavContent += '<div class="col-md-8">';
                     rightsAgreementContractsNavContent += '<div class="form-group has-feedback"> ';
-                    rightsAgreementContractsNavContent += '<label for="label_contract' + j + '" class="control-label pull-left" >Upload a copy of the contract with ' + translatorArray[i] + '</label>';
+                    rightsAgreementContractsNavContent += '<label for="label_contract' + j + '" class="control-label pull-left required-field" >Upload a copy of the contract with ' + translatorArray[i] + '</label>';
                     rightsAgreementContractsNavContent += '<div class="input-group contract pull-left">';
                     rightsAgreementContractsNavContent += '<label class="input-group-addon btn btn-default btn-file">';
-                    rightsAgreementContractsNavContent += 'Select file <input type="file" onchange="generatedLabels()" name="Contract-' + j + '" id="contract' + j + '">';
+                    rightsAgreementContractsNavContent += 'Select file <input type="file" required onchange="generatedLabels()" class="form-input Contract file-upload" name="Contract' + j + '" id="contract' + j + '" >';
                     rightsAgreementContractsNavContent += '<span class="glyphicon glyphicon-folder-open"></span>';
                     rightsAgreementContractsNavContent += '</label>';
                     rightsAgreementContractsNavContent += '<input id="label_contract' + j + '" class="pull-left"/>';
                     rightsAgreementContractsNavContent += '</div>';
                     rightsAgreementContractsNavContent += '<input type="hidden" value="Contract" name="destination" id="contract_upload' + j + '"/>';
                     rightsAgreementContractsNavContent += '</div>';
-                    rightsAgreementContractsNavContent += '<label for="Contract" class="validation_error_message help-block"></label> ';
+                    rightsAgreementContractsNavContent += '<label for="Contract' + j + '" class="validation_error_message help-block"></label> ';
                     rightsAgreementContractsNavContent += '</div>';
 
 
-                    rightsAgreementContractsNavContent += '</div  class="container EndwrapperContainer">'; // //container
-                    rightsAgreementContractsNavContent += '</div>'; //<div class="tab-pane"
+                    rightsAgreementContractsNavContent += '</div>';
+                    rightsAgreementContractsNavContent += '</div>';
 
                 }
 
@@ -665,7 +685,47 @@
 
                 $(rightsAgreementContractsNavContent).appendTo('#tnc');
 
+                /* add validation rules for each dynamically genereated Translator_CV */
+                $('.Translator_CV').each(function () {
+                    $(this).rules("add",
+                            {
+                                required: true,
+                                validFileName: true,
+                                minlength: 2,
+                                messages: {
+                                    validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space"
+                                }
+                            });
+                });
+
+                /* add validation rules for each dynamically genereated Contract */
+                $(".Contract").each(function () {
+                    $(this).rules("add",
+                            {
+                                required: true,
+                                validFileName: true,
+//                                filesize: 5,
+                                minlength: 2,
+                                messages: {
+                                    validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space"
+                                }
+                            });
+                    console.log("rightsAgreementContractsNavContent $(this)  ", $(this));
+//                    $("#applicationForm").validate($(this));
+
+                });
             }
+
+            /* We need the alert to make user click so the error message can be displayed immediately */
+            $(document).on('change', '.file-upload', function () {
+                console.log("file-upload  ", $(this));
+                var input = $(this),
+                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                console.log("You selected file: ", label);
+                console.log("file-upload  ", this.name);
+                alert("You selected file: " + label);
+            });
 
 
             //backToRightsAgreement
@@ -1071,7 +1131,7 @@
                 //                copyFirstTranslatorName();
                 generateTranslatorTab(1);
             }
-            ;
+
 
 
             //https://stackoverflow.com/questions/3392493/adjust-width-of-input-field-to-its-input
@@ -1263,16 +1323,33 @@
 
 
 
-            $(document).ready(function () {
-                var validator = $("#applicationForm").validate();
-                validator.form();
-            });
+//            $(document).ready(function () {
+//                var validator = $("#applicationForm").validate();
+//                validator.form();
+//            });
 
             $(document).ready(function () {
                 var tcACCEPTED = '${TCACCEPTED}';
                 var gdprACCEPTED = '${gdprACCEPTED}';
-                document.getElementById("tcACCEPTED").value = tcACCEPTED;
-                document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
+                console.log("tcACCEPTED " + tcACCEPTED);
+                console.log("gdprACCEPTED " + gdprACCEPTED);
+
+                if (tcACCEPTED === '1') {
+                    document.getElementById("tcACCEPTED").value = "ticked";
+                    console.log("tcACCEPTED ticked");
+                } else {
+                    document.getElementById("tcACCEPTED").value = "not ticked";
+                    console.log("tcACCEPTED not ticked");
+                }
+
+                if (gdprACCEPTED === '1') {
+                    document.getElementById("gdprACCEPTED").value = "ticked";
+                } else {
+                    document.getElementById("gdprACCEPTED").value = "not ticked";
+                }
+
+                //document.getElementById("tcACCEPTED").value = tcACCEPTED;
+                //document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
 
             });
 
@@ -1291,40 +1368,42 @@
                 }
             });
 
-
-            $(document).ready(function () {
-                $('input[type="file"]').change(function (e) {
-                    // $('input[type="file"]').valid();
-                    console.log("$(this)  " + $(this).val());
-                    console.log("e   " + e.target.files[0].name);
-                    if ($(this).valid()) {
-                        //            alert("Url is valid  --  " + $(this).val());
-                        //            $($(this)).closest('.form-group').addClass('has-success');
-                    } else {
-                        //            alert("Url is not valid!");
-                        //            $($(this)).closest('.form-group').addClass('has-error');
-                    }
-                });
-            });
-
-
-
-
-            //window.onscroll = function () {
-            //    scrollFunction();
-            //};
-            //function scrollFunction() {
-            //    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-            //        document.getElementById("totopBtn").style.display = "block";
-            //    } else {
-            //        document.getElementById("totopBtn").style.display = "none";
-            //    }
-            //}
-            //function topFunction() {
-            //    document.body.scrollTop = 0;
-            //    document.documentElement.scrollTop = 0;
-            //}
-
+//            $(document).ready(function () {
+//                $("input[type=file]").on("change", function (e) {
+//                    // $('input[type="file"]').valid();
+//                    alert("Url is valid  --  ");
+//                    console.log("input[type=file $(this)  " + $(this).val());
+//                    console.log("input[type=file e   " + e.target.files[0].name);
+//                    if ($(this).valid()) {
+//                        alert("Url is valid  --  " + $(this).val());
+//                        //            $($(this)).closest('.form-group').addClass('has-success');
+//                    } else {
+//                        alert("Url is not valid!");
+//                        //            $($(this)).closest('.form-group').addClass('has-error');
+//                    }
+//                });
+//            });
+//            $(document).ready(function () {
+//                $('input[type="file"]').on("change", function (e) {
+//                    // $('input[type="file"]').valid();
+//                    alert("Url is valid  --  ");
+//                    console.log("input[type=file $(this)  " + $(this).val());
+//                    console.log("input[type=file e   " + e.target.files[0].name);
+//                    if ($(this).valid()) {
+//                        alert("Url is valid  --  " + $(this).val());
+//                        //            $($(this)).closest('.form-group').addClass('has-success');
+//                    } else {
+//                        alert("Url is not valid!");
+//                        //            $($(this)).closest('.form-group').addClass('has-error');
+//                    }
+//                });
+//            });
+//
+//            $(document).ready(function () {
+//                $('input[type="file"]').select(function () {
+//                    alert("A file has been selected.");
+//                });
+//            });
 
             $(function () {
                 $(document).on('scroll', function () {
@@ -1358,8 +1437,8 @@
             }
 
             $(window).bind("beforeunload", function () {
-                var username = document.getElementById("username").value;
-                alert("username 2 " + username);
+                var username = document.getElementById("username1").value;
+//                alert("username 2 " + username);
                 $.ajax({
                     async: false, //This will make sure the browser waits until request completes
                     url: "./Logout",
@@ -1367,6 +1446,12 @@
                     cache: false,
                     data: {"username": username}
                 });
+            });
+
+            $(document).ready(function () {
+                var username = document.getElementById("username1").value;
+                console.log("username newApplication ", username);
+                document.getElementById("username3").value = username;
             });
 
         </script>
@@ -1404,8 +1489,8 @@
                     <div class="pull-right">
                         <form action="${pageContext.request.contextPath}/Logout" method="GET">
                             <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
-                                    <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
-                            <input type="hidden" name="username" value="${username}">
+                                    <button type="submit" name="username" id="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
+                            <input type="hidden" name="username" id="username1" value="${username}">
                         </form>
                     </div>
                 </div> <!--container for welcome/logout-->
@@ -1417,26 +1502,16 @@
                 <nav class="navbar navbar-default" >
                     <div class="container-fluid"  style="background-color: #d9d1d1">
                         <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <!--<a class="navbar-brand" href="#">Brand</a>-->
-                        </div>
+
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="myTab" style="background-color: #d9d1d1">
                             <ul class="nav navbar-nav nav-tabs two-lines">
-                                <!--<li class="active"><a href="#info" data-toggle="tab">Info</a></li>-->
                                 <li class="active"><a href="#Contact" data-toggle="tab">Contact Details</a></li>
-                                <li><a href="#books" data-toggle="tab">Book<br/> Details</a></li>
+                                <li><a href="#Books" data-toggle="tab">Book<br/> Details</a></li>
                                 <li><a href="#Publication" data-toggle="tab">Publication<br/>  Details</a></li>
                                 <li><a href="#Translator" data-toggle="tab">Translator <br/> Details</a></li>
-                                <li><a href="#Rights" data-toggle="tab">Rights Agreement <br/>&nbsp;</a></li>
-                                <!--         <li><a href="#Misc" data-toggle="tab">Misc</a></li>    -->
+                                <li><a href="#RightsAgreement" data-toggle="tab">Rights  <br/>Agreement</a></li>
                                 <li><a href="#Original" data-toggle="tab"><span>Original Work &<br/> Sample Translation</span></a></li>
                             </ul>
                             <div style="margin: 20px; text-align: center">
@@ -1453,23 +1528,23 @@
                             action="${pageContext.request.contextPath}/GrantApplicationServlet" 
                             enctype="multipart/form-data"> 
 
-                            <div id="my-tab-content" class="tab-content"  style="background-color: #E8F6FF">
+                            <div id="my-tab-content" class="tab-content tab-validate"  style="background-color: #E8F6FF">
 
 
                                 <input type="hidden" name="tcACCEPTED" id="tcACCEPTED">
                                 <input type="hidden" name="gdprACCEPTED" id="gdprACCEPTED">
-                                <input type="hidden" name="firstname" value ="${firstname}">
-                                <input type="hidden" name="lastname" value ="${lastname}">
                                 <input type="hidden" name="name" value ="${name}">
                                 <input type="hidden" name="userID" value ="${userID}">
                                 <input type="hidden" name="publisherID" value ="${publisherID}">
-                                <input type="hidden" name="publisherName" value ="${publisherName}">
+                                <input type="hidden" name="publisherName" value="${companyDetails.Company}">
+
+                                <input type="hidden" name="username" id="username2" value="${username}">
 
                                 <!--////////////////////////////////////////////////////////////////////////////
-                                    ///
-                                    ///  For Publisher Contact details Update
-                                    ///
-                                    ////////////////////////////////////////////////////////////////////////////-->
+                                ///
+                                ///  For Publisher Contact details Update
+                                ///
+                                ////////////////////////////////////////////////////////////////////////////-->
 
                                 <!-- Contact details -->
                                 <div class="tab-pane active" id="Contact">
@@ -1721,7 +1796,7 @@
                                     ////////////////////////////////////////////////////////////////////////////-->
 
                                 <!-- Book Details -->
-                                <div class="tab-pane fade" id="books">
+                                <div class="tab-pane fade" id="Books">
                                     <p class="header1">
                                         Book Details
                                     </p>
@@ -1731,17 +1806,16 @@
 
                                             <div class="col-sm-4">    
                                                 <div class="form-group has-feedback">
-                                                    <label for="aFirstName" class="control-label pull-left">Author&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;</label>
+                                                    <label for="aFirstName" class="control-label pull-left required-field">Author&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;</label>                                                  
                                                     <div class="input-group pull-left">
-                                                        <!--<label for="aFirstName" class="control-label pull-left">Author</label>-->
-                                                        <!--                                                        <label for="aFirstName" class="control-label pull-left">Author&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;</label>                                                -->
                                                         <input id="aFirstName"                                
                                                                type="text"                                
                                                                class="form-control"                                
                                                                name="AuthorFirstName"                                
                                                                value=""    
+                                                               required
                                                                placeholder="Author First Name"
-                                                               >                                                               
+                                                               >                                                              
                                                     </div>
                                                 </div>
                                             </div>
@@ -1755,6 +1829,7 @@
                                                                class="form-control"                                
                                                                name="AuthorLastName"                                
                                                                value=""    
+                                                               required
                                                                onblur="copyFirstRow2();"
                                                                placeholder="Author Last Name"
                                                                >                                                                
@@ -1768,7 +1843,7 @@
                                                    data-target="#addAuthorModal"
                                                    onclick="copyFirstRow2();"
                                                    >Add more authors</a>
-
+                                                <label  class="control-label pull-left">&nbsp;<i class="glyphicon glyphicon-info-sign my-tooltip" title="''Please note that the names of additional authors are not displayed but are saved to the system.'"></i></label>
                                             </div>
 
                                         </div> <!--row-->
@@ -1782,12 +1857,13 @@
                                             <div class="col-sm-4">  
                                                 <div class="form-group has-feedback"> 
                                                     <div class="input-group pull-left">
-                                                        <label for="title" class="control-label pull-left">Title</label> 
+                                                        <label for="title" class="control-label pull-left required-field">Title</label> 
                                                         <input id="title"                                
                                                                type="text"                                
                                                                class="form-control"                                
                                                                name="title"                                
                                                                value=""    
+                                                               required
                                                                placeholder="Title"
                                                                >
                                                     </div>
@@ -1797,12 +1873,13 @@
                                             <div class="col-sm-4">  
                                                 <div class="form-group has-feedback">  
                                                     <div class="input-group pull-left">
-                                                        <label for="appForeignPublisher" class="control-label pull-left">Publisher (of the original work)</label>                                                           
+                                                        <label for="appForeignPublisher" class="control-label pull-left required-field">Publisher (of the original work)</label>                                                           
                                                         <input id="appForeignPublisher"                                
                                                                type="text"                                
                                                                class="form-control"                                
                                                                name="appForeignPublisher"                                
                                                                value=""    
+                                                               required
                                                                placeholder="Publisher of original work"
                                                                >                                                     
                                                     </div>
@@ -1812,12 +1889,13 @@
                                             <div class="col-sm-3">  
                                                 <div class="form-group has-feedback">  
                                                     <div class="input-group pull-left">
-                                                        <label for="publicationYear" class="control-label pull-left">Publication year</label>
+                                                        <label for="publicationYear" class="control-label pull-left required-field">Publication year</label>
                                                         <input id="publicationYear"                                
                                                                type="text"                                
                                                                class="form-control"                                
                                                                name="publicationYear"                                
                                                                value=""    
+                                                               required
                                                                placeholder="Publication Year"
                                                                >
                                                     </div>
@@ -1834,12 +1912,13 @@
                                             <div class="col-sm-4">    
                                                 <div class="form-group has-feedback">
                                                     <div class="input-group pull-left">
-                                                        <label for="genre" class="control-label pull-left">Genre</label>
+                                                        <label for="genre" class="control-label pull-left required-field">Genre</label>
                                                         <input id="genre"                                
                                                                type="text"                                
                                                                class="form-control"                                
                                                                name="genre"                                
                                                                value=""    
+                                                               required
                                                                placeholder="Genre"
                                                                >
                                                         <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 20px"></i>
@@ -1847,6 +1926,37 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-sm-4">    
+                                                <div class="form-group has-feedback">
+                                                    <div class="input-group pull-left">
+                                                        <label for="anthologyAuthor" class="control-label pull-left required-field">Anthology Author</label>
+                                                        <input id="anthologyAuthor"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="anthologyAuthor"                                
+                                                               value=""    
+                                                               required
+                                                               placeholder="Anthology Author"
+                                                               >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">    
+                                                <div class="form-group has-feedback">
+                                                    <div class="input-group pull-left">
+                                                        <label for="anthologyTitle" class="control-label pull-left required-field">Anthology Title</label>
+                                                        <input id="anthologyTitle"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="anthologyTitle"                                
+                                                               value=""    
+                                                               required
+                                                               placeholder="Anthology Title"
+                                                               >
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div> <!--row-->
 
 
@@ -1854,8 +1964,8 @@
 
                                             <div class="col-xs-4">
                                                 <div class="form-group has-feedback">
-                                                    <div class="input-group pull-left">
-                                                        <label for="appLanguageOriginal" class="control-label ">Language (of the original)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                    <label for="appLanguageOriginal" class="control-label  pull-left required-field">Language (of the original)</label>
+                                                    <div class="input-group pull-left">                                                    
                                                         <div class="input-group pull-left">
                                                             <span class="input-group-addon">  
                                                                 <span class="fa fa-language  fa-1x"></span>                                                            
@@ -1865,6 +1975,7 @@
                                                                    class="form-control"                                
                                                                    name="appLanguageOriginal"                                
                                                                    value=""    
+                                                                   required
                                                                    placeholder="Language"
                                                                    >      
                                                             <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 20px"></i>
@@ -1875,8 +1986,8 @@
 
                                             <div class="col-xs-4">
                                                 <div class="form-group has-feedback">
-                                                    <div class="input-group pull-left">
-                                                        <label for="countryOfPublication" class="control-label pull-left" >Country of publication&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                    <label for="countryOfPublication" class="control-label pull-left required-field" >Country of publication</label>
+                                                    <div class="input-group pull-left">                                                        
                                                         <div class="input-group pull-left">
                                                             <span class="input-group-addon">  
                                                                 <span class="glyphicon glyphicon-globe fa-1x"></span>                                                            
@@ -1886,6 +1997,7 @@
                                                                    class="form-control"                                
                                                                    name="countryOfPublication"                                
                                                                    value=""    
+                                                                   required
                                                                    placeholder="Country of Publication"
                                                                    >
                                                             <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 15px"></i>
@@ -1913,21 +2025,23 @@
                                                 </div>
                                             </div> <!--col-xs-6-->
 
-                                            <div class="col-sm-4">           
+                                            <div class="col-xs-4">           
                                                 <div class="form-group has-feedback">  
-                                                    <label for="originalPageExtent" class="control-label pull-left">Page extent of the (of the original) </label>                                                                                             
+                                                    <label for="originalPageExtent" class="control-label pull-left required-field">Page extent (of the original) </label>                                                                                             
                                                     <div class="input-group pull-left">
-                                                        <span class="input-group-addon">  
-                                                            <span class="glyphicon glyphicon-book"></span>                                                            
-                                                        </span>
-                                                        <input type="text" 
-                                                               name="originalPageExtent" 
-                                                               id="originalPageExtent" 
-                                                               class="form-control" 
-                                                               placeholder="number of pages" 
-                                                               >                                               
-                                                    </div>
-                                                    <!--<label for="originalPageExtent" class="validation_error_message help-block"></label>-->                                         
+                                                        <div class="input-group pull-left">      
+                                                            <span class="input-group-addon">  
+                                                                <span class="glyphicon glyphicon-book"></span>                                                            
+                                                            </span>
+                                                            <input type="text" 
+                                                                   name="originalPageExtent" 
+                                                                   id="originalPageExtent" 
+                                                                   class="form-control" 
+                                                                   required
+                                                                   placeholder="number of pages" 
+                                                                   >                                               
+                                                        </div>
+                                                    </div>                                    
                                                 </div>
                                             </div>
 
@@ -1948,7 +2062,7 @@
                                             </div> <!-- col-sm-4  -->
 
                                         </div> <!-- row  -->
-
+                                        <label  class="control-label pull-left required-field">Required fields</label>                                                                        
                                     </div>  <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="books" -->
 
@@ -1966,12 +2080,13 @@
 
                                             <div class='col-sm-4'>
                                                 <div class="form-group has-feedback">
-                                                    <label for="proposedDateOfPublication" class="control-label pull-left">Proposed date of publication</label>
+                                                    <label for="proposedDateOfPublication" class="control-label pull-left required-field">Proposed date of publication</label>
                                                     <div class="input-group">
                                                         <input type="text" 
                                                                name="proposedDateOfPublication" 
                                                                id="proposedDateOfPublication" 
                                                                class="form-control" 
+                                                               required
                                                                placeholder="DD/MM/YYYY" 
                                                                >    
                                                         <label class="input-group-addon" for="proposedDateOfPublication">
@@ -1993,7 +2108,7 @@
 
                                             <div class='col-sm-5 form-inline'>        
                                                 <div class="form-group has-feedback">
-                                                    <label for="plannedPageExtent" class="control-label pull-left">Planned page extent (published translation) </label>
+                                                    <label for="plannedPageExtent" class="control-label pull-left required-field">Planned page extent (published translation) </label>
                                                     <div class="input-group pull-left">
                                                         <span class="input-group-addon">  
                                                             <span class="glyphicon glyphicon-book"></span>                                                            
@@ -2002,6 +2117,7 @@
                                                                name="plannedPageExtent" 
                                                                id="plannedPageExtent" 
                                                                class="form-control" 
+                                                               required
                                                                placeholder="number of pages" 
                                                                >
                                                     </div>
@@ -2016,7 +2132,7 @@
 
                                             <div class='col-sm-4 form-inline'>        
                                                 <div class="form-group has-feedback">
-                                                    <label for="appproposedPrintRun" class="control-label pull-left">Proposed print run
+                                                    <label for="appproposedPrintRun" class="control-label pull-left required-field">Proposed print run
                                                     </label>
                                                     <div class="input-group pull-left">
                                                         <span class="input-group-addon">  
@@ -2026,7 +2142,8 @@
                                                                name="appproposedPrintRun" 
                                                                id="appproposedPrintRun" 
                                                                class="form-control" 
-                                                               placeholder="number of pages" 
+                                                               required
+                                                               placeholder="number of copies" 
                                                                >
                                                     </div>
                                                 </div>
@@ -2039,12 +2156,13 @@
                                             <div class="col-sm-5">    
                                                 <div class="form-group has-feedback">
                                                     <div class="input-group pull-left">
-                                                        <label for="translationTitle" class="control-label pull-left">Translation title</label>
+                                                        <label for="translationTitle" class="control-label pull-left required-field">Translation title</label>
                                                         <input id="translationTitle"                                
                                                                type="text"                                
                                                                class="form-control"                                
                                                                name="translationTitle"                                
                                                                value=""    
+                                                               required
                                                                placeholder="Translation Title"
                                                                >
                                                     </div>
@@ -2055,14 +2173,15 @@
 
                                             <div class="col-sm-4">  
                                                 <div class="form-group has-feedback"> 
-                                                    <label for="appTargetLanguage" class="control-label"> Target language(s)</label>
+                                                    <label for="appTargetLanguage" class="control-label required-field"> Target language(s)</label>
                                                     <div class="input-group pull-left">
                                                         <span class="input-group-addon">  
                                                             <i class="fa fa-language  fa-1x"></i>                                                            
                                                         </span>
                                                         <input id="appTargetLanguage"                                
                                                                type="text"                                
-                                                               class="form-control"                                
+                                                               class="form-control"   
+                                                               required
                                                                name="appTargetLanguage"                                
                                                                >
                                                         <i class="glyphicon glyphicon-search form-control-feedback" style="margin-right: 20px"></i>
@@ -2086,7 +2205,7 @@
                                                 </div>
                                             </div>
                                         </div> <!--row-->   
-
+                                        <label  class="control-label pull-left required-field">Required fields</label>  
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Publication" -->
 
@@ -2103,19 +2222,28 @@
                                                 <div class="panel-body">
                                                     <div class="col-md-3">                                              
                                                         <div class="form-group has-feedback"> 
-                                                            <label for="translatorFee" class="control-label pull-left">Translator(s)'s fee &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>                                                                        
+                                                            <label for="translatorFee" class="control-label pull-left required-field">Translator(s)'s fee</label>          
+                                                            <label  class="control-label pull-left">&nbsp;<i class="glyphicon glyphicon-info-sign my-tooltip" title="Enter the amount paid to the translator."></i></label>                                                                    
                                                             <div class="input-group pull-left">
-                                                                <span class="input-group-addon">
-                                                                    <span class="glyphicon glyphicon-euro"></span>                                     
-                                                                </span>
-                                                                <input type="text" class="form-control" name="translatorFee" id="translatorFee" placeholder="fee">    
+                                                                <div class="input-group pull-left">     
+                                                                    <span class="input-group-addon">
+                                                                        <span class="glyphicon glyphicon-euro"></span>                                     
+                                                                    </span>
+                                                                    <input type="text" 
+                                                                           class="form-control" 
+                                                                           name="translatorFee" 
+                                                                           id="translatorFee" 
+                                                                           placeholder="fee"
+                                                                           >    
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-5"> 
                                                         <div class="form-group has-feedback"> 
-                                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left">Break-down of translator(s)'s fee</label>                                                  
+                                                            <label for="BreakDownOfTranslatorFee" class="control-label pull-left required-field">Break-down of translator(s)'s fee</label>  
+                                                            <label  class="control-label pull-left">&nbsp;<i class="glyphicon glyphicon-info-sign my-tooltip" title="Here you enter how the amount paid to the translator is calculated."></i></label>
                                                             <div class="input-group">
                                                                 <!--keep in one line otherwise placeholder doesn't show-->
                                                                 <textarea class="form-control" placeholder="Break-down of translator fee" name="BreakDownOfTranslatorFee" id='BreakDownOfTranslatorFee' style="width: 280px; height: 196px;"></textarea>
@@ -2133,15 +2261,18 @@
 
                                                     <div class="col-sm-4"> 
 
-                                                        <div class="form-group has-feedback">
-                                                            <label for="translatorName" class="control-label pull-left" id="translatorNameLabel">Translator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                                                            <input id="translatorName"                                
-                                                                   type="text"                                
-                                                                   class="form-control"                                
-                                                                   name="translatorName"                                
-                                                                   value=""    
-                                                                   placeholder="Translator Name"
-                                                                   >
+                                                        <div class="form-group  has-feedback">
+                                                            <div class="input-group pull-left">  
+                                                                <label class="control-label pull-left required-field" id="translatorNameLabel">Translator</label>                                                             
+                                                                <input id="translatorName"                                
+                                                                       type="text"                                
+                                                                       class="form-control"                                
+                                                                       name="translatorName"                                
+                                                                       value=""    
+                                                                       required="required"
+                                                                       placeholder="Translator Name"
+                                                                       >
+                                                            </div>
                                                         </div>
 
                                                         <div id="addTransl"></div>
@@ -2204,19 +2335,17 @@
                                             </div> <!-- container-fluid  -->
 
                                         </div> <!--row-->
-
+                                        <label  class="control-label pull-left required-field">Required fields</label>  
                                     </div> <!-- container-fluid  -->
                                 </div> <!-- class="tab-pane" id="Translator" -->
 
                                 <!-- Rights Agreement -->
-                                <div class="tab-pane" id="Rights">
+                                <div class="tab-pane" id="RightsAgreement">
                                     <p class="header1" style="margin-bottom: 40px">
                                         Rights Agreement
                                     </p>
 
                                     <div class="container-fluid"  id="rightsAgreementContracts">
-
-                                        <!--<div class="tab-content">-->
 
                                         <div class="row" style="margin-bottom: 10px;">
 
@@ -2249,15 +2378,17 @@
 
                                             <div class="col-sm-4">      
                                                 <div class="form-group has-feedback">
-                                                    <label for="rightsHoldersName0" class="control-label pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
-                                                    <input id="rightsHoldersName0"                                
-                                                           type="text"                                
-                                                           class="form-control"                                
-                                                           name="rightsHoldersName0"                                
-                                                           value=""  
-                                                           onblur="copyFirstRightsHolderName();"
-                                                           placeholder="Translation rights holder"
-                                                           >
+                                                    <div class="input-group pull-left has-feedback">  
+                                                        <label for="rightsHoldersName0" class="control-label pull-left" id="rightsHoldersNameLabel">Translation rights holder</label>
+                                                        <input id="rightsHoldersName0"                                
+                                                               type="text"                                
+                                                               class="form-control"                                
+                                                               name="rightsHoldersName0"                                
+                                                               value=""  
+                                                               onblur="copyFirstRightsHolderName();"
+                                                               placeholder="Translation rights holder"
+                                                               >
+                                                    </div>
                                                 </div>
                                                 <div id="addAddRightsHolders"></div>
                                             </div>
@@ -2309,49 +2440,6 @@
                                         Original Work & Sample Translation
                                     </p>
                                     <div class="container-fluid">
-<!--                                        <div class="row" >
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-
-                                                    copies of the original work
-                                                    <div class="col-md-9" >
-                                                        <div class="checkbox pull-left">                                                             
-                                                            <label for="copiesSent" class="pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
-                                                            <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
-                                                                <input type="checkbox" 
-                                                                       name="copiesSent" 
-                                                                       id="copiesSent" 
-                                                                       value="" 
-                                                                       class="form-control">
-                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                            </label>
-                                                            <input type="hidden" name="userID" value="${userID}">
-                                                            <input type="hidden" name="publisherID" value="${publisherID}">
-                                                            <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                                        </div>
-                                                    </div>  col-md-9 
-
-                                                    Date copies were sent:
-                                                    <div class="col-md-3" >
-                                                        <label for="dateCopiesWereSent" class="pull-left"><strong>Date copy was sent</strong> </label>
-                                                        <div class="input-group pull-left" >
-                                                            <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                            <label class="input-group-addon" for="dateCopiesWereSent">
-                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                            </label>
-                                                        </div>   input-group 
-                                                    </div> col-md-3
-
-                                                    datepicker  mail-sent
-                                                    <script>
-                                                        $("#dateCopiesWereSent").datepicker().on('change', function () {
-                                                            $(this).valid();  // triggers the validation test
-                                                            // '$(this)' refers to '$("#datepicker")'
-                                                        });
-                                                    </script>
-                                                </div> panel--body
-                                            </div> panel-default
-                                        </div>  row -->
 
                                         <div class="row" >
                                             <div class="panel panel-default">        
@@ -2361,7 +2449,7 @@
 
                                                         <div class="col-md-8">
                                                             <div class="form-group has-feedback">
-                                                                <label for="originalSample" class="control-label pull-left">Upload electronic copy of original work</label>
+                                                                <label for="originalSample" class="control-label pull-left required-field">Upload electronic copy of original work</label>
                                                                 <div class="input-group originalSample pull-left">                                                                         
                                                                     <label class="input-group-addon btn btn-default btn-file">
                                                                         Select file 
@@ -2369,12 +2457,13 @@
                                                                                name="Original" 
                                                                                id="originalSample" 
                                                                                onchange="generatedLabels();"
+                                                                               required
                                                                                class="form-input">
                                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                                     </label>
                                                                     <input id="label_originalSample" class="pull-left">   
 
-                                                                    <input type="hidden" name="userID" value="${userID}">
+                                                                    <!--<input type="text" name="userID" value="${userID}">-->
                                                                     <input type="hidden" name="publisherID" value="${publisherID}">
                                                                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                                     <!--Destination:-->
@@ -2391,16 +2480,21 @@
 
                                                         <div class="col-md-8">
                                                             <div class="form-group has-feedback">
-                                                                <label for="translationSample" class="control-label pull-left">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
+                                                                <label for="translationSample" class="control-label pull-left required-field">Upload copy of translation sample<sup>**</sup><br/> (10 to 12 pages of prose or six poems)</label>
                                                                 <div class="input-group translationSample pull-left" >
                                                                     <label class="input-group-addon btn btn-default btn-file">
                                                                         Select file 
-                                                                        <input type="file"  name="TranslationSample" id="translationSample" class="form-control">
+                                                                        <input type="file"  
+                                                                               name="TranslationSample" 
+                                                                               id="translationSample" 
+                                                                               required
+                                                                               class="form-control"
+                                                                               >
                                                                         <span class="glyphicon glyphicon-folder-open"></span>
                                                                     </label>
                                                                     <input id="label_translationSample" class="pull-left"/>
 
-                                                                    <input type="hidden" name="userID" value="${userID}">
+<!--                                                                    <input type="text" name="userID" value="${userID}">-->
                                                                     <input type="hidden" name="publisherID" value="${publisherID}">
                                                                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                                     <!--Destination:-->
@@ -2429,21 +2523,26 @@
                                                                     class="btn btn-success"
                                                                     title="Click to submit the application!"
                                                                     style="margin-bottom: 10px"
-                                                                    name="Start New Application"
-                                                                    >
-                                                                Submit the application
-                                                                <span class="glyphicon glyphicon-import"></span>
-                                                            </button>                                        
+                                                                    <!--name="Start New Application"-->
+
+                                                                    Submit the application
+                                                                    <span class="glyphicon glyphicon-import"></span>
+                                                            </button>                                           
                                                         </div><!-- input-group -->
                                                     </div>  <!-- col-md-9 -->
                                                 </div>  <!-- panel--body -->
                                             </div>  <!--panel--default-->                                                
                                         </div> <!-- row -->
                                         <hr/>
+
                                         <div class="col-md-10">
-                                            <i class="pull-left"><strong>*</strong> Please contact Literature Ireland if a hard copy the original work cannot be obtained.<br/>
-                                                &nbsp;  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
-                                        </div>    
+                                            <i class="pull-left"><strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
+                                        </div> 
+
+                                        <div class="col-md-10">
+                                            <label  class="control-label pull-left required-field">Required fields</label>  
+                                        </div> 
+
                                     </div>  <!-- container-fluid -->
                                 </div> <!-- tab-pane Original --> 
 
@@ -2618,12 +2717,15 @@
 
                                             <h3> Original Work & Sample Translation</h3>
                                             <ul class="dashed">
-                                                <li>One copy of the original work* </li>
+                                                <!--<li>One copy of the original work* </li>-->
                                                 <li>A translation sample** consisting of 10 to 12 pages of prose or six poems</li>
                                             </ul>
 
                                             <br/>
-                                            <p> <i> * &nbsp; Please contact Literature Ireland if a hard copy of the original work cannot be obtained.<br/>
+                                            <!--                                            <p> <i> * &nbsp; Please contact Literature Ireland if a hard copy of the original work cannot be obtained.<br/>
+                                                                                                ** If more than one translator is involved, a translation sample must be submitted for each translator.
+                                                                                            </i> </p>-->
+                                            <p> <i>
                                                     ** If more than one translator is involved, a translation sample must be submitted for each translator.
                                                 </i> </p>
                                             All queries in relation to the Translation Grant Programme should be sent to info@literatureireland.com.
@@ -2675,8 +2777,7 @@
                                                     </p>
                                                     <ol start="2">
                                                         <li>
-                                                            <p><b>Applications
-                                                                    should be submitted from one month prior to the deadline.</b>
+                                                            <p><b>Applications can be submitted from two weeks prior to the deadline.</b>
                                                                 Applications submitted after the deadline may not be accepted or may
                                                                 be postponed to the next round.
                                                             </p>
@@ -2772,11 +2873,8 @@
                                                     </p>
                                                     <ol start="8">
                                                         <li>
-                                                            <p><b>Applicants
-                                                                    will be informed of the outcome of the application within 10 days of
-                                                                    the board meeting</b>.
-                                                                Successful applicants will be issued with formal contracts and a
-                                                                letter of award within six weeks of approval.
+                                                            <p><b>Applicants will be informed of the outcome of the application within 10 days of the board meeting.</b>.
+                                                                Successful applicants will be issued with formal contracts and a letter of award within six weeks of approval. Each grant contract is valid for a term of twelve (12) months. 
                                                             </p>
                                                         </li>
                                                     </ol>
@@ -2812,12 +2910,12 @@
                       method="POST" 
                       name="regF"
                       >
-                    <input type="hidden" name="userID" value="${userID}">
+<!--                    <input type="hidden" name="userID" value="${userID}">-->
                     <input type="hidden" name="name" value="${name}">
                     <input type="hidden" name="publisherID" value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                     <input type="hidden" name="publisherName" value="${companyDetails.Company}">
-
+                    <input type="hidden" name="username" id="username3" value="${username}">
                     <div class="container col-sm-12" style="margin-bottom: 40px">
                         <input type="submit" id="NewApplication" name="New Application"  class = "btn btn-default btn-sm active" value="New Application" />
                         <input type="submit" id="ListOpenApplications" name="List Open Applications"  class = "btn btn-default btn-sm" value="List Open Applications" />
@@ -2867,7 +2965,6 @@
         <script src="js/bootstrap-imageupload.js"></script>
 
         <script>
-
                                                 var $imageupload = $('.imageupload');
                                                 $imageupload.imageupload();
 
@@ -2884,7 +2981,6 @@
                                                 function  showNotesModal() {
                                                     $("#showNotesModal").modal("show");
                                                 }
-
-        </script>
+        </script> 
     </body>
 </html>

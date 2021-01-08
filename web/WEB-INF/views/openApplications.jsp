@@ -86,7 +86,7 @@
 
     <body style="height: 100%">
 
-        <input type="hidden" name="pid"  id='pid' value="${publisherID}">
+        <input type="text" name="pid"  id='pid' value="${publisherID}">
 
         <sql:query var="applicationQuery" dataSource="jdbc/ILGAS">
             SELECT * FROM GrantApplication
@@ -122,7 +122,7 @@
                         <form action="${pageContext.request.contextPath}/Logout" method="POST">
                             <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
                                     <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
-                            <input type="hidden" name="username" id="username" value="${username}">
+                            <input type="hidden" name="username" id="username1" value="${username}">
                         </form>
                     </div>
                 </div> <!--container for welcome/logout-->
@@ -136,7 +136,7 @@
 
                     <h3 align="center" style="align-content: center">Display open applications</h3>
                     <br/>
-
+                    <input type="hidden" name="username" id="username2" value="${username}">
                     <!--Application-->
                     <div class="tab-pane fade  active in" id="Application">
                         <div class="container-fluid" style="margin-top: 40px; margin-bottom: 60px">
@@ -363,6 +363,7 @@
                                             <%request.getSession().setAttribute( "task", "openApplications" );%>
                                             <div id="applicationEditForm-tab-content" class="tab-content"  style="background-color: #E8F6FF">
                                                 <input type="hidden" name="name" value="${name}">
+                                                <input type="hidden" name="username" id="username3" value="${username}">
                                                 <!-- Contact details -->
                                                 <div class="tab-pane active" id="Contact">
 
@@ -664,7 +665,7 @@
                                                                                 <div class="col-xs-6">
                                                                                     <div class="mini-box">
                                                                                         <div class="form-group has-feedback">
-                                                                                            <label for="appLanguageOriginal" class="pull-left" >Language <br/>(of the original)</label>
+                                                                                            <label for="appLanguageOriginal" class="pull-left" >Language (of the original)</label>
                                                                                             <input id="appLanguageOriginal"                                
                                                                                                    type="text"                                
                                                                                                    class="form-control"                                
@@ -679,7 +680,7 @@
 
                                                                                 <div class="col-xs-6" style="margin-bottom: 20px">
                                                                                     <div class="mini-box">
-                                                                                        <label for="appCountryOfPublication" class="control-label pull-left" >Country of publication <br/>(of the original)</label>
+                                                                                        <label for="appCountryOfPublication" class="control-label pull-left" >Country of publication (of the original)</label>
                                                                                         <input id="appCountryOfPublication"                                
                                                                                                type="text"                                
                                                                                                class="form-control"                                
@@ -694,7 +695,7 @@
                                                                             <div class="row">
 
                                                                                 <div class='col-sm-6'  style="margin-bottom: 40px;">                                                
-                                                                                    <label for="originalPageExtent" class="control-label pull-left">Page extent of the <br/> (of the original): </label>
+                                                                                    <label for="originalPageExtent" class="control-label pull-left">Page extent of the  (of the original): </label>
                                                                                     <div class="input-group pull-left"  style="margin-bottom: 40px;">
                                                                                         <span class="input-group-addon" id="sizing-addon3">  
                                                                                             <span class="glyphicon glyphicon-book"></span>                                                            
@@ -848,13 +849,11 @@
                                                                 <div class="col-sm-4 col-md-offset-1"> 
                                                                     <div class="mini-box">
                                                                         <div class="form-group has-feedback">
-                                                                            <label for="languages" class="pull-left" >Languages</label>
+                                                                            <!--<label for="languages" class="pull-left" >Languages</label>-->
                                                                             <input id="languages"                                
-                                                                                   type="text"                                
+                                                                                   type="hidden"                                
                                                                                    class="form-control"                                
                                                                                    name="languages"                                
-                                                                                   value=""    
-                                                                                   placeholder="Languages"
                                                                                    >
                                                                             <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
                                                                         </div>
@@ -1180,7 +1179,7 @@
                                                         <input type="hidden" name="Company" value="${companyDetails.Company}">
                                                         <hr/>
                                                         <div class="col-md-12">
-                                                            <i class="pull-left"><strong> &nbsp; *</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.</i><br/>
+                                                            <!--<i class="pull-left"><strong> &nbsp; *</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.</i><br/>-->
                                                             <i class="pull-left">  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
                                                         </div>    
                                                     </div>  <!-- container-fluid -->
@@ -1253,7 +1252,7 @@
                     <input type="hidden" name="publisherID" value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                     <input type="hidden" name="publisherName" value="${companyDetails.Company}">
-
+                    <input type="hidden" name="username" id="username4" value="${username}">
                     <div class="container col-sm-12" style="margin-bottom: 40px">
                         <input type="submit" id="NewApplication" name="task"  class = "btn btn-default btn-sm" value="Start New Application" />
                         <input type="submit" id="ListOpenApplications" name="task"  class = "btn btn-default btn-sm active" value="List Open Applications" />

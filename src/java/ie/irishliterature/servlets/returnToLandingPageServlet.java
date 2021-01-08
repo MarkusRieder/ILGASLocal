@@ -44,7 +44,7 @@ public class returnToLandingPageServlet extends HttpServlet {
         String Company = "";
 
         HttpSession session = request.getSession();
-        System.out.println( "############################### /GrantApplicationServlet ####################################" );
+        System.out.println( "############################### /returnToLandingPageServlet ####################################" );
 
         Enumeration en = request.getParameterNames();
 

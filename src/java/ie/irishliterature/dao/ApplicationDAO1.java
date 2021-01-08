@@ -501,7 +501,7 @@ public class ApplicationDAO1 {
                     application.setReferenceNumber( ReferenceNumber );
                     application.setCompany( res.getString( "company" ) );
                     application.setPublisherID( res.getInt( "publisherID" ) );
-                    application.setUserID( res.getString( "userID" ) );
+                    application.setUserID( res.getInt( "userID" ) );
 
                     String[] bookTitle = getBookTitle( ReferenceNumber );
 

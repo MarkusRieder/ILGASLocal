@@ -9,50 +9,47 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 public class UserDAO {
 
     private static final Logger LOGGER = Logger.getLogger( UserDAO.class.getName() );
 
-    public static User selectUSER( String uname ) throws DBException
-    {
+  public static User selectUSER( String uname ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         User pojo = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
-            ps = conn.prepareStatement( "select uname, EMAIL, FIRST_NAME, LAST_NAME, EMAIL_VERIFICATION_HASH, EMAIL_VERIFICATION_ATTEMPTS, STATUS, CREATED_TIME from ILGAS.users where uname = ?" );
+            ps = conn.prepareStatement( "select uname, EMAIL, FIRST_NAME, LAST_NAME, userID, function, STATUS, CREATED_TIME, fullName from ILGAS.users where uname = ?" );
             ps.setString( 1, uname );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     pojo = new User();
                     pojo.setUSERNAME( res.getString( 1 ) );
                     pojo.setEMAIL( res.getString( 2 ) );
                     pojo.setFIRST_NAME( res.getString( 3 ) );
                     pojo.setLAST_NAME( res.getString( 4 ) );
-                    pojo.setEMAIL_VERIFICATION_HASH( res.getString( 5 ) );
-                    pojo.setEMAIL_VERIFICATION_ATTEMPTS( res.getInt( 6 ) );
+                    pojo.setUSER_ID( res.getString( 5 ) );
+                    pojo.setFUNCTION( res.getString( 6 ) );
                     pojo.setSTATUS( res.getString( 7 ) );
                     pojo.setCREATED_TIME( res.getString( 8 ) );
+                    pojo.setFull_NAME( res.getString( 9 ) );
                 }
             }
 
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
-            LOGGER.debug( e.getMessage() );
+            java.util.logging.Logger.getLogger( UserDAO.class.getName() ).log( Level.SEVERE, null, e );
             e.printStackTrace();
             throw new DBException( "1 Excepion while accessing database" );
         }
@@ -60,16 +57,14 @@ public class UserDAO {
         return pojo;
     }
 
-    public static boolean verifyEmailHash( String uname, String hash ) throws DBException
-    {
+    public static boolean verifyEmailHash( String uname, String hash ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select 1 from ILGAS.users where uname = ? and EMAIL_VERIFICATION_HASH = ?" );
@@ -77,17 +72,14 @@ public class UserDAO {
             System.out.println( "username dao verifyEmailHash: " + uname );
             ps.setString( 2, hash );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     verified = true;
                 }
             }
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps, res );
             LOGGER.debug( e.getMessage() );
             throw new DBException( "2 Excepion while accessing database" );
@@ -96,25 +88,21 @@ public class UserDAO {
         return verified;
     }
 
-    public static boolean isEmailExists( String uname ) throws DBException
-    {
+    public static boolean isEmailExists( String uname ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select 1 from ILGAS.users where uname = ?" );
             ps.setString( 1, uname );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     verified = true;
                 }
             }
@@ -122,8 +110,7 @@ public class UserDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "3 Excepion while accessing database" );
@@ -132,8 +119,7 @@ public class UserDAO {
         return verified;
     }
 
-    public static String insertRow( User pojo ) throws DBException
-    {
+    public static String insertRow( User pojo ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps1 = null;
@@ -141,8 +127,7 @@ public class UserDAO {
         String id = null;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             conn.setAutoCommit( false );
@@ -178,10 +163,8 @@ public class UserDAO {
 
             System.out.println( "res: " + res );
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     id = res.getString( 1 );
                 }
             }
@@ -190,8 +173,7 @@ public class UserDAO {
             DBConn.close( conn, ps1, ps2, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, ps2, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -200,14 +182,12 @@ public class UserDAO {
         return id;
     }
 
-    public static void deleteRow( User pojo )
-    {
+    public static void deleteRow( User pojo ) {
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "delete from users where uname = ?" );
@@ -217,21 +197,18 @@ public class UserDAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( SQLException | ClassNotFoundException e )
-        {
+        catch ( SQLException | ClassNotFoundException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
         }
     }
 
-    public static void updateStaus( String uname, String status ) throws DBException
-    {
+    public static void updateStaus( String uname, String status ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set STATUS = ? where uname = ?" );
@@ -241,22 +218,19 @@ public class UserDAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( "5 Excepion while accessing database" );
         }
     }
 
-    public static void updateEmailVerificationHash( String uname, String hash ) throws DBException
-    {
+    public static void updateEmailVerificationHash( String uname, String hash ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set EMAIL_VERIFICATION_HASH = ?, EMAIL_VERIFICATION_ATTEMPTS = ? where uname = ?" );
@@ -267,16 +241,14 @@ public class UserDAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( " 6 Excepion while accessing database" );
         }
     }
 
-    public static int incrementVerificationAttempts( String uname ) throws DBException
-    {
+    public static int incrementVerificationAttempts( String uname ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -284,8 +256,7 @@ public class UserDAO {
         ResultSet res = null;
         int attempts = 0;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set EMAIL_VERIFICATION_ATTEMPTS = EMAIL_VERIFICATION_ATTEMPTS + 1 where uname = ?" );
@@ -295,18 +266,15 @@ public class UserDAO {
             ps2 = conn.prepareStatement( "SELECT EMAIL_VERIFICATION_ATTEMPTS from users" );
             res = ps2.executeQuery();
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     attempts = res.getInt( 1 );
                 }
             }
 
             DBConn.close( conn, ps, ps2, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, ps2, res );
             throw new DBException( "7 Excepion while accessing database" );
@@ -315,8 +283,7 @@ public class UserDAO {
         return attempts;
     }
 
-    public static User verifyLogin( String username, String password ) throws DBException
-    {
+    public static User verifyLogin( String username, String password ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -325,8 +292,7 @@ public class UserDAO {
         System.out.println( "verifyLogin username before : " + username );
         System.out.println( "verifyLogin password before : " + password );
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select uname, EMAIL, FIRST_NAME, LAST_NAME, STATUS, CREATED_TIME, ROLE, FUNCTION from ILGAS.users where uname = ? and PASSWORD = ?" );
@@ -337,10 +303,8 @@ public class UserDAO {
             System.out.println( "ps: " + ps );
 
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     pojo = new User();
 
                     System.out.println( "Userdao 2 verifyLogin" );
@@ -358,8 +322,7 @@ public class UserDAO {
 
             DBConn.close( conn, ps, res );
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "8 Excepion while accessing database" );
@@ -369,26 +332,22 @@ public class UserDAO {
     }
 
     public static boolean verifyUserIdAndPassword( String uname,
-            String inputCurrentPassword ) throws DBException
-    {
+            String inputCurrentPassword ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         boolean verified = false;
         ResultSet res = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select 1 from ILGAS.users where uname = ? and PASSWORD = ?" );
             ps.setString( 1, uname );
             ps.setString( 2, inputCurrentPassword );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     verified = true;
                 }
             }
@@ -396,8 +355,7 @@ public class UserDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "9 Excepion while accessing database" );
@@ -406,14 +364,12 @@ public class UserDAO {
         return verified;
     }
 
-    public static void updatePassword( String uname, String inputPassword ) throws DBException
-    {
+    public static void updatePassword( String uname, String inputPassword ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set PASSWORD = ? where uname = ?" );
@@ -423,8 +379,7 @@ public class UserDAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( "10 Excepion while accessing database" );
@@ -432,14 +387,12 @@ public class UserDAO {
     }
 
     public static void updateEmailVerificationHashForResetPassword( String inputEmail,
-            String hash ) throws DBException
-    {
+            String hash ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "update ILGAS.users set EMAIL_VERIFICATION_HASH = ?, EMAIL_VERIFICATION_ATTEMPTS = ?, STATUS = ? where EMAIL = ?" );
@@ -451,33 +404,28 @@ public class UserDAO {
             DBConn.close( conn, ps );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps );
             throw new DBException( "11 Excepion while accessing database" );
         }
     }
 
-    public static User selectUSERbyEmail( String inputEmail ) throws DBException
-    {
+    public static User selectUSERbyEmail( String inputEmail ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
         User pojo = null;
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
             ps = conn.prepareStatement( "select uname, EMAIL, FIRST_NAME, LAST_NAME, EMAIL_VERIFICATION_HASH, EMAIL_VERIFICATION_ATTEMPTS, STATUS, CREATED_TIME from ILGAS.users where EMAIL = ?" );
             ps.setString( 1, inputEmail );
             res = ps.executeQuery();
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     pojo = new User();
                     pojo.setUSERNAME( res.getString( 1 ) );
                     pojo.setEMAIL( res.getString( 2 ) );
@@ -493,8 +441,7 @@ public class UserDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -504,8 +451,7 @@ public class UserDAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static ArrayList getAllUsers() throws ClassNotFoundException, DBException
-    {
+    public static ArrayList getAllUsers() throws ClassNotFoundException, DBException {
 
         ArrayList listUsers = new ArrayList();
         Connection conn = null;
@@ -514,8 +460,7 @@ public class UserDAO {
 
         String searchQuery = "SELECT * FROM ILGAS.users";
 
-        try
-        {
+        try {
 
             conn = DBConn.getConnection();
 
@@ -525,10 +470,8 @@ public class UserDAO {
 
             res = ps.executeQuery( searchQuery );
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     User user = new User();
 
                     user.setUSERNAME( res.getString( "uname" ) );
@@ -545,8 +488,7 @@ public class UserDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -556,8 +498,7 @@ public class UserDAO {
     }
 
     @SuppressWarnings( "unchecked" )
-    public static ArrayList getAllExpertReaders() throws ClassNotFoundException, DBException
-    {
+    public static ArrayList getAllExpertReaders() throws ClassNotFoundException, DBException {
 
         ArrayList listExpertReaders = new ArrayList();
 
@@ -568,8 +509,7 @@ public class UserDAO {
         String searchQuery = "SELECT * FROM ILGAS.users WHERE function = 'Expert Reader'"
                 + " AND first_name <> 'removed'";
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement( searchQuery );
@@ -578,10 +518,8 @@ public class UserDAO {
 
             res = ps.executeQuery( searchQuery );
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     User expertReader = new User();
                     expertReader.setUSER_ID( res.getString( "userID" ) );
                     expertReader.setFIRST_NAME( res.getString( "first_name" ) );
@@ -597,8 +535,7 @@ public class UserDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -607,10 +544,9 @@ public class UserDAO {
 
         return listExpertReaders;
     }
-    
-     @SuppressWarnings( "unchecked" )
-    public static ArrayList getAllStaff() throws ClassNotFoundException, DBException
-    {
+
+    @SuppressWarnings( "unchecked" )
+    public static ArrayList getAllStaff() throws ClassNotFoundException, DBException {
 
         ArrayList listStaff = new ArrayList();
 
@@ -621,8 +557,7 @@ public class UserDAO {
         String searchQuery = "SELECT * FROM ILGAS.users WHERE function = 'Literature Ireland Staff'"
                 + " AND first_name <> 'removed'";
 
-        try
-        {
+        try {
             conn = DBConn.getConnection();
 
             ps = conn.prepareStatement( searchQuery );
@@ -631,10 +566,8 @@ public class UserDAO {
 
             res = ps.executeQuery( searchQuery );
 
-            if ( res != null )
-            {
-                while ( res.next() )
-                {
+            if ( res != null ) {
+                while ( res.next() ) {
                     User Staff = new User();
                     Staff.setUSER_ID( res.getString( "userID" ) );
                     Staff.setFIRST_NAME( res.getString( "first_name" ) );
@@ -650,8 +583,7 @@ public class UserDAO {
             DBConn.close( conn, ps, res );
 
         }
-        catch ( ClassNotFoundException | SQLException e )
-        {
+        catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -659,5 +591,148 @@ public class UserDAO {
         System.out.println( listStaff );
 
         return listStaff;
+    }
+
+    public static String getUserNameByEmail( String inputEmail ) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String userName = "";
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement( "SELECT uname from ILGAS.users where EMAIL = ?" );
+            ps.setString( 1, inputEmail );
+            res = ps.executeQuery();
+            if ( res != null ) {
+                while ( res.next() ) {
+
+                    userName = res.getString( 1 );
+
+                }
+            }
+
+            DBConn.close( conn, ps, res );
+
+            System.out.println( "UserDAO: getUserIdbyEmail  inputEmail " + inputEmail + " userName  " + userName );
+
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 Excepion while accessing database" );
+        }
+
+        return userName;
+    }
+
+    public static String getUserIdByEmail( String inputEmail ) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String userID = "";
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement( "SELECT userID from ILGAS.users where EMAIL = ?" );
+            ps.setString( 1, inputEmail );
+            res = ps.executeQuery();
+            if ( res != null ) {
+                while ( res.next() ) {
+
+                    userID = res.getString( 1 );
+
+                }
+            }
+
+            DBConn.close( conn, ps, res );
+
+            System.out.println( "UserDAO: getUserIdbyEmail  inputEmail " + inputEmail + " userID  " + userID );
+
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 Excepion while accessing database" );
+        }
+
+        return userID;
+    }
+
+    public static String getUserIdByName( String userName ) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String userID = "";
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement( "SELECT userID from ILGAS.users where uname = ?" );
+            ps.setString( 1, userName );
+            res = ps.executeQuery();
+            if ( res != null ) {
+                while ( res.next() ) {
+
+                    userID = res.getString( 1 );
+
+                }
+            }
+
+            DBConn.close( conn, ps, res );
+
+            System.out.println( "UserDAO: getUserIdByName  userName " + userName + " userID  " + userID );
+
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 Excepion while accessing database" );
+        }
+
+        return userID;
+    }
+
+    public static String getUserEmailByUserId( String uid ) throws DBException {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+        String email = "";
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement( "SELECT email from ILGAS.users where userID = ?" );
+            ps.setString( 1, uid );
+            res = ps.executeQuery();
+
+            System.out.println( "UserDAO: getUserEmailByUserId  uid " + uid + " ps  " + ps );
+
+            if ( res != null ) {
+                while ( res.next() ) {
+
+                    email = res.getString( 1 );
+
+                }
+            }
+
+            DBConn.close( conn, ps, res );
+
+            System.out.println( "UserDAO: getUserEmailByUserName  uid " + uid + " email  " + email );
+
+        }
+        catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "12 Excepion while accessing database" );
+        }
+
+        return email;
     }
 }

@@ -205,12 +205,21 @@ public class RegisterServlet extends HttpServlet {
 
             user.setFUNCTION( function );
 
+            
+               System.out.println( "username:: 1 " + username );
+               System.out.println( "firstname:: 1 " + firstname );
+               System.out.println( "lastname:: 1 " + lastname );
+               System.out.println( "email:: 1 " + email );
+              System.out.println( "fullName:: 1 " + fullName );
+             
+             
+             
             try {
 
                 /*
                  * check whether email exists or not
                  */
-                if ( !ApplicationDAO.isEmailExists( email ) ) {
+                if ( !ApplicationDAO.isEmailExists( username ) ) {
 
                     System.out.println( "isEmailExists Not:: " );
 
@@ -232,6 +241,8 @@ public class RegisterServlet extends HttpServlet {
                     /*
                      * send verification email
                      */
+                    System.out.println( "RegisterServlet sendEmailRegistrationLink" );
+                    System.out.println( "uname " + username + " fullname " + fullName + " email " + email );
                     MailUtil.sendEmailRegistrationLink( username, fullName, email, hash );
                     System.out.println( "/RegisterServlet: sendEmailRegistrationLink username " + username + " fullName " + fullName );
                     sp.setCode( 0 );
@@ -294,7 +305,6 @@ public class RegisterServlet extends HttpServlet {
 
 //        session.setAttribute( "username", username );
 //        request.setAttribute( "username", username );
-
         if ( request.isRequestedSessionIdValid() && session != null ) {
             System.out.println( "RegisterServlet session.invalidate() 2" );
             session.invalidate();

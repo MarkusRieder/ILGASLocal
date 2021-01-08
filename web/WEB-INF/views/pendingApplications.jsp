@@ -144,7 +144,7 @@
                         <form action="${pageContext.request.contextPath}/Logout" method="POST">
                             <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
                                     <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
-                            <input type="hidden" id="username" name="username" value="${username}">
+                            <input type="hidden" name="username" id="username1" value="${username}">
                         </form>
                     </div>
                 </div> <!--container for welcome/logout-->
@@ -403,7 +403,7 @@
 
                                                     <!--wrapper for Contact tab pane-->
                                                     <div class="container-fluid">
-
+                                                        <input type="hidden" name="username" id="username2" value="${username}">
                                                         <!--first row-->
                                                         <!--get Company and Company_Number via autocomplete-->
                                                         <div class="row" style="margin-bottom: 20px;margin-top: 30px">
@@ -595,7 +595,7 @@
                                                             </div> <!--<div class="col-sm-3">-->   
                                                         </div> <!--row-->
                                                         <input type="hidden" id="authorArray" name="authorArray" >
- <input type="hidden" id="Status" name="Status" >
+                                                        <input type="hidden" id="Status" name="Status" >
                                                         <input type="hidden" id="translatorArray" name="translatorArray" >
                                                         <input type="hidden" id="rightsHolderArray" name="rightsHolderArray" >
                                                         <!--keep in one line otherwise placeholder doesn't show-->
@@ -750,7 +750,7 @@
                                                                     <div class="row" style="margin-bottom: 10px">
 
                                                                         <div class='col-sm-4'>                                                
-                                                                            <label for="originalPageExtent" class="control-label pull-left">Page extent of the  (of the original): </label>
+                                                                            <label for="originalPageExtent" class="control-label pull-left">Page extent (of the original): </label>
                                                                             <div class="form-group has-feedback">
                                                                                 <div class="input-group pull-left">
                                                                                     <span class="input-group-addon">  
@@ -940,13 +940,11 @@
 
                                                             <div class="col-xs-5">
                                                                 <div class="form-group has-feedback">  
-                                                                    <label for="languages" class="control-label pull-left" >Languages</label>
+                                                                    <!--<label for="languages" class="control-label pull-left" >Languages</label>-->
                                                                     <input id="languages"                                
-                                                                           type="text"                                
+                                                                           type="hidden"                                
                                                                            class="form-control"                                
                                                                            name="languages"                                
-                                                                           value=""    
-                                                                           placeholder="Languages"
                                                                            >
                                                                     <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
                                                                 </div>
@@ -1435,63 +1433,63 @@
 
                                                     <div class="container-fluid">
 
-<!--                                                        <div class="row" >
+                                                        <!--                                                        <div class="row" >
+                                                        
+                                                                                                                    <div class="panel panel-default">
+                                                                                                                        <div class="panel-body">
+                                                        
+                                                                                                                            copies of the original work
+                                                                                                                            <div class="col-md-9" >
+                                                                                                                                <div class="checkbox pull-left">                                                             
+                                                                                                                                    <label for="copiesSent" class="pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
+                                                                                                                                    <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
+                                                                                                                                        <input type="checkbox" 
+                                                                                                                                               name="copiesSent" 
+                                                                                                                                               id="copiesSent" 
+                                                                                                                                               checked =""
+                                                                                                                                               value="" 
+                                                                                                                                               class="form-control">
+                                                                                                                                        <span class="cr"><i class="cr-icon glyphicon glyphicon-ok black"></i></span>
+                                                                                                                                    </label>
+                                                                                                                                    <input type="hidden" name="userID"  id="userID"  value="${userID}">
+                                                                                                                                    <input type="hidden" name="name" id="name" value="${name}">
+                                                                                                                                    <input type="hidden" name="publisherID"  id="publisherID" value="${publisherID}">
+                                                                                                                                    <input type="hidden" name="Company" id="Company"  value="${companyDetails.Company}">
+                                                                                                                                    <input type="hidden" name="publisherName"  id="publisherName"  value="${companyDetails.Company}">
+                                                                                                                                    <input type="hidden" name="ReferenceNumber" value="<%=session.getAttribute( "ReferenceNumber" )%>"/>
+                                                        <c:set var="ReferenceNumber" scope="session" value="${ReferenceNumber}"/>
+                                                    </div>
+                                                </div>  col-md-7 
 
-                                                            <div class="panel panel-default">
-                                                                <div class="panel-body">
+                                                <div class="pressCuttingsClone" id="pressCuttingsClone">
+                                                    <input type="text"  name="pressCuttingArray" id="pressCuttingArray"/>
+                                                </div>
 
-                                                                    copies of the original work
-                                                                    <div class="col-md-9" >
-                                                                        <div class="checkbox pull-left">                                                             
-                                                                            <label for="copiesSent" class="pull-left"><strong>One copy of the original work<sup>*</sup> sent to Literature Ireland by post</strong></label>
-                                                                            <label style="font-size: 2.0em; " class="checkbox-inline  no_indent">
-                                                                                <input type="checkbox" 
-                                                                                       name="copiesSent" 
-                                                                                       id="copiesSent" 
-                                                                                       checked =""
-                                                                                       value="" 
-                                                                                       class="form-control">
-                                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok black"></i></span>
-                                                                            </label>
-                                                                            <input type="hidden" name="userID"  id="userID"  value="${userID}">
-                                                                            <input type="hidden" name="name" id="name" value="${name}">
-                                                                            <input type="hidden" name="publisherID"  id="publisherID" value="${publisherID}">
-                                                                            <input type="hidden" name="Company" id="Company"  value="${companyDetails.Company}">
-                                                                            <input type="hidden" name="publisherName"  id="publisherName"  value="${companyDetails.Company}">
-                                                                            <input type="hidden" name="ReferenceNumber" value="<%=session.getAttribute( "ReferenceNumber" )%>"/>
-                                                                            <c:set var="ReferenceNumber" scope="session" value="${ReferenceNumber}"/>
-                                                                        </div>
-                                                                    </div>  col-md-7 
+                                                Date copies were sent:
+                                                <div class="col-md-3" >
+                                                    <div class="form-group has-feedback">
+                                                        <label for="copiesSent" class="control-label pull-left"><strong>Date copies were sent</strong> </label>
+                                                        <div class="input-group pull-left" >
+                                                            <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
+                                                            <label class="input-group-addon" for="dateCopiesWereSent">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </label>
+                                                        </div>   input-group 
+                                                    </div>
+                                                </div> col-md-3
 
-                                                                    <div class="pressCuttingsClone" id="pressCuttingsClone">
-                                                                        <input type="text"  name="pressCuttingArray" id="pressCuttingArray"/>
-                                                                    </div>
+                                                datepicker  mail-sent
+                                                <script>
+                                                    $("#dateCopiesWereSent").datepicker().on('change', function () {
+                                                        $(this).valid();  // triggers the validation test
+                                                        // '$(this)' refers to '$("#datepicker")'
+                                                    });
+                                                </script>
 
-                                                                    Date copies were sent:
-                                                                    <div class="col-md-3" >
-                                                                        <div class="form-group has-feedback">
-                                                                            <label for="copiesSent" class="control-label pull-left"><strong>Date copies were sent</strong> </label>
-                                                                            <div class="input-group pull-left" >
-                                                                                <input type="text" name="dateCopiesWereSent" id="dateCopiesWereSent" class="form-control" placeholder="DD/MM/YYYY" />    
-                                                                                <label class="input-group-addon" for="dateCopiesWereSent">
-                                                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                                                </label>
-                                                                            </div>   input-group 
-                                                                        </div>
-                                                                    </div> col-md-3
+                                            </div> panel--body
+                                        </div> panel-default
 
-                                                                    datepicker  mail-sent
-                                                                    <script>
-                                                                        $("#dateCopiesWereSent").datepicker().on('change', function () {
-                                                                            $(this).valid();  // triggers the validation test
-                                                                            // '$(this)' refers to '$("#datepicker")'
-                                                                        });
-                                                                    </script>
-
-                                                                </div> panel--body
-                                                            </div> panel-default
-
-                                                        </div>  row -->
+                                    </div>  row -->
 
                                                         <div class="row" >
 
@@ -1520,13 +1518,13 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div> <!--row-->
-                                                                            <input type="hidden" name="userID"  id="userID"  value="${userID}">
-                                                                            <input type="hidden" name="name" id="name" value="${name}">
-                                                                            <input type="hidden" name="publisherID"  id="publisherID" value="${publisherID}">
-                                                                            <input type="hidden" name="Company" id="Company"  value="${companyDetails.Company}">
-                                                                            <input type="hidden" name="publisherName"  id="publisherName"  value="${companyDetails.Company}">
-                                                                            <input type="hidden" name="ReferenceNumber" value="<%=session.getAttribute( "ReferenceNumber" )%>"/>
-                                                                            <c:set var="ReferenceNumber" scope="session" value="${ReferenceNumber}"/>
+                                                                        <input type="hidden" name="userID"  id="userID"  value="${userID}">
+                                                                        <input type="hidden" name="name" id="name" value="${name}">
+                                                                        <input type="hidden" name="publisherID"  id="publisherID" value="${publisherID}">
+                                                                        <input type="hidden" name="Company" id="Company"  value="${companyDetails.Company}">
+                                                                        <input type="hidden" name="publisherName"  id="publisherName"  value="${companyDetails.Company}">
+                                                                        <input type="hidden" name="ReferenceNumber" value="<%=session.getAttribute( "ReferenceNumber" )%>"/>
+                                                                        <c:set var="ReferenceNumber" scope="session" value="${ReferenceNumber}"/>
                                                                         <div class="row">
 
                                                                             <div class="col-md-3"   style="margin-bottom: 20px">        
@@ -1570,7 +1568,7 @@
 
                                                         <hr/>
                                                         <div class="col-md-12">
-                                                            <i class="pull-left"><strong> &nbsp; *</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.</i><br/>
+                                                            <!--<i class="pull-left"><strong> &nbsp; *</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.</i><br/>-->
                                                             <i class="pull-left">  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
                                                         </div>    
                                                     </div>  <!-- container-fluid -->
@@ -1602,6 +1600,7 @@
                     <input type="hidden" name="publisherID"  value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                     <input type="hidden" name="publisherName"    value="${companyDetails.Company}">
+                    <input type="hidden" name="username" id="username3" value="${username}">
 
                     <div class="container col-sm-12" style="margin-bottom: 40px">
                         <input type="submit" id="NewApplication" name="task"  class = "btn btn-default btn-sm" value="Start New Application" />

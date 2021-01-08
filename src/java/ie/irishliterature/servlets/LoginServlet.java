@@ -1,20 +1,19 @@
 package ie.irishliterature.servlets;
 
 import ie.irishliterature.dao.ACpublisherDAO_test;
+import ie.irishliterature.dao.UserDAO;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
-import ie.irishliterature.listener.ActiveUser;
+import ie.irishliterature.model.User;
 import ie.irishliterature.service.LoginService;
-import ie.irishliterature.util.BCrypt;
-import ie.irishliterature.util.GlobalConstants;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +21,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class LoginServlet -
@@ -48,6 +49,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet( name = "login", urlPatterns = { "/login" } )
 
 public class LoginServlet extends HttpServlet {
+
+    private static final Logger logger = LogManager.getLogger( LoginServlet.class );
 
     /**
      * Constructor
@@ -94,7 +97,7 @@ public class LoginServlet extends HttpServlet {
      * </ul>
      */
     private final LoginService service = new LoginService();
-
+//    private static final Map<ActiveUser, HttpSession> usersSessions = new HashMap<ActiveUser, HttpSession>();
     /**
      * gets the initial sessionID
      */
@@ -107,17 +110,22 @@ public class LoginServlet extends HttpServlet {
     /**
      * LoginServlet Init method
      *
+     * @param request
+     * @param response
+     *
+     * @throws java.io.IOException
      * @throws ServletException Exception handling
      */
+//    @Override
+//    public void init() throws ServletException {
+//        System.out.println("-----------------------------------------");
+//        System.out.println("LoginServlet Init method is called in "
+//                + this.getClass().getName());
+//        System.out.println("--------------------------------------");
+//    }
+    
     @Override
-    public void init() throws ServletException {
-        System.out.println( "-----------------------------------------" );
-        System.out.println( "LoginServlet Init method is called in "
-                + this.getClass().getName() );
-        System.out.println( "--------------------------------------" );
-    }
-
-    @Override
+    @SuppressWarnings( "unchecked" )
     protected void doGet( HttpServletRequest request, HttpServletResponse response )
             throws IOException, ServletException {
         request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
@@ -128,304 +136,233 @@ public class LoginServlet extends HttpServlet {
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
             throws IOException, ServletException {
 
-        HttpSession session = request.getSession();
-        boolean loginStatus;
+        System.out.println( "\n" + " ############################ LoginServlet 1 #######################################" + "\n" );
+
+        Calendar calendar = Calendar.getInstance(); // Returns instance with current date and time set
+        SimpleDateFormat formatter = new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" );
+        System.out.println( formatter.format( calendar.getTime() ) );
+
+        boolean loginStatus = false;
 
         String username = request.getParameter( "username" );
         String password = request.getParameter( "password" );
 
-        System.out.println( "username:  " + username + " password " + password );
+        System.out.println( "user who wants to login: username:  " + username + " password " + password );
 
-        System.out.println( "Init session id: " + session.getId() );
-        initJSessionID = session.getId();
+        try {
 
-        if ( session == null ) {
-            System.out.println( "-- LoginServlet creating new session in the servlet --" );
-            session = request.getSession( true );
-            System.out.println( "New session id: " + session.getId() );
-            initJSessionID = session.getId();
+            loginStatus = service.loginCheck( username, password );
         }
-        else {
-            System.out.println( "Old session id:  " + session.getId() );
-            oldJSessionID = session.getId();
+        catch ( NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex ) {
+            java.util.logging.Logger.getLogger( LoginServlet.class.getName() ).log( Level.SEVERE, null, ex );
         }
+        System.out.println( "service.loginCheck: username " + username + " password " + password );
+        System.out.println( "service.loginCheck: 1 " + loginStatus );
 
-        System.out.println( "\n  *****************************************************************************  \n" );
-        System.out.println( "user who wants to login: " + username );
-
-        Set<String> loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
-        System.out.println( "LoginServlet already loggedInUsers :1 " + loggedInUsers );
-
-        System.out.println( "LoginServlet check if loggedInUsers contains( ' + username + '  )" + loggedInUsers.contains( username ) );
-        System.out.println( " LoginServlet session.getAttribute userData  1: " + session.getAttribute( "userData" ) );
-        /**
-         * check if user is already logged in - username in Set String
-         * loggedInUsers
-         */
-        if ( loggedInUsers.contains( username ) ) {
-//            request.setAttribute( "errorMessage", "You are already logged in!!" );
-//            request.getRequestDispatcher( "/WEB-INF/views/userloggedin.jsp" ).forward( request, response );
-            /**
-             * @return "errorMessage", "You are already logged in!!" and forward
-             * to userloggedin.jsp
-             */
-            return;
-
-        }
-
-        loggedInUsers = ( Set<String> ) request.getSession().getServletContext().getAttribute( "loggedInUsers" );
-        System.out.println( "LoginServlet loggedInUsers :2 " + loggedInUsers );
-
-        System.out.println( "\n" + " ############################ LoginServlet 1 #######################################" + "\n" );
-
-        System.out.println( "Enumeration keys   " );
-        Enumeration keys = session.getAttributeNames();
-        while ( keys.hasMoreElements() ) {
-            String key = ( String ) keys.nextElement();
-            System.out.println( "key  :" + key + ": " + session.getValue( key ) );
-        }
-
-        System.out.println( "\n" + " ############################ END LoginServlet 1 #######################################" + "\n" );
-
-        password = BCrypt.hashpw( request.getParameter( "password" ), GlobalConstants.SALT );
-        System.out.println( "password: 2 " + password );
-
-        String[] replied = service.loginCheck( username, password );
-
-        boolean isValidUser = Boolean.parseBoolean( replied[0] );
-        boolean LogonPassed = Boolean.parseBoolean( replied[8] );
-
+//        Session shiroSession;// = null;
+//        Subject currentUser = SecurityUtils.getSubject();
+//
+//        shiroSession = currentUser.getSession();
+//        System.out.println("Session Id: " + shiroSession.getId());
         /**
          * User validated and logon passed
+         * -----------------------------------------------------------------------
          */
-        if ( isValidUser && LogonPassed ) {
+        if ( loginStatus ) {
 
-            loginStatus = true;
-            session = request.getSession();
+            User user = new User();
+            try {
+                user = UserDAO.selectUSER( username );
+                System.out.println( "LoginServlet user : " + user );
+            }
+            catch ( DBException ex ) {
 
-            String status = ( String ) session.getAttribute( "status" );
+//                  Logger.getLogger( LoginServlet.class.getName() ).log( Level.SEVERE, null, ex );
+                logger.error( "LoginServlet " + ex );
+                System.out.println( "LoginServlet DBException : " + ex );
+            }
+            
+            String ipAddress = request.getHeader( "X-FORWARDED-FOR" );
+           
+            if ( ipAddress == null ) {
+                ipAddress = request.getRemoteAddr();
+                System.out.println( "LoginServlet X-FORWARDED-FOR :2 " + ipAddress );
+            }else{
+                 System.out.println( "LoginServlet X-FORWARDED-FOR :1 " + ipAddress );
+            }
 
-            System.out.println( "isValidUser && LogonPassed:: status: " + status );
+            System.out.println( "LoginServlet  user.getUSERNAME()  : " + user.getUSERNAME() );
+            System.out.println( "LoginServlet  user.getUSER_ID()   : " + user.getUSER_ID() );
+            System.out.println( "LoginServlet  user.getFUNCTION()  : " + user.getFUNCTION() );
+            System.out.println( "LoginServlet  user.getFull_NAME() : " + user.getFull_NAME() );
+
+            int userID = Integer.parseInt( user.getUSER_ID() );
+            String function = user.getFUNCTION();
+            String firstname = user.getFIRST_NAME();
+            String lastname = user.getLAST_NAME();
+            String name = user.getFull_NAME();
+            String email = user.getEMAIL();
+
+            HttpSession session = request.getSession();
+            session.setAttribute( "username", username );
+            session.setAttribute( "name", name );
+            request.setAttribute( "username", username );
+            request.setAttribute( "name", name );
+            request.setAttribute( "userID", userID );
+
+            //   response.setHeader( "Cache-Control", "no-cache, no-store, must-revalidate" ); // HTTP 1.1.
+            //   response.setHeader( "Pragma", "no-cache" ); // HTTP 1.0.
+            //   response.setHeader( "Expires", "0" ); // Proxies.
+            //int timeout = 5 * 60;  // in seconds - so 5 * 60 = 5 minutes
+            int timeout = 60 * 60;  // in seconds - so 60 * 60 = 60 minutes
 
             /**
-             * if status is not null AND the user is already loggedin in the
-             * same
-             * session
+             * *** Once The Time Out Is Reached. This Line Will Automatically
+             * Refresh The Page ****
              */
-            if ( status != null && status.equals( "loggedin" ) ) {
+            response.setHeader( "Refresh", timeout + "; URL=login.jsp" );
 
-//                System.out.println( "Only ONE session allowed!! " );
-//                request.setAttribute( "errorMessage", "Only ONE session allowed!!" );
-//                request.getRequestDispatcher( "/WEB-INF/views/userloggedin.jsp" ).forward( request, response );
+            /**
+             * *** Setting The Updated Session Time Out ****
+             */
+//            session.setMaxInactiveInterval(timeout);
+            System.out.println( "LoginServlet  username " + username );
+
+            System.out.println( "Heelllllooooooooooooooooooo" );
+            logger.info( "Heelllllooooooooooooooooooo" );
+
+            /**
+             * Setting user session
+             * --------------------------------------------------------------------
+             */
+            request.setAttribute( "username", username );
+
+            /**
+             * Literature Ireland Staff
+             * --------------------------------------------------------------------
+             */
+            if ( "Literature Ireland Staff".equals( function ) ) {
+                System.out.println( "Literature Ireland Staff  " );
+                System.out.println( "LoginServlet 1 Staff: username " + username );
+                System.out.println( "LoginServlet 1 Staff: name " + name );
+
+                request.setAttribute( "username", username );
+                request.setAttribute( "name", name );
+                System.out.println( "\n" + " ############################ END LoginServlet 1 Staff  #######################################" + "\n" );
+                request.getRequestDispatcher( "/WEB-INF/views/welcome_Staff_1.jsp" ).forward( request, response );
+
             }
             else {
-                if ( loginStatus ) {
 
-                    /**
-                     * ActiveUser needed to invoke ActiveUser /
-                     * HttpSessionBindingListener /
-                     * valueBound( HttpSessionBindingEvent event )
-                     */
-                    ActiveUser userData = null;
-
-                    if ( session.getAttribute( "userData" ) != null ) {
-
-                        userData = ( ActiveUser ) session.getAttribute( "userData" );
-                        System.out.println( " LoginServlet userData: " + userData );
-                    }
-                    /**
-                     * check if this is the first logon in this session userData
-                     * == null
-                     */
-                    if ( userData == null ) {
-                        System.out.println( " LoginServlet   if ( userData == null ) " );
-                        userData = new ActiveUser();
-                        userData.setUserName( username );
-                        session.setAttribute( "userData", userData );
-                        request.setAttribute( "username", username );
-                    }
-                    else {
-                        System.out.println( " LoginServlet   if ( userData == null ) else " );
-                        userData.setUserName( username );
-                        session.setAttribute( "userData", userData );
-                        request.setAttribute( "username", username );
-                    }
-                    session.setAttribute( "status", "loggedin" );
-
-                    String role = replied[1];
-                    String function = replied[2];
-                    String firstname = replied[3];
-                    String lastname = replied[4];
-                    String name = replied[5];
-                    String email = replied[6];
-                    int userID = Integer.parseInt( replied[7] );
-
-                    request.setAttribute( "username", username );
-                    request.setAttribute( "password", password );
-                    request.setAttribute( "firstname", firstname );
-                    request.setAttribute( "lastname", lastname );
-                    request.setAttribute( "name", name );
-                    request.setAttribute( "email", email );
-                    request.setAttribute( "userID", userID );
-
-                    System.out.println( "reply " + Arrays.toString( replied ) );
-
-                    System.out.println( "Heelllllooooooooooooooooooo" );
-                    System.out.println( "role: " + role );
-                    System.out.println( "function: " + function );
-                    System.out.println( "full name: " + name );
-
-                    // Setting user session
-                    session.setAttribute( "username", username );
-                    session.setAttribute( "firstname", firstname );
-                    session.setAttribute( "lastname", lastname );
-                    session.setAttribute( "name", name );
-                    session.setAttribute( "email", email );
-                    session.setAttribute( "userID", userID );
-
-                    System.out.println( "\n" + " ############################ LoginServlet 2 #######################################" + "\n" );
-
-                    System.out.println( "Iterate Parameters" );
-
-                    Enumeration en = request.getParameterNames();
-
-                    while ( en.hasMoreElements() ) {
-                        Object objOri = en.nextElement();
-
-                        String param = ( String ) objOri;
-
-                        String value = request.getParameter( param );
-
-                        System.out.println( "Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n" );
-
-                    }
-
-                    keys = session.getAttributeNames();
-                    while ( keys.hasMoreElements() ) {
-                        String key = ( String ) keys.nextElement();
-                        System.out.println( "key  :" + key + ": " + session.getValue( key ) );
-                    }
-
-//                    session.setAttribute( "userData", userData );
-
-                    System.out.println( "\n" + " ############################ END LoginServlet 2 #######################################" + "\n" );
-
-                    if ( "Literature Ireland Staff".equals( function ) ) {
-                        System.out.println( "Literature Ireland Staff  " );
-
-                        // Setting user session
-                        session.setAttribute( "username", username );
-                        session.setAttribute( "firstname", firstname );
-                        session.setAttribute( "lastname", lastname );
-                        session.setAttribute( "name", name );
-                        session.setAttribute( "email", email );
-                        session.setAttribute( "userID", userID );
-                        request.setAttribute( "username", username );
-                        request.setAttribute( "name", name );
-
-                        request.getRequestDispatcher( "/WEB-INF/views/welcome_Staff_1.jsp" ).forward( request, response );
-
-//                        response.sendRedirect( "welcome_Staff_1.jsp" );
-                    }
-                    else {
+                /**
+                 * User belongs to Publisher
+                 * ----------------------------------------------------------------
+                 */
+                if ( "Publisher".equals( function ) ) {
+                    try {
 
                         /**
-                         * User belongs to Publisher
+                         * get publisherID for userID
                          */
-                        if ( "Publisher".equals( function ) ) {
-                            try {
+                        int publisherID = findpublisherID( userID );
+                        String publisherName = findPublisherName( publisherID );
+                        session.setAttribute( "publisherID", publisherID );
+                        session.setAttribute( "publisherName", publisherName );
+                        request.setAttribute( "publisherName", publisherName );
+                        System.out.println( "publisherName:1 " + publisherName );
+                         System.out.println( "username:1 " + username );
+                        System.out.println( "userID:1 " + userID );
 
-                                /**
-                                 * get publisherID for userID
-                                 */
-                                int publisherID = findpublisherID( userID );
-                                String publisherName = findPublisherName( publisherID );
+                        /**
+                         * if it is a New Publisher show
+                         * publisherRegistration_1.jsp
+                         * so user can fill in Publishers details
+                         */
+                        boolean isNew;
+                        isNew = ACpublisherDAO_test.isNewPublisher( publisherID );
 
-                                session.setAttribute( "publisherID", publisherID );
-                                session.setAttribute( "Company_Number", publisherID );
-                                session.setAttribute( "publisherName", publisherName );
-                                session.setAttribute( "name", name );
+                        if ( isNew == true ) {
 
-                                publisherID = ( int ) session.getAttribute( "publisherID" );
-
-                                request.getSession().setAttribute( "publisherName", publisherName );
-                                request.setAttribute( "publisherName", publisherName );
-                                request.setAttribute( "name", name );
- request.setAttribute( "username", username );
-session.setAttribute( "username", username );
-              System.out.println( "username:1 " + username );
-                                /**
-                                 * if it is a New Publisher show
-                                 * publisherRegistration_1.jsp
-                                 * so user can fill in Publishers details
-                                 */
-                                boolean isNew = false;
-                                isNew = ACpublisherDAO_test.isNewPublisher( publisherID );
-
-                                if ( isNew == true ) {
-
-                                    /**
-                                     * if new Publisher go here (Status = "new")
-                                     * here update Status to complete
-                                     */
-//                                    response.sendRedirect( "PublisherRegistration" );
-                                    request.getRequestDispatcher( "/WEB-INF/views/publisherRegistration.jsp" ).forward( request, response );
-                                }
-                                else {
-                                    /**
-                                     * else redirect to welcome_Publisher.jsp
-                                     */
-                                    System.out.println( "User belongs to Publisher: " + publisherID );
-                                    session.setAttribute( "publisherID", publisherID );
-                                    session.setAttribute( "name", name );
-                                    request.setAttribute( "name", name );
-                                    request.setAttribute( "publisherName", publisherName );
-
- request.setAttribute( "username", username );
-session.setAttribute( "username", username );
-System.out.println( "username:2 " + username );
-//                                    response.sendRedirect( "welcome_Publisher" );
-                                    request.getRequestDispatcher( "/WEB-INF/views/welcome_Publisher.jsp" ).forward( request, response );
-                                }
-
-                            }
-                            catch ( DBException ex ) {
-                                java.util.logging.Logger.getLogger( LoginServlet.class.getName() ).log( Level.SEVERE, null, ex );
-                            }
-
+                            /**
+                             * if new Publisher go here (Status = "new")
+                             * here update Status to complete
+                             */
+                            System.out.println( "\n" + " ############################ END LoginServlet 1 new publisher  #######################################" + "\n" );
+                            request.getRequestDispatcher( "/WEB-INF/views/publisherRegistration.jsp" ).forward( request, response );
                         }
                         else {
-                            /**
-                             * If Expert Reade redirect to
-                             * welcome_ExpertReader.jsp
-                             */
-                            if ( "Expert Reader".equals( function ) ) {
-                                request.setAttribute( "userID", userID );
-                                session.setAttribute( "userID", userID );
-                                request.getSession().setAttribute( "userID", userID );
- request.setAttribute( "username", username );
-session.setAttribute( "username", username );
-//                                response.sendRedirect( "welcome_ExpertReader" );
-                                request.getRequestDispatcher( "/WEB-INF/views/welcome_ExpertReader.jsp" ).forward( request, response );
 
-                            }
-                            else {
-                                request.getRequestDispatcher( "/WEB-INF/views/welcome.jsp" ).forward( request, response );
-                            }
+                            /**
+                             * else redirect to welcome_Publisher.jsp
+                             */
+                            System.out.println( "User belongs to Publisher: " + publisherID );
+
+                            /**
+                             * Session timeout
+                             * ----------------------------------------------------------------
+                             */
+//                            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//                            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//                            response.setHeader("Expires", "0"); // Proxies.
+//                            response.setHeader("Refresh", timeout + "; URL=login.jsp");
+//
+//                            String message = "Servlet Session has Timed-Out!";
+//
+//                            request.setAttribute("message", message);
+                            request.setAttribute( "publisherName", publisherName );
+                            session.setAttribute( "publisherName", publisherName );
+//                            request.setAttribute("username", username);
+//                            request.setAttribute("name", name);
+
+                            System.out.println( "username:2 " + username );
+                            System.out.println( "name:2 " + name );
+                            System.out.println( "publisherName:2 " + publisherName );
+
+                            System.out.println( "\n" + " ############################ END LoginServlet 1 existing publisher #######################################" + "\n" );
+                            request.getRequestDispatcher( "/WEB-INF/views/welcome_Publisher.jsp" ).forward( request, response );
                         }
+
+                    }
+                    catch ( DBException ex ) {
+//                        Logger.getLogger( UserDataServlet.class.getName() ).log( Level.SEVERE, null, ex );
+                        logger.error( "LoginServlet " + ex );
+                    }
+
+                }
+                else {
+                    /**
+                     * Expert Reader
+                     * ------------------------------------------------------------
+                     */
+                    if ( "Expert Reader".equals( function ) ) {
+                        request.setAttribute( "userID", userID );
+//                        session.setAttribute("userID", userID);
+//                        request.getSession().setAttribute("userID", userID);
+//                        request.setAttribute("username", username);
+//                        session.setAttribute("username", username);
+                        System.out.println( "\n" + " ############################ END LoginServlet 1 #######################################" + "\n" );
+                        request.getRequestDispatcher( "/WEB-INF/views/welcome_ExpertReader.jsp" ).forward( request, response );
+
+                    }
+                    else {
+                        System.out.println( "\n" + " ############################ END LoginServlet 1 #######################################" + "\n" );
+                        request.getRequestDispatcher( "/WEB-INF/views/login.jsp" ).forward( request, response );
                     }
                 }
             }
         }
         /**
          * User not validated or logon not passed
+         * -----------------------------------------------------------------------
          */
         else {
 
             System.out.println( "Booooooooooooooooooo" );
-            request.setAttribute( "errorMessage", "Invalid Credentials!!" );
+            System.out.println( "\n" + " ############################ END LoginServlet 1 #######################################" + "\n" );
+            request.setAttribute( "message", "Invalid Credentials!!" );
             request.getRequestDispatcher( "/WEB-INF/views/login_error.jsp" ).forward( request, response );
         }
+
     }
 
     public static int findpublisherID( int userID ) throws DBException {
@@ -488,4 +425,5 @@ session.setAttribute( "username", username );
 
         return publisherName;
     }
+
 }

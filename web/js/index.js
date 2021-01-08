@@ -12,14 +12,14 @@
 //
 if (!sessionStorage.getItem('logged')) {
     console.log("sessionStorage.getItem('logged')");
-//     window.location.replace = "http://literatureirelandgrantapplication.com:8080/ILGAS/Logout";
+//     window.location.replace = "https://www.literatureirelandgrantapplication.com/ILGAS/Logout";
 
-//     var url = "http://literatureirelandgrantapplication.com:8080/ILGAS/Logout";
+//     var url = "https://www.literatureirelandgrantapplication.com/ILGAS/Logout";
 //     $(location).attr('href',url);
 
     var xmlhttp;
 //                        var uname = document.getElementById("uname").value;
-    var urls = "http://literatureirelandgrantapplication.com:8080/ILGAS/Logout";
+    var urls = "https://www.literatureirelandgrantapplication.com/Logout";
     console.log("redirect xmlhttp " + urls);
     if (window.XMLHttpRequest)
     {

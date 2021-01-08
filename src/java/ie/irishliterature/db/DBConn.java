@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
-
 /**
  * @author srinivas This file is to create Connections and Closing connections
  * and statements.
@@ -16,6 +15,7 @@ import org.apache.log4j.Logger;
 public class DBConn {
 
     private static final Logger LOGGER = Logger.getLogger( DBConn.class.getName() );
+    
     Connection con = null;
 
     /**
@@ -25,11 +25,12 @@ public class DBConn {
      */
     public static Connection getConnection() throws ClassNotFoundException, SQLException
     {
-        Class.forName( "com.mysql.jdbc.Driver" );
+//        Class.forName( "com.mysql.cj.jdbc.MysqlDataSource" );
+         Class.forName( Setup.JDBC_DRIVER );
         Connection connection = null;
         connection = DriverManager.getConnection(
                 Setup.DB_URL, Setup.DB_USERNAME, Setup.DB_PASSWORD );
-//         System.out.println("Your JDBC URL is as follows:" + Setup.DB_URL);
+//         System.out.println("DBConn getConnection :: Your JDBC URL is as follows:" + Setup.DB_URL);
          
         return connection;
     }

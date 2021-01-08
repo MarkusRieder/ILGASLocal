@@ -4,7 +4,8 @@
 $("document").ready(function () {
 
     // name validation
-    var nameregex = new XRegExp('^[\\p{L}\\p{Nd} _-]+$');
+//    var nameregex = new XRegExp('^[\\p{L}\\p{Nd} _-]+$');
+    var nameregex = new XRegExp("^[\\p{L}\\p{Nd} .'_-]+$");
     $.validator.addMethod("validname", function (value, element) {
         return this.optional(element) || nameregex.test(value);
     });
@@ -16,7 +17,16 @@ $("document").ready(function () {
     });
 
     $("#register-form").validate({
-
+        /*
+         * validate on onkeyup
+         * 
+         * @param {type} element
+         * @param {type} event
+         * @returns {undefined}
+         */
+        onkeyup: function (element) {
+            this.element(element);  // <- "eager validation"
+        },
         rules:
                 {
                     username: {
@@ -39,13 +49,17 @@ $("document").ready(function () {
                         validemail: true
                     },
                     password: {
-                        required: true,
                         minlength: 8,
                         maxlength: 15
                     },
                     cpassword: {
-                        required: true,
+                        minlength: 8,
                         equalTo: "#password"
+                    },
+                    company: {
+                        required: true,
+                        validname: true,
+                        minlength: 2
                     }
                 },
         messages:
@@ -69,13 +83,18 @@ $("document").ready(function () {
                         required: "Please Enter Email Address",
                         validemail: "Enter Valid Email Address"
                     },
+                    company: {
+                        required: "Please Enter Company Name",
+                        validname: "Company Name must contain only letters, numbers and spaces",
+                        minlength: "Your Name is Too Short"
+                    },
                     password: {
                         required: "Please Enter Password",
-                        minlength: "Password at least have 8 characters"
+                        minlength: "Password should have at least have 8 characters"
                     },
                     cpassword: {
                         required: "Please Retype your Password",
-                        equalTo: "Password do NOT Match !"
+                        equalTo: "Passwords do NOT Match !"
                     }
                 },
         errorPlacement: function (error, element) {
@@ -93,34 +112,6 @@ $("document").ready(function () {
 
             alert('Your request has been submitted ...');
             form.submit();
-            //var url = $('#register-form').attr('action');
-            //location.href=url;
-
         }
-
-        /*submitHandler: function() 
-         { 
-         alert("Submitted!");
-         $("#register-form").resetForm(); 
-         }*/
-
     });
-
-
-    /*function submitForm(){
-     
-     
-     /*$('#message').slideDown(200, function(){
-     
-     $('#message').delay(3000).slideUp(100);
-     $("#register-form")[0].reset();
-     $(element).closest('.form-group').find("error").removeClass("has-success");
-     
-     });
-     
-     alert('form submitted...');
-     $("#register-form").resetForm();
-     
-     }*/
-
 });

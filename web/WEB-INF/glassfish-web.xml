@@ -2,7 +2,6 @@
 <!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
 <glassfish-web-app error-url="">
   <keep-state>true</keep-state>
-  <context-root>/ILGAS</context-root>
   <resource-ref>
     <res-ref-name>jdbc/ILGAS</res-ref-name>
     <jndi-name>jdbc/ILGAS</jndi-name>
@@ -15,7 +14,7 @@
   </jsp-config>
   <session-config>
     <session-properties>
-      <property name="timeoutSeconds" value="60"/>
+      <property name="timeoutSeconds" value="3600"/>
       <property name="enableCookies" value="false"/>
     </session-properties>
   </session-config>

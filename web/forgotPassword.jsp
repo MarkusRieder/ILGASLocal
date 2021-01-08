@@ -36,28 +36,30 @@
 
         <!--<link rel="stylesheet" type="text/css" href="css/mobile.css">-->
 
-        <style>
-            .form-horizontal .control-label {
-                margin-bottom: 5px;
-            }
-            .form-horizontal .form-group {
-                margin-bottom: 5px;
-                margin-left:0px;
-                margin-right:0px;
-            }
-            body {
-                background-color:#f4f4f4;
-            }
-        </style>
+        <!--        <style>
+                    .form-horizontal .control-label {
+                        margin-bottom: 5px;
+                    }
+                    .form-horizontal .form-group {
+                        margin-bottom: 5px;
+                        margin-left:0px;
+                        margin-right:0px;
+                    }
+                    body {
+                        background-color:#f4f4f4;
+                    }
+                </style>-->
 
         <!-- Load jQuery and the validate plugin -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" async=""></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" async=""></script>
-        <script src="js/bootstrap.js" type="text/javascript" async=""></script>
-        <script src="js/register.js"  type="text/javascript" async=""></script>
-        <script src="js/bootstrap-select.min.js" type="text/javascript" async=""></script>
-        <script src="js/validator.js" type="text/javascript" async=""></script>
-        <script src="js/my-block-ui.js" type="text/javascript" async=""></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+        <script src="js/bootstrap.js" type="text/javascript"></script>
+        <script src="js/xregexp-all.js"></script> 
+        <script src="js/register.js"  type="text/javascript"></script>
+        <script src="js/bootstrap-select.min.js" type="text/javascript"></script>
+        <script src="js/validator.js" type="text/javascript"></script>
+        <script src="js/my-block-ui.js" type="text/javascript"></script>
 
         <script src="js/bootstrap.min.js"></script>
         <script src="js/validator.min.js"></script>
@@ -113,7 +115,7 @@
                     };
                 </script>-->
 
-        <script>
+<!--        <script>
             $(function () {
                 $('#formForgotPassword').validator().on('submit', function (e) {
                     if (e.isDefaultPrevented()) {
@@ -121,8 +123,10 @@
                     } else {
                         blockUi();
                         // everything looks good!
-                        $.post("ForgotPassword", $("#formForgotPassword").serialize(), function (data) {
+                        $.post("ForgotPassword", $("#formForgotPassword").serialize(), function (data) {                            
                             var jdata = JSON.parse(data);
+                            console.log(" jdata ");
+                            console.log(jdata);
                             if (jdata.code === -1) {
                                 $("#errorField .message").text(jdata.message);
                                 $("#errorField").show();
@@ -140,7 +144,7 @@
                     return false;
                 });
             });
-        </script>
+        </script>-->
     </head>
 
 
@@ -161,9 +165,10 @@
                 </div><!-- End of topbar div -->
 
                 <div class="container-fluid"> 
+
                     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
                         <!--<div style="max-width:500px;padding:10px 20px;margin:auto;margin-top:calc(50vh - 220px);">-->
-                        <h3 style="text-align:center">Forgot Password</h3>
+                         <h3 style="text-align:center">Forgot/Change Password</h3>
                         <div class="alert alert-danger" role="alert" id="errorField" style="display:none">
                             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                             <span class="sr-only">Error:</span>
@@ -174,10 +179,26 @@
                             <span class="sr-only">Success:</span>
                             <span class="message"></span>
                         </div>
-                        <form class="form-horizontal" id="formForgotPassword" data-toggle="validator" method="Post" role="form" action="${pageContext.request.contextPath}/ForgotPassword" >
+
+                        <form class="form-horizontal" 
+                              id="formForgotPassword" 
+                              data-toggle="validator" 
+                              method="Post" 
+                              role="form" 
+                              action="${pageContext.request.contextPath}/ForgotPassword" 
+                              >
+
                             <div class="form-group">
                                 <label for="inputEmail" class="control-label">Email</label>
-                                <input name="inputEmail" type="email" class="form-control" id="inputEmail" placeholder="Enter Email" data-error="Enter valid Email" required>
+                                <input name="inputEmail" 
+                                       type="email" 
+                                       class="form-control" 
+                                       id="inputEmail" 
+                                       placeholder="Enter Email" 
+                                       data-error="Enter valid Email" 
+                                       required
+                                       >
+
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group">
@@ -185,12 +206,7 @@
                                 <div style="margin-bottom: 100px;"> </div>
                             </div>
                         </form>
-                        <div id="blockUiDiv">
-                            <img src="images/gears.svg"  alt="spinner"/>
 
-                        </div>
-                        <div id="blockUiBackdrop">
-                        </div>
                     </div>
 
                 </div> <!-- /container-fluid -->
@@ -217,12 +233,12 @@
                         <a href="http://www.artscouncil.ie" target="_blank"><span class="hidden">The Arts Council</span></a>
                         <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>
                     </div>
-
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
                 </div><!-- end of Base div -->
 
-                <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                    &copy; 2017-2020 mgr Software
-                </div>
+
 
             </div><!-- end of container div -->
 

@@ -23,7 +23,7 @@ public class TranslatorTracker {
 
     private ArrayList<String> authorName;
 
-    private ArrayList<String> yuppydoo;
+//    private ArrayList<String> yuppydoo;
 
     /**
      * @return the translatorID

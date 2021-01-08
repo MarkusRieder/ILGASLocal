@@ -1,8 +1,8 @@
 package ie.irishliterature.dao;
 
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
-import static ie.irishliterature.dao.Test1DAO.getPreviousGrantAid;
-import static ie.irishliterature.dao.Test1DAO.getTitles;
+import static ie.irishliterature.dao.EntryDbDAO.getPreviousGrantAid;
+import static ie.irishliterature.dao.EntryDbDAO.getTitles;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
@@ -80,7 +80,7 @@ public class pendingApplicationDAO {
                 application.setReferenceNumber( ReferenceNumber );
                 application.setCompany( res.getString( "company" ) );
                 application.setPublisherID( res.getInt( "publisherID" ) );
-                application.setUserID( res.getString( "userID" ) );
+                application.setUserID( res.getInt( "userID" ) );
 
                 String[] bookTitle = getBookTitle( ReferenceNumber );
 
@@ -255,7 +255,7 @@ public class pendingApplicationDAO {
                     System.out.println( "openApplicationDAO  companyCountry " + companyCountry );
                     application.setCompanyCountry( companyCountry );
                     application.setPublisherID( res.getInt( "publisherID" ) );
-                    application.setUserID( res.getString( "userID" ) );
+                    application.setUserID( res.getInt( "userID" ) );
 
                     application.setBoardMeeting( res.getDate( "boardMeeting" ) );
                     application.setContractSentToPublisher( res.getDate( "contractSentToPublisher" ) );
@@ -1952,7 +1952,7 @@ public class pendingApplicationDAO {
                     String fullPath = FilenameUtils.getFullPath( fileName );
                     String extension = FilenameUtils.getExtension( fileName );
 
-                    pressCoverageArray[0] = "http://www.literatureirelandgrantapplication.com:8080" + fileName;
+                    pressCoverageArray[0] = "https://www.literatureirelandgrantapplication.com" + fileName;
                     pressCoverageArray[1] = res.getString( 2 ).trim();
                     System.out.println( " !Thumbs res.getString(1)   " + res.getString( 1 ) );
                     System.out.println( " !Thumbs  res.getString(2)  " + res.getString( 2 ) );
@@ -1966,7 +1966,7 @@ public class pendingApplicationDAO {
                         System.out.println( " thumbFilename   " + thumbFilename );
                         System.out.println( " thumbFullPath   " + thumbFullPath );
 
-                        pressCoverageArray[2] = "http://www.literatureirelandgrantapplication.com:8080" + thumbFullPath;
+                        pressCoverageArray[2] = "https://www.literatureirelandgrantapplication.com" + thumbFullPath;
                         pressCoverageArray[3] = thumbFilename;
 
                     }

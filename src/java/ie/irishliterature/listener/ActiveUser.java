@@ -2,6 +2,7 @@ package ie.irishliterature.listener;
 
 import java.util.Enumeration;
 import java.util.Set;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
@@ -60,7 +61,9 @@ public class ActiveUser implements HttpSessionBindingListener {
         Set<String> loggedInUsers = ( Set<String> ) event.getSession().getServletContext().getAttribute( "loggedInUsers" );
         System.out.println( "ActiveUser valueBound ( Set<String> ) event: " + event.getSession().getServletContext().getAttribute( "loggedInUsers" ) );
         System.out.println( "ActiveUser valueBound  user.getUserName(): " + user.getUserName() );
+         HttpSession session = event.getSession();
         loggedInUsers.add( ( user.getUserName() ) );
+           session.setAttribute("users", loggedInUsers);
         System.out.println( "ActiveUser valueBound loggedInUsers: " + loggedInUsers );
 //        }
         System.out.println( "\n" + " ############################ END ActiveUser 1 #######################################" + "\n" );
@@ -110,9 +113,10 @@ public class ActiveUser implements HttpSessionBindingListener {
 
         Set<String> loggedInUsers = ( Set<String> ) event.getSession().getServletContext().getAttribute( "loggedInUsers" );
         System.out.println( "ActiveUser valueUnbound loggedInUsers BEFORE loggedInUsers.remove: " + loggedInUsers );
-        
+         HttpSession session = event.getSession();
         if ( event.getValue() != null ) {
             loggedInUsers.remove( user.getUserName() );
+               session.setAttribute("users", loggedInUsers);
         }
 
         loggedInUsers = ( Set<String> ) event.getSession().getServletContext().getAttribute( "loggedInUsers" );

@@ -19,7 +19,7 @@ public class GrantApplication {
 
     private int publisherID;
 
-    private String userID;
+    private int userID;
 
     private String bookTitle;
 
@@ -156,6 +156,10 @@ public class GrantApplication {
 
     private String AuthorName;
 
+    private String AuthorFirstName;
+
+    private String AuthorLastName;
+
     private ArrayList<String> Author;
 
     private int idTranslator;
@@ -199,8 +203,12 @@ public class GrantApplication {
     private java.sql.Timestamp Created;
 
     private ArrayList<String> rightsHolderArray;
-    
-     private String gender;
+
+    private String gender;
+
+    private int SendPaidEmailtoPublisher;
+
+    private int SendApproveRejectEmailtoPublisher;
 
     /**
      * @return the ApplicationNumber
@@ -259,6 +267,20 @@ public class GrantApplication {
     }
 
     /**
+     * @return the companyCountry
+     */
+    public String getCompanyCountry() {
+        return companyCountry;
+    }
+
+    /**
+     * @param companyCountry the companyCountry to set
+     */
+    public void setCompanyCountry( String companyCountry ) {
+        this.companyCountry = companyCountry;
+    }
+
+    /**
      * @return the publisherID
      */
     public int getPublisherID() {
@@ -275,14 +297,14 @@ public class GrantApplication {
     /**
      * @return the userID
      */
-    public String getUserID() {
+    public int getUserID() {
         return userID;
     }
 
     /**
      * @param userID the userID to set
      */
-    public void setUserID( String userID ) {
+    public void setUserID( int userID ) {
         this.userID = userID;
     }
 
@@ -630,8 +652,7 @@ public class GrantApplication {
     }
 
     /**
-     * @param proofOfPaymentToTranslatorName the proofOfPaymentToTranslatorName
-     *                                       to set
+     * @param proofOfPaymentToTranslatorName the proofOfPaymentToTranslatorName to set
      */
     public void setProofOfPaymentToTranslatorName( String proofOfPaymentToTranslatorName ) {
         this.proofOfPaymentToTranslatorName = proofOfPaymentToTranslatorName;
@@ -1023,8 +1044,7 @@ public class GrantApplication {
     }
 
     /**
-     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName
-     *                                       to set
+     * @param copiesTranslationSampleDocName the copiesTranslationSampleDocName to set
      */
     public void setCopiesTranslationSampleDocName( String copiesTranslationSampleDocName ) {
         this.copiesTranslationSampleDocName = copiesTranslationSampleDocName;
@@ -1196,6 +1216,34 @@ public class GrantApplication {
      */
     public void setAuthorName( String AuthorName ) {
         this.AuthorName = AuthorName;
+    }
+
+    /**
+     * @return the AuthorFirstName
+     */
+    public String getAuthorFirstName() {
+        return AuthorFirstName;
+    }
+
+    /**
+     * @param AuthorFirstName the AuthorFirstName to set
+     */
+    public void setAuthorFirstName( String AuthorFirstName ) {
+        this.AuthorFirstName = AuthorFirstName;
+    }
+
+    /**
+     * @return the AuthorLastName
+     */
+    public String getAuthorLastName() {
+        return AuthorLastName;
+    }
+
+    /**
+     * @param AuthorLastName the AuthorLastName to set
+     */
+    public void setAuthorLastName( String AuthorLastName ) {
+        this.AuthorLastName = AuthorLastName;
     }
 
     /**
@@ -1507,20 +1555,6 @@ public class GrantApplication {
     }
 
     /**
-     * @return the companyCountry
-     */
-    public String getCompanyCountry() {
-        return companyCountry;
-    }
-
-    /**
-     * @param companyCountry the companyCountry to set
-     */
-    public void setCompanyCountry( String companyCountry ) {
-        this.companyCountry = companyCountry;
-    }
-
-    /**
      * @return the gender
      */
     public String getGender() {
@@ -1532,6 +1566,72 @@ public class GrantApplication {
      */
     public void setGender( String gender ) {
         this.gender = gender;
+    }
+
+    /**
+     * @return the SendPaidEmailtoPublisher
+     */
+    public int getSendPaidEmailtoPublisher() {
+        return SendPaidEmailtoPublisher;
+    }
+
+    /**
+     * @param SendPaidEmailtoPublisher the SendPaidEmailtoPublisher to set
+     */
+    public void setSendPaidEmailtoPublisher( int SendPaidEmailtoPublisher ) {
+        this.SendPaidEmailtoPublisher = SendPaidEmailtoPublisher;
+    }
+
+    /**
+     * @return the SendApproveRejectEmailtoPublisher
+     */
+    public int getSendApproveRejectEmailtoPublisher() {
+        return SendApproveRejectEmailtoPublisher;
+    }
+
+    /**
+     * @param SendApproveRejectEmailtoPublisher the SendApproveRejectEmailtoPublisher to set
+     */
+    public void setSendApproveRejectEmailtoPublisher( int SendApproveRejectEmailtoPublisher ) {
+        this.SendApproveRejectEmailtoPublisher = SendApproveRejectEmailtoPublisher;
+    }
+
+   
+    @Override
+    public String toString() {
+        return "GrantApplication{" + "ApplicationNumber=" + ApplicationNumber + ", ApplicationYear=" + ApplicationYear + ", ReferenceNumber=" 
+                + ReferenceNumber + ", company=" + company + ", companyCountry=" + companyCountry + ", publisherID=" + publisherID + ", userID=" 
+                + userID + ", bookTitle=" + bookTitle + ", agreement=" + agreement + ", agreementDocName=" + agreementDocName + ", contract=" 
+                + contract + ", contractDocName=" + contractDocName + ", rightsAgreement=" + rightsAgreement + ", proposedDateOfPublication=" 
+                + proposedDateOfPublication + ", publicationYear=" + publicationYear + ", originalPageExtent=" + originalPageExtent 
+                + ", originalLanguage=" + originalLanguage + ", countryOfPublication=" + countryOfPublication + ", boardMeeting=" + boardMeeting 
+                + ", amountRequested=" + amountRequested + ", amountApproved=" + amountApproved + ", publisherInformedOfMeeting=" 
+                + publisherInformedOfMeeting + ", boardComments_Instructions=" + boardComments_Instructions + ", contractSentToPublisher=" 
+                + contractSentToPublisher + ", acknowledgementApproved=" + acknowledgementApproved + ", datePublishedBooksReceived=" 
+                + datePublishedBooksReceived + ", datePaymentMadeToPublisher=" + datePaymentMadeToPublisher + ", paymentReferenceNumber=" 
+                + paymentReferenceNumber + ", addendumRightsAgreement=" + addendumRightsAgreement + ", addendumRightsAgreementName=" 
+                + addendumRightsAgreementName + ", proofOfPaymentToTranslator=" + proofOfPaymentToTranslator + ", proofOfPaymentToTranslatorName=" 
+                + proofOfPaymentToTranslatorName + ", bankDetailsForm=" + bankDetailsForm + ", bankDetailsFormName=" + bankDetailsFormName 
+                + ", SignedLIContract=" + SignedLIContract + ", SignedLIContractName=" + SignedLIContractName + ", paymentStatus=" + paymentStatus 
+                + ", previousGrantAid=" + previousGrantAid + ", award=" + award + ", bilingual_edition=" + bilingual_edition + ", salesFigures=" 
+                + salesFigures + ", proposedPrintRun=" + proposedPrintRun + ", plannedPageExtent=" + plannedPageExtent + ", translatorCV=" 
+                + translatorCV + ", translatorCVDocName=" + translatorCVDocName + ", original=" + original + ", originalName=" + originalName 
+                + ", numberOfPages=" + numberOfPages + ", breakDownTranslatorFee=" + breakDownTranslatorFee + ", translatorFee=" + translatorFee 
+                + ", bookNotes=" + bookNotes + ", notesAboutApplication=" + notesAboutApplication + ", translatorNotes=" + translatorNotes + ", Status=" 
+                + Status + ", approveWithdrawnReject=" + approveWithdrawnReject + ", directorChairDecision=" + directorChairDecision + ", copiesSent=" 
+                + copiesSent + ", dateCopiesWereSent=" + dateCopiesWereSent + ", copiesTranslationSample=" + copiesTranslationSample 
+                + ", copiesTranslationSampleDocName=" + copiesTranslationSampleDocName + ", TC_ACCEPTED=" + TC_ACCEPTED + ", gdprACCEPTED=" 
+                + gdprACCEPTED + ", APPROVED=" + APPROVED + ", cover=" + cover + ", coverName=" + coverName + ", genre=" + genre + ", TranslatorName=" 
+                + TranslatorName + ", TranslatorTrack=" + TranslatorTrack + ", TranslatorTrack2=" + TranslatorTrack2 + ", translatorTitles=" 
+                + translatorTitles + ", translationTitle=" + translationTitle + ", AuthorName=" + AuthorName + ", AuthorFirstName=" + AuthorFirstName 
+                + ", AuthorLastName=" + AuthorLastName + ", Author=" + Author + ", idTranslator=" + idTranslator + ", Titles=" + Titles 
+                + ", foreignPublisher=" + foreignPublisher + ", foreignCountry=" + foreignCountry + ", targetLanguage=" + targetLanguage 
+                + ", Languages=" + Languages + ", Series=" + Series + ", expertReaderName=" + expertReaderName + ", sampleSentOut=" + sampleSentOut 
+                + ", sampleReturned=" + sampleReturned + ", readerReport=" + readerReport + ", readerReportSummary=" + readerReportSummary 
+                + ", expertReaderList=" + expertReaderList + ", unassignedExpertReaderList=" + unassignedExpertReaderList + ", transList=" + transList 
+                + ", ISBN=" + ISBN + ", ISSN=" + ISSN + ", pressCoverage=" + pressCoverage + ", LASTUPDATED=" + LASTUPDATED + ", Created=" + Created 
+                + ", rightsHolderArray=" + rightsHolderArray + ", gender=" + gender + ", SendPaidEmailtoPublisher=" + SendPaidEmailtoPublisher 
+                + ", SendApproveRejectEmailtoPublisher=" + SendApproveRejectEmailtoPublisher + '}';
     }
 
 }

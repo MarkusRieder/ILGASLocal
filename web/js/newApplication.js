@@ -75,7 +75,7 @@ $(function () {
         },
         select: function (event, ui) { // What happens when an autocomplete result is selected
             $("#publisher").val(ui.item.name);
-            conslole.log("publisher :: ", ui.item.name);
+            console.log("publisher :: ", ui.item.name);
             $('#Company_Number').val(ui.item.id);
             $('#Address1').val(ui.item.Address1);
             $('#Address2').val(ui.item.Address2);
@@ -528,8 +528,8 @@ function  copyFirstTranslatorName() {
         //function retrieve(){
         document.getElementById("torget").innerHTML = localStorage.getItem("translatorContent");
         console.log("backToTranslators localStorage.translatorContent ", localStorage.translatorContent.length);
-        for (i = 0; i < translatorContent.length; i++) {
-            console.log("restored translatorContent " + translatorContent);
+        for (i = 0; i < localStorage.translatorContent.length; i++) {
+            console.log("restored translatorContent " + localStorage.translatorContent);
         }
     }
 
@@ -566,8 +566,8 @@ function  copyFirstRightsHolderName() {
         //function retrieve(){
         document.getElementById("rightsAgreementContracts").innerHTML = localStorage.getItem("rightsAgreementContent");
         console.log("copyFirstRightsHolderName localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
-        for (i = 0; i < translatorContent.length; i++) {
-            console.log("restored rightsAgreementContent " + rightsAgreementContent);
+        for (i = 0; i < localStorage.translatorContent.length; i++) {
+            console.log("restored rightsAgreementContent " + localStorage.rightsAgreementContent);
         }
     }
 
@@ -692,8 +692,8 @@ function  generateTranslatorTab(indicator) {
     }
 
     //show translatorTabs if hidden
-    if ($(translatorTabs).css('display') === 'none' || $(translatorTabs).css("visibility") === "hidden") {
-        $(translatorTabs).show();
+    if ($('#translatorTabs').css('display') === 'none' || $('#translatorTabs').css("visibility") === "hidden") {
+        $('#translatorTabs#').show();
     }
 
     $(rightsAgreementContractsNavContent).appendTo('#tnc');
@@ -721,7 +721,7 @@ function backToRightsAgreement() {
     console.log("backToRightsAgreement localStorage.rightsAgreementContent ", localStorage.rightsAgreementContent.length);
     if (!localStorage.rightsAgreementContent === 0) {
         console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent);
-        for (i = 0; i < translatorContent.length; i++) {
+        for (i = 0; i < localStorage.translatorContent.length; i++) {
             console.log("backToRightsAgreement rightsAgreementContent " + rightsAgreementContent[i]);
         }
 //                    alert("backToTranslators false");
@@ -1077,11 +1077,11 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#translatorName").change(function () {
         if ($('#translatorName').val() === '') {
-            $(uploadDocuments).hide();
+            $('#uploadDocuments').hide();
             translatorArray = []; // clear translatorArray
             $('#tnc').empty(); // empty the div 
             $('#tn').empty();  // empty the div 
-            $(translatorTabs).hide(); // close div
+            $('#translatorTabs').hide(); // close div
             $('#translatorName').trigger('click');
             console.log(translatorArray);
         }
@@ -1093,8 +1093,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#translatorName").keyup(function () {
         //show translatorTabs if hidden
-        if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
-            $(uploadDocuments).show();
+        if ($('#uploadDocuments').css('display') === 'none' || $('#uploadDocuments').css("visibility") === "hidden") {
+            $('#uploadDocuments').show();
         }
         var dInput = $(this).val();
         console.log(dInput);
@@ -1109,8 +1109,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#translatorName").on("paste", function () {
         //show translatorTabs if hidden
-        if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
-            $(uploadDocuments).show();
+        if ($('#uploadDocuments').css('display') === 'none' || $('#uploadDocuments').css("visibility") === "hidden") {
+            $('#uploadDocuments').show();
         }
         var dInput = $(this).val();
         console.log(dInput);
@@ -1127,9 +1127,9 @@ $(document).ready(function () {
     $("#translatorName").mouseup(function () {
         if ($('#translatorName').val() !== '') {
             //show translatorTabs if hidden
-            if ($(uploadDocuments).css('display') === 'none' || $(uploadDocuments).css("visibility") === "hidden") {
-                $(uploadDocuments).show();
-            }
+        if ($('#uploadDocuments').css('display') === 'none' || $('#uploadDocuments').css("visibility") === "hidden") {
+            $('#uploadDocuments').show();
+        }
             var dInput = $(this).val();
             console.log(dInput);
             $('#uploadDocuments').html("upload documents for <br/>" + $(this).val() + " ");
@@ -1152,11 +1152,11 @@ $(document).ready(function () {
         $(this).siblings('input[type="text"]').val('')
                 .trigger('propertychange').focus();
         if ($('#translatorName').val() === '') {
-            $(uploadDocuments).hide();
+            $('#uploadDocuments').hide();
             translatorArray = []; // clear translatorArray
             $('#tnc').empty(); // empty the div 
             $('#tn').empty();  // empty the div 
-            $(translatorTabs).hide(); // close div
+            $('#translatorTabs').hide(); // close div
             $('#addTranslatorModala').text("Add more translators"); // reset text
             $('#translatorName').trigger('click');
             console.log(translatorArray);

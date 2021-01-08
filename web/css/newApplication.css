@@ -350,5 +350,11 @@ header h1{
     line-height: inherit;
 }
 
+.required-field:after {
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 3px;   
+}
 
 

@@ -71,6 +71,7 @@ public class DataTableApplications {
 
     public void setAaData( List<GrantApplication> aaData )
     {
+         System.out.println( "setAaData: " );
         this.aaData = aaData;
     }
 }

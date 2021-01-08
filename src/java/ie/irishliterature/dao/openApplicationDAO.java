@@ -1,6 +1,6 @@
 package ie.irishliterature.dao;
 
-import static ie.irishliterature.dao.Test1DAO.getTitles;
+import static ie.irishliterature.dao.EntryDbDAO.getTitles;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
@@ -10,12 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.logging.Level;
 import org.apache.commons.io.FilenameUtils;
@@ -27,8 +29,8 @@ public class openApplicationDAO {
 
     private static ArrayList<String> titleList = new ArrayList<>();
 
-    @SuppressWarnings( "unchecked" )
-    public static List<GrantApplication> getAllApplicationsPublisher( String publisherID ) throws ClassNotFoundException, DBException, ParseException {
+    @SuppressWarnings("unchecked")
+    public static List<GrantApplication> getAllApplicationsPublisher( int publisherID ) throws ClassNotFoundException, DBException, ParseException {
 
         System.out.println( "ReferenceNumber openApplicationDAO  getAllApplicationsPublisher  " + publisherID );
         List<GrantApplication> GrantApplicationData = null;
@@ -43,7 +45,7 @@ public class openApplicationDAO {
             ArrayList<String> translatorTrackId; // contains array with translator id's
             ArrayList<String> authorList = new ArrayList<>();
             ArrayList<String> translatorNamesList = new ArrayList<>();
-            ArrayList<String> singleTranslatorTrackList = new ArrayList<>();
+            List<String> singleTranslatorTrackList = new ArrayList<>();
             List<List<String>> translatorTrackList = new ArrayList<>();
             List<List<String>> listOfTranslatorArray;
             List<List<String>> rightsAgreementArray;
@@ -66,6 +68,7 @@ public class openApplicationDAO {
                     GrantApplication application = new GrantApplication();
 
                     String ReferenceNumber = res.getString( "ReferenceNumber" );
+                     System.out.println( "ReferenceNumber openApplicationDAO 123 ReferenceNumber  " + ReferenceNumber );
                     application.setApplicationNumber( res.getInt( "ApplicationNumber" ) );
                     application.setApplicationYear( res.getString( "ApplicationYear" ) );
                     application.setReferenceNumber( ReferenceNumber );
@@ -77,7 +80,7 @@ public class openApplicationDAO {
                     application.setCompanyCountry( companyCountry );
 
                     application.setPublisherID( res.getInt( "publisherID" ) );
-                    application.setUserID( res.getString( "userID" ) );
+                    application.setUserID( res.getInt( "userID" ) );
 
                     application.setBoardMeeting( res.getDate( "boardMeeting" ) );
                     application.setContractSentToPublisher( res.getDate( "contractSentToPublisher" ) );
@@ -91,9 +94,10 @@ public class openApplicationDAO {
                     application.setDirectorChairDecision( res.getInt( "directorChairDecision" ) );
 
                     String[] bookTitle = getBookTitle( ReferenceNumber );
-                    System.out.println( "bookTitle:  " + bookTitle[0] );
-
-                    application.setBookTitle( bookTitle[0] );
+                    System.out.println( "bookTitle:  " + bookTitle[ 0 ] );
+                    application.setNotesAboutApplication( getBookNotesApplication( ReferenceNumber ) );
+                    System.out.println( "openApplicationDAO setNotesAboutApplication " + getBookNotesApplication( ReferenceNumber ) );
+                    application.setBookTitle( bookTitle[ 0 ] );
 
 //                    ArrayList<String[]> documentListing = new ArrayList<>();
 //
@@ -122,7 +126,7 @@ public class openApplicationDAO {
                     String[] t = res.getString( "publicationYear" ).split( "-" );
                     System.out.println( "t.length:  " + t.length );
                     for ( int g = 0; g < t.length; g++ ) {
-                        System.out.println( "setPublicationYear: [" + g + "] " + t[g] );
+                        System.out.println( "setPublicationYear: [" + g + "] " + t[ g ] );
                     }
 
 ////                    Info:   setPublicationYear:  2018-09-25 00:00:00.0
@@ -147,8 +151,7 @@ public class openApplicationDAO {
 //                                        // Convert input string into a date
 //                    DateFormat inputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 //                    Date date2 = inputFormat1.parse(text);
-                    application.setDateCopiesWereSent( res.getDate( "dateCopiesWereSent" ) );
-
+//                    application.setDateCopiesWereSent( res.getDate( "dateCopiesWereSent" ) );
                     application.setCopiesTranslationSample( res.getString( "copiesTranslationSample" ) );
                     application.setCopiesTranslationSampleDocName( res.getString( "copiesTranslationSampleDocName" ) );
                     application.setTC_ACCEPTED( res.getInt( "TC_ACCEPTED" ) );
@@ -175,8 +178,8 @@ public class openApplicationDAO {
                     application.setAmountRequested( res.getBigDecimal( "amountRequested" ) );
                     application.setAward( res.getInt( "award" ) );
                     application.setSalesFigures( res.getInt( "salesFigures" ) );
-                    application.setPreviousGrantAid( getPreviousGrantAid( ReferenceNumber ) );
-                    application.setGenre( bookTitle[1] );
+                    application.setPreviousGrantAid( getPreviousGrantAid( publisherID ) );
+                    application.setGenre( bookTitle[ 1 ] );
                     application.setBoardComments_Instructions( res.getString( "boardComments_Instructions" ) );
                     application.setApproveWithdrawnReject( res.getString( "approveWithdrawnReject" ) );
                     System.out.println( "setApproveWithdrawnReject  " );
@@ -211,6 +214,7 @@ public class openApplicationDAO {
                     listOfTranslatorArray.add( translatorDocsList );
 
                     translatorTrackList = new ArrayList<>();
+                    System.out.println( "translatorTrackId.size():  " + translatorTrackId.size() );
                     /*
                      * iterate through all translators in translatorTrackId
                      */
@@ -228,6 +232,7 @@ public class openApplicationDAO {
 
 //                        singleTranslatorTrackList.clear();
                         singleTranslatorTrackList = getTranslatorTracker( translatorTrackId.get( i ) );
+                        System.out.println( "singleTranslatorTrackList:  " + singleTranslatorTrackList );
                         translatorTrackList.add( singleTranslatorTrackList );
 
                         titleList = getTitles( ReferenceNumber );
@@ -248,7 +253,7 @@ public class openApplicationDAO {
                         System.out.println( "Array:  " + d );
                         application.setExpertReaderList( expertReaderList );
                         for ( int j = 0; j < strings.length; j++ ) {
-                            System.out.print( "expertReaderList :  " + strings[j] + " j: " + j );
+                            System.out.print( "expertReaderList :  " + strings[ j ] + " j: " + j );
                         }
                         System.out.println();
                     }
@@ -275,8 +280,7 @@ public class openApplicationDAO {
                     counter++;
                 }
 
-            }
-            catch ( ClassNotFoundException | SQLException e ) {
+            } catch ( ClassNotFoundException | SQLException e ) {
                 LOGGER.debug( e.getMessage() );
                 DBConn.close( conn, ps, res );
                 throw new DBException( "12 Excepion while accessing database" );
@@ -288,7 +292,7 @@ public class openApplicationDAO {
         return GrantApplicationData;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static List<GrantApplication> getAllApplications( String ReferenceNumber ) throws ClassNotFoundException, DBException, ParseException {
 
         System.out.println( "ReferenceNumber openApplicationDAO  getAllApplications  " + ReferenceNumber );
@@ -300,11 +304,11 @@ public class openApplicationDAO {
             Connection conn = null;
             PreparedStatement ps = null;
             ResultSet res = null;
-            System.out.println( "GrantApplicationData openApplicationDAO  here " );
+            System.out.println( "getAllApplicationsPublisher Local openApplicationDAO  here " );
             ArrayList<String> translatorTrackId; // contains array with translator id's
             ArrayList<String> authorList = new ArrayList<>();
             ArrayList<String> translatorNamesList = new ArrayList<>();
-            ArrayList<String> singleTranslatorTrackList = new ArrayList<>();
+            List<String> singleTranslatorTrackList = new ArrayList<>();
             List<List<String>> translatorTrackList = new ArrayList<>();
             List<List<String>> listOfTranslatorArray;
             List<List<String>> rightsAgreementArray;
@@ -327,7 +331,6 @@ public class openApplicationDAO {
                     System.out.println( "\n\n================================= Start: " + counter + "  =================================================\n\n" );
                     GrantApplication application = new GrantApplication();
 
-//                    String ReferenceNumber = res.getString("ReferenceNumber");
                     application.setApplicationNumber( res.getInt( "ApplicationNumber" ) );
                     application.setApplicationYear( res.getString( "ApplicationYear" ) );
                     application.setReferenceNumber( ReferenceNumber );
@@ -337,23 +340,23 @@ public class openApplicationDAO {
                     String companyCountry = getCompanyCountry( company );
                     System.out.println( "openApplicationDAO  companyCountry " + companyCountry );
                     application.setCompanyCountry( companyCountry );
-
+                    System.out.println( "publisherID:  " + res.getInt( "publisherID" ) );
                     application.setPublisherID( res.getInt( "publisherID" ) );
-                    application.setUserID( res.getString( "userID" ) );
+                    int publisherID = res.getInt( "publisherID" );
+                    System.out.println( "publisherID:  " + publisherID );
+                    application.setUserID( res.getInt( "userID" ) );
 
                     String[] bookTitle = getBookTitle( ReferenceNumber );
-                    System.out.println( "bookTitle:  " + bookTitle[0] );
-
-                    application.setBookTitle( bookTitle[0] );
-
-//                    ArrayList<String[]> documentListing = new ArrayList<>();
-//
-//                    documentListing = getDocuments(ReferenceNumber);
+                    System.out.println( "bookTitle:  " + bookTitle[ 0 ] );
+                    application.setBookTitle( bookTitle[ 0 ] );
+                    application.setBilingual_edition( res.getInt( "bilingual" ) );
+                    System.out.println( "777 xxx openApplicationDAO  bilingual " + res.getInt( "bilingual" ) );
                     application.setAgreement( res.getString( "agreement" ) );
                     application.setAgreementDocName( res.getString( "agreementDocName" ) );
                     application.setContract( res.getString( "contract" ) );
                     application.setContractDocName( res.getString( "contractDocName" ) );
                     application.setProposedDateOfPublication( res.getDate( "proposedDateOfPublication" ) );
+                    System.out.println( "proposedDateOfPublication:  " + res.getDate( "proposedDateOfPublication" ) );
                     application.setProposedPrintRun( res.getInt( "proposedPrintRun" ) );
                     application.setPlannedPageExtent( res.getInt( "plannedPageExtent" ) );
                     System.out.println( "setPlannedPageExtent:  " + res.getInt( "plannedPageExtent" ) );
@@ -361,47 +364,27 @@ public class openApplicationDAO {
                     application.setTranslatorCVDocName( res.getString( "translatorCVDocName" ) );
                     application.setBreakDownTranslatorFee( res.getString( "breakDownTranslatorFee" ) );
                     application.setTranslatorFee( res.getBigDecimal( "translatorFee" ) );
-//                    String Notes = getBookNotes( ReferenceNumber );                    
-//                    application.setBookNotes( Notes );
 
                     String bookNotes = getBookNotesApplication( ReferenceNumber );
+                    System.out.println( "openApplicationDAO getBookNotesApplication " + bookNotes );
                     application.setBookNotes( bookNotes );
 
-                    application.setCopiesSent( res.getInt( "copiesSent" ) );
-
+//                    application.setCopiesSent( res.getInt( "copiesSent" ) );
                     System.out.println( "setPublicationYear:  " + res.getString( "dateCopiesWereSent" ) );
                     String[] t = res.getString( "dateCopiesWereSent" ).split( "-" );
                     System.out.println( "t.length:  " + t.length );
                     for ( int g = 0; g < t.length; g++ ) {
-                        System.out.println( "setPublicationYear: [" + g + "] " + t[g] );
+                        System.out.println( "setPublicationYear: [" + g + "] " + t[ g ] );
                     }
 
-////                    Info:   setPublicationYear:  2018-09-25 00:00:00.0
-//                    SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd");
-//                    SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
-//
-//                    Date date = in.parse(res.getString("dateCopiesWereSent"));
-//                    String result = out.format(date);
-////                    Info:   setPublicationYear: result  25/09/2018
-//                    System.out.println("setPublicationYear: result  " + result);
-//
-//                    // Convert input string into a date
-//                    DateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-//                    Date date1 = inputFormat.parse(result);
-//
-//                    System.out.println("setPublicationYear: date1  " + date1);
-//
-//Date date3 = res.getDate("dateCopiesWereSent");  // wherever you get this
-//DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-//String text = df.format(date);
-//System.out.println(text);
-//                                        // Convert input string into a date
-//                    DateFormat inputFormat1 = new SimpleDateFormat("dd/MM/yyyy");
-//                    Date date2 = inputFormat1.parse(text);
+                    application.setNotesAboutApplication( getBookNotesApplication( ReferenceNumber ) );
+                    System.out.println( "openApplicationDAO setNotesAboutApplication " + getBookNotesApplication( ReferenceNumber ) );
                     application.setDateCopiesWereSent( res.getDate( "dateCopiesWereSent" ) );
                     application.setCopiesTranslationSample( res.getString( "copiesTranslationSample" ) );
                     application.setCopiesTranslationSampleDocName( res.getString( "copiesTranslationSampleDocName" ) );
+                        System.out.println( "setTC_ACCEPTED:  " + res.getInt( "TC_ACCEPTED" ) );
                     application.setTC_ACCEPTED( res.getInt( "TC_ACCEPTED" ) );
+                     System.out.println( "setAPPROVED:  " + res.getInt( "APPROVED" ) );
                     application.setAPPROVED( res.getInt( "APPROVED" ) );
                     application.setCover( res.getString( "cover" ) );
                     application.setCoverName( res.getString( "coverName" ) );
@@ -425,8 +408,8 @@ public class openApplicationDAO {
                     application.setAmountRequested( res.getBigDecimal( "amountRequested" ) );
                     application.setAward( res.getInt( "award" ) );
                     application.setSalesFigures( res.getInt( "salesFigures" ) );
-                    application.setPreviousGrantAid( getPreviousGrantAid( ReferenceNumber ) );
-                    application.setGenre( bookTitle[1] );
+                    application.setPreviousGrantAid( getPreviousGrantAid( publisherID ) );
+                    application.setGenre( bookTitle[ 1 ] );
                     application.setBoardMeeting( res.getDate( "boardMeeting" ) );
                     application.setContractSentToPublisher( res.getDate( "contractSentToPublisher" ) );
                     application.setAcknowledgementApproved( res.getDate( "acknowledgementApproved" ) );
@@ -479,35 +462,47 @@ public class openApplicationDAO {
                     /*
                      * iterate through all translators in translatorTrackId
                      */
+                    translatorNameList = new ArrayList<>();
+
                     for ( int i = 0; i < translatorTrackId.size(); i++ ) {
 
-                        translatorNameList = new ArrayList<>();
                         System.out.println( "7 xyz >>> i <<<  " + i );
                         titleList = new ArrayList<>();
-
+                        System.out.println( "7 xyz translatorNameForList ------------------------->  " );
                         String translatorNameForList = getTranslatorNames( translatorTrackId.get( i ) );
-
+                        System.out.println( "7 xyz translatorNameForList   " + translatorNameForList );
                         translatorNamesList.add( translatorNameForList );
 
                         translatorNameList.add( translatorNameForList );
-
+                        System.out.println( "7 xyz translatorNamesList   " + translatorNamesList + " translatorNameList " + translatorNameList );
 //                        singleTranslatorTrackList.clear();
+
                         singleTranslatorTrackList = getTranslatorTracker( translatorTrackId.get( i ) );
-                        System.out.println( "7 xyz getTranslatorTracker( translatorTrackId.get(" + i + ")" + singleTranslatorTrackList );
+                        System.out.println( "7 xyz getTranslatorTracker( singleTranslatorTrackList( " + i + ")" + singleTranslatorTrackList );
+
+                        System.out.println( "7 xyz AA translatorTrackId.get( " + i + " ) === " + Arrays.asList( getTranslatorTracker( translatorTrackId.get( i ) ) ) );
+
+//        for ( int u = 0; u < singleTranslatorTrackList.size(); u++ ) {
+//            System.out.println( "openApplicationDAO singleTranslatorTrackList " + u + "  " + singleTranslatorTrackList.get( u ).toString() );
+//        }
                         translatorTrackList.add( singleTranslatorTrackList );
+//                        translatorTrackList.add( getTranslatorTracker( translatorTrackId.get( i )) );
 
-                        System.out.println( "7 xyz getTranslatorTracker( translatorTrackId.get(i)" + translatorTrackList );
+                        System.out.println( "7 xyz BB getTranslatorTracker( translatorTrackId.get(i)" + translatorTrackList.toArray()[ 0 ] );
 
-                        System.out.println( "8 xyz singleTranslatorTrackList === " + singleTranslatorTrackList );
+//                        System.out.println( "7 xyz CC singleTranslatorTrackList === " + singleTranslatorTrackList.toArray()[ 0 ].toString() );
+//                        System.out.println( "7 xyz CC singleTranslatorTrackList === " + singleTranslatorTrackList.toArray()[ 1 ] );
+
                         titleList = getTitles( ReferenceNumber );
 
                     }
 
                     System.out.println( "7 xyz getTranslatorTracker( translatorTrackId.get" + translatorTrackList );
+                    System.out.println( "7 xyz getTranslatorTrackert translatorTrackList.size()  " + translatorTrackList.size() );
 
                     application.setRightsHolderArray( getRightsHolderArrayContent( ReferenceNumber ) );
                     application.setTransList( listOfTranslatorArray );
-                    application.setTranslatorName( translatorNamesList );
+                    application.setTranslatorName( translatorNameList );
                     application.setTranslatorTrack2( translatorTrackList );
 
                     System.out.println( "openApplicationDAO  getRightsHolderArrayContent(" + ReferenceNumber );
@@ -516,14 +511,13 @@ public class openApplicationDAO {
                     List<String[]> expertReaderList;
                     expertReaderList = getExpertReader( ReferenceNumber );
                     application.setExpertReaderList( expertReaderList );
-                    //  System.out.println("expertReaderList length:  " + expertReaderList.size());
 
                     for ( int d = 0; d < expertReaderList.size(); d++ ) {
                         String[] strings = expertReaderList.get( d );
                         System.out.println( "Array:  " + d );
                         application.setExpertReaderList( expertReaderList );
                         for ( int j = 0; j < strings.length; j++ ) {
-                            System.out.print( "expertReaderList :  " + strings[j] + " j: " + j );
+                            System.out.print( "expertReaderList :  " + strings[ j ] + " j: " + j );
                         }
                         System.out.println();
                     }
@@ -543,8 +537,11 @@ public class openApplicationDAO {
 //                   //  System.out.println("<==================================================================================");
                     application.setTitles( titleList );
 
-                    application.setGender( getGender( ReferenceNumber ) );
-
+                    application.setSendApproveRejectEmailtoPublisher( res.getInt( "SendApproveRejectEmailtoPublisher" ) );
+                    application.setSendPaidEmailtoPublisher( res.getInt( "SendPaidEmailtoPublisher" ) );
+                    int authorId = getAuthorId( ReferenceNumber );
+                    application.setGender( getGender( authorId ) );
+                    System.out.println( "openApplicationDAO getAllApplications  authorId " + authorId + " getGender( authorId ) " + getGender( authorId ) );
                     application.setStatus( res.getString( "Status" ) );
                     System.out.println( "res.getString(Status)" + res.getString( "Status" ) );
                     GrantApplicationData.add( application );
@@ -552,8 +549,7 @@ public class openApplicationDAO {
                     counter++;
                 }
 
-            }
-            catch ( ClassNotFoundException | SQLException e ) {
+            } catch ( ClassNotFoundException | SQLException e ) {
                 LOGGER.debug( e.getMessage() );
                 DBConn.close( conn, ps, res );
                 throw new DBException( "12 Excepion while accessing database" );
@@ -565,7 +561,7 @@ public class openApplicationDAO {
         return GrantApplicationData;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static List<GrantApplication> getAllApplicationsStatus( String paraVal ) throws ClassNotFoundException, DBException {
         System.out.println( "Status openApplicationDAO  " + paraVal );
         List<GrantApplication> GrantApplicationData = null;
@@ -580,7 +576,7 @@ public class openApplicationDAO {
             ArrayList<String> translatorTrackId; // contains array with translator id's
             ArrayList<String> authorList = new ArrayList<>();
             ArrayList<String> translatorNamesList = new ArrayList<>();
-            ArrayList<String> singleTranslatorTrackList = new ArrayList<>();
+            List<String> singleTranslatorTrackList = null;
             List<List<String>> translatorTrackList = new ArrayList<>();
             List<List<String>> listOfTranslatorArray;
             List<List<String>> rightsAgreementArray;
@@ -609,13 +605,15 @@ public class openApplicationDAO {
                     application.setReferenceNumber( ReferenceNumber );
                     application.setCompany( res.getString( "company" ) );
                     application.setPublisherID( res.getInt( "publisherID" ) );
-                    application.setUserID( res.getString( "userID" ) );
+                    int publisherID = res.getInt( "publisherID" );
+                    application.setUserID( res.getInt( "userID" ) );
 
                     String[] bookTitle = getBookTitle( ReferenceNumber );
-                    System.out.println( "bookTitle:  " + bookTitle[0] );
+                    System.out.println( "bookTitle:  " + bookTitle[ 0 ] );
 
-                    application.setBookTitle( bookTitle[0] );
-
+                    application.setBookTitle( bookTitle[ 0 ] );
+                    application.setNotesAboutApplication( getBookNotesApplication( ReferenceNumber ) );
+                    System.out.println( "openApplicationDAO setNotesAboutApplication " + getBookNotesApplication( ReferenceNumber ) );
 //                    ArrayList<String[]> documentListing = new ArrayList<>();
 //
 //                    documentListing = getDocuments(ReferenceNumber);
@@ -660,8 +658,8 @@ public class openApplicationDAO {
                     application.setAmountRequested( res.getBigDecimal( "amountRequested" ) );
                     application.setAward( res.getInt( "award" ) );
                     application.setSalesFigures( res.getInt( "salesFigures" ) );
-                    application.setPreviousGrantAid( getPreviousGrantAid( ReferenceNumber ) );
-                    application.setGenre( bookTitle[1] );
+                    application.setPreviousGrantAid( getPreviousGrantAid( publisherID ) );
+                    application.setGenre( bookTitle[ 1 ] );
                     application.setBoardComments_Instructions( res.getString( "boardComments_Instructions" ) );
                     application.setBoardMeeting( res.getDate( "boardMeeting" ) );
                     application.setContractSentToPublisher( res.getDate( "contractSentToPublisher" ) );
@@ -693,6 +691,7 @@ public class openApplicationDAO {
                     /*
                      * get all idTranslator id's for that ReferenceNumber return
                      * ArrayList
+                     *
                      * translatorTrackId: [500, 1166, 1164, 1165]
                      */
                     translatorTrackId = getTranslatorTrackId( ReferenceNumber );
@@ -707,12 +706,14 @@ public class openApplicationDAO {
                     translatorDocsList = getTransDocs( ReferenceNumber );
 
                     listOfTranslatorArray.add( translatorDocsList );
-
-                    translatorTrackList = new ArrayList<>();
+//                    translatorTrackList = new ArrayList<>();
+                    System.out.println( "8 xyz === translatorTrackId " + translatorTrackId.size() );
+//                    translatorTrackList = new ArrayList<>();
                     /*
                      * iterate through all translators in translatorTrackId
                      */
                     for ( int i = 0; i < translatorTrackId.size(); i++ ) {
+
                         System.out.println( "7 xyz >>> i <<<  " + i );
                         translatorNameList = new ArrayList<>();
 
@@ -732,7 +733,7 @@ public class openApplicationDAO {
                         titleList = getTitles( ReferenceNumber );
 
                     }
-
+                    application.setRightsHolderArray( getRightsHolderArrayContent( ReferenceNumber ) );
                     application.setTransList( listOfTranslatorArray );
                     application.setTranslatorName( translatorNamesList );
                     application.setTranslatorTrack2( translatorTrackList );
@@ -747,7 +748,7 @@ public class openApplicationDAO {
                         System.out.println( "Array:  " + d );
                         application.setExpertReaderList( expertReaderList );
                         for ( int j = 0; j < strings.length; j++ ) {
-                            System.out.print( "expertReaderList :  " + strings[j] + " j: " + j );
+                            System.out.print( "expertReaderList :  " + strings[ j ] + " j: " + j );
                         }
                         System.out.println();
                     }
@@ -773,8 +774,7 @@ public class openApplicationDAO {
                     counter++;
                 }
 
-            }
-            catch ( ClassNotFoundException | SQLException e ) {
+            } catch ( ClassNotFoundException | SQLException e ) {
                 LOGGER.debug( e.getMessage() );
                 DBConn.close( conn, ps, res );
                 throw new DBException( "12 Excepion while accessing database" );
@@ -786,7 +786,7 @@ public class openApplicationDAO {
         return GrantApplicationData;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static String getLanguages( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
@@ -812,8 +812,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -824,7 +823,7 @@ public class openApplicationDAO {
         return languages.trim();
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static ArrayList<String> getTransDocs( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
@@ -859,11 +858,11 @@ public class openApplicationDAO {
                 while ( res.next() ) {
 
                     translatorCVLst = new String[ 5 ];
-                    translatorCVLst[0] = res.getString( 1 );
-                    translatorCVLst[1] = res.getString( 2 );
-                    translatorCVLst[2] = res.getString( 3 );
-                    translatorCVLst[3] = res.getString( 4 );
-                    translatorCVLst[4] = res.getString( 5 );
+                    translatorCVLst[ 0 ] = res.getString( 1 );
+                    translatorCVLst[ 1 ] = res.getString( 2 );
+                    translatorCVLst[ 2 ] = res.getString( 3 );
+                    translatorCVLst[ 3 ] = res.getString( 4 );
+                    translatorCVLst[ 4 ] = res.getString( 5 );
 
                     System.out.println( "getTransDocs translatorCVLst " + res.getString( 1 ) + " Name" );
                     System.out.println( "getTransDocs translatorCVLst " + res.getString( 2 ) + " translatorCVDocName" );
@@ -876,8 +875,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -888,7 +886,7 @@ public class openApplicationDAO {
         return translatorDocsLst;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static String getSeries( String referenceNumber ) throws DBException {
 
         Connection conn = null;
@@ -921,8 +919,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -965,8 +962,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -978,7 +974,7 @@ public class openApplicationDAO {
 
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static ArrayList getTranslatorTrack( String TranslatorTrackId ) throws DBException {
 
         Connection conn = null;
@@ -1031,8 +1027,7 @@ public class openApplicationDAO {
 
             translatorTracker.setTitles( titleList );
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -1073,8 +1068,7 @@ public class openApplicationDAO {
                 }
             }
 
-        }
-        catch ( SQLException ex ) {
+        } catch ( SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1123,8 +1117,7 @@ public class openApplicationDAO {
                 }
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1170,8 +1163,7 @@ public class openApplicationDAO {
                 }
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1213,8 +1205,7 @@ public class openApplicationDAO {
                 }
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1228,7 +1219,7 @@ public class openApplicationDAO {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
-
+System.out.println( "openApplicationDAO getBookTitle appRef " + appRef );
         /*
          * getBookTitle returns a String[] with the bookTitle and Genre for a
          * specific ReferenceNumber
@@ -1251,14 +1242,15 @@ public class openApplicationDAO {
             if ( res != null ) {
                 while ( res.next() ) {
 
-                    ret[0] = res.getString( 1 );
-                    ret[1] = res.getString( 2 );
+                    ret[ 0 ] = res.getString( 1 );
+                    ret[ 1 ] = res.getString( 2 );
 
+                    System.out.println( "openApplicationDAO getBookTitle " + ret[ 0 ] );
+                    System.out.println( "openApplicationDAO getBookTitle " + ret[ 1 ] );
                 }
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1305,7 +1297,7 @@ public class openApplicationDAO {
 
                 while ( i <= numcols ) {
 
-                    indExpertReaderList[i] = res.getString( i++ );
+                    indExpertReaderList[ i ] = res.getString( i++ );
 
                 }
 
@@ -1321,38 +1313,38 @@ public class openApplicationDAO {
                 //Info:   indExpertReaderList[6]  Froggy The Frog
 //                        indExpertReaderList[7]  invoicePath
                 for ( int y = 0; y < indExpertReaderList.length; y++ ) {
-                    System.out.println( "indExpertReaderList[" + y + "]  " + indExpertReaderList[y] );
+                    System.out.println( "indExpertReaderList[" + y + "]  " + indExpertReaderList[ y ] );
 
                     /*
                      * fileDestination
                      */
                     if ( y == 2 ) {
-                        if ( indExpertReaderList[y] == null ) {
-                            indExpertReaderList[2] = "";
+                        if ( indExpertReaderList[ y ] == null ) {
+                            indExpertReaderList[ 2 ] = "";
                         }
                     }
                     /*
                      * sampleReturned
                      */
                     if ( y == 4 ) {
-                        if ( indExpertReaderList[y] == null ) {
-                            indExpertReaderList[4] = "nothing returned yet";
+                        if ( indExpertReaderList[ y ] == null ) {
+                            indExpertReaderList[ 4 ] = "nothing returned yet";
                         }
                     }
                     /*
                      * summaryReport
                      */
                     if ( y == 5 ) {
-                        if ( indExpertReaderList[y] == null ) {
-                            indExpertReaderList[5] = "no report available";
+                        if ( indExpertReaderList[ y ] == null ) {
+                            indExpertReaderList[ 5 ] = "no report available";
                         }
                     }
                     /*
                      * invoicePath
                      */
                     if ( y == 7 ) {
-                        if ( indExpertReaderList[y] == null ) {
-                            indExpertReaderList[7] = "";
+                        if ( indExpertReaderList[ y ] == null ) {
+                            indExpertReaderList[ 7 ] = "";
                         }
                     }
                 }
@@ -1361,8 +1353,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1371,7 +1362,7 @@ public class openApplicationDAO {
         return expertReaderList;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static String getPublicationYear( String appRef ) throws DBException {
 
         Connection conn = null;
@@ -1403,8 +1394,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -1415,7 +1405,7 @@ public class openApplicationDAO {
         return publicationYear;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static String getBookNotes( String appRef ) throws DBException {
 
         Connection conn = null;
@@ -1442,8 +1432,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -1454,7 +1443,7 @@ public class openApplicationDAO {
         return bookNotes;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static String getBookNotesApplication( String appRef ) throws DBException {
 
         Connection conn = null;
@@ -1481,20 +1470,19 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
         }
 
         DBConn.close( conn, ps, res );
-        System.out.println( "getBookNotes(String appRef)  " + bookNotes + " referenceNumber " + appRef );
+        System.out.println( "getBookNotesApplication(String appRef)  " + bookNotes + " referenceNumber " + appRef );
         return bookNotes;
     }
 
-    @SuppressWarnings( "unchecked" )
-    public static String getGender( String appRef ) throws DBException {
+    @SuppressWarnings("unchecked")
+    public static String getGender( int authorId ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1505,9 +1493,9 @@ public class openApplicationDAO {
         try {
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement( "SELECT gender FROM ILGAS.Author WHERE ReferenceNumber = ? " );
+            ps = conn.prepareStatement( "SELECT gender FROM ILGAS.Author_Gender WHERE idAuthor = ? " );
 
-            ps.setString( 1, appRef );
+            ps.setInt( 1, authorId );
 
             res = ps.executeQuery();
 
@@ -1518,21 +1506,20 @@ public class openApplicationDAO {
 
                 }
             }
-        }
-
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
-            throw new DBException( "12 Excepion while accessing database" );
+            throw new DBException( "12 getGender Excepion while accessing database" );
         }
 
         DBConn.close( conn, ps, res );
-        System.out.println( "getGender(String appRef)  " + gender + " referenceNumber " + appRef );
+
+        System.out.println( "getGender(String idAuthor)  " + gender + " idAuthor " + authorId );
 
         return gender;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static String getCompanyCountry( String company ) throws DBException {
 
         Connection conn = null;
@@ -1559,8 +1546,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 getCompanyCountry Excepion while accessing database" );
@@ -1597,14 +1583,18 @@ public class openApplicationDAO {
 //                    + "LEFT JOIN expertReader ON users.userID = expertReader.expertReaderUserID\n"
 //                    + "WHERE expertReader.reading = 'false'\n"
 //                    + "AND users.function = 'Expert Reader'");
-            ps = conn.prepareStatement( "SELECT \n"
-                    + "CONCAT(first_name, ' ', last_name) AS `expertReaderName`\n"
-                    + " FROM\n"
-                    + " ILGAS.users\n"
-                    + " LEFT JOIN\n"
-                    + " ILGAS.expertReader ON users.userID = expertReader.expertReaderUserID\n"
-                    + " WHERE\n"
-                    + " users.function = 'Expert Reader'\n"
+            //Amended as it returned the wrong results
+//            ps = conn.prepareStatement( "SELECT \n"
+//                    + "CONCAT(first_name, ' ', last_name) AS `expertReaderName`\n"
+//                    + " FROM\n"
+//                    + " ILGAS.users\n"
+//                    + " LEFT JOIN\n"
+//                    + " ILGAS.expertReader ON users.userID = expertReader.expertReaderUserID\n"
+//                    + " WHERE\n"
+//                    + " users.function = 'Expert Reader'\n"
+//                    + " AND first_name <> 'removed'" );
+            ps = conn.prepareStatement( "  SELECT CONCAT(first_name, ' ', last_name) AS `expertReaderName` FROM ILGAS.users "
+                    + "WHERE function = 'Expert Reader'"
                     + " AND first_name <> 'removed'" );
 
             res = ps.executeQuery();
@@ -1615,8 +1605,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1682,17 +1671,17 @@ public class openApplicationDAO {
 //                      7  ContractDocName, 
 //                      8  AddendumRightsAgreement, 
 //                      9  AddendumRightsAgreementName
-                columnList[0] = res.getString( 1 );
+                columnList[ 0 ] = res.getString( 1 );
 //                System.out.println("getRightsAgreement Agreement columnList[0] " + res.getString("Agreement"));
-                columnList[1] = res.getString( 2 );
+                columnList[ 1 ] = res.getString( 2 );
 //                System.out.println("getRightsAgreement AgreementDocName columnList[1] " + res.getString("AgreementDocName"));
 //                columnList[ 2 ] = res.getString( 3 );
 ////                System.out.println("getRightsAgreement Contract columnList[2] " + res.getString("Contract"));
 //                columnList[ 3 ] = res.getString( 4 );
 ////                System.out.println("getRightsAgreement ContractDocName columnList[3] " + res.getString("ContractDocName"));
-                columnList[2] = res.getString( 3 );
+                columnList[ 2 ] = res.getString( 3 );
 //                System.out.println("getRightsAgreement AddendumRightsAgreement columnList[4] " + res.getString("AddendumRightsAgreement"));
-                columnList[3] = res.getString( 4 );
+                columnList[ 3 ] = res.getString( 4 );
 //                System.out.println("getRightsAgreement AddendumRightsAgreementName columnList[5] " + res.getString("AddendumRightsAgreementName"));
 
 //                columnList[6] = res.getString(7);
@@ -1725,7 +1714,7 @@ public class openApplicationDAO {
                 rightsAgreementArray.add( Arrays.toString( columnList ) );
 
                 for ( int s = 0; s < columnList.length; s++ ) {
-                    System.out.println( "getRightsAgreement columnList[" + s + "] " + columnList[s] );
+                    System.out.println( "getRightsAgreement columnList[" + s + "] " + columnList[ s ] );
 
                 }
 
@@ -1754,8 +1743,7 @@ public class openApplicationDAO {
 //Info:   3  getRightsAgreement .... 1 == translator cv 2.docx
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -1768,7 +1756,7 @@ public class openApplicationDAO {
         return rightsAgreementArray;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static ArrayList<String> getRightsHolderArrayContent( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
@@ -1800,8 +1788,7 @@ public class openApplicationDAO {
 
             DBConn.close( conn, ps1, res );
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, res );
             throw new DBException( "openApplicationDAO getRightsHolderArrayContent 4 Excepion while accessing database" );
@@ -1826,7 +1813,7 @@ public class openApplicationDAO {
             conn.setAutoCommit( false );
 
             for ( int i = 0; i < rightsHolderArrayContent.length; i++ ) {
-                String translationRightsHolderName = rightsHolderArrayContent[i];
+                String translationRightsHolderName = rightsHolderArrayContent[ i ];
 
                 if ( !translationRightsHolderName.isEmpty() ) {
 
@@ -1856,8 +1843,7 @@ public class openApplicationDAO {
 
             DBConn.close( conn, ps1, res );
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" );
@@ -1912,8 +1898,7 @@ public class openApplicationDAO {
                     if ( col.equals( "Status" ) ) {
 
                         prepStat = prepStat + " " + col + " = '" + value + "', ";
-                    }
-                    else {
+                    } else {
                         prepStat = prepStat + " " + col + " = IFNULL(" + col + ",'" + value + "'), ";
                     }
 //                        }
@@ -1924,8 +1909,7 @@ public class openApplicationDAO {
 
                 counter++;
 
-            }
-            catch ( IllegalArgumentException | IllegalAccessException ex ) {
+            } catch ( IllegalArgumentException | IllegalAccessException ex ) {
                 java.util.logging.Logger.getLogger( openApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
             }
 
@@ -1952,8 +1936,7 @@ public class openApplicationDAO {
 
             DBConn.close( conn, ps1, res );
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
             throw new DBException( "4 Excepion while accessing database" + e );
         }
@@ -1962,8 +1945,8 @@ public class openApplicationDAO {
 
     }
 
-    @SuppressWarnings( "unchecked" )
-    public static ArrayList<String> getPreviousGrantAid( String appRef ) throws DBException {
+    @SuppressWarnings("unchecked")
+    public static ArrayList<String> getPreviousGrantAid( int publisherID ) throws DBException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
@@ -1980,44 +1963,43 @@ public class openApplicationDAO {
 
             conn = DBConn.getConnection();
 
-            ps = conn.prepareStatement( "# previousGrantAid\n"
-                    + "# author name, title, application year, amount awarded, etc \n"
-                    + "\n"
-                    + "\n"
-                    + "\n"
-                    + "SELECT \n"
-                    + "a.Name as Author,\n"
-                    + "l.Title  as Booktitle,\n"
+            ps = conn.prepareStatement( "SELECT DISTINCT\n"
+                    + "    a.Name AS Author,\n"
+                    + "    l.Title AS Booktitle,\n"
                     + "    ApplicationYear,\n"
+                    + "  g.ReferenceNumber,\n"
                     + "    amountApproved\n"
-                    + "    \n"
                     + "FROM\n"
                     + "    ILGAS.GrantApplication g,\n"
                     + "    ILGAS.Application_Author aa,\n"
                     + "    ILGAS.Author a,\n"
                     + "    ILGAS.library l\n"
                     + "WHERE\n"
-                    + "    g.ReferenceNumber = ?\n"
-                    + "    AND\n"
-                    + "    l.referenceNumber = g.ReferenceNumber\n"
-                    + "    AND aa.ReferenceNumber = g.ReferenceNumber\n"
-                    + "    AND a.idAuthor = aa.idAuthor\n"
-                    + "    AND g.amountApproved > 0.00 " );
+                    + "		g.publisherID = ? \n"
+                    + "\n"
+                    + "        AND l.referenceNumber = g.ReferenceNumber\n"
+                    + "        AND aa.ReferenceNumber = g.ReferenceNumber\n"
+                    + "        AND a.idAuthor = aa.idAuthor\n"
+                    + "        AND g.Status <> 'open'; " );
 
-            ps.setString( 1, appRef );
+            ps.setInt( 1, publisherID );
 
             res = ps.executeQuery();
 
             if ( res != null ) {
                 while ( res.next() ) {
-
-                    previousGrantAid.add( idx + ".  - " + res.getString( 1 ) + ", " + res.getString( 2 ) + ", " + res.getString( 3 ) + ", " + res.getString( 4 ) + "\n" );
+                    double amountApproved = Double.parseDouble( res.getString( 5 ) );
+                    DecimalFormat formatter = new DecimalFormat( "€ #,###.00" );
+                    if ( idx == 1 ) {
+                        previousGrantAid.add( " " + idx + ".  - " + res.getString( 1 ) + ", " + res.getString( 2 ) + ", " + res.getString( 3 ) + ", " + res.getString( 4 ) + ", " + formatter.format( amountApproved ) + "\n" );
+                    } else {
+                        previousGrantAid.add( idx + ".  - " + res.getString( 1 ) + ", " + res.getString( 2 ) + ", " + res.getString( 3 ) + ", " + res.getString( 4 ) + ", " + formatter.format( amountApproved ) + "\n" );
+                    }
                     idx++;
                 }
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( ClassNotFoundException | SQLException ex ) {
             java.util.logging.Logger.getLogger( ApplicationDAO.class.getName() ).log( Level.SEVERE, null, ex );
         }
 
@@ -2050,8 +2032,7 @@ public class openApplicationDAO {
                 }
             }
             DBConn.close( conn, ps, res );
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "rightsHolderArrayContent Excepion while accessing database" );
@@ -2059,23 +2040,27 @@ public class openApplicationDAO {
 
         if ( rightsHolderContent > 0 ) {
             return rightsHolderContentExists = true;
-        }
-        else {
+        } else {
             return rightsHolderContentExists = false;
         }
 
     }
 
-    @SuppressWarnings( "unchecked" )
-    public static ArrayList<String> getTranslatorTracker( String TranslatorTrackId ) throws DBException {
+    @SuppressWarnings("unchecked")
+    public static List<String> getTranslatorTracker( String TranslatorTrackId ) throws DBException {
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet res = null;
-
+        System.out.println( "openApplicationDAO getTranslatorTracker TranslatorTrackId " + TranslatorTrackId );
         ArrayList resultList = new ArrayList<>();
-        ArrayList testList = new ArrayList<>();
+//      List<String> testList = new ArrayList<String>();
 
+        /*
+         * previousGrantAid
+         * author name, title, application year, amount awarded, etc
+         */
+//        ArrayList<String> resultList = new ArrayList<>();
         TranslatorTracker translatorTracker;
 
         try {
@@ -2097,38 +2082,39 @@ public class openApplicationDAO {
                     + "	INNER JOIN ILGAS.Translator\n"
                     + "	 ON ILGAS.TranslatorTrack.idTranslator = ILGAS.Translator.idTranslator\n"
                     + "WHERE\n"
-                    + "	ILGAS.Translator.idTranslator =  ?" );
-            ps.setString( 1, TranslatorTrackId );
+                    + "	ILGAS.Translator.idTranslator = ?" );
 
+            ps.setString( 1, TranslatorTrackId );
             res = ps.executeQuery();
 
             translatorTracker.setTranslatorID( TranslatorTrackId );
 
             while ( res.next() ) {
 
-                testList = new ArrayList<>();
-
+//                testList = new ArrayList<>();
+                String[] testList = new String[ 4 ];
                 //add translator
-                testList.add( res.getString( 1 ) );
-
+//                testList.add( res.getString( 1 ) );
+                testList[ 0 ] = res.getString( 1 );
                 //add author
-                testList.add( res.getString( 3 ) );
-
+//                testList.add( res.getString( 3 ) );
+                testList[ 1 ] = res.getString( 3 );
                 //add book title
-                testList.add( res.getString( 2 ) );
-
+//                testList.add( res.getString( 2 ) );
+                testList[ 2 ] = res.getString( 2 );
                 //add ReferenceNumber
-                testList.add( res.getString( 4 ) );
-
+//                testList.add( res.getString( 4 ) );
+                testList[ 3 ] = res.getString( 4 );
                 //add record to resultList
-                resultList.add( testList );
+                resultList.add( Arrays.asList( testList ) );
 
                 System.out.println( "openApplicationDAO getTranslatorTracker  translator: " + res.getString( 1 ) + " author: " + res.getString( 2 ) + " title: " + res.getString( 3 ) + " ReferenceNumber: " + res.getString( 4 ) );
-
+                System.out.println( "openApplicationDAO getTranslatorTracker  translator:testList " + testList[ 0 ] );
+                System.out.println( "openApplicationDAO getTranslatorTracker  translator:resultList " + resultList );
+                System.out.println( "openApplicationDAO getTranslatorTracker  translator:Arrays.asList(testList ) " + Arrays.asList( testList ) );
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -2137,13 +2123,13 @@ public class openApplicationDAO {
         DBConn.close( conn, ps, res );
 
         for ( int u = 0; u < resultList.size(); u++ ) {
-            System.out.println( "openApplicationDAO resultList " + u + "  " + resultList.get( u ) );
+            System.out.println( "openApplicationDAO resultList " + u + "  " + resultList.get( u ).toString() );
         }
 
         return resultList;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static ArrayList<String> getPressCoverage( String ReferenceNumber ) throws DBException {
 
         Connection conn = null;
@@ -2177,8 +2163,8 @@ public class openApplicationDAO {
                     String fullPath = FilenameUtils.getFullPath( fileName );
                     String extension = FilenameUtils.getExtension( fileName );
 
-                    pressCoverageArray[0] = "http://www.literatureirelandgrantapplication.com:8080" + fileName;
-                    pressCoverageArray[1] = res.getString( 2 ).trim();
+                    pressCoverageArray[ 0 ] = "https://www.literatureirelandgrantapplication.com" + fileName;
+                    pressCoverageArray[ 1 ] = res.getString( 2 ).trim();
                     System.out.println( " !Thumbs res.getString(1)   " + res.getString( 1 ) );
                     System.out.println( " !Thumbs  res.getString(2)  " + res.getString( 2 ) );
 
@@ -2191,8 +2177,8 @@ public class openApplicationDAO {
                         System.out.println( " thumbFilename   " + thumbFilename );
                         System.out.println( " thumbFullPath   " + thumbFullPath );
 
-                        pressCoverageArray[2] = "http://www.literatureirelandgrantapplication.com:8080" + thumbFullPath;
-                        pressCoverageArray[3] = thumbFilename;
+                        pressCoverageArray[ 2 ] = "https://www.literatureirelandgrantapplication.com" + thumbFullPath;
+                        pressCoverageArray[ 3 ] = thumbFilename;
 
                     }
 
@@ -2204,8 +2190,7 @@ public class openApplicationDAO {
 
             }
 
-        }
-        catch ( ClassNotFoundException | SQLException e ) {
+        } catch ( ClassNotFoundException | SQLException e ) {
             LOGGER.debug( e.getMessage() );
             DBConn.close( conn, ps, res );
             throw new DBException( "12 Excepion while accessing database" );
@@ -2216,4 +2201,31 @@ public class openApplicationDAO {
         return pressCoverageLst;
     }
 
+    public static int getAuthorId( String referenceNumber ) throws DBException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet res = null;
+
+        int authorId = 0;
+
+        try {
+
+            conn = DBConn.getConnection();
+            ps = conn.prepareStatement( "SELECT idAuthor FROM ILGAS.Application_Author WHERE referenceNumber = ?" );
+            ps.setString( 1, referenceNumber );
+            res = ps.executeQuery();
+            if ( res != null ) {
+                while ( res.next() ) {
+                    authorId = res.getInt( 1 );
+                }
+            }
+            DBConn.close( conn, ps, res );
+        } catch ( ClassNotFoundException | SQLException e ) {
+            LOGGER.debug( e.getMessage() );
+            DBConn.close( conn, ps, res );
+            throw new DBException( "3 Excepion while accessing database" );
+        }
+
+        return authorId;
+    }
 }

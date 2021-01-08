@@ -356,11 +356,11 @@
                         {"data": "agreement",
                             "render": function (data, type, row) {
 
-                                return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }}, {"data": "contract",
                             "render": function (data, type, row) {
 
-                                return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "proposedDateOfPublication",
                             "render": function (data) {
@@ -378,7 +378,7 @@
                         {"data": "translatorCV",
                             "render": function (data, type, row) {
 
-                                return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "numberOfPages"},
                         {"data": "breakDownTranslatorFee"},
@@ -428,7 +428,7 @@
                         {"data": "copiesTranslationSample",
                             "render": function (data, type, row) {
                                 //     console.log("copiesTranslationSample " + data);
-                                return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "TC_ACCEPTED",
                             "render": function (data, type, row) {
@@ -494,7 +494,7 @@
                             }},
                         {"data": "readerReport",
                             "render": function (data, type, row) {
-                                return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         //                        {"data": "readerReportSummary"},
                         {"data": "expertReaderList"},
@@ -687,7 +687,7 @@
                             }},
                         {"data": "addendumRightsAgreement",
                             "render": function (data, type, row) {
-                                return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "addendumRightsAgreementName",
                             "render": function (data, type, row) {
@@ -706,7 +706,7 @@
                                     return "n/a";
                                 } else
                                 {
-                                    return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                    return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                                 }
                             }},
                         {"data": "proofOfPaymentToTranslatorName",
@@ -726,7 +726,7 @@
                                     return "n/a";
                                 } else
                                 {
-                                    return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                    return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                                 }
                             }},
                         {"data": "bankDetailsFormName",
@@ -746,7 +746,7 @@
                                     return "n/a";
                                 } else
                                 {
-                                    return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                    return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                                 }
                             }},
                         {"data": "SignedLIContractName",
@@ -784,7 +784,7 @@
                         {"data": "salesFigures"},
                         {"data": "original",
                             "render": function (data, type, row) {
-                                return '<a href="http://www.literatureirelandgrantapplication.com:8080' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
+                                return '<a href="https://www.literatureirelandgrantapplication.com' + data + '"><i class="fa fa-file-text-o" style="font-size:24px;color:blue"></i></a>';
                             }},
                         {"data": "originalName",
                             "render": function (data, type, row) {
@@ -957,15 +957,15 @@
 //                        document.getElementById("agreement").value = 'closed';
 //                    }
 //                    ;
-                    var agreemnt = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.agreement + '';
+                    var agreemnt = 'https://www.literatureirelandgrantapplication.com' + rowdata.agreement + '';
 //                    $("#appAgreement").val(agreemnt);
 //                    document.getElementById("agreement").href = agreemnt;
 
-                    var orig = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.original + '';
+                    var orig = 'https://www.literatureirelandgrantapplication.com' + rowdata.original + '';
 //                   $("#appOriginal").val(orig);                                  
 //                    document.getElementById("original").href = orig;
                     document.getElementById("originalSample1").href = orig;
-                    var addendumRightsAgreemnt = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.addendumRightsAgreement + '';
+                    var addendumRightsAgreemnt = 'https://www.literatureirelandgrantapplication.com' + rowdata.addendumRightsAgreement + '';
                     $("#appAddendumRightsAgreement").val(addendumRightsAgreemnt);
 //                    document.getElementById("addendum").href = addendumRightsAgreemnt;
 
@@ -974,7 +974,7 @@
                         $("#proofPaymentDiv1").toggle();
                         $("#proofPaymentDiv2").toggle();
                     }
-                    proofOfPaymentToTrans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.proofOfPaymentToTranslator + '';
+                    proofOfPaymentToTrans = 'https://www.literatureirelandgrantapplication.com' + rowdata.proofOfPaymentToTranslator + '';
                     $("#appProofPaymentToTranslator").val(proofOfPaymentToTrans);
                     console.log("7771 A proofOfPaymentToTranslator rowdata.proofOfPaymentToTranslator " + rowdata.proofOfPaymentToTranslator);
                     console.log("7771 A proofOfPaymentToTranslator proofOfPaymentToTrans " + proofOfPaymentToTrans);
@@ -986,7 +986,7 @@
                         $("#bankDetailForm1").toggle();
                         $("#bankDetailForm2").toggle();
                     }
-                    bankDetailsFrm = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.bankDetailsForm + '';
+                    bankDetailsFrm = 'https://www.literatureirelandgrantapplication.com' + rowdata.bankDetailsForm + '';
                     $("#appBankDetailsForm").val(bankDetailsFrm);
                     console.log("7771 B bankDetailsForm rowdata.bankDetailsForm " + rowdata.bankDetailsForm);
                     console.log("7771 B bankDetailsForm bankDetailsFrm " + bankDetailsFrm);
@@ -997,7 +997,7 @@
                         $("#signedLIContract1").toggle();
                         $("#signedLIContract2").toggle();
                     }
-                    signedLIContr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.SignedLIContract + '';
+                    signedLIContr = 'https://www.literatureirelandgrantapplication.com' + rowdata.SignedLIContract + '';
                     $("#appSignedLIContract").val(signedLIContr);
                     console.log("7771 C SignedLIContract rowdata.SignedLIContract " + rowdata.SignedLIContract);
                     console.log("7771 C SignedLIContract signedLIContr signedLIContr " + signedLIContr);
@@ -1015,17 +1015,17 @@
 //
 //                        $("#showCover").show();
 //                        $("#showUploadCover").hide();
-//                        var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+//                        var cver = 'https://www.literatureirelandgrantapplication.com' + rowdata.cover + '';
 //                        $("#cover").val(cver);
 //                        document.getElementById("cover").src = cver;
 //                    }
-                    var contr = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.contract + '';
+                    var contr = 'https://www.literatureirelandgrantapplication.com' + rowdata.contract + '';
 //                    document.getElementById("contract").href = contr;
 //
-//                    var trans = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.translatorCV + '';
+//                    var trans = 'https://www.literatureirelandgrantapplication.com' + rowdata.translatorCV + '';
 //                    document.getElementById("translatorCV").href = trans;
 //
-                    var transSamp = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.copiesTranslationSample + '';
+                    var transSamp = 'https://www.literatureirelandgrantapplication.com' + rowdata.copiesTranslationSample + '';
                     document.getElementById("translationSample1").href = transSamp;
 
 
@@ -1294,7 +1294,7 @@
                                     var dir = nls[l].substr(1);
                                     var destination = dir.replace("/home/markus/public_html/", "/~markus/");
                                     console.log("destination " + destination);
-                                    var entry = "location.href='http://www.literatureirelandgrantapplication.com:8080" + destination + "'";
+                                    var entry = "location.href='https://www.literatureirelandgrantapplication.com" + destination + "'";
                                     console.log("localhost " + entry);
                                     btn.setAttribute("onclick", entry);
                                     td.appendChild(btn);
@@ -1533,7 +1533,7 @@
                                             console.log("8 xyz Agreement not null");
                                             console.log("8 xyz case 0  j[" + j + "] w  " + w);
                                             console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
-                                            document.getElementById('agreement_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                            document.getElementById('agreement_link' + w).href = "https://www.literatureirelandgrantapplication.com" + rightsAgreementArray[v].substr(1) + " ";
                                         }
                                     }
                                     break;
@@ -1565,7 +1565,7 @@
                                     console.log("8 xyz Contract ");
                                     if (rightsAgreementArray[v].substr(1) !== 'null') {
                                         console.log("8 xyz Contract ===  available");
-                                        document.getElementById('contract_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                        document.getElementById('contract_link' + w).href = "https://www.literatureirelandgrantapplication.com" + rightsAgreementArray[v].substr(1) + " ";
                                     }
                                     break;
                                 case 3:
@@ -1596,7 +1596,7 @@
                                             console.log("8 xyz AddendumRightsAgreement not null");
                                             console.log("8 xyz case 0  j[" + j + "] w  " + w);
                                             console.log("8 xyz  rightsAgreementArray  :", rightsAgreementArray[v].substr(1) + ":");
-                                            document.getElementById('addendum_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + rightsAgreementArray[v].substr(1) + " ";
+                                            document.getElementById('addendum_link' + w).href = "https://www.literatureirelandgrantapplication.com" + rightsAgreementArray[v].substr(1) + " ";
                                         }
                                     }
                                     break;
@@ -1666,7 +1666,7 @@
                             console.log("81 xyz linkArray[2]  " + linkArray[2]);
 
                             document.getElementById("cv_button_label" + w).innerHTML = 'Open copy of the CV for ' + translatorNamesForGenerateTranslatorTab[j];
-                            document.getElementById('cv_link' + w).href = "http://www.literatureirelandgrantapplication.com:8080" + linkArray[2].trim() + " ";
+                            document.getElementById('cv_link' + w).href = "https://www.literatureirelandgrantapplication.com" + linkArray[2].trim() + " ";
 
                         }
 
@@ -1722,7 +1722,7 @@
                     if (typeof (rowdata.cover) === "undefined" || rowdata.cover === "") {
 
                         // no cover - show upload
-                        var cver = '..images/not-available.jpg';
+                        var cver = '../ILGAS/images/not-available.jpg';
                         $("#showUploadCover1").show();
                         $("#showUploadCover2").hide();
                         //                        document.getElementById("cover21").src = cver;
@@ -1730,7 +1730,7 @@
                         // we have a cover - show cover
                         $("#showUploadCover2").show();
                         $("#showUploadCover1").hide();
-                        var cver = 'http://www.literatureirelandgrantapplication.com:8080' + rowdata.cover + '';
+                        var cver = 'https://www.literatureirelandgrantapplication.com' + rowdata.cover + '';
 
                         $("#cover").val(cver);
                         console.log("81 xyz show bookCover cover " + bookCover);
@@ -2609,7 +2609,9 @@
 //                var emptyTextBoxes = $('input:text').filter(function () {
 //                    return (this.value !== "" || this.value.length !== 0);
 //                });
-                 var emptyTextBoxes = $('input:text').filter(function() { return this.value === ""; });
+                var emptyTextBoxes = $('input:text').filter(function () {
+                    return this.value === "";
+                });
                 var string = "The following input fields have been marked disabled - \n";
 
                 emptyTextBoxes.each(function () {
@@ -2925,8 +2927,8 @@
 
         <script type="text/javascript">
             $(window).bind("beforeunload", function () {
-                var username = document.getElementById("username").value;
-                alert("username 2 " + username);
+                var username = document.getElementById("username1").value;
+//                alert("username 2 " + username);
                 $.ajax({
                     async: false, //This will make sure the browser waits until request completes
                     url: "./Logout",
@@ -2937,6 +2939,14 @@
             });
         </script>
 
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var username = document.getElementById("username1").value;
+                console.log("username closedApplication ", username);
+                document.getElementById("username3").value = username;
+            });
+
+        </script>
     </head>
 
     <body style="height: 100%">
@@ -2975,7 +2985,7 @@
                         <form action="${pageContext.request.contextPath}/Logout" method="POST">
                             <h6> <small>Welcome <strong>${name}</strong> - <strong>not ${name}</strong>? 
                                     <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
-                                 <input type="hidden" name="username" id="username" value="${username}">
+                            <input type="hidden" name="username" id="username1" value="${username}">
                         </form>
                     </div>
                 </div> <!--container for welcome/logout-->
@@ -3223,7 +3233,7 @@
                                                         Contact
                                                     </p>
 
-
+                                                    <input type="hidden" name="username" id="username2" value="${username}">
                                                     <!--wrapper for Contact tab pane-->
                                                     <div class="container-fluid">
                                                         <div class="row"  style="display: block;
@@ -3732,11 +3742,9 @@
                                                                         <div class="form-group has-feedback">
                                                                             <label for="languages" class="pull-left" >Languages</label>
                                                                             <input id="languages"                                
-                                                                                   type="text"                                
+                                                                                   type="hidden"                                
                                                                                    class="form-control"                                
                                                                                    name="languages"                                
-                                                                                   value=""    
-                                                                                   placeholder="Languages"
                                                                                    >
                                                                             <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
                                                                         </div>
@@ -4286,7 +4294,7 @@
 
                                                         <hr/>
                                                         <div class="col-md-12">
-                                                            <i class="pull-left"><strong> &nbsp; *</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.</i><br/>
+                                                            <!--<i class="pull-left"><strong> &nbsp; *</strong> Please contact Literature Ireland if a hard copy of the original work cannot be obtained.</i><br/>-->
                                                             <i class="pull-left">  <strong>**</strong> If more than one translator is involved, a translation sample must be submitted for each translator.</i>
                                                         </div>    
                                                     </div>  <!-- container-fluid -->
@@ -4318,7 +4326,7 @@
                     <input type="hidden" name="publisherID"  value="${publisherID}">
                     <input type="hidden" name="Company" value="${companyDetails.Company}">
                     <input type="hidden" name="publisherName"    value="${companyDetails.Company}">
-
+                    <input type="hidden" name="username" id="username3" value="${username}">
                     <div class="container col-sm-12" style="margin-bottom: 40px">
                         <input type="submit" id="NewApplication" name="task"  class = "btn btn-default btn-sm" value="Start New Application" />
                         <input type="submit" id="ListOpenApplications" name="task"  class = "btn btn-default btn-sm" value="List Open Applications" />
@@ -4394,7 +4402,6 @@
                                                                         function  showNotesModal() {
                                                                             $("#showNotesModal").modal("show");
                                                                         }
-                                                                        ;
         </script>
     </body>
 </html>

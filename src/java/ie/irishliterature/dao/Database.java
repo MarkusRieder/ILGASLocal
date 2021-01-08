@@ -9,6 +9,7 @@ package ie.irishliterature.dao;
  *
  * @author markus
  */
+import ie.irishliterature.util.Setup;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,13 +21,12 @@ public class Database {
         Connection connection = null;
 
         // Store the database URL in a string
-        //   String url = "jdbc:mysql://localhost:3306/ILGAS";
-        String url = "jdbc:mysql://localhost:3306/ILGAS?useSSL=false";
+//        String url = "jdbc:mysql://localhost:3306/ILGAS?useSSL=false";
 
-        Class.forName( "com.mysql.jdbc.Driver" ).newInstance();
-
+//        Class.forName( "com.mysql.cj.jdbc.MysqlDataSource" ).newInstance();;
+            Class.forName( Setup.JDBC_DRIVER ).newInstance();
         // set the url, username and password for the databse 
-        connection = DriverManager.getConnection( url, "markus", "T6Sv0m3kTAPQZLX4KTIHAw2qgIYLXMMWU2NwYfmNLJr44PDUEJ" );
+        connection = DriverManager.getConnection( Setup.DB_URL, Setup.DB_USERNAME, Setup.DB_PASSWORD );
         return connection;
 
     }

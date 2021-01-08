@@ -1,5 +1,5 @@
 <%-- 
-    Document   : tabTesting
+    Document   : welcome_Publisher
     Created on : 19-Mar-2017, 11:27:58
     Author     : markus
 --%>
@@ -58,11 +58,11 @@
                 /* (853 / 1280 * 100) */
             }
         </style>
-        
+
         <script>
             $(window).bind("beforeunload", function () {
                 var username = document.getElementById("username").value;
-                alert("username 2 " + username);
+//                alert("username 2 " + username);
                 $.ajax({
                     async: false, //This will make sure the browser waits until request completes
                     url: "./Logout",
@@ -71,8 +71,15 @@
                     data: {"username": username}
                 });
             });
+
+
+            $(document).ready(function () {
+                var username = document.getElementById("username").value;
+                console.log("username openApplication ", username);
+                document.getElementById("username1").value = username;
+            });
         </script>
-        
+
     </head>
     <body>
         <div id="shadowholder">
@@ -108,7 +115,6 @@
 
                             <form id="taskForm" 
                                   class="form-horizontal" 
-
                                   action="${pageContext.request.contextPath}/Application" 
                                   method="POST"  
                                   role="form" 
@@ -133,12 +139,14 @@
                                         <span class="help-block" id="error"></span> 
                                     </div>
                                 </div> <!--form-group selectpicker-->
+                                
                                 <input type="hidden" name="userID" value="${userID}">
                                 <input type="hidden" name="name" value="${name}">
                                 <input type="hidden" name="publisherID" id="publisherID" value="${publisherID}">
                                 <input type="hidden" name="Company" value="${companyDetails.Company}">
-                                <input type="hidden" name="publisherName" value="${companyDetails.Company}">
-                                <input type="hidden" name="username" value="${username}">
+                                <input type="hidden" name="username" id="username1" value="${username}">
+                                <input type="hidden" name="publisherName"  value="${publisherName}">
+
                                 <div class="form-group">
 
                                     <button type="submit" class="btn btn-success  btn-send" id="nxtBtn">                           

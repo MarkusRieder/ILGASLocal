@@ -733,6 +733,9 @@ public class BCrypt {
      */
     public static String hashpw( String password, String salt )
     {
+        System.out.println( "bcrypt hashpw :password: " + password + "  salt " + salt );
+        
+        
         if ( password == null )
         {
             return null;
@@ -805,6 +808,8 @@ public class BCrypt {
         rs.append( encode_base64( saltb, saltb.length ) );
         rs.append( encode_base64( hashed,
                 bf_crypt_ciphertext.length * 4 - 1 ) );
+        
+        System.out.println( "bcrypt hashpw :rs.toString(): " + rs.toString() );
         return rs.toString();
     }
 

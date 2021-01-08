@@ -9,7 +9,6 @@ import ie.irishliterature.util.GlobalConstants;
 import ie.irishliterature.util.MailUtil;
 import ie.irishliterature.util.Utils;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,17 +20,17 @@ import org.apache.log4j.Logger;
 /**
  * Servlet implementation class ForgotPassword
  */
-@WebServlet( name = "ForgotPassword", urlPatterns =
-{
-    "/ForgotPassword"
-} )
+@WebServlet( name = "ForgotPassword", urlPatterns
+        = {
+            "/ForgotPassword"
+        } )
+
 public class ForgotPassword extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = Logger.getLogger( ForgotPassword.class.getName() );
 
-    public ForgotPassword()
-    {
+    public ForgotPassword() {
         super();
     }
 
@@ -45,37 +44,46 @@ public class ForgotPassword extends HttpServlet {
      * response)
      */
     @Override
-    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
-    {
+    protected void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+
+        System.out.println( "############################ /ForgotPassword #######################################  " );
+        
+        String message = "";
+        
         String inputEmail = request.getParameter( "inputEmail" );
+
+        System.out.println( "inputEmail  " + inputEmail );
+
         Status sp = new Status();
-        try
-        {
+
+        try {
             User up = ApplicationDAO.selectUSERbyEmail( inputEmail );
-            if ( up != null )
-            {
+            if ( up != null ) {
                 String hash = Utils.prepareRandomString( 30 );
                 ApplicationDAO.updateEmailVerificationHashForResetPassword( inputEmail, BCrypt.hashpw( hash, GlobalConstants.SALT ) );
                 MailUtil.sendResetPasswordLink( up.getUSERNAME() + "", inputEmail, hash );
                 sp.setCode( 0 );
                 sp.setMessage( "We have sent the reset password link to your email" );
             }
-            else
-            {
+            else {
                 sp.setCode( -1 );
                 sp.setMessage( "This email doesn't exist" );
             }
+
+            message = "We have sent the reset password link to your email ";
+            System.out.println( "We have sent the reset password link to your email " );
+            request.setAttribute( "message", message );
+            request.getRequestDispatcher( "/WEB-INF/views/forgotPasswordResponse.jsp" ).forward( request, response );
         }
-        catch ( DBException | MessagingException e )
-        {
+        catch ( DBException | MessagingException e ) {
             LOGGER.debug( e.getMessage() );
             sp.setCode( -1 );
             sp.setMessage( e.getMessage() );
         }
-        PrintWriter pw = response.getWriter();
-        pw.write( Utils.toJson( sp ) );
-        pw.flush();
-        pw.close();
+//        PrintWriter pw = response.getWriter();
+//        pw.write( Utils.toJson( sp ) );
+//        pw.flush();
+//        pw.close();
     }
 
 }

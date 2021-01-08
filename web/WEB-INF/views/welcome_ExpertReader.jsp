@@ -313,7 +313,7 @@
 
                     //ExpertReader Report found
                     if (rowdata.expertReaderReport !== undefined) {
-                        document.getElementById('expertReaderReport_link').href = "http://www.literatureirelandgrantapplication.com:8080" + rowdata.expertReaderReport + " ";
+                        document.getElementById('expertReaderReport_link').href = "http://localhost" + rowdata.expertReaderReport + " ";
                         document.getElementById("expertReaderReport_button_label").innerHTML = 'Open copy of the Expert Reader Report';
                         $('#expertReaderReportToggle1').toggle();
                         $('#expertReaderReport_button1').toggle();
@@ -342,7 +342,7 @@
 
                     // Invoice found
                     if (rowdata.expertReaderInvoice !== undefined) {
-                        document.getElementById('expertReaderInvoice_link').href = "http://www.literatureirelandgrantapplication.com:8080" + rowdata.expertReaderInvoice + " ";
+                        document.getElementById('expertReaderInvoice_link').href = "http://localhost" + rowdata.expertReaderInvoice + " ";
                         document.getElementById("expertReaderInvoice_button_label").innerHTML = 'Open copy of the Expert Reader Invoice';
                         $('#expertReaderInvoiceToggle1').toggle();
                         $('#expertReaderInvoice_button1').toggle();
@@ -430,6 +430,8 @@
                                     <button type="submit" name="username" value="${username}" class="btn-link">Click here to log out </button></small></h6>
                             <input type="hidden" id="username" name="username" value="${username}">
                         </form>
+                        <div class="pull-right"><a href="forgotPassword.jsp"> <strong>Change Password </strong></a></div>
+                        <br/>  
                     </div>
                 </div> <!--container for welcome/logout-->
 
@@ -629,7 +631,7 @@
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" placeholder="Summary of report" id="reportSummary" name="reportSummary" style="width: 580px; height: 430px;"></textarea>
+                                                        <textarea class="form-control" placeholder="Summary of report" id="reportSummary" name="reportSummary" required style="width: 580px; height: 430px;"></textarea>
                                                     </div>
                                                 </div>
 
@@ -708,6 +710,9 @@
                         <!--                        <a href="http://www.ahg.gov.ie/en/" target="_blank"><span class="hidden">Dept of Tourism</span></a>-->
                     </div>
 
+                    <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
+                        &copy; 2017-2020 mgr Software
+                    </div>
                 </div><!-- end of Base div -->
 
             </div><!-- end of container div -->
@@ -715,9 +720,6 @@
         </div><!-- end of Shadowholder container div -->
 
 
-        <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-            &copy; 2017-2019 mgr Software
-        </div>
         <!--contactUsModal-->
         <div class="modal fade" id="contactUsModal" tabindex="-1" role="dialog" aria-labelledby="contactUsModalLabel"  data-modal-index="3">
 

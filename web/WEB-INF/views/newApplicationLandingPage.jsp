@@ -188,7 +188,7 @@
                 var gdprACCEPTED = '${gdprACCEPTED}';
                 document.getElementById("tcACCEPTED").value = tcACCEPTED;
                 document.getElementById("gdprACCEPTED").value = gdprACCEPTED;
-      
+
             });
 
         </script>
@@ -237,7 +237,7 @@
                           method="POST"  
                           role="form" 
                           >
-                        
+
                         <input type="hidden" name="firstname" value ="${firstname}">
                         <input type="hidden" name="lastname" value ="${lastname}">
                         <input type="hidden" name="name" value ="${name}">
@@ -246,11 +246,12 @@
                         <input type="hidden" name="Company_Number" id="Company_Number" value ="${publisherID}">
                         <input type="hidden" name="publisherName" value ="${publisherName}">
                         <input type="hidden" name="task" value="NewApplicationTCconfirmed"> 
-                        
+                        <input type="hidden" name="username" value ="${username}">
+
                         <div class="background">
-                            
+
                             <div class="transbox">
-                                
+
                                 <!--<div class="form-group">-->
                                 <!--in Panel-->
                                 <div class = "panel panel-default">
@@ -291,7 +292,7 @@
                                             General Data Protection Regulation
                                         </p>
 
-                                         <!-- gdprACCEPTED: -->
+                                        <!-- gdprACCEPTED: -->
                                         <div class="checkbox">                                                             
                                             <label style="margin-bottom: 10px; margin-left: 20px" for="gdprACCEPTED">
                                                 It is the responsibility of the applicant to ensure that they have obtained the necessary consent 
@@ -320,7 +321,7 @@
                                             </div>
                                         </div>
 
-                                         <!-- NOTE FOR USERS: -->
+                                        <!-- NOTE FOR USERS: -->
                                         <div>
                                             <!-- NOTE FOR USERS: -->
                                             <p style="margin-bottom: 1px; font-weight: bold">
@@ -334,7 +335,7 @@
 
 
                                         <div class="form-group">
-                                            
+
                                             <div class="col-xs-4">
                                             </div>
                                             <div class="col-xs-4">
@@ -344,19 +345,19 @@
                                                     <span class="glyphicon glyphicon-thumbs-up"></span> Continue
                                                 </button>
                                             </div>
-                                            
+
                                         </div> <!-- form-group-->   
-                                        
+
                                     </div>  <!-- panel-body-->     
-                                    
+
                                 </div>  <!-- panel --> 
-                                
+
                             </div> <!-- transbox-->   
-                            
+
                         </div>  <!-- background --> 
-                        
+
                     </form>
-                        
+
                 </div>  <!-- container-fluid --> 
 
                 <!-- eligibilityModal -->
@@ -374,509 +375,257 @@
                                 <div class="row" style="margin-bottom: 10px">
 
 
-<p align="center" style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.64cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt">Application
-Eligibility</span></font></font><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt">&nbsp;&nbsp;</span></font></font><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt"><br/>
-Requirements
-and Criteria</span></font></font></font></p>
-<p style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">The translation grant
-	programme is designed to support the translation of works of Irish
-	literature<b>. The maximum grant that may be applied for is the
-	total fee being paid to the translator(s).</b>The translation grants
-	are considered a contribution towards the cost of the translation
-	and may not cover the full cost incurred by the publisher. Other
-	costs such as production, printing, publicity, etc., are not
-	covered.&nbsp;</font></p>
-</ol>
-<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol start="2">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>The board of Literature
-	Ireland meets three times a year to consider translation grant
-	applications.</b>&nbsp;The meeting will typically take place six to
-	eight weeks&nbsp;<u>after</u>&nbsp;the application
-	deadline.&nbsp;<b>Deadlines</b><b>&nbsp;</b>are advertised on
-	Literature Ireland’s website at
-	http://www.literatureireland.com/grants/translation-grant-programme/.</font></p>
-</ol>
-<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol start="3">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>The online</b>&nbsp;<b>application
-	system opens two weeks prior to the deadline</b>. Please note that
-	incomplete applications cannot be submitted by the system – please
-	see point 5 below to make sure you have all the information and
-	documentation required in order to apply.&nbsp;</font></p>
-</ol>
-<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol start="4">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">A&nbsp;<b>grace period of
-	one week</b>&nbsp;is given after the deadline to allow for
-	unforeseen delays. After this period, the application system will be
-	closed. Extraordinary appeals for inclusion after this period may be
-	made to&nbsp;<font color="#0000ff"><u><a href="mailto:info@literatureireland.com"><font color="#0f9039">info@literatureireland.com</font></a></u></font>&nbsp;and
-	will be considered at the discretion of the director.&nbsp;</font></p>
-</ol>
-<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol start="5">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">The following will be
-	required during the application process:</font></p>
-</ol>
-<ol type="i">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Source Text:</b>&nbsp;Author,
-	title and publication details for the original work; a copy of the
-	original work (e.g. a PDF). One print copy of the original work
-	should also be sent, with the application reference number, by post
-	to Literature Ireland, Trinity Centre for Literary and Cultural
-	Translation, 36 Fenian Street, Trinity College Dublin, Dublin D02
-	CH22, Ireland.&nbsp;<font color="#2e74b5">COVID-19 NOTE: At present,
-	the staff of Literature Ireland does not have access to its offices
-	so until further notice, the requirement to post a print copy of the
-	book is waived. </font></font>
-	</p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Target Text:</b>&nbsp;A
-	translation sample in WORD/RTF format (<u>not</u>&nbsp;PDF)
-	consisting of 10–12 pages of prose or six poems.&nbsp;<u>The
-	translator(s)’s name(s) must not appear anywhere on the document.</u></font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Rights Details:</b>&nbsp;Name
-	of the translation rights holder and a signed copy of the rights
-	agreement, where applicable.&nbsp;</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Translator Details:</b>&nbsp;Name
-	and curriculum vitae of the translator; details of the fee to be
-	paid to the translator (in Euro), including how this fee was
-	calculated (i.e. the rate per word/page/etc.); a signed copy of the
-	agreement between the translator and the publisher.</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Publisher Details:</b>&nbsp;Name
-	and contact details for the applicant and the publishing house.&nbsp;</font></p>
-</ol>
-<p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol start="6">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Basic eligibility
-	requirements:</b></font></p>
-</ol>
-<ol type="i">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">The author of the work of
-	literature for which funding is sought&nbsp;<b>must be
-	Irish</b><b>&nbsp;</b>(meaning from the Republic of Ireland or
-	Northern Ireland) or have lived and worked in Ireland for a
-	considerable length of time.&nbsp;</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">The genres for which
-	funding is available are:</font></p>
-</ol>
-<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><b>Literary Fiction</b></font></p>
-<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><b>Poetry</b></font></p>
-<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><b>Drama</b>&nbsp;(for
-publication)</font></p>
-<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><b>Children’s literature</b><b>&nbsp;</b></font></p>
-<p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><b>Certain works of
-non-fiction</b>&nbsp;that relate to Irish writers/literature (e.g.
-acclaimed biographies, critical works aimed at a general readership).</font></p>
-<ol type="i" start="3">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">Applications for
-	translations to be self-published or published only as e-books or
-	audio books will&nbsp;<u><b>not</b></u>&nbsp;be accepted.</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">Applications will only be
-	accepted from a member of staff at the publishing house planning to
-	publish the translation. The publishing house must be a registered
-	company of established reputation.&nbsp;</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1"><a name="_GoBack"></a>
-	<font face="Times New Roman, sans-serif">Translations which
-	have&nbsp;<b>already been published or which are due to go to
-	print</b>&nbsp;or be published <u>before </u>the meeting of the
-	board of Literature Ireland will be deemed&nbsp;<u><b>ineligible</b></u>.</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">A translation which may be
-	considered an&nbsp;<b>adaptation or abridgement</b>&nbsp;may&nbsp;<u><b>not</b></u>&nbsp;be
-	considered eligible – in such cases, the applicant is requested to
-	contact&nbsp;<font color="#0000ff"><u><a href="mailto:info@literatureireland.com"><font color="#0f9039">info@literatureireland.com</font></a></u></font>&nbsp;for
-	clarification in advance of applying.&nbsp;</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Applications for the
-	publication of a translation for which appropriate translation
-	rights have not been secured</b><b>&nbsp;</b><u><b>will not</b></u><b>&nbsp;</b><b>be
-	accepted</b>.&nbsp;</font></p>
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">Publishers may submit
-	a&nbsp;<u>maximum of two applications per round</u>. A given
-	publishing house may receive a&nbsp;<u>maximum of three translation
-	grants per annum</u>. A given publishing house may receive a maximum
-	of five grants overall for works by the same author in the same
-	genre.&nbsp;</font></p>
-</ol>
-<p style="margin-left: 2.54cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol start="7">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif">The translation sample
-	submitted with the application will be sent by Literature Ireland to
-	an independent expert reader for assessment. The reader will submit
-	a report on the quality of the translation which will be made
-	available to the board of directors in its consideration of the
-	application.&nbsp;<b>It is therefore recommended that the sample be
-	from a final or near final version of the translation which has been
-	proofread and/or edited.</b><b>&nbsp;</b></font></p>
-</ol>
-<p style="margin-left: 2.54cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><br/>
-</font><br/>
-<br/>
-
-</p>
-<ol start="8">
-	<li/>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-	<font face="Times New Roman, sans-serif"><b>Applicants will receive
-	an email within 10 working days of the meeting to inform them of the
-	outcome of their application.</b>&nbsp;Successful applicants will
-	also receive a formal grant agreement.&nbsp;</font></p>
-</ol>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif"><font color="#00b050"><b>If
-you are applying for the first time or if you have any questions or
-concerns about your application, you are encouraged to contact a
-member of Literature Ireland staff.</b></font><font color="#00b050"><b>&nbsp;</b></font></font></p>
-<p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
-<font face="Times New Roman, sans-serif">Contact email addresses are
-available on the website
-at:&nbsp;http://www.literatureireland.com/about/contact/.</font></p>
-<p align="right" style="margin-bottom: 0cm; line-height: 100%; background: #c3bcbc">
-Done</p>
-<h2 class="western" style="margin-top: 0cm; margin-bottom: 0.11cm; background: #ffffff">
-<font color="#0f9039"><font face="Georgia, sans-serif"><font size="4" style="font-size: 13pt"><b>Literature
-Ireland</b></font></font></font></h2>
-<p style="margin-bottom: 0cm; line-height: 0.48cm; background: #ffffff">
-<font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt"><i>Contact
-Details</i></font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;|&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt"><i>Legal
-Note</i></font></font></font></p>
-<p style="margin-bottom: 0cm; line-height: 100%"><br/>
-
-</p>
-<!--                                    <p  align="center"  style="margin-bottom: 0cm; line-height: 0.64cm"><a name="__DdeLink__127_852613866"></a>
-                                        <font color="#000000"><font size="5" style="font-size: 21pt;"><span style="letter-spacing: 0.3pt">Application
-                                            Eligibility  <br/> Requirements and Criteria</span></font></font></p>
-                                    <p style="margin-bottom: 0.35cm; line-height: 115%"><br/>
+                                    <p align="center" style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.64cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt">Application
+                                            Eligibility</span></font></font><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt">&nbsp;&nbsp;</span></font></font><font color="#000000"><font size="5" style="font-size: 21pt"><span style="letter-spacing: 0.3pt"><br/>
+                                            Requirements
+                                            and Criteria</span></font></font></font></p>
+                                    <p style="margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">The translation grant programme is designed to
-                                                support the translation of works of Irish literature</span><span lang="en-IE"><b>.
-                                                    The maximum grant that may be applied for is the total fee being
-                                                    paid to the translator(s).</b></span><span lang="en-IE"> The
-                                                translation grants are considered a contribution towards the cost of
-                                                the translation and may not cover the full cost incurred by the
-                                                publisher. Other costs such as production, printing, publicity,
-                                                etc., are not covered. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">The translation grant
+                                            programme is designed to support the translation of works of Irish
+                                            literature<b>. The maximum grant that may be applied for is the
+                                                total fee being paid to the translator(s).</b>The translation grants
+                                            are considered a contribution towards the cost of the translation
+                                            and may not cover the full cost incurred by the publisher. Other
+                                            costs such as production, printing, publicity, etc., are not
+                                            covered.&nbsp;</font></p>
                                     </ol>
-                                    <p style="margin-left: 1.27cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <br/>
+                                    <p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol start="2">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>The board of Literature Ireland meets three
-                                                    times a year to consider translation grant applications.</b></span><span lang="en-IE">
-                                                The meeting will typically take place six to eight weeks </span><span lang="en-IE"><u>after</u></span><span lang="en-IE">
-                                                the application deadline.  </span><span lang="en-IE"><b>Deadlines
-                                                </b></span><span lang="en-IE">are advertised on Literature Ireland’s
-                                                website at
-                                                <a href="http://www.literatureireland.com/programmes/translation-grant-programme/">http://www.literatureireland.com/programmes/translation-grant-programme/</a>.
-                                            </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>The board of Literature
+                                                Ireland meets three times a year to consider translation grant
+                                                applications.</b>&nbsp;The meeting will typically take place six to
+                                            eight weeks&nbsp;<u>after</u>&nbsp;the application
+                                            deadline.&nbsp;<b>Deadlines</b><b>&nbsp;</b>are advertised on
+                                            Literature Ireland’s website at
+                                            http://www.literatureireland.com/grants/translation-grant-programme/.</font></p>
                                     </ol>
-                                    <p style="margin-left: 1.27cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <br/>
+                                    <p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol start="3">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">The online </span><span lang="en-IE"><b>application
-                                                    system opens one month prior to the deadline</b></span><span lang="en-IE">.
-                                                Once an application has been commenced, the applicant will receive a
-                                                reference number which, together with a temporary password, will be
-                                                emailed to the address provided. Applicants may save their
-                                                application at any stage and return to complete and submit it later.
-                                                Please note that incomplete applications cannot be submitted by the
-                                                system – please see point 5 below to make sure you have all the
-                                                information and documentation required in order to apply. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>The online</b>&nbsp;<b>application
+                                                system opens two weeks prior to the deadline</b>. Please note that
+                                            incomplete applications cannot be submitted by the system – please
+                                            see point 5 below to make sure you have all the information and
+                                            documentation required in order to apply.&nbsp;</font></p>
                                     </ol>
-                                    <p style="margin-left: 1.27cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <br/>
+                                    <p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol start="4">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">A </span><span lang="en-IE"><b>grace period of
-                                                    one week</b></span><span lang="en-IE"> is given after the deadline
-                                                to allow for unforeseen delays. After this period, the application
-                                                system will be closed. Extraordinary appeals for inclusion after
-                                                this period may be made to <a href="mailto:info@literatureireland.com">info@literatureireland.com</a>
-                                                and will be considered at the discretion of the director and/or
-                                                deputy director. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">A&nbsp;<b>grace period of
+                                                one week</b>&nbsp;is given after the deadline to allow for
+                                            unforeseen delays. After this period, the application system will be
+                                            closed. Extraordinary appeals for inclusion after this period may be
+                                            made to&nbsp;<font color="#0000ff"><u><a href="mailto:info@literatureireland.com"><font color="#0f9039">info@literatureireland.com</font></a></u></font>&nbsp;and
+                                            will be considered at the discretion of the director.&nbsp;</font></p>
                                     </ol>
-                                    <p style="margin-left: 1.27cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <br/>
+                                    <p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol start="5">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">The following will be required during the
-                                                application process:</span></p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">The following will be
+                                            required during the application process:</font></p>
                                     </ol>
                                     <ol type="i">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Source Text:</b></span><span lang="en-IE">
-                                                Author, title and publication details for the original work; a copy
-                                                of the original work (e.g. a PDF). One print copy of the original
-                                                work should also be sent, with the application reference number, by
-                                                post to Literature Ireland, Trinity Centre for Literary Translation,
-                                                36 Fenian Street, Trinity College Dublin, Dublin D02 CH22, Ireland. 
-                                            </span>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Source Text:</b>&nbsp;Author,
+                                            title and publication details for the original work; a copy of the
+                                            original work (e.g. a PDF). One print copy of the original work
+                                            should also be sent, with the application reference number, by post
+                                            to Literature Ireland, Trinity Centre for Literary and Cultural
+                                            Translation, 36 Fenian Street, Trinity College Dublin, Dublin D02
+                                            CH22, Ireland.&nbsp;<font color="#2e74b5">COVID-19 NOTE: At present,
+                                            the staff of Literature Ireland does not have access to its offices
+                                            so until further notice, the requirement to post a print copy of the
+                                            book is waived. </font></font>
                                         </p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Target Text:</b></span><span lang="en-IE">
-                                                Translator, publisher and publication details for the translation; a
-                                                translation sample in WORD/RTF format (</span><span lang="en-IE"><u>not</u></span><span lang="en-IE">
-                                                PDF) consisting of 10–12 pages of prose or six poems. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Target Text:</b>&nbsp;A
+                                            translation sample in WORD/RTF format (<u>not</u>&nbsp;PDF)
+                                            consisting of 10–12 pages of prose or six poems.&nbsp;<u>The
+                                                translator(s)’s name(s) must not appear anywhere on the document.</u></font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Rights Details:</b></span><span lang="en-IE">
-                                                Name and contact details for the translation rights holder and a
-                                                signed copy of the rights agreement, where applicable. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Rights Details:</b>&nbsp;Name
+                                            of the translation rights holder and a signed copy of the rights
+                                            agreement, where applicable.&nbsp;</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Translator Details:</b></span><span lang="en-IE">
-                                                Name and curriculum vitae of the translator; details of the fee to
-                                                be paid to the translator (in Euro), including how this fee was
-                                                calculated (i.e. the rate per word/page/etc.); a signed copy of the
-                                                agreement between the translator and the publisher.</span></p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Translator Details:</b>&nbsp;Name
+                                            and curriculum vitae of the translator; details of the fee to be
+                                            paid to the translator (in Euro), including how this fee was
+                                            calculated (i.e. the rate per word/page/etc.); a signed copy of the
+                                            agreement between the translator and the publisher.</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Publisher Details:</b></span><span lang="en-IE">
-                                                Name and contact details for the applicant and the publishing house,
-                                                details of any previous awards from Literature Ireland/Ireland
-                                                Literature Exchange, sales information for previously awarded
-                                                titles, and the distribution and promotion plan for the work for
-                                                which funding is currently being sought. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Publisher Details:</b>&nbsp;Name
+                                            and contact details for the applicant and the publishing house.&nbsp;</font></p>
                                     </ol>
-                                    <p style="margin-left: 1.27cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <br/>
+                                    <p style="margin-left: 1.27cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol start="6">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Basic eligibility requirements:</b></span></p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Basic eligibility
+                                                requirements:</b></font></p>
                                     </ol>
                                     <ol type="i">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">The author of the work of literature for which
-                                                funding is sought </span><span lang="en-IE"><b>must be Irish
-                                                </b></span><span lang="en-IE">(meaning from the Republic of Ireland
-                                                or Northern Ireland) or have lived and worked in Ireland for a
-                                                considerable length of time. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">The author of the work of
+                                            literature for which funding is sought&nbsp;<b>must be
+                                                Irish</b><b>&nbsp;</b>(meaning from the Republic of Ireland or
+                                            Northern Ireland) or have lived and worked in Ireland for a
+                                            considerable length of time.&nbsp;</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">The genres for which funding is available are:</span></p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">The genres for which
+                                            funding is available are:</font></p>
                                     </ol>
-                                    <p lang="en-US" style="margin-left: 3.81cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <span lang="en-IE"><b>Literary Fiction</b></span></p>
-                                    <p lang="en-US" style="margin-left: 3.81cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <span lang="en-IE"><b>Poetry</b></span></p>
-                                    <p lang="en-US" style="margin-left: 3.81cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <span lang="en-IE"><b>Drama</b></span><span lang="en-IE"> (for
-                                            publication)</span></p>
-                                    <p lang="en-US" style="margin-left: 3.81cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <span lang="en-IE"><b>Children’s literature </b></span>
-                                    </p>
-                                    <p lang="en-US" style="margin-left: 3.81cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <span lang="en-IE"><b>Certain works of non-fiction</b></span><span lang="en-IE">
-                                            that relate to Irish writers/literature (e.g. acclaimed biographies,
-                                            critical works aimed at a general readership).</span></p>
+                                    <p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><b>Literary Fiction</b></font></p>
+                                    <p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><b>Poetry</b></font></p>
+                                    <p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><b>Drama</b>&nbsp;(for
+                                        publication)</font></p>
+                                    <p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><b>Children’s literature</b><b>&nbsp;</b></font></p>
+                                    <p style="margin-left: 3.81cm; margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><b>Certain works of
+                                            non-fiction</b>&nbsp;that relate to Irish writers/literature (e.g.
+                                        acclaimed biographies, critical works aimed at a general readership).</font></p>
                                     <ol type="i" start="3">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">Applications for translations to be
-                                                self-published or published only as e-books or audio books will </span><span lang="en-IE"><u><b>not</b></u></span><span lang="en-IE">
-                                                be accepted.</span></p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">Applications for
+                                            translations to be self-published or published only as e-books or
+                                            audio books will&nbsp;<u><b>not</b></u>&nbsp;be accepted.</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">Applications will only be accepted from a member
-                                                of staff at the publishing house planning to publish the
-                                                translation. The publishing house must be a registered company of
-                                                established reputation. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">Applications will only be
+                                            accepted from a member of staff at the publishing house planning to
+                                            publish the translation. The publishing house must be a registered
+                                            company of established reputation.&nbsp;</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">Translations which have </span><span lang="en-IE"><b>already
-                                                    been published or which are due to go to print</b></span><span lang="en-IE">
-                                                or be published before the meeting of the board of Literature
-                                                Ireland will be deemed </span><span lang="en-IE"><u><b>ineligible</b></u></span><span lang="en-IE">.
-                                            </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1"><a name="_GoBack"></a>
+                                            <font face="Times New Roman, sans-serif">Translations which
+                                            have&nbsp;<b>already been published or which are due to go to
+                                                print</b>&nbsp;or be published <u>before </u>the meeting of the
+                                            board of Literature Ireland will be deemed&nbsp;<u><b>ineligible</b></u>.</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">A translation which may be considered an
-                                            </span><span lang="en-IE"><b>adaptation or abridgement</b></span><span lang="en-IE">
-                                                may </span><span lang="en-IE"><u><b>not</b></u></span><span lang="en-IE">
-                                                be considered eligible – in such cases, the applicant is requested
-                                                to contact <a href="mailto:info@literatureireland.com">info@literatureireland.com</a>
-                                                for clarification in advance of applying. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">A translation which may be
+                                            considered an&nbsp;<b>adaptation or abridgement</b>&nbsp;may&nbsp;<u><b>not</b></u>&nbsp;be
+                                            considered eligible – in such cases, the applicant is requested to
+                                            contact&nbsp;<font color="#0000ff"><u><a href="mailto:info@literatureireland.com"><font color="#0f9039">info@literatureireland.com</font></a></u></font>&nbsp;for
+                                            clarification in advance of applying.&nbsp;</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Applications for the publication of a
-                                                    translation for which appropriate translation rights have not been
-                                                    secured </b></span><span lang="en-IE"><u><b>will not</b></u></span><span lang="en-IE"><b>
-                                                    be accepted</b></span><span lang="en-IE">. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Applications for the
+                                                publication of a translation for which appropriate translation
+                                                rights have not been secured</b><b>&nbsp;</b><u><b>will not</b></u><b>&nbsp;</b><b>be
+                                                accepted</b>.&nbsp;</font></p>
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">Publishers may submit a </span><span lang="en-IE"><u>maximum
-                                                    of two applications per round</u></span><span lang="en-IE">. A given
-                                                publishing house may receive a </span><span lang="en-IE"><u>maximum
-                                                    of three translation grants per annum</u></span><span lang="en-IE">.
-                                                A given publishing house may receive a maximum of five grants
-                                                overall for works by the same author in the same genre. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">Publishers may submit
+                                            a&nbsp;<u>maximum of two applications per round</u>. A given
+                                            publishing house may receive a&nbsp;<u>maximum of three translation
+                                                grants per annum</u>. A given publishing house may receive a maximum
+                                            of five grants overall for works by the same author in the same
+                                            genre.&nbsp;</font></p>
                                     </ol>
-                                    <p style="margin-left: 2.54cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <br/>
+                                    <p style="margin-left: 2.54cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol start="7">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE">The translation sample submitted with the
-                                                application will be sent by Literature Ireland to an independent
-                                                expert reader for assessment. The reader will submit a report on the
-                                                quality of the translation which will be made available to the board
-                                                of directors in its consideration of the application. </span><span lang="en-IE"><b>It
-                                                    is therefore recommended that the sample be from a final or near
-                                                    final version of the translation which has been proofread and/or
-                                                    edited. </b></span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif">The translation sample
+                                            submitted with the application will be sent by Literature Ireland to
+                                            an independent expert reader for assessment. The reader will submit
+                                            a report on the quality of the translation which will be made
+                                            available to the board of directors in its consideration of the
+                                            application.&nbsp;<b>It is therefore recommended that the sample be
+                                                from a final or near final version of the translation which has been
+                                                proofread and/or edited.</b><b>&nbsp;</b></font></p>
                                     </ol>
-                                    <p style="margin-left: 2.54cm; margin-bottom: 0.35cm; line-height: 115%">
-                                        <br/>
+                                    <p style="margin-left: 2.54cm; margin-top: 0.49cm; margin-bottom: 0.49cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><br/>
+                                        </font><br/>
                                         <br/>
 
                                     </p>
                                     <ol start="8">
                                         <li/>
-                                        <p lang="en-US" style="margin-bottom: 0.35cm; line-height: 115%">
-                                            <span lang="en-IE"><b>Applicants will receive an email within 10
-                                                    working days of the meeting to inform them of the outcome of their
-                                                    application.</b></span><span lang="en-IE"> Successful applicants
-                                                will also receive a formal grant agreement. </span>
-                                        </p>
+                                        <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                            <font face="Times New Roman, sans-serif"><b>Applicants will receive
+                                                an email within 10 working days of the meeting to inform them of the
+                                                outcome of their application.</b>&nbsp;Successful applicants will
+                                            also receive a formal grant agreement.&nbsp;</font></p>
                                     </ol>
-                                    <p style="margin-bottom: 0.35cm; line-height: 115%"><a name="_GoBack"></a>
-                                        <font color="#00b050"><font size="3" style="font-size: 12pt"><b>If
+                                    <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif"><font color="#00b050"><b>If
                                             you are applying for the first time or if you have any questions or
                                             concerns about your application, you are encouraged to contact a
-                                            member of Literature Ireland staff. </b></font></font>
+                                            member of Literature Ireland staff.</b></font><font color="#00b050"><b>&nbsp;</b></font></font></p>
+                                    <p style="margin-top: 0.49cm; margin-bottom: 0.35cm; line-height: 0.4cm; background: #d9d1d1">
+                                        <font face="Times New Roman, sans-serif">Contact email addresses are
+                                        available on the website
+                                        at:&nbsp;http://www.literatureireland.com/about/contact/.</font></p>
+                                    <p align="right" style="margin-bottom: 0cm; line-height: 100%; background: #c3bcbc">
+                                        Done</p>
+                                    <h2 class="western" style="margin-top: 0cm; margin-bottom: 0.11cm; background: #ffffff">
+                                        <font color="#0f9039"><font face="Georgia, sans-serif"><font size="4" style="font-size: 13pt"><b>Literature
+                                            Ireland</b></font></font></font></h2>
+                                    <p style="margin-bottom: 0cm; line-height: 0.48cm; background: #ffffff">
+                                        <font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt"><i>Contact
+                                            Details</i></font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;|&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt">&nbsp;</font></font></font><font color="#515151"><font face="Georgia, sans-serif"><font size="2" style="font-size: 10pt"><i>Legal
+                                            Note</i></font></font></font></p>
+                                    <p style="margin-bottom: 0cm; line-height: 100%"><br/>
+
                                     </p>
-                                    <p style="margin-bottom: 0.35cm; line-height: 115%">Contact email
-                                        addresses are available on the website at:
-                                        <a href="http://www.literatureireland.com/contact-us/">http://www.literatureireland.com/contact-us/</a>.
-                                    </p>-->
                                 </div>
 
 
@@ -1030,10 +779,10 @@ Note</i></font></font></font></p>
                                                     copies</b></span><span lang="en-IE"> of the published work (gratis)
                                                 to Literature Ireland, Trinity Centre for Literary Translation, 36
                                                 Fenian Street, Trinity College Dublin, Dublin D02 CH22, Ireland.
-                                                [</span><span lang="en-IE"><b>French publishers</b></span><span lang="en-IE">
-                                                are requested to send seven copies of the work to this address and
-                                                one copy to: Libraries and Archives Officer, Centre Culturel
-                                                Irlandais, 5, rue des Irlandais, 75005 Paris, France.] </span>
+                                                <!--                                                [</span><span lang="en-IE"><b>French publishers</b></span><span lang="en-IE">
+                                                                                                are requested to send seven copies of the work to this address and
+                                                                                                one copy to: Libraries and Archives Officer, Centre Culturel
+                                                                                                Irlandais, 5, rue des Irlandais, 75005 Paris, France.] </span>-->
                                         </p>
                                     </ol>
                                     <p style="margin-left: 1.27cm; margin-bottom: 0.35cm; line-height: 115%">

@@ -216,7 +216,7 @@ public class ExpertReaderDAO {
 
                 conn = DBConn.getConnection();
 
-                ps = conn.prepareStatement( "SELECT expertReaderUserID, expertReader.referenceNumber, sampleSentOut,expertReader.fileDestination,\n"
+                ps = conn.prepareStatement( "SELECT DISTINCT expertReaderUserID, expertReader.referenceNumber, sampleSentOut,expertReader.fileDestination,\n"
                         + "expertReader.summaryReport,\n"
                         + "expertReader.sampleReturned,\n"
                         + "expertReader.invoicePath, \n"

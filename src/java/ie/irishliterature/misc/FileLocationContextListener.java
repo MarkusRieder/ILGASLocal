@@ -15,19 +15,19 @@ import javax.servlet.annotation.WebListener;
 public class FileLocationContextListener implements ServletContextListener {
 
     @Override
-    public void contextInitialized( ServletContextEvent servletContextEvent )
-    {
+    public void contextInitialized( ServletContextEvent servletContextEvent ) {
 
-        String tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
-        String rootPath = "/home/glassfish/glassfish/domains/domain1/documents";
+//        String tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
+//        String rootPath = "/home/glassfish/glassfish/domains/domain1/documents";
+        String tempPath = "/home/markus/test/tempDir";
+        String rootPath = "/home/markus/public_html/test";
 
         System.out.println( "tempPath: " + tempPath + " rootPath: " + rootPath );
 
         ServletContext ctx = servletContextEvent.getServletContext();
         String relativePath = ctx.getInitParameter( "tempfile.dir" );
         File file = new File( rootPath + File.separator + relativePath );
-        if ( !file.exists() )
-        {
+        if ( !file.exists() ) {
             file.mkdirs();
         }
         System.out.println( "File.separator:: " + File.separator );
@@ -37,8 +37,7 @@ public class FileLocationContextListener implements ServletContextListener {
     }
 
     @Override
-    public void contextDestroyed( ServletContextEvent servletContextEvent )
-    {
+    public void contextDestroyed( ServletContextEvent servletContextEvent ) {
         //do cleanup if needed
     }
 

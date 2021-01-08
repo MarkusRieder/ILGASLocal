@@ -1,11 +1,13 @@
 <%-- 
-    Document   : login.jsp - remote
+    Document   : login.jsp 
     Created on : 17-Mar-2017, 11:57:10
     Author     : markus
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="cons" class="ie.irishliterature.util.Setup" scope="session"/>
 <!DOCTYPE html>
 <html style="height: 100%" >
     <head>
@@ -46,7 +48,7 @@
         <!--clear localStorage and sessionStorage-->
         <script type="text/javascript">
             localStorage.clear();
-            sessionStorage.clear();            
+            sessionStorage.clear();
         </script>
 
 
@@ -425,8 +427,12 @@
                     </div>
 
                     <div id="credit"> <a><img src="images/paw.gif" alt="The Cat" height="30" /></a>
-                        &copy; 2017-2020 mgr Software
-                    </div>
+                        <c:set var="CREDIT" value="<%=cons.CREDIT%>" />
+                       &copy;  ${CREDIT}
+                        <br/>
+                        <c:set var="VERSION" value="<%=cons.VERSION%>" />
+                        <span class="pull-right">  ILGAS v. ${VERSION}</span>
+                    </div><!-- end of credit -->
 
                 </div><!-- end of Base div -->
 

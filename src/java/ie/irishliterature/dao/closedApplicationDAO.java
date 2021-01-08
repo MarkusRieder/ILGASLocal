@@ -1,10 +1,10 @@
 package ie.irishliterature.dao;
 
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
-import static ie.irishliterature.dao.Test1DAO.getPressCoverage;
-import static ie.irishliterature.dao.Test1DAO.getPreviousGrantAid;
-import static ie.irishliterature.dao.Test1DAO.getTitles;
-import static ie.irishliterature.dao.Test1DAO.getTranslatorTracker;
+import static ie.irishliterature.dao.EntryDbDAO.getPressCoverage;
+import static ie.irishliterature.dao.EntryDbDAO.getPreviousGrantAid;
+import static ie.irishliterature.dao.EntryDbDAO.getTitles;
+import static ie.irishliterature.dao.EntryDbDAO.getTranslatorTracker;
 import ie.irishliterature.db.DBConn;
 import ie.irishliterature.db.DBException;
 import ie.irishliterature.model.GrantApplication;
@@ -86,7 +86,7 @@ public class closedApplicationDAO {
                 application.setReferenceNumber( ReferenceNumber );
                 application.setCompany( res.getString( "company" ) );
                 application.setPublisherID( res.getInt( "publisherID" ) );
-                application.setUserID( res.getString( "userID" ) );
+                application.setUserID( res.getInt( "userID" ) );
 
                 String[] bookTitle = getBookTitle( ReferenceNumber );
 
@@ -269,7 +269,7 @@ public class closedApplicationDAO {
                     application.setReferenceNumber( ReferenceNumber );
                     application.setCompany( res.getString( "company" ) );
                     application.setPublisherID( res.getInt( "publisherID" ) );
-                    application.setUserID( res.getString( "userID" ) );
+                    application.setUserID( res.getInt( "userID" ) );
 
                     application.setBoardMeeting( res.getDate( "boardMeeting" ) );
                     application.setContractSentToPublisher( res.getDate( "contractSentToPublisher" ) );

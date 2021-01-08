@@ -36,44 +36,6 @@ $(document).ready(function () {
 });
 
 
-
-/* autocomplete */
-/* AutoComplete_international_publishers */
-
-$(function () {
-    $("#company").autocomplete({
-        source: './ACintPublishers_test', // The source of the AJAX results
-        dataType: 'json',
-        data: '',
-        minLength: 3, // The minimum amount of characters that must be typed before the autocomplete is triggered
-        focus: function (event, ui) { // What happens when an autocomplete result is focused on
-            $("#company").val(ui.item.name);
-            return false;
-        },
-        select: function (event, ui) { // What happens when an autocomplete result is selected
-            $("#company").val(ui.item.name);
-            $('#companyNumber').val(ui.item.id);
-            $('#Address1').val(ui.item.Address1);
-            $('#Address2').val(ui.item.Address2);
-            $('#Address3').val(ui.item.Address3);
-            $('#Address4').val(ui.item.Address4);
-            $('#postCode').val(ui.item.postCode);
-            $('#City').val(ui.item.City);
-            $('#country').val(ui.item.Country);
-            $('#countryCode').val(ui.item.CountryCode);
-            $('#Telephone').val(ui.item.Telephone);
-            $('#Fax_Number').val(ui.item.Fax);
-            $('#Web_Address').val(ui.item.WWW);
-            $('#doNotMail').val(ui.item.DoNotMail);
-            $('#Bursaries').val(ui.item.Bursaries);
-            $('#Founded').val(ui.item.Founded);
-            $('#Number_Of_Titles').val(ui.item.NumberOfTitles);
-            $('#Date_modified').val(ui.item.DateModified);
-            $('#note').val(ui.item.Notes);
-        }
-    });
-});
-
 /* Tooltips */
 $(document).ready(function () {
     $('input[type=text][name=Company]').tooltip({
@@ -148,36 +110,6 @@ function checkUserName() {
         });
     }
 }
-
-//$(function () {
-//    $('#register-form').validator().on('submit', function (e) {
-//        if (e.isDefaultPrevented()) {
-//            // handle the invalid form...
-//        } else {
-//            blockUi();
-//            // everything looks good!
-//            $.post("RegisterServlet", $("#register-form").serialize(), function (data) {
-//                var jdata = JSON.parse(data);
-//                console.log("RegisterServlet jdata " + jdata);
-//                if (jdata.code === -1) {
-//                    $("#errorField .message").text(jdata.message);
-//                    $("#errorField").show();
-//                    $("#successField").hide();
-//                } else {
-//                    $("#successField .message").text(jdata.message);
-//                    $("#errorField").hide();
-//                    $("#successField").show();
-//                    $("#formRegister").hide();
-//                }
-//                
-//            }).always(function () {
-//                unBlockUi();
-//            });
-//        }
-//        return false;
-//    });
-//
-//});
 
 window.onload = function () {
     $('.selectpicker').selectpicker();

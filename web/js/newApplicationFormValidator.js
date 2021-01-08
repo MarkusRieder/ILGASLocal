@@ -7,24 +7,7 @@
 /*global $, jQuery, alert*/
 $("document").ready(function () {
     console.log("newApplicationFormValidator document.ready  ");
-    // override jquery validate plugin defaults
-//    $.validator.setDefaults({
-//        highlight: function (element, errorClass, validClass) {
-//            $(element).closest('.form-group').removeClass('has-success has-feedback').addClass('has-error has-feedback');
-//        },
-//        unhighlight: function (element, errorClass, validClass) {
-//            $(element).closest('.form-group').removeClass('has-error has-feedback').addClass('has-success has-feedback');
-//        },
-//        errorElement: 'span',
-//        errorClass: 'help-block',
-//        errorPlacement: function (error, element) {
-//            if (element.parent('.input-group').length) {
-//                error.insertAfter(element.parent());
-//            } else {
-//                error.insertAfter(element);
-//            }
-//        }
-//    });
+
 
     /*
      * validName 
@@ -36,7 +19,17 @@ $("document").ready(function () {
     $.validator.addMethod("validname", function (value, element) {
         return this.optional(element) || validName.test(value);
     }, "Please use only letters, numbers, '.',''', '-',', '_' and space");
-        /*
+    /*
+     * validName 
+     * checking for UTF-8 string
+     * 
+     * @type XRegExp
+     */
+    var validAddress = new XRegExp("^[\\p{L}\\p{Nd} .:'_-]+$");
+    $.validator.addMethod("validAddress", function (value, element) {
+        return this.optional(element) || validAddress.test(value);
+    }, "Please use only letters, numbers, '.',''',':', '-',', '_' and space");
+    /*
      * validNamEuro 
      * checking for UTF-8 string plus €
      * 
@@ -111,18 +104,21 @@ $("document").ready(function () {
      */
     var validFileName = new XRegExp("^[\\p{L}\\p{Nd} ._-]+$");
     $.validator.addMethod("validFileName", function (value, element) {
-//        alert("here...");
-//        console.log("validFileName  value " + value);
-//        console.log("validFileName  re " + validFileName + " re.test(value)  " + validFileName.test(value));
         return this.optional(element) || validFileName.test(value);
-//        console.log("newApplicationFormvalidate  element " + element.files[0].name + " event " + event);
-//        return this.optional(element) || (validFileName.test(element.files[0].name));
     }, "Incorect file name - please use only letters, numbers, '.', '-', '_' and space");
+
+//    $.validator.addMethod("filesize", function (value, element, param) {
+//         console.log("filesize ::value " + value + "  element  " + element.files[0].name  + "  param  " + param);
+//        console.log("filesize ::this.optional(element) " + this.optional(element) + "  element.files[0].size <= param  " + element.files[0].size <= param  + "  param  " + param);
+//        
+//        return this.optional(element) || (element.files[0].size <= param);
+//    }, 'File size must be less than {10}');
 
     /*
      * validate form
      */
     $("#applicationForm").validate({
+
         /*
          * validate on onkeyup
          * 
@@ -130,16 +126,23 @@ $("document").ready(function () {
          * @param {type} event
          * @returns {undefined}
          */
-        onkeyup: function (element, event) {
-
-            if (event.which === 9 && event.which === 3 && this.elementValue(element) === "") {
-//                console.log("applicationFormvalidate  element " + element.value + " event " + event);
-                return;
-            } else {
-//                console.log("applicationFormvalidate  element " + element.value + " event " + event);
-                this.element(element);
-            }
+        onkeyup: function (element) {
+            this.element(element);  // <- "eager validation"
         },
+        onkeydown: function (element) {
+            this.element(element);  // <- "eager validation"
+        },
+        onkeypress: function (element) {
+            this.element(element);  // <- "eager validation"
+        },
+        onfocusout: function (element) {
+            this.element(element);  // <- "eager validation"
+        },
+        onfocus: function (element) {
+            this.element(element);  // <- "eager validation"
+        },
+
+        ignore: [],
         rules:
                 {
                     username: {
@@ -160,7 +163,8 @@ $("document").ready(function () {
                     },
                     Address1: {
                         required: true,
-                        validname: true
+                        validAddress: true,
+                        maxlength: 250
                     },
                     postCode: {
                         required: true,
@@ -168,7 +172,16 @@ $("document").ready(function () {
                     },
                     Address2: {
                         required: true,
-                        validname: true
+                        validAddress: true,
+                        maxlength: 250
+                    },
+                    Address3: {
+                        validAddress: true,
+                        maxlength: 250
+                    },
+                    Address4: {
+                        validAddress: true,
+                        maxlength: 250
                     },
                     Country: {
                         required: true,
@@ -238,12 +251,16 @@ $("document").ready(function () {
                     },
                     translationTitle: {
                         required: true,
+                        minlength: 2,
                         validname: true
                     },
-//                    languageOfTheOriginal: {
-//                        required: true,
-//                        validLanguage: true
-//                    },
+                    genre: {
+                        required: true,
+                        validname: true
+                    },
+                    proposedDateOfPublication: {
+                        required: true
+                    },
                     appLanguageOriginal: {
                         required: true,
                         validLanguage: true
@@ -256,20 +273,11 @@ $("document").ready(function () {
                         required: true,
                         validname: true
                     },
-//                    series: {
-//                        validname: true,
-//                        minlength: 2
-//                    },
                     originalPageExtent: {
                         required: true,
                         number: true
                     },
                     nameuser: {
-                        required: true,
-                        validname: true,
-                        minlength: 2
-                    },
-                    agreement1: {
                         required: true,
                         validname: true,
                         minlength: 2
@@ -303,6 +311,7 @@ $("document").ready(function () {
                         minlength: 2
                     },
                     appForeignCountry: {
+                        required: true,
                         onlyLetters: true,
                         minlength: 2
                     },
@@ -317,11 +326,6 @@ $("document").ready(function () {
                         validname: true,
                         minlength: 2
                     },
-//                    languages: {
-//                        required: true,
-//                        validname: true,
-//                        minlength: 2
-//                    },
                     translatorFee: {
                         required: true,
                         number: true
@@ -336,6 +340,9 @@ $("document").ready(function () {
                         validname: true,
                         minlength: 2
                     },
+                    /*
+                     * removed during Covid-19
+                     */
 //                    dateCopiesWereSent: {
 //                        required: true,
 //                        validname: true,
@@ -374,12 +381,12 @@ $("document").ready(function () {
                         validname: true,
                         minlength: 2
                     },
-                    "translatorName": {
+                    translatorName: {
                         required: true,
                         validname: true,
                         minlength: 2
                     },
-                    "translatorrightsHolderName":{
+                    "translatorrightsHolderName": {
                         required: true,
                         validname: true,
                         minlength: 2
@@ -392,21 +399,25 @@ $("document").ready(function () {
                     "Original": {
                         required: true,
                         validFileName: true,
+//                        filesize: 5,
                         minlength: 2
                     },
                     "TranslationSample": {
                         required: true,
                         validFileName: true,
+//                        filesize: 5,
                         minlength: 2
                     },
                     "Translator_CV": {
                         required: true,
                         validFileName: true,
+//                        filesize: 5,
                         minlength: 2
                     },
                     "Contract": {
                         required: true,
                         validFileName: true,
+//                        filesize: 5,
                         minlength: 2
                     },
                     first0: {
@@ -425,9 +436,12 @@ $("document").ready(function () {
                         minlength: 2
                     },
                     "Agreement-1": {
-                        validFileName: true
+                        required: true,
+                        validFileName: true,
+                        minlength: 2
                     },
                     "Addendum-1": {
+//                        filesize: 5,
                         validFileName: true
                     },
                     datepicker: {
@@ -435,22 +449,47 @@ $("document").ready(function () {
                         date: true
                     }
                 },
+        showErrors: function (errorMap, errorList) {
+
+            var errors = this.numberOfInvalids();  // <- NUMBER OF INVALIDS
+            console.log("this.numberOfInvalids 1 ", errors);
+
+//            $("#num_invalids").html(errors);
+            console.log(errorMap);
+            $.each(errorMap, function (key, value) {
+                console.log("pet name of invalid field " + key + " Value " + value); // <- name of invalid field
+                var parent = $('[name="' + key + '"]').parent();
+                console.log("pet parent: ", parent); // <- parent object
+            });
+
+//            if (errors) {
+//                var message = errors === 1
+//                        ? 'Your form has 1 error'
+//                        : 'Your form has ' + errors + ' errors.';
+//                message = message + ' Please, fix them first!';
+////                $("#help-block span").empty().html(message);
+//                $("#help-block").show();
+//            } else {
+//                $("#help-block").hide();
+//            }
+            this.defaultShowErrors(); // <- ENABLE default MESSAGES
+        },
         messages: {
             username: {
                 required: "Please Enter User Name",
                 validname: "User name must contain only letters and spaces",
                 minlength: "Your Name is Too Short"
             },
-            firstname: {
-                required: "Please Enter First Name",
-                validname: "First name must contain only letters and spaces",
-                minlength: "Your Name is Too Short"
-            },
-            lastname: {
-                required: "Please Enter Last Name",
-                validname: "Last name must contain only letters and spaces",
-                minlength: "Your Name is Too Short"
-            },
+//            firstname: {
+//                required: "Please Enter First Name",
+//                validname: "First name must contain only letters and spaces",
+//                minlength: "Your Name is Too Short"
+//            },
+//            lastname: {
+//                required: "Please Enter Last Name",
+//                validname: "Last name must contain only letters and spaces",
+//                minlength: "Your Name is Too Short"
+//            },
             email: {
                 required: "Please Enter Email Address",
                 validemail: "Enter Valid Email Address"
@@ -483,6 +522,11 @@ $("document").ready(function () {
                 validname: "Last name must contain only letters and spaces",
                 minlength: "Your Name is Too Short"
             },
+            translationTitle: {
+                required: "Please Enter a translation title",
+                validname: "Translation title must contain only letters and spaces",
+                minlength: "Translation title  is Too Short"
+            },
             originalPageExtent: {
                 number: "Original page extent contains numbers only"
             },
@@ -508,22 +552,28 @@ $("document").ready(function () {
                 minlength: "Publication year has 4 digits"
             },
             rightsHoldersName0: {
-                required: "<span class='pull_left'>Last name must contain only letters and spaces</span>",
-                validname: "Incorect word - please use only letters, numbers, '.',''', '-', '_' and space"
+                validname: "Incorect name - please use only letters, numbers, '.',''', '-', '_' and space"
             },
             "Agreement-1": {
-//                required: "Please enter Translation rights holder",
-                validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space Agreement"
+                validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space"
             },
             "Addendum-1": {
-//                required: "Please enter Translation rights holder",
-                validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space Addendum"
+                validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space"
+            },
+            "Contract": {
+                required: "Please Enter the Authors Last Name",
+                filesize: "Please Enter the Authors Last Name",
+                validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space"
+            },
+            "Translator_CV": {
+                required: "Please Enter the Authors Last Name",
+                filesize: "Please Enter the Authors Last Name",
+                validFileName: "Incorect file name - please use only letters, numbers, '.', '-', '_' and space"
             },
             datepicker: {
-                required: " * required: You must enter a destruction date",
+                required: " * required: You must enter a  date",
                 date: "Can contain digits only"
             }
-
 
         },
         errorElement: "em",
@@ -570,6 +620,32 @@ $("document").ready(function () {
                 $("<span class='glyphicon glyphicon-remove form-control-feedback'></span>").insertAfter(element);
             }
         },
+        invalidHandler: function (e, validator) {
+            //validator.errorList contains an array of objects, where each object has properties "element" and "message".  element is the actual HTML Input.
+            var errors = validator.numberOfInvalids();
+            console.log("this.numberOfInvalids ", errors);
+            console.log("validator.errorList ");
+//            for (var i = 0; i < validator.errorList.length; i++) {
+//                console.log(validator.errorList[i]);
+//            }
+//            console.log("validator.errorMap ");
+//            //validator.errorMap is an object mapping input names -> error messages
+//            for (var i in validator.errorMap) {
+//                console.log(i, ":", validator.errorMap[i]);
+//            }
+            var fieldset = $("#my-tab").parent().parent().parent().parent().parent().parent().parent();
+            console.log("plum fieldset ", fieldset);
+            for (var i = 0; i < validator.errorList.length; i++) {
+
+                var formId = validator.errorList[i].element.closest('.tab-pane').id;
+                console.log("plum formId ", formId);
+                var tab = $('[href="#' + formId + '"]');
+                console.log("plumInvalidHandler tab ", tab);
+                $(tab).css('color', 'red');
+                console.log(validator.errorList[i]);
+            }
+        },
+
         success: function (label, element) {
             // Add the span element, if doesn't exists, and apply the icon classes to it.
             if (!$(element).next("span")[ 0 ]) {
@@ -579,29 +655,26 @@ $("document").ready(function () {
         highlight: function (element, errorClass, validClass) {
             $(element).parents(".form-group").addClass("has-error").removeClass("has-success");
             $(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
+            var tab = $(element).closest('.tab-pane').attr('id');
+            console.log("plum highlight tab ", tab);
+            var tabHighlight = $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+            console.log("plum highlight tabHighlight ", tabHighlight);
+//            $(tabHighlight).css('color', 'red');
         },
         unhighlight: function (element, errorClass, validClass) {
             $(element).parents(".form-group").addClass("has-success").removeClass("has-error");
             $(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
+            var tab = $(element).closest('.tab-pane').attr('id');
+            console.log("plum tabUnHighlight tab ", tab);
+            var tabUnHighlight = $('.nav-tabs a[href="#' + tab + '"]').tab('show');
+//             console.log("plum tabUnHighlight ppp ", ppp);
+//            $(tabUnHighlight).css('color', ' black');
         }
+//        submitHandler: function (form) {
+//            //submit form here
+//        }
     });
+
 });
 
-//        submitHandler: function (form) {
-//
-//            alert('Your request has been submitted ...');
-//            form.submit();
-//            //var url = $('#register-form').attr('action');
-//            //location.href=url;
-//
-//        };
-
-/*submitHandler: function() 
- :{ 
- alert("Submitted!");
- $("#register-form").resetForm(); 
- }*/
-//    });
-
-//});
 

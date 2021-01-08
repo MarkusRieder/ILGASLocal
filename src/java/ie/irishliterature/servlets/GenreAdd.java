@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ie.irishliterature.servlets;
 
 import ie.irishliterature.dao.GenresDAO;
@@ -58,7 +53,6 @@ public class GenreAdd extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -91,24 +85,6 @@ public class GenreAdd extends HttpServlet {
     {
 
         System.out.println( "GenreAdd doPost " );
-//        Enumeration en = request.getParameterNames();
-//
-//        while (en.hasMoreElements()) {
-//            Object objOri = en.nextElement();
-//
-//            String param = (String) objOri;
-//
-//            String value = request.getParameter(param);
-//
-//            System.out.println("pendingApplicationDataServlet Parameter Name is '" + param + "' and Parameter Value is '" + value + "'\n");
-//
-//        }
-//
-//        Enumeration<String> attributes = request.getSession().getAttributeNames();
-//        while (attributes.hasMoreElements()) {
-//            String attribute = attributes.nextElement();
-//            System.out.println("pendingApplicationDataServlet attribute '" + attribute + " and Parameter Value is " + request.getSession().getAttribute(attribute));
-//        }
 
         System.out.println( "genre:  " + request.getParameter( "genre" ) );
 
@@ -126,38 +102,10 @@ public class GenreAdd extends HttpServlet {
         }
 
         System.out.println( "result  " + result );
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Your Input Date Format
-//        Date date = null;
-//        try {
-//            date = sdf.parse(request.getParameter("date"));
-//        } catch (ParseException ex) {
-//            Logger.getLogger(GenreDelete.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        SimpleDateFormat ft = new SimpleDateFormat("EEEE");
 
-//        out.print("<h2 align=\"left\">" + ft.format(date) + "</h2>");
-//        out.print("<h2 align=\"left\">" + id + "</h2>");
         response.setContentType( "text/html" );
         PrintWriter out = response.getWriter();
 
-//        out.println("<html><body>");
-//        out.println("<script type=\"text/javascript\">");
-//        out.println("var popwin = window.open(\"pag/WEB-INF/views/welcome_Staff_1.jsp\")");
-//        out.println("setTimeout(function(){ popwin.close(); window.location.href='/WEB-INF/views/welcome_Staff_1';},5000)");
-//        out.println("</script>");
-//        out.println("</body></html>");
-//
-////        out.println("<HTML>");
-////        out.println("<HEAD><TITLE>Hello World</TITLE></HEAD>");
-////        out.println("<BODY>");
-////        out.println("<BIG>Hello World</BIG>");
-////        out.println("<h2 align=\"left\">" + ft.format(date) + "</h2>");
-////        out.println("</BODY></HTML>");
-//////        request.setAttribute("activeTab", "Genres");
-////        request.setAttribute("errorMessage", "Invalid Credentials!!");
-////        request.getRequestDispatcher("/WEB-INF/views/welcome_Staff_1.jsp").forward(request, response);
-////    get id from jsp then delete via GenresDAO - return message 
     }
 
     /**
@@ -169,6 +117,6 @@ public class GenreAdd extends HttpServlet {
     public String getServletInfo()
     {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

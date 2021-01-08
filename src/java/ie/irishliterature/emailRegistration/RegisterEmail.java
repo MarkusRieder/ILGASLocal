@@ -53,6 +53,10 @@ public class RegisterEmail extends HttpServlet {
         String lastName = request.getParameter( "inputLastName" );
         String fullName = firstName + " " + lastName;
         String password = request.getParameter( "inputPassword" );
+        
+        System.out.println( "RegisterEmail doPost" );
+        System.out.println( "firstName " + firstName + " lastName " + lastName + " fullname " + fullName + " email " + email );
+        
         Status sp = new Status();
         String output = "";
         if ( !validate( email, firstName, lastName, password ) )
@@ -79,14 +83,24 @@ public class RegisterEmail extends HttpServlet {
             try
             {
 
-                // check whether email exists or not
+                /*
+                 *  check whether email exists or not
+                 */
                 if ( !ApplicationDAO.isEmailExists( email ) )
                 {
-                    // create account if email not exists
+                    /*
+                     * create account if email not exists
+                     */
                     int id = ApplicationDAO.insertRow( up );
 
                     String strID = id + "";
-                    // send verification email
+                    
+        System.out.println( "RegisterEmail sendEmailRegistrationLink" );
+        System.out.println( "uname " + strID + " fullname " + fullName + " email " + email );
+        
+                    /*
+                     * send verification email
+                     */
                     MailUtil.sendEmailRegistrationLink( strID, fullName, email, hash );
                     sp.setCode( 0 );
                     sp.setMessage( "Registation Link Was Sent To Your Mail Successfully. Please Verify Your Email" );
@@ -104,6 +118,7 @@ public class RegisterEmail extends HttpServlet {
             catch ( DBException | MessagingException e )
             {
                 LOGGER.debug( e.getMessage() );
+                System.err.println( "MessagingException " + e.getMessage() );
                 sp.setCode( -1 );
                 sp.setMessage( e.getMessage() );
                 output = Utils.toJson( sp );

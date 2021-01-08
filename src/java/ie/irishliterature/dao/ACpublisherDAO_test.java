@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ie.irishliterature.dao;
 
 import static ie.irishliterature.dao.GrantApplicationDAO.getcurrentTimeStamp;
@@ -180,9 +175,7 @@ public class ACpublisherDAO_test {
             System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber ps1::  " + ps1 );
 
             res = ps1.executeQuery();
-
-            System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber res::  " + res.toString() );
-
+        
             while ( res.next() ) {
 
                 System.out.println( "ACpublisherDAO_test getpublisherByReferenceNumber FULL_NAME::  " + res.getString( "fullName" ) );
@@ -544,7 +537,7 @@ public class ACpublisherDAO_test {
         return id;
     }
 
-    //updatePublisher
+    /* updatePublisher */
     public static boolean updatePublisher( Publisher publisher, int Company_Number ) throws DBException {
 
         Connection conn = null;
@@ -629,7 +622,7 @@ public class ACpublisherDAO_test {
         }
         catch ( ClassNotFoundException | SQLException e ) {
             DBConn.close( conn, ps1, res );
-            throw new DBException( "updatePublisher - 4 Excepion while accessing database" );
+            throw new DBException( "ACpublisherDAO_test updatePublisher - 4 Excepion while accessing database" );
         }
 
         return id;

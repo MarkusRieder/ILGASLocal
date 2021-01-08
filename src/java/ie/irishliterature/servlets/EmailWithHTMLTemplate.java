@@ -34,13 +34,14 @@ import javax.servlet.http.HttpSession;
  * handles email templates
  *
  * <br><br>
- * $LastChangedDate:: 2019-09-21 07:00:27 +0100 (Sat, 21 Sep 2019)  $:  Date of last change<br>
- * $LastChangedRevision:: 11                                        $:  Revision of last commit<br>
- * $Author:: markus                                                 $:  Author of last commit
- * 
+ * $LastChangedDate:: 2019-09-21 07:00:27 +0100 (Sat, 21 Sep 2019) $: Date of
+ * last change<br>
+ * $LastChangedRevision:: 11 $: Revision of last commit<br>
+ * $Author:: markus $: Author of last commit
+ *
  * @author Markus Rieder
  */
-@WebServlet( name = "emailWithHTMLTemplate", urlPatterns = { "/emailWithHTMLTemplate"} )
+@WebServlet( name = "emailWithHTMLTemplate", urlPatterns = { "/emailWithHTMLTemplate" } )
 public class EmailWithHTMLTemplate extends HttpServlet {
 
     /**
@@ -57,8 +58,7 @@ public class EmailWithHTMLTemplate extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType( "text/html;charset=UTF-8" );
 
-        try ( PrintWriter out = response.getWriter() )
-        {
+        try ( PrintWriter out = response.getWriter() ) {
             /*
              * TODO output your page here. You may use following sample code.
              */
@@ -74,7 +74,6 @@ public class EmailWithHTMLTemplate extends HttpServlet {
         }
     }
 
-  
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -102,8 +101,7 @@ public class EmailWithHTMLTemplate extends HttpServlet {
     @Override
     protected void doPost( HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException {
-        
-        
+
         HttpSession httpSession = request.getSession();
 
         String name = "";
@@ -116,13 +114,11 @@ public class EmailWithHTMLTemplate extends HttpServlet {
         System.out.println( "############################### /emailWithHTMLTemplate ####################################" );
         System.out.println( "Enumeration keys   " );
         Enumeration keys = httpSession.getAttributeNames();
-        while ( keys.hasMoreElements() )
-        {
+        while ( keys.hasMoreElements() ) {
             String key = ( String ) keys.nextElement();
             System.out.println( "key  :" + key + ": " + httpSession.getValue( key ) );
 
-            switch ( key )
-            {
+            switch ( key ) {
 
                 case "name":
                     name = ( String ) httpSession.getValue( key );
@@ -149,8 +145,7 @@ public class EmailWithHTMLTemplate extends HttpServlet {
         }
         Enumeration en = request.getParameterNames();
 
-        while ( en.hasMoreElements() )
-        {
+        while ( en.hasMoreElements() ) {
             Object objOri = en.nextElement();
 
             String param = ( String ) objOri;
@@ -169,8 +164,7 @@ public class EmailWithHTMLTemplate extends HttpServlet {
         System.out.println( "selectedTemplateName  " + selectedTemplateN.getName() );
         String selectedTemplateName = selectedTemplateN.getName();
         String subject = "";
-        switch ( selectedTemplateName )
-        {
+        switch ( selectedTemplateName ) {
             case "EmailVerificationStaff.html":
                 subject = "Irish Literature - Email Registration";
                 break;
@@ -216,8 +210,7 @@ public class EmailWithHTMLTemplate extends HttpServlet {
                 break;
         }
 
-        try
-        {
+        try {
 
             //Email data 
 //            String Email_Id = "markus@rieder.ie";        //change to your email ID
@@ -225,29 +218,38 @@ public class EmailWithHTMLTemplate extends HttpServlet {
             String recipient_mail_id = "markus@rieder.ie";   //change to recipient email id
             String mail_subject = subject;
 
-            //Set mail properties
+            /*
+             * Set mail properties
+             */
             Properties props = new Properties();
-
-//            props.put( "mail.smtp.host", Setup.MAIL_SMTP_HOST );
-//            props.put( "mail.smtp.user", Setup.MAIL_USERNAME );
-//            props.put( "mail.smtp.port", "26" );
-//            props.put( "mail.smtp.auth", "true" );
-//            props.put( "mail.smtp.starttls.enable", "true" );
 
             props.put( "mail.smtp.host", "smtp.gmail.com" );
             props.put( "mail.smtp.user", "online@literatureireland.com" );
+            props.put( "mail.smtp.password", "Hell0W0rld19" );
             props.put( "mail.smtp.port", "465" );
             props.put( "mail.smtp.auth", "true" );
             props.put( "mail.smtp.starttls.enable", "true" );
-            
+
+//            props.put( "mail.smtp.host", "lh30.dnsireland.com" );
+//            props.put( "mail.smtp.port", "26" );
+//            props.put( "mail.smtp.starttls.enable", "true" );
+//            props.put( "mail.smtp.ssl.trust", "*" );
+//            props.put( "mail.smtp.auth", "true" );
             Session session = Session.getDefaultInstance( props );
             MimeMessage message = new MimeMessage( session );
 
-            try
-            {
-                //Set email data 
+            /*
+             * Used to debug SMTP issues
+             */
+            session.setDebug( true );
+
+            try {
+                /*
+                 * Set email data
+                 */
 //                message.setFrom( new InternetAddress( Setup.MAIL_USERNAME ) );
-                  message.setFrom( new InternetAddress( "online@literatureireland.com" ) );
+//                message.setFrom( new InternetAddress( "online@literatureireland.com" ) );
+
                 message.addRecipient( Message.RecipientType.TO, new InternetAddress( recipient_mail_id ) );
                 message.setSubject( mail_subject );
                 MimeMultipart multipart = new MimeMultipart();
@@ -265,33 +267,38 @@ public class EmailWithHTMLTemplate extends HttpServlet {
                 input.put( "Topic", "HTML Template for Email" );
                 input.put( "Content In", "English" );
 
-                //HTML mail content
+                /*
+                 * HTML mail content
+                 */
                 String htmlText = readEmailFromHtml( selectedTemplate, input );
                 messageBodyPart.setContent( htmlText, "text/html" );
 
                 multipart.addBodyPart( messageBodyPart );
                 message.setContent( multipart );
 
-                //Conect to smtp server and send Email
+                /*
+                 * Conect to smtp server and send Email
+                 */
                 Transport transport = session.getTransport( "smtp" );
-//                transport.connect( Setup.MAIL_SMTP_HOST, Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD );
-  transport.connect("smtp.gmail.com" ,"online@literatureireland.com" , "%q9SAL35l*Tf" );
+//             Transport transport = session.getTransport();
+
+                //  transport.connect( Setup.MAIL_SMTP_HOST, Setup.MAIL_USERNAME, Setup.MAIL_PASSWORD );
+                //  transport.connect("smtp.gmail.com" ,"online@literatureireland.com" , "%q9SAL35l*Tf" );
+                transport.connect( "smtp.gmail.com", "online@literatureireland.com", "Hell0W0rld19" );
+
                 transport.sendMessage( message, message.getAllRecipients() );
                 transport.close();
                 System.out.println( "Mail sent successfully..." );
 
             }
-            catch ( MessagingException ex )
-            {
+            catch ( MessagingException ex ) {
                 Logger.getLogger( EmailWithHTMLTemplate.class.getName() ).log( Level.SEVERE, null, ex );
             }
-            catch ( Exception ae )
-            {
+            catch ( Exception ae ) {
                 ae.printStackTrace();
             }
         }
-        catch ( Exception exception )
-        {
+        catch ( Exception exception ) {
             exception.printStackTrace();
         }
 
@@ -307,16 +314,13 @@ public class EmailWithHTMLTemplate extends HttpServlet {
 
     protected String readEmailFromHtml( String filePath, Map<String, String> input ) {
         String msg = readContentFromFile( filePath );
-        try
-        {
+        try {
             Set<Map.Entry<String, String>> entries = input.entrySet();
-            for ( Map.Entry<String, String> entry : entries )
-            {
+            for ( Map.Entry<String, String> entry : entries ) {
                 msg = msg.replace( entry.getKey().trim(), entry.getValue().trim() );
             }
         }
-        catch ( Exception exception )
-        {
+        catch ( Exception exception ) {
             exception.printStackTrace();
         }
         return msg;
@@ -326,26 +330,21 @@ public class EmailWithHTMLTemplate extends HttpServlet {
     private String readContentFromFile( String fileName ) {
         StringBuffer contents = new StringBuffer();
 
-        try
-        {
+        try {
             //use buffering, reading one line at a time
             BufferedReader reader = new BufferedReader( new FileReader( fileName ) );
-            try
-            {
+            try {
                 String line = null;
-                while ( ( line = reader.readLine() ) != null )
-                {
+                while ( ( line = reader.readLine() ) != null ) {
                     contents.append( line );
                     contents.append( System.getProperty( "line.separator" ) );
                 }
             }
-            finally
-            {
+            finally {
                 reader.close();
             }
         }
-        catch ( IOException ex )
-        {
+        catch ( IOException ex ) {
             ex.printStackTrace();
         }
         return contents.toString();

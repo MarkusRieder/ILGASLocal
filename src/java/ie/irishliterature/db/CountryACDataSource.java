@@ -9,6 +9,7 @@ package ie.irishliterature.db;
  *
  * @author markus
  */
+import ie.irishliterature.util.Setup;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,10 +22,11 @@ import java.util.logging.Level;
 public class CountryACDataSource {
 
     private static CountryACDataSource ds = null;
-    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost/ILGAS:3306?useSSL=false";
-    private static final String USER = "markus";
-    private static final String PASS = "T6Sv0m3kTAPQZLX4KTIHAw2qgIYLXMMWU2NwYfmNLJr44PDUEJ";
+//    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.MysqlDataSource";
+//    private static final String DB_URL = "jdbc:mysql://localhost/ILGAS:3306?useSSL=false";
+    private static final String DB_URL = Setup.DB_URL;
+    private static final String USER = Setup.DB_USERNAME ;
+    private static final String PASS = Setup.DB_PASSWORD;
 
     public CountryACDataSource()
     {
@@ -45,7 +47,8 @@ public class CountryACDataSource {
         Connection conn = null;
         try
         {
-            Class.forName( "com.mysql.jdbc.Driver" );
+//            Class.forName( "com.mysql.jdbc.Driver" );
+            Class.forName( Setup.JDBC_DRIVER );
             conn = ( Connection ) DriverManager.getConnection( DB_URL, USER, PASS );
         }
         catch ( ClassNotFoundException | SQLException e )
@@ -67,7 +70,8 @@ public class CountryACDataSource {
         Connection conn = null;
         try
         {
-            Class.forName( "com.mysql.jdbc.Driver" );
+           //            Class.forName( "com.mysql.jdbc.Driver" );
+            Class.forName( Setup.JDBC_DRIVER );
             conn = ( Connection ) DriverManager.getConnection( DB_URL, USER, PASS );
             PreparedStatement preStatement;
             ResultSet resultSet;

@@ -83,7 +83,7 @@ public class PendingApplicationServlet extends HttpServlet {
     private String ReferenceNumber;
     private String company;
     private int publisherID;
-    private String userID;
+    private int userID;
     private String agreement; // path to file
     private String contract;  // path to file
     private String proposedDateOfPublication;
@@ -256,8 +256,11 @@ public class PendingApplicationServlet extends HttpServlet {
     public void init() {
 
         // Get the file location where they would be stored.
-        tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
-        rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
+//        tempPath = "/home/glassfish/glassfish/domains/domain1/tempDir";
+//        rootPath = "/home/glassfish/glassfish/domains/domain1/docroot/documents";
+                String tempPath = "/home/markus/test/tempDir";
+        String rootPath = "/home/markus/public_html/test";
+        
         System.out.println( "PendingApplicationServlet :: " );
         System.out.println( "file location :tempPath: " + tempPath );
         System.out.println( "file location :rootPath: " + rootPath );
@@ -448,7 +451,7 @@ public class PendingApplicationServlet extends HttpServlet {
                             Type = fieldvalue;
                             break;
                         case "userID":
-                            userID = fieldvalue;
+                            userID = Integer.parseInt( fieldvalue );
                             break;
                         case "publisherID":
                             publisherID = Integer.parseInt( fieldvalue );
@@ -968,16 +971,18 @@ public class PendingApplicationServlet extends HttpServlet {
             /*
              * Original Work & Sample Translation
              */
-            application.setCopiesSent( copiesSent );
-            if ( !"".equals( dateCopiesWereSent ) ) {
-                System.out.println( "!\"\".equals(dateCopiesWereSent)" );
-                application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
-            }
-            if ( dateCopiesWereSent != null ) {
-                System.out.println( "!= null" );
-                application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
-            }
-            application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
+            
+
+//            application.setCopiesSent( copiesSent );
+//            if ( !"".equals( dateCopiesWereSent ) ) {
+//                System.out.println( "!\"\".equals(dateCopiesWereSent)" );
+//                application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
+//            }
+//            if ( dateCopiesWereSent != null ) {
+//                System.out.println( "!= null" );
+//                application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
+//            }
+//            application.setDateCopiesWereSent( convertDate( dateCopiesWereSent ) );
             application.setTranslatorNotes( translatorNotes );
             application.setBookNotes( bookNotes );
             application.setTC_ACCEPTED( TC_ACCEPTED );

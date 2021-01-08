@@ -171,6 +171,13 @@
                                 <strong>Thank you - your application has been submitted.</strong> <br/>
                                 A member of Literature Ireland staff will contact you if any further information or documentation may be required
                             </div>
+                             <div>
+                            Please click the ‘Return to previous page’ button and navigate to the ‘Open Applications’ tab. 
+                            You will find the application listed here. Please open the application and ensure that all of the information you 
+                            entered and the documents you uploaded are displaying. 
+                            If any information or documents are missing, please contact online@literatureireland.com with the details. 
+                            
+                              </div>
                         </div>
                     </div>
 
@@ -185,6 +192,7 @@
                         <input type="hidden" name="name" value="${name}">
                         <input type="hidden" name="publisherID" value="${publisherID}">
                         <input type="hidden" name="Company" value="${companyDetails.Company}">
+                        <input type="hidden" name="username" value="${username}">
                         <div class="col-md-3">
                             <button type="submit" class="btn btn-default" value="Back"  style="margin-bottom: 50px">Return to previous page</button>
                         </div>
